@@ -1,0 +1,31 @@
+project:
+  name: painting-restoration-eval
+  image_size: 768
+
+paths:
+  raw_images: data/raw/images
+  raw_metadata: data/raw/metadata/metadata_pilot.csv
+  clean_images: data/processed/clean
+  masks: data/processed/masks
+  masked_images: data/processed/masked
+  restored_opencv: data/processed/restored/opencv_telea
+  processed_metadata: data/processed/metadata
+  metrics: outputs/metrics
+  figures: outputs/figures
+  reports: outputs/reports
+
+opencv:
+  method: telea
+  radius: 3
+
+lpips:
+  net: alex
+  crop_size: 256
+  crop_padding: 48
+
+mask_generation:
+  random_seed: 42
+  mask_types:
+    - irregular_small
+    - scratch_lines
+    - irregular_large

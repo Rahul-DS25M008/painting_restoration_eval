@@ -1,0 +1,906 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>OpenCV Telea Pilot Restoration Report</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 40px;
+                background-color: #f7f7f7;
+                color: #222;
+            }
+
+            h1 {
+                color: #111;
+                border-bottom: 2px solid #333;
+                padding-bottom: 10px;
+            }
+
+            h2 {
+                margin-top: 40px;
+                color: #222;
+            }
+
+            h3 {
+                margin-top: 30px;
+                color: #333;
+            }
+
+            ul {
+                line-height: 1.6;
+            }
+
+            .summary {
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                margin-bottom: 30px;
+                border: 1px solid #ddd;
+            }
+
+            .painting-section {
+                background: white;
+                padding: 24px;
+                border-radius: 8px;
+                margin-bottom: 40px;
+                border: 1px solid #ddd;
+            }
+
+            .case-block {
+                margin-top: 25px;
+                padding-top: 15px;
+                border-top: 1px solid #ddd;
+            }
+
+            .image-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 14px;
+                align-items: flex-start;
+                margin: 15px 0;
+            }
+
+            .image-block {
+                text-align: center;
+                font-size: 12px;
+            }
+
+            .image-block img {
+                border: 1px solid #ccc;
+                background: #eee;
+            }
+
+            .caption {
+                margin-top: 5px;
+                color: #555;
+            }
+
+            table,
+            .summary-table {
+                border-collapse: collapse;
+                margin-top: 15px;
+                width: 100%;
+                font-size: 13px;
+            }
+
+            th, td,
+            .summary-table th,
+            .summary-table td {
+                border: 1px solid #ccc;
+                padding: 8px;
+                text-align: center;
+            }
+
+            th,
+            .summary-table th {
+                background-color: #eee;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>OpenCV Telea Pilot Restoration Report</h1>
+
+        
+    <div class="summary">
+        <h2>Experiment overview</h2>
+        <p>
+            This pilot evaluates a complete restoration-analysis pipeline on three selected paintings.
+            Each painting was processed into a standardized clean image, artificially damaged with three
+            mask types, restored using OpenCV Telea inpainting, and evaluated using full-image,
+            masked-region, and perceptual metrics.
+        </p>
+
+        <ul>
+            <li><b>Paintings:</b> 3</li>
+            <li><b>Mask types:</b> irregular_small, scratch_lines, irregular_large</li>
+            <li><b>Total restoration cases:</b> 9</li>
+            <li><b>Baseline model:</b> OpenCV Telea inpainting</li>
+            <li><b>Metrics:</b> MAE, MSE, PSNR, SSIM, masked-region metrics, LPIPS full, LPIPS crop</li>
+        </ul>
+
+        <h2>Aggregate summary by mask type</h2>
+        <table border="1" class="dataframe summary-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>mask_type</th>
+      <th>cases</th>
+      <th>mean_mask_area_ratio</th>
+      <th>mean_full_ssim</th>
+      <th>mean_mask_mae</th>
+      <th>mean_mask_psnr</th>
+      <th>mean_lpips_full</th>
+      <th>mean_lpips_mask_crop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>scratch_lines</td>
+      <td>3</td>
+      <td>0.0211</td>
+      <td>0.9948</td>
+      <td>6.0901</td>
+      <td>26.4771</td>
+      <td>0.0088</td>
+      <td>0.0037</td>
+    </tr>
+    <tr>
+      <td>irregular_small</td>
+      <td>3</td>
+      <td>0.0261</td>
+      <td>0.9915</td>
+      <td>8.9060</td>
+      <td>27.4581</td>
+      <td>0.0223</td>
+      <td>0.2088</td>
+    </tr>
+    <tr>
+      <td>irregular_large</td>
+      <td>3</td>
+      <td>0.1125</td>
+      <td>0.9580</td>
+      <td>13.9816</td>
+      <td>23.0418</td>
+      <td>0.0893</td>
+      <td>0.2726</td>
+    </tr>
+  </tbody>
+</table>
+
+        <h2>Best cases by masked-region MAE</h2>
+        <table border="1" class="dataframe summary-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>painting_id</th>
+      <th>mask_type</th>
+      <th>model_name</th>
+      <th>mask_area_ratio</th>
+      <th>ssim</th>
+      <th>mask_mae</th>
+      <th>mask_psnr</th>
+      <th>lpips_full</th>
+      <th>lpips_mask_crop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>p001</td>
+      <td>irregular_small</td>
+      <td>opencv_telea</td>
+      <td>0.0254</td>
+      <td>0.9950</td>
+      <td>4.7146</td>
+      <td>32.2316</td>
+      <td>0.0230</td>
+      <td>0.2133</td>
+    </tr>
+    <tr>
+      <td>p001</td>
+      <td>scratch_lines</td>
+      <td>opencv_telea</td>
+      <td>0.0233</td>
+      <td>0.9945</td>
+      <td>4.8240</td>
+      <td>29.6016</td>
+      <td>0.0101</td>
+      <td>0.0022</td>
+    </tr>
+    <tr>
+      <td>p003</td>
+      <td>scratch_lines</td>
+      <td>opencv_telea</td>
+      <td>0.0158</td>
+      <td>0.9957</td>
+      <td>6.5058</td>
+      <td>27.2022</td>
+      <td>0.0044</td>
+      <td>0.0018</td>
+    </tr>
+  </tbody>
+</table>
+
+        <h2>Worst cases by masked-region MAE</h2>
+        <table border="1" class="dataframe summary-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>painting_id</th>
+      <th>mask_type</th>
+      <th>model_name</th>
+      <th>mask_area_ratio</th>
+      <th>ssim</th>
+      <th>mask_mae</th>
+      <th>mask_psnr</th>
+      <th>lpips_full</th>
+      <th>lpips_mask_crop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>p003</td>
+      <td>irregular_large</td>
+      <td>opencv_telea</td>
+      <td>0.1112</td>
+      <td>0.9373</td>
+      <td>20.6117</td>
+      <td>19.3308</td>
+      <td>0.0915</td>
+      <td>0.3310</td>
+    </tr>
+    <tr>
+      <td>p003</td>
+      <td>irregular_small</td>
+      <td>opencv_telea</td>
+      <td>0.0254</td>
+      <td>0.9865</td>
+      <td>14.7682</td>
+      <td>21.8085</td>
+      <td>0.0211</td>
+      <td>0.2053</td>
+    </tr>
+    <tr>
+      <td>p001</td>
+      <td>irregular_large</td>
+      <td>opencv_telea</td>
+      <td>0.1134</td>
+      <td>0.9673</td>
+      <td>12.4760</td>
+      <td>23.0875</td>
+      <td>0.0911</td>
+      <td>0.2373</td>
+    </tr>
+  </tbody>
+</table>
+
+        <h2>Key pilot observations</h2>
+        
+    <p>
+        The easiest mask type for the OpenCV Telea baseline was 
+        <b>scratch_lines</b>, with the lowest mean masked-region MAE 
+        (6.09). The hardest mask type was 
+        <b>irregular_large</b>, with the highest mean masked-region MAE 
+        (13.98).
+    </p>
+
+    <p>
+        The results show that thin scratch-like damage is easier for classical inpainting,
+        while larger irregular missing regions are more difficult and often lead to blurry
+        or structurally weak restorations.
+    </p>
+
+    <p>
+        Full-image SSIM remains high in many cases because most of the image is unchanged.
+        Therefore, masked-region metrics and localized error maps are more informative for
+        evaluating restoration quality in damaged areas.
+    </p>
+
+    
+        <p>
+            The local LPIPS results show the same broad pattern: 
+            <b>scratch_lines</b> has the lowest mean local perceptual difference 
+            (0.0037), while 
+            <b>irregular_large</b> has the highest 
+            (0.2726).
+        </p>
+        
+    
+
+        <ul>
+            <li>Scratch-line masks were usually restored very well and often became nearly invisible.</li>
+            <li>Small irregular masks produced mixed results depending on the local image content.</li>
+            <li>Large irregular masks were the hardest cases and often produced blurry or structurally weak restorations.</li>
+            <li>Masked-region metrics were more useful than full-image metrics for identifying local restoration failures.</li>
+            <li>Error maps helped localize restoration errors and supported the metric-based interpretation.</li>
+            <li>LPIPS confirms the same broad difficulty pattern, with scratch-line masks showing the lowest perceptual difference and large irregular masks showing the highest.</li>
+            <li>Crop-based LPIPS is more sensitive to local restoration errors than full-image LPIPS, especially for large missing regions.</li>
+            <li>Structured image content, such as architectural regions, was harder to restore than softer background regions.</li>
+        </ul>
+
+        <h2>Limitations of this pilot</h2>
+        <ul>
+            <li>The pilot uses only three paintings and is not intended as a statistically meaningful benchmark.</li>
+            <li>The artificial masks are simple and still more polygon-like than real conservation damage.</li>
+            <li>OpenCV Telea is only a classical baseline and not representative of modern generative inpainting models.</li>
+            <li>The current error maps are locally normalized, which makes them readable but not directly comparable across all cases.</li>
+            <li>The white masked images are useful for visualization, but later deep models may require model-specific input formats.</li>
+            <li>For scratch-line masks, bounding-box LPIPS crops can include large unchanged regions, so future experiments should consider patch-based or dilated-mask perceptual evaluation.</li>
+        </ul>
+
+        <h2>Next steps</h2>
+        <ul>
+            <li>Add LaMa as a pretrained inpainting model.</li>
+            <li>Compare OpenCV Telea and LaMa on the same masked inputs.</li>
+            <li>Generate both local-normalized and global-scale error maps.</li>
+            <li>Improve mask realism using mixed synthetic damage, rougher boundaries, scattered paint loss, edge damage, and cracks.</li>
+            <li>Investigate pretrained model training data and possible bias/domain gaps.</li>
+            <li>Extend the report to support multi-model comparison and uncertainty visualization.</li>
+        </ul>
+    </div>
+    
+
+        
+        <section class="painting-section">
+            <h2>p001: Portrait of a Man</h2>
+            <p>
+                <b>Artist:</b> Frans Hals<br>
+                <b>Date:</b> early 1650s<br>
+                <b>Category:</b> portrait<br>
+                <b>Style / period:</b> Dutch Golden Age<br>
+                <b>Medium:</b> Oil on canvas<br>
+                <b>License:</b> Public Domain<br>
+                <b>Source:</b> <a href="https://www.metmuseum.org/art/collection/search/436623" target="_blank">https://www.metmuseum.org/art/collection/search/436623</a>
+            </p>
+        
+            <div class="case-block">
+                <h3>Mask type: irregular_small</h3>
+
+                <div class="image-row">
+                    
+    <div class="image-block">
+        <img src="data/processed/clean/p001_clean.png" width="220">
+        <div class="caption">Clean image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masks/p001_irregular_small_mask.png" width="220">
+        <div class="caption">Mask</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masked/p001_irregular_small_masked.png" width="220">
+        <div class="caption">Masked image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/restored/opencv_telea/p001_irregular_small_restored_opencv_telea.png" width="220">
+        <div class="caption">Restored image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="outputs/figures/difference_maps/p001_irregular_small_opencv_telea_diff_masked_only.png" width="220">
+        <div class="caption">Error map</div>
+    </div>
+    
+                </div>
+
+                <table>
+                    <tr>
+                <th>Mask area ratio</th>
+                <th>Full MAE</th>
+                <th>Full PSNR</th>
+                <th>Full SSIM</th>
+                <th>Masked MAE</th>
+                <th>Masked PSNR</th>
+            <th>LPIPS full</th><th>LPIPS crop</th></tr>
+                    <tr>
+                <td>0.0254</td>
+                <td>0.1197</td>
+                <td>48.18</td>
+                <td>0.9950</td>
+                <td>4.71</td>
+                <td>32.23</td>
+            <td>0.0230</td><td>0.2133</td></tr>
+                </table>
+
+                <p><b>Interpretation:</b> The small irregular mask creates a localized missing region. Restoration quality depends on whether the missing area contains simple texture or important structure. The masked-region error is low for this pilot setting. The full-image SSIM is very high, but this should be interpreted carefully because most of the image was never damaged. The local LPIPS score indicates moderate perceptual difference around the damaged area.</p>
+            </div>
+            
+            <div class="case-block">
+                <h3>Mask type: scratch_lines</h3>
+
+                <div class="image-row">
+                    
+    <div class="image-block">
+        <img src="data/processed/clean/p001_clean.png" width="220">
+        <div class="caption">Clean image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masks/p001_scratch_lines_mask.png" width="220">
+        <div class="caption">Mask</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masked/p001_scratch_lines_masked.png" width="220">
+        <div class="caption">Masked image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/restored/opencv_telea/p001_scratch_lines_restored_opencv_telea.png" width="220">
+        <div class="caption">Restored image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="outputs/figures/difference_maps/p001_scratch_lines_opencv_telea_diff_masked_only.png" width="220">
+        <div class="caption">Error map</div>
+    </div>
+    
+                </div>
+
+                <table>
+                    <tr>
+                <th>Mask area ratio</th>
+                <th>Full MAE</th>
+                <th>Full PSNR</th>
+                <th>Full SSIM</th>
+                <th>Masked MAE</th>
+                <th>Masked PSNR</th>
+            <th>LPIPS full</th><th>LPIPS crop</th></tr>
+                    <tr>
+                <td>0.0233</td>
+                <td>0.1124</td>
+                <td>45.93</td>
+                <td>0.9945</td>
+                <td>4.82</td>
+                <td>29.60</td>
+            <td>0.0101</td><td>0.0022</td></tr>
+                </table>
+
+                <p><b>Interpretation:</b> The scratch-line damage is narrow and local. Restoration is expected to perform relatively well because surrounding pixels provide strong local context. The masked-region error is low for this pilot setting. The full-image SSIM is very high, but this should be interpreted carefully because most of the image was never damaged. The local LPIPS score indicates very low perceptual difference around the damaged area.</p>
+            </div>
+            
+            <div class="case-block">
+                <h3>Mask type: irregular_large</h3>
+
+                <div class="image-row">
+                    
+    <div class="image-block">
+        <img src="data/processed/clean/p001_clean.png" width="220">
+        <div class="caption">Clean image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masks/p001_irregular_large_mask.png" width="220">
+        <div class="caption">Mask</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masked/p001_irregular_large_masked.png" width="220">
+        <div class="caption">Masked image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/restored/opencv_telea/p001_irregular_large_restored_opencv_telea.png" width="220">
+        <div class="caption">Restored image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="outputs/figures/difference_maps/p001_irregular_large_opencv_telea_diff_masked_only.png" width="220">
+        <div class="caption">Error map</div>
+    </div>
+    
+                </div>
+
+                <table>
+                    <tr>
+                <th>Mask area ratio</th>
+                <th>Full MAE</th>
+                <th>Full PSNR</th>
+                <th>Full SSIM</th>
+                <th>Masked MAE</th>
+                <th>Masked PSNR</th>
+            <th>LPIPS full</th><th>LPIPS crop</th></tr>
+                    <tr>
+                <td>0.1134</td>
+                <td>1.4142</td>
+                <td>32.54</td>
+                <td>0.9673</td>
+                <td>12.48</td>
+                <td>23.09</td>
+            <td>0.0911</td><td>0.2373</td></tr>
+                </table>
+
+                <p><b>Interpretation:</b> The large irregular mask creates a more difficult restoration case. Blurring or loss of structure is expected for this classical baseline. The masked-region error is moderate. The full-image SSIM is lower here, indicating that the restoration error is more visible at the image level. The local LPIPS score indicates moderate perceptual difference around the damaged area.</p>
+            </div>
+            </section>
+
+        <section class="painting-section">
+            <h2>p002: Wall painting: Perseus and Andromeda in landscape</h2>
+            <p>
+                <b>Artist:</b> Roman<br>
+                <b>Date:</b> last decade of the 1st century BCE<br>
+                <b>Category:</b> landscape<br>
+                <b>Style / period:</b> Augustan / Roman<br>
+                <b>Medium:</b> Fresco<br>
+                <b>License:</b> Public Domain<br>
+                <b>Source:</b> <a href="https://www.metmuseum.org/art/collection/search/250945" target="_blank">https://www.metmuseum.org/art/collection/search/250945</a>
+            </p>
+        
+            <div class="case-block">
+                <h3>Mask type: irregular_small</h3>
+
+                <div class="image-row">
+                    
+    <div class="image-block">
+        <img src="data/processed/clean/p002_clean.png" width="220">
+        <div class="caption">Clean image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masks/p002_irregular_small_mask.png" width="220">
+        <div class="caption">Mask</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masked/p002_irregular_small_masked.png" width="220">
+        <div class="caption">Masked image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/restored/opencv_telea/p002_irregular_small_restored_opencv_telea.png" width="220">
+        <div class="caption">Restored image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="outputs/figures/difference_maps/p002_irregular_small_opencv_telea_diff_masked_only.png" width="220">
+        <div class="caption">Error map</div>
+    </div>
+    
+                </div>
+
+                <table>
+                    <tr>
+                <th>Mask area ratio</th>
+                <th>Full MAE</th>
+                <th>Full PSNR</th>
+                <th>Full SSIM</th>
+                <th>Masked MAE</th>
+                <th>Masked PSNR</th>
+            <th>LPIPS full</th><th>LPIPS crop</th></tr>
+                    <tr>
+                <td>0.0274</td>
+                <td>0.1979</td>
+                <td>43.96</td>
+                <td>0.9930</td>
+                <td>7.24</td>
+                <td>28.33</td>
+            <td>0.0229</td><td>0.2079</td></tr>
+                </table>
+
+                <p><b>Interpretation:</b> The small irregular mask creates a localized missing region. Restoration quality depends on whether the missing area contains simple texture or important structure. The masked-region error is moderate. The full-image SSIM is very high, but this should be interpreted carefully because most of the image was never damaged. The local LPIPS score indicates moderate perceptual difference around the damaged area.</p>
+            </div>
+            
+            <div class="case-block">
+                <h3>Mask type: scratch_lines</h3>
+
+                <div class="image-row">
+                    
+    <div class="image-block">
+        <img src="data/processed/clean/p002_clean.png" width="220">
+        <div class="caption">Clean image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masks/p002_scratch_lines_mask.png" width="220">
+        <div class="caption">Mask</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masked/p002_scratch_lines_masked.png" width="220">
+        <div class="caption">Masked image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/restored/opencv_telea/p002_scratch_lines_restored_opencv_telea.png" width="220">
+        <div class="caption">Restored image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="outputs/figures/difference_maps/p002_scratch_lines_opencv_telea_diff_masked_only.png" width="220">
+        <div class="caption">Error map</div>
+    </div>
+    
+                </div>
+
+                <table>
+                    <tr>
+                <th>Mask area ratio</th>
+                <th>Full MAE</th>
+                <th>Full PSNR</th>
+                <th>Full SSIM</th>
+                <th>Masked MAE</th>
+                <th>Masked PSNR</th>
+            <th>LPIPS full</th><th>LPIPS crop</th></tr>
+                    <tr>
+                <td>0.0243</td>
+                <td>0.1684</td>
+                <td>38.78</td>
+                <td>0.9941</td>
+                <td>6.94</td>
+                <td>22.63</td>
+            <td>0.0119</td><td>0.0070</td></tr>
+                </table>
+
+                <p><b>Interpretation:</b> The scratch-line damage is narrow and local. Restoration is expected to perform relatively well because surrounding pixels provide strong local context. The masked-region error is low for this pilot setting. The full-image SSIM is very high, but this should be interpreted carefully because most of the image was never damaged. The masked-region PSNR suggests a weaker restoration in the damaged area. The local LPIPS score indicates very low perceptual difference around the damaged area.</p>
+            </div>
+            
+            <div class="case-block">
+                <h3>Mask type: irregular_large</h3>
+
+                <div class="image-row">
+                    
+    <div class="image-block">
+        <img src="data/processed/clean/p002_clean.png" width="220">
+        <div class="caption">Clean image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masks/p002_irregular_large_mask.png" width="220">
+        <div class="caption">Mask</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masked/p002_irregular_large_masked.png" width="220">
+        <div class="caption">Masked image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/restored/opencv_telea/p002_irregular_large_restored_opencv_telea.png" width="220">
+        <div class="caption">Restored image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="outputs/figures/difference_maps/p002_irregular_large_opencv_telea_diff_masked_only.png" width="220">
+        <div class="caption">Error map</div>
+    </div>
+    
+                </div>
+
+                <table>
+                    <tr>
+                <th>Mask area ratio</th>
+                <th>Full MAE</th>
+                <th>Full PSNR</th>
+                <th>Full SSIM</th>
+                <th>Masked MAE</th>
+                <th>Masked PSNR</th>
+            <th>LPIPS full</th><th>LPIPS crop</th></tr>
+                    <tr>
+                <td>0.1129</td>
+                <td>0.9996</td>
+                <td>36.18</td>
+                <td>0.9695</td>
+                <td>8.86</td>
+                <td>26.71</td>
+            <td>0.0853</td><td>0.2496</td></tr>
+                </table>
+
+                <p><b>Interpretation:</b> The large irregular mask creates a more difficult restoration case. Blurring or loss of structure is expected for this classical baseline. The masked-region error is moderate. The full-image SSIM is lower here, indicating that the restoration error is more visible at the image level. The local LPIPS score indicates moderate perceptual difference around the damaged area.</p>
+            </div>
+            </section>
+
+        <section class="painting-section">
+            <h2>p003: Gardanne</h2>
+            <p>
+                <b>Artist:</b> Paul Cézanne<br>
+                <b>Date:</b> [fill from page]<br>
+                <b>Category:</b> brushstroke_heavy<br>
+                <b>Style / period:</b> Post-Impressionist<br>
+                <b>Medium:</b> Oil on canvas<br>
+                <b>License:</b> Public Domain<br>
+                <b>Source:</b> <a href="https://www.metmuseum.org/art/collection/search/435871" target="_blank">https://www.metmuseum.org/art/collection/search/435871</a>
+            </p>
+        
+            <div class="case-block">
+                <h3>Mask type: irregular_small</h3>
+
+                <div class="image-row">
+                    
+    <div class="image-block">
+        <img src="data/processed/clean/p003_clean.png" width="220">
+        <div class="caption">Clean image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masks/p003_irregular_small_mask.png" width="220">
+        <div class="caption">Mask</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masked/p003_irregular_small_masked.png" width="220">
+        <div class="caption">Masked image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/restored/opencv_telea/p003_irregular_small_restored_opencv_telea.png" width="220">
+        <div class="caption">Restored image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="outputs/figures/difference_maps/p003_irregular_small_opencv_telea_diff_masked_only.png" width="220">
+        <div class="caption">Error map</div>
+    </div>
+    
+                </div>
+
+                <table>
+                    <tr>
+                <th>Mask area ratio</th>
+                <th>Full MAE</th>
+                <th>Full PSNR</th>
+                <th>Full SSIM</th>
+                <th>Masked MAE</th>
+                <th>Masked PSNR</th>
+            <th>LPIPS full</th><th>LPIPS crop</th></tr>
+                    <tr>
+                <td>0.0254</td>
+                <td>0.3756</td>
+                <td>37.75</td>
+                <td>0.9865</td>
+                <td>14.77</td>
+                <td>21.81</td>
+            <td>0.0211</td><td>0.2053</td></tr>
+                </table>
+
+                <p><b>Interpretation:</b> The small irregular mask creates a localized missing region. Restoration quality depends on whether the missing area contains simple texture or important structure. The masked-region error is high compared with the other pilot cases. The full-image SSIM is very high, but this should be interpreted carefully because most of the image was never damaged. The masked-region PSNR suggests a weaker restoration in the damaged area. The local LPIPS score indicates moderate perceptual difference around the damaged area.</p>
+            </div>
+            
+            <div class="case-block">
+                <h3>Mask type: scratch_lines</h3>
+
+                <div class="image-row">
+                    
+    <div class="image-block">
+        <img src="data/processed/clean/p003_clean.png" width="220">
+        <div class="caption">Clean image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masks/p003_scratch_lines_mask.png" width="220">
+        <div class="caption">Mask</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masked/p003_scratch_lines_masked.png" width="220">
+        <div class="caption">Masked image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/restored/opencv_telea/p003_scratch_lines_restored_opencv_telea.png" width="220">
+        <div class="caption">Restored image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="outputs/figures/difference_maps/p003_scratch_lines_opencv_telea_diff_masked_only.png" width="220">
+        <div class="caption">Error map</div>
+    </div>
+    
+                </div>
+
+                <table>
+                    <tr>
+                <th>Mask area ratio</th>
+                <th>Full MAE</th>
+                <th>Full PSNR</th>
+                <th>Full SSIM</th>
+                <th>Masked MAE</th>
+                <th>Masked PSNR</th>
+            <th>LPIPS full</th><th>LPIPS crop</th></tr>
+                    <tr>
+                <td>0.0158</td>
+                <td>0.1028</td>
+                <td>45.21</td>
+                <td>0.9957</td>
+                <td>6.51</td>
+                <td>27.20</td>
+            <td>0.0044</td><td>0.0018</td></tr>
+                </table>
+
+                <p><b>Interpretation:</b> The scratch-line damage is narrow and local. Restoration is expected to perform relatively well because surrounding pixels provide strong local context. The masked-region error is low for this pilot setting. The full-image SSIM is very high, but this should be interpreted carefully because most of the image was never damaged. The local LPIPS score indicates very low perceptual difference around the damaged area.</p>
+            </div>
+            
+            <div class="case-block">
+                <h3>Mask type: irregular_large</h3>
+
+                <div class="image-row">
+                    
+    <div class="image-block">
+        <img src="data/processed/clean/p003_clean.png" width="220">
+        <div class="caption">Clean image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masks/p003_irregular_large_mask.png" width="220">
+        <div class="caption">Mask</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/masked/p003_irregular_large_masked.png" width="220">
+        <div class="caption">Masked image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="data/processed/restored/opencv_telea/p003_irregular_large_restored_opencv_telea.png" width="220">
+        <div class="caption">Restored image</div>
+    </div>
+    
+                    
+    <div class="image-block">
+        <img src="outputs/figures/difference_maps/p003_irregular_large_opencv_telea_diff_masked_only.png" width="220">
+        <div class="caption">Error map</div>
+    </div>
+    
+                </div>
+
+                <table>
+                    <tr>
+                <th>Mask area ratio</th>
+                <th>Full MAE</th>
+                <th>Full PSNR</th>
+                <th>Full SSIM</th>
+                <th>Masked MAE</th>
+                <th>Masked PSNR</th>
+            <th>LPIPS full</th><th>LPIPS crop</th></tr>
+                    <tr>
+                <td>0.1112</td>
+                <td>2.2921</td>
+                <td>28.87</td>
+                <td>0.9373</td>
+                <td>20.61</td>
+                <td>19.33</td>
+            <td>0.0915</td><td>0.3310</td></tr>
+                </table>
+
+                <p><b>Interpretation:</b> The large irregular mask creates a more difficult restoration case. Blurring or loss of structure is expected for this classical baseline. The masked-region error is high compared with the other pilot cases. The full-image SSIM is lower here, indicating that the restoration error is more visible at the image level. The masked-region PSNR suggests a weaker restoration in the damaged area. The local LPIPS score indicates high perceptual difference around the damaged area.</p>
+            </div>
+            </section>
+    </body>
+    </html>
+    

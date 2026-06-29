@@ -1,0 +1,4 @@
+painting_id,category,title,artist,date,style_or_period,medium,source,source_url,license,filename,processed_filename,processed_width,processed_height
+p001,portrait,Portrait of a Man,Frans Hals,early 1650s,Dutch Golden Age,Oil on canvas,The Met,https://www.metmuseum.org/art/collection/search/436623,Public Domain,p001_portrait_hals.jpg,p001_clean.png,768,768
+p002,landscape,Wall painting: Perseus and Andromeda in landscape,Roman,last decade of the 1st century BCE,Augustan / Roman,Fresco,The Met,https://www.metmuseum.org/art/collection/search/250945,Public Domain,p002_landscape_boscotrecase.jpg,p002_clean.png,768,768
+p003,brushstroke_heavy,Gardanne,Paul Cézanne,[fill from page],Post-Impressionist,Oil on canvas,The Met,https://www.metmuseum.org/art/collection/search/435871,Public Domain,p003_cezanne_gardanne.jpg,p003_clean.png,768,768

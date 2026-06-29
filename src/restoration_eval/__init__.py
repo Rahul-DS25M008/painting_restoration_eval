@@ -1,0 +1,1 @@
+"""Painting restoration evaluation package."""

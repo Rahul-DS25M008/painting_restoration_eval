@@ -1,0 +1,4 @@
+painting_id,filename,width,height,mode,format
+p001,p001_portrait_hals.jpg,2790,3767,RGB,JPEG
+p002,p002_landscape_boscotrecase.jpg,2523,3857,RGB,JPEG
+p003,p003_cezanne_gardanne.jpg,3178,4000,RGB,JPEG
