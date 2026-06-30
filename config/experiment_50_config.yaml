@@ -1,0 +1,131 @@
+# 50-painting controlled subset configuration
+
+experiment:
+  name: "painting_restoration_50_subset"
+  phase: "controlled_subset"
+  description: "Controlled 50-painting evaluation subset for AI-assisted painting restoration."
+  image_size: 768
+  random_seed: 42
+
+paths:
+  metadata_path: "data/raw/metadata/metadata_50.csv"
+  raw_image_dir: "data/raw/images"
+  clean_dir: "data/processed/clean"
+  mask_dir: "data/processed/masks"
+  masked_dir: "data/processed/masked"
+  restored_dir: "data/processed/restored"
+  processed_metadata_dir: "data/processed/metadata"
+  metrics_dir: "outputs/metrics"
+  figures_dir: "outputs/figures"
+  reports_dir: "outputs/reports"
+
+dataset:
+  total_paintings: 50
+  categories:
+    portrait_figure: 10
+    landscape_natural: 10
+    architecture_structured: 10
+    abstraction_surrealism: 10
+    high_texture_brushwork: 10
+  selection_rules:
+    - "Use public-domain or open-access images only."
+    - "Use images with sufficient resolution for 768x768 preprocessing."
+    - "Record source URL and license for each painting."
+    - "Select images based on restoration-relevant visual properties, not only art-historical category."
+
+preprocessing:
+  output_size: 768
+  color_mode: "RGB"
+  resize_strategy: "resize_shortest_side_then_center_crop"
+  output_format: "png"
+
+damage_conditions:
+  zero_control:
+    target_area_ratio_min: 0.0
+    target_area_ratio_max: 0.0
+    description: "No damage. Used to measure unnecessary model changes or hallucination."
+  scratch_thin:
+    target_area_ratio_min: 0.01
+    target_area_ratio_max: 0.03
+    description: "Thin scratch/crack-like damage."
+  loss_small:
+    target_area_ratio_min: 0.03
+    target_area_ratio_max: 0.06
+    description: "Small localized missing paint."
+  loss_large:
+    target_area_ratio_min: 0.10
+    target_area_ratio_max: 0.15
+    description: "Large missing region and hard restoration case."
+  mixed_damage:
+    target_area_ratio_min: 0.08
+    target_area_ratio_max: 0.15
+    description: "Combination of scratches, irregular loss, scattered loss, and optional edge damage."
+
+models:
+  opencv_telea:
+    enabled: true
+    role: "classical_deterministic_baseline"
+    parameters:
+      radius: 3
+  lama:
+    enabled: false
+    role: "pretrained_open_inpainting_candidate"
+    parameters: {}
+  stable_diffusion_inpainting:
+    enabled: false
+    role: "generative_uncertainty_candidate"
+    parameters:
+      num_seeds: 5
+      prompt_strategy: "neutral_restoration_prompt"
+  sdxl_inpainting:
+    enabled: false
+    role: "higher_capacity_generative_candidate"
+    parameters:
+      num_seeds: 5
+      prompt_strategy: "neutral_restoration_prompt"
+  dalle_image_editing:
+    enabled: false
+    role: "optional_closed_model_comparison"
+    parameters: {}
+
+metrics:
+  classical:
+    - "mae_full"
+    - "mse_full"
+    - "psnr_full"
+    - "ssim_full"
+    - "mae_masked"
+    - "mse_masked"
+    - "psnr_masked"
+  perceptual:
+    - "lpips_full"
+    - "lpips_mask_crop"
+  future_semantic_style:
+    - "dinov2_similarity"
+    - "clip_similarity"
+  zero_control:
+    - "unnecessary_change_mae"
+    - "unnecessary_change_lpips"
+  uncertainty:
+    enabled_for_full_50: false
+    subset_size: 10
+    damage_conditions:
+      - "loss_large"
+      - "mixed_damage"
+    planned_metrics:
+      - "pixel_variance"
+      - "pairwise_lpips"
+      - "metric_standard_deviation"
+      - "best_worst_gap"
+
+reporting:
+  generate_case_grids: true
+  generate_error_maps: true
+  generate_html_report: true
+  compare_models: false
+  include_uncertainty_section: false
+
+notes:
+  - "Run OpenCV Telea on all 50 paintings first before adding pretrained models."
+  - "Keep model audit updated before selecting final model set."
+  - "Use this subset to decide final main experiment scale and model lineup."
