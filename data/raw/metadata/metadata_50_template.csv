@@ -1,51 +1,11 @@
 painting_id,category,title,artist,date,style_or_period,medium,source,source_url,license,filename,original_width,original_height,selection_reason,visual_complexity_note,status,notes
-p001,portrait_figure,,,,,,,,,p001.jpg,,,,,candidate,
-p002,portrait_figure,,,,,,,,,p002.jpg,,,,,candidate,
-p003,portrait_figure,,,,,,,,,p003.jpg,,,,,candidate,
-p004,portrait_figure,,,,,,,,,p004.jpg,,,,,candidate,
-p005,portrait_figure,,,,,,,,,p005.jpg,,,,,candidate,
-p006,portrait_figure,,,,,,,,,p006.jpg,,,,,candidate,
-p007,portrait_figure,,,,,,,,,p007.jpg,,,,,candidate,
-p008,portrait_figure,,,,,,,,,p008.jpg,,,,,candidate,
-p009,portrait_figure,,,,,,,,,p009.jpg,,,,,candidate,
-p010,portrait_figure,,,,,,,,,p010.jpg,,,,,candidate,
-p011,landscape_natural,,,,,,,,,p011.jpg,,,,,candidate,
-p012,landscape_natural,,,,,,,,,p012.jpg,,,,,candidate,
-p013,landscape_natural,,,,,,,,,p013.jpg,,,,,candidate,
-p014,landscape_natural,,,,,,,,,p014.jpg,,,,,candidate,
-p015,landscape_natural,,,,,,,,,p015.jpg,,,,,candidate,
-p016,landscape_natural,,,,,,,,,p016.jpg,,,,,candidate,
-p017,landscape_natural,,,,,,,,,p017.jpg,,,,,candidate,
-p018,landscape_natural,,,,,,,,,p018.jpg,,,,,candidate,
-p019,landscape_natural,,,,,,,,,p019.jpg,,,,,candidate,
-p020,landscape_natural,,,,,,,,,p020.jpg,,,,,candidate,
-p021,architecture_structured,,,,,,,,,p021.jpg,,,,,candidate,
-p022,architecture_structured,,,,,,,,,p022.jpg,,,,,candidate,
-p023,architecture_structured,,,,,,,,,p023.jpg,,,,,candidate,
-p024,architecture_structured,,,,,,,,,p024.jpg,,,,,candidate,
-p025,architecture_structured,,,,,,,,,p025.jpg,,,,,candidate,
-p026,architecture_structured,,,,,,,,,p026.jpg,,,,,candidate,
-p027,architecture_structured,,,,,,,,,p027.jpg,,,,,candidate,
-p028,architecture_structured,,,,,,,,,p028.jpg,,,,,candidate,
-p029,architecture_structured,,,,,,,,,p029.jpg,,,,,candidate,
-p030,architecture_structured,,,,,,,,,p030.jpg,,,,,candidate,
-p031,abstraction_surrealism,,,,,,,,,p031.jpg,,,,,candidate,
-p032,abstraction_surrealism,,,,,,,,,p032.jpg,,,,,candidate,
-p033,abstraction_surrealism,,,,,,,,,p033.jpg,,,,,candidate,
-p034,abstraction_surrealism,,,,,,,,,p034.jpg,,,,,candidate,
-p035,abstraction_surrealism,,,,,,,,,p035.jpg,,,,,candidate,
-p036,abstraction_surrealism,,,,,,,,,p036.jpg,,,,,candidate,
-p037,abstraction_surrealism,,,,,,,,,p037.jpg,,,,,candidate,
-p038,abstraction_surrealism,,,,,,,,,p038.jpg,,,,,candidate,
-p039,abstraction_surrealism,,,,,,,,,p039.jpg,,,,,candidate,
-p040,abstraction_surrealism,,,,,,,,,p040.jpg,,,,,candidate,
-p041,high_texture_brushwork,,,,,,,,,p041.jpg,,,,,candidate,
-p042,high_texture_brushwork,,,,,,,,,p042.jpg,,,,,candidate,
-p043,high_texture_brushwork,,,,,,,,,p043.jpg,,,,,candidate,
-p044,high_texture_brushwork,,,,,,,,,p044.jpg,,,,,candidate,
-p045,high_texture_brushwork,,,,,,,,,p045.jpg,,,,,candidate,
-p046,high_texture_brushwork,,,,,,,,,p046.jpg,,,,,candidate,
-p047,high_texture_brushwork,,,,,,,,,p047.jpg,,,,,candidate,
-p048,high_texture_brushwork,,,,,,,,,p048.jpg,,,,,candidate,
-p049,high_texture_brushwork,,,,,,,,,p049.jpg,,,,,candidate,
-p050,high_texture_brushwork,,,,,,,,,p050.jpg,,,,,candidate,
+p001,portrait_figure,Juan de Pareja,Diego Velázquez,1650,Baroque,Oil on canvas,The Metropolitan Museum of Art,https://www.metmuseum.org/art/collection/search/437869,Public Domain / Open Access,p001.jpg,,,"Strong classic portrait baseline; face, clothing, and dark tonal structure.","Single male portrait with strong facial detail and dark background.","selected","Met Open Access candidate."
+p002,portrait_figure,Madame X (Madame Pierre Gautreau),John Singer Sargent,1883-84,19th century portraiture,Oil on canvas,The Metropolitan Museum of Art,https://www.metmuseum.org/art/collection/search/12127,Public Domain / Open Access,p002.jpg,,,"Full-figure portrait with strong silhouette and clothing structure.","Elegant figure pose, skin/clothing contrast, useful for semantic restoration.","selected","Met Open Access candidate."
+p003,portrait_figure,Marie Joséphine Charlotte du Val d'Ognes,Marie-Denise Villers,1801,Neoclassical / early 19th century,Oil on canvas,The Metropolitan Museum of Art,https://www.metmuseum.org/art/collection/search/437903,Public Domain / Open Access,p003.jpg,,,"Distinct portrait composition with interior/studio context.","Face, hands, clothing, and background objects create varied restoration targets.","selected","Met Open Access candidate."
+p004,portrait_figure,Madame Georges Charpentier and Her Children,Pierre-Auguste Renoir,1878,Impressionism,Oil on canvas,The Metropolitan Museum of Art,https://www.metmuseum.org/art/collection/search/438815,Public Domain / Open Access,p004.jpg,,,"Multi-person portrait chosen for compositional variety and preprocessing diversity.","Multiple faces, clothing textures, and interior setting.","selected","Met Open Access candidate."
+p005,portrait_figure,Self-Portrait with Two Pupils,Adélaïde Labille-Guiard,1785,18th century portraiture,Oil on canvas,The Metropolitan Museum of Art,https://www.metmuseum.org/art/collection/search/436840,Public Domain / Open Access,p005.jpg,,,"Multi-figure portrait with studio context and strong compositional diversity.","Faces, fabrics, and painter-at-work setting.","selected","Met Open Access candidate."
+p006,portrait_figure,Boy with a Sword,Édouard Manet,1861,Realism / early modern French painting,Oil on canvas,The Metropolitan Museum of Art,https://www.metmuseum.org/art/collection/search/436948,Public Domain / Open Access,p006.jpg,,,"Useful full-figure case with cleaner composition.","Child figure, costume details, and simple background.","selected","Met Open Access candidate."
+p007,portrait_figure,Princesse de Broglie,Jean-Auguste-Dominique Ingres,1851-53,Neoclassical,Oil on canvas,The Metropolitan Museum of Art,https://www.metmuseum.org/art/collection/search/459106,Public Domain / Open Access,p007.jpg,,,"Highly detailed portrait with fabric and jewelry detail.","Fine textures and ornamentation make it a strong detail-restoration case.","selected","Met Open Access candidate."
+p008,portrait_figure,Manuel Osorio Manrique de Zuñiga,Francisco de Goya y Lucientes,1787-88,Spanish portraiture,Oil on canvas,The Metropolitan Museum of Art,https://www.metmuseum.org/art/collection/search/436545,Public Domain / Open Access,p008.jpg,,,"Portrait with props/animals gives semantic diversity beyond simple figure cases.","Human figure plus animals and objects create complex restoration targets.","selected","Met Open Access candidate."
+p009,portrait_figure,Madame Roulin and Her Baby,Vincent van Gogh,1888,Post-Impressionism,Oil on canvas,The Metropolitan Museum of Art,https://www.metmuseum.org/art/collection/search/459123,Public Domain / Open Access,p009.jpg,,,"Chosen to represent strong visible brushwork within the portrait category.","Mother-and-child portrait with painterly texture and color variation.","selected","Met Open Access candidate."
+p010,portrait_figure,Joan of Arc,Jules Bastien-Lepage,1879,19th century French painting,Oil on canvas,The Metropolitan Museum of Art,https://www.metmuseum.org/art/collection/search/435621,Public Domain / Open Access,p010.jpg,,,"Figure + scenery/context case useful for broader portrait-category coverage.","Human subject embedded in a more complex scene with natural background.","selected","Met Open Access candidate."
