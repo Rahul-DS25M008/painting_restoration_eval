@@ -79,14 +79,17 @@ painting-restoration-eval/
 Create and activate a virtual environment.
 
 ```powershell
-python -m venv .venv
+winget install -e --id Python.Python.3.12
+py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
 Install dependencies.
 
 ```powershell
+python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
+python -m ipykernel install --user --name painting-restoration-eval --display-name "Painting Restoration Eval"
 ```
 
 Start Jupyter.
