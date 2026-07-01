@@ -1,0 +1,6 @@
+mask_type,count,mean_changed_pixels_vs_damaged,min_changed_pixels_vs_damaged,max_changed_pixels_vs_damaged,mean_changed_pixels_vs_clean,min_changed_pixels_vs_clean,max_changed_pixels_vs_clean
+loss_large,50,58769.48,39135,93278,58594.54,39118,93015
+loss_small,50,19951.84,13227,26756,19801.54,12881,26730
+mixed_damage,50,45450.92,38316,54098,44948.46,37972,53081
+scratch_thin,50,10000.84,5790,15636,9647.78,5754,15544
+zero_control,50,0.0,0,0,0.0,0,0

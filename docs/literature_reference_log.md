@@ -230,3 +230,70 @@ This section can support the methodology chapter by clarifying the distinction b
 Possible thesis wording:
 
 > For each artificial damage mask, a damaged input image was created by replacing masked pixels with white RGB values while preserving all unmasked pixels exactly. The binary mask remained the authoritative definition of the restoration region and was stored separately. This ensured that all restoration methods were evaluated using the same controlled damage cases while preserving compatibility with OpenCV, LaMa, and diffusion-based inpainting workflows.
+
+## 4. OpenCV Telea Restoration Baseline
+
+### Decision supported
+
+OpenCV Telea is used as the first restoration baseline for the 50-painting controlled subset.
+
+The method is included as a deterministic classical inpainting baseline. It is not treated as a painting-specific restoration model. Its purpose is to provide a simple reference point before evaluating learned inpainting models.
+
+---
+
+### Research papers
+
+#### Telea (2004) — Fast Marching Method inpainting
+
+- Reference: Telea, A. (2004). *An Image Inpainting Technique Based on the Fast Marching Method.*
+- Type: classical inpainting method paper.
+- Relevant point: Telea proposes a fast marching method for digital inpainting, filling damaged regions progressively from their boundaries using nearby image information.
+- How it influenced this project: This is the core method behind the OpenCV Telea baseline used in the project. The method is suitable as a fast deterministic baseline for local inpainting, especially for smaller missing regions.
+
+#### Bertalmio et al. (2000) — foundational image inpainting
+
+- Reference: Bertalmio, M., Sapiro, G., Caselles, V., & Ballester, C. (2000). *Image Inpainting.*
+- Type: foundational inpainting paper.
+- Relevant point: The paper frames digital inpainting as the automatic filling of user-selected missing or damaged regions by propagating surrounding image information into the target area.
+- How it influenced this project: This supports the general framing of the task as controlled image inpainting over known damaged regions.
+
+#### Bertalmio, Bertozzi, and Sapiro (2001) — Navier-Stokes inpainting
+
+- Reference: Bertalmio, M., Bertozzi, A. L., & Sapiro, G. (2001). *Navier-Stokes, Fluid Dynamics, and Image and Video Inpainting.*
+- Type: classical PDE-based inpainting paper.
+- Relevant point: The paper connects inpainting with fluid-dynamics/PDE-based propagation of image structures.
+- How it influenced this project: This paper helps position OpenCV-style classical inpainting methods as pre-deep-learning restoration baselines.
+
+#### Quan et al. (2024) — deep learning inpainting survey
+
+- Reference: Quan, W., Chen, J., Liu, Y., Yan, D.-M., & Wonka, P. (2024). *Deep Learning-based Image and Video Inpainting: A Survey.*
+- Type: survey paper.
+- Relevant point: The survey reviews modern deep learning inpainting methods, including CNN, GAN, VAE, transformer, and diffusion-based approaches, as well as common evaluation settings and challenges.
+- How it influenced this project: This supports the project’s staged comparison between a classical baseline and later learned inpainting methods.
+
+---
+
+### Technical documentation
+
+#### OpenCV inpainting documentation
+
+- Source: OpenCV inpainting documentation.
+- Type: technical documentation.
+- Relevant point: OpenCV inpainting uses an input image and a single-channel mask where non-zero mask pixels indicate the region to be inpainted.
+- How it influenced this project: This confirms the implementation convention used in the OpenCV Telea notebook: damaged image plus binary mask, with mask value 255 defining the restoration area.
+
+---
+
+### Project decision
+
+The project uses OpenCV Telea as the first restoration baseline with a fixed radius of 3. The same radius is applied across all 50 paintings and all five mask types to ensure deterministic and comparable baseline results.
+
+The baseline is expected to perform better on small local scratches and small missing regions than on large losses or mixed damage. This expected limitation is useful because the project evaluates not only restoration quality, but also when and where each model type fails.
+
+---
+
+### Notes for final thesis writing
+
+Possible thesis wording:
+
+> OpenCV Telea was included as a deterministic classical inpainting baseline. The method is based on Telea’s fast marching approach, where missing regions are filled progressively from their boundaries using nearby image information. Classical inpainting methods provide useful non-learning reference points because they are fast, deterministic, and reproducible, but they are not expected to recover large semantic structures or painting-specific stylistic details. In this thesis, OpenCV Telea therefore serves as a baseline for comparing later learned inpainting models.

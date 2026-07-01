@@ -64,3 +64,31 @@ Validation checks confirmed that:
 - non-zero mask cases change only pixels inside the mask,
 - all masked pixels are set to the configured white fill color,
 - no pixels outside the mask are modified.
+
+## OpenCV Telea baseline restoration decision
+
+For the 50-painting controlled subset, OpenCV Telea was used as the first restoration baseline.
+
+OpenCV Telea is treated as a deterministic classical inpainting method rather than a painting-specific restoration model. Its role in this project is to provide a simple non-learning baseline against which later learned inpainting methods can be compared.
+
+The baseline uses:
+
+- input image: white-filled damaged RGB image,
+- mask: binary grayscale mask where 255 indicates the inpainting region,
+- algorithm: `cv2.INPAINT_TELEA`,
+- radius: 3,
+- model name recorded in metadata: `opencv_telea`.
+
+A single fixed radius is used for all paintings and mask types. This avoids per-image tuning and keeps the baseline deterministic, reproducible, and comparable across categories and damage conditions.
+
+Zero-control cases are also passed through OpenCV Telea. Since these masks contain no damaged pixels, the restored output is expected to remain identical to the clean/damaged input. This acts as a sanity check for the restoration pipeline.
+
+Validation checks confirmed that:
+
+- all 250 OpenCV-restored images were generated,
+- all restored images are RGB PNG files at 768 × 768 pixels,
+- zero-control restored images remained unchanged,
+- non-zero mask cases produced outputs different from the damaged inputs,
+- restoration metadata was saved for downstream metric evaluation.
+
+The OpenCV Telea baseline is not expected to reconstruct large semantic structures or painting-specific stylistic content reliably. Its main purpose is to establish a classical baseline before evaluating learned models such as LaMa, Stable Diffusion Inpainting, and SDXL Inpainting.
