@@ -36,8 +36,10 @@ dataset:
 preprocessing:
   output_size: 768
   color_mode: "RGB"
-  resize_strategy: "resize_shortest_side_then_center_crop"
+  resize_strategy: "aspect_ratio_resize_median_rgb_pad"
   output_format: "png"
+  padding_strategy: "median_rgb"
+  record_content_region: true
 
 damage_conditions:
   zero_control:
