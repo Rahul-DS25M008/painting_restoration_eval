@@ -1,0 +1,6 @@
+mask_type,count,mean_area_pct_content,std_area_pct_content,min_area_pct_content,max_area_pct_content,mean_area_pct_full,std_area_pct_full,min_area_pct_full,max_area_pct_full
+zero_control,50,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+scratch_thin,50,2.1985,0.4539,1.3284,2.9748,1.6956,0.4212,0.9816,2.651
+loss_small,50,4.4385,0.859,3.0285,5.9383,3.3827,0.603,2.2425,4.5363
+loss_large,50,12.8222,2.3997,10.0029,17.9223,9.9639,2.7537,6.635,15.8145
+mixed_damage,50,10.1351,1.3654,8.0613,13.7123,7.7059,0.6574,6.4962,9.1719

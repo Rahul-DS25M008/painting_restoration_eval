@@ -1,0 +1,6 @@
+mask_type,count,touches_content_border_count,touches_content_border_rate
+zero_control,50,0,0.0
+scratch_thin,50,50,100.0
+loss_small,50,0,0.0
+loss_large,50,0,0.0
+mixed_damage,50,50,100.0
