@@ -175,3 +175,58 @@ This section can later support the methodology chapter by explaining why the art
 Possible thesis wording:
 
 > Artificial damage was simulated using five mask conditions: no damage, thin scratches, small losses, large losses, and mixed damage. The masks were generated only inside the recorded painting-content region to avoid applying artificial damage to padded areas introduced during preprocessing. This enabled controlled comparison across restoration difficulty levels while maintaining compatibility with classical, deep learning, and diffusion-based inpainting methods.
+
+## 3. Damage Image Creation
+
+### Decision supported
+
+For each generated binary mask, a damaged RGB image is created by replacing masked pixels with white RGB(255, 255, 255). The binary mask remains the authoritative definition of the region to restore.
+
+The damaged image is used as a controlled visual/input representation of synthetic damage. The mask is retained separately for restoration models and evaluation.
+
+---
+
+### References
+
+#### OpenCV inpainting documentation
+
+- Source: OpenCV inpainting documentation.
+- Type: technical documentation.
+- Relevant point: OpenCV inpainting expects an input image and a single-channel mask where non-zero mask pixels indicate the region to be inpainted.
+- How it influenced this project: The project saves damaged images together with binary masks. The damaged image provides the visible corrupted input, while the mask tells OpenCV Telea which region to restore.
+
+---
+
+#### Hugging Face Diffusers inpainting documentation
+
+- Source: Hugging Face Diffusers inpainting documentation.
+- Type: technical documentation.
+- Relevant point: Diffusion inpainting pipelines commonly use masks where white pixels indicate regions to repaint and black pixels indicate regions to preserve.
+- How it influenced this project: The project keeps binary mask files separate from damaged images. This preserves compatibility with later Stable Diffusion Inpainting and SDXL Inpainting experiments.
+
+---
+
+#### LaMa / simple-lama inpainting usage
+
+- Source: LaMa-related implementations and simple-lama-inpainting usage.
+- Type: implementation reference.
+- Relevant point: LaMa-style inpainting workflows use an image and a binary mask to define the missing region.
+- How it influenced this project: The project stores both damaged images and binary masks so later LaMa integration can use the same controlled mask cases as OpenCV and diffusion models.
+
+---
+
+### Project decision
+
+The project uses white-fill damaged images for the 50-painting controlled subset. This is not intended to simulate every possible physical appearance of real painting damage. Instead, it provides a controlled synthetic corruption representation while the binary mask defines the exact restoration target.
+
+For each case, metadata records the clean image path, mask path, damaged image path, fill strategy, fill color, damaged area in pixels, damaged area relative to the painting-content region, and damaged area relative to the full 768 × 768 image.
+
+---
+
+### Notes for final thesis writing
+
+This section can support the methodology chapter by clarifying the distinction between artificial damage masks and damaged input images.
+
+Possible thesis wording:
+
+> For each artificial damage mask, a damaged input image was created by replacing masked pixels with white RGB values while preserving all unmasked pixels exactly. The binary mask remained the authoritative definition of the restoration region and was stored separately. This ensured that all restoration methods were evaluated using the same controlled damage cases while preserving compatibility with OpenCV, LaMa, and diffusion-based inpainting workflows.

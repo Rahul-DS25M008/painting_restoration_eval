@@ -1,0 +1,6 @@
+mask_type,count
+loss_large,50
+loss_small,50
+mixed_damage,50
+scratch_thin,50
+zero_control,50

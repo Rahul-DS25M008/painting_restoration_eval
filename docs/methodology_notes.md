@@ -40,3 +40,27 @@ This design supports controlled comparison across damage types. The zero-control
 During visual inspection of the 50-painting pilot masks, `scratch_thin` masks often touched the painting-content boundary. This is acceptable for the pilot because scratches and cracks can extend across large portions of a painting, but it should be reviewed again before scaling to the final dataset.
 
 The red mask overlay used in notebooks is only a diagnostic visualization choice. Saved masks remain binary grayscale files. In final report figures, overlay colors may be adjusted for readability depending on the painting palette.
+
+## Damage image creation decision
+
+For the 50-painting controlled subset, damaged images are created by applying each binary mask to its corresponding processed clean painting.
+
+The binary mask remains the authoritative definition of the damaged/inpaint region:
+
+- 0 = preserved/original region
+- 255 = damaged/inpaint region
+
+For each mask case, pixels inside the damaged region are filled with white RGB(255, 255, 255), while all pixels outside the mask are preserved exactly. This creates one RGB damaged PNG image per mask case.
+
+The white-fill strategy is used because it provides a clear visual representation of synthetic damage and is compatible with the OpenCV Telea baseline. Later model pipelines may use the damaged image, the mask, or both depending on their input requirements.
+
+The zero-control condition produces a damaged image identical to the processed clean image. This acts as a sanity check for later restoration and evaluation stages.
+
+Validation checks confirmed that:
+
+- all 250 damaged images were generated,
+- all damaged images are RGB PNG files at 768 × 768 pixels,
+- zero-control damaged images are identical to their clean originals,
+- non-zero mask cases change only pixels inside the mask,
+- all masked pixels are set to the configured white fill color,
+- no pixels outside the mask are modified.
