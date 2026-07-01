@@ -20,7 +20,11 @@ DATA_DIR = PROJECT_ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
 RAW_IMAGES_DIR = RAW_DIR / "images"
 RAW_METADATA_DIR = RAW_DIR / "metadata"
-RAW_METADATA_PATH = RAW_METADATA_DIR / "metadata_pilot.csv"
+RAW_METADATA_PILOT_PATH = RAW_METADATA_DIR / "metadata_pilot.csv"
+RAW_METADATA_50_PATH = RAW_METADATA_DIR / "metadata_50.csv"
+
+# Default metadata path for the current controlled 50-painting experiment.
+RAW_METADATA_PATH = RAW_METADATA_50_PATH
 
 PROCESSED_DIR = DATA_DIR / "processed"
 CLEAN_DIR = PROCESSED_DIR / "clean"
