@@ -170,3 +170,42 @@ For LPIPS, lower values indicate higher perceptual similarity. Improvement is co
 A positive value means that the restored image is perceptually closer to the clean reference than the damaged input.
 
 LPIPS is included because classical metrics such as MSE, MAE, PSNR, and SSIM do not fully capture perceptual similarity. In this project, LPIPS is not treated as a final truth measure. Instead, it is one part of a multi-metric evaluation framework. Cases where LPIPS and pixel-level metrics disagree are especially useful because they reveal how different metric families emphasize different aspects of restoration quality.
+
+## CLIP and DINOv2 feature-space similarity decision
+
+CLIP and DINOv2 are used as pretrained feature-space diagnostics for the OpenCV Telea baseline.
+
+The evaluated comparisons are:
+
+- clean image vs damaged image,
+- clean image vs restored image.
+
+Feature similarity is computed using cosine similarity between image embeddings. Higher similarity indicates that two image regions are closer in the corresponding pretrained feature space.
+
+Implementation note: CLIP was loaded using `use_safetensors=True` to avoid PyTorch `.bin` loading with Torch 2.5.1.
+
+The improvement definition is:
+
+`similarity_improvement = restored_similarity - damaged_similarity`
+
+A positive value means that the restored output is closer to the clean reference than the damaged input in that feature space.
+
+Feature similarity is evaluated on image-like spatial regions only:
+
+- full image,
+- painting content region,
+- mask bounding-box crop.
+
+Sparse masked pixels are not evaluated directly with CLIP or DINOv2 because these models expect spatial image inputs rather than unordered pixel sets.
+
+### Feature-space interpretation note
+
+The OpenCV Telea feature-similarity results show that CLIP and DINOv2 should be interpreted as diagnostic representation spaces rather than as definitive restoration-quality measures.
+
+Large-loss mask-bounding-box crops showed weak CLIP improvement and negative average DINOv2 improvement. This suggests that OpenCV can reduce visible white damage while producing interpolated local structures that remain far from the clean reference in a self-supervised visual feature space.
+
+This finding is important because it separates visible damage removal from faithful restoration. A restoration can look less damaged while still failing to recover the original visual structure. Therefore, feature-space metrics are used alongside classical metrics, LPIPS, and visual diagnostics rather than replacing them.
+
+CLIP and DINOv2 are included because they represent different pretrained visual feature spaces. CLIP is trained with image-text contrastive supervision, while DINOv2 is a self-supervised visual representation model. In this project, both are used as diagnostic signals, not as final truth measures of restoration quality.
+
+Cases where CLIP, DINOv2, LPIPS, and classical pixel metrics disagree are especially important. These disagreements show that restoration quality depends on multiple dimensions, including pixel accuracy, perceptual similarity, feature-space similarity, and visual plausibility.

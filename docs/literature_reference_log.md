@@ -448,3 +448,68 @@ Positive improvement indicates that the restored output is perceptually closer t
 Possible thesis wording:
 
 > LPIPS was included as a perceptual full-reference metric to complement classical pixel-level and structural measures. Unlike MSE, MAE, PSNR, and SSIM, LPIPS compares images in a learned feature space and has been shown to better reflect perceptual similarity in many image-comparison settings. In this thesis, LPIPS was computed for full images, painting content regions, and mask-bounding-box crops. Sparse masked pixels were not used directly because LPIPS assumes spatial image inputs. The resulting LPIPS scores were compared with classical metric rankings to identify cases where pixel-level improvement and perceptual similarity diverged.
+
+## 8. CLIP and DINOv2 Feature-Space Similarity
+
+### Decision supported
+
+CLIP and DINOv2 are used as pretrained feature-space diagnostics to complement classical metrics and LPIPS.
+
+The project computes cosine similarity between image embeddings for:
+
+- clean reference vs damaged input,
+- clean reference vs restored output.
+
+The feature-space improvement is computed as:
+
+`restored_similarity - damaged_similarity`
+
+Positive improvement indicates that the restored output is closer to the clean reference in the corresponding pretrained feature space.
+
+---
+
+### Interpretation limitation
+
+CLIP and DINOv2 are not painting-restoration-specific evaluation models. Their embeddings are useful as pretrained feature-space diagnostics, but they do not determine historical correctness, conservation validity, or restoration faithfulness.
+
+Observed disagreement between CLIP, DINOv2, LPIPS, and classical metrics is therefore not treated as an error. Instead, disagreement is used diagnostically to identify cases where pixel-level recovery, perceptual similarity, and feature-space similarity diverge.
+
+In the OpenCV Telea baseline, large-loss mask-bounding-box crops showed weak CLIP improvement and negative average DINOv2 improvement. This is interpreted as a diagnostic signal that OpenCV can remove obvious visible damage while still failing to recover original local visual structure in a pretrained self-supervised feature space.
+
+### Research papers
+
+#### Radford et al. (2021) — CLIP
+
+- Reference: Radford, A., Kim, J. W., Hallacy, C., Ramesh, A., Goh, G., Agarwal, S., Sastry, G., Askell, A., Mishkin, P., Clark, J., Krueger, G., & Sutskever, I. (2021). *Learning Transferable Visual Models From Natural Language Supervision.*
+- Type: image-text contrastive representation learning paper.
+- Relevant point: CLIP learns transferable image representations through contrastive learning on image-text pairs.
+- How it influenced this project: CLIP image embeddings are used as a broad semantic/visual feature-space signal for comparing damaged and restored image regions against the clean reference.
+
+#### Oquab et al. (2023) — DINOv2
+
+- Reference: Oquab, M., Darcet, T., Moutakanni, T., Vo, H. V., Szafraniec, M., Khalidov, V., Fernandez, P., HAZIZA, D., Massa, F., El-Nouby, A., Assran, M., Ballas, N., Galuba, W., Howes, R., Huang, P.-Y., Li, S.-W., Misra, I., Rabbat, M., Sharma, V., Synnaeve, G., Xu, H., Jegou, H., Mairal, J., Labatut, P., Joulin, A., & Bojanowski, P. (2023). *DINOv2: Learning Robust Visual Features without Supervision.*
+- Type: self-supervised visual foundation model paper.
+- Relevant point: DINOv2 provides strong general-purpose visual features without relying on language supervision.
+- How it influenced this project: DINOv2 embeddings are used as an additional visual feature-space diagnostic, distinct from CLIP and LPIPS.
+
+---
+
+### Project decision
+
+Feature similarity is computed only on image-like spatial regions:
+
+- full image,
+- content region,
+- mask bounding-box crop.
+
+The project does not compute CLIP or DINOv2 similarity directly on sparse masked pixels because both models expect spatial image inputs.
+
+The mask bounding-box crop is used as the local feature-comparison region around the damaged area.
+
+---
+
+### Notes for final thesis writing
+
+Possible thesis wording:
+
+> CLIP and DINOv2 feature similarities were included to complement classical full-reference metrics and LPIPS. CLIP provides an image-text-supervised representation space, while DINOv2 provides a self-supervised visual representation space. In this thesis, both were used as diagnostic feature spaces rather than final restoration-quality judges. Similarity was computed between clean and damaged regions and between clean and restored regions. Improvement was defined as restored similarity minus damaged similarity. Cases where CLIP, DINOv2, LPIPS, and classical metric rankings diverged were treated as important diagnostic examples, because they show that restoration quality cannot be fully captured by any single metric family.

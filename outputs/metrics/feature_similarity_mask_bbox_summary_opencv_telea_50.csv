@@ -1,0 +1,5 @@
+mask_type,cases,mean_clip_damaged_similarity,mean_clip_restored_similarity,mean_clip_similarity_improvement,clip_improvement_rate,mean_dinov2_damaged_similarity,mean_dinov2_restored_similarity,mean_dinov2_similarity_improvement,dinov2_improvement_rate
+loss_large,50,0.80508,0.83139,0.02631,0.74,0.76151,0.63938,-0.12213,0.16
+loss_small,50,0.89377,0.99259,0.09881,1.0,0.91628,0.97421,0.05793,1.0
+mixed_damage,50,0.84528,0.97768,0.1324,1.0,0.75315,0.92595,0.1728,1.0
+scratch_thin,50,0.89807,0.99923,0.10116,1.0,0.85036,0.998,0.14765,1.0
