@@ -145,3 +145,28 @@ Difference maps are generated both for selected diagnostic cases and for all 250
 The purpose of these maps is not to replace scalar metrics, but to show the spatial distribution of error and improvement. This is important because scalar metrics can show that a restoration improved numerically without revealing whether the result is blurry, structurally incorrect, or visually plausible.
 
 The OpenCV error maps confirmed that strong pixel-error improvement often corresponds to removal of the white damaged region, while residual error may remain in fine details, object boundaries, facial regions, or structured compositions.
+
+## LPIPS perceptual metric evaluation decision
+
+LPIPS is computed as a perceptual full-reference metric for the OpenCV Telea baseline.
+
+The evaluated comparisons are:
+
+- clean image vs damaged image,
+- clean image vs OpenCV-restored image.
+
+LPIPS is evaluated on image-like spatial regions only:
+
+- full image,
+- painting content region,
+- mask bounding-box crop.
+
+Sparse masked pixels are not used directly for LPIPS because LPIPS expects spatial image inputs and learned feature activations, not unordered pixel sets. The mask bounding-box crop is therefore used as the local perceptual region around the damaged area.
+
+For LPIPS, lower values indicate higher perceptual similarity. Improvement is computed as:
+
+`lpips_improvement = damaged_lpips - restored_lpips`
+
+A positive value means that the restored image is perceptually closer to the clean reference than the damaged input.
+
+LPIPS is included because classical metrics such as MSE, MAE, PSNR, and SSIM do not fully capture perceptual similarity. In this project, LPIPS is not treated as a final truth measure. Instead, it is one part of a multi-metric evaluation framework. Cases where LPIPS and pixel-level metrics disagree are especially useful because they reveal how different metric families emphasize different aspects of restoration quality.

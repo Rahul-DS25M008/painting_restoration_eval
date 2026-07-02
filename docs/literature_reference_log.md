@@ -398,3 +398,53 @@ Diagnostic figures are generated for selected cases first, then for all 250 Open
 Possible thesis wording:
 
 > Difference maps were generated to complement scalar full-reference metrics by visualizing where restoration errors remained or improved. For each case, absolute error maps were computed between the clean reference and both the damaged and restored images. A signed improvement map was then computed by subtracting restored error from damaged-input error. This allowed inspection of whether numerical improvement corresponded to meaningful local restoration or merely to replacement of high-contrast synthetic damage with smoother interpolated regions.
+
+## 7. LPIPS Perceptual Metric Evaluation
+
+### Decision supported
+
+LPIPS is used as a perceptual full-reference metric to complement classical pixel-level and structural metrics.
+
+The project computes LPIPS between:
+
+- clean reference and damaged input,
+- clean reference and OpenCV-restored output.
+
+LPIPS is evaluated over full images, painting content regions, and mask bounding-box crops.
+
+---
+
+### Research papers
+
+#### Zhang et al. (2018) — LPIPS
+
+- Reference: Zhang, R., Isola, P., Efros, A. A., Shechtman, E., & Wang, O. (2018). *The Unreasonable Effectiveness of Deep Features as a Perceptual Metric.*
+- Type: perceptual image similarity paper.
+- Relevant point: The paper shows that distances in deep feature spaces can better align with human perceptual similarity than traditional low-level metrics such as PSNR and SSIM.
+- How it influenced this project: LPIPS is included to complement classical full-reference metrics and to test whether OpenCV restoration outputs are perceptually closer to the clean reference than the damaged inputs.
+
+---
+
+### Project decision
+
+LPIPS is computed only on image-like spatial regions:
+
+- full image,
+- content region,
+- mask bounding-box crop.
+
+The project does not compute LPIPS directly on sparse masked pixels because LPIPS depends on spatial feature activations. The mask bounding-box crop is used as the local perceptual comparison region around the damaged area.
+
+LPIPS improvement is computed as:
+
+`damaged_lpips - restored_lpips`
+
+Positive improvement indicates that the restored output is perceptually closer to the clean reference than the damaged input.
+
+---
+
+### Notes for final thesis writing
+
+Possible thesis wording:
+
+> LPIPS was included as a perceptual full-reference metric to complement classical pixel-level and structural measures. Unlike MSE, MAE, PSNR, and SSIM, LPIPS compares images in a learned feature space and has been shown to better reflect perceptual similarity in many image-comparison settings. In this thesis, LPIPS was computed for full images, painting content regions, and mask-bounding-box crops. Sparse masked pixels were not used directly because LPIPS assumes spatial image inputs. The resulting LPIPS scores were compared with classical metric rankings to identify cases where pixel-level improvement and perceptual similarity diverged.
