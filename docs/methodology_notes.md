@@ -123,3 +123,25 @@ The full-image region is retained for completeness, but it can hide restoration 
 SSIM is not computed directly on sparse masked pixels because SSIM assumes spatial image structure. Computing SSIM over isolated masked pixels would produce misleading precision. Instead, SSIM is computed for full-image, content-region, and mask bounding-box crop evaluations.
 
 The OpenCV Telea baseline showed positive masked-region MSE improvement for all non-zero mask cases. This means that the restored outputs were numerically closer to the clean images than the white-filled damaged inputs. However, this does not imply historically correct or semantically faithful restoration. Classical pixel-level metrics are treated as one component of the evaluation framework, not as final evidence of restoration quality.
+
+## Difference-map diagnostic evaluation decision
+
+Difference maps are generated to complement scalar metric evaluation.
+
+For each OpenCV restoration case, the project computes:
+
+- clean vs damaged absolute error,
+- clean vs restored absolute error,
+- signed improvement after restoration.
+
+The absolute error maps use mean absolute RGB error per pixel. The signed improvement map is computed as:
+
+`damaged_error - restored_error`
+
+Positive values indicate pixels where restoration reduced error compared with the damaged input. Negative values indicate pixels where the restored output is farther from the clean reference than the damaged input.
+
+Difference maps are generated both for selected diagnostic cases and for all 250 OpenCV restoration cases. The selected cases include the strongest masked-region MSE improvements, weakest masked-region MSE improvements, and one mixed-damage case per painting category. This supports qualitative inspection before full-batch figure generation.
+
+The purpose of these maps is not to replace scalar metrics, but to show the spatial distribution of error and improvement. This is important because scalar metrics can show that a restoration improved numerically without revealing whether the result is blurry, structurally incorrect, or visually plausible.
+
+The OpenCV error maps confirmed that strong pixel-error improvement often corresponds to removal of the white damaged region, while residual error may remain in fine details, object boundaries, facial regions, or structured compositions.

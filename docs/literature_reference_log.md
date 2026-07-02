@@ -353,3 +353,48 @@ SSIM is not computed over sparse masked pixels. Instead, SSIM is computed on ima
 Possible thesis wording:
 
 > Classical full-reference metrics were computed to quantify pixel-level and structural similarity between the clean reference paintings, damaged inputs, and restored outputs. MSE, MAE, PSNR, and SSIM were evaluated across full-image, content-region, masked-region, and mask-bounding-box regions. The masked region directly measures the artificial restoration target, while the content region avoids distortion from preprocessing padding. SSIM was not computed on sparse masked pixels because it assumes local spatial image structure. These classical metrics provide useful baseline measurements, but they are not treated as sufficient evidence of perceptual or art-historical restoration quality.
+
+## 6. Difference-Map Diagnostic Evaluation
+
+### Decision supported
+
+Difference maps are used as visual diagnostics to complement scalar full-reference metrics.
+
+Scalar metrics such as MSE, MAE, PSNR, and SSIM summarize restoration quality numerically, but they do not show where errors occur. Difference maps visualize the spatial distribution of damaged-input error, restored-output error, and restoration improvement.
+
+---
+
+### Research connection
+
+This step builds on the image-quality assessment motivation discussed in the classical metrics section. Full-reference metrics provide useful numerical summaries, but visual diagnostics are needed to interpret spatial error patterns.
+
+Relevant references remain:
+
+- Wang et al. (2004), for structural similarity and the motivation to move beyond simple error visibility.
+- Zhang et al. (2018), for the argument that traditional pixel-level metrics do not always align with perceptual similarity.
+- Horé and Ziou (2010), for comparison of PSNR and SSIM as image quality metrics.
+
+---
+
+### Project decision
+
+For each OpenCV restoration case, the project computes mean absolute RGB error maps:
+
+- clean vs damaged,
+- clean vs restored.
+
+A signed improvement map is then computed as:
+
+`damaged_error - restored_error`
+
+Positive values indicate reduced error after restoration. Negative values indicate worsened pixels.
+
+Diagnostic figures are generated for selected cases first, then for all 250 OpenCV restoration cases. The selected diagnostic cases include strongest and weakest masked-region MSE-improvement cases, plus one mixed-damage case per painting category.
+
+---
+
+### Notes for final thesis writing
+
+Possible thesis wording:
+
+> Difference maps were generated to complement scalar full-reference metrics by visualizing where restoration errors remained or improved. For each case, absolute error maps were computed between the clean reference and both the damaged and restored images. A signed improvement map was then computed by subtracting restored error from damaged-input error. This allowed inspection of whether numerical improvement corresponded to meaningful local restoration or merely to replacement of high-contrast synthetic damage with smoother interpolated regions.
