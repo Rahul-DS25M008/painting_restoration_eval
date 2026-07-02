@@ -92,3 +92,34 @@ Validation checks confirmed that:
 - restoration metadata was saved for downstream metric evaluation.
 
 The OpenCV Telea baseline is not expected to reconstruct large semantic structures or painting-specific stylistic content reliably. Its main purpose is to establish a classical baseline before evaluating learned models such as LaMa, Stable Diffusion Inpainting, and SDXL Inpainting.
+
+## Classical metric evaluation decision
+
+For the OpenCV Telea baseline, classical full-reference image metrics are computed by comparing the clean reference image against both the damaged input and the restored output.
+
+The evaluated comparisons are:
+
+- clean image vs damaged image,
+- clean image vs OpenCV-restored image.
+
+The metrics are:
+
+- MSE,
+- MAE,
+- PSNR,
+- SSIM.
+
+The purpose is to measure not only the restoration output, but also the amount of improvement over the synthetic damaged input. For error-based metrics such as MSE and MAE, lower values are better. For PSNR and SSIM, higher values are better.
+
+The evaluation is performed across multiple regions:
+
+- full image,
+- painting content region,
+- masked region,
+- mask bounding-box crop.
+
+The full-image region is retained for completeness, but it can hide restoration failures because most pixels are unchanged. The painting content region excludes preprocessing padding and better reflects the actual artwork. The masked region directly evaluates the artificially damaged target area and is therefore the most important region for MSE, MAE, and PSNR. The mask bounding-box crop preserves local spatial structure around the damaged region and is used for SSIM-style local structural evaluation.
+
+SSIM is not computed directly on sparse masked pixels because SSIM assumes spatial image structure. Computing SSIM over isolated masked pixels would produce misleading precision. Instead, SSIM is computed for full-image, content-region, and mask bounding-box crop evaluations.
+
+The OpenCV Telea baseline showed positive masked-region MSE improvement for all non-zero mask cases. This means that the restored outputs were numerically closer to the clean images than the white-filled damaged inputs. However, this does not imply historically correct or semantically faithful restoration. Classical pixel-level metrics are treated as one component of the evaluation framework, not as final evidence of restoration quality.

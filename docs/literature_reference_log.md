@@ -297,3 +297,59 @@ The baseline is expected to perform better on small local scratches and small mi
 Possible thesis wording:
 
 > OpenCV Telea was included as a deterministic classical inpainting baseline. The method is based on Telea’s fast marching approach, where missing regions are filled progressively from their boundaries using nearby image information. Classical inpainting methods provide useful non-learning reference points because they are fast, deterministic, and reproducible, but they are not expected to recover large semantic structures or painting-specific stylistic details. In this thesis, OpenCV Telea therefore serves as a baseline for comparing later learned inpainting models.
+
+## 5. Classical Metric Evaluation
+
+### Decision supported
+
+Classical full-reference image metrics are used to evaluate the OpenCV Telea baseline against the clean reference images.
+
+The project computes MSE, MAE, PSNR, and SSIM for both damaged and restored images. Metrics are evaluated across multiple regions because full-image scores can hide restoration failures when the damaged area is small.
+
+---
+
+### Research papers
+
+#### Wang et al. (2004) — SSIM
+
+- Reference: Wang, Z., Bovik, A. C., Sheikh, H. R., & Simoncelli, E. P. (2004). *Image Quality Assessment: From Error Visibility to Structural Similarity.*
+- Type: image quality assessment paper.
+- Relevant point: The paper introduces SSIM as a structural similarity metric designed to move beyond simple pixel-error visibility.
+- How it influenced this project: SSIM is included as a classical structural metric alongside MSE, MAE, and PSNR. The project computes SSIM only on spatial image regions, not on sparse masked pixels.
+
+#### Zhang et al. (2018) — LPIPS and limitations of shallow metrics
+
+- Reference: Zhang, R., Isola, P., Efros, A. A., Shechtman, E., & Wang, O. (2018). *The Unreasonable Effectiveness of Deep Features as a Perceptual Metric.*
+- Type: perceptual metric paper.
+- Relevant point: The paper shows that traditional metrics such as PSNR and SSIM do not always align with human perceptual similarity.
+- How it influenced this project: Classical metrics are treated as necessary but insufficient. This motivates the later use of perceptual and feature-based metrics such as LPIPS, CLIP, and DINOv2.
+
+#### Horé and Ziou (2010) — PSNR and SSIM relationship
+
+- Reference: Horé, A., & Ziou, D. (2010). *Image Quality Metrics: PSNR vs. SSIM.*
+- Type: image quality metric comparison paper.
+- Relevant point: The paper discusses differences between PSNR and SSIM as image quality measures.
+- How it influenced this project: The project includes both distortion-based and structural metrics rather than relying on a single score.
+
+---
+
+### Project decision
+
+The project reports classical metrics across multiple evaluation regions:
+
+- full image,
+- content region,
+- masked region,
+- mask bounding-box crop.
+
+The masked region is especially important because it corresponds directly to the restoration target. Full-image metrics are retained but interpreted cautiously because unchanged pixels can dominate the score.
+
+SSIM is not computed over sparse masked pixels. Instead, SSIM is computed on image-like spatial regions, including the full image, the content region, and the mask bounding-box crop.
+
+---
+
+### Notes for final thesis writing
+
+Possible thesis wording:
+
+> Classical full-reference metrics were computed to quantify pixel-level and structural similarity between the clean reference paintings, damaged inputs, and restored outputs. MSE, MAE, PSNR, and SSIM were evaluated across full-image, content-region, masked-region, and mask-bounding-box regions. The masked region directly measures the artificial restoration target, while the content region avoids distortion from preprocessing padding. SSIM was not computed on sparse masked pixels because it assumes local spatial image structure. These classical metrics provide useful baseline measurements, but they are not treated as sufficient evidence of perceptual or art-historical restoration quality.
