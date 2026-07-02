@@ -1,18 +1,26 @@
 from __future__ import annotations
 
 import base64
+import html
 from pathlib import Path
-from typing import Literal
+from typing import Any, Literal
 
+import numpy as np
 import pandas as pd
 
 
 ImageMode = Literal["embedded", "linked"]
 
 
+# ---------------------------------------------------------------------
+# Basic HTML helpers
+# ---------------------------------------------------------------------
+
+
 def image_to_base64(path: Path) -> str:
     """Convert an image file to a base64 string for embedding in HTML."""
     path = Path(path)
+
     if not path.exists():
         raise FileNotFoundError(f"Missing image file: {path}")
 
@@ -20,32 +28,75 @@ def image_to_base64(path: Path) -> str:
         return base64.b64encode(file.read()).decode("utf-8")
 
 
+def html_escape(value: Any) -> str:
+    """Escape a value for safe HTML display."""
+    if pd.isna(value):
+        return ""
+
+    return html.escape(str(value))
+
+
+def format_float(value: Any, decimals: int = 4) -> str:
+    """Format numeric values for compact HTML tables."""
+    if pd.isna(value):
+        return ""
+
+    if value == float("inf"):
+        return "inf"
+
+    if value == float("-inf"):
+        return "-inf"
+
+    try:
+        return f"{float(value):.{decimals}f}"
+    except Exception:
+        return str(value)
+
+
+def dataframe_to_html_table(
+    df: pd.DataFrame,
+    *,
+    float_decimals: int = 4,
+    max_rows: int | None = None,
+) -> str:
+    """Convert a dataframe to a compact rounded HTML table."""
+    display_df = df.copy()
+
+    if max_rows is not None:
+        display_df = display_df.head(max_rows)
+
+    for column in display_df.columns:
+        if pd.api.types.is_float_dtype(display_df[column]):
+            display_df[column] = display_df[column].map(
+                lambda value: format_float(value, decimals=float_decimals)
+            )
+
+    return display_df.to_html(
+        index=False,
+        classes="summary-table",
+        escape=True,
+        border=0,
+    )
+
+
 def image_block(
     path: Path,
     caption: str,
     *,
     project_root: Path | None = None,
-    width: int = 220,
-    mode: ImageMode = "embedded",
+    width: int = 920,
+    mode: ImageMode = "linked",
 ) -> str:
-    """
-    Create an HTML image block.
-
-    Parameters
-    ----------
-    path:
-        Image path.
-    caption:
-        Caption shown below the image.
-    project_root:
-        Required for linked mode. The image path is made relative to this root.
-    width:
-        Display width in pixels.
-    mode:
-        - "embedded": stores image as base64 inside the HTML file.
-        - "linked": stores a relative file path, producing a much smaller HTML file.
-    """
+    """Create an HTML image block."""
     path = Path(path)
+
+    if not path.exists():
+        return f"""
+        <div class="image-block missing-image">
+            <div class="missing">Missing image: {html_escape(path)}</div>
+            <div class="caption">{html_escape(caption)}</div>
+        </div>
+        """
 
     if mode == "embedded":
         encoded = image_to_base64(path)
@@ -60,86 +111,199 @@ def image_block(
     return f"""
     <div class="image-block">
         <img src="{src}" width="{width}">
-        <div class="caption">{caption}</div>
+        <div class="caption">{html_escape(caption)}</div>
     </div>
     """
 
 
-def dataframe_to_html_table(df: pd.DataFrame, float_decimals: int = 3) -> str:
-    """Convert a dataframe to a compact rounded HTML table."""
-    display_df = df.copy()
-
-    for column in display_df.columns:
-        if pd.api.types.is_float_dtype(display_df[column]):
-            display_df[column] = display_df[column].round(float_decimals)
-
-    return display_df.to_html(index=False, classes="summary-table")
+# ---------------------------------------------------------------------
+# Input validation and dataframe preparation
+# ---------------------------------------------------------------------
 
 
-def interpret_case(row: pd.Series) -> str:
-    """Generate a short rule-based interpretation for one restoration case."""
-    mask_type = row["mask_type"]
-    mask_mae = row["mask_mae"]
-    mask_psnr = row["mask_psnr"]
-    ssim_value = row["ssim"]
+def require_columns(
+    df: pd.DataFrame,
+    required_columns: list[str],
+    *,
+    dataframe_name: str,
+) -> None:
+    """Raise a clear error when a dataframe is missing required columns."""
+    missing_columns = [
+        column for column in required_columns
+        if column not in df.columns
+    ]
 
-    comments: list[str] = []
-
-    if mask_type == "scratch_lines":
-        comments.append(
-            "The scratch-line damage is narrow and local. Restoration is expected to perform relatively well because surrounding pixels provide strong local context."
-        )
-    elif mask_type == "irregular_small":
-        comments.append(
-            "The small irregular mask creates a localized missing region. Restoration quality depends on whether the missing area contains simple texture or important structure."
-        )
-    elif mask_type == "irregular_large":
-        comments.append(
-            "The large irregular mask creates a more difficult restoration case. Blurring or loss of structure is expected for this classical baseline."
+    if missing_columns:
+        raise ValueError(
+            f"{dataframe_name} is missing required columns: {missing_columns}"
         )
 
-    if mask_mae < 7:
-        comments.append("The masked-region error is low for this pilot setting.")
-    elif mask_mae < 14:
-        comments.append("The masked-region error is moderate.")
-    else:
-        comments.append("The masked-region error is high compared with the other pilot cases.")
 
-    if ssim_value > 0.98:
-        comments.append(
-            "The full-image SSIM is very high, but this should be interpreted carefully because most of the image was never damaged."
-        )
-    else:
-        comments.append(
-            "The full-image SSIM is lower here, indicating that the restoration error is more visible at the image level."
-        )
+def _first_existing_column(df: pd.DataFrame, candidates: list[str]) -> str | None:
+    """Return the first column from candidates that exists in the dataframe."""
+    for column in candidates:
+        if column in df.columns:
+            return column
 
-    if mask_psnr < 23:
-        comments.append("The masked-region PSNR suggests a weaker restoration in the damaged area.")
-
-    if "lpips_mask_crop" in row.index:
-        lpips_crop = row["lpips_mask_crop"]
-        if lpips_crop < 0.05:
-            comments.append("The local LPIPS score indicates very low perceptual difference around the damaged area.")
-        elif lpips_crop < 0.25:
-            comments.append("The local LPIPS score indicates moderate perceptual difference around the damaged area.")
-        else:
-            comments.append("The local LPIPS score indicates high perceptual difference around the damaged area.")
-
-    return " ".join(comments)
+    return None
 
 
-def prepare_report_dataframe(
-    metadata: pd.DataFrame,
+def _filter_metric_region(
     metrics_df: pd.DataFrame,
-    diff_df: pd.DataFrame,
+    *,
+    region: str,
+    dataframe_name: str,
 ) -> pd.DataFrame:
-    """Merge painting metadata, metrics, and difference-map metadata for reporting."""
-    report_df = metrics_df.merge(
-        diff_df[["painting_id", "mask_type", "model_name", "diff_masked_filename"]],
-        on=["painting_id", "mask_type", "model_name"],
-        how="left",
+    """Filter a metric dataframe to one evaluation region and ok rows."""
+    require_columns(
+        metrics_df,
+        ["case_id", "evaluation_region", "status"],
+        dataframe_name=dataframe_name,
     )
+
+    region_df = metrics_df[
+        (metrics_df["evaluation_region"] == region)
+        & (metrics_df["status"] == "ok")
+    ].copy()
+
+    if region_df.empty:
+        raise ValueError(
+            f"No rows found in {dataframe_name} for evaluation_region={region!r}."
+        )
+
+    return region_df
+
+
+def _prepare_error_manifest(
+    error_map_manifest_df: pd.DataFrame | None,
+    *,
+    project_root: Path,
+) -> pd.DataFrame:
+    """Prepare error-map manifest paths when available."""
+    if error_map_manifest_df is None or error_map_manifest_df.empty:
+        return pd.DataFrame(columns=["case_id", "error_map_figure_path"])
+
+    require_columns(
+        error_map_manifest_df,
+        ["case_id"],
+        dataframe_name="error_map_manifest_df",
+    )
+
+    path_column = _first_existing_column(
+        error_map_manifest_df,
+        [
+            "figure_path",
+            "error_map_figure_path",
+            "output_path",
+            "output_figure_path",
+            "saved_figure_path",
+            "figure_file_path",
+        ],
+    )
+
+    if path_column is None:
+        return error_map_manifest_df[["case_id"]].assign(error_map_figure_path="")
+
+    prepared_df = error_map_manifest_df[["case_id", path_column]].copy()
+    prepared_df = prepared_df.rename(columns={path_column: "error_map_figure_path"})
+
+    prepared_df["error_map_figure_path"] = prepared_df["error_map_figure_path"].map(
+        lambda value: "" if pd.isna(value) else str(value)
+    )
+
+    def resolve_path(value: str) -> str:
+        if value == "":
+            return ""
+
+        path = Path(value)
+
+        if path.is_absolute():
+            return str(path)
+
+        return str(project_root / path)
+
+    prepared_df["error_map_figure_path"] = prepared_df["error_map_figure_path"].map(resolve_path)
+
+    return prepared_df
+
+
+def prepare_opencv_50_report_dataframe(
+    *,
+    processed_metadata_df: pd.DataFrame,
+    restored_metadata_df: pd.DataFrame,
+    classical_metrics_df: pd.DataFrame,
+    lpips_metrics_df: pd.DataFrame,
+    feature_metrics_df: pd.DataFrame,
+    error_map_manifest_df: pd.DataFrame | None = None,
+    project_root: Path | str = ".",
+    include_zero_control: bool = False,
+) -> pd.DataFrame:
+    """Build one report-ready dataframe for the OpenCV 50-painting baseline."""
+    project_root = Path(project_root)
+
+    require_columns(
+        processed_metadata_df,
+        [
+            "painting_id",
+            "title",
+            "artist",
+            "date",
+            "category",
+            "style_or_period",
+            "medium",
+            "source",
+            "source_url",
+            "license",
+            "filename",
+        ],
+        dataframe_name="processed_metadata_df",
+    )
+
+    require_columns(
+        restored_metadata_df,
+        [
+            "case_id",
+            "painting_id",
+            "mask_id",
+            "mask_type",
+            "model_name",
+            "clean_path",
+            "damaged_path",
+            "restored_path",
+            "mask_path",
+            "status",
+        ],
+        dataframe_name="restored_metadata_df",
+    )
+
+    classical_masked_df = _filter_metric_region(
+        classical_metrics_df,
+        region="masked_region",
+        dataframe_name="classical_metrics_df",
+    )
+
+    lpips_mask_bbox_df = _filter_metric_region(
+        lpips_metrics_df,
+        region="mask_bbox_crop",
+        dataframe_name="lpips_metrics_df",
+    )
+
+    feature_mask_bbox_df = _filter_metric_region(
+        feature_metrics_df,
+        region="mask_bbox_crop",
+        dataframe_name="feature_metrics_df",
+    )
+
+    if not include_zero_control:
+        restored_base_df = restored_metadata_df[
+            restored_metadata_df["mask_type"] != "zero_control"
+        ].copy()
+    else:
+        restored_base_df = restored_metadata_df.copy()
+
+    restored_base_df = restored_base_df[
+        restored_base_df["status"] == "ok"
+    ].copy()
 
     metadata_columns = [
         "painting_id",
@@ -149,355 +313,595 @@ def prepare_report_dataframe(
         "category",
         "style_or_period",
         "medium",
+        "source",
         "source_url",
         "license",
         "filename",
     ]
 
-    report_df = report_df.merge(
-        metadata[metadata_columns],
+    report_df = restored_base_df.merge(
+        processed_metadata_df[metadata_columns],
         on="painting_id",
         how="left",
+        validate="many_to_one",
     )
 
-    # Backward-compatible filename reconstruction.
-    # Earlier metric CSVs do not always carry the image filenames from the
-    # restoration metadata. The pilot uses a fixed naming convention, so we
-    # reconstruct the filenames here when they are missing. This keeps the
-    # reporting step usable with both old and cleaned metric files.
-    if "clean_filename" not in report_df.columns:
-        report_df["clean_filename"] = report_df["painting_id"].astype(str) + "_clean.png"
-
-    if "mask_filename" not in report_df.columns:
-        report_df["mask_filename"] = (
-            report_df["painting_id"].astype(str)
-            + "_"
-            + report_df["mask_type"].astype(str)
-            + "_mask.png"
-        )
-
-    if "masked_filename" not in report_df.columns:
-        report_df["masked_filename"] = (
-            report_df["painting_id"].astype(str)
-            + "_"
-            + report_df["mask_type"].astype(str)
-            + "_masked.png"
-        )
-
-    if "restored_filename" not in report_df.columns:
-        report_df["restored_filename"] = (
-            report_df["painting_id"].astype(str)
-            + "_"
-            + report_df["mask_type"].astype(str)
-            + "_restored_"
-            + report_df["model_name"].astype(str)
-            + ".png"
-        )
-
-    return report_df
-
-
-def summarize_by_mask_type(metrics_df: pd.DataFrame) -> pd.DataFrame:
-    """Aggregate metrics by mask type."""
-    aggregations = {
-        "cases": ("painting_id", "count"),
-        "mean_mask_area_ratio": ("mask_area_ratio", "mean"),
-        "mean_full_mae": ("mae", "mean"),
-        "mean_full_psnr": ("psnr", "mean"),
-        "mean_full_ssim": ("ssim", "mean"),
-        "mean_mask_mae": ("mask_mae", "mean"),
-        "mean_mask_mse": ("mask_mse", "mean"),
-        "mean_mask_psnr": ("mask_psnr", "mean"),
-    }
-
-    if "lpips_full" in metrics_df.columns:
-        aggregations["mean_lpips_full"] = ("lpips_full", "mean")
-
-    if "lpips_mask_crop" in metrics_df.columns:
-        aggregations["mean_lpips_mask_crop"] = ("lpips_mask_crop", "mean")
-
-    return (
-        metrics_df.groupby("mask_type")
-        .agg(**aggregations)
-        .reset_index()
-        .sort_values("mean_mask_mae")
-    )
-
-
-def get_best_worst_cases(
-    metrics_df: pd.DataFrame,
-    *,
-    metric: str = "mask_mae",
-    n: int = 3,
-) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Return best and worst cases according to a metric where lower is better."""
-    best_cases = metrics_df.sort_values(metric, ascending=True).head(n).copy()
-    worst_cases = metrics_df.sort_values(metric, ascending=False).head(n).copy()
-    return best_cases, worst_cases
-
-
-def generate_pilot_summary_text(summary_by_mask: pd.DataFrame) -> str:
-    """Generate a short analytical summary from aggregate mask metrics."""
-    easiest = summary_by_mask.sort_values("mean_mask_mae").iloc[0]
-    hardest = summary_by_mask.sort_values("mean_mask_mae", ascending=False).iloc[0]
-
-    lpips_sentence = ""
-    if "mean_lpips_mask_crop" in summary_by_mask.columns:
-        easiest_lpips = summary_by_mask.sort_values("mean_lpips_mask_crop").iloc[0]
-        hardest_lpips = summary_by_mask.sort_values("mean_lpips_mask_crop", ascending=False).iloc[0]
-        lpips_sentence = f"""
-        <p>
-            The local LPIPS results show the same broad pattern: 
-            <b>{easiest_lpips['mask_type']}</b> has the lowest mean local perceptual difference 
-            ({easiest_lpips['mean_lpips_mask_crop']:.4f}), while 
-            <b>{hardest_lpips['mask_type']}</b> has the highest 
-            ({hardest_lpips['mean_lpips_mask_crop']:.4f}).
-        </p>
-        """
-
-    return f"""
-    <p>
-        The easiest mask type for the OpenCV Telea baseline was 
-        <b>{easiest['mask_type']}</b>, with the lowest mean masked-region MAE 
-        ({easiest['mean_mask_mae']:.2f}). The hardest mask type was 
-        <b>{hardest['mask_type']}</b>, with the highest mean masked-region MAE 
-        ({hardest['mean_mask_mae']:.2f}).
-    </p>
-
-    <p>
-        The results show that thin scratch-like damage is easier for classical inpainting,
-        while larger irregular missing regions are more difficult and often lead to blurry
-        or structurally weak restorations.
-    </p>
-
-    <p>
-        Full-image SSIM remains high in many cases because most of the image is unchanged.
-        Therefore, masked-region metrics and localized error maps are more informative for
-        evaluating restoration quality in damaged areas.
-    </p>
-
-    {lpips_sentence}
-    """
-
-
-def build_analysis_summary_html(
-    metrics_df: pd.DataFrame,
-    *,
-    float_decimals: int = 4,
-) -> str:
-    """Build the analytical front section of the report."""
-    summary_by_mask = summarize_by_mask_type(metrics_df)
-    best_cases, worst_cases = get_best_worst_cases(metrics_df, metric="mask_mae", n=3)
-
-    summary_columns = [
-        "mask_type",
-        "cases",
-        "mean_mask_area_ratio",
-        "mean_full_ssim",
-        "mean_mask_mae",
-        "mean_mask_psnr",
+    classical_columns = [
+        "case_id",
+        "damaged_mse",
+        "restored_mse",
+        "mse_improvement",
+        "damaged_mae",
+        "restored_mae",
+        "mae_improvement",
+        "damaged_psnr",
+        "restored_psnr",
+        "psnr_improvement",
     ]
 
-    case_columns = [
+    available_classical_columns = [
+        column for column in classical_columns
+        if column in classical_masked_df.columns
+    ]
+
+    report_df = report_df.merge(
+        classical_masked_df[available_classical_columns],
+        on="case_id",
+        how="left",
+        validate="one_to_one",
+    )
+
+    lpips_columns = [
+        "case_id",
+        "damaged_lpips",
+        "restored_lpips",
+        "lpips_improvement",
+    ]
+
+    available_lpips_columns = [
+        column for column in lpips_columns
+        if column in lpips_mask_bbox_df.columns
+    ]
+
+    report_df = report_df.merge(
+        lpips_mask_bbox_df[available_lpips_columns],
+        on="case_id",
+        how="left",
+        validate="one_to_one",
+    )
+
+    feature_columns = [
+        "case_id",
+        "clip_damaged_similarity",
+        "clip_restored_similarity",
+        "clip_similarity_improvement",
+        "dinov2_damaged_similarity",
+        "dinov2_restored_similarity",
+        "dinov2_similarity_improvement",
+    ]
+
+    available_feature_columns = [
+        column for column in feature_columns
+        if column in feature_mask_bbox_df.columns
+    ]
+
+    report_df = report_df.merge(
+        feature_mask_bbox_df[available_feature_columns],
+        on="case_id",
+        how="left",
+        validate="one_to_one",
+    )
+
+    error_manifest_prepared_df = _prepare_error_manifest(
+        error_map_manifest_df,
+        project_root=project_root,
+    )
+
+    if not error_manifest_prepared_df.empty:
+        report_df = report_df.merge(
+            error_manifest_prepared_df,
+            on="case_id",
+            how="left",
+        )
+    else:
+        report_df["error_map_figure_path"] = ""
+
+    for column in [
+        "damaged_area_pixels",
+        "damaged_area_percentage_content",
+        "damaged_area_percentage_full",
+    ]:
+        if column not in report_df.columns:
+            report_df[column] = np.nan
+
+    required_output_columns = [
+        "case_id",
         "painting_id",
         "mask_type",
         "model_name",
-        "mask_area_ratio",
-        "ssim",
-        "mask_mae",
-        "mask_psnr",
+        "category",
+        "title",
+        "mse_improvement",
+        "lpips_improvement",
+        "clip_similarity_improvement",
+        "dinov2_similarity_improvement",
     ]
 
-    if "mean_lpips_full" in summary_by_mask.columns:
-        summary_columns.append("mean_lpips_full")
-    if "mean_lpips_mask_crop" in summary_by_mask.columns:
-        summary_columns.append("mean_lpips_mask_crop")
-    if "lpips_full" in metrics_df.columns:
-        case_columns.append("lpips_full")
-    if "lpips_mask_crop" in metrics_df.columns:
-        case_columns.append("lpips_mask_crop")
+    missing_output_columns = [
+        column for column in required_output_columns
+        if column not in report_df.columns
+    ]
 
-    summary_table_html = dataframe_to_html_table(summary_by_mask[summary_columns], float_decimals=float_decimals)
-    best_cases_html = dataframe_to_html_table(best_cases[case_columns], float_decimals=float_decimals)
-    worst_cases_html = dataframe_to_html_table(worst_cases[case_columns], float_decimals=float_decimals)
+    if missing_output_columns:
+        raise ValueError(
+            f"Prepared report dataframe is missing expected output columns: "
+            f"{missing_output_columns}"
+        )
 
-    pilot_summary_text = generate_pilot_summary_text(summary_by_mask)
+    return report_df.sort_values(["painting_id", "mask_type"]).reset_index(drop=True)
+
+
+# ---------------------------------------------------------------------
+# Summary tables
+# ---------------------------------------------------------------------
+
+
+def summarize_report_overview(
+    *,
+    processed_metadata_df: pd.DataFrame,
+    restored_metadata_df: pd.DataFrame,
+    report_df: pd.DataFrame,
+) -> pd.DataFrame:
+    """Build a compact experiment overview table."""
+    rows = [
+        {"item": "Paintings", "value": processed_metadata_df["painting_id"].nunique()},
+        {"item": "Painting categories", "value": processed_metadata_df["category"].nunique()},
+        {"item": "Restoration cases generated", "value": len(restored_metadata_df)},
+        {"item": "Non-zero report cases", "value": len(report_df)},
+        {"item": "Mask types", "value": restored_metadata_df["mask_type"].nunique()},
+        {
+            "item": "Baseline model",
+            "value": ", ".join(sorted(restored_metadata_df["model_name"].dropna().unique())),
+        },
+    ]
+
+    return pd.DataFrame(rows)
+
+
+def summarize_report_by_mask_type(report_df: pd.DataFrame) -> pd.DataFrame:
+    """Summarize report metrics by damage/mask type."""
+    return (
+        report_df
+        .groupby("mask_type", dropna=False)
+        .agg(
+            cases=("case_id", "count"),
+            mean_damage_area_content_pct=("damaged_area_percentage_content", "mean"),
+            mean_mse_improvement=("mse_improvement", "mean"),
+            mean_restored_mse=("restored_mse", "mean"),
+            mean_lpips_improvement=("lpips_improvement", "mean"),
+            mean_restored_lpips=("restored_lpips", "mean"),
+            mean_clip_improvement=("clip_similarity_improvement", "mean"),
+            clip_improvement_rate=("clip_similarity_improvement", lambda values: (values > 0).mean()),
+            mean_dinov2_improvement=("dinov2_similarity_improvement", "mean"),
+            dinov2_improvement_rate=("dinov2_similarity_improvement", lambda values: (values > 0).mean()),
+        )
+        .reset_index()
+        .round(5)
+    )
+
+
+def summarize_report_by_category(report_df: pd.DataFrame) -> pd.DataFrame:
+    """Summarize report metrics by painting category."""
+    return (
+        report_df
+        .groupby("category", dropna=False)
+        .agg(
+            cases=("case_id", "count"),
+            mean_mse_improvement=("mse_improvement", "mean"),
+            mean_lpips_improvement=("lpips_improvement", "mean"),
+            mean_clip_improvement=("clip_similarity_improvement", "mean"),
+            mean_dinov2_improvement=("dinov2_similarity_improvement", "mean"),
+            dinov2_negative_rate=("dinov2_similarity_improvement", lambda values: (values < 0).mean()),
+        )
+        .reset_index()
+        .round(5)
+    )
+
+
+def summarize_metric_correlations(report_df: pd.DataFrame) -> pd.DataFrame:
+    """Return the main multi-metric correlation matrix."""
+    correlation_columns = [
+        "mse_improvement",
+        "mae_improvement",
+        "psnr_improvement",
+        "lpips_improvement",
+        "clip_similarity_improvement",
+        "dinov2_similarity_improvement",
+    ]
+
+    available_columns = [
+        column for column in correlation_columns
+        if column in report_df.columns
+    ]
+
+    return report_df[available_columns].corr().round(4)
+
+
+# ---------------------------------------------------------------------
+# Diagnostic case selection
+# ---------------------------------------------------------------------
+
+
+def _select_top_cases(
+    report_df: pd.DataFrame,
+    *,
+    metric: str,
+    label: str,
+    ascending: bool,
+    n: int,
+) -> pd.DataFrame:
+    """Select top cases for one metric and attach a selection reason."""
+    if metric not in report_df.columns:
+        return pd.DataFrame(columns=list(report_df.columns) + ["selection_reason"])
+
+    selected_df = (
+        report_df
+        .dropna(subset=[metric])
+        .sort_values(metric, ascending=ascending)
+        .head(n)
+        .copy()
+    )
+
+    selected_df["selection_reason"] = label
+    selected_df["selection_metric"] = metric
+
+    return selected_df
+
+
+def select_opencv_50_diagnostic_cases(
+    report_df: pd.DataFrame,
+    *,
+    n_per_group: int = 3,
+    include_category_examples: bool = True,
+) -> pd.DataFrame:
+    """Select representative diagnostic cases for the report."""
+    selections = [
+        _select_top_cases(
+            report_df,
+            metric="mse_improvement",
+            label="Strongest masked-region MSE improvement",
+            ascending=False,
+            n=n_per_group,
+        ),
+        _select_top_cases(
+            report_df,
+            metric="mse_improvement",
+            label="Weakest masked-region MSE improvement",
+            ascending=True,
+            n=n_per_group,
+        ),
+        _select_top_cases(
+            report_df,
+            metric="lpips_improvement",
+            label="Strongest mask-bbox LPIPS improvement",
+            ascending=False,
+            n=n_per_group,
+        ),
+        _select_top_cases(
+            report_df,
+            metric="lpips_improvement",
+            label="Weakest mask-bbox LPIPS improvement",
+            ascending=True,
+            n=n_per_group,
+        ),
+        _select_top_cases(
+            report_df,
+            metric="dinov2_similarity_improvement",
+            label="Strongest DINOv2 feature improvement",
+            ascending=False,
+            n=n_per_group,
+        ),
+        _select_top_cases(
+            report_df,
+            metric="dinov2_similarity_improvement",
+            label="Weakest DINOv2 feature improvement",
+            ascending=True,
+            n=n_per_group,
+        ),
+    ]
+
+    if include_category_examples and "category" in report_df.columns:
+        category_examples = (
+            report_df
+            .sort_values("mse_improvement", ascending=False)
+            .groupby("category", dropna=False)
+            .head(1)
+            .copy()
+        )
+        category_examples["selection_reason"] = "Strong category example by MSE improvement"
+        category_examples["selection_metric"] = "mse_improvement"
+        selections.append(category_examples)
+
+    selected_df = pd.concat(selections, ignore_index=True)
+
+    if selected_df.empty:
+        return selected_df
+
+    reason_df = (
+        selected_df
+        .groupby("case_id")
+        .agg(
+            selection_reason=("selection_reason", lambda values: "; ".join(sorted(set(values)))),
+            selection_metric=("selection_metric", lambda values: "; ".join(sorted(set(values)))),
+        )
+        .reset_index()
+    )
+
+    base_columns = [
+        column for column in selected_df.columns
+        if column not in ["selection_reason", "selection_metric"]
+    ]
+
+    deduped_df = (
+        selected_df[base_columns]
+        .drop_duplicates(subset=["case_id"])
+        .merge(reason_df, on="case_id", how="left")
+        .sort_values(["painting_id", "mask_type"])
+        .reset_index(drop=True)
+    )
+
+    return deduped_df
+
+
+# ---------------------------------------------------------------------
+# Interpretation helpers
+# ---------------------------------------------------------------------
+
+
+def interpret_case(row: pd.Series) -> str:
+    """Generate a short report interpretation for one selected case."""
+    mask_type = row.get("mask_type", "")
+    mse_improvement = row.get("mse_improvement", np.nan)
+    lpips_improvement = row.get("lpips_improvement", np.nan)
+    dinov2_improvement = row.get("dinov2_similarity_improvement", np.nan)
+
+    comments: list[str] = []
+
+    if mask_type == "scratch_thin":
+        comments.append(
+            "This thin scratch case is favorable for OpenCV Telea because nearby pixels provide local interpolation context."
+        )
+    elif mask_type == "loss_small":
+        comments.append(
+            "This small-loss case tests whether local interpolation can recover a compact missing region without disrupting nearby structure."
+        )
+    elif mask_type == "loss_large":
+        comments.append(
+            "This large-loss case is difficult for OpenCV Telea because the missing region may require structural or semantic reconstruction."
+        )
+    elif mask_type == "mixed_damage":
+        comments.append(
+            "This mixed-damage case combines multiple damage patterns and tests whether the baseline remains stable under less uniform degradation."
+        )
+
+    if pd.notna(mse_improvement):
+        if mse_improvement > 10_000:
+            comments.append(
+                "The masked-region MSE improvement is large, showing that restoration strongly reduces pixel error compared with the white-filled damaged input."
+            )
+        elif mse_improvement > 0:
+            comments.append(
+                "The masked-region MSE improvement is positive, but more modest than the strongest baseline cases."
+            )
+        else:
+            comments.append(
+                "The masked-region MSE improvement is non-positive, indicating a failure under this pixel-level metric."
+            )
+
+    if pd.notna(lpips_improvement):
+        if lpips_improvement > 0:
+            comments.append(
+                "LPIPS also improves, indicating that the restored crop is closer to the clean reference in learned perceptual feature space."
+            )
+        else:
+            comments.append(
+                "LPIPS does not improve, suggesting that pixel-level restoration did not translate into local perceptual improvement."
+            )
+
+    if pd.notna(dinov2_improvement):
+        if dinov2_improvement > 0:
+            comments.append(
+                "DINOv2 feature similarity improves, suggesting better alignment with the clean local visual structure in this pretrained representation space."
+            )
+        else:
+            comments.append(
+                "DINOv2 feature similarity decreases, suggesting that the filled region may remain structurally inconsistent with the clean reference despite visible damage removal."
+            )
+
+    return " ".join(comments)
+
+
+def build_key_findings_html(
+    *,
+    summary_by_mask: pd.DataFrame,
+    summary_by_category: pd.DataFrame,
+    correlation_df: pd.DataFrame,
+) -> str:
+    """Build the main textual interpretation section."""
+    hardest_mask_by_dino = summary_by_mask.sort_values(
+        "mean_dinov2_improvement",
+        ascending=True,
+    ).iloc[0]
+
+    easiest_mask_by_mse = summary_by_mask.sort_values(
+        "mean_mse_improvement",
+        ascending=False,
+    ).iloc[0]
+
+    weakest_category_by_dino = summary_by_category.sort_values(
+        "mean_dinov2_improvement",
+        ascending=True,
+    ).iloc[0]
+
+    corr_html = dataframe_to_html_table(
+        correlation_df.reset_index().rename(columns={"index": "metric"}),
+        float_decimals=4,
+    )
 
     return f"""
-    <div class="summary">
-        <h2>Experiment overview</h2>
-        <p>
-            This pilot evaluates a complete restoration-analysis pipeline on three selected paintings.
-            Each painting was processed into a standardized clean image, artificially damaged with three
-            mask types, restored using OpenCV Telea inpainting, and evaluated using full-image,
-            masked-region, and perceptual metrics.
-        </p>
+    <h2>Key findings</h2>
 
-        <ul>
-            <li><b>Paintings:</b> 3</li>
-            <li><b>Mask types:</b> irregular_small, scratch_lines, irregular_large</li>
-            <li><b>Total restoration cases:</b> 9</li>
-            <li><b>Baseline model:</b> OpenCV Telea inpainting</li>
-            <li><b>Metrics:</b> MAE, MSE, PSNR, SSIM, masked-region metrics, LPIPS full, LPIPS crop</li>
-        </ul>
+    <p>
+        OpenCV Telea consistently reduces the obvious white-mask damage, especially for
+        local and scratch-like damage. The strongest average masked-region MSE improvement
+        was observed for <b>{html_escape(easiest_mask_by_mse['mask_type'])}</b>.
+    </p>
 
-        <h2>Aggregate summary by mask type</h2>
-        {summary_table_html}
+    <p>
+        However, pixel-level improvement does not imply faithful restoration. The weakest
+        DINOv2 feature-space behavior was observed for <b>{html_escape(hardest_mask_by_dino['mask_type'])}</b>,
+        with mean DINOv2 improvement of
+        <b>{format_float(hardest_mask_by_dino['mean_dinov2_improvement'], 5)}</b>.
+        This indicates that OpenCV can fill a visibly damaged region while still failing
+        to recover local visual structure in a pretrained self-supervised feature space.
+    </p>
 
-        <h2>Best cases by masked-region MAE</h2>
-        {best_cases_html}
+    <p>
+        Category-level behavior also varies. The weakest average DINOv2 improvement was
+        observed for <b>{html_escape(weakest_category_by_dino['category'])}</b>.
+        This supports the project decision to evaluate restoration behavior across
+        multiple painting categories rather than treating all artworks as a single
+        homogeneous image set.
+    </p>
 
-        <h2>Worst cases by masked-region MAE</h2>
-        {worst_cases_html}
+    <p>
+        The metric correlations show that classical, perceptual, and feature-space metrics
+        are related but not redundant. This supports the central evaluation-framework
+        argument: restoration quality cannot be judged using one scalar metric family.
+    </p>
 
-        <h2>Key pilot observations</h2>
-        {pilot_summary_text}
-
-        <ul>
-            <li>Scratch-line masks were usually restored very well and often became nearly invisible.</li>
-            <li>Small irregular masks produced mixed results depending on the local image content.</li>
-            <li>Large irregular masks were the hardest cases and often produced blurry or structurally weak restorations.</li>
-            <li>Masked-region metrics were more useful than full-image metrics for identifying local restoration failures.</li>
-            <li>Error maps helped localize restoration errors and supported the metric-based interpretation.</li>
-            <li>LPIPS confirms the same broad difficulty pattern, with scratch-line masks showing the lowest perceptual difference and large irregular masks showing the highest.</li>
-            <li>Crop-based LPIPS is more sensitive to local restoration errors than full-image LPIPS, especially for large missing regions.</li>
-            <li>Structured image content, such as architectural regions, was harder to restore than softer background regions.</li>
-        </ul>
-
-        <h2>Limitations of this pilot</h2>
-        <ul>
-            <li>The pilot uses only three paintings and is not intended as a statistically meaningful benchmark.</li>
-            <li>The artificial masks are simple and still more polygon-like than real conservation damage.</li>
-            <li>OpenCV Telea is only a classical baseline and not representative of modern generative inpainting models.</li>
-            <li>The current error maps are locally normalized, which makes them readable but not directly comparable across all cases.</li>
-            <li>The white masked images are useful for visualization, but later deep models may require model-specific input formats.</li>
-            <li>For scratch-line masks, bounding-box LPIPS crops can include large unchanged regions, so future experiments should consider patch-based or dilated-mask perceptual evaluation.</li>
-        </ul>
-
-        <h2>Next steps</h2>
-        <ul>
-            <li>Add LaMa as a pretrained inpainting model.</li>
-            <li>Compare OpenCV Telea and LaMa on the same masked inputs.</li>
-            <li>Generate both local-normalized and global-scale error maps.</li>
-            <li>Improve mask realism using mixed synthetic damage, rougher boundaries, scattered paint loss, edge damage, and cracks.</li>
-            <li>Investigate pretrained model training data and possible bias/domain gaps.</li>
-            <li>Extend the report to support multi-model comparison and uncertainty visualization.</li>
-        </ul>
-    </div>
+    <h3>Main metric correlation matrix</h3>
+    {corr_html}
     """
 
 
-def build_case_sections(
-    report_df: pd.DataFrame,
+# ---------------------------------------------------------------------
+# HTML report generation
+# ---------------------------------------------------------------------
+
+
+def build_selected_case_sections_html(
+    selected_cases_df: pd.DataFrame,
     *,
     project_root: Path,
-    clean_dir: Path,
-    mask_dir: Path,
-    masked_dir: Path,
-    restored_dir: Path,
-    diff_map_dir: Path,
-    image_mode: ImageMode = "embedded",
+    image_mode: ImageMode = "linked",
+    image_width: int = 980,
 ) -> str:
-    """Build the image-by-image case sections."""
-    html_sections: list[str] = []
+    """Build selected diagnostic case sections using error-map figures."""
+    if selected_cases_df.empty:
+        return "<p>No selected diagnostic cases were provided.</p>"
 
-    for painting_id in report_df["painting_id"].unique():
-        painting_rows = report_df[report_df["painting_id"] == painting_id]
-        first = painting_rows.iloc[0]
+    sections: list[str] = []
 
-        section_html = f"""
-        <section class="painting-section">
-            <h2>{painting_id}: {first['title']}</h2>
-            <p>
-                <b>Artist:</b> {first['artist']}<br>
-                <b>Date:</b> {first['date']}<br>
-                <b>Category:</b> {first['category']}<br>
-                <b>Style / period:</b> {first['style_or_period']}<br>
-                <b>Medium:</b> {first['medium']}<br>
-                <b>License:</b> {first['license']}<br>
-                <b>Source:</b> <a href="{first['source_url']}" target="_blank">{first['source_url']}</a>
+    for _, row in selected_cases_df.iterrows():
+        figure_path_value = row.get("error_map_figure_path", "")
+
+        if pd.notna(figure_path_value) and str(figure_path_value).strip() != "":
+            figure_html = image_block(
+                Path(str(figure_path_value)),
+                caption="Diagnostic error-map figure",
+                project_root=project_root,
+                width=image_width,
+                mode=image_mode,
+            )
+        else:
+            figure_html = """
+            <p class="missing">
+                No error-map figure path available for this case.
             </p>
-        """
-
-        for _, row in painting_rows.iterrows():
-            clean_path = clean_dir / row["clean_filename"]
-            mask_path = mask_dir / row["mask_filename"]
-            masked_path = masked_dir / row["masked_filename"]
-            restored_path = restored_dir / row["restored_filename"]
-            diff_path = diff_map_dir / row["diff_masked_filename"]
-
-            metric_headers = """
-                <th>Mask area ratio</th>
-                <th>Full MAE</th>
-                <th>Full PSNR</th>
-                <th>Full SSIM</th>
-                <th>Masked MAE</th>
-                <th>Masked PSNR</th>
             """
 
-            metric_values = f"""
-                <td>{row['mask_area_ratio']:.4f}</td>
-                <td>{row['mae']:.4f}</td>
-                <td>{row['psnr']:.2f}</td>
-                <td>{row['ssim']:.4f}</td>
-                <td>{row['mask_mae']:.2f}</td>
-                <td>{row['mask_psnr']:.2f}</td>
+        metric_table = pd.DataFrame(
+            [
+                {
+                    "case_id": row.get("case_id", ""),
+                    "category": row.get("category", ""),
+                    "mask_type": row.get("mask_type", ""),
+                    "mse_improvement": row.get("mse_improvement", np.nan),
+                    "lpips_improvement": row.get("lpips_improvement", np.nan),
+                    "clip_improvement": row.get("clip_similarity_improvement", np.nan),
+                    "dinov2_improvement": row.get("dinov2_similarity_improvement", np.nan),
+                }
+            ]
+        )
+
+        sections.append(
+            f"""
+            <section class="case-section">
+                <h3>{html_escape(row.get("case_id", ""))}: {html_escape(row.get("title", ""))}</h3>
+
+                <p>
+                    <b>Selection reason:</b> {html_escape(row.get("selection_reason", ""))}<br>
+                    <b>Painting ID:</b> {html_escape(row.get("painting_id", ""))}<br>
+                    <b>Category:</b> {html_escape(row.get("category", ""))}<br>
+                    <b>Mask type:</b> {html_escape(row.get("mask_type", ""))}<br>
+                    <b>Artist:</b> {html_escape(row.get("artist", ""))}<br>
+                    <b>Date:</b> {html_escape(row.get("date", ""))}
+                </p>
+
+                {dataframe_to_html_table(metric_table, float_decimals=5)}
+
+                <p><b>Interpretation:</b> {html_escape(interpret_case(row))}</p>
+
+                {figure_html}
+            </section>
             """
+        )
 
-            if "lpips_full" in row.index:
-                metric_headers += "<th>LPIPS full</th>"
-                metric_values += f"<td>{row['lpips_full']:.4f}</td>"
-
-            if "lpips_mask_crop" in row.index:
-                metric_headers += "<th>LPIPS crop</th>"
-                metric_values += f"<td>{row['lpips_mask_crop']:.4f}</td>"
-
-            section_html += f"""
-            <div class="case-block">
-                <h3>Mask type: {row['mask_type']}</h3>
-
-                <div class="image-row">
-                    {image_block(clean_path, "Clean image", project_root=project_root, mode=image_mode)}
-                    {image_block(mask_path, "Mask", project_root=project_root, mode=image_mode)}
-                    {image_block(masked_path, "Masked image", project_root=project_root, mode=image_mode)}
-                    {image_block(restored_path, "Restored image", project_root=project_root, mode=image_mode)}
-                    {image_block(diff_path, "Error map", project_root=project_root, mode=image_mode)}
-                </div>
-
-                <table>
-                    <tr>{metric_headers}</tr>
-                    <tr>{metric_values}</tr>
-                </table>
-
-                <p><b>Interpretation:</b> {interpret_case(row)}</p>
-            </div>
-            """
-
-        section_html += "</section>"
-        html_sections.append(section_html)
-
-    return "\n".join(html_sections)
+    return "\n".join(sections)
 
 
-def build_html_report(
-    analysis_summary_html: str,
-    case_sections_html: str,
+def build_opencv_50_report_html(
     *,
-    title: str = "OpenCV Telea Pilot Restoration Report",
+    overview_df: pd.DataFrame,
+    summary_by_mask: pd.DataFrame,
+    summary_by_category: pd.DataFrame,
+    correlation_df: pd.DataFrame,
+    selected_cases_df: pd.DataFrame,
+    project_root: Path,
+    image_mode: ImageMode = "linked",
+    title: str = "OpenCV Telea 50-Painting Baseline Report",
 ) -> str:
-    """Combine summary and case sections into a full HTML document."""
+    """Build the full OpenCV 50-painting HTML report."""
+    overview_html = dataframe_to_html_table(overview_df, float_decimals=4)
+    mask_summary_html = dataframe_to_html_table(summary_by_mask, float_decimals=5)
+    category_summary_html = dataframe_to_html_table(summary_by_category, float_decimals=5)
+
+    key_findings_html = build_key_findings_html(
+        summary_by_mask=summary_by_mask,
+        summary_by_category=summary_by_category,
+        correlation_df=correlation_df,
+    )
+
+    selected_cases_html = build_selected_case_sections_html(
+        selected_cases_df,
+        project_root=project_root,
+        image_mode=image_mode,
+    )
+
     return f"""
     <!DOCTYPE html>
     <html>
     <head>
         <meta charset="UTF-8">
-        <title>{title}</title>
+        <title>{html_escape(title)}</title>
         <style>
             body {{
                 font-family: Arial, sans-serif;
                 margin: 40px;
                 background-color: #f7f7f7;
                 color: #222;
+                line-height: 1.55;
             }}
 
             h1 {{
@@ -507,78 +911,69 @@ def build_html_report(
             }}
 
             h2 {{
-                margin-top: 40px;
+                margin-top: 38px;
                 color: #222;
             }}
 
             h3 {{
-                margin-top: 30px;
+                margin-top: 26px;
                 color: #333;
             }}
 
-            ul {{
-                line-height: 1.6;
-            }}
-
-            .summary {{
+            .summary,
+            .case-section {{
                 background: white;
-                padding: 20px;
+                padding: 22px;
                 border-radius: 8px;
                 margin-bottom: 30px;
                 border: 1px solid #ddd;
             }}
 
-            .painting-section {{
-                background: white;
-                padding: 24px;
-                border-radius: 8px;
-                margin-bottom: 40px;
-                border: 1px solid #ddd;
-            }}
-
-            .case-block {{
-                margin-top: 25px;
-                padding-top: 15px;
-                border-top: 1px solid #ddd;
-            }}
-
-            .image-row {{
-                display: flex;
-                flex-wrap: wrap;
-                gap: 14px;
-                align-items: flex-start;
-                margin: 15px 0;
+            .case-section {{
+                page-break-inside: avoid;
             }}
 
             .image-block {{
                 text-align: center;
                 font-size: 12px;
+                margin-top: 15px;
             }}
 
             .image-block img {{
                 border: 1px solid #ccc;
                 background: #eee;
+                max-width: 100%;
+                height: auto;
             }}
 
             .caption {{
-                margin-top: 5px;
+                margin-top: 6px;
                 color: #555;
+            }}
+
+            .missing {{
+                color: #9a3412;
+                font-style: italic;
             }}
 
             table,
             .summary-table {{
                 border-collapse: collapse;
                 margin-top: 15px;
+                margin-bottom: 18px;
                 width: 100%;
                 font-size: 13px;
+                background: white;
             }}
 
-            th, td,
+            th,
+            td,
             .summary-table th,
             .summary-table td {{
                 border: 1px solid #ccc;
-                padding: 8px;
+                padding: 7px;
                 text-align: center;
+                vertical-align: middle;
             }}
 
             th,
@@ -586,51 +981,146 @@ def build_html_report(
                 background-color: #eee;
                 font-weight: bold;
             }}
+
+            .note {{
+                background: #fff7ed;
+                border: 1px solid #fed7aa;
+                padding: 12px;
+                border-radius: 6px;
+            }}
         </style>
     </head>
 
     <body>
-        <h1>{title}</h1>
+        <h1>{html_escape(title)}</h1>
 
-        {analysis_summary_html}
+        <div class="summary">
+            <h2>Experiment overview</h2>
+            <p>
+                This report consolidates the OpenCV Telea baseline evaluation for the
+                controlled 50-painting subset. It summarizes restoration behavior across
+                synthetic damage types, painting categories, and multiple metric families.
+            </p>
 
-        {case_sections_html}
+            {overview_html}
+
+            <p class="note">
+                OpenCV Telea is used here as a deterministic classical baseline. The goal is
+                not to claim faithful restoration, but to establish how a local interpolation
+                method behaves under the proposed evaluation framework.
+            </p>
+        </div>
+
+        <div class="summary">
+            <h2>Summary by mask type</h2>
+            {mask_summary_html}
+
+            <h2>Summary by painting category</h2>
+            {category_summary_html}
+
+            {key_findings_html}
+        </div>
+
+        <div class="summary">
+            <h2>Selected diagnostic cases</h2>
+            <p>
+                The following cases were selected from strongest and weakest metric outcomes,
+                feature-space failures, and category examples. They are intended for qualitative
+                inspection, not as a replacement for the full metric tables.
+            </p>
+
+            {selected_cases_html}
+        </div>
+
+        <div class="summary">
+            <h2>Baseline conclusion</h2>
+            <p>
+                The OpenCV Telea baseline reliably improves over white-filled synthetic damage
+                for local and scratch-like masks, but it remains limited for large missing
+                regions and cases requiring semantic or structural reconstruction.
+            </p>
+
+            <p>
+                The disagreement between MSE, LPIPS, CLIP, DINOv2, and visual error maps is a
+                core finding rather than a problem. It shows that restoration quality has to be
+                evaluated through complementary metric families and visual diagnostics.
+            </p>
+
+            <p>
+                This baseline therefore provides a useful reference point before introducing
+                pretrained or generative inpainting models such as LaMa, Stable Diffusion
+                Inpainting, and SDXL Inpainting.
+            </p>
+        </div>
     </body>
     </html>
     """
 
 
-def generate_opencv_report(
+def generate_opencv_50_report(
     *,
-    metadata: pd.DataFrame,
-    metrics_df: pd.DataFrame,
-    diff_df: pd.DataFrame,
-    project_root: Path,
-    clean_dir: Path,
-    mask_dir: Path,
-    masked_dir: Path,
-    restored_dir: Path,
-    diff_map_dir: Path,
-    output_path: Path,
-    image_mode: ImageMode = "embedded",
-) -> str:
-    """Generate and save the OpenCV Telea pilot HTML report."""
-    report_df = prepare_report_dataframe(metadata, metrics_df, diff_df)
-    analysis_summary_html = build_analysis_summary_html(metrics_df)
-    case_sections_html = build_case_sections(
-        report_df,
+    processed_metadata_df: pd.DataFrame,
+    restored_metadata_df: pd.DataFrame,
+    classical_metrics_df: pd.DataFrame,
+    lpips_metrics_df: pd.DataFrame,
+    feature_metrics_df: pd.DataFrame,
+    error_map_manifest_df: pd.DataFrame | None,
+    project_root: Path | str,
+    output_path: Path | str,
+    selected_cases_output_path: Path | str | None = None,
+    image_mode: ImageMode = "linked",
+) -> dict[str, pd.DataFrame | str]:
+    """Generate and save the OpenCV 50-painting baseline report."""
+    project_root = Path(project_root)
+    output_path = Path(output_path)
+
+    report_df = prepare_opencv_50_report_dataframe(
+        processed_metadata_df=processed_metadata_df,
+        restored_metadata_df=restored_metadata_df,
+        classical_metrics_df=classical_metrics_df,
+        lpips_metrics_df=lpips_metrics_df,
+        feature_metrics_df=feature_metrics_df,
+        error_map_manifest_df=error_map_manifest_df,
         project_root=project_root,
-        clean_dir=clean_dir,
-        mask_dir=mask_dir,
-        masked_dir=masked_dir,
-        restored_dir=restored_dir,
-        diff_map_dir=diff_map_dir,
+        include_zero_control=False,
+    )
+
+    overview_df = summarize_report_overview(
+        processed_metadata_df=processed_metadata_df,
+        restored_metadata_df=restored_metadata_df,
+        report_df=report_df,
+    )
+
+    summary_by_mask_df = summarize_report_by_mask_type(report_df)
+    summary_by_category_df = summarize_report_by_category(report_df)
+    correlation_df = summarize_metric_correlations(report_df)
+
+    selected_cases_df = select_opencv_50_diagnostic_cases(report_df)
+
+    if selected_cases_output_path is not None:
+        selected_cases_output_path = Path(selected_cases_output_path)
+        selected_cases_output_path.parent.mkdir(parents=True, exist_ok=True)
+        selected_cases_df.to_csv(selected_cases_output_path, index=False)
+
+    html_report = build_opencv_50_report_html(
+        overview_df=overview_df,
+        summary_by_mask=summary_by_mask_df,
+        summary_by_category=summary_by_category_df,
+        correlation_df=correlation_df,
+        selected_cases_df=selected_cases_df,
+        project_root=project_root,
         image_mode=image_mode,
     )
-    html_report = build_html_report(analysis_summary_html, case_sections_html)
 
-    output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(html_report, encoding="utf-8")
 
-    return html_report
+    return {
+        "report_df": report_df,
+        "overview_df": overview_df,
+        "summary_by_mask_df": summary_by_mask_df,
+        "summary_by_category_df": summary_by_category_df,
+        "correlation_df": correlation_df,
+        "selected_cases_df": selected_cases_df,
+        "html_report": html_report,
+    }

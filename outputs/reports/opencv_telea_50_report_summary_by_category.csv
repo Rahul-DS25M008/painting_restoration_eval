@@ -1,0 +1,6 @@
+category,cases,mean_mse_improvement,mean_lpips_improvement,mean_clip_improvement,mean_dinov2_improvement,dinov2_negative_rate
+abstraction_surrealism,40,18899.9599,0.13913,0.06509,0.02661,0.25
+architecture_structured,40,25406.39262,0.23882,0.11136,0.03398,0.25
+high_texture_brushwork,40,26778.38258,0.23651,0.09135,0.09313,0.175
+landscape_natural,40,21573.90409,0.20719,0.09035,0.08718,0.25
+portrait_figure,40,38096.48966,0.27016,0.0902,0.07941,0.125

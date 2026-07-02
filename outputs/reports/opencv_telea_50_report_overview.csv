@@ -1,0 +1,7 @@
+item,value
+Paintings,50
+Painting categories,5
+Restoration cases generated,250
+Non-zero report cases,200
+Mask types,5
+Baseline model,opencv_telea

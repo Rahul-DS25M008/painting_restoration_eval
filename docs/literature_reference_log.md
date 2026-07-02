@@ -513,3 +513,29 @@ The mask bounding-box crop is used as the local feature-comparison region around
 Possible thesis wording:
 
 > CLIP and DINOv2 feature similarities were included to complement classical full-reference metrics and LPIPS. CLIP provides an image-text-supervised representation space, while DINOv2 provides a self-supervised visual representation space. In this thesis, both were used as diagnostic feature spaces rather than final restoration-quality judges. Similarity was computed between clean and damaged regions and between clean and restored regions. Improvement was defined as restored similarity minus damaged similarity. Cases where CLIP, DINOv2, LPIPS, and classical metric rankings diverged were treated as important diagnostic examples, because they show that restoration quality cannot be fully captured by any single metric family.
+
+## 9. OpenCV Baseline Report Interpretation
+
+### Decision supported
+
+The OpenCV Telea baseline report consolidates the first complete 50-painting evaluation pass.
+
+The report is used to interpret the deterministic classical baseline before introducing pretrained or generative inpainting models. It combines classical metrics, LPIPS, CLIP/DINOv2 feature similarities, error-map figures, and diagnostic case selection.
+
+---
+
+### Project decision
+
+The report does not treat any single metric as the final measure of restoration quality. Instead, it compares multiple metric families and selected visual examples.
+
+The report emphasizes that OpenCV Telea can reduce obvious synthetic white damage while still failing to recover faithful local structure, especially for large-loss cases.
+
+Metric disagreement is interpreted as part of the evaluation framework. Cases where pixel-level metrics, perceptual metrics, feature-space metrics, and visual diagnostics diverge are useful for identifying restoration failure modes.
+
+---
+
+### Notes for final thesis writing
+
+Possible thesis wording:
+
+> An interim OpenCV Telea baseline report was generated after the full 50-painting evaluation pass. The report consolidates classical metrics, LPIPS, CLIP and DINOv2 feature similarities, diagnostic error maps, and selected cases. The baseline showed reliable improvement over white-filled synthetic damage, especially for scratch-like and local masks. However, large missing regions remained difficult, and feature-space metrics revealed cases where visible damage removal did not correspond to faithful structural recovery. These findings support the thesis argument that trustworthy evaluation of AI-assisted painting restoration requires multiple complementary metrics and visual diagnostics rather than a single scalar score.

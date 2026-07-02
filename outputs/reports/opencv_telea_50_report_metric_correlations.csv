@@ -1,0 +1,7 @@
+,mse_improvement,mae_improvement,psnr_improvement,lpips_improvement,clip_similarity_improvement,dinov2_similarity_improvement
+mse_improvement,1.0,0.9789,0.6746,0.574,0.2246,0.1861
+mae_improvement,0.9789,1.0,0.7646,0.6124,0.2881,0.2507
+psnr_improvement,0.6746,0.7646,1.0,0.6052,0.3936,0.401
+lpips_improvement,0.574,0.6124,0.6052,1.0,0.5126,0.5023
+clip_similarity_improvement,0.2246,0.2881,0.3936,0.5126,1.0,0.6151
+dinov2_similarity_improvement,0.1861,0.2507,0.401,0.5023,0.6151,1.0

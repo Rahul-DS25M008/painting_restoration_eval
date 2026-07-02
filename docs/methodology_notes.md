@@ -209,3 +209,27 @@ This finding is important because it separates visible damage removal from faith
 CLIP and DINOv2 are included because they represent different pretrained visual feature spaces. CLIP is trained with image-text contrastive supervision, while DINOv2 is a self-supervised visual representation model. In this project, both are used as diagnostic signals, not as final truth measures of restoration quality.
 
 Cases where CLIP, DINOv2, LPIPS, and classical pixel metrics disagree are especially important. These disagreements show that restoration quality depends on multiple dimensions, including pixel accuracy, perceptual similarity, feature-space similarity, and visual plausibility.
+
+## OpenCV Telea baseline report generation
+
+An interim OpenCV Telea baseline report was generated after completing the 50-painting evaluation pipeline.
+
+The report consolidates:
+
+- dataset and restoration-case overview,
+- mask-type summaries,
+- painting-category summaries,
+- classical masked-region metrics,
+- LPIPS mask-bounding-box metrics,
+- CLIP and DINOv2 mask-bounding-box feature similarities,
+- metric correlation analysis,
+- selected diagnostic cases,
+- diagnostic error-map figures.
+
+The report is intended as a baseline interpretation artifact, not as the final thesis result. It summarizes how the deterministic OpenCV Telea baseline behaves before adding pretrained and generative inpainting models.
+
+The selected diagnostic cases are not intended to provide equal coverage across all categories. They are selected to expose strong metric improvements, weak metric improvements, feature-space disagreement, and representative category examples. The full CSV outputs remain the complete quantitative record.
+
+For portability, the report currently embeds the selected diagnostic figures directly into the HTML file. This is acceptable because only selected cases are included. A fully linked-image report may be preferable later if larger report variants are generated.
+
+The main baseline conclusion is that OpenCV Telea reliably improves over white-filled synthetic damage for local and scratch-like masks, but remains limited for large missing regions and cases requiring structural or semantic reconstruction. Metric disagreement between MSE, LPIPS, CLIP, DINOv2, and visual error maps is treated as a useful diagnostic signal rather than an error.
