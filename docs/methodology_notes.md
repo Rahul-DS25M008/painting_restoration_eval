@@ -233,3 +233,34 @@ The selected diagnostic cases are not intended to provide equal coverage across 
 For portability, the report currently embeds the selected diagnostic figures directly into the HTML file. This is acceptable because only selected cases are included. A fully linked-image report may be preferable later if larger report variants are generated.
 
 The main baseline conclusion is that OpenCV Telea reliably improves over white-filled synthetic damage for local and scratch-like masks, but remains limited for large missing regions and cases requiring structural or semantic reconstruction. Metric disagreement between MSE, LPIPS, CLIP, DINOv2, and visual error maps is treated as a useful diagnostic signal rather than an error.
+
+## LaMa implementation planning decision
+
+After completing the OpenCV Telea baseline evaluation and report, LaMa is selected as the next model to add to the 50-painting controlled subset.
+
+LaMa is used as the first pretrained open inpainting baseline. Unlike OpenCV Telea, LaMa has learned image priors and is designed for large-mask inpainting. This makes it a useful next comparison point for evaluating whether pretrained inpainting improves restoration behavior on larger and more complex damage masks.
+
+The LaMa method source is the original LaMa paper and official project. For practical execution in this repository, the planned runtime implementation is the IOPaint command-line interface using `model=lama`.
+
+The reason for using IOPaint is practical batch integration. The existing project already has standardized damaged images and binary masks for 250 restoration cases. IOPaint provides a command-line workflow that can process image and mask folders, which can be integrated through temporary staging folders.
+
+The planned staging strategy is:
+
+- copy damaged images into a temporary LaMa input folder,
+- copy corresponding binary masks into a temporary LaMa mask folder,
+- use matching filenames in both folders,
+- run IOPaint LaMa on the staged batch,
+- collect outputs into `data/processed/restored/lama/`,
+- write restoration metadata to `data/processed/metadata/metadata_restored_lama.csv`.
+
+This staging approach avoids changing the permanent project filenames to satisfy an external tool’s filename-matching convention.
+
+LaMa outputs will be evaluated using the same metric families as OpenCV Telea:
+
+- classical full-reference metrics,
+- difference/error maps,
+- LPIPS,
+- CLIP and DINOv2 feature-space similarity,
+- later model-comparison reports.
+
+LaMa is not treated as a ground-truth restoration model. It is a pretrained inpainting baseline whose behavior must be evaluated against the known clean references under controlled synthetic damage. Particular attention will be paid to whether LaMa improves large-loss cases without introducing visually plausible but incorrect structures.

@@ -28,11 +28,42 @@ Decision: keep as the first model for the 50-painting subset.
 
 ## LaMa
 
-LaMa is the preferred next model because it is open, pretrained, and specifically designed for large-mask inpainting. Its paper describes Fast Fourier Convolutions, high-receptive-field perceptual loss, and large training masks as key design choices.
+LaMa is the preferred next model because it is open, pretrained, and specifically designed for large-mask image inpainting. Its paper describes Fast Fourier Convolutions, high-receptive-field perceptual loss, and large training masks as key design choices. This makes LaMa a stronger next baseline than OpenCV Telea for larger missing regions.
 
 The main audit concern is domain gap. The reported Big LaMa training data uses a large subset of the Places-Challenge dataset, which is scene-oriented rather than painting-restoration-specific. This makes LaMa a good general inpainting baseline, but not necessarily a faithful painting restoration model.
 
-Decision: add after the OpenCV 50-painting run is stable.
+For this project, LaMa will be treated as a pretrained open inpainting baseline rather than as a conservation-specific restoration system. It is expected to outperform OpenCV Telea on some larger masks because it has learned image priors and a larger effective receptive field. However, those same learned priors may also introduce visually plausible but historically incorrect content, especially in paintings with distinctive brushwork, abstraction, surrealism, or iconographic detail.
+
+### Implementation decision
+
+The LaMa method source is the original LaMa paper and official project/repository. The runtime implementation for this thesis pipeline will use the IOPaint command-line interface with `model=lama`.
+
+This decision separates the research source from the practical execution wrapper:
+
+- method source: LaMa paper and official implementation,
+- runtime source: IOPaint LaMa CLI,
+- reason: IOPaint provides a practical local batch interface for image and mask folders,
+- expected benefit: easier integration with the existing 50-painting batch pipeline,
+- expected risk: the wrapper may impose filename, mask-format, or input-size conventions that must be validated before full-scale execution.
+
+The current plan is to stage damaged images and masks into temporary LaMa batch folders with matching filenames, run IOPaint on the staged batch, and then collect outputs back into the project’s standard structure.
+
+Planned LaMa output contract:
+
+- input metadata: `data/processed/metadata/metadata_damaged_images.csv`,
+- input damaged images: `data/processed/masked/*.png`,
+- input masks: `data/processed/masks/*.png`,
+- staged batch input: `outputs/tmp/lama_batch/input/`,
+- staged batch masks: `outputs/tmp/lama_batch/mask/`,
+- staged batch outputs: `outputs/tmp/lama_batch/output/`,
+- final restored images: `data/processed/restored/lama/*.png`,
+- final metadata: `data/processed/metadata/metadata_restored_lama.csv`,
+- model name: `lama`,
+- cases: 250, including zero-control cases.
+
+Zero-control cases should be preserved in the output metadata. If the LaMa runtime does not naturally support empty masks, zero-control outputs may be copied directly from the damaged/clean image with a documented status note rather than passed through the model.
+
+Decision: add LaMa next, after the OpenCV 50-painting baseline and report are stable.
 
 ## Stable Diffusion Inpainting
 

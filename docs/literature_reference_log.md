@@ -539,3 +539,44 @@ Metric disagreement is interpreted as part of the evaluation framework. Cases wh
 Possible thesis wording:
 
 > An interim OpenCV Telea baseline report was generated after the full 50-painting evaluation pass. The report consolidates classical metrics, LPIPS, CLIP and DINOv2 feature similarities, diagnostic error maps, and selected cases. The baseline showed reliable improvement over white-filled synthetic damage, especially for scratch-like and local masks. However, large missing regions remained difficult, and feature-space metrics revealed cases where visible damage removal did not correspond to faithful structural recovery. These findings support the thesis argument that trustworthy evaluation of AI-assisted painting restoration requires multiple complementary metrics and visual diagnostics rather than a single scalar score.
+
+## 10. LaMa Implementation Planning
+
+### Decision supported
+
+LaMa is selected as the next restoration model after the OpenCV Telea baseline.
+
+OpenCV Telea provides a deterministic classical interpolation baseline. LaMa provides the next step: a pretrained open inpainting model designed for larger and more complex masks.
+
+---
+
+### Research paper
+
+#### Suvorov et al. — LaMa
+
+- Reference: Suvorov, R., Logacheva, E., Mashikhin, A., Remizova, A., Ashukha, A., Silvestrov, A., Kong, N., Goka, H., Park, K., & Lempitsky, V. *Resolution-robust Large Mask Inpainting with Fourier Convolutions.*
+- Type: pretrained image inpainting model.
+- Relevant point: LaMa uses architectural and training choices intended to improve large-mask inpainting, including Fast Fourier Convolutions and large-mask training.
+- How it influenced this project: LaMa is selected as the first pretrained open inpainting baseline after OpenCV Telea because it is expected to handle larger missing regions better than a purely local classical method.
+
+---
+
+### Implementation decision
+
+The LaMa paper and official project are treated as the method source. For practical execution in this repository, the planned runtime implementation is IOPaint with `model=lama`.
+
+This implementation choice is made for reproducibility and batch integration. IOPaint provides a command-line workflow for processing image and mask folders, which fits the project’s existing 50-painting pipeline.
+
+The repository will use temporary staging folders with matched image and mask filenames before collecting outputs into the project’s standard restored-image directory.
+
+---
+
+### Interpretation limitation
+
+LaMa is not painting-restoration-specific. It is trained as a general image inpainting model and may rely on natural-image priors that do not fully match historical paintings, brushstroke texture, abstraction, surrealism, or conservation-style restoration.
+
+A visually plausible LaMa output is not necessarily a historically faithful restoration. Since this project uses synthetic damage, the clean reference is known, allowing LaMa outputs to be evaluated against ground truth using the same multi-metric framework already applied to OpenCV Telea.
+
+Possible thesis wording:
+
+> LaMa was selected as the first pretrained open inpainting baseline after OpenCV Telea. Its architecture is designed for large-mask inpainting and therefore provides a useful comparison against the local classical OpenCV baseline. However, LaMa is not trained specifically for painting restoration, so its outputs are evaluated as candidate restorations rather than assumed faithful reconstructions. The implementation uses a practical IOPaint command-line workflow while retaining the LaMa paper and official project as the methodological source.
