@@ -92,6 +92,37 @@ A Windows console encoding issue occurred when IOPaint/Rich emitted Unicode prog
 
 Current decision: LaMa restoration generation is complete. Next step is metric evaluation using the same framework already used for OpenCV Telea.
 
+### Classical metric evaluation status
+
+LaMa classical metric evaluation has been completed for the controlled 50-painting subset.
+
+Notebook:
+
+`notebooks/12_metrics_classical_lama_cleaned.ipynb`
+
+Main metric output:
+
+`outputs/metrics/classical_metrics_lama_50.csv`
+
+The evaluation produced 900 metric rows using the same region structure as OpenCV Telea:
+
+- 250 full-image rows,
+- 250 content-region rows,
+- 200 masked-region rows,
+- 200 mask-bounding-box crop rows.
+
+The LaMa restoration metadata was enriched with category and content-region coordinates from `metadata_processed_clean.csv` before metric computation. This was necessary because the LaMa restoration metadata focuses on restoration output paths and inference status rather than carrying all processed-image metadata fields.
+
+The classical metric module was updated with progress printing for long 250-case metric runs. Metric definitions were not changed.
+
+Additional outputs include summary CSVs by mask type, category, region, region-mask type, and masked-region mask type. Strongest and weakest LaMa cases by masked-region MSE improvement were also exported.
+
+Metric-driven visual examples were generated and saved to:
+
+`outputs/figures/lama_classical_metric_cases/`
+
+Current interpretation: LaMa classical metrics are now available for later direct comparison against OpenCV Telea. These results should not be interpreted alone as proof of restoration quality, because classical pixel metrics do not fully capture perceptual plausibility, semantic correctness, or conservation faithfulness.
+
 ## Stable Diffusion Inpainting
 
 Stable Diffusion Inpainting is useful because it is generative, text-conditioned, mask-aware, and seed-controllable. That makes it a strong candidate for uncertainty analysis, especially through multiple sampled restorations for the same damaged painting.

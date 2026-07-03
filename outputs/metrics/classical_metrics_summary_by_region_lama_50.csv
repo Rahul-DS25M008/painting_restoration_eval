@@ -1,0 +1,5 @@
+evaluation_region,rows,cases,mean_damaged_mse,mean_restored_mse,mean_mse_improvement,mean_damaged_mae,mean_restored_mae,mean_mae_improvement,mean_damaged_psnr,mean_restored_psnr,mean_psnr_improvement,mean_damaged_ssim,mean_restored_ssim,mean_ssim_improvement,mean_region_pixel_count
+content_region,250,250,1572.525,42.1763,1530.3487,8.9654,0.9172,8.0482,16.6442,35.1816,18.5375,0.9367,0.9731,0.0365,454656.0
+full_image,250,250,1203.4601,33.5904,1169.8697,6.8572,0.7117,6.1455,17.8125,36.3499,18.5375,0.9506,0.9791,0.0286,589824.0
+mask_bbox_crop,200,200,4835.2005,156.7296,4678.4709,27.8695,3.2629,24.6067,14.4229,32.9604,18.5375,0.8288,0.9072,0.0784,318789.815
+masked_region,200,200,26995.7325,555.8093,26439.9232,152.7505,13.4187,139.3318,4.3305,22.868,18.5375,,,,33543.27

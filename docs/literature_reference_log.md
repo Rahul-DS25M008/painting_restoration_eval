@@ -625,3 +625,54 @@ The selected visual inspection figures generated in Notebook 11 are diagnostic s
 Possible thesis wording:
 
 > LaMa was integrated as the first pretrained learned inpainting baseline after OpenCV Telea. The implementation uses IOPaint as a practical batch runtime while retaining the LaMa paper and official project as the methodological source. Outputs are evaluated as candidate restorations rather than assumed faithful reconstructions, since LaMa is not trained specifically for painting conservation.
+
+## 12. LaMa Classical Metric Evaluation
+
+### Decision supported
+
+LaMa outputs were evaluated using the same classical full-reference metric framework previously applied to OpenCV Telea.
+
+This supports direct model comparison because the two baselines are evaluated under the same controlled synthetic damage conditions, using the same clean references, masks, and evaluation regions.
+
+---
+
+### Metrics used
+
+The classical metrics are:
+
+- MSE,
+- MAE,
+- PSNR,
+- SSIM.
+
+These metrics measure pixel-level or structure-based similarity between the clean reference and the damaged/restored images.
+
+The metric regions are:
+
+- full image,
+- content region,
+- masked region,
+- mask bounding-box crop.
+
+The masked-region rows focus on the actual damaged pixels. The mask-bounding-box crop provides an image-like local region around the damage, allowing SSIM to be computed in a spatially meaningful way.
+
+---
+
+### Interpretation limitation
+
+Classical metrics are useful for controlled synthetic restoration because the clean reference is known. However, they are not sufficient as standalone restoration-quality measures.
+
+A high MSE or MAE improvement indicates numerical closeness to the clean reference, especially within masked pixels. It does not necessarily mean the restoration is perceptually convincing, semantically correct, or historically faithful.
+
+This is especially important for LaMa because it is a learned pretrained inpainting model. It may generate visually plausible content that reduces pixel error in some cases, while still altering painterly texture, structure, or historical detail.
+
+The classical metric results should therefore be interpreted together with:
+
+- visual diagnostic examples,
+- LPIPS perceptual similarity,
+- CLIP and DINOv2 feature-space similarity,
+- model-comparison analysis.
+
+Possible thesis wording:
+
+> Classical full-reference metrics were computed for LaMa using the same region-based framework applied to OpenCV Telea. These metrics quantify numerical similarity to the known clean reference under controlled synthetic damage. However, classical metric improvement is not treated as sufficient evidence of faithful restoration, especially for learned inpainting models that may generate plausible but incorrect content.

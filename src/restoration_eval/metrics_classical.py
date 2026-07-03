@@ -11,6 +11,7 @@ Mask convention:
 
 from __future__ import annotations
 
+import time
 from pathlib import Path
 from typing import Any
 
@@ -99,7 +100,9 @@ def compute_ssim_safe(
         )
 
     if reference_arr.ndim != 3 or reference_arr.shape[2] != 3:
-        raise ValueError(f"Expected RGB arrays with shape HxWx3, got {reference_arr.shape}")
+        raise ValueError(
+            f"Expected RGB arrays with shape HxWx3, got {reference_arr.shape}"
+        )
 
     height, width = reference_arr.shape[:2]
     min_dim = min(height, width)
@@ -339,10 +342,11 @@ def compute_classical_metrics_for_restorations(
     restoration_metadata: pd.DataFrame,
     target_size: int = 768,
     mask_bbox_margin: int = 8,
+    progress_every: int | None = 25,
 ) -> pd.DataFrame:
     """Compute classical metrics for restoration outputs.
 
-    The input dataframe should contain OpenCV restoration metadata merged with
+    The input dataframe should contain restoration metadata merged with
     processed image metadata so that content-region coordinates and category
     labels are available.
 
@@ -376,7 +380,31 @@ def compute_classical_metrics_for_restorations(
 
     metric_records: list[dict[str, Any]] = []
 
-    for _, row in restoration_metadata.sort_values(["painting_id", "mask_type"]).iterrows():
+    sorted_metadata = restoration_metadata.sort_values(
+        ["painting_id", "mask_type"]
+    ).reset_index(drop=True)
+
+    total_cases = len(sorted_metadata)
+    start_time = time.perf_counter()
+
+    print("Starting classical metric computation")
+    print(f"  Cases: {total_cases}")
+    print(f"  Target size: {target_size}")
+    print(f"  Mask bbox margin: {mask_bbox_margin}")
+    print(f"  Expected metric rows: 900 for the full 50-painting experiment")
+
+    for index, (_, row) in enumerate(sorted_metadata.iterrows(), start=1):
+        if progress_every and (
+            index == 1
+            or index % progress_every == 0
+            or index == total_cases
+        ):
+            elapsed = time.perf_counter() - start_time
+            print(
+                f"Computing classical metrics for case {index}/{total_cases} "
+                f"({row['case_id']}) | elapsed {elapsed:.2f}s"
+            )
+
         try:
             clean_arr = load_rgb_array(Path(row["clean_path"]))
             damaged_arr = load_rgb_array(Path(row["damaged_path"]))
@@ -403,8 +431,16 @@ def compute_classical_metrics_for_restorations(
                 )
 
             # 1. Full image region
-            damaged_full = compute_image_region_metrics(clean_arr, damaged_arr, compute_ssim_value=True)
-            restored_full = compute_image_region_metrics(clean_arr, restored_arr, compute_ssim_value=True)
+            damaged_full = compute_image_region_metrics(
+                clean_arr,
+                damaged_arr,
+                compute_ssim_value=True,
+            )
+            restored_full = compute_image_region_metrics(
+                clean_arr,
+                restored_arr,
+                compute_ssim_value=True,
+            )
 
             metric_records.append(
                 _build_metric_record(
@@ -457,8 +493,16 @@ def compute_classical_metrics_for_restorations(
                 continue
 
             # 3. Masked pixel region: MSE/MAE/PSNR only, no SSIM.
-            damaged_mask_metrics = compute_masked_pixel_metrics(clean_arr, damaged_arr, mask_bool)
-            restored_mask_metrics = compute_masked_pixel_metrics(clean_arr, restored_arr, mask_bool)
+            damaged_mask_metrics = compute_masked_pixel_metrics(
+                clean_arr,
+                damaged_arr,
+                mask_bool,
+            )
+            restored_mask_metrics = compute_masked_pixel_metrics(
+                clean_arr,
+                restored_arr,
+                mask_bool,
+            )
 
             metric_records.append(
                 _build_metric_record(
@@ -533,7 +577,27 @@ def compute_classical_metrics_for_restorations(
                 }
             )
 
-    return pd.DataFrame(metric_records)
+            print(
+                f"  Error while computing case {index}/{total_cases} "
+                f"({row.get('case_id', '')}): {type(exc).__name__}: {exc}"
+            )
+
+    metrics_df = pd.DataFrame(metric_records)
+    elapsed_total = time.perf_counter() - start_time
+
+    print("Classical metric computation complete")
+    print(f"  Runtime: {elapsed_total:.2f} seconds")
+    print(f"  Output rows: {len(metrics_df)}")
+
+    if "evaluation_region" in metrics_df.columns:
+        print("  Region counts:")
+        print(metrics_df["evaluation_region"].value_counts().to_string())
+
+    if "status" in metrics_df.columns:
+        print("  Status counts:")
+        print(metrics_df["status"].value_counts(dropna=False).to_string())
+
+    return metrics_df
 
 
 def validate_classical_metrics(
