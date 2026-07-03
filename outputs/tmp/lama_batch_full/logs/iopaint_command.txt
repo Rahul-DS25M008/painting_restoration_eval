@@ -1,0 +1,1 @@
+iopaint run --model lama --device cuda --image D:\Masters\FH\Thesis\painting-restoration-eval\outputs\tmp\lama_batch_full\input --mask D:\Masters\FH\Thesis\painting-restoration-eval\outputs\tmp\lama_batch_full\mask --output D:\Masters\FH\Thesis\painting-restoration-eval\outputs\tmp\lama_batch_full\output

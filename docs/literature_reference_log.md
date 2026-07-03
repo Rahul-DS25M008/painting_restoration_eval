@@ -580,3 +580,48 @@ A visually plausible LaMa output is not necessarily a historically faithful rest
 Possible thesis wording:
 
 > LaMa was selected as the first pretrained open inpainting baseline after OpenCV Telea. Its architecture is designed for large-mask inpainting and therefore provides a useful comparison against the local classical OpenCV baseline. However, LaMa is not trained specifically for painting restoration, so its outputs are evaluated as candidate restorations rather than assumed faithful reconstructions. The implementation uses a practical IOPaint command-line workflow while retaining the LaMa paper and official project as the methodological source.
+
+## 11. LaMa Restoration Runtime Integration
+
+### Decision supported
+
+LaMa was implemented as the first pretrained open inpainting baseline after OpenCV Telea.
+
+The LaMa paper and official project remain the methodological source. The practical runtime used in this repository is IOPaint with `model=lama`, wrapped through `src/restoration_eval/restoration_lama.py`.
+
+---
+
+### Implementation relevance
+
+The LaMa runtime integration supports the thesis framework by adding a learned pretrained inpainting model after a deterministic classical baseline.
+
+This allows the evaluation framework to compare:
+
+- a local classical inpainting method: OpenCV Telea,
+- a pretrained learned inpainting method: LaMa.
+
+This comparison is important because the models have different expected behavior. OpenCV Telea mainly performs local interpolation from surrounding pixels. LaMa uses learned image priors and a larger effective receptive field, so it may better handle larger missing regions but may also introduce plausible yet incorrect content.
+
+---
+
+### Reproducibility note
+
+The repository does not call LaMa manually from notebook cells. Instead, the LaMa runtime is wrapped in `src/restoration_eval/restoration_lama.py`.
+
+The module stages damaged images and masks into temporary folders with matching filenames, runs IOPaint LaMa through a controlled subprocess call, collects outputs into the project’s standard restored-image folder, and writes restoration metadata.
+
+The subprocess environment forces UTF-8 output and disables decorative terminal behavior where possible. This was necessary because IOPaint/Rich progress output produced a Windows console encoding issue during notebook execution.
+
+---
+
+### Interpretation limitation
+
+LaMa outputs are not treated as historically faithful restoration. LaMa is a general pretrained inpainting model, not a painting-conservation-specific model.
+
+The generated images are therefore candidate restorations under controlled synthetic damage. Their quality must be evaluated against the known clean references using the same multi-metric framework applied to OpenCV Telea.
+
+The selected visual inspection figures generated in Notebook 11 are diagnostic sanity checks only. They are not final quality rankings.
+
+Possible thesis wording:
+
+> LaMa was integrated as the first pretrained learned inpainting baseline after OpenCV Telea. The implementation uses IOPaint as a practical batch runtime while retaining the LaMa paper and official project as the methodological source. Outputs are evaluated as candidate restorations rather than assumed faithful reconstructions, since LaMa is not trained specifically for painting conservation.

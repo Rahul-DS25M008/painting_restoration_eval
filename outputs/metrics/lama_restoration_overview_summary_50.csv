@@ -1,0 +1,7 @@
+item,value
+total_rows,250
+unique_paintings,50
+successful_rows,250
+error_rows,0
+model_inference_rows,200
+copied_zero_control_rows,50

@@ -264,3 +264,57 @@ LaMa outputs will be evaluated using the same metric families as OpenCV Telea:
 - later model-comparison reports.
 
 LaMa is not treated as a ground-truth restoration model. It is a pretrained inpainting baseline whose behavior must be evaluated against the known clean references under controlled synthetic damage. Particular attention will be paid to whether LaMa improves large-loss cases without introducing visually plausible but incorrect structures.
+
+## LaMa restoration generation
+
+LaMa was added as the first pretrained open inpainting baseline after the OpenCV Telea baseline.
+
+The LaMa method source is the original LaMa paper and official project. For practical execution in this repository, LaMa was run through the IOPaint command-line runtime using `model=lama`. The CLI call is wrapped inside `src/restoration_eval/restoration_lama.py`, so the notebook still follows the same project structure as the OpenCV restoration stage.
+
+The LaMa restoration notebook is:
+
+`notebooks/11_lama_restoration_cleaned.ipynb`
+
+The LaMa module is:
+
+`src/restoration_eval/restoration_lama.py`
+
+The module handles:
+
+- staging damaged images and masks into temporary folders,
+- matching image and mask filenames for IOPaint batch execution,
+- running IOPaint LaMa through `subprocess`,
+- forcing UTF-8 subprocess output to avoid Windows console/Rich progress encoding failures,
+- collecting and renaming restored outputs into the project directory,
+- copying zero-control cases directly without model inference,
+- validating restored image existence, size, and basic behavior,
+- writing restoration metadata.
+
+A one-painting test was run first before the full batch. This test used one painting with all five mask types and confirmed that the module-level LaMa pipeline worked before scaling to the full controlled subset.
+
+The full LaMa restoration run produced 250 restoration cases:
+
+- 200 non-zero damage cases processed through LaMa model inference,
+- 50 zero-control cases copied directly without model inference.
+
+Zero-control cases were copied directly to preserve the no-damage control condition exactly. Although a manual IOPaint zero-mask test showed no pixel difference, the direct-copy strategy avoids depending on external runtime behavior for control cases.
+
+The final LaMa outputs are:
+
+- restored images: `data/processed/restored/lama/`,
+- metadata: `data/processed/metadata/metadata_restored_lama.csv`.
+
+The notebook also created selected visual inspection figures before formal metric evaluation:
+
+- figures: `outputs/figures/lama_restoration_selected_cases/`,
+- manifest: `outputs/metrics/lama_selected_visual_inspection_manifest_50.csv`.
+
+The selected visual inspection set includes zero-control, category-representative large-loss cases, mixed-damage stress cases for abstraction/surrealism and high-texture paintings, and local-damage sanity cases. These visual checks are diagnostic only and are not treated as final quality rankings.
+
+The next stage is to evaluate LaMa outputs using the same metric families already applied to OpenCV Telea:
+
+- classical full-reference metrics,
+- difference/error maps,
+- LPIPS,
+- CLIP and DINOv2 feature-space similarity,
+- later model-comparison reporting.

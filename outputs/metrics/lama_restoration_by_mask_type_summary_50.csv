@@ -1,0 +1,6 @@
+mask_type,cases,successful_cases,error_cases,mean_batch_runtime_seconds
+loss_large,50,50,0,302.61427
+loss_small,50,50,0,302.61427
+mixed_damage,50,50,0,302.61427
+scratch_thin,50,50,0,302.61427
+zero_control,50,50,0,0.0

@@ -65,6 +65,33 @@ Zero-control cases should be preserved in the output metadata. If the LaMa runti
 
 Decision: add LaMa next, after the OpenCV 50-painting baseline and report are stable.
 
+### Implementation status update
+
+LaMa has now been integrated into the controlled 50-painting pipeline.
+
+The implementation uses:
+
+- method source: LaMa paper and official project,
+- runtime source: IOPaint CLI with `model=lama`,
+- wrapper module: `src/restoration_eval/restoration_lama.py`,
+- notebook: `notebooks/11_lama_restoration_cleaned.ipynb`.
+
+A manual IOPaint test was run first on a non-zero damage case and a zero-control case. The zero-control test produced exact zero pixel difference, but the final module still copies zero-control cases directly instead of passing them through the model runtime. This keeps the no-damage control condition independent of external preprocessing behavior.
+
+The module-level notebook test was then run on one painting with all five mask types before scaling to the full subset.
+
+Final LaMa generation output:
+
+- total cases: 250,
+- model-inference cases: 200,
+- copied zero-control cases: 50,
+- restored image directory: `data/processed/restored/lama/`,
+- metadata file: `data/processed/metadata/metadata_restored_lama.csv`.
+
+A Windows console encoding issue occurred when IOPaint/Rich emitted Unicode progress characters during subprocess execution. The wrapper was updated to force UTF-8 subprocess handling and reduce decorative console behavior. After this fix, the LaMa notebook test and full run completed successfully.
+
+Current decision: LaMa restoration generation is complete. Next step is metric evaluation using the same framework already used for OpenCV Telea.
+
 ## Stable Diffusion Inpainting
 
 Stable Diffusion Inpainting is useful because it is generative, text-conditioned, mask-aware, and seed-controllable. That makes it a strong candidate for uncertainty analysis, especially through multiple sampled restorations for the same damaged painting.

@@ -26,6 +26,7 @@ lpips==0.1.4
 transformers
 safetensors
 accelerate
+iopaint
 
 ipykernel>=6.29,<8
 jupyter>=1.1,<2
