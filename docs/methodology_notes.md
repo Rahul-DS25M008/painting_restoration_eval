@@ -402,3 +402,61 @@ Their manifest was saved to:
 These visual examples are diagnostic and tied to classical metric behavior. They are not final quality rankings. A large masked-region MSE improvement means the restored pixels are numerically closer to the clean reference, but it does not by itself prove perceptual, semantic, or historically faithful restoration quality.
 
 This stage prepares the LaMa classical metric baseline for later direct comparison against OpenCV Telea and for later perceptual/feature-space evaluation.
+
+## LaMa difference and error-map diagnostics
+
+LaMa difference/error-map diagnostics were generated for the controlled 50-painting subset after LaMa classical metric computation.
+
+Notebook:
+
+`notebooks/13_difference_maps_lama_cleaned.ipynb`
+
+The notebook reuses the shared error-map utility module:
+
+`src/restoration_eval/error_maps.py`
+
+The module generates diagnostic figures showing:
+
+- clean reference image,
+- damage mask,
+- damaged input,
+- restored output,
+- clean-vs-damaged absolute error,
+- clean-vs-restored absolute error,
+- signed restoration improvement,
+- masked signed restoration improvement.
+
+The error-map module was updated so that the restored-image panel title is model-aware rather than OpenCV-specific. This allows the same diagnostic figure function to be reused for LaMa and later restoration models.
+
+The LaMa metadata was enriched with painting category and title from:
+
+`data/processed/metadata/metadata_processed_clean.csv`
+
+This ensures that generated manifests and diagnostic displays preserve painting-category information.
+
+Two sets of LaMa error-map outputs were generated:
+
+1. selected diagnostic cases,
+2. all 250 LaMa restoration cases.
+
+The selected diagnostic set includes:
+
+- strongest masked-region MSE improvement cases,
+- weakest masked-region MSE improvement cases,
+- representative mixed-damage cases across painting categories,
+- one zero-control sanity case.
+
+The all-case set includes one diagnostic figure for every LaMa restoration case.
+
+Main outputs:
+
+- `outputs/figures/error_maps/lama/selected_cases/`
+- `outputs/figures/error_maps/lama/all_cases/`
+- `outputs/metrics/error_map_manifest_selected_lama_50.csv`
+- `outputs/metrics/error_map_manifest_all_lama_50.csv`
+- `outputs/metrics/error_map_summary_selected_lama_50.csv`
+- `outputs/metrics/error_map_summary_all_lama_50.csv`
+
+The all-case manifest contains 250 rows, with 50 cases per mask type and 50 cases per painting category. All generated rows completed with status `ok`.
+
+These diagnostics complement the numerical classical metrics by showing where restoration changes reduce or increase spatial error. They remain diagnostic visual evidence, not standalone proof of restoration quality.

@@ -123,6 +123,31 @@ Metric-driven visual examples were generated and saved to:
 
 Current interpretation: LaMa classical metrics are now available for later direct comparison against OpenCV Telea. These results should not be interpreted alone as proof of restoration quality, because classical pixel metrics do not fully capture perceptual plausibility, semantic correctness, or conservation faithfulness.
 
+### Difference/error-map diagnostic status
+
+LaMa difference/error-map diagnostics have been completed for the controlled 50-painting subset.
+
+Notebook:
+
+`notebooks/13_difference_maps_lama_cleaned.ipynb`
+
+Main outputs:
+
+- `outputs/figures/error_maps/lama/selected_cases/`
+- `outputs/figures/error_maps/lama/all_cases/`
+- `outputs/metrics/error_map_manifest_selected_lama_50.csv`
+- `outputs/metrics/error_map_manifest_all_lama_50.csv`
+- `outputs/metrics/error_map_summary_selected_lama_50.csv`
+- `outputs/metrics/error_map_summary_all_lama_50.csv`
+
+The selected diagnostic set contains 16 cases. These include strongest and weakest masked-region MSE improvement examples, representative mixed-damage examples across categories, and one zero-control sanity case.
+
+The all-case LaMa error-map manifest contains 250 rows, one for each LaMa restoration case. All rows completed with status `ok`.
+
+The shared error-map module was updated to make the restored-output panel title model-aware, so the same plotting function can now be reused for LaMa and later restoration models.
+
+Current interpretation: LaMa now has spatial diagnostic outputs aligned with the OpenCV Telea baseline. These figures will support later model comparison and help identify where scalar metrics hide spatially localized restoration behavior.
+
 ## Stable Diffusion Inpainting
 
 Stable Diffusion Inpainting is useful because it is generative, text-conditioned, mask-aware, and seed-controllable. That makes it a strong candidate for uncertainty analysis, especially through multiple sampled restorations for the same damaged painting.

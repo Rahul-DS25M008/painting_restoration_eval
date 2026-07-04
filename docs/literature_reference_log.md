@@ -676,3 +676,40 @@ The classical metric results should therefore be interpreted together with:
 Possible thesis wording:
 
 > Classical full-reference metrics were computed for LaMa using the same region-based framework applied to OpenCV Telea. These metrics quantify numerical similarity to the known clean reference under controlled synthetic damage. However, classical metric improvement is not treated as sufficient evidence of faithful restoration, especially for learned inpainting models that may generate plausible but incorrect content.
+
+## 13. LaMa Difference/Error-Map Diagnostics
+
+### Decision supported
+
+Spatial error-map diagnostics were generated for LaMa using the same visual diagnostic framework previously applied to OpenCV Telea.
+
+This supports direct comparison between restoration models because the same clean references, damaged inputs, masks, and visualization structure are used.
+
+---
+
+### Diagnostic maps generated
+
+Each diagnostic figure contains:
+
+- clean reference image,
+- binary damage mask,
+- damaged input,
+- restored output,
+- clean-vs-damaged absolute error,
+- clean-vs-restored absolute error,
+- signed restoration improvement,
+- masked signed restoration improvement.
+
+The signed improvement map is computed by subtracting the restored error map from the damaged error map. Positive values indicate that restoration reduced error relative to the damaged input. Negative values indicate regions where the restored image became farther from the clean reference.
+
+---
+
+### Interpretation limitation
+
+Error maps provide spatial diagnostic evidence, but they are not final restoration-quality judgments.
+
+They help reveal where a model reduces pixel-level error, where residual errors remain, and where restoration may worsen local differences. However, they do not directly measure historical correctness, conservation validity, or semantic faithfulness.
+
+Possible thesis wording:
+
+> Error-map diagnostics were used to spatially localize restoration behavior. Positive signed-improvement regions indicate areas where the restored output became numerically closer to the clean reference, while negative regions identify local degradation relative to the damaged input. These maps complement scalar metrics by showing where errors occur, but they are interpreted as diagnostic evidence rather than standalone measures of restoration quality.

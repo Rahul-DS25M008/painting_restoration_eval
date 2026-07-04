@@ -278,7 +278,8 @@ def create_error_map_figure(
     axes[0, 2].axis("off")
 
     axes[0, 3].imshow(restored_img)
-    axes[0, 3].set_title("OpenCV restored")
+    restored_title = str(case_row.get("model_name", "Restored")).replace("_", " ")
+    axes[0, 3].set_title(f"{restored_title} restored")
     axes[0, 3].axis("off")
 
     damaged_error_display = axes[1, 0].imshow(
