@@ -320,6 +320,56 @@ The Stable Diffusion baseline uses a fixed prompt and negative prompt for all pa
 
 Current interpretation: the project now includes a third model family: diffusion-based generative inpainting. The next step is to apply the same metric stack used for OpenCV Telea and LaMa: classical metrics, difference/error maps, LPIPS, and CLIP/DINOv2 feature similarity.
 
+### Stable Diffusion classical metric status
+
+Classical metric evaluation has been completed for the Stable Diffusion Inpainting baseline.
+
+Notebook:
+
+`notebooks/19_metrics_classical_stable_diffusion_cleaned.ipynb`
+
+Input:
+
+`data/processed/metadata/metadata_restored_stable_diffusion.csv`
+
+Main output:
+
+`outputs/metrics/classical_metrics_stable_diffusion_50.csv`
+
+The final classical metric output contains 900 rows:
+
+- 250 full-image rows,
+- 250 content-region rows,
+- 200 masked-region rows,
+- 200 mask-bounding-box crop rows.
+
+Summary outputs:
+
+- `outputs/metrics/classical_metrics_summary_by_mask_type_stable_diffusion_50.csv`
+- `outputs/metrics/classical_metrics_summary_by_category_stable_diffusion_50.csv`
+- `outputs/metrics/classical_metrics_summary_by_region_stable_diffusion_50.csv`
+- `outputs/metrics/classical_metrics_summary_by_region_mask_type_stable_diffusion_50.csv`
+- `outputs/metrics/classical_metrics_masked_region_summary_stable_diffusion_50.csv`
+
+Diagnostic outputs:
+
+- `outputs/metrics/stable_diffusion_strongest_masked_region_cases_50.csv`
+- `outputs/metrics/stable_diffusion_weakest_masked_region_cases_50.csv`
+- `outputs/metrics/stable_diffusion_classical_metric_visual_cases_manifest_50.csv`
+- `outputs/figures/stable_diffusion_classical_metric_cases/`
+
+Final gates confirmed:
+
+- all expected metric files exist,
+- the metric table contains 900 rows,
+- all metric rows have status `ok`,
+- all expected evaluation-region counts are present,
+- mask-type/evaluation-region counts match the experiment design,
+- summary and ranking files have expected row counts,
+- selected visual figures exist.
+
+Current interpretation: Stable Diffusion now has completed restoration generation and classical metric evaluation. The next step is Stable Diffusion difference/error maps.
+
 ## SDXL Inpainting
 
 SDXL Inpainting is a higher-capacity diffusion candidate. It may produce visually stronger outputs than older Stable Diffusion models, but this can make failure harder to detect: a convincing generated patch may still be historically or structurally wrong.

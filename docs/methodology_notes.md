@@ -734,3 +734,56 @@ Additional outputs:
 The restored outputs were validated for file existence, expected image size, zero-control identity, and non-zero change from damaged input.
 
 This stage prepares Stable Diffusion for the same metric stack already applied to OpenCV Telea and LaMa.
+
+## Stable Diffusion classical metric evaluation
+
+Classical image restoration metrics were computed for the Stable Diffusion Inpainting baseline on the controlled 50-painting subset.
+
+Notebook:
+
+`notebooks/19_metrics_classical_stable_diffusion_cleaned.ipynb`
+
+Input restoration metadata:
+
+`data/processed/metadata/metadata_restored_stable_diffusion.csv`
+
+Main metric output:
+
+`outputs/metrics/classical_metrics_stable_diffusion_50.csv`
+
+The notebook computes classical metrics between:
+
+- the clean reference and damaged input,
+- the clean reference and Stable Diffusion restored output.
+
+The same evaluation regions used for OpenCV Telea and LaMa were reused:
+
+- `full_image`,
+- `content_region`,
+- `masked_region`,
+- `mask_bbox_crop`.
+
+The final output contains 900 metric rows:
+
+- 250 full-image rows,
+- 250 content-region rows,
+- 200 masked-region rows,
+- 200 mask-bounding-box crop rows.
+
+Non-zero damage cases contribute four evaluation regions per case. Zero-control cases contribute only full-image and content-region rows because they contain no damaged pixels.
+
+The notebook also generated summary tables by mask type, category, evaluation region, and evaluation-region/mask-type combination.
+
+Additional outputs:
+
+- `outputs/metrics/classical_metrics_summary_by_mask_type_stable_diffusion_50.csv`
+- `outputs/metrics/classical_metrics_summary_by_category_stable_diffusion_50.csv`
+- `outputs/metrics/classical_metrics_summary_by_region_stable_diffusion_50.csv`
+- `outputs/metrics/classical_metrics_summary_by_region_mask_type_stable_diffusion_50.csv`
+- `outputs/metrics/classical_metrics_masked_region_summary_stable_diffusion_50.csv`
+- `outputs/metrics/stable_diffusion_strongest_masked_region_cases_50.csv`
+- `outputs/metrics/stable_diffusion_weakest_masked_region_cases_50.csv`
+- `outputs/metrics/stable_diffusion_classical_metric_visual_cases_manifest_50.csv`
+- `outputs/figures/stable_diffusion_classical_metric_cases/`
+
+This stage completes the pixel-level and structural classical metric layer for Stable Diffusion and prepares the model for spatial difference/error-map analysis.

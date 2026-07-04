@@ -983,3 +983,65 @@ The model is therefore not treated as a restoration authority. It is treated as 
 Possible thesis wording:
 
 > Stable Diffusion Inpainting was included to test how a prompt-conditioned diffusion model behaves under the same controlled damage conditions as deterministic and learned inpainting baselines. A fixed prompt policy was used to reduce prompt-engineering bias. The generated outputs are interpreted as diagnostic model behavior, not as evidence of historically faithful restoration.
+
+## 19. Stable Diffusion Classical Metric Evaluation
+
+### Decision supported
+
+Stable Diffusion Inpainting was evaluated using the same classical metric structure previously applied to OpenCV Telea and LaMa.
+
+This keeps the evaluation framework model-agnostic and allows direct comparison between:
+
+- deterministic inpainting,
+- learned pretrained inpainting,
+- diffusion-based generative inpainting.
+
+---
+
+### Metric design
+
+The classical metric notebook computes pixel-level and structural restoration measurements between:
+
+- clean reference and damaged input,
+- clean reference and Stable Diffusion restored output.
+
+The evaluated regions are:
+
+- full image,
+- content region,
+- masked damaged region,
+- mask bounding-box crop.
+
+The masked-region metrics are the most direct local measure of synthetic damage repair because they evaluate only the damaged pixels.
+
+---
+
+### Output design
+
+The final metric table contains 900 rows.
+
+Non-zero damage masks contribute four region rows per case:
+
+- full image,
+- content region,
+- masked region,
+- mask bounding-box crop.
+
+Zero-control masks contribute only:
+
+- full image,
+- content region.
+
+This keeps zero-control cases useful for sanity checking without inventing a masked-region metric where no damaged pixels exist.
+
+---
+
+### Interpretation limitation
+
+Classical metrics measure pixel-level and structural similarity. They are useful for controlled comparison but are not sufficient to judge restoration quality in paintings.
+
+For Stable Diffusion specifically, a generated result may look plausible while receiving weak classical scores if it changes valid texture, color, or structure. Conversely, a strong classical score does not guarantee art-historical or conservation faithfulness.
+
+Possible thesis wording:
+
+> Classical metrics were used as a controlled low-level comparison layer for Stable Diffusion Inpainting. Because diffusion models may generate plausible but non-faithful content, these metrics are interpreted as diagnostic signals rather than final restoration-quality judgments.
