@@ -927,3 +927,59 @@ These cases are especially important for the thesis because they show that pixel
 Possible thesis wording:
 
 > The OpenCV Telea versus LaMa comparison demonstrates why AI-assisted painting restoration should not be evaluated with a single scalar metric. A model may improve local pixel error while failing to improve perceptual or feature-space similarity. The framework therefore treats metric disagreement as diagnostic evidence rather than noise.
+
+## 18. Stable Diffusion Inpainting Restoration Generation
+
+### Decision supported
+
+Stable Diffusion Inpainting was added as the first diffusion-based generative inpainting baseline in the controlled 50-painting evaluation framework.
+
+This extends the model coverage beyond:
+
+- deterministic local interpolation: OpenCV Telea,
+- learned pretrained inpainting: LaMa,
+
+to include:
+
+- prompt-conditioned diffusion-based generative inpainting: Stable Diffusion Inpainting.
+
+---
+
+### Model and prompt policy
+
+The baseline uses:
+
+`runwayml/stable-diffusion-inpainting`
+
+A fixed prompt and fixed negative prompt were used across all paintings. This avoids adapting prompts per artwork and reduces prompt-engineering bias.
+
+The fixed prompt asks the model to restore the damaged painting area while preserving style, color, brushwork, composition, and surrounding context.
+
+The fixed negative prompt discourages modern objects, text, watermarks, altered faces, extra objects, cartoon-like outputs, digital-art artifacts, and unrealistic texture.
+
+---
+
+### Inference design
+
+The Stable Diffusion baseline was run with:
+
+- seed: `2026`,
+- inference steps: `30`,
+- guidance scale: `7.5`,
+- inference size: `512 × 512`.
+
+The 512 × 512 inference resolution was selected for GPU memory stability. Outputs were resized back to the processed image size for downstream metric compatibility.
+
+Zero-control cases were copied directly rather than passed through the model. This preserves the zero-control sanity-check role and avoids introducing arbitrary generative changes where no damage exists.
+
+---
+
+### Interpretation limitation
+
+Stable Diffusion Inpainting is prompt-conditioned and generative. Its outputs may appear plausible while still being historically inaccurate, structurally inconsistent, or conservation-inappropriate.
+
+The model is therefore not treated as a restoration authority. It is treated as a generative baseline whose outputs will be evaluated using the same classical, perceptual, feature-space, and visual diagnostic framework applied to OpenCV Telea and LaMa.
+
+Possible thesis wording:
+
+> Stable Diffusion Inpainting was included to test how a prompt-conditioned diffusion model behaves under the same controlled damage conditions as deterministic and learned inpainting baselines. A fixed prompt policy was used to reduce prompt-engineering bias. The generated outputs are interpreted as diagnostic model behavior, not as evidence of historically faithful restoration.

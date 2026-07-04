@@ -664,3 +664,73 @@ A compact overall metric vote was also added. This vote is used only as a diagno
 Metric disagreement cases were explicitly exported. These include cases where one model wins pixel-level or perceptual metrics but loses feature-space similarity. This supports the central evaluation-framework argument that restoration behavior cannot be reliably summarized by a single scalar metric family.
 
 The comparison report uses embedded visual figures so that it can be opened as a standalone HTML artifact.
+
+## Stable Diffusion Inpainting restoration generation
+
+Stable Diffusion Inpainting restoration outputs were generated for the controlled 50-painting subset.
+
+Notebook:
+
+`notebooks/18_stable_diffusion_restoration_cleaned.ipynb`
+
+Module:
+
+`src/restoration_eval/restoration_stable_diffusion.py`
+
+Model:
+
+`runwayml/stable-diffusion-inpainting`
+
+Internal model name:
+
+`stable_diffusion_inpainting`
+
+Main restoration output directory:
+
+`data/processed/restored/stable_diffusion_inpainting/`
+
+Main restoration metadata output:
+
+`data/processed/metadata/metadata_restored_stable_diffusion.csv`
+
+The Stable Diffusion baseline was added as the first diffusion-based generative inpainting model after the deterministic OpenCV Telea baseline and the learned LaMa baseline.
+
+A fixed prompt and fixed negative prompt were used for all paintings to reduce prompt-engineering bias.
+
+Prompt:
+
+`restore the missing damaged area of the painting, preserve the original style, colors, brushwork, composition, and surrounding visual context`
+
+Negative prompt:
+
+`modern objects, text, watermark, signature, frame, border, people added, face changed, extra objects, oversharpened, cartoon, digital art, photorealistic, unrealistic texture`
+
+Inference settings:
+
+- seed: `2026`
+- inference steps: `30`
+- guidance scale: `7.5`
+- inference size: `512 × 512`
+- device: CUDA GPU where available
+
+The model inference resolution was set to 512 × 512 for memory stability. Final restored outputs were resized back to the processed image size so that downstream metrics remain comparable with OpenCV Telea and LaMa.
+
+The final restoration metadata contains 250 rows:
+
+- 200 non-zero damage cases processed through Stable Diffusion Inpainting,
+- 50 zero-control cases copied directly from the damaged input.
+
+Zero-control cases were not passed through the diffusion model because they contain no damaged region. This matches the policy used for LaMa and avoids introducing unnecessary generative changes.
+
+Additional outputs:
+
+- `outputs/metrics/stable_diffusion_restoration_overview_summary_50.csv`
+- `outputs/metrics/stable_diffusion_restoration_by_mask_type_summary_50.csv`
+- `outputs/metrics/stable_diffusion_restoration_by_inference_mode_summary_50.csv`
+- `outputs/metrics/stable_diffusion_restoration_validation_summary_50.csv`
+- `outputs/metrics/stable_diffusion_selected_visual_inspection_manifest_50.csv`
+- `outputs/figures/stable_diffusion_restoration_selected_cases/`
+
+The restored outputs were validated for file existence, expected image size, zero-control identity, and non-zero change from damaged input.
+
+This stage prepares Stable Diffusion for the same metric stack already applied to OpenCV Telea and LaMa.

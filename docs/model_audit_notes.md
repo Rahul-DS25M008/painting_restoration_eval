@@ -273,6 +273,53 @@ The main risk is hallucination. The model may create visually plausible content 
 
 Decision: keep as a candidate for later uncertainty analysis, not the next immediate model.
 
+### Stable Diffusion Inpainting restoration status
+
+Stable Diffusion Inpainting restoration generation has been completed for the controlled 50-painting subset.
+
+Notebook:
+
+`notebooks/18_stable_diffusion_restoration_cleaned.ipynb`
+
+Module:
+
+`src/restoration_eval/restoration_stable_diffusion.py`
+
+Model:
+
+`runwayml/stable-diffusion-inpainting`
+
+Internal model name:
+
+`stable_diffusion_inpainting`
+
+Main outputs:
+
+- `data/processed/restored/stable_diffusion_inpainting/`
+- `data/processed/metadata/metadata_restored_stable_diffusion.csv`
+- `outputs/metrics/stable_diffusion_restoration_overview_summary_50.csv`
+- `outputs/metrics/stable_diffusion_restoration_by_mask_type_summary_50.csv`
+- `outputs/metrics/stable_diffusion_restoration_by_inference_mode_summary_50.csv`
+- `outputs/metrics/stable_diffusion_restoration_validation_summary_50.csv`
+- `outputs/metrics/stable_diffusion_selected_visual_inspection_manifest_50.csv`
+- `outputs/figures/stable_diffusion_restoration_selected_cases/`
+
+The restoration metadata contains 250 rows:
+
+- 200 model-inference rows,
+- 50 copied zero-control rows.
+
+All restored outputs passed validation for:
+
+- restored file existence,
+- expected output size,
+- zero-control identity against damaged input,
+- non-zero output change from damaged input.
+
+The Stable Diffusion baseline uses a fixed prompt and negative prompt for all paintings. This keeps the run reproducible and reduces prompt-engineering bias.
+
+Current interpretation: the project now includes a third model family: diffusion-based generative inpainting. The next step is to apply the same metric stack used for OpenCV Telea and LaMa: classical metrics, difference/error maps, LPIPS, and CLIP/DINOv2 feature similarity.
+
 ## SDXL Inpainting
 
 SDXL Inpainting is a higher-capacity diffusion candidate. It may produce visually stronger outputs than older Stable Diffusion models, but this can make failure harder to detect: a convincing generated patch may still be historically or structurally wrong.
