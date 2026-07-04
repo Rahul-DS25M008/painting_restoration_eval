@@ -148,6 +148,30 @@ The shared error-map module was updated to make the restored-output panel title 
 
 Current interpretation: LaMa now has spatial diagnostic outputs aligned with the OpenCV Telea baseline. These figures will support later model comparison and help identify where scalar metrics hide spatially localized restoration behavior.
 
+### LPIPS perceptual metric status
+
+LaMa LPIPS perceptual metric evaluation has been completed for the controlled 50-painting subset.
+
+Notebook:
+
+`notebooks/14_lpips_metrics_lama_cleaned.ipynb`
+
+Main output:
+
+`outputs/metrics/lpips_metrics_lama_50.csv`
+
+The evaluation produced 700 LPIPS rows:
+
+- 250 full-image rows,
+- 250 content-region rows,
+- 200 mask-bounding-box crop rows.
+
+The evaluated LPIPS regions match the OpenCV Telea LPIPS setup, enabling later direct model comparison.
+
+Additional outputs include summary CSVs by mask type, category, region, region-mask type, and category-region grouping. Strongest and weakest LaMa cases by mask-bounding-box LPIPS improvement were also exported.
+
+Current interpretation: LaMa now has a perceptual similarity evaluation layer in addition to classical metrics and spatial error-map diagnostics. These LPIPS results will support later comparison against OpenCV Telea and future diffusion-based inpainting models.
+
 ## Stable Diffusion Inpainting
 
 Stable Diffusion Inpainting is useful because it is generative, text-conditioned, mask-aware, and seed-controllable. That makes it a strong candidate for uncertainty analysis, especially through multiple sampled restorations for the same damaged painting.

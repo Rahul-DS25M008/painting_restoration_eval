@@ -1,0 +1,4 @@
+evaluation_region,rows,cases,mean_damaged_lpips,mean_restored_lpips,mean_lpips_improvement,median_damaged_lpips,median_restored_lpips,median_lpips_improvement,improvement_rate,mean_region_pixel_count
+content_region,250,250,0.20812,0.02044,0.18767,0.2035,0.00767,0.17931,0.8,454656.0
+full_image,250,250,0.17717,0.01575,0.16142,0.17143,0.0056,0.14604,0.8,589824.0
+mask_bbox_crop,200,200,0.31303,0.05321,0.25982,0.29492,0.01529,0.25834,1.0,434875.19

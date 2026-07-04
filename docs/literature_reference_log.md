@@ -713,3 +713,52 @@ They help reveal where a model reduces pixel-level error, where residual errors 
 Possible thesis wording:
 
 > Error-map diagnostics were used to spatially localize restoration behavior. Positive signed-improvement regions indicate areas where the restored output became numerically closer to the clean reference, while negative regions identify local degradation relative to the damaged input. These maps complement scalar metrics by showing where errors occur, but they are interpreted as diagnostic evidence rather than standalone measures of restoration quality.
+
+## 14. LaMa LPIPS Perceptual Metric Evaluation
+
+### Decision supported
+
+LaMa was evaluated with LPIPS using the same perceptual metric framework previously applied to OpenCV Telea.
+
+This supports direct model comparison because both models are evaluated against the same clean references, damaged inputs, masks, and spatial evaluation regions.
+
+---
+
+### Metric interpretation
+
+LPIPS measures perceptual distance between two images using deep neural network feature activations. Lower LPIPS indicates higher perceptual similarity.
+
+For this project, LPIPS is computed for:
+
+- clean reference versus damaged input,
+- clean reference versus restored output.
+
+LPIPS improvement is defined as:
+
+`damaged_lpips - restored_lpips`
+
+A positive value indicates that the restoration moved the image closer to the clean reference in LPIPS space.
+
+---
+
+### Evaluation regions
+
+LPIPS is computed over image-like regions:
+
+- full image,
+- content region,
+- mask bounding-box crop.
+
+Sparse masked pixels are not evaluated directly with LPIPS because LPIPS expects spatial image patches rather than unordered pixel sets. The mask bounding-box crop provides a local image region around the damage while preserving spatial structure.
+
+---
+
+### Interpretation limitation
+
+LPIPS provides a perceptual similarity signal, but it is not a conservation-specific or historically grounded restoration metric.
+
+A better LPIPS score does not necessarily mean that a restoration is historically accurate, semantically faithful, or acceptable for conservation use. It indicates perceptual closeness to the known clean reference under controlled synthetic damage.
+
+Possible thesis wording:
+
+> LPIPS was included to complement pixel-level metrics with a perceptual similarity measure. Since LPIPS operates on spatial image patches, it was computed over the full image, content region, and mask-bounding-box crop rather than sparse masked pixels. The resulting scores help identify whether restoration outputs are perceptually closer to the clean reference, but they are interpreted alongside classical metrics, feature-space metrics, and visual diagnostics rather than as standalone evidence of restoration quality.
