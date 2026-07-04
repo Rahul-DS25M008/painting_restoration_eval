@@ -860,3 +860,70 @@ LaMa is treated as a learned pretrained inpainting baseline. The report does not
 Possible thesis wording:
 
 > The LaMa baseline report consolidates scalar metrics and spatial diagnostics into a single model-specific artifact. It is used to inspect learned inpainting behavior across damage types and painting categories, while preserving the distinction between numerical improvement, perceptual similarity, feature-space alignment, and conservation-level restoration faithfulness.
+
+## 17. OpenCV Telea versus LaMa Comparison
+
+### Decision supported
+
+A direct comparison between OpenCV Telea and LaMa was generated to evaluate two different restoration paradigms under the same controlled experimental setup.
+
+The compared model families are:
+
+- deterministic local interpolation: OpenCV Telea,
+- learned pretrained inpainting: LaMa.
+
+This comparison supports the thesis goal of building a trustworthy evaluation framework rather than only reporting isolated model scores.
+
+---
+
+### Comparison design
+
+The comparison is case-paired. Each OpenCV Telea output is matched to the corresponding LaMa output using:
+
+- `painting_id`,
+- `mask_id`,
+- `mask_type`.
+
+This ensures that both models are evaluated on identical paintings, masks, damaged inputs, and clean references.
+
+The main local comparison uses:
+
+- masked-region classical metrics,
+- mask-bounding-box LPIPS metrics,
+- mask-bounding-box CLIP and DINOv2 feature-space metrics.
+
+The resulting unified comparison table contains 200 non-zero damage cases.
+
+---
+
+### Metric deltas and winners
+
+For each paired case, LaMa-minus-OpenCV deltas were computed for the main metric improvements.
+
+Winner columns were added for:
+
+- masked-region MSE improvement,
+- mask-bounding-box LPIPS improvement,
+- mask-bounding-box CLIP similarity improvement,
+- mask-bounding-box DINOv2 similarity improvement.
+
+A compact overall metric vote was computed from these winner columns. This vote is interpreted only as a diagnostic summary, not as a final restoration-quality label.
+
+---
+
+### Metric disagreement analysis
+
+Metric disagreement cases were exported separately.
+
+These cases include examples where:
+
+- LaMa improves MSE more than OpenCV but loses DINOv2 feature similarity,
+- LaMa improves LPIPS more than OpenCV but loses DINOv2 feature similarity,
+- the two models split wins across metric families,
+- the overall metric vote is mixed or tied.
+
+These cases are especially important for the thesis because they show that pixel-level, perceptual, and feature-space metrics can expose different restoration behaviors.
+
+Possible thesis wording:
+
+> The OpenCV Telea versus LaMa comparison demonstrates why AI-assisted painting restoration should not be evaluated with a single scalar metric. A model may improve local pixel error while failing to improve perceptual or feature-space similarity. The framework therefore treats metric disagreement as diagnostic evidence rather than noise.

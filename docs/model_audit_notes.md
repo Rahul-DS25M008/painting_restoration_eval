@@ -232,6 +232,39 @@ The HTML report uses embedded images so that diagnostic figures display correctl
 
 Current interpretation: LaMa now has a standalone baseline report parallel to the OpenCV Telea report. The next methodological step is direct OpenCV Telea versus LaMa comparison using the aligned metric outputs and diagnostic case selections.
 
+### OpenCV Telea versus LaMa comparison status
+
+The direct OpenCV Telea versus LaMa comparison has been completed for the controlled 50-painting subset.
+
+Notebook:
+
+`notebooks/17_compare_opencv_lama_cleaned.ipynb`
+
+Main report:
+
+`outputs/reports/opencv_vs_lama_comparison_report_50.html`
+
+The comparison produced paired outputs for:
+
+- restoration metadata alignment,
+- classical metrics,
+- LPIPS metrics,
+- CLIP and DINOv2 feature-space metrics,
+- unified local-region comparison,
+- metric disagreement cases,
+- selected visual comparison cases,
+- standalone HTML comparison report.
+
+The unified local comparison table contains 200 non-zero damage cases and compares:
+
+- masked-region classical metrics,
+- mask-bounding-box LPIPS metrics,
+- mask-bounding-box CLIP/DINOv2 metrics.
+
+The comparison explicitly tracks metric winners and disagreements. This allows the project to identify cases where OpenCV and LaMa differ not only in aggregate performance but also across metric families.
+
+Current interpretation: the project now has its first direct cross-model comparison between a deterministic classical interpolation baseline and a learned pretrained inpainting baseline. This is the first major framework-level result and prepares the project for the next model-family extension: diffusion-based inpainting.
+
 ## Stable Diffusion Inpainting
 
 Stable Diffusion Inpainting is useful because it is generative, text-conditioned, mask-aware, and seed-controllable. That makes it a strong candidate for uncertainty analysis, especially through multiple sampled restorations for the same damaged painting.

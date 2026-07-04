@@ -608,3 +608,59 @@ The report uses embedded images so that the HTML file can be opened independentl
 The LaMa report is model-specific and uses LaMa-specific wording rather than reusing the OpenCV report text directly. This avoids conflating the deterministic OpenCV Telea baseline with the learned LaMa inpainting baseline.
 
 This stage completes the standalone LaMa baseline evaluation and prepares the project for direct OpenCV Telea versus LaMa comparison.
+
+## OpenCV Telea versus LaMa comparison
+
+A direct OpenCV Telea versus LaMa comparison was generated after both baselines had completed the same evaluation stack.
+
+Notebook:
+
+`notebooks/17_compare_opencv_lama_cleaned.ipynb`
+
+Main report output:
+
+`outputs/reports/opencv_vs_lama_comparison_report_50.html`
+
+Main comparison outputs:
+
+- `outputs/metrics/model_pairing_opencv_lama_50.csv`
+- `outputs/metrics/comparison_classical_opencv_lama_50.csv`
+- `outputs/metrics/comparison_lpips_opencv_lama_50.csv`
+- `outputs/metrics/comparison_feature_similarity_opencv_lama_50.csv`
+- `outputs/metrics/comparison_unified_opencv_lama_50.csv`
+- `outputs/metrics/comparison_summary_by_mask_type_opencv_lama_50.csv`
+- `outputs/metrics/comparison_summary_by_category_opencv_lama_50.csv`
+- `outputs/metrics/comparison_win_rates_opencv_lama_50.csv`
+- `outputs/metrics/comparison_metric_disagreement_cases_opencv_lama_50.csv`
+- `outputs/metrics/comparison_visual_cases_opencv_lama_50.csv`
+
+Visual comparison figures:
+
+`outputs/figures/model_comparison/opencv_vs_lama/`
+
+The comparison is case-paired using:
+
+- `painting_id`,
+- `mask_id`,
+- `mask_type`.
+
+This ensures that OpenCV Telea and LaMa are compared on the same paintings, synthetic masks, damaged inputs, and clean references.
+
+The unified local comparison table contains 200 non-zero damage cases. It combines:
+
+- masked-region classical metrics,
+- mask-bounding-box LPIPS metrics,
+- mask-bounding-box CLIP and DINOv2 feature-space metrics.
+
+For each case, LaMa-minus-OpenCV deltas were computed for the main improvement metrics. Winner columns were added for:
+
+- MSE improvement,
+- LPIPS improvement,
+- CLIP feature-similarity improvement,
+- DINOv2 feature-similarity improvement.
+
+A compact overall metric vote was also added. This vote is used only as a diagnostic summary and is not interpreted as a conservation-level quality judgment.
+
+Metric disagreement cases were explicitly exported. These include cases where one model wins pixel-level or perceptual metrics but loses feature-space similarity. This supports the central evaluation-framework argument that restoration behavior cannot be reliably summarized by a single scalar metric family.
+
+The comparison report uses embedded visual figures so that it can be opened as a standalone HTML artifact.
