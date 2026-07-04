@@ -172,6 +172,35 @@ Additional outputs include summary CSVs by mask type, category, region, region-m
 
 Current interpretation: LaMa now has a perceptual similarity evaluation layer in addition to classical metrics and spatial error-map diagnostics. These LPIPS results will support later comparison against OpenCV Telea and future diffusion-based inpainting models.
 
+### CLIP and DINOv2 feature-space similarity status
+
+LaMa CLIP and DINOv2 feature-space similarity evaluation has been completed for the controlled 50-painting subset.
+
+Notebook:
+
+`notebooks/15_feature_similarity_lama_cleaned.ipynb`
+
+Main output:
+
+`outputs/metrics/feature_similarity_lama_50.csv`
+
+The evaluation produced 700 feature-similarity rows:
+
+- 250 full-image rows,
+- 250 content-region rows,
+- 200 mask-bounding-box crop rows.
+
+The evaluated feature models are:
+
+- CLIP: `openai/clip-vit-base-patch32`,
+- DINOv2: `dinov2_vits14`.
+
+The evaluated regions match the OpenCV Telea feature-similarity setup, enabling later direct model comparison.
+
+Additional outputs include summary CSVs by mask type, category, region, region-mask type, and category-region grouping. Strongest and weakest LaMa cases were exported separately for DINOv2 and CLIP feature-similarity improvement.
+
+Current interpretation: LaMa now has classical metrics, spatial error-map diagnostics, LPIPS perceptual metrics, and CLIP/DINOv2 feature-space metrics. This makes the LaMa evaluation stack nearly parallel with the completed OpenCV Telea baseline and prepares both models for direct comparison.
+
 ## Stable Diffusion Inpainting
 
 Stable Diffusion Inpainting is useful because it is generative, text-conditioned, mask-aware, and seed-controllable. That makes it a strong candidate for uncertainty analysis, especially through multiple sampled restorations for the same damaged painting.

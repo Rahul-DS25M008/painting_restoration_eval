@@ -762,3 +762,63 @@ A better LPIPS score does not necessarily mean that a restoration is historicall
 Possible thesis wording:
 
 > LPIPS was included to complement pixel-level metrics with a perceptual similarity measure. Since LPIPS operates on spatial image patches, it was computed over the full image, content region, and mask-bounding-box crop rather than sparse masked pixels. The resulting scores help identify whether restoration outputs are perceptually closer to the clean reference, but they are interpreted alongside classical metrics, feature-space metrics, and visual diagnostics rather than as standalone evidence of restoration quality.
+
+## 15. LaMa CLIP and DINOv2 Feature-Space Similarity Evaluation
+
+### Decision supported
+
+LaMa was evaluated with CLIP and DINOv2 feature-space similarity using the same framework previously applied to OpenCV Telea.
+
+This supports direct model comparison because both baselines are evaluated against the same clean references, damaged inputs, masks, and spatial evaluation regions.
+
+---
+
+### Metrics used
+
+The feature-space metrics are based on cosine similarity between feature embeddings.
+
+For each evaluated region, similarities are computed for:
+
+- clean reference versus damaged input,
+- clean reference versus restored output.
+
+Feature-similarity improvement is defined as:
+
+`restored_similarity - damaged_similarity`
+
+A positive value indicates that the restored output moved closer to the clean reference in the selected feature space.
+
+---
+
+### Models used
+
+The feature models are:
+
+- CLIP: `openai/clip-vit-base-patch32`,
+- DINOv2: `dinov2_vits14`.
+
+CLIP provides a broad image-text pretrained visual representation. DINOv2 provides a self-supervised visual representation that can be useful for structural and visual similarity analysis.
+
+---
+
+### Evaluation regions
+
+Feature-space similarity is computed over image-like regions:
+
+- full image,
+- content region,
+- mask bounding-box crop.
+
+Sparse masked pixels are not evaluated directly because CLIP and DINOv2 expect spatial image inputs rather than unordered pixel sets. The mask bounding-box crop provides a local image region around the damage while preserving spatial structure.
+
+---
+
+### Interpretation limitation
+
+CLIP and DINOv2 similarities provide feature-space evidence, but they are not conservation-specific measures.
+
+Higher feature similarity does not necessarily mean that a restoration is historically accurate, semantically faithful, or acceptable for conservation use. These metrics are interpreted together with classical metrics, LPIPS, spatial error maps, and selected visual diagnostics.
+
+Possible thesis wording:
+
+> CLIP and DINOv2 feature-space similarities were included to complement pixel-level and perceptual metrics with pretrained visual representations. Similarity improvements indicate whether restored outputs move closer to the clean reference in feature space. However, these models are not trained specifically for painting conservation, so their scores are interpreted as diagnostic signals rather than standalone evidence of restoration quality.
