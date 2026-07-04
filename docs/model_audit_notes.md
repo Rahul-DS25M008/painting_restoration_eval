@@ -201,6 +201,37 @@ Additional outputs include summary CSVs by mask type, category, region, region-m
 
 Current interpretation: LaMa now has classical metrics, spatial error-map diagnostics, LPIPS perceptual metrics, and CLIP/DINOv2 feature-space metrics. This makes the LaMa evaluation stack nearly parallel with the completed OpenCV Telea baseline and prepares both models for direct comparison.
 
+### Standalone report status
+
+The standalone LaMa baseline report has been completed for the controlled 50-painting subset.
+
+Notebook:
+
+`notebooks/16_generate_report_lama_cleaned.ipynb`
+
+Main report output:
+
+`outputs/reports/lama_baseline_report_50.html`
+
+Additional outputs:
+
+- `outputs/metrics/lama_report_dataframe_50.csv`
+- `outputs/metrics/lama_report_selected_cases_50.csv`
+
+The report consolidates the completed LaMa evaluation stack:
+
+- restoration outputs,
+- classical metrics,
+- difference/error-map diagnostics,
+- LPIPS perceptual metrics,
+- CLIP and DINOv2 feature-space metrics.
+
+The report focuses on the 200 non-zero damage cases and excludes zero-control cases from the main report dataframe. Zero-control cases remain part of the validation workflow.
+
+The HTML report uses embedded images so that diagnostic figures display correctly when the report is opened independently.
+
+Current interpretation: LaMa now has a standalone baseline report parallel to the OpenCV Telea report. The next methodological step is direct OpenCV Telea versus LaMa comparison using the aligned metric outputs and diagnostic case selections.
+
 ## Stable Diffusion Inpainting
 
 Stable Diffusion Inpainting is useful because it is generative, text-conditioned, mask-aware, and seed-controllable. That makes it a strong candidate for uncertainty analysis, especially through multiple sampled restorations for the same damaged painting.

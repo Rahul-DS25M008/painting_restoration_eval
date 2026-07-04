@@ -575,3 +575,36 @@ The notebook also exports strongest and weakest LaMa cases by feature-space simi
 Feature-similarity improvement is computed as restored similarity minus damaged similarity. Positive improvement therefore means that the restored output is closer to the clean reference in the selected feature space.
 
 These results complete the LaMa feature-space evaluation layer and prepare LaMa for later direct comparison with OpenCV Telea and future generative inpainting baselines.
+
+## LaMa standalone baseline report
+
+A standalone LaMa baseline report was generated after completing the LaMa restoration, classical metric, error-map, LPIPS, and CLIP/DINOv2 feature-similarity stages.
+
+Notebook:
+
+`notebooks/16_generate_report_lama_cleaned.ipynb`
+
+Main report output:
+
+`outputs/reports/lama_baseline_report_50.html`
+
+Additional report outputs:
+
+- `outputs/metrics/lama_report_dataframe_50.csv`
+- `outputs/metrics/lama_report_selected_cases_50.csv`
+
+The report consolidates the LaMa evaluation stack for the controlled 50-painting subset, including:
+
+- LaMa restoration metadata,
+- masked-region classical metrics,
+- mask-bounding-box LPIPS metrics,
+- mask-bounding-box CLIP and DINOv2 feature-space metrics,
+- selected diagnostic error-map figures.
+
+The report focuses on the 200 non-zero damage cases. Zero-control cases remain part of the metric validation workflow, but are excluded from the main report dataframe because they contain no damaged region.
+
+The report uses embedded images so that the HTML file can be opened independently without relying on relative image paths. This makes the report easier to inspect and share as a standalone artifact.
+
+The LaMa report is model-specific and uses LaMa-specific wording rather than reusing the OpenCV report text directly. This avoids conflating the deterministic OpenCV Telea baseline with the learned LaMa inpainting baseline.
+
+This stage completes the standalone LaMa baseline evaluation and prepares the project for direct OpenCV Telea versus LaMa comparison.

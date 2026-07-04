@@ -822,3 +822,41 @@ Higher feature similarity does not necessarily mean that a restoration is histor
 Possible thesis wording:
 
 > CLIP and DINOv2 feature-space similarities were included to complement pixel-level and perceptual metrics with pretrained visual representations. Similarity improvements indicate whether restored outputs move closer to the clean reference in feature space. However, these models are not trained specifically for painting conservation, so their scores are interpreted as diagnostic signals rather than standalone evidence of restoration quality.
+
+## 16. LaMa Standalone Baseline Report
+
+### Decision supported
+
+A standalone LaMa baseline report was generated to consolidate the model's evaluation results across classical, perceptual, feature-space, and visual diagnostic evidence.
+
+This report supports the broader evaluation-framework goal by showing how one learned inpainting baseline behaves across multiple metric families and painting categories.
+
+---
+
+### Report scope
+
+The LaMa report focuses on the 200 non-zero damage cases from the controlled 50-painting subset.
+
+The report combines:
+
+- masked-region classical metrics,
+- mask-bounding-box LPIPS metrics,
+- mask-bounding-box CLIP and DINOv2 feature-space metrics,
+- selected diagnostic error-map figures,
+- summaries by mask type and painting category,
+- metric correlation analysis,
+- selected strongest and weakest diagnostic cases.
+
+Zero-control cases are excluded from the main report dataframe because they contain no damaged region, but they remain part of the metric validation notebooks.
+
+---
+
+### Interpretation limitation
+
+The standalone report is a diagnostic summary, not a final restoration-quality judgment.
+
+LaMa is treated as a learned pretrained inpainting baseline. The report does not claim that LaMa produces historically faithful painting restoration. Instead, it evaluates whether the framework can reveal where LaMa improves, fails, or produces disagreement across metric families.
+
+Possible thesis wording:
+
+> The LaMa baseline report consolidates scalar metrics and spatial diagnostics into a single model-specific artifact. It is used to inspect learned inpainting behavior across damage types and painting categories, while preserving the distinction between numerical improvement, perceptual similarity, feature-space alignment, and conservation-level restoration faithfulness.
