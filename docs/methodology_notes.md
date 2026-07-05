@@ -787,3 +787,47 @@ Additional outputs:
 - `outputs/figures/stable_diffusion_classical_metric_cases/`
 
 This stage completes the pixel-level and structural classical metric layer for Stable Diffusion and prepares the model for spatial difference/error-map analysis.
+
+## Stable Diffusion difference and error-map diagnostics
+
+Spatial difference/error-map diagnostics were generated for the Stable Diffusion Inpainting baseline on the controlled 50-painting subset.
+
+Notebook:
+
+`notebooks/20_difference_maps_stable_diffusion_cleaned.ipynb`
+
+Inputs:
+
+- `data/processed/metadata/metadata_restored_stable_diffusion.csv`
+- `outputs/metrics/classical_metrics_stable_diffusion_50.csv`
+
+Main outputs:
+
+- `outputs/metrics/error_map_manifest_stable_diffusion_50.csv`
+- `outputs/metrics/error_map_summary_by_mask_type_stable_diffusion_50.csv`
+- `outputs/metrics/error_map_summary_by_category_stable_diffusion_50.csv`
+- `outputs/metrics/stable_diffusion_error_map_visual_cases_50.csv`
+- `outputs/figures/error_maps/stable_diffusion_inpainting/`
+
+The generated figures compare:
+
+- clean reference,
+- damage mask,
+- damaged input,
+- Stable Diffusion restored output,
+- clean-vs-damaged absolute error,
+- clean-vs-restored absolute error,
+- signed improvement map,
+- masked signed improvement map.
+
+Positive signed improvement indicates that the restored output is closer to the clean reference than the damaged input. Negative signed improvement indicates that the restored output is farther from the clean reference than the damaged input.
+
+A fixed diagnostic case-selection policy was used to avoid manual cherry-picking. Selected cases include:
+
+- best cases by masked-region MSE improvement,
+- worst cases by masked-region MSE improvement,
+- median representative cases,
+- classical metric-disagreement cases,
+- category/mask representative cases.
+
+This stage provides spatial evidence for where Stable Diffusion improves damage regions, where it fails, and where it may introduce new visual errors outside or around the mask.

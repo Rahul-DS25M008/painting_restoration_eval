@@ -370,6 +370,45 @@ Final gates confirmed:
 
 Current interpretation: Stable Diffusion now has completed restoration generation and classical metric evaluation. The next step is Stable Diffusion difference/error maps.
 
+### Stable Diffusion difference/error-map status
+
+Difference and error-map diagnostics have been completed for the Stable Diffusion Inpainting baseline.
+
+Notebook:
+
+`notebooks/20_difference_maps_stable_diffusion_cleaned.ipynb`
+
+Inputs:
+
+- `data/processed/metadata/metadata_restored_stable_diffusion.csv`
+- `outputs/metrics/classical_metrics_stable_diffusion_50.csv`
+
+Main outputs:
+
+- `outputs/metrics/error_map_manifest_stable_diffusion_50.csv`
+- `outputs/metrics/error_map_summary_by_mask_type_stable_diffusion_50.csv`
+- `outputs/metrics/error_map_summary_by_category_stable_diffusion_50.csv`
+- `outputs/metrics/stable_diffusion_error_map_visual_cases_50.csv`
+- `outputs/figures/error_maps/stable_diffusion_inpainting/`
+
+The diagnostic case selection used a fixed policy:
+
+- best masked-region MSE improvement,
+- worst masked-region MSE improvement,
+- median representative masked-region improvement,
+- classical metric disagreement,
+- category/mask representative cases.
+
+Final gates confirmed:
+
+- all expected error-map files exist,
+- selected visual diagnostic cases were saved,
+- generated error-map figures exist,
+- summary outputs by mask type and category were saved,
+- all expected selection-policy categories are represented.
+
+Current interpretation: Stable Diffusion now has completed restoration generation, classical metric evaluation, and spatial error-map diagnostics. The next step is Stable Diffusion LPIPS evaluation.
+
 ## SDXL Inpainting
 
 SDXL Inpainting is a higher-capacity diffusion candidate. It may produce visually stronger outputs than older Stable Diffusion models, but this can make failure harder to detect: a convincing generated patch may still be historically or structurally wrong.

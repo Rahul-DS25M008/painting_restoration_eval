@@ -1045,3 +1045,47 @@ For Stable Diffusion specifically, a generated result may look plausible while r
 Possible thesis wording:
 
 > Classical metrics were used as a controlled low-level comparison layer for Stable Diffusion Inpainting. Because diffusion models may generate plausible but non-faithful content, these metrics are interpreted as diagnostic signals rather than final restoration-quality judgments.
+
+## 20. Stable Diffusion Difference and Error-Map Diagnostics
+
+### Decision supported
+
+Stable Diffusion Inpainting was evaluated with spatial difference/error-map diagnostics after classical metric computation.
+
+This diagnostic layer supports interpretation beyond aggregate scores by localizing where restoration improved or worsened relative to the clean reference.
+
+---
+
+### Diagnostic design
+
+The generated figures compare the clean reference, damage mask, damaged input, restored output, damaged absolute error, restored absolute error, signed improvement, and masked signed improvement.
+
+Signed improvement is used to identify spatial regions where restoration reduces or increases error relative to the damaged input.
+
+This is especially relevant for generative inpainting models because a generated output may look plausible while still changing valid image structure, texture, or color.
+
+---
+
+### Case-selection policy
+
+Visual diagnostic cases were selected using a fixed policy rather than manual visual preference.
+
+The policy includes:
+
+- best cases by masked-region MSE improvement,
+- worst cases by masked-region MSE improvement,
+- median representative cases,
+- classical metric-disagreement cases,
+- category/mask representative cases.
+
+This supports more balanced qualitative interpretation and reduces cherry-picking risk.
+
+---
+
+### Interpretation limitation
+
+Difference maps compare against the known clean target because the damage is synthetic. This is suitable for controlled evaluation but does not mean the same ground-truth comparison would be available in real restoration settings.
+
+Possible thesis wording:
+
+> Spatial error-map diagnostics were used to complement aggregate metrics by showing where restoration outputs improved or degraded relative to the clean reference. For generative inpainting models, this is important because plausible-looking completions may still introduce localized deviations from the original painting.
