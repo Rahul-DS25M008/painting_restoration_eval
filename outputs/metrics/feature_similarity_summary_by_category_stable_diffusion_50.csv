@@ -1,0 +1,6 @@
+category,rows,cases,mean_clip_damaged_similarity,mean_clip_restored_similarity,mean_clip_similarity_improvement,median_clip_similarity_improvement,clip_improvement_rate,mean_dinov2_damaged_similarity,mean_dinov2_restored_similarity,mean_dinov2_similarity_improvement,median_dinov2_similarity_improvement,dinov2_improvement_rate,mean_region_pixel_count
+abstraction_surrealism,140,50,0.92535,0.97406,0.04871,0.03471,0.80714,0.91287,0.92398,0.01111,0.00391,0.53571,524982.7
+architecture_structured,140,50,0.87098,0.94589,0.0749,0.07054,0.82143,0.89525,0.90521,0.00996,0.0,0.42857,482446.84286
+high_texture_brushwork,140,50,0.8856,0.96145,0.07586,0.07616,0.84286,0.83053,0.92055,0.09003,0.04456,0.7,496638.98571
+landscape_natural,140,50,0.885,0.93786,0.05286,0.05469,0.74286,0.78932,0.83065,0.04132,0.01438,0.57857,480574.62143
+portrait_figure,140,50,0.88942,0.96432,0.07491,0.0605,0.85,0.86389,0.91648,0.05259,0.02611,0.66429,501749.97857

@@ -1140,3 +1140,54 @@ For Stable Diffusion, a result can have favorable perceptual similarity while st
 Possible thesis wording:
 
 > LPIPS was used as a perceptual-distance layer for Stable Diffusion Inpainting. Because diffusion-based restoration may produce plausible but non-faithful content, LPIPS is interpreted as one diagnostic signal rather than as a final restoration-quality judgment.
+
+## 22. Stable Diffusion CLIP and DINOv2 Feature-Similarity Evaluation
+
+### Decision supported
+
+Stable Diffusion Inpainting was evaluated using CLIP and DINOv2 feature-space similarity metrics.
+
+This adds semantic and structural feature-space diagnostics to the existing classical, spatial error-map, and LPIPS evaluations.
+
+---
+
+### Metric design
+
+The notebook computes feature-space cosine similarity between:
+
+- clean reference and damaged input,
+- clean reference and Stable Diffusion restored output.
+
+Higher similarity means the image is closer to the clean reference in the corresponding feature space.
+
+Improvement is computed so that positive values indicate that the restored output is closer to the clean reference than the damaged input.
+
+---
+
+### Region design
+
+Feature similarity was computed for:
+
+- full image,
+- content region,
+- mask bounding-box crop.
+
+Sparse masked-region pixels were not used because CLIP and DINOv2 expect image-like spatial inputs. The mask bounding-box crop is therefore used as the local damage-region proxy.
+
+The final output contains 700 metric rows:
+
+- 250 full-image rows,
+- 250 content-region rows,
+- 200 mask-bounding-box crop rows.
+
+---
+
+### Interpretation limitation
+
+CLIP and DINOv2 provide useful feature-space similarity signals, but they do not directly measure conservation correctness.
+
+For Stable Diffusion, a generated output may increase semantic or structural similarity while still hallucinating historically incorrect content. Conversely, feature-space disagreement can reveal cases where surface-level visual plausibility hides structural inconsistency.
+
+Possible thesis wording:
+
+> CLIP and DINOv2 feature similarities were used to evaluate Stable Diffusion Inpainting beyond pixel-level and perceptual-distance metrics. These feature-space scores are interpreted as diagnostic signals for semantic and structural consistency, not as proof of restoration faithfulness.

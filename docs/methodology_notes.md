@@ -884,3 +884,58 @@ Additional outputs:
 The strongest and weakest local perceptual cases were ranked using `mask_bbox_crop` LPIPS improvement.
 
 This stage completes the Stable Diffusion perceptual-distance metric layer and prepares the model for CLIP/DINOv2 feature-similarity evaluation.
+
+## Stable Diffusion CLIP and DINOv2 feature-similarity evaluation
+
+CLIP and DINOv2 feature-similarity metrics were computed for the Stable Diffusion Inpainting baseline on the controlled 50-painting subset.
+
+Notebook:
+
+`notebooks/22_feature_similarity_stable_diffusion_cleaned.ipynb`
+
+Input restoration metadata:
+
+`data/processed/metadata/metadata_restored_stable_diffusion.csv`
+
+Main metric output:
+
+`outputs/metrics/feature_similarity_stable_diffusion_50.csv`
+
+Feature similarities were computed between:
+
+- the clean reference and damaged input,
+- the clean reference and Stable Diffusion restored output.
+
+Higher cosine similarity means higher feature-space similarity to the clean reference. Positive improvement means that the restored output is closer to the clean reference in feature space than the damaged input.
+
+The evaluated regions were:
+
+- `full_image`,
+- `content_region`,
+- `mask_bbox_crop`.
+
+Sparse `masked_region` pixels were not used because CLIP and DINOv2 expect image-like spatial inputs rather than unordered masked pixels. The `mask_bbox_crop` region is therefore used as the local damage-region proxy.
+
+The final feature-similarity output contains 700 rows:
+
+- 250 full-image rows,
+- 250 content-region rows,
+- 200 mask-bounding-box crop rows.
+
+Additional outputs:
+
+- `outputs/metrics/feature_similarity_summary_by_mask_type_stable_diffusion_50.csv`
+- `outputs/metrics/feature_similarity_summary_by_category_stable_diffusion_50.csv`
+- `outputs/metrics/feature_similarity_summary_by_region_stable_diffusion_50.csv`
+- `outputs/metrics/feature_similarity_summary_by_region_mask_type_stable_diffusion_50.csv`
+- `outputs/metrics/feature_similarity_mask_bbox_summary_stable_diffusion_50.csv`
+- `outputs/metrics/stable_diffusion_strongest_dinov2_mask_bbox_cases_50.csv`
+- `outputs/metrics/stable_diffusion_weakest_dinov2_mask_bbox_cases_50.csv`
+- `outputs/metrics/stable_diffusion_strongest_clip_mask_bbox_cases_50.csv`
+- `outputs/metrics/stable_diffusion_weakest_clip_mask_bbox_cases_50.csv`
+- `outputs/metrics/stable_diffusion_feature_similarity_visual_cases_manifest_50.csv`
+- `outputs/figures/stable_diffusion_feature_similarity_cases/`
+
+The strongest and weakest local feature-similarity cases were ranked using `mask_bbox_crop` CLIP and DINOv2 improvement.
+
+This stage completes the Stable Diffusion feature-space metric layer and prepares the model for its baseline report.

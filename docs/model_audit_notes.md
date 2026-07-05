@@ -466,6 +466,66 @@ Final gates confirmed:
 
 Current interpretation: Stable Diffusion now has completed restoration generation, classical metric evaluation, spatial error-map diagnostics, and LPIPS perceptual evaluation. The next step is Stable Diffusion CLIP/DINOv2 feature-similarity evaluation.
 
+### Stable Diffusion CLIP/DINOv2 feature-similarity status
+
+CLIP and DINOv2 feature-similarity evaluation has been completed for the Stable Diffusion Inpainting baseline.
+
+Notebook:
+
+`notebooks/22_feature_similarity_stable_diffusion_cleaned.ipynb`
+
+Input:
+
+`data/processed/metadata/metadata_restored_stable_diffusion.csv`
+
+Main output:
+
+`outputs/metrics/feature_similarity_stable_diffusion_50.csv`
+
+The final feature-similarity metric output contains 700 rows:
+
+- 250 full-image rows,
+- 250 content-region rows,
+- 200 mask-bounding-box crop rows.
+
+Feature similarity was evaluated using:
+
+- `full_image`,
+- `content_region`,
+- `mask_bbox_crop`.
+
+The `mask_bbox_crop` region is used as the local damage-region proxy because CLIP and DINOv2 expect image-like spatial inputs.
+
+Summary outputs:
+
+- `outputs/metrics/feature_similarity_summary_by_mask_type_stable_diffusion_50.csv`
+- `outputs/metrics/feature_similarity_summary_by_category_stable_diffusion_50.csv`
+- `outputs/metrics/feature_similarity_summary_by_region_stable_diffusion_50.csv`
+- `outputs/metrics/feature_similarity_summary_by_region_mask_type_stable_diffusion_50.csv`
+- `outputs/metrics/feature_similarity_mask_bbox_summary_stable_diffusion_50.csv`
+
+Diagnostic outputs:
+
+- `outputs/metrics/stable_diffusion_strongest_dinov2_mask_bbox_cases_50.csv`
+- `outputs/metrics/stable_diffusion_weakest_dinov2_mask_bbox_cases_50.csv`
+- `outputs/metrics/stable_diffusion_strongest_clip_mask_bbox_cases_50.csv`
+- `outputs/metrics/stable_diffusion_weakest_clip_mask_bbox_cases_50.csv`
+- `outputs/metrics/stable_diffusion_feature_similarity_visual_cases_manifest_50.csv`
+- `outputs/figures/stable_diffusion_feature_similarity_cases/`
+
+Final gates confirmed:
+
+- all expected feature-similarity files exist,
+- the metric table contains 700 rows,
+- all metric rows have status `ok`,
+- all expected evaluation-region counts are present,
+- all expected mask/category counts are present,
+- summary and ranking files have expected row counts,
+- strongest and weakest cases use `mask_bbox_crop`,
+- selected feature-similarity visual figures exist.
+
+Current interpretation: Stable Diffusion now has completed restoration generation, classical metric evaluation, spatial error-map diagnostics, LPIPS perceptual evaluation, and CLIP/DINOv2 feature-similarity evaluation. The next step is the Stable Diffusion baseline report.
+
 ## SDXL Inpainting
 
 SDXL Inpainting is a higher-capacity diffusion candidate. It may produce visually stronger outputs than older Stable Diffusion models, but this can make failure harder to detect: a convincing generated patch may still be historically or structurally wrong.
