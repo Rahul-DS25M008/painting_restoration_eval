@@ -939,3 +939,52 @@ Additional outputs:
 The strongest and weakest local feature-similarity cases were ranked using `mask_bbox_crop` CLIP and DINOv2 improvement.
 
 This stage completes the Stable Diffusion feature-space metric layer and prepares the model for its baseline report.
+
+## Stable Diffusion baseline report
+
+A consolidated baseline report was generated for the Stable Diffusion Inpainting model on the controlled 50-painting subset.
+
+Notebook:
+
+`notebooks/23_generate_report_stable_diffusion_cleaned.ipynb`
+
+Main report output:
+
+`outputs/reports/stable_diffusion_baseline_report_50.html`
+
+Additional report outputs:
+
+- `outputs/metrics/stable_diffusion_report_dataframe_50.csv`
+- `outputs/metrics/stable_diffusion_report_selected_cases_50.csv`
+
+The report combines:
+
+- restoration metadata,
+- classical metric summaries,
+- LPIPS perceptual-distance summaries,
+- CLIP/DINOv2 feature-similarity summaries,
+- local metric outcome summaries,
+- selected report cases,
+- classical metric visual diagnostics,
+- LPIPS visual diagnostics,
+- feature-similarity visual diagnostics,
+- spatial error-map diagnostics.
+
+The local report dataframe contains 200 non-zero damage cases.
+
+Local metric regions are handled as follows:
+
+- classical metrics use the sparse `masked_region`,
+- LPIPS uses `mask_bbox_crop`,
+- CLIP/DINOv2 feature similarity uses `mask_bbox_crop`.
+
+The report selected cases using a fixed diagnostic policy:
+
+- highest number of improved metrics,
+- lowest number of improved metrics,
+- mixed metric outcomes,
+- category/mask representatives.
+
+The report explicitly notes that Stable Diffusion is a generative model and that visual plausibility is not interpreted as conservation or art-historical faithfulness.
+
+This stage completes the Stable Diffusion model-level evaluation branch and prepares the project for multi-model comparison.

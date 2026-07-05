@@ -526,6 +526,49 @@ Final gates confirmed:
 
 Current interpretation: Stable Diffusion now has completed restoration generation, classical metric evaluation, spatial error-map diagnostics, LPIPS perceptual evaluation, and CLIP/DINOv2 feature-similarity evaluation. The next step is the Stable Diffusion baseline report.
 
+### Stable Diffusion baseline report status
+
+The consolidated Stable Diffusion baseline report has been completed.
+
+Notebook:
+
+`notebooks/23_generate_report_stable_diffusion_cleaned.ipynb`
+
+Main report output:
+
+`outputs/reports/stable_diffusion_baseline_report_50.html`
+
+Additional report outputs:
+
+- `outputs/metrics/stable_diffusion_report_dataframe_50.csv`
+- `outputs/metrics/stable_diffusion_report_selected_cases_50.csv`
+
+The report dataframe contains 200 non-zero damage cases.
+
+The report combines:
+
+- restoration metadata,
+- classical metric summaries,
+- LPIPS summaries,
+- CLIP/DINOv2 feature-similarity summaries,
+- local metric outcome summaries,
+- selected diagnostic cases,
+- embedded classical visual examples,
+- embedded LPIPS visual examples,
+- embedded feature-similarity visual examples,
+- embedded spatial error-map examples.
+
+Final gates confirmed:
+
+- report dataframe exists and contains 200 local non-zero cases,
+- selected report cases file exists and is non-empty,
+- HTML report exists,
+- required report sections are present,
+- HTML report includes the Stable Diffusion generative-model limitation note,
+- selected report cases include all expected selection reasons.
+
+Current interpretation: the Stable Diffusion branch is complete. It includes restoration generation, classical metric evaluation, spatial error-map diagnostics, LPIPS evaluation, CLIP/DINOv2 feature-similarity evaluation, and a consolidated model-level report. The next project step is multi-model comparison with OpenCV Telea, LaMa, and Stable Diffusion.
+
 ## SDXL Inpainting
 
 SDXL Inpainting is a higher-capacity diffusion candidate. It may produce visually stronger outputs than older Stable Diffusion models, but this can make failure harder to detect: a convincing generated patch may still be historically or structurally wrong.

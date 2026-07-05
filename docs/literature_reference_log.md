@@ -1191,3 +1191,65 @@ For Stable Diffusion, a generated output may increase semantic or structural sim
 Possible thesis wording:
 
 > CLIP and DINOv2 feature similarities were used to evaluate Stable Diffusion Inpainting beyond pixel-level and perceptual-distance metrics. These feature-space scores are interpreted as diagnostic signals for semantic and structural consistency, not as proof of restoration faithfulness.
+
+## 23. Stable Diffusion Baseline Report
+
+### Decision supported
+
+A consolidated Stable Diffusion baseline report was generated after completing restoration generation, classical metrics, spatial error maps, LPIPS, and CLIP/DINOv2 feature similarity.
+
+This report acts as a model-level diagnostic summary before multi-model comparison.
+
+---
+
+### Report design
+
+The report combines quantitative and visual evidence from the Stable Diffusion evaluation branch.
+
+It includes:
+
+- restoration metadata,
+- classical metric summaries,
+- LPIPS perceptual-distance summaries,
+- CLIP/DINOv2 feature-similarity summaries,
+- local metric outcome summaries,
+- selected report cases,
+- embedded visual diagnostic examples,
+- spatial error-map examples.
+
+---
+
+### Local metric policy
+
+The report uses the most appropriate local region for each metric family:
+
+- classical metrics: sparse masked region,
+- LPIPS: mask bounding-box crop,
+- CLIP/DINOv2: mask bounding-box crop.
+
+This keeps the local comparison methodologically consistent with each metric type.
+
+---
+
+### Case-selection policy
+
+Selected report cases were chosen using a fixed diagnostic policy:
+
+- highest number of improved metrics,
+- lowest number of improved metrics,
+- mixed metric outcomes,
+- category/mask representatives.
+
+This reduces cherry-picking risk and supports balanced qualitative interpretation.
+
+---
+
+### Interpretation limitation
+
+The report explicitly separates visual plausibility from restoration faithfulness.
+
+Stable Diffusion may generate coherent and visually persuasive completions, but these completions can still be inconsistent with the clean reference or art-historical expectations.
+
+Possible thesis wording:
+
+> The Stable Diffusion baseline report consolidates quantitative metrics and visual diagnostics into a model-level summary. Because Stable Diffusion is generative, the report treats visual plausibility as a separate issue from measured similarity and conservation faithfulness.
