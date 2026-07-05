@@ -1060,3 +1060,58 @@ The report includes selected visual comparison cases using a fixed diagnostic po
 - Stable Diffusion zero-metric-win cases where available.
 
 Stable Diffusion results are interpreted cautiously because the model is generative. Metric wins do not imply conservation or art-historical correctness.
+
+## SDXL feasibility audit
+
+SDXL Inpainting was initially planned as a fourth restoration baseline after OpenCV Telea, LaMa, and Stable Diffusion Inpainting.
+
+A local feasibility test was performed before launching a full controlled evaluation.
+
+Notebook:
+
+`notebooks/25_sdxl_restoration_cleaned.ipynb`
+
+Planned SDXL model:
+
+`diffusers/stable-diffusion-xl-1.0-inpainting-0.1`
+
+Planned output location:
+
+`data/processed/restored/sdxl_inpainting/`
+
+Planned metadata output:
+
+`data/processed/metadata/metadata_restored_sdxl.csv`
+
+The local test environment used an NVIDIA GeForce RTX 3060 Laptop GPU with 6 GB VRAM.
+
+The SDXL pipeline was technically loadable, but full local evaluation was not practical under the available hardware constraints.
+
+Observed feasibility issues:
+
+- running without CPU offload caused CUDA out-of-memory errors,
+- 768 × 768 inference was too slow for practical evaluation,
+- 512 × 512 inference with CPU offload was technically executable but slow,
+- low-step settings did not produce usable restoration quality,
+- stronger settings produced heavy hallucination and excessive runtime.
+
+Two reduced smoke-test configurations were examined:
+
+1. 6 inference steps, guidance scale 4.5, 512 × 512 inference, 768 × 768 output, CPU offload enabled.
+2. 12 inference steps, guidance scale 6.0, strength 1.0, 512 × 512 inference, 768 × 768 output, CPU offload enabled.
+
+The 6-step setting completed in approximately 4.6 minutes for one non-zero case, but the masked region was not meaningfully restored.
+
+The 12-step setting completed in approximately 10 minutes for one non-zero case, but the result showed strong overgeneration and global visual alteration.
+
+Given this runtime-quality trade-off, SDXL was excluded from the full local controlled evaluation.
+
+This exclusion is treated as a computational feasibility limitation, not as a conclusion about SDXL restoration quality under adequate hardware.
+
+The full controlled evaluation therefore remains focused on:
+
+- OpenCV Telea,
+- LaMa,
+- Stable Diffusion Inpainting.
+
+SDXL is reserved for future work or for rerunning on stronger GPU resources, preferably with at least 12–16 GB VRAM.

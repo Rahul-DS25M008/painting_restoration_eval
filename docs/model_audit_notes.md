@@ -627,6 +627,60 @@ SDXL Inpainting is a higher-capacity diffusion candidate. It may produce visuall
 
 Decision: keep as a later candidate. Do not add before the simpler generative setup is understood.
 
+### SDXL feasibility audit status
+
+SDXL Inpainting was tested as a planned fourth restoration baseline.
+
+Notebook:
+
+`notebooks/25_sdxl_restoration_cleaned.ipynb`
+
+Model tested:
+
+`diffusers/stable-diffusion-xl-1.0-inpainting-0.1`
+
+Local hardware:
+
+- NVIDIA GeForce RTX 3060 Laptop GPU,
+- 6 GB VRAM.
+
+Observed status:
+
+- SDXL module import succeeded,
+- SDXL pipeline loading succeeded,
+- execution without CPU offload caused CUDA out-of-memory errors,
+- 768 × 768 inference was impractical locally,
+- 512 × 512 inference with CPU offload was technically executable,
+- low-step execution produced poor restoration quality,
+- stronger execution produced severe hallucination and high runtime.
+
+Smoke-test observations:
+
+- 6-step setting: approximately 4.6 minutes for one case; masked region not meaningfully restored.
+- 12-step setting with strength 1.0: approximately 10 minutes for one case; masked region filled but with strong overgeneration and global visual alteration.
+
+Decision:
+
+SDXL is excluded from the full local controlled evaluation.
+
+Reason:
+
+The local hardware did not support a practical runtime-quality balance for SDXL Inpainting.
+
+Interpretation:
+
+This is a computational feasibility limitation, not a model-quality conclusion about SDXL under adequate compute.
+
+Current evaluated model stack remains:
+
+- OpenCV Telea,
+- LaMa,
+- Stable Diffusion Inpainting.
+
+Next project step:
+
+Proceed to diffusion uncertainty analysis using the completed Stable Diffusion Inpainting branch.
+
 ## DALL-E / OpenAI Image Editing
 
 OpenAI image editing is useful as an optional closed commercial comparison because it supports masked image editing. However, it has weaker reproducibility and lower training-data transparency. Public documentation also describes mask-guided editing as prompt-based, meaning the mask may guide the edit without guaranteeing exact pixel-level replacement behavior.

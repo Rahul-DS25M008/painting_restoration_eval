@@ -1329,3 +1329,68 @@ Stable Diffusion requires special caution because its outputs are generative. A 
 Possible thesis wording:
 
 > The three-model comparison ranks models by metric improvement under controlled damage conditions. These rankings are interpreted as diagnostic behavior, not as claims of conservation-grade restoration quality.
+
+## 25. SDXL Feasibility Audit
+
+### Decision supported
+
+SDXL Inpainting was considered as a fourth restoration baseline, but was not included in the full local controlled evaluation after feasibility testing.
+
+This decision was based on local runtime and memory constraints, not on a complete model-quality evaluation.
+
+---
+
+### Tested model
+
+Planned model:
+
+`diffusers/stable-diffusion-xl-1.0-inpainting-0.1`
+
+The model was selected because SDXL represents a stronger and more recent diffusion-based inpainting baseline than the earlier Stable Diffusion Inpainting model.
+
+---
+
+### Local feasibility findings
+
+The local environment used an NVIDIA GeForce RTX 3060 Laptop GPU with 6 GB VRAM.
+
+The SDXL pipeline could be loaded and executed only with memory-saving settings.
+
+Running without CPU offload caused CUDA out-of-memory errors.
+
+With CPU offload enabled, SDXL became technically executable but too slow for a full 200-case non-zero evaluation.
+
+Two reduced smoke-test configurations were tested:
+
+- 6 inference steps, guidance scale 4.5, 512 × 512 inference, 768 × 768 output,
+- 12 inference steps, guidance scale 6.0, strength 1.0, 512 × 512 inference, 768 × 768 output.
+
+The 6-step setting completed but did not meaningfully restore the masked region.
+
+The 12-step setting produced a completed image region but showed strong hallucination and global visual alteration, while requiring approximately 10 minutes for one case.
+
+---
+
+### Methodological decision
+
+SDXL was excluded from the full local controlled evaluation because the available hardware did not support a practical balance between runtime and restoration quality.
+
+The exclusion is recorded as a feasibility limitation.
+
+Possible thesis wording:
+
+> SDXL Inpainting was planned as an additional diffusion baseline, but local feasibility testing showed that the available 6 GB GPU environment did not support a practical full evaluation. Low-step settings produced insufficient restoration quality, while stronger settings caused excessive runtime and overgeneration. SDXL was therefore excluded from the full controlled evaluation and retained as future work for stronger compute environments.
+
+---
+
+### Future work
+
+SDXL should be revisited if stronger GPU resources become available.
+
+Recommended minimum compute:
+
+- 12 GB VRAM as a lower bound,
+- 16 GB or more preferred,
+- A100, A40, RTX 3090, RTX 4090, L40, or equivalent class hardware if available.
+
+With suitable compute, SDXL could be rerun as a fourth full baseline and compared against OpenCV Telea, LaMa, and Stable Diffusion Inpainting.
