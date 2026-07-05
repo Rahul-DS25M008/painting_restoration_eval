@@ -1,0 +1,5 @@
+mask_type,rows,cases,mean_damaged_lpips,mean_restored_lpips,mean_lpips_improvement,median_damaged_lpips,median_restored_lpips,median_lpips_improvement,improvement_rate,mean_region_pixel_count
+loss_large,50,50,0.57325,0.35184,0.22141,0.5926,0.33265,0.20923,1.0,137882.06
+loss_small,50,50,0.20216,0.09346,0.1087,0.19557,0.08668,0.09834,1.0,369764.72
+mixed_damage,50,50,0.31851,0.13017,0.18833,0.31766,0.12634,0.19133,1.0,560881.26
+scratch_thin,50,50,0.26245,0.13122,0.13123,0.25635,0.11344,0.14715,0.9,562828.24

@@ -831,3 +831,56 @@ A fixed diagnostic case-selection policy was used to avoid manual cherry-picking
 - category/mask representative cases.
 
 This stage provides spatial evidence for where Stable Diffusion improves damage regions, where it fails, and where it may introduce new visual errors outside or around the mask.
+
+## Stable Diffusion LPIPS perceptual evaluation
+
+LPIPS perceptual-distance metrics were computed for the Stable Diffusion Inpainting baseline on the controlled 50-painting subset.
+
+Notebook:
+
+`notebooks/21_lpips_metrics_stable_diffusion_cleaned.ipynb`
+
+Input restoration metadata:
+
+`data/processed/metadata/metadata_restored_stable_diffusion.csv`
+
+Main metric output:
+
+`outputs/metrics/lpips_metrics_stable_diffusion_50.csv`
+
+LPIPS was computed between:
+
+- the clean reference and damaged input,
+- the clean reference and Stable Diffusion restored output.
+
+Lower LPIPS indicates that an image is perceptually closer to the clean reference. Positive LPIPS improvement means that the restored output is perceptually closer to the clean reference than the damaged input.
+
+The evaluated regions were:
+
+- `full_image`,
+- `content_region`,
+- `mask_bbox_crop`.
+
+Sparse `masked_region` pixels were not used for LPIPS because LPIPS expects image-like spatial inputs rather than unordered masked pixels. The `mask_bbox_crop` region is therefore used as the local damage-region proxy.
+
+The final LPIPS output contains 700 rows:
+
+- 250 full-image rows,
+- 250 content-region rows,
+- 200 mask-bounding-box crop rows.
+
+Additional outputs:
+
+- `outputs/metrics/lpips_metrics_summary_by_mask_type_stable_diffusion_50.csv`
+- `outputs/metrics/lpips_metrics_summary_by_category_stable_diffusion_50.csv`
+- `outputs/metrics/lpips_metrics_summary_by_region_stable_diffusion_50.csv`
+- `outputs/metrics/lpips_metrics_summary_by_region_mask_type_stable_diffusion_50.csv`
+- `outputs/metrics/lpips_metrics_masked_region_summary_stable_diffusion_50.csv`
+- `outputs/metrics/stable_diffusion_strongest_lpips_masked_region_cases_50.csv`
+- `outputs/metrics/stable_diffusion_weakest_lpips_masked_region_cases_50.csv`
+- `outputs/metrics/stable_diffusion_lpips_visual_cases_manifest_50.csv`
+- `outputs/figures/stable_diffusion_lpips_metric_cases/`
+
+The strongest and weakest local perceptual cases were ranked using `mask_bbox_crop` LPIPS improvement.
+
+This stage completes the Stable Diffusion perceptual-distance metric layer and prepares the model for CLIP/DINOv2 feature-similarity evaluation.

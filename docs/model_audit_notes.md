@@ -409,6 +409,63 @@ Final gates confirmed:
 
 Current interpretation: Stable Diffusion now has completed restoration generation, classical metric evaluation, and spatial error-map diagnostics. The next step is Stable Diffusion LPIPS evaluation.
 
+### Stable Diffusion LPIPS status
+
+LPIPS perceptual-distance evaluation has been completed for the Stable Diffusion Inpainting baseline.
+
+Notebook:
+
+`notebooks/21_lpips_metrics_stable_diffusion_cleaned.ipynb`
+
+Input:
+
+`data/processed/metadata/metadata_restored_stable_diffusion.csv`
+
+Main output:
+
+`outputs/metrics/lpips_metrics_stable_diffusion_50.csv`
+
+The final LPIPS metric output contains 700 rows:
+
+- 250 full-image rows,
+- 250 content-region rows,
+- 200 mask-bounding-box crop rows.
+
+LPIPS was evaluated using:
+
+- `full_image`,
+- `content_region`,
+- `mask_bbox_crop`.
+
+The `mask_bbox_crop` region is used as the local damage-region proxy because LPIPS expects image-like spatial inputs.
+
+Summary outputs:
+
+- `outputs/metrics/lpips_metrics_summary_by_mask_type_stable_diffusion_50.csv`
+- `outputs/metrics/lpips_metrics_summary_by_category_stable_diffusion_50.csv`
+- `outputs/metrics/lpips_metrics_summary_by_region_stable_diffusion_50.csv`
+- `outputs/metrics/lpips_metrics_summary_by_region_mask_type_stable_diffusion_50.csv`
+- `outputs/metrics/lpips_metrics_masked_region_summary_stable_diffusion_50.csv`
+
+Diagnostic outputs:
+
+- `outputs/metrics/stable_diffusion_strongest_lpips_masked_region_cases_50.csv`
+- `outputs/metrics/stable_diffusion_weakest_lpips_masked_region_cases_50.csv`
+- `outputs/metrics/stable_diffusion_lpips_visual_cases_manifest_50.csv`
+- `outputs/figures/stable_diffusion_lpips_metric_cases/`
+
+Final gates confirmed:
+
+- all expected LPIPS files exist,
+- the metric table contains 700 rows,
+- all metric rows have status `ok`,
+- all expected evaluation-region counts are present,
+- summary and ranking files have expected row counts,
+- strongest and weakest cases use `mask_bbox_crop`,
+- selected LPIPS visual figures exist.
+
+Current interpretation: Stable Diffusion now has completed restoration generation, classical metric evaluation, spatial error-map diagnostics, and LPIPS perceptual evaluation. The next step is Stable Diffusion CLIP/DINOv2 feature-similarity evaluation.
+
 ## SDXL Inpainting
 
 SDXL Inpainting is a higher-capacity diffusion candidate. It may produce visually stronger outputs than older Stable Diffusion models, but this can make failure harder to detect: a convincing generated patch may still be historically or structurally wrong.

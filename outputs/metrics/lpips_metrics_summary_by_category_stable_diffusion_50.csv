@@ -1,0 +1,6 @@
+category,rows,cases,mean_damaged_lpips,mean_restored_lpips,mean_lpips_improvement,median_damaged_lpips,median_restored_lpips,median_lpips_improvement,improvement_rate,mean_region_pixel_count
+abstraction_surrealism,140,50,0.16324,0.08961,0.07363,0.16623,0.07045,0.06381,0.81429,517083.94286
+architecture_structured,140,50,0.25717,0.12234,0.13484,0.23658,0.11202,0.12445,0.85714,474867.97143
+high_texture_brushwork,140,50,0.24889,0.12153,0.12737,0.2451,0.10684,0.14297,0.85714,488901.85714
+landscape_natural,140,50,0.23632,0.13837,0.09795,0.21585,0.12511,0.09357,0.77857,473544.29286
+portrait_figure,140,50,0.26681,0.11563,0.15118,0.25981,0.09611,0.14707,0.85714,493372.03571

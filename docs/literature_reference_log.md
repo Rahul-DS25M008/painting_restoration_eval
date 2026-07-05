@@ -1089,3 +1089,54 @@ Difference maps compare against the known clean target because the damage is syn
 Possible thesis wording:
 
 > Spatial error-map diagnostics were used to complement aggregate metrics by showing where restoration outputs improved or degraded relative to the clean reference. For generative inpainting models, this is important because plausible-looking completions may still introduce localized deviations from the original painting.
+
+## 21. Stable Diffusion LPIPS Perceptual Evaluation
+
+### Decision supported
+
+Stable Diffusion Inpainting was evaluated with LPIPS as a perceptual-distance metric.
+
+LPIPS complements classical metrics by comparing images in learned feature space rather than only through direct pixel-level differences.
+
+---
+
+### Metric design
+
+The notebook computes LPIPS between:
+
+- clean reference and damaged input,
+- clean reference and Stable Diffusion restored output.
+
+Lower LPIPS means lower perceptual distance from the clean reference.
+
+LPIPS improvement is computed so that positive values indicate that the restoration is perceptually closer to the clean reference than the damaged input.
+
+---
+
+### Region design
+
+LPIPS was computed for:
+
+- full image,
+- content region,
+- mask bounding-box crop.
+
+Sparse masked-region pixels were not used because LPIPS expects image-like spatial inputs. The mask bounding-box crop is therefore used as the local damage-region proxy.
+
+The final output contains 700 metric rows:
+
+- 250 full-image rows,
+- 250 content-region rows,
+- 200 mask-bounding-box crop rows.
+
+---
+
+### Interpretation limitation
+
+LPIPS can capture perceptual similarity better than simple pixel metrics, but it still does not guarantee art-historical or conservation faithfulness.
+
+For Stable Diffusion, a result can have favorable perceptual similarity while still hallucinating plausible but incorrect content.
+
+Possible thesis wording:
+
+> LPIPS was used as a perceptual-distance layer for Stable Diffusion Inpainting. Because diffusion-based restoration may produce plausible but non-faithful content, LPIPS is interpreted as one diagnostic signal rather than as a final restoration-quality judgment.
