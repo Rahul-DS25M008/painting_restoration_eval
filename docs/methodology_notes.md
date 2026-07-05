@@ -988,3 +988,75 @@ The report selected cases using a fixed diagnostic policy:
 The report explicitly notes that Stable Diffusion is a generative model and that visual plausibility is not interpreted as conservation or art-historical faithfulness.
 
 This stage completes the Stable Diffusion model-level evaluation branch and prepares the project for multi-model comparison.
+
+## Three-model comparison: OpenCV Telea vs LaMa vs Stable Diffusion
+
+A three-model comparison was generated after completing the OpenCV Telea, LaMa, and Stable Diffusion Inpainting evaluation branches.
+
+Notebook:
+
+`notebooks/24_compare_opencv_lama_stable_diffusion_cleaned.ipynb`
+
+Compared models:
+
+- OpenCV Telea,
+- LaMa,
+- Stable Diffusion Inpainting.
+
+Main report output:
+
+`outputs/reports/opencv_lama_stable_diffusion_comparison_report_50.html`
+
+Main metric outputs:
+
+- `outputs/metrics/model_pairing_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_classical_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_lpips_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_feature_similarity_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_unified_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_summary_by_mask_type_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_summary_by_category_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_win_rates_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_metric_disagreement_cases_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_visual_cases_opencv_lama_stable_diffusion_50.csv`
+
+Main figure output directory:
+
+`outputs/figures/model_comparison/opencv_lama_stable_diffusion/`
+
+The comparison was paired by:
+
+- `case_id`,
+- `painting_id`,
+- `mask_id`,
+- `mask_type`.
+
+The local comparison used 200 non-zero damage cases.
+
+Metric-region policy:
+
+- classical metrics use `masked_region`,
+- LPIPS uses `mask_bbox_crop`,
+- CLIP/DINOv2 feature similarity uses `mask_bbox_crop`.
+
+Six local comparison metrics were used:
+
+- MSE improvement,
+- PSNR improvement,
+- SSIM improvement,
+- LPIPS improvement,
+- CLIP similarity improvement,
+- DINOv2 similarity improvement.
+
+For each case and metric, the model with the highest improvement value was treated as the metric winner. Per-case majority votes were then calculated across the six metrics.
+
+The comparison also identified metric-disagreement cases where different metric families preferred different models. These cases are treated as diagnostically important rather than as errors.
+
+The report includes selected visual comparison cases using a fixed diagnostic policy:
+
+- majority-vote cases by model,
+- metric-disagreement cases,
+- category/mask representatives,
+- Stable Diffusion zero-metric-win cases where available.
+
+Stable Diffusion results are interpreted cautiously because the model is generative. Metric wins do not imply conservation or art-historical correctness.

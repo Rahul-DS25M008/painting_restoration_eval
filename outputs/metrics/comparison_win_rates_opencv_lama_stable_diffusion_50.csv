@@ -1,0 +1,21 @@
+metric_name,metric_description,winner,cases,case_fraction
+mse_improvement,Classical masked-region MSE improvement,lama,159,0.795
+mse_improvement,Classical masked-region MSE improvement,opencv_telea,40,0.2
+mse_improvement,Classical masked-region MSE improvement,stable_diffusion_inpainting,1,0.005
+psnr_improvement,Classical masked-region PSNR improvement,lama,159,0.795
+psnr_improvement,Classical masked-region PSNR improvement,opencv_telea,40,0.2
+psnr_improvement,Classical masked-region PSNR improvement,stable_diffusion_inpainting,1,0.005
+ssim_improvement,Classical masked-region SSIM improvement,no_valid_values,200,1.0
+lpips_improvement,Mask-bounding-box LPIPS improvement,lama,182,0.91
+lpips_improvement,Mask-bounding-box LPIPS improvement,opencv_telea,12,0.06
+lpips_improvement,Mask-bounding-box LPIPS improvement,stable_diffusion_inpainting,6,0.03
+clip_improvement,Mask-bounding-box CLIP similarity improvement,lama,170,0.85
+clip_improvement,Mask-bounding-box CLIP similarity improvement,opencv_telea,25,0.125
+clip_improvement,Mask-bounding-box CLIP similarity improvement,stable_diffusion_inpainting,5,0.025
+dinov2_improvement,Mask-bounding-box DINOv2 similarity improvement,lama,167,0.835
+dinov2_improvement,Mask-bounding-box DINOv2 similarity improvement,opencv_telea,27,0.135
+dinov2_improvement,Mask-bounding-box DINOv2 similarity improvement,stable_diffusion_inpainting,6,0.03
+overall_metric_vote,Per-case majority vote across six local metrics,lama,177,0.885
+overall_metric_vote,Per-case majority vote across six local metrics,opencv_telea,21,0.105
+overall_metric_vote,Per-case majority vote across six local metrics,stable_diffusion_inpainting,1,0.005
+overall_metric_vote,Per-case majority vote across six local metrics,tie_lama_opencv_telea,1,0.005

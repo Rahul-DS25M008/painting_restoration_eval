@@ -1253,3 +1253,79 @@ Stable Diffusion may generate coherent and visually persuasive completions, but 
 Possible thesis wording:
 
 > The Stable Diffusion baseline report consolidates quantitative metrics and visual diagnostics into a model-level summary. Because Stable Diffusion is generative, the report treats visual plausibility as a separate issue from measured similarity and conservation faithfulness.
+
+## 24. Three-Model Comparison: OpenCV Telea, LaMa, and Stable Diffusion
+
+### Decision supported
+
+A three-model comparison was generated to compare the completed restoration baselines before adding SDXL.
+
+Compared models:
+
+- OpenCV Telea,
+- LaMa,
+- Stable Diffusion Inpainting.
+
+This comparison acts as the first multi-model evaluation checkpoint in the thesis pipeline.
+
+---
+
+### Comparison design
+
+The comparison was paired by case identity:
+
+- `case_id`,
+- `painting_id`,
+- `mask_id`,
+- `mask_type`.
+
+The local comparison used the 200 non-zero damage cases.
+
+Metric-region policy:
+
+- classical metrics: sparse masked region,
+- LPIPS: mask bounding-box crop,
+- CLIP/DINOv2: mask bounding-box crop.
+
+This preserves consistency with the model-level report methodology.
+
+---
+
+### Metric winner policy
+
+Six local metrics were compared:
+
+- MSE improvement,
+- PSNR improvement,
+- SSIM improvement,
+- LPIPS improvement,
+- CLIP similarity improvement,
+- DINOv2 similarity improvement.
+
+For each case and metric, the model with the highest improvement value was marked as the metric winner.
+
+A per-case majority vote was then calculated across the six metrics.
+
+---
+
+### Metric disagreement
+
+The comparison explicitly records cases where metric families disagree.
+
+These disagreement cases are important because restoration quality is multi-dimensional. A model may improve pixel-level similarity while performing worse in perceptual or feature-space similarity, or vice versa.
+
+Possible thesis wording:
+
+> Metric-disagreement cases were retained as diagnostic evidence rather than discarded. They indicate situations where restoration quality cannot be summarized reliably by a single metric family.
+
+---
+
+### Interpretation limitation
+
+The comparison evaluates controlled synthetic-damage behavior. It does not establish real conservation quality.
+
+Stable Diffusion requires special caution because its outputs are generative. A visually coherent completion can still differ from the clean reference or from historically plausible restoration.
+
+Possible thesis wording:
+
+> The three-model comparison ranks models by metric improvement under controlled damage conditions. These rankings are interpreted as diagnostic behavior, not as claims of conservation-grade restoration quality.

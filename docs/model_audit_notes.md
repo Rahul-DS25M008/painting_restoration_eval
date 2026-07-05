@@ -569,6 +569,58 @@ Final gates confirmed:
 
 Current interpretation: the Stable Diffusion branch is complete. It includes restoration generation, classical metric evaluation, spatial error-map diagnostics, LPIPS evaluation, CLIP/DINOv2 feature-similarity evaluation, and a consolidated model-level report. The next project step is multi-model comparison with OpenCV Telea, LaMa, and Stable Diffusion.
 
+### Three-model comparison status
+
+The first multi-model comparison has been completed.
+
+Notebook:
+
+`notebooks/24_compare_opencv_lama_stable_diffusion_cleaned.ipynb`
+
+Compared models:
+
+- OpenCV Telea,
+- LaMa,
+- Stable Diffusion Inpainting.
+
+Main report output:
+
+`outputs/reports/opencv_lama_stable_diffusion_comparison_report_50.html`
+
+Main metric outputs:
+
+- `outputs/metrics/model_pairing_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_classical_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_lpips_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_feature_similarity_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_unified_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_summary_by_mask_type_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_summary_by_category_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_win_rates_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_metric_disagreement_cases_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_visual_cases_opencv_lama_stable_diffusion_50.csv`
+
+Main figure directory:
+
+`outputs/figures/model_comparison/opencv_lama_stable_diffusion/`
+
+Final gates confirmed:
+
+- 250 paired cases across all three models,
+- 200 local non-zero comparison cases,
+- 50 cases per non-zero mask type,
+- 40 cases per painting category,
+- classical, LPIPS, and feature comparison files saved,
+- unified local comparison file saved,
+- win-rate summary saved,
+- metric-disagreement cases saved,
+- visual comparison cases saved,
+- comparison figures generated,
+- embedded HTML comparison report generated,
+- expected report sections present.
+
+Current interpretation: the three completed model branches are now directly comparable. The project has completed a first multi-model evaluation checkpoint. The next model branch is SDXL Inpainting, after which a four-model comparison and diffusion uncertainty analysis can be performed.
+
 ## SDXL Inpainting
 
 SDXL Inpainting is a higher-capacity diffusion candidate. It may produce visually stronger outputs than older Stable Diffusion models, but this can make failure harder to detect: a convincing generated patch may still be historically or structurally wrong.
