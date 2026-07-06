@@ -1323,3 +1323,29 @@ Main supervisor clarification points:
 - whether SDXL should remain feasibility-audited or be rerun on university compute,
 - whether the refined metric-region policy is accepted,
 - whether the Streamlit dashboard should be formalized as a supporting artifact.
+
+## Candidate methodology extensions after supervisor review
+
+The current framework includes classical metrics, perceptual metrics, feature-space metrics, visual diagnostics, metric-region refinement, model comparison, and Stable Diffusion uncertainty analysis.
+
+Several possible extensions could strengthen the final thesis:
+
+1. **Texture-aware evaluation**  
+   Add local texture descriptors such as GLCM contrast, GLCM homogeneity, or Gabor-filter responses. This would directly support the painting-specific claim that restoration quality depends not only on pixel similarity but also on brushstroke and texture continuity.
+
+2. **Uncertainty heatmaps**  
+   Generate pixel-wise standard-deviation maps across Stable Diffusion seed outputs. These maps would make uncertainty spatially interpretable and help identify speculative restoration regions.
+
+3. **Metric-policy ablation**  
+   Treat the old-versus-refined metric-region policy comparison as a formal ablation study. This would strengthen the claim that evaluation design materially affects model ranking and trustworthiness conclusions.
+
+4. **Metadata-driven analysis**  
+   If metadata quality is sufficient, extend category-level analysis using artist, period, medium, or collection fields. Statistical testing should only be used where group sizes are meaningful.
+
+5. **Semantic or iconographic checks**  
+   Explore lightweight CLIP-based semantic consistency checks for restored regions. This should be treated carefully because semantic correctness in paintings is difficult to validate without art-historical ground truth.
+
+6. **Per-painting reporting layer**  
+   Generate standardized per-painting or per-case reports containing visual comparisons, metrics, uncertainty summaries, and trustworthiness notes.
+
+These extensions should be prioritized with supervisor input. The strongest candidates for final methodology improvement are texture-aware metrics, uncertainty heatmaps, and metric-policy ablation.
