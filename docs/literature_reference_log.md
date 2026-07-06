@@ -1537,3 +1537,75 @@ Another possible wording:
 The uncertainty analysis is diagnostic rather than exhaustive. It uses 40 balanced cases rather than all 200 non-zero damaged cases. This choice keeps the analysis computationally practical while still covering all categories and damage types.
 
 A full 200-case uncertainty sweep remains possible but is not necessary for the current controlled evaluation unless broader uncertainty coverage is requested.
+
+## 28. Final controlled evaluation report
+
+### Decision supported
+
+A final consolidated controlled-evaluation report was created for the 50-painting benchmark.
+
+The purpose of the report is to synthesize all completed experimental outputs into one thesis-ready artifact.
+
+---
+
+### Consolidated evaluation layers
+
+The report combines the following evaluation layers:
+
+1. Dataset and synthetic damage design,
+2. OpenCV Telea deterministic baseline,
+3. LaMa deep inpainting model,
+4. Stable Diffusion Inpainting generative model,
+5. SDXL feasibility audit,
+6. refined metric-region policy,
+7. refined three-model comparison,
+8. Stable Diffusion multi-seed uncertainty analysis,
+9. uncertainty-performance linkage,
+10. final visual examples and thesis interpretation.
+
+---
+
+### Final model interpretation
+
+OpenCV Telea is retained as a deterministic classical baseline.
+
+LaMa is the strongest model under the refined reference-based metric comparison.
+
+Stable Diffusion Inpainting is treated as a generative restoration candidate. It may produce visually plausible completions, but it rarely wins the refined reference-based majority comparison and requires uncertainty analysis because repeated seeds can produce different outputs.
+
+SDXL Inpainting is treated as feasibility-audited but excluded from full local comparison due local hardware constraints.
+
+---
+
+### Final methodological interpretation
+
+The final report supports a trustworthiness-oriented evaluation framework.
+
+The framework does not rely on a single score. Instead, it combines:
+
+- pixel-level metrics,
+- structural metrics,
+- perceptual metrics,
+- feature similarity metrics,
+- metric-region policy,
+- visual comparison,
+- model feasibility audit,
+- multi-seed generative uncertainty.
+
+This is important because in painting restoration, a visually plausible output is not necessarily historically or reference-faithful.
+
+---
+
+### Possible thesis wording
+
+> The final controlled evaluation demonstrates that AI-assisted painting restoration should be evaluated through multiple complementary lenses. Reference-based similarity remains important, but it does not capture all relevant trustworthiness concerns. In particular, generative models require uncertainty analysis because different seeds may produce different plausible completions for the same damaged region.
+
+Another possible wording:
+
+> LaMa achieved the strongest reference-based performance in the controlled benchmark, while Stable Diffusion highlighted the distinction between visual plausibility and restoration trustworthiness. Its outputs can appear coherent, but multi-seed analysis shows that diffusion-based restoration may be unstable across repeated generations.
+
+---
+
+### Main final artifact
+
+`outputs/reports/final_controlled_50_evaluation_report.html`

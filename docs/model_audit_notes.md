@@ -796,3 +796,45 @@ Decision: keep optional. It should not be part of the core reproducible experime
 ## Current conclusion
 
 The thesis should not frame any pretrained model as a ground-truth restoration system. The models are restoration candidates being evaluated under controlled synthetic damage. The key research value is the evaluation framework: how classical, pretrained, and generative inpainting systems behave across painting categories, damage types, and uncertainty conditions.
+
+### Final controlled evaluation report status
+
+Notebook completed:
+
+`notebooks/28_final_controlled_50_evaluation_report_cleaned.ipynb`
+
+The final controlled 50-painting evaluation report has been generated.
+
+Main report:
+
+`outputs/reports/final_controlled_50_evaluation_report.html`
+
+Fully evaluated models:
+
+- OpenCV Telea,
+- LaMa,
+- Stable Diffusion Inpainting.
+
+Feasibility-audited model:
+
+- SDXL Inpainting.
+
+Final comparison policy:
+
+- MSE: `masked_region`,
+- PSNR: `masked_region`,
+- SSIM: `mask_bbox_crop`,
+- LPIPS: `mask_bbox_crop`,
+- CLIP: `mask_bbox_crop`,
+- DINOv2: `mask_bbox_crop`.
+
+Final interpretation:
+
+- LaMa dominates the refined reference-based comparison.
+- OpenCV Telea remains a useful deterministic baseline.
+- Stable Diffusion Inpainting can create visually plausible completions, but performs weakly under reference-based comparison and needs multi-seed uncertainty diagnostics.
+- SDXL was excluded from full local evaluation due local 6GB VRAM/runtime feasibility constraints.
+
+The final report is the main consolidated experimental artifact for the controlled 50-painting benchmark.
+
+The central audit conclusion is that visual plausibility alone is insufficient for restoration trustworthiness.

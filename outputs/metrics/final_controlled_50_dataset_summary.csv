@@ -1,0 +1,8 @@
+section,item,value,description
+dataset,total_paintings,50,Controlled painting subset used for the final local evaluation.
+dataset,painting_categories,5,Five controlled painting categories.
+dataset,paintings_per_category,10,Each category contributes ten paintings.
+damage,total_damage_cases,250,50 paintings × 5 mask types.
+damage,non_zero_damage_cases,200,Cases used for local restoration comparison.
+damage,zero_control_cases,50,No-damage control cases.
+damage,mask_types,5,"zero_control, scratch_thin, loss_small, loss_large, mixed_damage."

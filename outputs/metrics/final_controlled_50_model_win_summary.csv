@@ -1,0 +1,5 @@
+model_name,display_name,total_metric_wins,majority_vote_cases,majority_vote_rate,mean_metric_wins_per_case
+lama,LaMa,924.0,155,0.775,4.62
+tie_lama_opencv_telea,tie_lama_opencv_telea,,23,0.115,
+opencv_telea,OpenCV Telea,257.0,21,0.105,1.285
+stable_diffusion_inpainting,Stable Diffusion Inpainting,19.0,1,0.005,0.095

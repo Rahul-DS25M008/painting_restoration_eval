@@ -1214,3 +1214,64 @@ Main outputs:
 - `outputs/reports/stable_diffusion_uncertainty_report_50.html`
 
 This notebook provides the main uncertainty component of the evaluation framework.
+
+## Final controlled 50-painting evaluation report
+
+Notebook:
+
+`notebooks/28_final_controlled_50_evaluation_report_cleaned.ipynb`
+
+A final consolidated report was created for the controlled 50-painting evaluation.
+
+The notebook does not generate new restorations. It consolidates and validates outputs from the completed experimental pipeline:
+
+- controlled dataset preparation,
+- synthetic mask and damage generation,
+- OpenCV Telea restoration,
+- LaMa restoration,
+- Stable Diffusion Inpainting restoration,
+- SDXL feasibility audit,
+- refined metric-region comparison,
+- Stable Diffusion multi-seed uncertainty analysis.
+
+The report uses the refined local metric-region policy:
+
+- MSE improvement: `masked_region`,
+- PSNR improvement: `masked_region`,
+- SSIM improvement: `mask_bbox_crop`,
+- LPIPS improvement: `mask_bbox_crop`,
+- CLIP similarity improvement: `mask_bbox_crop`,
+- DINOv2 similarity improvement: `mask_bbox_crop`.
+
+The final comparison includes three fully evaluated models:
+
+- OpenCV Telea,
+- LaMa,
+- Stable Diffusion Inpainting.
+
+SDXL Inpainting is included only as a feasibility-audited model. It was excluded from full local evaluation because local 6GB VRAM and runtime constraints made full controlled evaluation impractical.
+
+The final report also incorporates Stable Diffusion uncertainty analysis. This analysis evaluates whether the diffusion model produces stable restoration outputs across multiple random seeds.
+
+Main final report:
+
+`outputs/reports/final_controlled_50_evaluation_report.html`
+
+Main final synthesis outputs:
+
+- `outputs/metrics/final_controlled_50_dataset_summary.csv`
+- `outputs/metrics/final_controlled_50_model_stack_summary.csv`
+- `outputs/metrics/final_controlled_50_metric_policy_summary.csv`
+- `outputs/metrics/final_controlled_50_key_results_summary.csv`
+- `outputs/metrics/final_controlled_50_model_win_summary.csv`
+- `outputs/metrics/final_controlled_50_uncertainty_summary.csv`
+- `outputs/metrics/final_controlled_50_sdxl_feasibility_summary.csv`
+- `outputs/metrics/final_controlled_50_visual_cases.csv`
+
+Final interpretation:
+
+The controlled evaluation supports a layered trustworthiness framework. Reference-based metrics are necessary but insufficient. Metric-region policy, visual inspection, model feasibility auditing, and generative uncertainty analysis are also needed.
+
+The final thesis-level claim is:
+
+> Visual plausibility is not the same as restoration trustworthiness.
