@@ -507,6 +507,28 @@ Key module groups include:
 
 ---
 
+## Future scope and supervisor review
+
+The current framework is complete enough for supervisor review, but several candidate extensions could strengthen the final thesis.
+
+Recommended high-priority extensions:
+
+- **Texture-aware metrics:** add local texture descriptors such as GLCM contrast/homogeneity or Gabor-filter responses to better evaluate brushstroke and surface continuity.
+- **Uncertainty heatmaps:** generate pixel-wise uncertainty maps across Stable Diffusion seed outputs and add them to selected reports and the dashboard.
+- **Metric-policy ablation:** formalize the old-versus-refined metric-region comparison as an ablation study.
+
+Possible medium-priority extensions:
+
+- **Per-painting report templates:** generate standardized case-level reports with original, damaged, restored, metric, uncertainty, and trustworthiness summaries.
+- **Metadata-driven analysis:** enrich analysis using artist, period, medium, or collection metadata where available.
+- **Dashboard expansion:** add richer model/category/damage filters, uncertainty exploration, and report-generation features.
+
+Exploratory future work:
+
+- **Semantic/iconographic consistency checks:** use lightweight CLIP-based concept consistency or qualitative hallucination flags to identify possible semantic inventions in generative restoration outputs.
+
+These additions should be prioritized with supervisor input. The strongest candidates for final thesis methodology are texture-aware metrics, uncertainty heatmaps, and metric-policy ablation.
+
 ## Future work
 
 Current likely next steps:
