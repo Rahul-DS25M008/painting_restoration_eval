@@ -1,0 +1,13 @@
+path,size_mb,exists,large_warning_over_50mb,hard_limit_risk_over_100mb
+notebooks/30_supervisor_package_cleaned.ipynb,0.1653461456298828,True,False,False
+outputs/supervisor_package/package_manifest.json,0.01803112030029297,True,False,False
+outputs/supervisor_package/README_supervisor.md,0.0032405853271484375,True,False,False
+outputs/supervisor_package/proposal_alignment.md,0.009240150451660156,True,False,False
+outputs/supervisor_package/methodology_summary.md,0.005095481872558594,True,False,False
+outputs/supervisor_package/results_summary.md,0.007285118103027344,True,False,False
+outputs/supervisor_package/limitations_and_deviations.md,0.004843711853027344,True,False,False
+outputs/supervisor_package/supervisor_questions.md,0.00302886962890625,True,False,False
+outputs/supervisor_package/next_steps.md,0.00250244140625,True,False,False
+docs/methodology_notes.md,0.05692100524902344,True,False,False
+docs/literature_reference_log.md,0.07459545135498047,True,False,False
+docs/model_audit_notes.md,0.03564643859863281,True,False,False

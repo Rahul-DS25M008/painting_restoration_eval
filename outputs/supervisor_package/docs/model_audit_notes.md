@@ -838,36 +838,3 @@ Final interpretation:
 The final report is the main consolidated experimental artifact for the controlled 50-painting benchmark.
 
 The central audit conclusion is that visual plausibility alone is insufficient for restoration trustworthiness.
-
-<!-- NOTEBOOK_30_SUPERVISOR_PACKAGE -->
-
-### Supervisor package status
-
-Notebook completed:
-
-`notebooks/30_supervisor_package_cleaned.ipynb`
-
-A supervisor-facing review package has been created at:
-
-`outputs/supervisor_package/`
-
-The package summarizes the current evaluated model stack:
-
-- OpenCV Telea,
-- LaMa,
-- Stable Diffusion Inpainting,
-- SDXL Inpainting as feasibility-audited only.
-
-The package also documents the main model-related supervisor questions:
-
-1. whether SDXL should remain feasibility-audited only,
-2. whether university GPU resources should be requested for SDXL,
-3. whether the 40-case Stable Diffusion uncertainty subset is sufficient,
-4. whether the final thesis should emphasize the LaMa versus Stable Diffusion contrast as a central empirical result.
-
-Current model interpretation remains:
-
-- LaMa is strongest under the refined reference-based comparison.
-- OpenCV Telea is useful as a deterministic baseline.
-- Stable Diffusion exposes the gap between visual plausibility, reference-based performance, and generative stability.
-- SDXL is excluded from full local comparison due feasibility, not as a model-quality conclusion.

@@ -1,0 +1,450 @@
+{
+  "generated_at": "2026-07-06 19:01:57",
+  "package_root": "outputs/supervisor_package",
+  "project_title": "Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration",
+  "central_claim": "Visual plausibility is not the same as restoration trustworthiness.",
+  "controlled_subset": {
+    "paintings": 50,
+    "painting_categories": 5,
+    "damage_cases": 250,
+    "non_zero_comparison_cases": 200
+  },
+  "models": {
+    "fully_evaluated": [
+      "opencv_telea",
+      "lama",
+      "stable_diffusion_inpainting"
+    ],
+    "feasibility_audited": [
+      "sdxl_inpainting"
+    ]
+  },
+  "refined_comparison": {
+    "lama_majority_cases": 155,
+    "opencv_telea_majority_cases": 21,
+    "stable_diffusion_inpainting_majority_cases": 1,
+    "total_non_zero_cases": 200
+  },
+  "uncertainty_analysis": {
+    "cases": 40,
+    "seed_outputs": 160,
+    "seeds_per_case": 4,
+    "highest_uncertainty_case": "p011_loss_large",
+    "highest_uncertainty_case_mask_type": "loss_large",
+    "highest_uncertainty_index": 0.9834162335148644
+  },
+  "package_sections": {
+    "data": "outputs/supervisor_package/data",
+    "selected_figures": "outputs/supervisor_package/selected_figures",
+    "reports": "outputs/supervisor_package/reports",
+    "docs": "outputs/supervisor_package/docs"
+  },
+  "files": [
+    {
+      "relative_path": "data/comparison_metric_disagreement_cases_refined_opencv_lama_stable_diffusion_50.csv",
+      "project_relative_path": "outputs/supervisor_package/data/comparison_metric_disagreement_cases_refined_opencv_lama_stable_diffusion_50.csv",
+      "file_type": "csv",
+      "size_bytes": 68258,
+      "size_mb": 0.06509590148925781
+    },
+    {
+      "relative_path": "data/comparison_summary_by_category_refined_opencv_lama_stable_diffusion_50.csv",
+      "project_relative_path": "outputs/supervisor_package/data/comparison_summary_by_category_refined_opencv_lama_stable_diffusion_50.csv",
+      "file_type": "csv",
+      "size_bytes": 2779,
+      "size_mb": 0.0026502609252929688
+    },
+    {
+      "relative_path": "data/comparison_summary_by_mask_type_refined_opencv_lama_stable_diffusion_50.csv",
+      "project_relative_path": "outputs/supervisor_package/data/comparison_summary_by_mask_type_refined_opencv_lama_stable_diffusion_50.csv",
+      "file_type": "csv",
+      "size_bytes": 2345,
+      "size_mb": 0.0022363662719726562
+    },
+    {
+      "relative_path": "data/dashboard_assets_manifest.json",
+      "project_relative_path": "outputs/supervisor_package/data/dashboard_assets_manifest.json",
+      "file_type": "json",
+      "size_bytes": 4140,
+      "size_mb": 0.003948211669921875
+    },
+    {
+      "relative_path": "data/dashboard_key_findings.json",
+      "project_relative_path": "outputs/supervisor_package/data/dashboard_key_findings.json",
+      "file_type": "json",
+      "size_bytes": 3042,
+      "size_mb": 0.0029010772705078125
+    },
+    {
+      "relative_path": "data/dashboard_overview_summary.json",
+      "project_relative_path": "outputs/supervisor_package/data/dashboard_overview_summary.json",
+      "file_type": "json",
+      "size_bytes": 1111,
+      "size_mb": 0.0010595321655273438
+    },
+    {
+      "relative_path": "data/dashboard_reports_manifest.json",
+      "project_relative_path": "outputs/supervisor_package/data/dashboard_reports_manifest.json",
+      "file_type": "json",
+      "size_bytes": 1036,
+      "size_mb": 0.000988006591796875
+    },
+    {
+      "relative_path": "data/final_controlled_50_dataset_summary.csv",
+      "project_relative_path": "outputs/supervisor_package/data/final_controlled_50_dataset_summary.csv",
+      "file_type": "csv",
+      "size_bytes": 552,
+      "size_mb": 0.00052642822265625
+    },
+    {
+      "relative_path": "data/final_controlled_50_key_results_summary.csv",
+      "project_relative_path": "outputs/supervisor_package/data/final_controlled_50_key_results_summary.csv",
+      "file_type": "csv",
+      "size_bytes": 2023,
+      "size_mb": 0.0019292831420898438
+    },
+    {
+      "relative_path": "data/final_controlled_50_metric_policy_summary.csv",
+      "project_relative_path": "outputs/supervisor_package/data/final_controlled_50_metric_policy_summary.csv",
+      "file_type": "csv",
+      "size_bytes": 711,
+      "size_mb": 0.0006780624389648438
+    },
+    {
+      "relative_path": "data/final_controlled_50_model_stack_summary.csv",
+      "project_relative_path": "outputs/supervisor_package/data/final_controlled_50_model_stack_summary.csv",
+      "file_type": "csv",
+      "size_bytes": 1040,
+      "size_mb": 0.0009918212890625
+    },
+    {
+      "relative_path": "data/final_controlled_50_model_win_summary.csv",
+      "project_relative_path": "outputs/supervisor_package/data/final_controlled_50_model_win_summary.csv",
+      "file_type": "csv",
+      "size_bytes": 320,
+      "size_mb": 0.00030517578125
+    },
+    {
+      "relative_path": "data/final_controlled_50_per_metric_winner_summary.csv",
+      "project_relative_path": "outputs/supervisor_package/data/final_controlled_50_per_metric_winner_summary.csv",
+      "file_type": "csv",
+      "size_bytes": 736,
+      "size_mb": 0.000701904296875
+    },
+    {
+      "relative_path": "data/final_controlled_50_sdxl_feasibility_summary.csv",
+      "project_relative_path": "outputs/supervisor_package/data/final_controlled_50_sdxl_feasibility_summary.csv",
+      "file_type": "csv",
+      "size_bytes": 1006,
+      "size_mb": 0.0009593963623046875
+    },
+    {
+      "relative_path": "data/final_controlled_50_uncertainty_summary.csv",
+      "project_relative_path": "outputs/supervisor_package/data/final_controlled_50_uncertainty_summary.csv",
+      "file_type": "csv",
+      "size_bytes": 596,
+      "size_mb": 0.000568389892578125
+    },
+    {
+      "relative_path": "data/final_controlled_50_visual_case_summary.csv",
+      "project_relative_path": "outputs/supervisor_package/data/final_controlled_50_visual_case_summary.csv",
+      "file_type": "csv",
+      "size_bytes": 1260,
+      "size_mb": 0.001201629638671875
+    },
+    {
+      "relative_path": "data/proposal_hypothesis_coverage.csv",
+      "project_relative_path": "outputs/supervisor_package/data/proposal_hypothesis_coverage.csv",
+      "file_type": "csv",
+      "size_bytes": 976,
+      "size_mb": 0.0009307861328125
+    },
+    {
+      "relative_path": "data/proposal_research_question_coverage.csv",
+      "project_relative_path": "outputs/supervisor_package/data/proposal_research_question_coverage.csv",
+      "file_type": "csv",
+      "size_bytes": 1072,
+      "size_mb": 0.0010223388671875
+    },
+    {
+      "relative_path": "data/research_question_coverage_summary.csv",
+      "project_relative_path": "outputs/supervisor_package/data/research_question_coverage_summary.csv",
+      "file_type": "csv",
+      "size_bytes": 3192,
+      "size_mb": 0.00304412841796875
+    },
+    {
+      "relative_path": "data/selected_supervisor_visual_cases.csv",
+      "project_relative_path": "outputs/supervisor_package/data/selected_supervisor_visual_cases.csv",
+      "file_type": "csv",
+      "size_bytes": 6703,
+      "size_mb": 0.006392478942871094
+    },
+    {
+      "relative_path": "data/selected_supervisor_visual_manifest.csv",
+      "project_relative_path": "outputs/supervisor_package/data/selected_supervisor_visual_manifest.csv",
+      "file_type": "csv",
+      "size_bytes": 5967,
+      "size_mb": 0.005690574645996094
+    },
+    {
+      "relative_path": "data/stable_diffusion_uncertainty_combined_summary_by_category_50.csv",
+      "project_relative_path": "outputs/supervisor_package/data/stable_diffusion_uncertainty_combined_summary_by_category_50.csv",
+      "file_type": "csv",
+      "size_bytes": 1017,
+      "size_mb": 0.0009698867797851562
+    },
+    {
+      "relative_path": "data/stable_diffusion_uncertainty_combined_summary_by_mask_type_50.csv",
+      "project_relative_path": "outputs/supervisor_package/data/stable_diffusion_uncertainty_combined_summary_by_mask_type_50.csv",
+      "file_type": "csv",
+      "size_bytes": 834,
+      "size_mb": 0.0007953643798828125
+    },
+    {
+      "relative_path": "data/stable_diffusion_uncertainty_performance_quadrants_50.csv",
+      "project_relative_path": "outputs/supervisor_package/data/stable_diffusion_uncertainty_performance_quadrants_50.csv",
+      "file_type": "csv",
+      "size_bytes": 654,
+      "size_mb": 0.0006237030029296875
+    },
+    {
+      "relative_path": "data/supervisor_compact_summary_copy_results.csv",
+      "project_relative_path": "outputs/supervisor_package/data/supervisor_compact_summary_copy_results.csv",
+      "file_type": "csv",
+      "size_bytes": 5609,
+      "size_mb": 0.005349159240722656
+    },
+    {
+      "relative_path": "data/supervisor_questions.csv",
+      "project_relative_path": "outputs/supervisor_package/data/supervisor_questions.csv",
+      "file_type": "csv",
+      "size_bytes": 2329,
+      "size_mb": 0.0022211074829101562
+    },
+    {
+      "relative_path": "data/supervisor_report_file_sizes.csv",
+      "project_relative_path": "outputs/supervisor_package/data/supervisor_report_file_sizes.csv",
+      "file_type": "csv",
+      "size_bytes": 578,
+      "size_mb": 0.0005512237548828125
+    },
+    {
+      "relative_path": "docs/literature_reference_log.md",
+      "project_relative_path": "outputs/supervisor_package/docs/literature_reference_log.md",
+      "file_type": "md",
+      "size_bytes": 77128,
+      "size_mb": 0.07355499267578125
+    },
+    {
+      "relative_path": "docs/methodology_notes.md",
+      "project_relative_path": "outputs/supervisor_package/docs/methodology_notes.md",
+      "file_type": "md",
+      "size_bytes": 57999,
+      "size_mb": 0.055312156677246094
+    },
+    {
+      "relative_path": "docs/model_audit_notes.md",
+      "project_relative_path": "outputs/supervisor_package/docs/model_audit_notes.md",
+      "file_type": "md",
+      "size_bytes": 35347,
+      "size_mb": 0.03370952606201172
+    },
+    {
+      "relative_path": "limitations_and_deviations.md",
+      "project_relative_path": "outputs/supervisor_package/limitations_and_deviations.md",
+      "file_type": "md",
+      "size_bytes": 5079,
+      "size_mb": 0.004843711853027344
+    },
+    {
+      "relative_path": "methodology_summary.md",
+      "project_relative_path": "outputs/supervisor_package/methodology_summary.md",
+      "file_type": "md",
+      "size_bytes": 5343,
+      "size_mb": 0.005095481872558594
+    },
+    {
+      "relative_path": "next_steps.md",
+      "project_relative_path": "outputs/supervisor_package/next_steps.md",
+      "file_type": "md",
+      "size_bytes": 2624,
+      "size_mb": 0.00250244140625
+    },
+    {
+      "relative_path": "proposal_alignment.md",
+      "project_relative_path": "outputs/supervisor_package/proposal_alignment.md",
+      "file_type": "md",
+      "size_bytes": 9689,
+      "size_mb": 0.009240150451660156
+    },
+    {
+      "relative_path": "README_supervisor.md",
+      "project_relative_path": "outputs/supervisor_package/README_supervisor.md",
+      "file_type": "md",
+      "size_bytes": 3398,
+      "size_mb": 0.0032405853271484375
+    },
+    {
+      "relative_path": "reports/final_controlled_50_evaluation_report.html",
+      "project_relative_path": "outputs/supervisor_package/reports/final_controlled_50_evaluation_report.html",
+      "file_type": "html",
+      "size_bytes": 202327206,
+      "size_mb": 192.95425987243652
+    },
+    {
+      "relative_path": "reports/opencv_lama_stable_diffusion_refined_metric_comparison_report_50.html",
+      "project_relative_path": "outputs/supervisor_package/reports/opencv_lama_stable_diffusion_refined_metric_comparison_report_50.html",
+      "file_type": "html",
+      "size_bytes": 25876976,
+      "size_mb": 24.678207397460938
+    },
+    {
+      "relative_path": "reports/stable_diffusion_uncertainty_report_50.html",
+      "project_relative_path": "outputs/supervisor_package/reports/stable_diffusion_uncertainty_report_50.html",
+      "file_type": "html",
+      "size_bytes": 194945971,
+      "size_mb": 185.91496562957764
+    },
+    {
+      "relative_path": "results_summary.md",
+      "project_relative_path": "outputs/supervisor_package/results_summary.md",
+      "file_type": "md",
+      "size_bytes": 7639,
+      "size_mb": 0.007285118103027344
+    },
+    {
+      "relative_path": "selected_figures/01_refined_model_comparison_p004_scratch_thin.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/01_refined_model_comparison_p004_scratch_thin.png",
+      "file_type": "png",
+      "size_bytes": 2243366,
+      "size_mb": 2.1394405364990234
+    },
+    {
+      "relative_path": "selected_figures/02_refined_model_comparison_p040_loss_large.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/02_refined_model_comparison_p040_loss_large.png",
+      "file_type": "png",
+      "size_bytes": 2407646,
+      "size_mb": 2.296110153198242
+    },
+    {
+      "relative_path": "selected_figures/03_refined_model_comparison_p001_mixed_damage.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/03_refined_model_comparison_p001_mixed_damage.png",
+      "file_type": "png",
+      "size_bytes": 1968410,
+      "size_mb": 1.8772220611572266
+    },
+    {
+      "relative_path": "selected_figures/04_refined_model_comparison_p030_loss_large.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/04_refined_model_comparison_p030_loss_large.png",
+      "file_type": "png",
+      "size_bytes": 1762349,
+      "size_mb": 1.6807069778442383
+    },
+    {
+      "relative_path": "selected_figures/05_refined_model_comparison_p001_loss_large.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/05_refined_model_comparison_p001_loss_large.png",
+      "file_type": "png",
+      "size_bytes": 1519665,
+      "size_mb": 1.449265480041504
+    },
+    {
+      "relative_path": "selected_figures/06_refined_model_comparison_p037_scratch_thin.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/06_refined_model_comparison_p037_scratch_thin.png",
+      "file_type": "png",
+      "size_bytes": 2165862,
+      "size_mb": 2.0655269622802734
+    },
+    {
+      "relative_path": "selected_figures/07_stable_diffusion_uncertainty_p031_loss_large.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/07_stable_diffusion_uncertainty_p031_loss_large.png",
+      "file_type": "png",
+      "size_bytes": 6341385,
+      "size_mb": 6.047616004943848
+    },
+    {
+      "relative_path": "selected_figures/08_stable_diffusion_uncertainty_p037_loss_small.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/08_stable_diffusion_uncertainty_p037_loss_small.png",
+      "file_type": "png",
+      "size_bytes": 4566230,
+      "size_mb": 4.354696273803711
+    },
+    {
+      "relative_path": "selected_figures/09_stable_diffusion_uncertainty_p037_mixed_damage.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/09_stable_diffusion_uncertainty_p037_mixed_damage.png",
+      "file_type": "png",
+      "size_bytes": 4780728,
+      "size_mb": 4.559257507324219
+    },
+    {
+      "relative_path": "selected_figures/10_stable_diffusion_uncertainty_p037_scratch_thin.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/10_stable_diffusion_uncertainty_p037_scratch_thin.png",
+      "file_type": "png",
+      "size_bytes": 4796946,
+      "size_mb": 4.574724197387695
+    },
+    {
+      "relative_path": "selected_figures/11_stable_diffusion_uncertainty_p026_loss_large.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/11_stable_diffusion_uncertainty_p026_loss_large.png",
+      "file_type": "png",
+      "size_bytes": 5002172,
+      "size_mb": 4.770442962646484
+    },
+    {
+      "relative_path": "selected_figures/12_stable_diffusion_uncertainty_p026_loss_small.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/12_stable_diffusion_uncertainty_p026_loss_small.png",
+      "file_type": "png",
+      "size_bytes": 5126856,
+      "size_mb": 4.889350891113281
+    },
+    {
+      "relative_path": "selected_figures/13_uncertainty_trustworthiness_quadrant_p011_loss_large.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/13_uncertainty_trustworthiness_quadrant_p011_loss_large.png",
+      "file_type": "png",
+      "size_bytes": 4176251,
+      "size_mb": 3.982783317565918
+    },
+    {
+      "relative_path": "selected_figures/14_uncertainty_trustworthiness_quadrant_p009_loss_large.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/14_uncertainty_trustworthiness_quadrant_p009_loss_large.png",
+      "file_type": "png",
+      "size_bytes": 5983064,
+      "size_mb": 5.705894470214844
+    },
+    {
+      "relative_path": "selected_figures/15_uncertainty_trustworthiness_quadrant_p018_loss_large.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/15_uncertainty_trustworthiness_quadrant_p018_loss_large.png",
+      "file_type": "png",
+      "size_bytes": 3935875,
+      "size_mb": 3.753542900085449
+    },
+    {
+      "relative_path": "selected_figures/16_uncertainty_trustworthiness_quadrant_p037_loss_large.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/16_uncertainty_trustworthiness_quadrant_p037_loss_large.png",
+      "file_type": "png",
+      "size_bytes": 4504361,
+      "size_mb": 4.295693397521973
+    },
+    {
+      "relative_path": "selected_figures/17_uncertainty_trustworthiness_quadrant_p010_loss_large.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/17_uncertainty_trustworthiness_quadrant_p010_loss_large.png",
+      "file_type": "png",
+      "size_bytes": 6104051,
+      "size_mb": 5.821276664733887
+    },
+    {
+      "relative_path": "selected_figures/18_uncertainty_trustworthiness_quadrant_p043_loss_large.png",
+      "project_relative_path": "outputs/supervisor_package/selected_figures/18_uncertainty_trustworthiness_quadrant_p043_loss_large.png",
+      "file_type": "png",
+      "size_bytes": 5126828,
+      "size_mb": 4.889324188232422
+    },
+    {
+      "relative_path": "supervisor_questions.md",
+      "project_relative_path": "outputs/supervisor_package/supervisor_questions.md",
+      "file_type": "md",
+      "size_bytes": 3176,
+      "size_mb": 0.00302886962890625
+    }
+  ]
+}

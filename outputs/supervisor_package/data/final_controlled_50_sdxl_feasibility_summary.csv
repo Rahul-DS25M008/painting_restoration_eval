@@ -1,0 +1,8 @@
+aspect,finding,details
+model,SDXL Inpainting feasibility audit,diffusers/stable-diffusion-xl-1.0-inpainting-0.1 was tested locally.
+local_hardware,6GB GPU limitation,RTX 3060 Laptop GPU with 6GB VRAM was insufficient for practical full SDXL evaluation.
+no_offload_result,CUDA out-of-memory,Pipeline loading/inference without CPU offload exceeded available local VRAM.
+cpu_offload_result,Technically possible but too slow,"Low-quality SDXL probe required several minutes per image, making full controlled evaluation impractical locally."
+quality_runtime_tradeoff,Excluded from full local comparison,Faster low-step settings were not adequate for restoration-quality comparison; stronger settings were too slow.
+interpretation,"Feasibility exclusion, not model-quality conclusion","SDXL was excluded because of local compute constraints, not because of a full comparative quality evaluation."
+future_work,Remote GPU possible,"Full SDXL evaluation can be revisited with 12GB+ VRAM, preferably 16GB+."

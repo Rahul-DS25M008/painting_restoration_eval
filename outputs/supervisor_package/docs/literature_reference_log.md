@@ -1609,33 +1609,3 @@ Another possible wording:
 ### Main final artifact
 
 `outputs/reports/final_controlled_50_evaluation_report.html`
-
-<!-- NOTEBOOK_30_SUPERVISOR_PACKAGE -->
-
-## 30. Supervisor package and proposal alignment
-
-### Decision supported
-
-A supervisor package was created to connect the completed controlled experiment back to the thesis proposal framing.
-
-The package emphasizes that the thesis contribution is an evaluation framework rather than a new restoration model.
-
-### Proposal alignment
-
-The package maps the current experiment to three remembered research directions:
-
-1. multi-metric restoration trustworthiness,
-2. pretrained model comparison across painting and damage conditions,
-3. diffusion uncertainty from multiple restoration candidates.
-
-### Current interpretation
-
-The completed 50-painting controlled experiment supports the main framework claim:
-
-> Visual plausibility is not the same as restoration trustworthiness.
-
-The package also identifies remaining clarification points for the supervisor, especially around final dataset scale, uncertainty subset size, SDXL feasibility, and dashboard formalization.
-
-### Main artifact
-
-`outputs/supervisor_package/`

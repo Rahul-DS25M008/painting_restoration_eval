@@ -30,3 +30,5 @@ outputs/logs/
 # outputs/figures/
 # outputs/reports/
 # outputs/metrics/
+# Large copied supervisor package reports
+outputs/supervisor_package/reports/*.html
