@@ -1151,3 +1151,66 @@ Main refined outputs:
 - `outputs/reports/opencv_lama_stable_diffusion_refined_metric_comparison_report_50.html`
 
 The refined comparison is the preferred comparison policy for the final controlled 50-painting report.
+
+## Stable Diffusion multi-seed uncertainty analysis
+
+Notebook:
+
+`notebooks/27_diffusion_uncertainty_analysis_cleaned.ipynb`
+
+A multi-seed uncertainty analysis was added for Stable Diffusion Inpainting.
+
+The purpose was to evaluate whether the diffusion model produces stable restorations for the same damaged input when sampled repeatedly with different random seeds.
+
+The analysis used a balanced diagnostic subset rather than the full non-zero benchmark:
+
+- 5 painting categories,
+- 2 paintings per category,
+- 4 non-zero mask types per selected painting,
+- 40 damaged cases.
+
+For each selected case, Stable Diffusion Inpainting was run with four seeds:
+
+- `2026`,
+- `2027`,
+- `2028`,
+- `2029`.
+
+This produced 160 generated restoration outputs.
+
+The subset selection was based on the refined three-model comparison. For each painting category, one relatively stronger Stable Diffusion painting and one weaker or disagreement-prone Stable Diffusion painting were selected. All four non-zero masks were then included for each selected painting.
+
+Uncertainty was measured using complementary indicators:
+
+- image-space seed variation,
+- masked-region seed standard deviation,
+- mask-bounding-box seed variation,
+- pairwise LPIPS distance between seed outputs,
+- pairwise CLIP feature uncertainty distance,
+- pairwise DINOv2 feature uncertainty distance,
+- combined normalized uncertainty index.
+
+The analysis was also linked back to the refined three-model comparison to evaluate uncertainty against reference-based Stable Diffusion metric performance.
+
+The uncertainty-performance linkage produced four diagnostic cases:
+
+- high uncertainty and low reference performance,
+- high uncertainty and high reference performance,
+- low uncertainty and low reference performance,
+- low uncertainty and high reference performance.
+
+The uncertainty analysis supports the thesis argument that a visually plausible diffusion restoration is not necessarily trustworthy. If repeated seeds produce different restorations for the same damaged region, then the model is sampling multiple plausible completions rather than providing a stable restoration estimate.
+
+Main outputs:
+
+- `outputs/metrics/stable_diffusion_uncertainty_subset_manifest_50.csv`
+- `outputs/metrics/stable_diffusion_uncertainty_generations_50.csv`
+- `outputs/metrics/stable_diffusion_uncertainty_image_summary_by_case_50.csv`
+- `outputs/metrics/stable_diffusion_uncertainty_pairwise_lpips_50.csv`
+- `outputs/metrics/stable_diffusion_uncertainty_pairwise_feature_similarity_50.csv`
+- `outputs/metrics/stable_diffusion_uncertainty_combined_summary_by_case_50.csv`
+- `outputs/metrics/stable_diffusion_uncertainty_vs_refined_performance_50.csv`
+- `outputs/metrics/stable_diffusion_uncertainty_performance_quadrants_50.csv`
+- `outputs/reports/stable_diffusion_uncertainty_report_50.html`
+
+This notebook provides the main uncertainty component of the evaluation framework.

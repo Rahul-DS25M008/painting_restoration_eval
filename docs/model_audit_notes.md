@@ -528,6 +528,60 @@ Current interpretation: Stable Diffusion now has completed restoration generatio
 
 ### Stable Diffusion baseline report status
 
+### Stable Diffusion uncertainty analysis status
+
+Notebook completed:
+
+`notebooks/27_diffusion_uncertainty_analysis_cleaned.ipynb`
+
+Stable Diffusion Inpainting was evaluated for stochastic output uncertainty using multiple random seeds.
+
+Model:
+
+- `runwayml/stable-diffusion-inpainting`
+- project model name: `stable_diffusion_inpainting`
+
+Generation settings:
+
+- seeds: `2026`, `2027`, `2028`, `2029`
+- inference steps: 30
+- guidance scale: 7.5
+- inference size: 512
+- output size: 768
+- safety checker disabled in the existing Stable Diffusion pipeline setup for art-restoration use.
+
+Subset:
+
+- 40 damaged cases,
+- 5 categories,
+- 2 paintings per category,
+- 4 non-zero masks per painting,
+- 160 generated outputs.
+
+Runtime:
+
+- Full uncertainty generation took approximately 27 minutes locally.
+
+Uncertainty outputs:
+
+- image-space uncertainty,
+- pairwise LPIPS uncertainty,
+- pairwise CLIP/DINOv2 uncertainty,
+- combined uncertainty index,
+- uncertainty versus refined comparison performance,
+- visual uncertainty grids,
+- HTML uncertainty report.
+
+Main report:
+
+`outputs/reports/stable_diffusion_uncertainty_report_50.html`
+
+Interpretation:
+
+The uncertainty analysis shows whether Stable Diffusion produces stable outputs across seeds. High uncertainty indicates that the model can generate multiple different plausible completions for the same damaged input. This is important for restoration trustworthiness because visual plausibility alone does not imply stable or reference-faithful restoration.
+
+The uncertainty analysis should be treated as a diagnostic component of the final evaluation framework, not as a replacement for the full reference-based model comparison.
+
 The consolidated Stable Diffusion baseline report has been completed.
 
 Notebook:
@@ -720,6 +774,8 @@ Main refined outputs:
 Interpretation:
 
 The refined comparison should be used as the final model-comparison reference in the consolidated 50-painting evaluation report. The initial comparison remains useful as an audit trail showing why the refinement was necessary.
+
+
 
 ## DALL-E / OpenAI Image Editing
 

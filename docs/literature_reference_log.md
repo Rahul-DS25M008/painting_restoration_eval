@@ -1441,3 +1441,99 @@ Possible thesis wording:
 The refined comparison was saved as a separate set of comparison-level outputs rather than overwriting the initial comparison.
 
 This preserves an audit trail from the initial comparison to the final refined comparison policy.
+
+## 27. Diffusion uncertainty analysis
+
+### Decision supported
+
+A multi-seed uncertainty analysis was added for Stable Diffusion Inpainting.
+
+The motivation is that diffusion models are stochastic generative models. A single generated restoration output does not fully describe model behavior. Repeated sampling with different seeds can reveal whether the model produces stable restorations or multiple inconsistent plausible completions.
+
+---
+
+### Experimental design
+
+The analysis uses a balanced diagnostic subset:
+
+- 5 painting categories,
+- 2 paintings per category,
+- 4 non-zero synthetic damage masks,
+- 40 total cases.
+
+Each case is generated with four seeds:
+
+- `2026`,
+- `2027`,
+- `2028`,
+- `2029`.
+
+This gives 160 Stable Diffusion uncertainty outputs.
+
+The subset is not intended to replace the full 200-case non-zero comparison. Instead, it provides a controlled uncertainty probe across categories, damage types, and Stable Diffusion performance profiles.
+
+---
+
+### Uncertainty indicators
+
+The notebook computes uncertainty using several complementary indicators.
+
+Image-space indicators:
+
+- pixel-wise seed standard deviation,
+- masked-region seed standard deviation,
+- mask-bounding-box seed standard deviation,
+- mean absolute deviation from the seed-mean output.
+
+Perceptual indicators:
+
+- pairwise LPIPS distance between seed outputs.
+
+Feature-space indicators:
+
+- pairwise CLIP cosine similarity,
+- pairwise DINOv2 cosine similarity,
+- CLIP uncertainty distance,
+- DINOv2 uncertainty distance.
+
+A combined uncertainty index is created by min-max normalizing selected uncertainty indicators and averaging them.
+
+---
+
+### Link to refined model comparison
+
+The uncertainty results are linked back to the refined three-model comparison.
+
+This allows four diagnostic interpretations:
+
+1. High uncertainty and low reference performance:
+   - unstable and weak against the reference.
+
+2. High uncertainty and higher reference performance:
+   - one seed may perform well, but the model is unstable.
+
+3. Low uncertainty and low reference performance:
+   - the model is consistently wrong or consistently biased.
+
+4. Low uncertainty and higher reference performance:
+   - relatively stable and comparatively stronger behavior.
+
+This framing supports the trustworthiness focus of the thesis.
+
+---
+
+### Possible thesis wording
+
+> Since diffusion-based inpainting is stochastic, a single generated restoration cannot fully characterize model behavior. Multi-seed uncertainty analysis was therefore used to measure whether Stable Diffusion produced stable or variable restorations for identical damaged inputs. High seed variability was interpreted as a trustworthiness warning, particularly when paired with weak reference-based metrics.
+
+Another possible wording:
+
+> The uncertainty analysis shows that visual plausibility and output stability are separate evaluation dimensions. A generated restoration may look coherent while still being one of several inconsistent completions sampled by the model.
+
+---
+
+### Methodological caveat
+
+The uncertainty analysis is diagnostic rather than exhaustive. It uses 40 balanced cases rather than all 200 non-zero damaged cases. This choice keeps the analysis computationally practical while still covering all categories and damage types.
+
+A full 200-case uncertainty sweep remains possible but is not necessary for the current controlled evaluation unless broader uncertainty coverage is requested.
