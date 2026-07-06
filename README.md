@@ -210,20 +210,6 @@ It includes:
 
 The dashboard is designed for review and presentation. It does not rerun models, recompute metrics, or load large HTML reports.
 
-### Run the dashboard
-
-From the repository root:
-
-```powershell
-streamlit run streamlit_app.py
-```
-
-If Streamlit is missing:
-
-```powershell
-pip install streamlit plotly
-```
-
 Recommended full setup is described below.
 
 ---
@@ -271,6 +257,21 @@ jupyter notebook
 ```
 
 ---
+
+
+### Run the dashboard
+
+From the repository root:
+
+```powershell
+streamlit run streamlit_app.py
+```
+
+If Streamlit is missing:
+
+```powershell
+pip install streamlit plotly
+```
 
 ## Reproducibility notes
 
