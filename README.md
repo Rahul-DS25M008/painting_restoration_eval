@@ -136,13 +136,13 @@ Current conclusions from the controlled 50-painting experiment:
 
 A supervisor-facing review package has been created at:
 
-```text
+```powershell
 outputs/supervisor_package/
 ```
 
 Important files:
 
-```text
+```powershell
 outputs/supervisor_package/README_supervisor.md
 outputs/supervisor_package/proposal_alignment.md
 outputs/supervisor_package/methodology_summary.md
@@ -155,7 +155,7 @@ outputs/supervisor_package/package_manifest.json
 
 The most important file for supervisor discussion is:
 
-```text
+```powershell
 outputs/supervisor_package/supervisor_questions.md
 ```
 
@@ -174,7 +174,7 @@ Large copied HTML reports are intentionally not committed inside `outputs/superv
 
 The final report as well as other important reports however can still be accessed in the folder:
 
-```text
+```powershell
 outputs/reports/final_controlled_50_evaluation_report.html
 outputs/reports/
 ``
@@ -185,13 +185,13 @@ outputs/reports/
 
 A working Streamlit dashboard is available at:
 
-```text
+```powershell
 streamlit_app.py
 ```
 
 The dashboard uses prepared assets from:
 
-```text
+```powershell
 outputs/dashboard/
 ```
 
