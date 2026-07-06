@@ -1,82 +1,243 @@
 # Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration
 
-This repository contains the reproducible pilot pipeline for the master thesis project **Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration**.
+This repository contains the reproducible implementation for the master thesis project:
 
-The current version is a cleaned and refactored pilot implementation. It evaluates synthetic damage restoration on a small set of public-domain paintings using a classical OpenCV Telea inpainting baseline, classical image metrics, LPIPS perceptual metrics, difference maps, comparison grids, and an HTML report.
+**Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration**
 
-The pilot is not intended to produce final benchmark claims. Its purpose is to validate the end-to-end workflow before moving to a controlled 50-painting subset and later model comparison.
+The project builds and evaluates a controlled framework for assessing AI-assisted painting restoration. The focus is **not** to train a new restoration model or to claim conservation-ready restoration. The focus is to test whether different evaluation signals can reveal when restoration outputs are faithful, unstable, metric-dependent, or only visually plausible.
+
+> **Core thesis claim:** visual plausibility is not the same as restoration trustworthiness.
+
+---
 
 ## Current status
 
-The pilot pipeline has been refactored into reusable source modules and cleaned notebooks. The project was rerun from raw inputs after deleting generated outputs, and all expected files regenerated successfully.
+The project has progressed beyond the initial OpenCV pilot. The current repository contains a controlled 50-painting evaluation pipeline, final comparison reports, supervisor review package, and a working Streamlit dashboard.
 
-Current reproducibility status:
+Current completed stages:
 
-- Raw images and metadata are sufficient to regenerate processed images, masks, restorations, metrics, figures, and reports.
-- Notebook order has been validated.
-- Reusable logic has been moved into `src/restoration_eval/`.
-- The pilot can now be used as the foundation for the 50-painting controlled subset phase.
+- cleaned pilot pipeline,
+- controlled 50-painting subset,
+- synthetic damage generation,
+- OpenCV Telea restoration baseline,
+- LaMa restoration evaluation,
+- Stable Diffusion Inpainting evaluation,
+- SDXL feasibility audit,
+- classical metrics,
+- LPIPS perceptual metrics,
+- CLIP and DINOv2 feature similarity,
+- difference maps and comparison grids,
+- refined metric-region policy,
+- final three-model comparison,
+- Stable Diffusion multi-seed uncertainty analysis,
+- final controlled 50-painting evaluation report,
+- dashboard asset preparation,
+- supervisor review package,
+- working Streamlit dashboard.
 
-## Repository structure
+The current evaluated model stack is:
+
+| Model | Status | Role |
+|---|---|---|
+| OpenCV Telea | Fully evaluated | Deterministic classical inpainting baseline |
+| LaMa | Fully evaluated | Strong learned inpainting baseline |
+| Stable Diffusion Inpainting | Fully evaluated | Generative inpainting model and uncertainty target |
+| SDXL Inpainting | Feasibility audited | Not fully evaluated locally because of GPU/runtime constraints |
+
+---
+
+## Thesis framing
+
+The thesis is framed as an **evaluation framework** for AI-assisted painting restoration.
+
+It does **not** claim that the generated restorations are historically correct, conservation-approved, or suitable for real restoration practice. The experiment uses controlled synthetic damage because clean reference images are available, allowing full-reference metric analysis.
+
+The central contribution is a reproducible framework that combines:
+
+- controlled painting categories,
+- synthetic damage types,
+- multiple restoration paradigms,
+- region-aware metric policy,
+- perceptual and feature-space metrics,
+- visual diagnostics,
+- metric disagreement analysis,
+- generative uncertainty analysis,
+- feasibility documentation for heavier models.
+
+---
+
+## Research questions
+
+The current project is organized around the following research questions.
+
+### RQ1: Multi-metric trustworthiness evaluation
+
+Can multi-metric evaluation provide a more trustworthy assessment of AI-assisted painting restoration than relying on PSNR/SSIM or a single score alone?
+
+Current answer:
+
+- Substantially answered for the controlled 50-painting subset.
+- The framework uses MSE, PSNR, SSIM, LPIPS, CLIP, DINOv2, difference maps, comparison grids, and metric-disagreement analysis.
+- The project found that metric-region policy matters, especially because sparse masked-region SSIM is not valid.
+
+### RQ2: Model comparison across painting and damage conditions
+
+How do pretrained restoration/inpainting models compare across painting categories and synthetic damage types?
+
+Current answer:
+
+- Substantially answered for the controlled 50-painting subset.
+- OpenCV Telea, LaMa, and Stable Diffusion Inpainting were fully evaluated on 200 non-zero damage cases.
+- Results are summarized by model, metric, mask type, and painting category.
+
+### RQ3: Diffusion uncertainty from multiple candidates
+
+Can uncertainty estimated from multiple diffusion restoration candidates identify cases where a generative restoration should be treated cautiously?
+
+Current answer:
+
+- Answered diagnostically using a balanced Stable Diffusion uncertainty subset.
+- The uncertainty analysis uses 40 cases and 4 seeds per case, producing 160 outputs.
+- The current result supports uncertainty as a complementary warning signal, not as a replacement for reference metrics.
+
+---
+
+## Current conclusions
+
+Current conclusions from the controlled 50-painting experiment:
+
+1. **LaMa dominates the refined reference-based comparison.**  
+   Under the final refined metric-region policy, LaMa wins most non-zero comparison cases.
+
+2. **OpenCV Telea remains a useful deterministic baseline.**  
+   It is not the strongest learned method, but it gives a stable classical comparison point.
+
+3. **Stable Diffusion rarely wins under reference-based metrics.**  
+   Its outputs may look plausible, but reference fidelity and seed stability are weaker.
+
+4. **Metric-region policy is critical.**  
+   Sparse masked-region SSIM was found to be invalid. The final policy evaluates SSIM on the mask bounding-box crop.
+
+5. **Metric disagreement supports the framework argument.**  
+   The result is not just a model leaderboard. Different metric families can point to different interpretations.
+
+6. **Uncertainty analysis is useful for generative models.**  
+   Stable Diffusion can produce different outputs for the same damaged input depending on seed. This instability is useful as a caution signal.
+
+7. **SDXL requires stronger compute for fair full evaluation.**  
+   SDXL was feasibility-audited locally, but full evaluation was excluded because local 6GB VRAM did not provide a practical runtime-quality balance.
+
+8. **The strongest thesis claim is methodological.**  
+   The project demonstrates why restoration trustworthiness requires multiple evaluation signals instead of visual inspection alone.
+
+---
+
+## Supervisor review package
+
+A supervisor-facing review package has been created at:
 
 ```text
-painting-restoration-eval/
-  config/
-    pilot_config.yaml
-
-  data/
-    raw/
-      images/
-      metadata/
-    processed/
-      clean/
-      masks/
-      masked/
-      restored/
-        opencv_telea/
-      metadata/
-
-  docs/
-    pilot_notes.md
-    pilot_reproducibility_note.md
-    supervisor_feedback_next_phase.md
-
-  notebooks/
-    01_dataset_verification.ipynb
-    02_preprocessing.ipynb
-    03_mask_generation.ipynb
-    04_opencv_restoration.ipynb
-    05_metrics_classical.ipynb
-    06_difference_maps.ipynb
-    07_lpips_metrics.ipynb
-    08_generate_report_opencv.ipynb
-
-  outputs/
-    metrics/
-    figures/
-      difference_maps/
-      comparison_grids/
-    reports/
-
-  src/
-    restoration_eval/
-      paths.py
-      io_utils.py
-      preprocessing.py
-      masks.py
-      restoration_opencv.py
-      metrics_classical.py
-      metrics_lpips.py
-      error_maps.py
-      reporting.py
-
-  requirements.txt
-  README.md
+outputs/supervisor_package/
 ```
 
-## Setup
+Important files:
 
-Create and activate a virtual environment.
+```text
+outputs/supervisor_package/README_supervisor.md
+outputs/supervisor_package/proposal_alignment.md
+outputs/supervisor_package/methodology_summary.md
+outputs/supervisor_package/results_summary.md
+outputs/supervisor_package/limitations_and_deviations.md
+outputs/supervisor_package/supervisor_questions.md
+outputs/supervisor_package/next_steps.md
+outputs/supervisor_package/package_manifest.json
+```
+
+The most important file for supervisor discussion is:
+
+```text
+outputs/supervisor_package/supervisor_questions.md
+```
+
+It asks for clarification on:
+
+1. whether the controlled 50-painting subset is sufficient,
+2. whether the 40-case uncertainty subset is sufficient,
+3. whether SDXL should remain feasibility-audited only,
+4. whether university GPU resources should be requested for full SDXL comparison,
+5. whether the refined metric-region policy is accepted,
+6. whether the Streamlit dashboard should be included as a formal supporting artifact,
+7. whether the final thesis should emphasize the LaMa versus Stable Diffusion contrast,
+8. whether the final thesis should scale dataset size, uncertainty analysis, or model coverage.
+
+Large copied HTML reports are intentionally not committed inside `outputs/supervisor_package/reports/` because they exceed GitHub size limits. The package references the main generated reports instead.
+
+The final report as well as other important reports however can still be accessed in the folder:
+
+```text
+outputs/reports/final_controlled_50_evaluation_report.html
+outputs/reports/
+``
+
+---
+
+## Streamlit dashboard
+
+A working Streamlit dashboard is available at:
+
+```text
+streamlit_app.py
+```
+
+The dashboard uses prepared assets from:
+
+```text
+outputs/dashboard/
+```
+
+It includes:
+
+- Overview,
+- Dataset & Damage,
+- Model Stack,
+- Metric Policy,
+- Model Comparison,
+- Diffusion Uncertainty,
+- Visual Explorer,
+- Key Findings,
+- Reports,
+- Debug.
+
+The dashboard is designed for review and presentation. It does not rerun models, recompute metrics, or load large HTML reports.
+
+### Run the dashboard
+
+From the repository root:
+
+```powershell
+streamlit run streamlit_app.py
+```
+
+If Streamlit is missing:
+
+```powershell
+pip install streamlit plotly
+```
+
+Recommended full setup is described below.
+
+---
+
+## Setup from a fresh GitHub clone
+
+Clone the repository.
+
+```powershell
+git clone https://github.com/Rahul-DS25M008/painting_restoration_eval.git
+cd painting_restoration_eval
+```
+
+Create and activate a Python virtual environment.
 
 ```powershell
 winget install -e --id Python.Python.3.12
@@ -89,142 +250,289 @@ Install dependencies.
 ```powershell
 python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
+```
+
+Optional but recommended for notebook work:
+
+```powershell
 python -m ipykernel install --user --name painting-restoration-eval --display-name "Painting Restoration Eval"
 ```
 
-Start Jupyter.
+Run the dashboard.
+
+```powershell
+streamlit run streamlit_app.py
+```
+
+Start Jupyter if the notebooks need to be inspected or rerun.
 
 ```powershell
 jupyter notebook
 ```
 
-## Pilot dataset
+---
 
-The pilot uses three public-domain / open-access paintings from The Metropolitan Museum of Art collection.
+## Reproducibility notes
 
-| ID | Category | Purpose |
-|---|---|---|
-| p001 | Portrait / figure | Tests semantic and figure-heavy restoration cases |
-| p002 | Landscape / fresco | Tests broad texture and softer atmospheric areas |
-| p003 | Structured / brushstroke-heavy | Tests architecture, geometry, and painterly texture continuity |
+The dashboard can be used directly if the generated dashboard assets are present in the cloned repository.
 
-All images are converted to RGB and standardized to 768 × 768 pixels using resize and center crop.
+If generated outputs are missing, the notebooks must be rerun in order. The current project has many generated artifacts, including model outputs, metrics, figures, and reports. Some large HTML reports may be local-only or Git LFS-managed depending on the repository state.
 
-## Notebook run order
+For full experimental reproduction, the most important requirements are:
 
-Run the notebooks in this exact order:
+- Python environment from `requirements.txt`,
+- raw painting images and metadata,
+- notebook execution in the validated order,
+- sufficient local storage,
+- NVIDIA GPU for Stable Diffusion experiments,
+- stronger GPU if SDXL is to be rerun fully.
 
-```text
-01_dataset_verification.ipynb
-02_preprocessing.ipynb
-03_mask_generation.ipynb
-04_opencv_restoration.ipynb
-05_metrics_classical.ipynb
-06_difference_maps.ipynb
-07_lpips_metrics.ipynb
-08_generate_report_opencv.ipynb
-```
+The Streamlit dashboard itself does **not** require a GPU. It only reads prepared CSV, JSON, and figure files.
 
-The report notebook depends on the merged classical + LPIPS metrics file generated by notebook 07.
+---
 
-## Expected pilot outputs
+## Current notebook pipeline
 
-After a full rerun from raw inputs, the project should generate:
+The cleaned notebook pipeline is currently organized as follows.
 
 ```text
-outputs/dataset_verification_summary.csv
+01_dataset_verification_cleaned.ipynb
+02_preprocessing_cleaned.ipynb
+03_mask_generation_cleaned.ipynb
+04_damage_creation_cleaned.ipynb
+05_opencv_restoration_cleaned.ipynb
+06_metrics_classical_cleaned.ipynb
+07_difference_maps_cleaned.ipynb
+08_lpips_metrics_cleaned.ipynb
+09_feature_similarity_cleaned.ipynb
+10_generate_report_opencv_cleaned.ipynb
 
-data/processed/clean/
-  3 clean PNGs
+11_lama_restoration_cleaned.ipynb
+12_metrics_classical_lama_cleaned.ipynb
+13_difference_maps_lama_cleaned.ipynb
+14_lpips_metrics_lama_cleaned.ipynb
+15_feature_similarity_lama_cleaned.ipynb
+16_generate_report_lama_cleaned.ipynb
+17_compare_opencv_lama_cleaned.ipynb
 
-data/processed/masks/
-  9 mask PNGs
+18_stable_diffusion_restoration_cleaned.ipynb
+19_metrics_classical_stable_diffusion_cleaned.ipynb
+20_difference_maps_stable_diffusion_cleaned.ipynb
+21_lpips_metrics_stable_diffusion_cleaned.ipynb
+22_feature_similarity_stable_diffusion_cleaned.ipynb
+23_generate_report_stable_diffusion_cleaned.ipynb
+24_compare_opencv_lama_stable_diffusion_cleaned.ipynb
 
-data/processed/masked/
-  9 masked PNGs
-
-data/processed/restored/opencv_telea/
-  9 restored PNGs
-
-data/processed/metadata/
-  metadata_processed_clean.csv
-  metadata_masks.csv
-  metadata_restorations_opencv_telea.csv
-
-outputs/metrics/
-  metrics_opencv_telea_classical.csv
-  difference_map_summary_opencv_telea.csv
-  metrics_opencv_telea_lpips.csv
-  metrics_opencv_telea_with_lpips.csv
-
-outputs/figures/difference_maps/
-  18 difference map images
-
-outputs/figures/comparison_grids/
-  9 comparison grid images
-
-outputs/reports/
-  opencv_telea_report_v3_lpips.html
-  opencv_telea_report_v3_lpips_light.html
+25_sdxl_feasibility_audit_cleaned.ipynb
+26_refined_metric_region_policy_cleaned.ipynb
+27_diffusion_uncertainty_analysis_cleaned.ipynb
+28_final_controlled_50_evaluation_report_cleaned.ipynb
+29_prepare_streamlit_dashboard_assets_cleaned.ipynb
+30_supervisor_package_cleaned.ipynb
 ```
 
-## Reusable source modules
+Planned or optional next notebooks:
 
-The notebooks call reusable functions from `src/restoration_eval/`.
+```text
+31_thesis_methods_assets_cleaned.ipynb
+32_sdxl_full_restoration_remote_cleaned.ipynb
+33_sdxl_metrics_remote_cleaned.ipynb
+34_four_model_comparison_remote_cleaned.ipynb
+```
 
-| Module | Purpose |
+The SDXL notebooks are optional and depend on access to stronger GPU resources.
+
+---
+
+## Controlled dataset design
+
+The current controlled subset contains:
+
+- 50 paintings,
+- 5 painting categories,
+- 10 paintings per category,
+- 5 mask conditions per painting,
+- 250 total damage cases,
+- 200 non-zero restoration comparison cases.
+
+Painting categories:
+
+| Category | Purpose |
 |---|---|
-| `paths.py` | Central project paths |
-| `io_utils.py` | Metadata loading, validation, image inspection |
-| `preprocessing.py` | Resize, center crop, clean image generation |
-| `masks.py` | Synthetic mask and masked image generation |
-| `restoration_opencv.py` | OpenCV Telea restoration baseline |
-| `metrics_classical.py` | MAE, MSE, PSNR, SSIM, masked-region metrics |
-| `metrics_lpips.py` | LPIPS full-image and mask-crop metrics |
-| `error_maps.py` | Difference maps and comparison grids |
-| `reporting.py` | HTML report generation |
+| `portrait_figure` | Human figures and semantic facial/body structure |
+| `landscape_natural` | Natural scenery and atmospheric regions |
+| `architecture_structured` | Geometric and structured visual content |
+| `abstraction_surrealism` | Non-literal or abstract/surreal content |
+| `high_texture_brushwork` | Strong texture, brushwork, and local detail |
 
-## Pilot findings
+Mask conditions:
 
-The pilot shows that the pipeline is technically viable and that local evaluation is necessary.
+| Mask type | Purpose |
+|---|---|
+| `zero_control` | Sanity check with no damage |
+| `scratch_thin` | Thin scratch-like damage |
+| `loss_small` | Small localized paint loss |
+| `loss_large` | Larger missing region |
+| `mixed_damage` | Combined scratch and loss pattern |
 
-Main observations:
+---
 
-- OpenCV Telea performs well on thin scratch-line masks.
-- Small irregular masks produce mixed results.
-- Large irregular masks are consistently more difficult.
-- The p003 large irregular case is the clearest weak case because it combines architectural structure and visible painterly texture.
-- Full-image metrics can hide local restoration failures.
-- Masked-region metrics, crop-based LPIPS, and error maps provide more useful case-level evidence.
+## Final metric-region policy
 
-More detailed observations are documented in `docs/pilot_notes.md`.
+The final local evaluation policy is:
 
-## Next phase
+| Metric family | Final region |
+|---|---|
+| MSE | `masked_region` |
+| PSNR | `masked_region` |
+| SSIM | `mask_bbox_crop` |
+| LPIPS | `mask_bbox_crop` |
+| CLIP similarity | `mask_bbox_crop` |
+| DINOv2 similarity | `mask_bbox_crop` |
 
-The next planned phase is a controlled 50-painting subset.
+Reason:
 
-The proposed design includes:
+- MSE and PSNR can be computed directly on sparse masked pixels.
+- SSIM is not valid on sparse masked pixels because it requires local spatial structure.
+- LPIPS, CLIP, and DINOv2 are more meaningful on image-like cropped regions around the damage.
 
-- 5 restoration-relevant painting categories:
-  - portrait / figure
-  - landscape / natural scene
-  - architecture / structured scene
-  - abstraction / surrealism
-  - high-texture / brushstroke-heavy
-- Improved synthetic damage conditions:
-  - zero-control
-  - thin scratch
-  - small paint loss
-  - large paint loss
-  - mixed damage
-- Model audit before expanding beyond OpenCV Telea.
-- OpenCV baseline on 50 paintings before adding LaMa and diffusion-based inpainting.
-- Later uncertainty analysis for stochastic/generative models.
-- Deployment as a Streamlit-based evaluation dashboard.
+---
 
-## Notes on version control
+## Important outputs
 
-The virtual environment, Python cache files, notebook checkpoints, and generated temporary files should not be committed.
+Main reports:
+
+```text
+outputs/reports/final_controlled_50_evaluation_report.html
+outputs/reports/opencv_lama_stable_diffusion_refined_metric_comparison_report_50.html
+outputs/reports/stable_diffusion_uncertainty_report_50.html
+```
+
+Dashboard assets:
+
+```text
+outputs/dashboard/data/
+outputs/dashboard/manifests/
+```
+
+Supervisor package:
+
+```text
+outputs/supervisor_package/
+```
+
+Final controlled summary files:
+
+```text
+outputs/metrics/final_controlled_50_dataset_summary.csv
+outputs/metrics/final_controlled_50_model_stack_summary.csv
+outputs/metrics/final_controlled_50_metric_policy_summary.csv
+outputs/metrics/final_controlled_50_key_results_summary.csv
+outputs/metrics/final_controlled_50_model_win_summary.csv
+outputs/metrics/final_controlled_50_uncertainty_summary.csv
+outputs/metrics/final_controlled_50_sdxl_feasibility_summary.csv
+```
+
+---
+
+## Repository structure
+
+High-level structure:
+
+```text
+painting-restoration-eval/
+  config/
+    experiment_50_config.yaml
+    pilot_config.yaml
+
+  data/
+    raw/
+      images/
+      metadata/
+    processed/
+      clean/
+      masks/
+      masked/
+      restored/
+      metadata/
+
+  docs/
+    literature_reference_log.md
+    methodology_notes.md
+    model_audit_notes.md
+
+  notebooks/
+    *_cleaned.ipynb
+
+  outputs/
+    dashboard/
+      data/
+      manifests/
+    figures/
+    metrics/
+    reports/
+    supervisor_package/
+
+  src/
+    restoration_eval/
+
+  streamlit_app.py
+  requirements.txt
+  README.md
+```
+
+---
+
+## Source modules
+
+Reusable code lives in:
+
+```text
+src/restoration_eval/
+```
+
+Key module groups include:
+
+| Module area | Purpose |
+|---|---|
+| path/config helpers | Centralized project paths and configuration |
+| preprocessing | Clean image generation and metadata preparation |
+| masks/damage | Synthetic mask and damaged-image generation |
+| restoration | OpenCV, LaMa, Stable Diffusion, and SDXL audit helpers |
+| metrics | Classical, LPIPS, CLIP, DINOv2, and comparison metrics |
+| visualization | Difference maps, comparison grids, uncertainty grids |
+| reporting | HTML reports and final summaries |
+| dashboard preparation | Dashboard-ready CSV/JSON assets |
+
+---
+
+## Future work
+
+Current likely next steps:
+
+1. Supervisor reviews the package in `outputs/supervisor_package/`.
+2. Confirm whether the 50-painting subset is sufficient.
+3. Confirm whether Stable Diffusion uncertainty should be expanded from 40 to 200 non-zero cases.
+4. Confirm whether SDXL should remain feasibility-audited or be rerun on university GPU.
+5. Decide whether the Streamlit dashboard should be included as a formal supporting artifact.
+6. Prepare `31_thesis_methods_assets_cleaned.ipynb`.
+7. Generate thesis-ready tables, captions, methodology text, and result figures.
+8. Draft methodology, results, limitations, and future work sections.
+
+Possible experimental extensions:
+
+- scale beyond 50 paintings,
+- expand uncertainty analysis to all non-zero Stable Diffusion cases,
+- rerun SDXL on stronger GPU,
+- perform four-model comparison if SDXL becomes feasible,
+- add additional painting categories or damage patterns,
+- add human/expert review if available.
+
+---
+
+## Version control notes
+
+The virtual environment, cache files, notebook checkpoints, and generated temporary files should not be committed.
 
 Typical ignored files/folders:
 
@@ -235,6 +543,22 @@ __pycache__/
 .ipynb_checkpoints/
 ```
 
-## Pilot Report
+Large HTML reports can exceed GitHub's regular file-size limits. If they are needed in the remote repository, use Git LFS deliberately. Otherwise, keep large reports local and commit compact summaries, markdown notes, dashboard assets, and selected figures.
 
-The final visual pilot report is generated by `notebooks/08_generate_report_opencv.ipynb` and saved under `outputs/reports/`. The main report file, `opencv_telea_report_v3_lpips.html`, contains the case-by-case OpenCV Telea pilot results, including clean, masked, restored, and error-map visualizations, classical image metrics, masked-region metrics, LPIPS perceptual metrics, and best/worst case summaries. This HTML report should be treated as the primary supervisor-facing pilot result artifact, while the Markdown files in `docs/` provide project notes, reproducibility details, and next-phase planning context.
+The supervisor package intentionally avoids committing copied giant HTML reports under:
+
+```text
+outputs/supervisor_package/reports/
+```
+
+Use `outputs/supervisor_package/reports/README_reports.md` for report references instead.
+
+---
+
+## Quick commands
+
+Run dashboard:
+
+```powershell
+streamlit run streamlit_app.py
+```

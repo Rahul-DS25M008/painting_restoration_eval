@@ -28,5 +28,8 @@ safetensors
 accelerate
 iopaint
 
+streamlit
+plotly
+
 ipykernel>=6.29,<8
 jupyter>=1.1,<2
