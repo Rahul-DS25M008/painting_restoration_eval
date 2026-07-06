@@ -871,3 +871,26 @@ Current model interpretation remains:
 - OpenCV Telea is useful as a deterministic baseline.
 - Stable Diffusion exposes the gap between visual plausibility, reference-based performance, and generative stability.
 - SDXL is excluded from full local comparison due feasibility, not as a model-quality conclusion.
+
+## Candidate model-evaluation extensions
+
+The current evaluated stack includes OpenCV Telea, LaMa, and Stable Diffusion Inpainting, with SDXL treated as a feasibility audit under local hardware constraints.
+
+Possible model-evaluation extensions:
+
+1. **Texture-specific comparison**  
+   Compare models using local texture descriptors in masked regions or mask bounding-box crops. This is especially relevant for high-texture brushwork cases where visual continuity is not fully captured by PSNR, SSIM, LPIPS, CLIP, or DINOv2.
+
+2. **Diffusion uncertainty heatmaps**  
+   Extend Stable Diffusion uncertainty analysis by generating pixel-wise standard-deviation heatmaps across seeds. This would help identify where the model is most unstable or speculative.
+
+3. **Semantic hallucination flags**  
+   Add lightweight qualitative or CLIP-based checks for cases where a generative model introduces content not supported by the original context. This should be treated as exploratory unless stronger art-domain validation is available.
+
+4. **SDXL remote-compute option**  
+   If supervisor feedback requires a stronger diffusion comparison, SDXL should be rerun only on suitable university or cloud GPU hardware. Local 6GB VRAM remains insufficient for a fair full evaluation.
+
+5. **Model-ranking sensitivity**  
+   Test whether model rankings change under alternative metric-region policies, mask margins, or damage intensities.
+
+These extensions should be considered optional until supervisor feedback confirms which additions are necessary for the final thesis scope.
