@@ -226,8 +226,8 @@ cd painting_restoration_eval
 Create and activate a Python virtual environment.
 
 ```powershell
-winget install -e --id Python.Python.3.12
-py -3.12 -m venv .venv
+winget install -e --id Python.Python.3.11
+py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
