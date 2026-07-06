@@ -1,16 +1,17 @@
-# Python: 3.12 recommended
+# Python: 3.11 recommended
 # Install with:
-#   py -3.12 -m venv .venv
+#   py -3.11 -m venv .venv
 #   .\.venv\Scripts\Activate.ps1
 #   python -m pip install --upgrade pip setuptools wheel
 #   pip install -r requirements.txt
 
 --extra-index-url https://download.pytorch.org/whl/cu121
 
-numpy>=2.0,<2.3
+# Core scientific stack
+numpy>=1.26,<2.0
 pandas>=2.2,<2.4
 matplotlib>=3.9,<3.11
-pillow>=10.4,<12
+pillow==9.5.0
 opencv-python>=4.10,<4.13
 scikit-image>=0.24,<0.26
 scipy>=1.14,<1.16
@@ -19,17 +20,24 @@ tifffile>=2024.8,<2027
 tqdm>=4.66,<5
 PyYAML>=6.0,<7
 
+# PyTorch CUDA 12.1 stack
 torch==2.5.1+cu121
 torchvision==0.20.1+cu121
 torchaudio==2.5.1+cu121
+
+# Evaluation / ML models
 lpips==0.1.4
 transformers
 safetensors
 accelerate
-iopaint
 
+# Inpainting / LaMa
+iopaint==1.6.0
+
+# Reporting / dashboard
 streamlit
 plotly
 
+# Notebook support
 ipykernel
 jupyter>=1.1,<2
