@@ -31,5 +31,5 @@ iopaint
 streamlit
 plotly
 
-ipykernel>=6.29,<8
+ipykernel
 jupyter>=1.1,<2
