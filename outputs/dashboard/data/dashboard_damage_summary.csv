@@ -1,0 +1,6 @@
+mask_type,cases,paintings
+loss_large,50,50
+loss_small,50,50
+mixed_damage,50,50
+scratch_thin,50,50
+zero_control,50,50

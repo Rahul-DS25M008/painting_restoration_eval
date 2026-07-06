@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-07-06 18:07:37",
+  "reports": [
+    {
+      "report_id": "final_controlled_50",
+      "title": "Final Controlled 50-Painting Evaluation Report",
+      "path": "outputs/reports/final_controlled_50_evaluation_report.html",
+      "description": "Main consolidated experimental report.",
+      "recommended_primary": true
+    },
+    {
+      "report_id": "refined_model_comparison",
+      "title": "Refined OpenCV-LaMa-Stable Diffusion Comparison Report",
+      "path": "outputs/reports/opencv_lama_stable_diffusion_refined_metric_comparison_report_50.html",
+      "description": "Detailed refined metric-region comparison report.",
+      "recommended_primary": false
+    },
+    {
+      "report_id": "stable_diffusion_uncertainty",
+      "title": "Stable Diffusion Uncertainty Report",
+      "path": "outputs/reports/stable_diffusion_uncertainty_report_50.html",
+      "description": "Detailed multi-seed Stable Diffusion uncertainty report.",
+      "recommended_primary": false
+    }
+  ]
+}

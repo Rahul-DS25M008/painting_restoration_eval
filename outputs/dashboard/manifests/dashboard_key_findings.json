@@ -1,0 +1,54 @@
+{
+  "generated_at": "2026-07-06 18:07:37",
+  "central_claim": "Visual plausibility is not the same as restoration trustworthiness.",
+  "findings": [
+    {
+      "finding_id": "F1",
+      "finding": "Balanced controlled benchmark completed",
+      "evidence": "50 paintings, 5 painting categories, 250 damage cases, 200 non-zero local comparison cases.",
+      "thesis_interpretation": "The experiment provides a controlled basis for comparing restoration behavior across categories and damage types."
+    },
+    {
+      "finding_id": "F2",
+      "finding": "LaMa dominates refined reference-based comparison",
+      "evidence": "LaMa won the refined majority vote in 155/200 non-zero cases.",
+      "thesis_interpretation": "Deep inpainting can outperform both classical interpolation and diffusion generation under reference-based metrics."
+    },
+    {
+      "finding_id": "F3",
+      "finding": "OpenCV Telea remains useful as deterministic baseline",
+      "evidence": "OpenCV Telea won the refined majority vote in 21/200 non-zero cases.",
+      "thesis_interpretation": "Classical methods remain useful for baseline comparison and can still win some controlled cases."
+    },
+    {
+      "finding_id": "F4",
+      "finding": "Stable Diffusion rarely wins reference-based majority vote",
+      "evidence": "Stable Diffusion won the refined majority vote in 1/200 non-zero cases.",
+      "thesis_interpretation": "Visual generative plausibility does not necessarily align with reference-faithful restoration."
+    },
+    {
+      "finding_id": "F5",
+      "finding": "Metric-region policy affects validity",
+      "evidence": "Sparse masked-region SSIM was invalid and was moved to mask_bbox_crop in the refined comparison.",
+      "thesis_interpretation": "Evaluation frameworks must align metric choice with spatial region and metric assumptions."
+    },
+    {
+      "finding_id": "F6",
+      "finding": "Stable Diffusion uncertainty exposes generative instability",
+      "evidence": "40 cases were sampled with 4 seeds each, producing 160 outputs and multi-metric uncertainty summaries.",
+      "thesis_interpretation": "Diffusion restoration should be evaluated for stability across seeds, not only single-output visual quality."
+    },
+    {
+      "finding_id": "F7",
+      "finding": "Uncertainty and reference performance are complementary",
+      "evidence": "Uncertainty-performance quadrants distinguish unstable weak cases, unstable stronger cases, consistently weak cases, and relatively reliable cases.",
+      "thesis_interpretation": "Trustworthiness requires both reference-based accuracy and generative stability diagnostics."
+    },
+    {
+      "finding_id": "F8",
+      "finding": "SDXL excluded from full local evaluation",
+      "evidence": "SDXL feasibility audit showed local 6GB VRAM/runtime constraints.",
+      "thesis_interpretation": "The final controlled comparison is limited to feasible local models; SDXL remains future remote-compute work."
+    }
+  ]
+}

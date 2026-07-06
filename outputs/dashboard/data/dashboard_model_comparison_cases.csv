@@ -1,0 +1,201 @@
+case_id,painting_id,mask_id,mask_type,category,title,overall_metric_vote,metric_ties,mixed_metric_outcome,opencv_telea_metric_wins,lama_metric_wins,stable_diffusion_inpainting_metric_wins,overall_metric_vote_display
+p001_loss_large,p001,p001_loss_large,loss_large,portrait_figure,Juan de Pareja,lama,0,False,0,6,0,LaMa
+p001_loss_small,p001,p001_loss_small,loss_small,portrait_figure,Juan de Pareja,lama,0,True,1,5,0,LaMa
+p001_mixed_damage,p001,p001_mixed_damage,mixed_damage,portrait_figure,Juan de Pareja,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p001_scratch_thin,p001,p001_scratch_thin,scratch_thin,portrait_figure,Juan de Pareja,lama,0,True,1,5,0,LaMa
+p002_loss_large,p002,p002_loss_large,loss_large,portrait_figure,Madame X (Madame Pierre Gautreau),lama,0,False,0,6,0,LaMa
+p002_loss_small,p002,p002_loss_small,loss_small,portrait_figure,Madame X (Madame Pierre Gautreau),lama,0,False,0,6,0,LaMa
+p002_mixed_damage,p002,p002_mixed_damage,mixed_damage,portrait_figure,Madame X (Madame Pierre Gautreau),lama,0,False,0,6,0,LaMa
+p002_scratch_thin,p002,p002_scratch_thin,scratch_thin,portrait_figure,Madame X (Madame Pierre Gautreau),lama,0,True,1,5,0,LaMa
+p003_loss_large,p003,p003_loss_large,loss_large,portrait_figure,Marie Joséphine Charlotte du Val d'Ognes,lama,0,False,0,6,0,LaMa
+p003_loss_small,p003,p003_loss_small,loss_small,portrait_figure,Marie Joséphine Charlotte du Val d'Ognes,lama,0,False,0,6,0,LaMa
+p003_mixed_damage,p003,p003_mixed_damage,mixed_damage,portrait_figure,Marie Joséphine Charlotte du Val d'Ognes,lama,0,False,0,6,0,LaMa
+p003_scratch_thin,p003,p003_scratch_thin,scratch_thin,portrait_figure,Marie Joséphine Charlotte du Val d'Ognes,lama,0,False,0,6,0,LaMa
+p004_loss_large,p004,p004_loss_large,loss_large,portrait_figure,Madame Georges Charpentier and Her Children,lama,0,False,0,6,0,LaMa
+p004_loss_small,p004,p004_loss_small,loss_small,portrait_figure,Madame Georges Charpentier and Her Children,lama,0,True,1,5,0,LaMa
+p004_mixed_damage,p004,p004_mixed_damage,mixed_damage,portrait_figure,Madame Georges Charpentier and Her Children,lama,0,True,1,5,0,LaMa
+p004_scratch_thin,p004,p004_scratch_thin,scratch_thin,portrait_figure,Madame Georges Charpentier and Her Children,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p005_loss_large,p005,p005_loss_large,loss_large,portrait_figure,Self-Portrait with Two Pupils,lama,0,True,2,4,0,LaMa
+p005_loss_small,p005,p005_loss_small,loss_small,portrait_figure,Self-Portrait with Two Pupils,lama,0,False,0,6,0,LaMa
+p005_mixed_damage,p005,p005_mixed_damage,mixed_damage,portrait_figure,Self-Portrait with Two Pupils,lama,0,False,0,6,0,LaMa
+p005_scratch_thin,p005,p005_scratch_thin,scratch_thin,portrait_figure,Self-Portrait with Two Pupils,lama,0,False,0,6,0,LaMa
+p006_loss_large,p006,p006_loss_large,loss_large,portrait_figure,Boy with a Sword,lama,0,False,0,6,0,LaMa
+p006_loss_small,p006,p006_loss_small,loss_small,portrait_figure,Boy with a Sword,lama,0,False,0,6,0,LaMa
+p006_mixed_damage,p006,p006_mixed_damage,mixed_damage,portrait_figure,Boy with a Sword,lama,0,False,0,6,0,LaMa
+p006_scratch_thin,p006,p006_scratch_thin,scratch_thin,portrait_figure,Boy with a Sword,lama,0,False,0,6,0,LaMa
+p007_loss_large,p007,p007_loss_large,loss_large,portrait_figure,Princesse de Broglie,lama,0,True,0,5,1,LaMa
+p007_loss_small,p007,p007_loss_small,loss_small,portrait_figure,Princesse de Broglie,lama,0,False,0,6,0,LaMa
+p007_mixed_damage,p007,p007_mixed_damage,mixed_damage,portrait_figure,Princesse de Broglie,lama,0,False,0,6,0,LaMa
+p007_scratch_thin,p007,p007_scratch_thin,scratch_thin,portrait_figure,Princesse de Broglie,lama,0,True,2,4,0,LaMa
+p008_loss_large,p008,p008_loss_large,loss_large,portrait_figure,Manuel Osorio Manrique de Zuñiga,lama,0,False,0,6,0,LaMa
+p008_loss_small,p008,p008_loss_small,loss_small,portrait_figure,Manuel Osorio Manrique de Zuñiga,lama,0,False,0,6,0,LaMa
+p008_mixed_damage,p008,p008_mixed_damage,mixed_damage,portrait_figure,Manuel Osorio Manrique de Zuñiga,lama,0,False,0,6,0,LaMa
+p008_scratch_thin,p008,p008_scratch_thin,scratch_thin,portrait_figure,Manuel Osorio Manrique de Zuñiga,lama,0,True,2,4,0,LaMa
+p009_loss_large,p009,p009_loss_large,loss_large,portrait_figure,Madame Roulin and Her Baby,lama,0,True,1,3,2,LaMa
+p009_loss_small,p009,p009_loss_small,loss_small,portrait_figure,Madame Roulin and Her Baby,lama,0,True,1,5,0,LaMa
+p009_mixed_damage,p009,p009_mixed_damage,mixed_damage,portrait_figure,Madame Roulin and Her Baby,lama,0,True,1,5,0,LaMa
+p009_scratch_thin,p009,p009_scratch_thin,scratch_thin,portrait_figure,Madame Roulin and Her Baby,opencv_telea,0,True,4,2,0,OpenCV Telea
+p010_loss_large,p010,p010_loss_large,loss_large,portrait_figure,Joan of Arc,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p010_loss_small,p010,p010_loss_small,loss_small,portrait_figure,Joan of Arc,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p010_mixed_damage,p010,p010_mixed_damage,mixed_damage,portrait_figure,Joan of Arc,lama,0,True,1,5,0,LaMa
+p010_scratch_thin,p010,p010_scratch_thin,scratch_thin,portrait_figure,Joan of Arc,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p011_loss_large,p011,p011_loss_large,loss_large,landscape_natural,View of Haarlem and the Haarlemmer Meer,lama,0,True,1,5,0,LaMa
+p011_loss_small,p011,p011_loss_small,loss_small,landscape_natural,View of Haarlem and the Haarlemmer Meer,lama,0,True,1,5,0,LaMa
+p011_mixed_damage,p011,p011_mixed_damage,mixed_damage,landscape_natural,View of Haarlem and the Haarlemmer Meer,lama,0,True,1,5,0,LaMa
+p011_scratch_thin,p011,p011_scratch_thin,scratch_thin,landscape_natural,View of Haarlem and the Haarlemmer Meer,lama,0,True,1,5,0,LaMa
+p012_loss_large,p012,p012_loss_large,loss_large,landscape_natural,An Extensive Wooded Landscape,lama,0,False,0,6,0,LaMa
+p012_loss_small,p012,p012_loss_small,loss_small,landscape_natural,An Extensive Wooded Landscape,lama,0,False,0,6,0,LaMa
+p012_mixed_damage,p012,p012_mixed_damage,mixed_damage,landscape_natural,An Extensive Wooded Landscape,lama,0,False,0,6,0,LaMa
+p012_scratch_thin,p012,p012_scratch_thin,scratch_thin,landscape_natural,An Extensive Wooded Landscape,lama,0,True,1,5,0,LaMa
+p013_loss_large,p013,p013_loss_large,loss_large,landscape_natural,Landscape with a Village in the Distance,lama,0,True,1,5,0,LaMa
+p013_loss_small,p013,p013_loss_small,loss_small,landscape_natural,Landscape with a Village in the Distance,lama,0,True,2,4,0,LaMa
+p013_mixed_damage,p013,p013_mixed_damage,mixed_damage,landscape_natural,Landscape with a Village in the Distance,lama,0,True,1,5,0,LaMa
+p013_scratch_thin,p013,p013_scratch_thin,scratch_thin,landscape_natural,Landscape with a Village in the Distance,lama,0,True,1,5,0,LaMa
+p014_loss_large,p014,p014_loss_large,loss_large,landscape_natural,Landscape on a River,lama,0,True,1,5,0,LaMa
+p014_loss_small,p014,p014_loss_small,loss_small,landscape_natural,Landscape on a River,lama,0,True,1,5,0,LaMa
+p014_mixed_damage,p014,p014_mixed_damage,mixed_damage,landscape_natural,Landscape on a River,lama,0,True,1,5,0,LaMa
+p014_scratch_thin,p014,p014_scratch_thin,scratch_thin,landscape_natural,Landscape on a River,opencv_telea,0,True,5,1,0,OpenCV Telea
+p015_loss_large,p015,p015_loss_large,loss_large,landscape_natural,Landscape,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p015_loss_small,p015,p015_loss_small,loss_small,landscape_natural,Landscape,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p015_mixed_damage,p015,p015_mixed_damage,mixed_damage,landscape_natural,Landscape,lama,0,True,1,5,0,LaMa
+p015_scratch_thin,p015,p015_scratch_thin,scratch_thin,landscape_natural,Landscape,opencv_telea,0,True,4,2,0,OpenCV Telea
+p016_loss_large,p016,p016_loss_large,loss_large,landscape_natural,Wooded Landscape with a House beside a River,lama,0,True,1,5,0,LaMa
+p016_loss_small,p016,p016_loss_small,loss_small,landscape_natural,Wooded Landscape with a House beside a River,lama,0,True,2,4,0,LaMa
+p016_mixed_damage,p016,p016_mixed_damage,mixed_damage,landscape_natural,Wooded Landscape with a House beside a River,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p016_scratch_thin,p016,p016_scratch_thin,scratch_thin,landscape_natural,Wooded Landscape with a House beside a River,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p017_loss_large,p017,p017_loss_large,loss_large,landscape_natural,Picturesque Landscape,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p017_loss_small,p017,p017_loss_small,loss_small,landscape_natural,Picturesque Landscape,lama,0,True,1,5,0,LaMa
+p017_mixed_damage,p017,p017_mixed_damage,mixed_damage,landscape_natural,Picturesque Landscape,lama,0,True,1,5,0,LaMa
+p017_scratch_thin,p017,p017_scratch_thin,scratch_thin,landscape_natural,Picturesque Landscape,opencv_telea,0,True,4,2,0,OpenCV Telea
+p018_loss_large,p018,p018_loss_large,loss_large,landscape_natural,Classical Landscape with Figures,lama,0,True,0,5,1,LaMa
+p018_loss_small,p018,p018_loss_small,loss_small,landscape_natural,Classical Landscape with Figures,lama,0,False,0,6,0,LaMa
+p018_mixed_damage,p018,p018_mixed_damage,mixed_damage,landscape_natural,Classical Landscape with Figures,lama,0,True,2,4,0,LaMa
+p018_scratch_thin,p018,p018_scratch_thin,scratch_thin,landscape_natural,Classical Landscape with Figures,lama,0,True,1,5,0,LaMa
+p019_loss_large,p019,p019_loss_large,loss_large,landscape_natural,Evening: Landscape with an Aqueduct,lama,0,False,0,6,0,LaMa
+p019_loss_small,p019,p019_loss_small,loss_small,landscape_natural,Evening: Landscape with an Aqueduct,lama,0,False,0,6,0,LaMa
+p019_mixed_damage,p019,p019_mixed_damage,mixed_damage,landscape_natural,Evening: Landscape with an Aqueduct,lama,0,True,1,5,0,LaMa
+p019_scratch_thin,p019,p019_scratch_thin,scratch_thin,landscape_natural,Evening: Landscape with an Aqueduct,opencv_telea,0,True,5,1,0,OpenCV Telea
+p020_loss_large,p020,p020_loss_large,loss_large,landscape_natural,Mediterranean landscape (recto); Mountains (verso),tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p020_loss_small,p020,p020_loss_small,loss_small,landscape_natural,Mediterranean landscape (recto); Mountains (verso),lama,0,True,1,5,0,LaMa
+p020_mixed_damage,p020,p020_mixed_damage,mixed_damage,landscape_natural,Mediterranean landscape (recto); Mountains (verso),lama,0,True,1,5,0,LaMa
+p020_scratch_thin,p020,p020_scratch_thin,scratch_thin,landscape_natural,Mediterranean landscape (recto); Mountains (verso),lama,0,True,1,5,0,LaMa
+p021_loss_large,p021,p021_loss_large,loss_large,architecture_structured,Interior of the Oude Kerk in Delft,lama,0,True,0,4,2,LaMa
+p021_loss_small,p021,p021_loss_small,loss_small,architecture_structured,Interior of the Oude Kerk in Delft,lama,0,False,0,6,0,LaMa
+p021_mixed_damage,p021,p021_mixed_damage,mixed_damage,architecture_structured,Interior of the Oude Kerk in Delft,lama,0,False,0,6,0,LaMa
+p021_scratch_thin,p021,p021_scratch_thin,scratch_thin,architecture_structured,Interior of the Oude Kerk in Delft,lama,0,False,0,6,0,LaMa
+p022_loss_large,p022,p022_loss_large,loss_large,architecture_structured,"Interior of a Protestant, Gothic Church, with a Gravedigger in the Choir",lama,0,False,0,6,0,LaMa
+p022_loss_small,p022,p022_loss_small,loss_small,architecture_structured,"Interior of a Protestant, Gothic Church, with a Gravedigger in the Choir",lama,0,False,0,6,0,LaMa
+p022_mixed_damage,p022,p022_mixed_damage,mixed_damage,architecture_structured,"Interior of a Protestant, Gothic Church, with a Gravedigger in the Choir",lama,0,False,0,6,0,LaMa
+p022_scratch_thin,p022,p022_scratch_thin,scratch_thin,architecture_structured,"Interior of a Protestant, Gothic Church, with a Gravedigger in the Choir",lama,0,True,1,5,0,LaMa
+p023_loss_large,p023,p023_loss_large,loss_large,architecture_structured,Church Interior,lama,0,False,0,6,0,LaMa
+p023_loss_small,p023,p023_loss_small,loss_small,architecture_structured,Church Interior,lama,0,False,0,6,0,LaMa
+p023_mixed_damage,p023,p023_mixed_damage,mixed_damage,architecture_structured,Church Interior,lama,0,False,0,6,0,LaMa
+p023_scratch_thin,p023,p023_scratch_thin,scratch_thin,architecture_structured,Church Interior,opencv_telea,0,True,4,2,0,OpenCV Telea
+p024_loss_large,p024,p024_loss_large,loss_large,architecture_structured,Interior of the Church of St Bavo in Haarlem,lama,0,True,1,4,1,LaMa
+p024_loss_small,p024,p024_loss_small,loss_small,architecture_structured,Interior of the Church of St Bavo in Haarlem,lama,0,False,0,6,0,LaMa
+p024_mixed_damage,p024,p024_mixed_damage,mixed_damage,architecture_structured,Interior of the Church of St Bavo in Haarlem,lama,0,False,0,6,0,LaMa
+p024_scratch_thin,p024,p024_scratch_thin,scratch_thin,architecture_structured,Interior of the Church of St Bavo in Haarlem,opencv_telea,0,False,6,0,0,OpenCV Telea
+p025_loss_large,p025,p025_loss_large,loss_large,architecture_structured,The Quay de Paris in Rouen,lama,0,False,0,6,0,LaMa
+p025_loss_small,p025,p025_loss_small,loss_small,architecture_structured,The Quay de Paris in Rouen,lama,0,False,0,6,0,LaMa
+p025_mixed_damage,p025,p025_mixed_damage,mixed_damage,architecture_structured,The Quay de Paris in Rouen,lama,0,False,0,6,0,LaMa
+p025_scratch_thin,p025,p025_scratch_thin,scratch_thin,architecture_structured,The Quay de Paris in Rouen,lama,0,True,2,4,0,LaMa
+p026_loss_large,p026,p026_loss_large,loss_large,architecture_structured,View of a Village along a River,lama,0,True,1,5,0,LaMa
+p026_loss_small,p026,p026_loss_small,loss_small,architecture_structured,View of a Village along a River,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p026_mixed_damage,p026,p026_mixed_damage,mixed_damage,architecture_structured,View of a Village along a River,lama,0,True,1,5,0,LaMa
+p026_scratch_thin,p026,p026_scratch_thin,scratch_thin,architecture_structured,View of a Village along a River,opencv_telea,0,True,5,1,0,OpenCV Telea
+p027_loss_large,p027,p027_loss_large,loss_large,architecture_structured,Italian Landscape with the Ponte Lucano over the Aniene River,lama,0,True,1,5,0,LaMa
+p027_loss_small,p027,p027_loss_small,loss_small,architecture_structured,Italian Landscape with the Ponte Lucano over the Aniene River,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p027_mixed_damage,p027,p027_mixed_damage,mixed_damage,architecture_structured,Italian Landscape with the Ponte Lucano over the Aniene River,lama,0,True,1,5,0,LaMa
+p027_scratch_thin,p027,p027_scratch_thin,scratch_thin,architecture_structured,Italian Landscape with the Ponte Lucano over the Aniene River,opencv_telea,0,True,5,1,0,OpenCV Telea
+p028_loss_large,p028,p028_loss_large,loss_large,architecture_structured,Trading posts of the Dutch East India Company (VOC),lama,0,True,1,5,0,LaMa
+p028_loss_small,p028,p028_loss_small,loss_small,architecture_structured,Trading posts of the Dutch East India Company (VOC),lama,0,True,1,5,0,LaMa
+p028_mixed_damage,p028,p028_mixed_damage,mixed_damage,architecture_structured,Trading posts of the Dutch East India Company (VOC),lama,0,True,1,5,0,LaMa
+p028_scratch_thin,p028,p028_scratch_thin,scratch_thin,architecture_structured,Trading posts of the Dutch East India Company (VOC),opencv_telea,0,True,5,1,0,OpenCV Telea
+p029_loss_large,p029,p029_loss_large,loss_large,architecture_structured,"The Trading Post of the Dutch East India Company in Hooghly, Bengal",lama,0,False,0,6,0,LaMa
+p029_loss_small,p029,p029_loss_small,loss_small,architecture_structured,"The Trading Post of the Dutch East India Company in Hooghly, Bengal",lama,0,False,0,6,0,LaMa
+p029_mixed_damage,p029,p029_mixed_damage,mixed_damage,architecture_structured,"The Trading Post of the Dutch East India Company in Hooghly, Bengal",lama,0,False,0,6,0,LaMa
+p029_scratch_thin,p029,p029_scratch_thin,scratch_thin,architecture_structured,"The Trading Post of the Dutch East India Company in Hooghly, Bengal",opencv_telea,0,True,5,1,0,OpenCV Telea
+p030_loss_large,p030,p030_loss_large,loss_large,architecture_structured,Interior with Five Women,lama,0,False,0,6,0,LaMa
+p030_loss_small,p030,p030_loss_small,loss_small,architecture_structured,Interior with Five Women,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p030_mixed_damage,p030,p030_mixed_damage,mixed_damage,architecture_structured,Interior with Five Women,lama,0,False,0,6,0,LaMa
+p030_scratch_thin,p030,p030_scratch_thin,scratch_thin,architecture_structured,Interior with Five Women,opencv_telea,0,False,6,0,0,OpenCV Telea
+p031_loss_large,p031,p031_loss_large,loss_large,abstraction_surrealism,Improvisation No. 30 (Cannons),lama,0,True,1,5,0,LaMa
+p031_loss_small,p031,p031_loss_small,loss_small,abstraction_surrealism,Improvisation No. 30 (Cannons),lama,0,False,0,6,0,LaMa
+p031_mixed_damage,p031,p031_mixed_damage,mixed_damage,abstraction_surrealism,Improvisation No. 30 (Cannons),lama,0,True,1,5,0,LaMa
+p031_scratch_thin,p031,p031_scratch_thin,scratch_thin,abstraction_surrealism,Improvisation No. 30 (Cannons),opencv_telea,0,True,5,1,0,OpenCV Telea
+p032_loss_large,p032,p032_loss_large,loss_large,abstraction_surrealism,Composition (No. 1) Gray-Red,lama,0,True,0,5,1,LaMa
+p032_loss_small,p032,p032_loss_small,loss_small,abstraction_surrealism,Composition (No. 1) Gray-Red,lama,0,False,0,6,0,LaMa
+p032_mixed_damage,p032,p032_mixed_damage,mixed_damage,abstraction_surrealism,Composition (No. 1) Gray-Red,lama,0,True,1,5,0,LaMa
+p032_scratch_thin,p032,p032_scratch_thin,scratch_thin,abstraction_surrealism,Composition (No. 1) Gray-Red,lama,0,True,1,5,0,LaMa
+p033_loss_large,p033,p033_loss_large,loss_large,abstraction_surrealism,Movement,lama,0,True,0,5,1,LaMa
+p033_loss_small,p033,p033_loss_small,loss_small,abstraction_surrealism,Movement,lama,0,False,0,6,0,LaMa
+p033_mixed_damage,p033,p033_mixed_damage,mixed_damage,abstraction_surrealism,Movement,lama,0,False,0,6,0,LaMa
+p033_scratch_thin,p033,p033_scratch_thin,scratch_thin,abstraction_surrealism,Movement,opencv_telea,0,True,5,1,0,OpenCV Telea
+p034_loss_large,p034,p034_loss_large,loss_large,abstraction_surrealism,Painting with Green Center,lama,0,True,1,5,0,LaMa
+p034_loss_small,p034,p034_loss_small,loss_small,abstraction_surrealism,Painting with Green Center,lama,0,False,0,6,0,LaMa
+p034_mixed_damage,p034,p034_mixed_damage,mixed_damage,abstraction_surrealism,Painting with Green Center,lama,0,False,0,6,0,LaMa
+p034_scratch_thin,p034,p034_scratch_thin,scratch_thin,abstraction_surrealism,Painting with Green Center,lama,0,True,1,5,0,LaMa
+p035_loss_large,p035,p035_loss_large,loss_large,abstraction_surrealism,The Bewitched Mill,lama,0,False,0,6,0,LaMa
+p035_loss_small,p035,p035_loss_small,loss_small,abstraction_surrealism,The Bewitched Mill,lama,0,False,0,6,0,LaMa
+p035_mixed_damage,p035,p035_mixed_damage,mixed_damage,abstraction_surrealism,The Bewitched Mill,lama,0,False,0,6,0,LaMa
+p035_scratch_thin,p035,p035_scratch_thin,scratch_thin,abstraction_surrealism,The Bewitched Mill,opencv_telea,0,True,5,1,0,OpenCV Telea
+p036_loss_large,p036,p036_loss_large,loss_large,abstraction_surrealism,"Lozenge Composition with Yellow, Black, Blue, Red, and Gray",lama,0,False,0,6,0,LaMa
+p036_loss_small,p036,p036_loss_small,loss_small,abstraction_surrealism,"Lozenge Composition with Yellow, Black, Blue, Red, and Gray",lama,0,True,1,5,0,LaMa
+p036_mixed_damage,p036,p036_mixed_damage,mixed_damage,abstraction_surrealism,"Lozenge Composition with Yellow, Black, Blue, Red, and Gray",lama,0,False,0,6,0,LaMa
+p036_scratch_thin,p036,p036_scratch_thin,scratch_thin,abstraction_surrealism,"Lozenge Composition with Yellow, Black, Blue, Red, and Gray",opencv_telea,0,True,4,2,0,OpenCV Telea
+p037_loss_large,p037,p037_loss_large,loss_large,abstraction_surrealism,In the Sea,stable_diffusion_inpainting,0,True,1,1,4,Stable Diffusion Inpainting
+p037_loss_small,p037,p037_loss_small,loss_small,abstraction_surrealism,In the Sea,lama,0,False,0,6,0,LaMa
+p037_mixed_damage,p037,p037_mixed_damage,mixed_damage,abstraction_surrealism,In the Sea,lama,0,False,0,6,0,LaMa
+p037_scratch_thin,p037,p037_scratch_thin,scratch_thin,abstraction_surrealism,In the Sea,opencv_telea,0,False,6,0,0,OpenCV Telea
+p038_loss_large,p038,p038_loss_large,loss_large,abstraction_surrealism,Mahana no atua (Day of the God),lama,0,False,0,6,0,LaMa
+p038_loss_small,p038,p038_loss_small,loss_small,abstraction_surrealism,Mahana no atua (Day of the God),lama,0,False,0,6,0,LaMa
+p038_mixed_damage,p038,p038_mixed_damage,mixed_damage,abstraction_surrealism,Mahana no atua (Day of the God),lama,0,True,1,5,0,LaMa
+p038_scratch_thin,p038,p038_scratch_thin,scratch_thin,abstraction_surrealism,Mahana no atua (Day of the God),lama,0,True,1,5,0,LaMa
+p039_loss_large,p039,p039_loss_large,loss_large,abstraction_surrealism,Painting with Troika,lama,0,True,1,5,0,LaMa
+p039_loss_small,p039,p039_loss_small,loss_small,abstraction_surrealism,Painting with Troika,lama,0,False,0,6,0,LaMa
+p039_mixed_damage,p039,p039_mixed_damage,mixed_damage,abstraction_surrealism,Painting with Troika,lama,0,False,0,6,0,LaMa
+p039_scratch_thin,p039,p039_scratch_thin,scratch_thin,abstraction_surrealism,Painting with Troika,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p040_loss_large,p040,p040_loss_large,loss_large,abstraction_surrealism,Houses at Murnau,opencv_telea,0,True,3,2,1,OpenCV Telea
+p040_loss_small,p040,p040_loss_small,loss_small,abstraction_surrealism,Houses at Murnau,lama,0,True,1,5,0,LaMa
+p040_mixed_damage,p040,p040_mixed_damage,mixed_damage,abstraction_surrealism,Houses at Murnau,lama,0,True,1,5,0,LaMa
+p040_scratch_thin,p040,p040_scratch_thin,scratch_thin,abstraction_surrealism,Houses at Murnau,opencv_telea,0,False,6,0,0,OpenCV Telea
+p041_loss_large,p041,p041_loss_large,loss_large,high_texture_brushwork,Wheat Field with Cypresses,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p041_loss_small,p041,p041_loss_small,loss_small,high_texture_brushwork,Wheat Field with Cypresses,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p041_mixed_damage,p041,p041_mixed_damage,mixed_damage,high_texture_brushwork,Wheat Field with Cypresses,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p041_scratch_thin,p041,p041_scratch_thin,scratch_thin,high_texture_brushwork,Wheat Field with Cypresses,opencv_telea,0,True,4,2,0,OpenCV Telea
+p042_loss_large,p042,p042_loss_large,loss_large,high_texture_brushwork,View of Beirut,lama,0,True,1,5,0,LaMa
+p042_loss_small,p042,p042_loss_small,loss_small,high_texture_brushwork,View of Beirut,lama,0,True,1,5,0,LaMa
+p042_mixed_damage,p042,p042_mixed_damage,mixed_damage,high_texture_brushwork,View of Beirut,lama,0,True,1,5,0,LaMa
+p042_scratch_thin,p042,p042_scratch_thin,scratch_thin,high_texture_brushwork,View of Beirut,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p043_loss_large,p043,p043_loss_large,loss_large,high_texture_brushwork,The Card Players,lama,0,True,0,4,2,LaMa
+p043_loss_small,p043,p043_loss_small,loss_small,high_texture_brushwork,The Card Players,lama,0,False,0,6,0,LaMa
+p043_mixed_damage,p043,p043_mixed_damage,mixed_damage,high_texture_brushwork,The Card Players,lama,0,False,0,6,0,LaMa
+p043_scratch_thin,p043,p043_scratch_thin,scratch_thin,high_texture_brushwork,The Card Players,lama,0,True,1,5,0,LaMa
+p044_loss_large,p044,p044_loss_large,loss_large,high_texture_brushwork,Versailles,lama,0,True,1,5,0,LaMa
+p044_loss_small,p044,p044_loss_small,loss_small,high_texture_brushwork,Versailles,lama,0,True,1,5,0,LaMa
+p044_mixed_damage,p044,p044_mixed_damage,mixed_damage,high_texture_brushwork,Versailles,lama,0,True,1,5,0,LaMa
+p044_scratch_thin,p044,p044_scratch_thin,scratch_thin,high_texture_brushwork,Versailles,lama,0,True,1,5,0,LaMa
+p045_loss_large,p045,p045_loss_large,loss_large,high_texture_brushwork,Two Girls with Parasols,lama,0,True,1,5,0,LaMa
+p045_loss_small,p045,p045_loss_small,loss_small,high_texture_brushwork,Two Girls with Parasols,lama,0,False,0,6,0,LaMa
+p045_mixed_damage,p045,p045_mixed_damage,mixed_damage,high_texture_brushwork,Two Girls with Parasols,lama,0,True,1,5,0,LaMa
+p045_scratch_thin,p045,p045_scratch_thin,scratch_thin,high_texture_brushwork,Two Girls with Parasols,lama,0,False,0,6,0,LaMa
+p046_loss_large,p046,p046_loss_large,loss_large,high_texture_brushwork,Boating,lama,0,True,1,4,1,LaMa
+p046_loss_small,p046,p046_loss_small,loss_small,high_texture_brushwork,Boating,lama,0,False,0,6,0,LaMa
+p046_mixed_damage,p046,p046_mixed_damage,mixed_damage,high_texture_brushwork,Boating,lama,0,False,0,6,0,LaMa
+p046_scratch_thin,p046,p046_scratch_thin,scratch_thin,high_texture_brushwork,Boating,lama,0,True,2,4,0,LaMa
+p047_loss_large,p047,p047_loss_large,loss_large,high_texture_brushwork,The Dance Class,lama,0,True,1,5,0,LaMa
+p047_loss_small,p047,p047_loss_small,loss_small,high_texture_brushwork,The Dance Class,lama,0,False,0,6,0,LaMa
+p047_mixed_damage,p047,p047_mixed_damage,mixed_damage,high_texture_brushwork,The Dance Class,lama,0,False,0,6,0,LaMa
+p047_scratch_thin,p047,p047_scratch_thin,scratch_thin,high_texture_brushwork,The Dance Class,lama,0,True,1,5,0,LaMa
+p048_loss_large,p048,p048_loss_large,loss_large,high_texture_brushwork,A Farm in Brittany,lama,0,True,1,4,1,LaMa
+p048_loss_small,p048,p048_loss_small,loss_small,high_texture_brushwork,A Farm in Brittany,lama,0,True,1,5,0,LaMa
+p048_mixed_damage,p048,p048_mixed_damage,mixed_damage,high_texture_brushwork,A Farm in Brittany,lama,0,True,1,5,0,LaMa
+p048_scratch_thin,p048,p048_scratch_thin,scratch_thin,high_texture_brushwork,A Farm in Brittany,lama,0,True,2,4,0,LaMa
+p049_loss_large,p049,p049_loss_large,loss_large,high_texture_brushwork,Peonies,lama,0,False,0,6,0,LaMa
+p049_loss_small,p049,p049_loss_small,loss_small,high_texture_brushwork,Peonies,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p049_mixed_damage,p049,p049_mixed_damage,mixed_damage,high_texture_brushwork,Peonies,lama,0,True,1,5,0,LaMa
+p049_scratch_thin,p049,p049_scratch_thin,scratch_thin,high_texture_brushwork,Peonies,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p050_loss_large,p050,p050_loss_large,loss_large,high_texture_brushwork,Landscape with a Sunlit Stream,lama,0,True,1,4,1,LaMa
+p050_loss_small,p050,p050_loss_small,loss_small,high_texture_brushwork,Landscape with a Sunlit Stream,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p050_mixed_damage,p050,p050_mixed_damage,mixed_damage,high_texture_brushwork,Landscape with a Sunlit Stream,tie_lama_opencv_telea,0,True,3,3,0,tie_lama_opencv_telea
+p050_scratch_thin,p050,p050_scratch_thin,scratch_thin,high_texture_brushwork,Landscape with a Sunlit Stream,opencv_telea,0,True,5,1,0,OpenCV Telea
