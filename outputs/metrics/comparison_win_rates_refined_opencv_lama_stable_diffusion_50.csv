@@ -1,0 +1,22 @@
+metric_name,metric_description,metric_region,winner,cases,case_fraction
+mse_improvement,MSE improvement on sparse masked region,masked_region,lama,159,0.795
+mse_improvement,MSE improvement on sparse masked region,masked_region,opencv_telea,40,0.2
+mse_improvement,MSE improvement on sparse masked region,masked_region,stable_diffusion_inpainting,1,0.005
+psnr_improvement,PSNR improvement on sparse masked region,masked_region,lama,159,0.795
+psnr_improvement,PSNR improvement on sparse masked region,masked_region,opencv_telea,40,0.2
+psnr_improvement,PSNR improvement on sparse masked region,masked_region,stable_diffusion_inpainting,1,0.005
+ssim_improvement,SSIM improvement on mask-bounding-box crop,mask_bbox_crop,opencv_telea,113,0.565
+ssim_improvement,SSIM improvement on mask-bounding-box crop,mask_bbox_crop,lama,87,0.435
+lpips_improvement,LPIPS improvement on mask-bounding-box crop,mask_bbox_crop,lama,182,0.91
+lpips_improvement,LPIPS improvement on mask-bounding-box crop,mask_bbox_crop,opencv_telea,12,0.06
+lpips_improvement,LPIPS improvement on mask-bounding-box crop,mask_bbox_crop,stable_diffusion_inpainting,6,0.03
+clip_improvement,CLIP similarity improvement on mask-bounding-box crop,mask_bbox_crop,lama,170,0.85
+clip_improvement,CLIP similarity improvement on mask-bounding-box crop,mask_bbox_crop,opencv_telea,25,0.125
+clip_improvement,CLIP similarity improvement on mask-bounding-box crop,mask_bbox_crop,stable_diffusion_inpainting,5,0.025
+dinov2_improvement,DINOv2 similarity improvement on mask-bounding-box crop,mask_bbox_crop,lama,167,0.835
+dinov2_improvement,DINOv2 similarity improvement on mask-bounding-box crop,mask_bbox_crop,opencv_telea,27,0.135
+dinov2_improvement,DINOv2 similarity improvement on mask-bounding-box crop,mask_bbox_crop,stable_diffusion_inpainting,6,0.03
+overall_metric_vote,Per-case majority vote across six refined local metrics,mixed_refined_regions,lama,155,0.775
+overall_metric_vote,Per-case majority vote across six refined local metrics,mixed_refined_regions,tie_lama_opencv_telea,23,0.115
+overall_metric_vote,Per-case majority vote across six refined local metrics,mixed_refined_regions,opencv_telea,21,0.105
+overall_metric_vote,Per-case majority vote across six refined local metrics,mixed_refined_regions,stable_diffusion_inpainting,1,0.005

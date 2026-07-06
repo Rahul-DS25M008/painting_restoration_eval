@@ -1394,3 +1394,50 @@ Recommended minimum compute:
 - A100, A40, RTX 3090, RTX 4090, L40, or equivalent class hardware if available.
 
 With suitable compute, SDXL could be rerun as a fourth full baseline and compared against OpenCV Telea, LaMa, and Stable Diffusion Inpainting.
+
+## 26. Refined Metric-Region Policy
+
+### Decision supported
+
+The local metric-region policy was refined after the initial three-model comparison showed that sparse masked-region SSIM produced invalid local comparison values.
+
+The decision was to retain SSIM, but evaluate it on the mask-bounding-box crop instead of the sparse masked region.
+
+---
+
+### Rationale
+
+MSE and PSNR are direct pixel-error metrics. They can be meaningfully computed over sparse damaged pixels.
+
+SSIM is a structural-similarity metric. It depends on local image neighborhoods and is therefore better suited to an image-like crop than to an irregular sparse mask region.
+
+LPIPS, CLIP, and DINOv2 also require image-like inputs and were already evaluated on the mask-bounding-box crop for local comparison.
+
+---
+
+### Final local comparison policy
+
+- MSE improvement: sparse masked region,
+- PSNR improvement: sparse masked region,
+- SSIM improvement: mask-bounding-box crop,
+- LPIPS improvement: mask-bounding-box crop,
+- CLIP similarity improvement: mask-bounding-box crop,
+- DINOv2 similarity improvement: mask-bounding-box crop.
+
+---
+
+### Methodological interpretation
+
+This refinement does not remove SSIM from the framework. Instead, it aligns SSIM with a region type that preserves local spatial context.
+
+Possible thesis wording:
+
+> SSIM was retained as a structural-similarity metric, but sparse masked-region SSIM was excluded from final local model ranking because it does not provide a stable image-like neighborhood. For the final comparison, SSIM was evaluated on the mask-bounding-box crop, while MSE and PSNR remained on the sparse masked region.
+
+---
+
+### Output
+
+The refined comparison was saved as a separate set of comparison-level outputs rather than overwriting the initial comparison.
+
+This preserves an audit trail from the initial comparison to the final refined comparison policy.

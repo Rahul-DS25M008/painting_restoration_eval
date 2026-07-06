@@ -1115,3 +1115,39 @@ The full controlled evaluation therefore remains focused on:
 - Stable Diffusion Inpainting.
 
 SDXL is reserved for future work or for rerunning on stronger GPU resources, preferably with at least 12–16 GB VRAM.
+
+## Refined metric-region policy for final comparison
+
+A refined metric-region policy was added after the initial three-model comparison revealed that sparse masked-region SSIM was not valid for local majority voting.
+
+Notebook:
+
+`notebooks/26_refined_metric_region_policy_cleaned.ipynb`
+
+The initial three-model comparison used sparse `masked_region` values for MSE, PSNR, and SSIM. While this is appropriate for MSE and PSNR, it is not appropriate for SSIM because SSIM requires an image-like local neighborhood with spatial context.
+
+SSIM was therefore retained, but moved from sparse `masked_region` to `mask_bbox_crop` for final local model comparison.
+
+Final local metric-region policy:
+
+- MSE improvement: `masked_region`
+- PSNR improvement: `masked_region`
+- SSIM improvement: `mask_bbox_crop`
+- LPIPS improvement: `mask_bbox_crop`
+- CLIP similarity improvement: `mask_bbox_crop`
+- DINOv2 similarity improvement: `mask_bbox_crop`
+
+This refinement rebuilds only the comparison-level outputs. Model-level metric files and model-level reports remain valid.
+
+Main refined outputs:
+
+- `outputs/metrics/comparison_unified_refined_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_win_rates_refined_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_summary_by_mask_type_refined_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_summary_by_category_refined_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_metric_disagreement_cases_refined_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_old_vs_refined_metric_policy_50.csv`
+- `outputs/metrics/comparison_visual_cases_refined_opencv_lama_stable_diffusion_50.csv`
+- `outputs/reports/opencv_lama_stable_diffusion_refined_metric_comparison_report_50.html`
+
+The refined comparison is the preferred comparison policy for the final controlled 50-painting report.

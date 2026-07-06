@@ -681,6 +681,46 @@ Next project step:
 
 Proceed to diffusion uncertainty analysis using the completed Stable Diffusion Inpainting branch.
 
+### Refined metric-region policy status
+
+The final local comparison policy has been refined.
+
+Notebook:
+
+`notebooks/26_refined_metric_region_policy_cleaned.ipynb`
+
+Reason:
+
+The initial three-model comparison revealed that sparse masked-region SSIM produced invalid local comparison values.
+
+Decision:
+
+SSIM is retained, but moved from sparse `masked_region` to `mask_bbox_crop` for final local comparison.
+
+Final local metric-region policy:
+
+- MSE improvement: `masked_region`
+- PSNR improvement: `masked_region`
+- SSIM improvement: `mask_bbox_crop`
+- LPIPS improvement: `mask_bbox_crop`
+- CLIP similarity improvement: `mask_bbox_crop`
+- DINOv2 similarity improvement: `mask_bbox_crop`
+
+Main refined outputs:
+
+- `outputs/metrics/comparison_unified_refined_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_win_rates_refined_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_summary_by_mask_type_refined_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_summary_by_category_refined_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_metric_disagreement_cases_refined_opencv_lama_stable_diffusion_50.csv`
+- `outputs/metrics/comparison_old_vs_refined_metric_policy_50.csv`
+- `outputs/metrics/comparison_visual_cases_refined_opencv_lama_stable_diffusion_50.csv`
+- `outputs/reports/opencv_lama_stable_diffusion_refined_metric_comparison_report_50.html`
+
+Interpretation:
+
+The refined comparison should be used as the final model-comparison reference in the consolidated 50-painting evaluation report. The initial comparison remains useful as an audit trail showing why the refinement was necessary.
+
 ## DALL-E / OpenAI Image Editing
 
 OpenAI image editing is useful as an optional closed commercial comparison because it supports masked image editing. However, it has weaker reproducibility and lower training-data transparency. Public documentation also describes mask-guided editing as prompt-based, meaning the mask may guide the edit without guaranteeing exact pixel-level replacement behavior.
