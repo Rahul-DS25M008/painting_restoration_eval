@@ -2747,7 +2747,9 @@ This extends the existing metric stack beyond:
 
 by adding local texture-continuity diagnostics.
 
-The notebook computes texture metrics on the `mask_bbox_crop` region because texture descriptors require spatial image structure.
+The notebook computes texture and brushstroke-proxy metrics on the `mask_bbox_crop` region because these descriptors require spatial image structure.
+
+The brushstroke-proxy metrics do not perform semantic brushstroke recognition. They measure directional local texture structure using gradient magnitude, edge/detail density, orientation coherence, and orientation histogram similarity.
 
 ### References
 
@@ -2757,7 +2759,7 @@ Relevant point:
 The paper argues that image inpainting quality depends on both structure generation and texture synthesis.
 
 How Notebook 31 uses it:  
-Notebook 31 operationalizes this structure-texture motivation by adding texture metrics to the restoration evaluation framework. The notebook does not implement Jain et al.’s model. Instead, it uses the paper’s argument to justify measuring texture preservation as a separate diagnostic layer beyond PSNR, SSIM, LPIPS, CLIP, and DINOv2.
+Notebook 31 operationalizes this structure-texture motivation by adding texture and brushstroke-proxy metrics to the restoration evaluation framework. The notebook does not implement Jain et al.’s model and does not claim semantic brushstroke recognition. Instead, it uses the paper’s structure-texture argument to justify measuring local texture preservation and directional brushstroke-like continuity as separate diagnostic layers beyond PSNR, SSIM, LPIPS, CLIP, and DINOv2.
 
 #### Sun et al. (2024) — Ancient Paintings Inpainting Based on Dual Encoders and Multi-Scale Feature Fusion
 
@@ -2827,6 +2829,10 @@ The notebook computes:
 - GLCM energy difference,
 - GLCM correlation difference,
 - Gabor response descriptor differences,
+- brushstroke-proxy gradient magnitude differences,
+- brushstroke-proxy edge/detail density difference,
+- brushstroke-proxy orientation coherence difference,
+- brushstroke-proxy orientation histogram distance,
 - normalized combined texture distance.
 
 Lower texture distance means that the restored crop is closer to the clean reference crop in local texture structure.
@@ -2840,11 +2846,14 @@ The texture metrics are computed for:
 The outputs include:
 
 - per-model texture metric files,
-- unified texture comparison,
+- unified texture and brushstroke-proxy comparison,
 - summary by model,
 - summary by mask type,
 - summary by painting category,
-- texture disagreement cases.
+- high-texture brushwork focused summary,
+- non-zero-only texture winner summary,
+- brushstroke-proxy summary by model,
+- texture disagreement cases against the refined metric vote.
 
 ### Notes for final thesis writing
 
@@ -2852,7 +2861,7 @@ This section should support the claim that trustworthy restoration evaluation sh
 
 Possible thesis wording:
 
-> A texture-aware metric layer was added to evaluate whether restored regions preserve local surface structure and brushstroke-like detail. GLCM and Gabor descriptors were computed on the mask-bounding-box crop because texture descriptors require spatial context. This layer was interpreted as a diagnostic measure of local texture consistency rather than as evidence of conservation correctness.
+> A texture-aware and brushstroke-proxy metric layer was added to evaluate whether restored regions preserve local surface structure, directional texture, and brushstroke-like detail. GLCM, Gabor, and gradient-orientation descriptors were computed on the mask-bounding-box crop because these descriptors require spatial context. This layer was interpreted as diagnostic evidence of local texture consistency rather than as brushstroke authentication or conservation correctness.
 
 Another possible thesis wording:
 
@@ -2861,6 +2870,7 @@ Another possible thesis wording:
 ### Potential improvements / supervisor feedback
 
 - Consider adding LBP if the supervisor wants a broader texture descriptor set.
-- Consider separating texture results for the `high_texture_brushwork` category.
-- Consider adding visual examples where texture metrics disagree with LPIPS, DINOv2, or the refined model vote.
-- Consider adding texture overlays or texture-difference maps to the per-case reports.
+- Consider adding structure-tensor visualization if the supervisor wants stronger visual explanation of brushstroke-proxy orientation behavior.
+- Use the `high_texture_brushwork` focused summary when discussing texture-heavy paintings.
+- Consider adding visual examples where texture or brushstroke-proxy metrics disagree with LPIPS, DINOv2, or the refined model vote.
+- Consider adding texture overlays, orientation maps, or texture-difference maps to the per-case reports.
