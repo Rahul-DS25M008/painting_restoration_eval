@@ -2971,3 +2971,277 @@ Another possible thesis wording:
 - Consider adding a symmetric inner-plus-outer boundary band if the supervisor wants a stricter boundary-transition analysis.
 - Add uncertainty heatmap links to the Streamlit dashboard in Notebook 34.
 - Use selected high-uncertainty cases in Notebook 33 per-case reports.
+
+---
+
+## 33. Per-Case Diagnostic Report Generation
+
+### Decision supported
+
+The per-case diagnostic report notebook creates selected case-level inspection reports from the completed evaluation outputs.
+
+The decision supported by this notebook is that aggregate metrics and summary tables are not sufficient on their own. The framework also needs standardized case-level inspection artifacts that combine visual outputs, metric evidence, texture diagnostics, and uncertainty diagnostics.
+
+Notebook 33 does not rerun restoration models and does not recompute core metrics. It assembles existing evidence into selected diagnostic grids, individual HTML case pages, and a case report index.
+
+### References
+
+#### Fontoura Júnior et al. (2023) — Assessing the Effectiveness of Inpainting Techniques in Cultural Heritage
+
+Relevant point:  
+Cultural heritage inpainting evaluation benefits from multiple complementary forms of assessment, including visual inspection and quantitative metrics.
+
+How Notebook 33 uses it:  
+Notebook 33 operationalizes this multi-evidence interpretation by generating per-case reports that combine restored outputs, refined metric summaries, texture diagnostics, and uncertainty diagnostics. This prevents the final interpretation from relying only on aggregate model rankings.
+
+#### Munzner (2014) — Visualization Analysis and Design
+
+Relevant point:  
+Visualization and analysis systems should be designed around analytical tasks and user needs rather than simply displaying all available data.
+
+How Notebook 33 uses it:  
+Notebook 33 selects a manageable number of representative and diagnostically important cases rather than creating hundreds of full report pages. The selected reports support supervisor review and thesis writing.
+
+#### Heer and Shneiderman (2012) — Interactive Dynamics for Visual Analysis
+
+Relevant point:  
+Inspection workflows benefit from filtering, selection, detail-on-demand, and coordinated views.
+
+How Notebook 33 uses it:  
+Notebook 33 prepares case-level artifacts that later support dashboard inspection. Each report links summary evidence to visual grids and source paths, making detailed review possible without manually navigating every notebook output.
+
+#### Van Vijle et al. (2025) — Machine Learning for Painting Conservation: A State-of-the-Art Review
+
+Relevant point:  
+Painting-conservation applications require careful validation and cautious interpretation of machine-learning outputs.
+
+How Notebook 33 uses it:  
+Notebook 33 treats case reports as inspection artifacts rather than restoration judgments. The reports help evaluate model behavior while keeping conservation claims limited.
+
+### Project decision
+
+Notebook 33 generates selected per-case diagnostic reports for the 200 non-zero controlled restoration cases.
+
+The notebook combines:
+
+- clean reference image,
+- damaged input,
+- binary mask,
+- OpenCV Telea restoration,
+- LaMa restoration,
+- Stable Diffusion restoration,
+- refined reference-based metric summaries,
+- texture and brushstroke-proxy diagnostics where available,
+- Stable Diffusion uncertainty heatmap diagnostics where available.
+
+The selected cases are chosen using deterministic criteria, including:
+
+- high Stable Diffusion masked-region uncertainty,
+- high Stable Diffusion boundary-ring uncertainty,
+- texture/refined disagreement cases,
+- high-texture brushwork representatives,
+- Stable Diffusion low refined metric-win cases,
+- OpenCV and LaMa strong cases where available,
+- category representatives,
+- non-zero mask-type representatives.
+
+Main outputs include:
+
+- `outputs/metrics/case_diagnostic_selected_cases_50.csv`
+- `outputs/metrics/case_diagnostic_report_manifest_50.csv`
+- `outputs/reports/case_diagnostics/case_report_index.html`
+- `outputs/reports/case_diagnostics/selected_cases/`
+- `outputs/figures/case_diagnostics/selected_case_grids/`
+
+### Notes for final thesis writing
+
+This section should support the qualitative inspection and case-study part of the thesis.
+
+Possible thesis wording:
+
+> Selected per-case diagnostic reports were generated to make the evaluation framework inspectable at the individual-case level. Each report combines the clean reference, damaged input, mask, restored outputs, refined metric summaries, texture diagnostics, and uncertainty diagnostics where available. These reports are used as inspection artifacts rather than new metric computations, supporting interpretation of cases where aggregate metrics, texture behavior, and diffusion uncertainty diverge.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether selected case reports should be used as thesis evidence examples.
+- Consider adding error maps or texture-difference maps into the case reports after supervisor feedback.
+- Consider creating a small set of final thesis case studies from the selected reports.
+- Keep case reports linked rather than embedded to avoid creating oversized HTML files.
+
+---
+
+## 34. Final Dashboard Asset Preparation and Streamlit Update
+
+### Decision supported
+
+The final dashboard asset notebook prepares dashboard-ready CSV and JSON files from the completed pre-feedback evaluation framework.
+
+The decision supported by this notebook is to separate data preparation from the Streamlit interface. The dashboard should consume clean, lightweight assets rather than reconstructing state from many notebook outputs at runtime.
+
+Notebook 34 does not rerun models and does not recompute core metrics. It prepares final dashboard assets from the refined comparison, texture diagnostics, uncertainty heatmaps, case reports, and supervisor-facing outputs.
+
+### References
+
+#### Heer and Shneiderman (2012) — Interactive Dynamics for Visual Analysis
+
+Relevant point:  
+Interactive visual analysis benefits from overview, filtering, selection, details-on-demand, and coordinated inspection.
+
+How Notebook 34 uses it:  
+Notebook 34 prepares dashboard assets that support overview pages, filtered model comparison, texture diagnostics, uncertainty inspection, case report browsing, and report access.
+
+#### Munzner (2014) — Visualization Analysis and Design
+
+Relevant point:  
+Visualization design should be driven by task abstraction, data abstraction, and intended use.
+
+How Notebook 34 uses it:  
+Notebook 34 structures dashboard assets around thesis-review tasks: model comparison, metric-region interpretation, texture diagnostics, uncertainty heatmaps, case-level inspection, and limitations.
+
+#### Fontoura Júnior et al. (2023) — Assessing the Effectiveness of Inpainting Techniques in Cultural Heritage
+
+Relevant point:  
+Cultural heritage inpainting evaluation requires careful multi-criteria assessment rather than simple visual ranking.
+
+How Notebook 34 uses it:  
+Notebook 34 prepares the dashboard as a multi-layer review interface that exposes metrics, texture diagnostics, uncertainty diagnostics, and case reports.
+
+#### Van Vijle et al. (2025) — Machine Learning for Painting Conservation: A State-of-the-Art Review
+
+Relevant point:  
+Machine-learning applications in painting conservation require reliability-aware evaluation and careful validation.
+
+How Notebook 34 uses it:  
+Notebook 34 supports reliability-aware review by making the framework layers accessible through a reproducible dashboard interface.
+
+### Project decision
+
+Notebook 34 creates final dashboard-ready assets under:
+
+`outputs/dashboard/`
+
+Main outputs include:
+
+- `outputs/dashboard/dashboard_summary.json`
+- `outputs/dashboard/dashboard_model_winner_summary.csv`
+- `outputs/dashboard/dashboard_metric_vote_summary.csv`
+- `outputs/dashboard/dashboard_texture_summary.csv`
+- `outputs/dashboard/dashboard_texture_disagreements.csv`
+- `outputs/dashboard/dashboard_uncertainty_summary.csv`
+- `outputs/dashboard/dashboard_uncertainty_selected_cases.csv`
+- `outputs/dashboard/dashboard_case_report_manifest.csv`
+- `outputs/dashboard/dashboard_selected_cases.csv`
+- `outputs/dashboard/dashboard_figure_manifest.csv`
+- `outputs/dashboard/dashboard_asset_manifest.json`
+
+The updated `streamlit_app.py` consumes these dashboard assets and adds pages for:
+
+- overview,
+- model comparison,
+- texture diagnostics,
+- diffusion uncertainty,
+- case reports,
+- key findings,
+- reports,
+- debug information.
+
+The dashboard is treated as an inspection and reproducibility artifact, not as a separate experiment.
+
+### Notes for final thesis writing
+
+This section should describe the dashboard as a supporting framework artifact.
+
+Possible thesis wording:
+
+> A Streamlit dashboard was prepared as an interactive inspection layer for the evaluation framework. Dashboard-ready CSV and JSON files were generated from the completed refined comparison, texture diagnostics, uncertainty heatmaps, and case reports. The dashboard supports structured review of model behavior, metric-region policy, texture preservation, seed-based uncertainty, and selected case-level evidence. It is treated as a reproducibility and interpretation interface rather than as an additional experiment.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether the dashboard should be submitted as a formal thesis artifact.
+- Consider adding thesis-facing screenshots after the dashboard design is accepted.
+- Add metadata-driven or semantic-consistency pages only if those extensions are approved after feedback.
+- Keep dashboard assets lightweight and avoid committing oversized embedded HTML reports.
+
+---
+
+## 35. Supervisor Package Refresh
+
+### Decision supported
+
+The supervisor-package refresh notebook updates the supervisor-facing review package after the latest pre-feedback additions.
+
+The decision supported by this notebook is to consolidate supervisor-facing information into a small set of current files rather than maintaining many overlapping summaries.
+
+Notebook 35 refreshes the existing supervisor package in place. It does not create duplicate `v2` files.
+
+### References
+
+#### Munzner (2014) — Visualization Analysis and Design
+
+Relevant point:  
+Effective analysis artifacts should be organized around the intended review task and audience.
+
+How Notebook 35 uses it:  
+Notebook 35 organizes supervisor-facing material around review needs: current status, new additions, artifact index, key findings, open questions, and meeting agenda.
+
+#### Heer and Shneiderman (2012) — Interactive Dynamics for Visual Analysis
+
+Relevant point:  
+Analytical review benefits from overview, details-on-demand, and direct access to relevant artifacts.
+
+How Notebook 35 uses it:  
+Notebook 35 creates an artifact index and meeting agenda that point the supervisor to the dashboard, case report index, uncertainty report, and key summaries.
+
+#### Van Vijle et al. (2025) — Machine Learning for Painting Conservation: A State-of-the-Art Review
+
+Relevant point:  
+Painting-conservation machine-learning work requires careful reliability framing, validation, and explicit limitations.
+
+How Notebook 35 uses it:  
+Notebook 35 frames the current package around trustworthiness, limitations, and supervisor decisions rather than overclaiming restoration correctness.
+
+#### Fontoura Júnior et al. (2023) — Assessing the Effectiveness of Inpainting Techniques in Cultural Heritage
+
+Relevant point:  
+Cultural heritage inpainting should be assessed using multiple complementary criteria.
+
+How Notebook 35 uses it:  
+Notebook 35 summarizes the framework as a layered evaluation approach that includes reference metrics, texture diagnostics, uncertainty heatmaps, and case-level inspection.
+
+### Project decision
+
+Notebook 35 refreshes the supervisor package under:
+
+`outputs/supervisor_package/`
+
+Main outputs include:
+
+- `outputs/supervisor_package/supervisor_summary.md`
+- `outputs/supervisor_package/supervisor_artifact_index.csv`
+- `outputs/supervisor_package/supervisor_key_findings.json`
+- `outputs/supervisor_package/supervisor_open_questions.md`
+- `outputs/supervisor_package/supervisor_feedback_agenda.md`
+- `outputs/supervisor_package/supervisor_package_manifest.json`
+
+The refreshed package documents:
+
+- what was added since the original supervisor package,
+- what is ready for supervisor review,
+- what should wait until after supervisor feedback,
+- which artifacts should be shown during the meeting.
+
+Older duplicate supervisor notes are replaced by the refreshed package files to reduce confusion.
+
+### Notes for final thesis writing
+
+This section should support the project-management and scope-control narrative before final thesis execution.
+
+Possible thesis wording:
+
+> After adding texture diagnostics, uncertainty heatmaps, per-case reports, and dashboard assets, the supervisor-facing package was refreshed in place. The refreshed package summarizes the current framework state, identifies key findings, lists open scope decisions, and provides an artifact index for review. This checkpoint separates completed pre-feedback work from possible post-feedback extensions such as scaling, semantic consistency checks, metadata analysis, SDXL follow-up, and metric-policy ablation.
+
+### Potential improvements / supervisor feedback
+
+- Use the supervisor feedback agenda to structure the next meeting.
+- Ask the supervisor to prioritize post-feedback extensions before starting new experiments.
+- Keep the supervisor package lean and regenerate it from Notebook 35 when the project state changes.

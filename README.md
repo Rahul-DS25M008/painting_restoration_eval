@@ -4,7 +4,7 @@ This repository contains the reproducible implementation for the master thesis p
 
 **Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration**
 
-The project builds and evaluates a controlled framework for assessing AI-assisted painting restoration. The focus is **not** to train a new restoration model or to claim conservation-ready restoration. The focus is to test whether different evaluation signals can reveal when restoration outputs are faithful, unstable, metric-dependent, or only visually plausible.
+The project builds and evaluates a controlled framework for assessing AI-assisted painting restoration. The focus is **not** to train a new restoration model or to claim conservation-ready restoration. The focus is to test whether different evaluation signals can reveal when restoration outputs are faithful, unstable, metric-dependent, texture-inconsistent, or only visually plausible.
 
 > **Core thesis claim:** visual plausibility is not the same as restoration trustworthiness.
 
@@ -12,7 +12,7 @@ The project builds and evaluates a controlled framework for assessing AI-assiste
 
 ## Current status
 
-The project has progressed beyond the initial OpenCV pilot. The current repository contains a controlled 50-painting evaluation pipeline, final comparison reports, supervisor review package, and a working Streamlit dashboard.
+The project has progressed beyond the initial OpenCV pilot. The current repository contains a controlled 50-painting evaluation pipeline, refined three-model comparison, texture diagnostics, Stable Diffusion uncertainty heatmaps, selected per-case diagnostic reports, a refreshed supervisor review package, and a working Streamlit dashboard.
 
 Current completed stages:
 
@@ -30,10 +30,13 @@ Current completed stages:
 - refined metric-region policy,
 - final three-model comparison,
 - Stable Diffusion multi-seed uncertainty analysis,
+- texture and brushstroke-proxy diagnostics,
+- Stable Diffusion uncertainty heatmaps,
+- selected per-case diagnostic reports,
 - final controlled 50-painting evaluation report,
-- dashboard asset preparation,
-- supervisor review package,
-- working Streamlit dashboard.
+- final dashboard asset preparation,
+- updated Streamlit dashboard,
+- refreshed supervisor review package.
 
 The current evaluated model stack is:
 
@@ -43,6 +46,12 @@ The current evaluated model stack is:
 | LaMa | Fully evaluated | Strong learned inpainting baseline |
 | Stable Diffusion Inpainting | Fully evaluated | Generative inpainting model and uncertainty target |
 | SDXL Inpainting | Feasibility audited | Not fully evaluated locally because of GPU/runtime constraints |
+
+Current pre-feedback checkpoint:
+
+- The framework is ready for supervisor review.
+- No further experiments are planned before feedback.
+- Remaining additions should be prioritized only after supervisor input.
 
 ---
 
@@ -58,11 +67,23 @@ The central contribution is a reproducible framework that combines:
 - synthetic damage types,
 - multiple restoration paradigms,
 - region-aware metric policy,
-- perceptual and feature-space metrics,
+- classical, perceptual, and feature-space metrics,
+- texture and brushstroke-proxy diagnostics,
 - visual diagnostics,
 - metric disagreement analysis,
 - generative uncertainty analysis,
-- feasibility documentation for heavier models.
+- spatial uncertainty heatmaps,
+- selected case-level inspection reports,
+- feasibility documentation for heavier models,
+- dashboard-based review and reproducibility support.
+
+Important interpretation boundaries:
+
+- The project evaluates candidate restoration outputs under controlled synthetic damage.
+- It does not certify conservation-ready restoration.
+- It does not claim historical reconstruction correctness.
+- It does not treat any single metric as ground truth.
+- It treats visual plausibility, reference fidelity, texture consistency, and uncertainty as separate but complementary signals.
 
 ---
 
@@ -77,8 +98,10 @@ Can multi-metric evaluation provide a more trustworthy assessment of AI-assisted
 Current answer:
 
 - Substantially answered for the controlled 50-painting subset.
-- The framework uses MSE, PSNR, SSIM, LPIPS, CLIP, DINOv2, difference maps, comparison grids, and metric-disagreement analysis.
+- The framework uses MSE, PSNR, SSIM, LPIPS, CLIP, DINOv2, texture diagnostics, brushstroke-proxy diagnostics, difference maps, comparison grids, and metric-disagreement analysis.
 - The project found that metric-region policy matters, especially because sparse masked-region SSIM is not valid.
+- Texture and brushstroke-proxy diagnostics add a local-structure layer beyond the original metric stack.
+- Case-level reports make metric disagreement and diagnostic divergence inspectable.
 
 ### RQ2: Model comparison across painting and damage conditions
 
@@ -88,7 +111,8 @@ Current answer:
 
 - Substantially answered for the controlled 50-painting subset.
 - OpenCV Telea, LaMa, and Stable Diffusion Inpainting were fully evaluated on 200 non-zero damage cases.
-- Results are summarized by model, metric, mask type, and painting category.
+- Results are summarized by model, metric, mask type, painting category, texture behavior, and selected diagnostic cases.
+- SDXL was feasibility-audited but not fully evaluated locally because of hardware/runtime constraints.
 
 ### RQ3: Diffusion uncertainty from multiple candidates
 
@@ -98,7 +122,9 @@ Current answer:
 
 - Answered diagnostically using a balanced Stable Diffusion uncertainty subset.
 - The uncertainty analysis uses 40 cases and 4 seeds per case, producing 160 outputs.
+- Scalar uncertainty summaries and spatial uncertainty heatmaps are available.
 - The current result supports uncertainty as a complementary warning signal, not as a replacement for reference metrics.
+- Supervisor feedback is needed on whether uncertainty should be expanded to all 200 non-zero cases.
 
 ---
 
@@ -118,65 +144,92 @@ Current conclusions from the controlled 50-painting experiment:
 4. **Metric-region policy is critical.**  
    Sparse masked-region SSIM was found to be invalid. The final policy evaluates SSIM on the mask bounding-box crop.
 
-5. **Metric disagreement supports the framework argument.**  
+5. **Texture and brushstroke-proxy diagnostics add local structure evidence.**  
+   These metrics help inspect whether restorations preserve local texture and brushstroke-like directional structure. They do not perform semantic brushstroke recognition, artist authentication, or conservation validation.
+
+6. **Metric disagreement supports the framework argument.**  
    The result is not just a model leaderboard. Different metric families can point to different interpretations.
 
-6. **Uncertainty analysis is useful for generative models.**  
+7. **Uncertainty analysis is useful for generative models.**  
    Stable Diffusion can produce different outputs for the same damaged input depending on seed. This instability is useful as a caution signal.
 
-7. **SDXL requires stronger compute for fair full evaluation.**  
-   SDXL was feasibility-audited locally, but full evaluation was excluded because local 6GB VRAM did not provide a practical runtime-quality balance.
+8. **Uncertainty heatmaps make instability spatially inspectable.**  
+   The heatmap layer shows where seed-based Stable Diffusion variation occurs inside the mask, around the mask, and outside the mask.
 
-8. **The strongest thesis claim is methodological.**  
-   The project demonstrates why restoration trustworthiness requires multiple evaluation signals instead of visual inspection alone.
+9. **Per-case reports make aggregate results inspectable.**  
+   Selected diagnostic reports combine clean/damaged/mask/model outputs, refined metrics, texture diagnostics, and uncertainty heatmaps where available.
+
+10. **SDXL requires stronger compute for fair full evaluation.**  
+    SDXL was feasibility-audited locally, but full evaluation was excluded because local 6GB VRAM did not provide a practical runtime-quality balance.
+
+11. **The strongest thesis claim is methodological.**  
+    The project demonstrates why restoration trustworthiness requires multiple evaluation signals instead of visual inspection alone.
 
 ---
 
 ## Supervisor review package
 
-A supervisor-facing review package has been created at:
+A supervisor-facing review package has been refreshed at:
 
 ```powershell
 outputs/supervisor_package/
+```
+
+The package is generated/refreshed by:
+
+```text
+notebooks/35_refresh_supervisor_package_cleaned.ipynb
 ```
 
 Important files:
 
 ```powershell
 outputs/supervisor_package/README_supervisor.md
-outputs/supervisor_package/proposal_alignment.md
-outputs/supervisor_package/methodology_summary.md
-outputs/supervisor_package/results_summary.md
-outputs/supervisor_package/limitations_and_deviations.md
-outputs/supervisor_package/supervisor_questions.md
-outputs/supervisor_package/next_steps.md
-outputs/supervisor_package/package_manifest.json
+outputs/supervisor_package/supervisor_summary.md
+outputs/supervisor_package/supervisor_artifact_index.csv
+outputs/supervisor_package/supervisor_key_findings.json
+outputs/supervisor_package/supervisor_open_questions.md
+outputs/supervisor_package/supervisor_feedback_agenda.md
+outputs/supervisor_package/supervisor_package_manifest.json
 ```
 
-The most important file for supervisor discussion is:
+The most important files for supervisor discussion are:
 
 ```powershell
-outputs/supervisor_package/supervisor_questions.md
+outputs/supervisor_package/supervisor_summary.md
+outputs/supervisor_package/supervisor_feedback_agenda.md
+outputs/supervisor_package/supervisor_open_questions.md
 ```
 
-It asks for clarification on:
+The supervisor package asks for clarification on:
 
 1. whether the controlled 50-painting subset is sufficient,
 2. whether the 40-case uncertainty subset is sufficient,
-3. whether SDXL should remain feasibility-audited only,
-4. whether university GPU resources should be requested for full SDXL comparison,
-5. whether the refined metric-region policy is accepted,
-6. whether the Streamlit dashboard should be included as a formal supporting artifact,
-7. whether the final thesis should emphasize the LaMa versus Stable Diffusion contrast,
-8. whether the final thesis should scale dataset size, uncertainty analysis, or model coverage.
+3. whether uncertainty heatmaps should be expanded to all 200 non-zero cases,
+4. whether SDXL should remain feasibility-audited only,
+5. whether university GPU resources should be requested for full SDXL comparison,
+6. whether the refined metric-region policy is accepted,
+7. whether texture and brushstroke-proxy diagnostics should remain core diagnostics,
+8. whether semantic/iconographic checks should be added after feedback,
+9. whether metadata-driven analysis should be added after feedback,
+10. whether metric-policy ablation should be added after feedback,
+11. whether the Streamlit dashboard should be included as a formal supporting artifact.
 
-Large copied HTML reports are intentionally not committed inside `outputs/supervisor_package/reports/` because they exceed GitHub size limits. The package references the main generated reports instead.
+Large copied HTML reports are intentionally not committed inside `outputs/supervisor_package/reports/` because they can exceed GitHub size limits. The package references the main generated reports instead.
 
-The final report as well as other important reports however can still be accessed in the folder:
+Important reports can be accessed in:
+
+```powershell
+outputs/reports/
+```
+
+Key report entry points:
 
 ```powershell
 outputs/reports/final_controlled_50_evaluation_report.html
-outputs/reports/
+outputs/reports/opencv_lama_stable_diffusion_refined_metric_comparison_report_50.html
+outputs/reports/stable_diffusion_uncertainty_heatmap_report_50.html
+outputs/reports/case_diagnostics/case_report_index.html
 ```
 
 ---
@@ -202,7 +255,9 @@ It includes:
 - Model Stack,
 - Metric Policy,
 - Model Comparison,
+- Texture Diagnostics,
 - Diffusion Uncertainty,
+- Case Reports,
 - Visual Explorer,
 - Key Findings,
 - Reports,
@@ -210,7 +265,13 @@ It includes:
 
 The dashboard is designed for review and presentation. It does not rerun models, recompute metrics, or load large HTML reports.
 
-Recommended full setup is described below.
+Run from the repository root:
+
+```powershell
+streamlit run streamlit_app.py
+```
+
+The dashboard is a supporting inspection artifact. It is not treated as the primary research result, because apparently even dashboards need existential boundaries now.
 
 ---
 
@@ -256,22 +317,13 @@ Start Jupyter if the notebooks need to be inspected or rerun.
 jupyter notebook
 ```
 
----
-
-
-### Run the dashboard
-
-From the repository root:
-
-```powershell
-streamlit run streamlit_app.py
-```
-
 If Streamlit is missing:
 
 ```powershell
 pip install streamlit plotly
 ```
+
+---
 
 ## Reproducibility notes
 
@@ -289,6 +341,16 @@ For full experimental reproduction, the most important requirements are:
 - stronger GPU if SDXL is to be rerun fully.
 
 The Streamlit dashboard itself does **not** require a GPU. It only reads prepared CSV, JSON, and figure files.
+
+Generated outputs are intentionally separated by purpose:
+
+- `outputs/metrics/` stores CSV metric and manifest files,
+- `outputs/figures/` stores generated visual artifacts,
+- `outputs/reports/` stores HTML reports,
+- `outputs/dashboard/` stores dashboard-ready assets,
+- `outputs/supervisor_package/` stores supervisor-facing summaries and manifests.
+
+Large HTML files should be handled carefully because GitHub has regular file-size limits. Linked-image HTML reports are preferred over embedded base64 reports whenever possible.
 
 ---
 
@@ -330,18 +392,25 @@ The cleaned notebook pipeline is currently organized as follows.
 28_final_controlled_50_evaluation_report_cleaned.ipynb
 29_prepare_streamlit_dashboard_assets_cleaned.ipynb
 30_supervisor_package_cleaned.ipynb
+
+31_texture_metrics_cleaned.ipynb
+32_uncertainty_heatmaps_cleaned.ipynb
+33_case_report_generation_cleaned.ipynb
+34_prepare_final_dashboard_assets_cleaned.ipynb
+35_refresh_supervisor_package_cleaned.ipynb
 ```
 
-Planned or optional next notebooks:
+Potential post-feedback notebooks may include:
 
 ```text
-31_thesis_methods_assets_cleaned.ipynb
-32_sdxl_full_restoration_remote_cleaned.ipynb
-33_sdxl_metrics_remote_cleaned.ipynb
-34_four_model_comparison_remote_cleaned.ipynb
+36_semantic_iconographic_consistency_cleaned.ipynb
+37_metadata_driven_analysis_cleaned.ipynb
+38_metric_policy_ablation_cleaned.ipynb
+39_scaling_audit_cleaned.ipynb
+40_sdxl_followup_or_remote_feasibility_cleaned.ipynb
 ```
 
-The SDXL notebooks are optional and depend on access to stronger GPU resources.
+These are not started before supervisor feedback unless approved.
 
 ---
 
@@ -376,6 +445,8 @@ Mask conditions:
 | `loss_large` | Larger missing region |
 | `mixed_damage` | Combined scratch and loss pattern |
 
+The zero-control cases are used for sanity checking. The main refined model comparison uses the 200 non-zero cases, because those are the cases where restoration behavior can actually be evaluated.
+
 ---
 
 ## Final metric-region policy
@@ -390,12 +461,102 @@ The final local evaluation policy is:
 | LPIPS | `mask_bbox_crop` |
 | CLIP similarity | `mask_bbox_crop` |
 | DINOv2 similarity | `mask_bbox_crop` |
+| GLCM texture metrics | `mask_bbox_crop` |
+| Gabor texture metrics | `mask_bbox_crop` |
+| Brushstroke-proxy orientation metrics | `mask_bbox_crop` |
 
 Reason:
 
 - MSE and PSNR can be computed directly on sparse masked pixels.
 - SSIM is not valid on sparse masked pixels because it requires local spatial structure.
 - LPIPS, CLIP, and DINOv2 are more meaningful on image-like cropped regions around the damage.
+- Texture and brushstroke-proxy metrics require local spatial structure and are therefore also computed on the mask bounding-box crop.
+
+Interpretation boundary:
+
+- Brushstroke-proxy metrics measure directional local texture structure.
+- They do not perform semantic brushstroke recognition, artist authentication, historical verification, or conservation judgment.
+
+---
+
+## Stable Diffusion uncertainty policy
+
+Stable Diffusion uncertainty is evaluated using repeated generation for selected cases.
+
+Current uncertainty subset:
+
+- 40 non-zero cases,
+- 4 seeds per case,
+- 160 generated outputs.
+
+Uncertainty layers:
+
+- scalar multi-seed uncertainty summaries,
+- pairwise LPIPS uncertainty,
+- pairwise CLIP/DINOv2 uncertainty,
+- combined uncertainty index,
+- spatial uncertainty heatmaps.
+
+Uncertainty heatmaps summarize seed-based spatial variability over:
+
+- full image,
+- masked region,
+- mask-bounding-box crop,
+- outside-mask region,
+- outside boundary ring around the mask.
+
+Interpretation boundary:
+
+- Stable Diffusion uncertainty is seed-based variability, not calibrated model confidence.
+- High uncertainty is a warning signal, not automatic proof of poor restoration.
+- Low uncertainty does not prove historical or conservation correctness.
+- The current boundary-ring metric measures an outside ring around the mask, not a symmetric inner-plus-outer boundary band.
+
+---
+
+## Per-case diagnostic reports
+
+Selected per-case diagnostic reports were generated to make the framework inspectable at the individual-case level.
+
+Main entry point:
+
+```text
+outputs/reports/case_diagnostics/case_report_index.html
+```
+
+Main files:
+
+```text
+outputs/metrics/case_diagnostic_selected_cases_50.csv
+outputs/metrics/case_diagnostic_report_manifest_50.csv
+outputs/reports/case_diagnostics/selected_cases/
+outputs/figures/case_diagnostics/selected_case_grids/
+```
+
+Each selected case can include:
+
+- clean reference,
+- damaged input,
+- binary mask,
+- OpenCV Telea output,
+- LaMa output,
+- Stable Diffusion output,
+- refined reference metric evidence,
+- texture and brushstroke-proxy diagnostics where available,
+- Stable Diffusion uncertainty heatmap evidence where available.
+
+Selection criteria include:
+
+- high Stable Diffusion masked-region uncertainty,
+- high boundary-ring uncertainty,
+- texture/refined disagreement,
+- high-texture brushwork representation,
+- Stable Diffusion low metric-win cases,
+- OpenCV and LaMa strong cases,
+- category representatives,
+- non-zero mask-type representatives.
+
+The case reports are inspection artifacts. They do not create new metric evidence.
 
 ---
 
@@ -406,20 +567,36 @@ Main reports:
 ```text
 outputs/reports/final_controlled_50_evaluation_report.html
 outputs/reports/opencv_lama_stable_diffusion_refined_metric_comparison_report_50.html
-outputs/reports/stable_diffusion_uncertainty_report_50.html
+outputs/reports/stable_diffusion_uncertainty_heatmap_report_50.html
+outputs/reports/case_diagnostics/case_report_index.html
 ```
 
 Dashboard assets:
 
 ```text
-outputs/dashboard/data/
-outputs/dashboard/manifests/
+outputs/dashboard/dashboard_summary.json
+outputs/dashboard/dashboard_model_winner_summary.csv
+outputs/dashboard/dashboard_metric_vote_summary.csv
+outputs/dashboard/dashboard_texture_summary.csv
+outputs/dashboard/dashboard_texture_disagreements.csv
+outputs/dashboard/dashboard_uncertainty_summary.csv
+outputs/dashboard/dashboard_uncertainty_selected_cases.csv
+outputs/dashboard/dashboard_case_report_manifest.csv
+outputs/dashboard/dashboard_selected_cases.csv
+outputs/dashboard/dashboard_figure_manifest.csv
+outputs/dashboard/dashboard_asset_manifest.json
 ```
 
 Supervisor package:
 
 ```text
-outputs/supervisor_package/
+outputs/supervisor_package/README_supervisor.md
+outputs/supervisor_package/supervisor_summary.md
+outputs/supervisor_package/supervisor_artifact_index.csv
+outputs/supervisor_package/supervisor_key_findings.json
+outputs/supervisor_package/supervisor_open_questions.md
+outputs/supervisor_package/supervisor_feedback_agenda.md
+outputs/supervisor_package/supervisor_package_manifest.json
 ```
 
 Final controlled summary files:
@@ -432,6 +609,38 @@ outputs/metrics/final_controlled_50_key_results_summary.csv
 outputs/metrics/final_controlled_50_model_win_summary.csv
 outputs/metrics/final_controlled_50_uncertainty_summary.csv
 outputs/metrics/final_controlled_50_sdxl_feasibility_summary.csv
+```
+
+Texture and brushstroke-proxy outputs:
+
+```text
+outputs/metrics/comparison_texture_unified_50.csv
+outputs/metrics/comparison_texture_case_winners_nonzero_50.csv
+outputs/metrics/comparison_texture_winner_summary_nonzero_50.csv
+outputs/metrics/comparison_texture_disagreement_cases_50.csv
+outputs/metrics/comparison_texture_high_texture_brushwork_summary_50.csv
+outputs/metrics/comparison_brushstroke_proxy_summary_by_model_50.csv
+```
+
+Uncertainty heatmap outputs:
+
+```text
+outputs/metrics/stable_diffusion_uncertainty_heatmap_manifest_50.csv
+outputs/metrics/stable_diffusion_uncertainty_heatmap_summary_by_case_50.csv
+outputs/metrics/stable_diffusion_uncertainty_heatmap_summary_by_mask_type_50.csv
+outputs/metrics/stable_diffusion_uncertainty_heatmap_summary_by_category_50.csv
+outputs/metrics/stable_diffusion_uncertainty_heatmap_vs_refined_performance_50.csv
+outputs/metrics/stable_diffusion_uncertainty_heatmap_selected_cases_50.csv
+```
+
+Case diagnostic outputs:
+
+```text
+outputs/metrics/case_diagnostic_selected_cases_50.csv
+outputs/metrics/case_diagnostic_report_manifest_50.csv
+outputs/reports/case_diagnostics/case_report_index.html
+outputs/reports/case_diagnostics/selected_cases/
+outputs/figures/case_diagnostics/selected_case_grids/
 ```
 
 ---
@@ -467,8 +676,6 @@ painting-restoration-eval/
 
   outputs/
     dashboard/
-      data/
-      manifests/
     figures/
     metrics/
     reports/
@@ -500,34 +707,43 @@ Key module groups include:
 | preprocessing | Clean image generation and metadata preparation |
 | masks/damage | Synthetic mask and damaged-image generation |
 | restoration | OpenCV, LaMa, Stable Diffusion, and SDXL audit helpers |
-| metrics | Classical, LPIPS, CLIP, DINOv2, and comparison metrics |
-| visualization | Difference maps, comparison grids, uncertainty grids |
-| reporting | HTML reports and final summaries |
+| metrics | Classical, LPIPS, CLIP, DINOv2, texture, and comparison metrics |
+| visualization | Difference maps, comparison grids, uncertainty grids, case diagnostics |
+| reporting | HTML reports, final summaries, case reports, supervisor package |
 | dashboard preparation | Dashboard-ready CSV/JSON assets |
 
 ---
 
 ## Future scope and supervisor review
 
-The current framework is complete enough for supervisor review, but several candidate extensions could strengthen the final thesis.
+The current framework is complete enough for supervisor review.
 
-Recommended high-priority extensions:
+Completed before supervisor feedback:
 
-- **Texture-aware metrics:** add local texture descriptors such as GLCM contrast/homogeneity or Gabor-filter responses to better evaluate brushstroke and surface continuity.
-- **Uncertainty heatmaps:** generate pixel-wise uncertainty maps across Stable Diffusion seed outputs and add them to selected reports and the dashboard.
-- **Metric-policy ablation:** formalize the old-versus-refined metric-region comparison as an ablation study.
+- texture-aware and brushstroke-proxy metrics,
+- uncertainty heatmaps,
+- selected per-case diagnostic reports,
+- updated Streamlit dashboard,
+- refreshed supervisor package.
 
-Possible medium-priority extensions:
+Post-feedback candidate extensions:
 
-- **Per-painting report templates:** generate standardized case-level reports with original, damaged, restored, metric, uncertainty, and trustworthiness summaries.
-- **Metadata-driven analysis:** enrich analysis using artist, period, medium, or collection metadata where available.
-- **Dashboard expansion:** add richer model/category/damage filters, uncertainty exploration, and report-generation features.
+### High-priority only if supervisor requests them
 
-Exploratory future work:
+- **Metric-policy ablation:** compare old vs refined metric-region policies and alternative vote rules.
+- **Uncertainty expansion:** expand Stable Diffusion uncertainty heatmaps from 40 cases to all 200 non-zero cases.
+- **Scaling audit:** scale beyond the controlled 50-painting subset if the supervisor wants stronger empirical coverage.
 
-- **Semantic/iconographic consistency checks:** use lightweight CLIP-based concept consistency or qualitative hallucination flags to identify possible semantic inventions in generative restoration outputs.
+### Conditional extensions
 
-These additions should be prioritized with supervisor input. The strongest candidates for final thesis methodology are texture-aware metrics, uncertainty heatmaps, and metric-policy ablation.
+- **SDXL full evaluation:** rerun SDXL on stronger GPU resources if the supervisor considers it necessary.
+- **Metadata-driven analysis:** analyze results by artist, medium, source, period, or other available artwork metadata if metadata quality is sufficient.
+- **Semantic/iconographic consistency checks:** test whether generative outputs preserve high-level content or introduce semantic inventions.
+- **Human/expert review protocol:** add structured human or expert evaluation only if available and in scope.
+
+These additions should be prioritized with supervisor input. The current pre-feedback package intentionally avoids further scope expansion before feedback.
+
+---
 
 ## Future work
 
@@ -537,10 +753,12 @@ Current likely next steps:
 2. Confirm whether the 50-painting subset is sufficient.
 3. Confirm whether Stable Diffusion uncertainty should be expanded from 40 to 200 non-zero cases.
 4. Confirm whether SDXL should remain feasibility-audited or be rerun on university GPU.
-5. Decide whether the Streamlit dashboard should be included as a formal supporting artifact.
-6. Prepare `31_thesis_methods_assets_cleaned.ipynb`.
-7. Generate thesis-ready tables, captions, methodology text, and result figures.
-8. Draft methodology, results, limitations, and future work sections.
+5. Confirm whether texture and brushstroke-proxy diagnostics should remain part of the core framework.
+6. Decide whether the Streamlit dashboard should be included as a formal supporting artifact.
+7. Decide whether metric-policy ablation should be added after feedback.
+8. Decide whether semantic/iconographic consistency or metadata-driven analysis is in scope.
+9. Prepare thesis-ready tables, captions, methodology text, and result figures.
+10. Draft methodology, results, limitations, and future work sections.
 
 Possible experimental extensions:
 
@@ -549,6 +767,9 @@ Possible experimental extensions:
 - rerun SDXL on stronger GPU,
 - perform four-model comparison if SDXL becomes feasible,
 - add additional painting categories or damage patterns,
+- add semantic/iconographic checks,
+- add metadata-driven analysis,
+- add metric-policy ablation,
 - add human/expert review if available.
 
 ---
@@ -573,10 +794,6 @@ The supervisor package intentionally avoids committing copied giant HTML reports
 ```text
 outputs/supervisor_package/reports/
 ```
-
-Use `outputs/supervisor_package/reports/README_reports.md` for report references instead.
-
----
 
 ## Quick commands
 

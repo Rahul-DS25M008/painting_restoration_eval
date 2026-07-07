@@ -383,57 +383,184 @@ This notebook extends the uncertainty component of the evaluation framework by m
 
 ---
 
-## 13. Reporting and dashboard policy
+---
 
-Reports and dashboards are interpretation artifacts, not new experiments.
+## 13. Per-case diagnostic reports
 
-Stable intermediate reports are preserved as audit-trail artifacts.
+Notebook:
 
-The preferred current reporting strategy is:
+`notebooks/33_case_report_generation_cleaned.ipynb`
 
-- keep old model-specific reports stable,
-- create extended reports when new methodology layers are added,
-- avoid repeatedly rewriting every historical report.
+Selected per-case diagnostic reports were added after the texture and uncertainty-heatmap layers.
 
-The Streamlit dashboard is treated as an inspection interface for:
+These reports combine existing evidence into case-level inspection artifacts. They do not rerun models and do not recompute core metrics.
 
-- dataset design,
-- damage design,
+Each selected case report can include:
+
+- clean reference image,
+- damaged input,
+- binary mask,
+- OpenCV Telea restoration,
+- LaMa restoration,
+- Stable Diffusion restoration,
+- refined metric summaries,
+- texture and brushstroke-proxy diagnostics where available,
+- Stable Diffusion uncertainty heatmaps where available.
+
+The reports are generated for selected cases only, not all 200 non-zero cases.
+
+Selection reasons include:
+
+- high Stable Diffusion masked-region uncertainty,
+- high Stable Diffusion boundary-ring uncertainty,
+- texture/refined disagreement,
+- high-texture brushwork representatives,
+- Stable Diffusion low refined metric-win cases,
+- OpenCV and LaMa strong cases where metric-win columns are available,
+- category representatives,
+- non-zero mask-type representatives.
+
+Main outputs:
+
+- `outputs/metrics/case_diagnostic_selected_cases_50.csv`
+- `outputs/metrics/case_diagnostic_report_manifest_50.csv`
+- `outputs/reports/case_diagnostics/case_report_index.html`
+- `outputs/reports/case_diagnostics/selected_cases/`
+- `outputs/figures/case_diagnostics/selected_case_grids/`
+
+Interpretation boundary:
+
+Case reports are inspection artifacts. They are not new metric computations and should not be treated as independent quantitative evidence.
+
+---
+
+## 14. Dashboard asset and Streamlit policy
+
+Notebook:
+
+`notebooks/34_prepare_final_dashboard_assets_cleaned.ipynb`
+
+Application:
+
+`streamlit_app.py`
+
+Dashboard-ready assets are prepared under:
+
+`outputs/dashboard/`
+
+The dashboard asset notebook consolidates lightweight CSV and JSON files for the Streamlit app.
+
+The dashboard consumes prepared assets instead of reconstructing results directly from many notebook outputs. This keeps the app lightweight and avoids making the UI responsible for project-state archaeology, an activity best left to cursed graduate students and doomed interns.
+
+Main dashboard assets:
+
+- `outputs/dashboard/dashboard_summary.json`
+- `outputs/dashboard/dashboard_model_winner_summary.csv`
+- `outputs/dashboard/dashboard_metric_vote_summary.csv`
+- `outputs/dashboard/dashboard_texture_summary.csv`
+- `outputs/dashboard/dashboard_texture_disagreements.csv`
+- `outputs/dashboard/dashboard_uncertainty_summary.csv`
+- `outputs/dashboard/dashboard_uncertainty_selected_cases.csv`
+- `outputs/dashboard/dashboard_case_report_manifest.csv`
+- `outputs/dashboard/dashboard_selected_cases.csv`
+- `outputs/dashboard/dashboard_figure_manifest.csv`
+- `outputs/dashboard/dashboard_asset_manifest.json`
+
+The updated dashboard includes sections for:
+
+- overview,
+- dataset and damage,
 - model stack,
-- metric-region policy,
+- metric policy,
 - model comparison,
-- uncertainty analysis,
-- visual examples,
-- report access.
+- texture diagnostics,
+- diffusion uncertainty,
+- case reports,
+- visual explorer,
+- key findings,
+- reports,
+- debug information.
 
-Dashboard-ready CSV/JSON assets should remain lightweight.
-
-Large HTML reports should not be committed directly to GitHub unless managed separately.
-
----
-
-## 14. Current pre-feedback extensions
-
-Before supervisor feedback, the framework is being extended with:
-
-1. texture-aware and brushstroke-proxy metrics,
-2. uncertainty heatmaps,
-3. standardized per-case or per-painting reports,
-4. dashboard updates for the new outputs.
-
-These additions strengthen the current 50-painting framework without changing the core thesis direction.
-
-After supervisor feedback, possible extensions include:
-
-- semantic or iconographic consistency checks,
-- metadata-driven analysis,
-- metric-policy ablation,
-- 300-painting scaling,
-- SDXL full evaluation on stronger compute.
+The dashboard is an inspection interface and supporting artifact. It is not a separate experiment and does not recompute metrics.
 
 ---
 
-## 15. Main limitations
+## 15. Supervisor package policy
+
+Notebook:
+
+`notebooks/35_refresh_supervisor_package_cleaned.ipynb`
+
+The supervisor-facing package is refreshed in place under:
+
+`outputs/supervisor_package/`
+
+Current supervisor package outputs:
+
+- `outputs/supervisor_package/supervisor_summary.md`
+- `outputs/supervisor_package/supervisor_artifact_index.csv`
+- `outputs/supervisor_package/supervisor_key_findings.json`
+- `outputs/supervisor_package/supervisor_open_questions.md`
+- `outputs/supervisor_package/supervisor_feedback_agenda.md`
+- `outputs/supervisor_package/supervisor_package_manifest.json`
+
+The package summarizes:
+
+- current controlled experiment status,
+- what was added since the original package,
+- refined comparison results,
+- texture and brushstroke-proxy diagnostics,
+- Stable Diffusion uncertainty heatmaps,
+- per-case diagnostic reports,
+- updated dashboard assets,
+- open questions for supervisor feedback,
+- post-feedback extension candidates.
+
+Older duplicate supervisor notes are removed or replaced by the refreshed package files to avoid conflicting summaries.
+
+The supervisor package is a review artifact, not a data source for metric computation.
+
+---
+
+## 16. Current pre-feedback framework status
+
+The pre-feedback framework now includes:
+
+1. controlled synthetic painting-damage benchmark,
+2. OpenCV Telea restoration branch,
+3. LaMa restoration branch,
+4. Stable Diffusion restoration branch,
+5. SDXL feasibility audit,
+6. refined metric-region policy,
+7. classical metrics,
+8. LPIPS perceptual metrics,
+9. CLIP feature-space metrics,
+10. DINOv2 feature-space metrics,
+11. visual difference-map diagnostics,
+12. texture and brushstroke-proxy diagnostics,
+13. Stable Diffusion multi-seed uncertainty analysis,
+14. Stable Diffusion spatial uncertainty heatmaps,
+15. selected per-case diagnostic reports,
+16. final dashboard assets,
+17. updated Streamlit dashboard,
+18. refreshed supervisor package.
+
+The current pre-feedback state is ready for supervisor review.
+
+The main supervisor decisions are:
+
+- whether the controlled 50-painting subset is sufficient,
+- whether uncertainty should be expanded to all 200 non-zero cases,
+- whether SDXL should remain feasibility-audited only,
+- whether texture and brushstroke-proxy metrics should remain core diagnostics,
+- whether semantic/iconographic checks should be added after feedback,
+- whether metadata-driven analysis should be added after feedback,
+- whether metric-policy ablation should be added after feedback,
+- whether the dashboard should be treated as a formal thesis artifact.
+
+---
+
+## 17. Main limitations
 
 Current limitations:
 
@@ -442,20 +569,27 @@ Current limitations:
 - evaluated models are not trained specifically for painting conservation,
 - feature-space metrics are not conservation-specific,
 - texture and brushstroke-proxy metrics measure local texture and directional structure similarity, not historical brushstroke correctness or brushstroke authentication,
-- Stable Diffusion uncertainty is currently evaluated on a subset,
-- SDXL full evaluation requires stronger compute.
+- Stable Diffusion uncertainty heatmaps are currently computed on a 40-case subset,
+- Stable Diffusion uncertainty is seed-based spatial variability, not calibrated confidence,
+- the current boundary-ring heatmap summary measures only the outside ring around the mask,
+- SDXL full evaluation requires stronger compute,
+- the dashboard is an inspection interface, not the primary research result.
 
 These limitations should be stated directly in the thesis.
 
 ---
 
-## 16. Supervisor decisions to confirm
+## 18. Post-feedback extension candidates
 
-The following decisions should be confirmed with the supervisor:
+Possible extensions after supervisor feedback:
 
-- whether the final experiment should scale to 300 paintings,
-- whether SDXL must be included if stronger compute is available,
-- whether uncertainty analysis should cover all non-zero cases,
-- whether metric-policy ablation should be formalized,
-- whether semantic/iconographic consistency checks are in scope,
-- whether the dashboard should be treated as a formal thesis artifact.
+- semantic or iconographic consistency checks,
+- metadata-driven analysis by artist, medium, source, period, or other available artwork metadata,
+- metric-policy ablation,
+- scaling beyond the controlled 50-painting subset,
+- expanding Stable Diffusion uncertainty heatmaps to all 200 non-zero cases,
+- SDXL full evaluation on stronger compute,
+- human or expert review protocol,
+- final thesis chapter and paper-style condensation.
+
+These should not be started before supervisor feedback unless explicitly requested.

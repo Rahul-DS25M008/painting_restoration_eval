@@ -398,43 +398,204 @@ Texture faithfulness risk includes both general local texture mismatch and brush
 
 ---
 
-## 10. Reporting policy for model audit
+---
+
+## 10. Reporting and inspection policy for model audit
 
 Model-specific reports are treated as stable audit artifacts.
 
-Current stable model reports:
+Current stable model reports include:
 
 - OpenCV Telea baseline report,
 - LaMa baseline report,
 - Stable Diffusion baseline report,
 - refined three-model comparison report,
 - Stable Diffusion uncertainty report,
-- final controlled 50-painting report.
+- Stable Diffusion uncertainty heatmap report,
+- final controlled 50-painting report,
+- selected per-case diagnostic reports.
 
-Future extensions should create extended reports rather than repeatedly rewriting every historical report.
+Future extensions should create targeted extended reports rather than repeatedly rewriting every historical report.
 
 Recommended approach:
 
 - keep old reports as provenance,
-- add texture/heatmap/case-report results to extended reports,
-- use the Streamlit dashboard as the interactive inspection layer,
+- use texture and heatmap outputs as newer diagnostic layers,
+- use selected case reports for inspection examples,
+- use the Streamlit dashboard as the interactive review interface,
 - avoid committing giant embedded HTML reports unless handled separately.
+
+Current report and inspection entry points:
+
+- `outputs/reports/stable_diffusion_uncertainty_heatmap_report_50.html`
+- `outputs/reports/case_diagnostics/case_report_index.html`
+- `outputs/dashboard/`
+- `streamlit_app.py`
+
+The dashboard and reports should be described as inspection artifacts, not as separate experiments.
 
 ---
 
-## 11. Supervisor questions
+## 11. Stable Diffusion uncertainty audit status
+
+Stable Diffusion has two uncertainty-related audit layers.
+
+### Multi-seed scalar uncertainty
+
+Notebook:
+
+`notebooks/27_diffusion_uncertainty_analysis_cleaned.ipynb`
+
+Current subset:
+
+- 40 non-zero cases,
+- 4 seeds per case,
+- 160 generated outputs.
+
+This layer measures:
+
+- image-space seed variation,
+- pairwise LPIPS variation,
+- pairwise CLIP variation,
+- pairwise DINOv2 variation,
+- combined uncertainty index,
+- uncertainty versus reference-performance relationship.
+
+### Spatial uncertainty heatmaps
+
+Notebook:
+
+`notebooks/32_uncertainty_heatmaps_cleaned.ipynb`
+
+This layer converts seed variation into spatial heatmaps.
+
+The heatmaps summarize uncertainty over:
+
+- full image,
+- masked region,
+- mask-bounding-box crop,
+- outside-mask region,
+- outside boundary ring around the mask.
+
+Important boundary:
+
+The boundary-ring metric currently measures an outside ring around the mask. It is not a symmetric inner-plus-outer boundary band.
+
+Interpretation:
+
+Stable Diffusion uncertainty is seed-based spatial variability, not calibrated confidence.
+
+High uncertainty is an audit warning signal. It does not automatically prove poor restoration, and low uncertainty does not prove correctness. The uncertainty layer should be interpreted together with reference-based metrics, texture diagnostics, and case-level inspection.
+
+---
+
+## 12. Texture and brushstroke-proxy audit status
+
+Texture and brushstroke-proxy diagnostics are now part of the model-audit framework.
+
+Notebook:
+
+`notebooks/31_texture_metrics_cleaned.ipynb`
+
+These metrics evaluate local texture consistency between the clean reference crop and the restored crop.
+
+They are computed on:
+
+`mask_bbox_crop`
+
+because texture descriptors require spatial context.
+
+Implemented diagnostic families include:
+
+- GLCM texture differences,
+- Gabor response differences,
+- gradient magnitude differences,
+- edge/detail density difference,
+- orientation coherence difference,
+- orientation histogram distance,
+- normalized combined texture distance.
+
+Interpretation boundary:
+
+Brushstroke-proxy metrics measure directional local texture structure. They do not perform semantic brushstroke recognition, artist authentication, historical verification, or conservation judgment.
+
+Audit role:
+
+- identify smoothing or texture mismatch,
+- compare model behavior on high-texture paintings,
+- expose cases where refined reference metrics and texture diagnostics disagree,
+- strengthen the framework beyond pixel, perceptual, and feature-space similarity.
+
+---
+
+## 13. Dashboard and case-report audit status
+
+The updated dashboard and selected case reports are now part of the model-audit inspection layer.
+
+Dashboard assets:
+
+`outputs/dashboard/`
+
+Dashboard app:
+
+`streamlit_app.py`
+
+Case report index:
+
+`outputs/reports/case_diagnostics/case_report_index.html`
+
+The dashboard includes pages for:
+
+- overview,
+- model comparison,
+- texture diagnostics,
+- diffusion uncertainty,
+- case reports,
+- reports,
+- debug information.
+
+The selected case reports combine:
+
+- clean reference,
+- damaged input,
+- mask,
+- OpenCV Telea output,
+- LaMa output,
+- Stable Diffusion output,
+- refined metric evidence,
+- texture diagnostics where available,
+- uncertainty heatmaps where available.
+
+Audit role:
+
+- make aggregate findings inspectable,
+- support supervisor review,
+- expose model behavior in selected edge cases,
+- help identify thesis examples,
+- reduce cherry-picking by using deterministic selection rules.
+
+Interpretation boundary:
+
+Case reports and dashboards do not create new model-quality evidence. They organize existing outputs for inspection.
+
+---
+
+## 14. Supervisor questions
 
 Model-related questions to confirm:
 
 - Is LaMa sufficient as the main learned inpainting baseline?
 - Should SDXL be rerun if stronger university compute is available?
-- Should Stable Diffusion uncertainty be expanded to all 200 non-zero cases?
-- Should a semantic/iconographic consistency layer be added after feedback?
+- Should Stable Diffusion uncertainty heatmaps be expanded to all 200 non-zero cases?
+- Should the current 40-case uncertainty subset remain sufficient for the thesis?
+- Should texture and brushstroke-proxy diagnostics remain part of the core model-audit framework?
+- Should semantic/iconographic consistency checks be added after feedback?
 - Should DALL-E / OpenAI Image Editing remain excluded from the reproducible core experiment?
+- Should the Streamlit dashboard be treated as a formal supporting artifact?
 
 ---
 
-## 12. Current conclusion
+## 15. Current conclusion
 
 The current model stack is methodologically coherent:
 
@@ -442,6 +603,16 @@ The current model stack is methodologically coherent:
 2. LaMa provides a strong open pretrained learned inpainting baseline.
 3. Stable Diffusion Inpainting provides a generative diffusion baseline and uncertainty target.
 4. SDXL is documented as a feasibility-audited higher-capacity candidate.
+
+The current model-audit framework now includes:
+
+- refined reference-based comparison,
+- metric-region policy,
+- texture and brushstroke-proxy diagnostics,
+- Stable Diffusion scalar uncertainty,
+- Stable Diffusion spatial uncertainty heatmaps,
+- selected per-case reports,
+- Streamlit dashboard inspection.
 
 The thesis should frame these models as restoration candidates evaluated under controlled synthetic damage.
 
