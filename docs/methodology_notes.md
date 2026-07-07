@@ -314,7 +314,76 @@ High uncertainty is interpreted as a trustworthiness warning, especially when pa
 
 ---
 
-## 12. Reporting and dashboard policy
+## 12. Stable Diffusion uncertainty heatmap analysis
+
+Notebook:
+
+`notebooks/32_uncertainty_heatmaps_cleaned.ipynb`
+
+A spatial uncertainty-heatmap analysis was added for the Stable Diffusion multi-seed subset.
+
+The notebook does not rerun Stable Diffusion. It reuses the 160 generated outputs from Notebook 27:
+
+- 40 selected non-zero damaged cases,
+- 4 seeds per case,
+- seeds `2026`, `2027`, `2028`, and `2029`.
+
+For each case, the four seed outputs are stacked and per-pixel RGB standard deviation is computed across seeds. The channel-wise standard deviation is averaged into a single spatial uncertainty heatmap.
+
+The heatmaps are interpreted as seed-based spatial variability diagnostics, not calibrated model-confidence estimates.
+
+Uncertainty is summarized over several regions:
+
+- full image,
+- masked region,
+- mask-bounding-box crop,
+- outside-mask region,
+- outside boundary ring around the mask.
+
+The masked-region summary measures variability inside the restoration target. The mask-bounding-box summary measures local-context variability around the target. The outside-mask summary acts as a spillover diagnostic. The boundary-ring summary measures variability around the outside edge of the mask and is used as a transition-instability diagnostic.
+
+Important implementation boundary:
+
+The current boundary ring is computed from a dilated mask minus the original mask. It therefore captures the outside edge around the mask, not a symmetric inner-plus-outer boundary band.
+
+The heatmap analysis is linked back to the refined reference-based Stable Diffusion metric performance using:
+
+`refined_stable_diffusion_metric_wins`
+
+This allows uncertainty to be interpreted alongside reference-based performance rather than replacing it.
+
+Main outputs:
+
+- `outputs/metrics/stable_diffusion_uncertainty_heatmap_manifest_50.csv`
+- `outputs/metrics/stable_diffusion_uncertainty_heatmap_summary_by_case_50.csv`
+- `outputs/metrics/stable_diffusion_uncertainty_heatmap_summary_by_mask_type_50.csv`
+- `outputs/metrics/stable_diffusion_uncertainty_heatmap_summary_by_category_50.csv`
+- `outputs/metrics/stable_diffusion_uncertainty_heatmap_vs_refined_performance_50.csv`
+- `outputs/metrics/stable_diffusion_uncertainty_heatmap_selected_cases_50.csv`
+- `outputs/reports/stable_diffusion_uncertainty_heatmap_report_50.html`
+
+Main figure directories:
+
+- `outputs/figures/uncertainty_heatmaps/all_cases/`
+- `outputs/figures/uncertainty_heatmaps/selected_cases/`
+- `outputs/figures/uncertainty_heatmaps/heatmap_images/`
+- `outputs/figures/uncertainty_heatmaps/overlay_images/`
+
+Observed interpretation:
+
+- `loss_large` produced the highest masked-region uncertainty.
+- `mixed_damage` and `loss_small` showed intermediate uncertainty.
+- `scratch_thin` showed the lowest masked-region uncertainty.
+- `abstraction_surrealism` and `landscape_natural` showed high masked-region uncertainty by category.
+- `high_texture_brushwork` showed comparatively high boundary-ring uncertainty, linking the heatmap layer to the later texture and brushstroke-proxy interpretation.
+
+The heatmap report uses linked images rather than embedded base64 images. This keeps the HTML report lightweight, but the report should be opened within the repository output folder structure so relative image paths resolve correctly.
+
+This notebook extends the uncertainty component of the evaluation framework by making diffusion instability spatially inspectable.
+
+---
+
+## 13. Reporting and dashboard policy
 
 Reports and dashboards are interpretation artifacts, not new experiments.
 
@@ -343,7 +412,7 @@ Large HTML reports should not be committed directly to GitHub unless managed sep
 
 ---
 
-## 13. Current pre-feedback extensions
+## 14. Current pre-feedback extensions
 
 Before supervisor feedback, the framework is being extended with:
 
@@ -364,7 +433,7 @@ After supervisor feedback, possible extensions include:
 
 ---
 
-## 14. Main limitations
+## 15. Main limitations
 
 Current limitations:
 
@@ -380,7 +449,7 @@ These limitations should be stated directly in the thesis.
 
 ---
 
-## 15. Supervisor decisions to confirm
+## 16. Supervisor decisions to confirm
 
 The following decisions should be confirmed with the supervisor:
 
