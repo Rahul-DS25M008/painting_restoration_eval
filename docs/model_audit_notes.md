@@ -168,7 +168,7 @@ Completed layers:
 - OpenCV-vs-LaMa comparison,
 - three-model comparison,
 - refined comparison,
-- texture metrics.
+- texture and brushstroke-proxy metrics.
 
 ### Interpretation boundary
 
@@ -240,7 +240,7 @@ Completed layers:
 - three-model comparison,
 - refined comparison,
 - multi-seed uncertainty subset,
-- texture metrics.
+- texture and brushstroke-proxy metrics.
 
 ### Uncertainty status
 
@@ -366,6 +366,7 @@ The refined comparison uses the final metric-region policy:
 | CLIP | `mask_bbox_crop` |
 | DINOv2 | `mask_bbox_crop` |
 | Texture metrics | `mask_bbox_crop` |
+| Brushstroke-proxy orientation metrics | `mask_bbox_crop` |
 
 Current interpretation from the controlled 50-painting experiment:
 
@@ -373,7 +374,7 @@ Current interpretation from the controlled 50-painting experiment:
 - OpenCV Telea remains useful as a deterministic baseline.
 - Stable Diffusion rarely wins reference-based metrics but is valuable for studying generative uncertainty.
 - SDXL is excluded only because of local feasibility constraints.
-- Texture metrics add a local texture-consistency audit layer.
+- Texture and brushstroke-proxy metrics add local texture-consistency and directional-structure audit layers.
 - Metric disagreement is expected and useful.
 
 The model comparison should not be described as a simple leaderboard. It is a trustworthiness audit across metric families and model behaviors.
@@ -392,6 +393,8 @@ The model comparison should not be described as a simple leaderboard. It is a tr
 | Reproducibility | High | High | Medium | Medium |
 | Local compute burden | Low | Medium | High | Very high |
 | Current evaluation status | Complete | Complete | Complete | Feasibility only |
+
+Texture faithfulness risk includes both general local texture mismatch and brushstroke-like directional structure loss. The brushstroke-proxy metrics measure directional texture preservation, not semantic brushstroke authenticity.
 
 ---
 
@@ -426,7 +429,6 @@ Model-related questions to confirm:
 - Is LaMa sufficient as the main learned inpainting baseline?
 - Should SDXL be rerun if stronger university compute is available?
 - Should Stable Diffusion uncertainty be expanded to all 200 non-zero cases?
-- Should texture metrics enter the model-ranking vote or remain diagnostic?
 - Should a semantic/iconographic consistency layer be added after feedback?
 - Should DALL-E / OpenAI Image Editing remain excluded from the reproducible core experiment?
 
@@ -445,4 +447,4 @@ The thesis should frame these models as restoration candidates evaluated under c
 
 The central model-audit conclusion is:
 
-> No pretrained model should be treated as a ground-truth painting restoration system. The research contribution is the evaluation framework that exposes where models succeed, fail, hallucinate, smooth texture, or become uncertain.
+> No pretrained model should be treated as a ground-truth painting restoration system. The research contribution is the evaluation framework that exposes where models succeed, fail, hallucinate, smooth texture, alter brushstroke-like directional structure, or become uncertain.
