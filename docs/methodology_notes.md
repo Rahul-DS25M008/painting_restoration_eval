@@ -183,13 +183,14 @@ The final local comparison policy is:
 | DINOv2 | `mask_bbox_crop` |
 | GLCM texture metrics | `mask_bbox_crop` |
 | Gabor texture metrics | `mask_bbox_crop` |
+| Brushstroke-proxy orientation metrics | `mask_bbox_crop` |
 
 Reasoning:
 
 - MSE and PSNR can be computed directly on sparse damaged pixels.
 - SSIM requires spatial structure, so sparse masked pixels are not suitable.
 - LPIPS, CLIP, and DINOv2 require image-like spatial inputs.
-- Texture descriptors also require local spatial structure.
+- Texture and brushstroke-proxy descriptors also require local spatial structure.
 
 This region policy is one of the key methodology decisions in the framework.
 
@@ -224,7 +225,7 @@ CLIP and DINOv2 are used as pretrained feature-space diagnostics.
 
 They are not conservation-specific metrics. They help reveal whether restored outputs move closer to the clean reference in broad visual representation spaces.
 
-### Texture metrics
+### Texture and brushstroke-proxy metrics
 
 Texture metrics add a local texture-continuity layer.
 
@@ -232,9 +233,15 @@ Implemented descriptors:
 
 - GLCM feature differences,
 - Gabor response descriptor differences,
+- brushstroke-proxy gradient magnitude differences,
+- brushstroke-proxy edge/detail density difference,
+- brushstroke-proxy orientation coherence difference,
+- brushstroke-proxy orientation histogram distance,
 - normalized combined texture distance.
 
-Texture metrics are diagnostic. They do not prove brushstroke correctness or conservation validity.
+The brushstroke-proxy metrics do not perform semantic brushstroke recognition. They measure directional local texture structure as a proxy for brushstroke-like continuity.
+
+Texture and brushstroke-proxy metrics are diagnostic. They do not prove brushstroke authenticity, artist intent, or conservation validity.
 
 ---
 
@@ -340,7 +347,7 @@ Large HTML reports should not be committed directly to GitHub unless managed sep
 
 Before supervisor feedback, the framework is being extended with:
 
-1. texture-aware metrics,
+1. texture-aware and brushstroke-proxy metrics,
 2. uncertainty heatmaps,
 3. standardized per-case or per-painting reports,
 4. dashboard updates for the new outputs.
@@ -365,7 +372,7 @@ Current limitations:
 - clean references are available only because damage is synthetic,
 - evaluated models are not trained specifically for painting conservation,
 - feature-space metrics are not conservation-specific,
-- texture metrics measure local texture similarity, not historical brushstroke correctness,
+- texture and brushstroke-proxy metrics measure local texture and directional structure similarity, not historical brushstroke correctness or brushstroke authentication,
 - Stable Diffusion uncertainty is currently evaluated on a subset,
 - SDXL full evaluation requires stronger compute.
 
@@ -380,7 +387,6 @@ The following decisions should be confirmed with the supervisor:
 - whether the final experiment should scale to 300 paintings,
 - whether SDXL must be included if stronger compute is available,
 - whether uncertainty analysis should cover all non-zero cases,
-- whether texture metrics should remain diagnostic or enter final model voting,
 - whether metric-policy ablation should be formalized,
 - whether semantic/iconographic consistency checks are in scope,
 - whether the dashboard should be treated as a formal thesis artifact.
