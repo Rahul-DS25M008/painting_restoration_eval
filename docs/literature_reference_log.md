@@ -1,1299 +1,2040 @@
+# Literature Reference Log
+
+This document records the literature and technical references that support each notebook-level decision in the project.
+
+---
+
 ## 1. Preprocessing
 
 ### Decision supported
 
-For the 50-painting controlled subset, raw paintings are resized while preserving their original aspect ratio, padded to 768 × 768 using the image median RGB color, and saved as PNG. The actual painting-content region inside the padded square is recorded for each image.
+The preprocessing notebook standardizes all paintings for the controlled 50-painting experiment.
 
-This decision supports standardized multi-model evaluation while avoiding two problematic alternatives:
+Raw painting images are resized while preserving aspect ratio, padded to a fixed 768 × 768 canvas using the median RGB color of the image, and saved as PNG. The valid painting-content region inside the padded image is recorded in metadata.
 
-1. direct resizing to a square, which geometrically distorts the artwork;
-2. center cropping, which may remove real painting content and alter composition.
+This supports a shared input format for OpenCV, LaMa, Stable Diffusion, SDXL feasibility testing, LPIPS, CLIP, DINOv2, visual diagnostics, and later uncertainty analysis.
 
-Later mask generation is restricted to the recorded painting-content region, so artificial damage is applied only to painting pixels rather than padding.
+The decision avoids two problematic alternatives:
 
-Later metrics should be computed across multiple regions:
+1. direct square resizing, which geometrically distorts the artwork;
+2. center cropping, which can remove real painting content and alter composition.
 
-- full image,
-- painting-content region,
-- masked region,
-- mask-centered crop.
-
----
+Later mask generation is restricted to the recorded painting-content region so that synthetic damage is applied only to actual painting pixels, not padding.
 
 ### References
 
-#### Suvorov et al. — LaMa: Resolution-Robust Large Mask Inpainting with Fourier Convolutions
+#### Suvorov et al. (2022) — Resolution-Robust Large Mask Inpainting with Fourier Convolutions
 
-- Source: Suvorov, R. et al. “Resolution-Robust Large Mask Inpainting with Fourier Convolutions.”
-- Type: research paper.
-- Relevant point: LaMa is designed for large-mask inpainting and emphasizes resolution robustness, large receptive fields, and large-mask training. This supports the need for a preprocessing strategy that keeps input resolution controlled while preserving enough visual detail for larger missing regions.
-- How it influenced this project: The project uses 768 × 768 standardized clean images so LaMa and later models can be evaluated under consistent image-size conditions. The preprocessing keeps the whole painting composition visible instead of cropping content away.
+Relevant point:  
+LaMa is designed for large-mask inpainting and uses Fast Fourier Convolutions, high receptive field losses, and large training masks to support wider contextual reasoning. The paper emphasizes that inpainting performance is affected by mask size, context, and image resolution handling. :contentReference[oaicite:1]{index=1}
 
----
+How Notebook 1 uses it:  
+Notebook 1 prepares standardized 768 × 768 images so that later LaMa evaluation can operate under controlled and reproducible image-size conditions. The preprocessing preserves the complete painting composition rather than center-cropping away context that LaMa may need for large-mask inpainting.
 
-#### Hugging Face Diffusers / Stable Diffusion documentation and blog
+#### Hugging Face Diffusers inpainting documentation
 
-- Source: Hugging Face Stable Diffusion and Diffusers documentation.
-- Type: technical documentation.
-- Relevant point: Stable Diffusion-style pipelines generally expect image dimensions that are compatible with the model architecture, commonly multiples of 8. Controlled image dimensions are therefore practical for diffusion-based inpainting experiments.
-- How it influenced this project: The target size of 768 × 768 was selected because it is divisible by 8, preserves more painting detail than 512 × 512, and remains more computationally manageable than 1024 × 1024 for later Stable Diffusion, SDXL, and uncertainty experiments.
+Relevant point:  
+Diffusers inpainting pipelines use image and mask inputs, and the documentation states that white mask pixels represent the region to inpaint while black pixels represent the region to preserve. It also implies the practical need for controlled input image and mask dimensions in diffusion-based workflows. :contentReference[oaicite:2]{index=2}
 
----
+How Notebook 1 uses it:  
+Notebook 1 standardizes images to a fixed square size that is compatible with later Stable Diffusion and SDXL inpainting workflows. The chosen 768 × 768 size is divisible by 8, preserves more detail than 512 × 512, and remains more practical than 1024 × 1024 on the local hardware.
 
-#### OpenAI CLIP preprocessing behavior
+#### Radford et al. (2021) — CLIP
 
-- Source: OpenAI CLIP implementation and related preprocessing discussions.
-- Type: model implementation / technical reference.
-- Relevant point: CLIP-style image preprocessing commonly involves resizing and center cropping to a fixed square input size. Such preprocessing can discard parts of non-square images if applied blindly.
-- How it influenced this project: Because paintings may have portrait, landscape, or unusual aspect ratios, the project avoids center cropping during the main preprocessing stage. Instead, it preserves the complete artwork and records the content region. Later CLIP-based similarity should be computed carefully, especially on content-region or mask-centered crops, rather than assuming full-image square preprocessing is always meaningful.
+Relevant point:  
+CLIP uses fixed image preprocessing when computing image embeddings. In standard use, this can involve resizing and cropping behavior that may not preserve the full composition of non-square artworks.
 
----
+How Notebook 1 uses it:  
+Notebook 1 records the valid painting-content region so that later CLIP similarity can be interpreted carefully. The project does not rely only on full padded images; later feature metrics are also computed on content regions and mask-bounding-box crops.
 
-#### DINOv2 preprocessing considerations
+#### Oquab et al. (2023) — DINOv2
 
-- Source: DINOv2 paper and Hugging Face / Transformers preprocessing discussions.
-- Type: research paper and implementation reference.
-- Relevant point: DINOv2 provides strong visual features, but model preprocessing often involves fixed crop sizes. This creates the same risk as CLIP when evaluating non-square artworks: important regions may be ignored or cropped if preprocessing is not controlled.
-- How it influenced this project: DINOv2 similarity will later be computed with awareness of the painting-content region and mask-centered crop. The preprocessing metadata records the content bounding box so feature-based metrics can be applied more meaningfully.
+Relevant point:  
+DINOv2 provides strong general-purpose visual features, but like other vision foundation models, it operates on fixed-size spatial image inputs.
 
----
+How Notebook 1 uses it:  
+Notebook 1 stores content-region metadata so that later DINOv2 similarity can be computed and interpreted on meaningful image regions rather than blindly evaluating padded areas or cropped-away painting content.
 
 ### Project decision
 
-The project rejects direct square resizing because it distorts paintings. It also rejects center cropping because it can remove actual artwork content and change the composition being evaluated.
+The project uses aspect-ratio-preserving resize plus median-color padding to 768 × 768.
 
-The selected preprocessing strategy is:
+The notebook records:
 
-- resize while preserving aspect ratio,
-- pad to 768 × 768 using median RGB padding,
-- save as PNG,
-- record the painting-content bounding box,
-- restrict later mask generation to the content region,
-- compute later metrics over full image, content region, masked region, and mask-centered crop.
+- processed image path,
+- original dimensions,
+- resized dimensions,
+- padding offsets,
+- painting-content bounding box,
+- category metadata.
 
-This strategy balances artwork preservation, reproducibility, and compatibility with OpenCV, LaMa, Stable Diffusion Inpainting, SDXL Inpainting, LPIPS, CLIP, DINOv2, visual diagnostics, and uncertainty analysis.
+The preprocessing strategy is selected because it balances:
 
----
+- preservation of artwork composition,
+- reproducibility,
+- compatibility with multiple restoration models,
+- compatibility with multiple metric families,
+- later region-aware evaluation.
 
 ### Notes for final thesis writing
 
-This section can later support the methodology chapter rather than the main related-work chapter. The key argument is not that padding is universally superior, but that it is a defensible compromise for this project because the study compares multiple restoration and inpainting systems under a shared evaluation framework.
+This section should be used in the methodology chapter.
 
 Possible thesis wording:
 
-> To avoid geometric distortion and prevent loss of painting content, each raw image was resized while preserving its original aspect ratio and padded to a fixed resolution of 768 × 768 pixels. The valid painting-content region within the padded image was recorded and used in later mask generation and metric computation. This ensured that artificial damage was applied only to painting content, while still providing standardized inputs for classical, deep learning, diffusion-based, and feature-based evaluation methods.
+> To avoid geometric distortion and prevent loss of painting content, each painting was resized while preserving its original aspect ratio and padded to a fixed resolution of 768 × 768 pixels. The valid painting-content region inside the padded image was recorded and later used for mask generation and region-specific metric computation. This created standardized model inputs while preserving the complete painting composition.
+
+### Potential improvements / supervisor feedback
+
+- If SDXL is later run on stronger hardware, consider whether SDXL should use 768 × 768 or a larger native resolution.
+- Consider adding a small figure in the thesis showing original image, padded image, and recorded content region.
 
 ---
-
-### Follow-up references to add later
-
-- Final Stable Diffusion Inpainting model card used in the experiment.
-- Final SDXL Inpainting model card used in the experiment.
-- Final CLIP model variant used for feature similarity.
-- Final DINOv2 model variant used for feature similarity.
-- Any painting/cultural-heritage restoration paper used to justify preserving full artwork composition.
 
 ## 2. Mask Generation
 
 ### Decision supported
 
-For the 50-painting controlled subset, five reproducible binary mask types are generated per painting:
+The mask-generation notebook creates five deterministic synthetic damage masks per painting:
 
-- `zero_control`
-- `scratch_thin`
-- `loss_small`
-- `loss_large`
-- `mixed_damage`
+- `zero_control`,
+- `scratch_thin`,
+- `loss_small`,
+- `loss_large`,
+- `mixed_damage`.
 
-All masks are generated only inside the recorded painting-content region, not on padded areas. Mask area is measured relative to the painting-content region and also recorded relative to the full 768 × 768 image.
+Masks are generated only inside the recorded painting-content region. Padded regions are excluded.
 
-The mask values follow the standard inpainting convention:
+The notebook records mask area relative to:
 
-- 0 = preserved/original region,
-- 255 = damaged/inpaint region.
+- the painting-content region,
+- the full 768 × 768 image.
 
----
+Mask values follow the standard inpainting convention:
+
+- `0` = preserved/original region,
+- `255` = damaged/inpaint region.
 
 ### References
 
-#### Liu et al. — Image Inpainting for Irregular Holes Using Partial Convolutions
+#### Liu et al. (2018) — Image Inpainting for Irregular Holes Using Partial Convolutions
 
-- Source: Liu, G. et al. “Image Inpainting for Irregular Holes Using Partial Convolutions.” ECCV 2018.
-- Type: research paper.
-- Relevant point: The paper focuses on image inpainting with irregular holes rather than only rectangular missing regions. It motivates the use of irregular mask shapes when evaluating inpainting methods.
-- How it influenced this project: The project uses irregular blob-like masks for `loss_small`, `loss_large`, and parts of `mixed_damage`, rather than simple rectangular or circular holes.
+Relevant point:  
+The paper focuses on inpainting irregular holes rather than only simple rectangular missing regions. It proposes partial convolutions conditioned on valid pixels and uses irregular masks for inpainting evaluation. :contentReference[oaicite:3]{index=3}
 
----
+How Notebook 2 uses it:  
+Notebook 2 uses irregular blob-like masks for `loss_small`, `loss_large`, and parts of `mixed_damage`. This makes the controlled damage setup more realistic than simple rectangles while keeping the mask generation reproducible.
 
-#### Suvorov et al. — LaMa: Resolution-Robust Large Mask Inpainting with Fourier Convolutions
+#### Suvorov et al. (2022) — LaMa
 
-- Source: Suvorov, R. et al. “Resolution-Robust Large Mask Inpainting with Fourier Convolutions.” WACV 2022.
-- Type: research paper.
-- Relevant point: LaMa is explicitly designed for large-mask inpainting and emphasizes performance on large missing regions.
-- How it influenced this project: The project includes a `loss_large` mask type with a target area of 10–18% of the painting-content region. This creates a harder condition that can expose differences between classical, deep learning, and diffusion-based methods.
+Relevant point:  
+LaMa is designed for large-mask inpainting and uses large training masks to exploit broader context. The paper reports strong behavior in challenging scenarios involving large missing regions and repeated structures. :contentReference[oaicite:4]{index=4}
 
----
+How Notebook 2 uses it:  
+Notebook 2 includes a `loss_large` condition to test whether models can handle larger missing regions rather than only thin scratches or small local holes. This makes the later OpenCV vs LaMa vs Stable Diffusion comparison more informative.
 
 #### Hugging Face Diffusers inpainting documentation
 
-- Source: Hugging Face Diffusers inpainting documentation.
-- Type: technical documentation.
-- Relevant point: Diffusion inpainting pipelines commonly use binary masks where white pixels indicate regions to repaint and black pixels indicate regions to preserve.
-- How it influenced this project: The project saves masks as binary grayscale PNG files using 255 for damaged/inpaint regions and 0 for preserved regions. This keeps the masks compatible with OpenCV, LaMa, Stable Diffusion Inpainting, and SDXL Inpainting workflows.
+Relevant point:  
+Diffusers inpainting uses white pixels in the mask as the region to repaint and black pixels as the region to preserve. :contentReference[oaicite:5]{index=5}
 
----
+How Notebook 2 uses it:  
+Notebook 2 saves masks as binary grayscale PNG files with `255` for damaged/inpaint pixels and `0` for preserved pixels. This keeps the same mask files compatible with OpenCV, LaMa, Stable Diffusion, SDXL feasibility testing, and evaluation routines.
 
-#### Cultural heritage and mural restoration literature
+#### Cultural heritage restoration and inpainting evaluation literature
 
-- Source: cultural heritage image restoration and mural restoration studies.
-- Type: research literature.
-- Relevant point: Cultural heritage images often contain scratches, cracks, missing regions, fragmented damage, and texture-sensitive degradation. Restoration evaluation should therefore not rely only on generic rectangular or blob masks.
-- How it influenced this project: The project includes `scratch_thin` and `mixed_damage` masks in addition to small and large missing-region masks. The mixed condition combines scratches, scattered losses, larger missing areas, and edge-adjacent damage to better approximate compound deterioration.
+Relevant point:  
+Cultural heritage restoration commonly involves varied degradation patterns such as cracks, scratches, missing paint, fragmented losses, and compound damage. This makes a single generic rectangular mask insufficient for evaluating restoration behavior.
 
----
+How Notebook 2 uses it:  
+Notebook 2 creates multiple synthetic damage families rather than a single mask type. The `scratch_thin` and `mixed_damage` masks are included to approximate crack-like and compound damage patterns, while `loss_small` and `loss_large` provide controlled missing-region difficulty levels.
 
 ### Project decision
 
-The project rejects using only simple rectangular masks because they do not reflect the variety of damage patterns relevant to painting restoration. Instead, it uses five mask types:
+The project rejects using only rectangular or circular holes.
 
-- `zero_control` for sanity checking,
-- `scratch_thin` for crack/scratch-like damage,
-- `loss_small` for small missing-paint regions,
+The selected mask design creates a controlled benchmark with five difficulty conditions:
+
+- `zero_control` for sanity checking and pipeline validation,
+- `scratch_thin` for thin crack/scratch-like damage,
+- `loss_small` for small missing regions,
 - `loss_large` for larger missing regions,
 - `mixed_damage` for compound deterioration.
 
-The generated masks are reproducible through deterministic seeds. Each mask records target area, actual area relative to content region, actual area relative to full image, bounding box information, and whether it touches the content-region border.
-
-The notebook uses red overlays only for visual inspection. The saved masks themselves remain binary grayscale images. Overlay colors may be changed in final report figures to improve readability against different painting palettes.
-
----
+All masks are deterministic through seeded generation. Each mask stores area statistics, content-region relation, bounding-box information, and border-touch information.
 
 ### Notes for final thesis writing
 
-This section can later support the methodology chapter by explaining why the artificial damage setup uses multiple controlled damage types rather than a single generic mask.
+This section should explain why the experiment uses several synthetic damage types rather than one generic mask.
 
 Possible thesis wording:
 
-> Artificial damage was simulated using five mask conditions: no damage, thin scratches, small losses, large losses, and mixed damage. The masks were generated only inside the recorded painting-content region to avoid applying artificial damage to padded areas introduced during preprocessing. This enabled controlled comparison across restoration difficulty levels while maintaining compatibility with classical, deep learning, and diffusion-based inpainting methods.
+> Artificial damage was simulated using five deterministic mask conditions: no damage, thin scratches, small losses, large losses, and mixed damage. Masks were generated only inside the recorded painting-content region to avoid damaging padded areas introduced during preprocessing. This enabled controlled comparison across damage difficulty while preserving compatibility with all restoration models and metric families.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether the mask types are sufficient for the final thesis experiment or whether additional real-damage-inspired masks should be added.
+- Consider adding mask examples in the methodology chapter.
+- Consider reporting exact mask area ranges for each damage type in a table.
+- If the final dataset scales to 300 paintings, confirm whether the same five mask types should be retained unchanged.
+
+---
 
 ## 3. Damage Image Creation
 
 ### Decision supported
 
-For each generated binary mask, a damaged RGB image is created by replacing masked pixels with white RGB(255, 255, 255). The binary mask remains the authoritative definition of the region to restore.
+The damage-creation notebook generates damaged RGB inputs from the clean processed images and binary masks.
 
-The damaged image is used as a controlled visual/input representation of synthetic damage. The mask is retained separately for restoration models and evaluation.
+For each mask, masked pixels are replaced with white RGB values:
 
----
+`RGB(255, 255, 255)`
+
+The binary mask remains the authoritative definition of the restoration region.
+
+The damaged image is therefore a controlled input representation of synthetic damage, while the separate mask defines exactly what the models should restore.
 
 ### References
 
 #### OpenCV inpainting documentation
 
-- Source: OpenCV inpainting documentation.
-- Type: technical documentation.
-- Relevant point: OpenCV inpainting expects an input image and a single-channel mask where non-zero mask pixels indicate the region to be inpainted.
-- How it influenced this project: The project saves damaged images together with binary masks. The damaged image provides the visible corrupted input, while the mask tells OpenCV Telea which region to restore.
+Relevant point:  
+OpenCV inpainting expects an input image and a single-channel mask where non-zero mask pixels indicate the region to be inpainted.
 
----
+How Notebook 3 uses it:  
+Notebook 3 stores the damaged image and binary mask separately so that Notebook 5 can pass both into OpenCV Telea. The damaged image shows the corrupted input, while the mask tells OpenCV which pixels to restore.
 
 #### Hugging Face Diffusers inpainting documentation
 
-- Source: Hugging Face Diffusers inpainting documentation.
-- Type: technical documentation.
-- Relevant point: Diffusion inpainting pipelines commonly use masks where white pixels indicate regions to repaint and black pixels indicate regions to preserve.
-- How it influenced this project: The project keeps binary mask files separate from damaged images. This preserves compatibility with later Stable Diffusion Inpainting and SDXL Inpainting experiments.
+Relevant point:  
+Diffusers inpainting workflows use white mask pixels for the region to repaint and black pixels for the region to preserve. :contentReference[oaicite:6]{index=6}
 
----
+How Notebook 3 uses it:  
+Notebook 3 keeps the binary mask as a separate file instead of relying only on the visible white-filled image. This preserves compatibility with later Stable Diffusion and SDXL inpainting pipelines.
 
-#### LaMa / simple-lama inpainting usage
+#### LaMa / IOPaint implementation conventions
 
-- Source: LaMa-related implementations and simple-lama-inpainting usage.
-- Type: implementation reference.
-- Relevant point: LaMa-style inpainting workflows use an image and a binary mask to define the missing region.
-- How it influenced this project: The project stores both damaged images and binary masks so later LaMa integration can use the same controlled mask cases as OpenCV and diffusion models.
+Relevant point:  
+LaMa-style inpainting workflows use paired image and mask inputs, where the mask defines the unknown region.
 
----
+How Notebook 3 uses it:  
+Notebook 3 writes standardized damaged images and masks that can later be staged into the IOPaint LaMa runtime. This allows OpenCV, LaMa, and diffusion-based models to use the same controlled cases.
 
 ### Project decision
 
-The project uses white-fill damaged images for the 50-painting controlled subset. This is not intended to simulate every possible physical appearance of real painting damage. Instead, it provides a controlled synthetic corruption representation while the binary mask defines the exact restoration target.
+The project uses white-fill synthetic damage for the controlled 50-painting subset.
 
-For each case, metadata records the clean image path, mask path, damaged image path, fill strategy, fill color, damaged area in pixels, damaged area relative to the painting-content region, and damaged area relative to the full 768 × 768 image.
+This is not intended to simulate every physical appearance of real painting deterioration. It is a controlled corruption strategy where:
 
----
+- the clean reference remains known,
+- the damaged pixels are visually obvious,
+- the binary mask defines the restoration target,
+- all models receive matched image/mask cases.
+
+The notebook records:
+
+- clean image path,
+- mask path,
+- damaged image path,
+- fill strategy,
+- fill color,
+- damaged area in pixels,
+- damaged area relative to content region,
+- damaged area relative to full image.
 
 ### Notes for final thesis writing
 
-This section can support the methodology chapter by clarifying the distinction between artificial damage masks and damaged input images.
+This section should clarify the distinction between synthetic visible damage and the actual evaluation mask.
 
 Possible thesis wording:
 
-> For each artificial damage mask, a damaged input image was created by replacing masked pixels with white RGB values while preserving all unmasked pixels exactly. The binary mask remained the authoritative definition of the restoration region and was stored separately. This ensured that all restoration methods were evaluated using the same controlled damage cases while preserving compatibility with OpenCV, LaMa, and diffusion-based inpainting workflows.
+> For each synthetic mask, a damaged input image was created by replacing masked pixels with white RGB values while leaving all unmasked pixels unchanged. The binary mask was stored separately and remained the authoritative definition of the restoration target. This ensured that all restoration methods were evaluated on identical controlled damage cases.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether white-fill damage is acceptable as the main controlled corruption strategy.
+- Consider testing one additional fill strategy later, such as noise-fill or neutral-color fill, if the supervisor wants input-condition sensitivity.
+- Explain clearly in the thesis that white-fill is a controlled synthetic corruption, not a claim that all real painting damage appears white.
+- Consider adding a limitation that real degradation can include transparency, discoloration, cracks, flaking, stains, and uneven material loss.
+
+---
 
 ## 4. OpenCV Telea Restoration Baseline
 
 ### Decision supported
 
-OpenCV Telea is used as the first restoration baseline for the 50-painting controlled subset.
+The OpenCV restoration notebook uses OpenCV Telea as the first restoration baseline.
 
-The method is included as a deterministic classical inpainting baseline. It is not treated as a painting-specific restoration model. Its purpose is to provide a simple reference point before evaluating learned inpainting models.
+OpenCV Telea is included as a deterministic classical inpainting method. It is not treated as painting-specific or conservation-grade.
 
----
+Its role is to provide a simple, fast, reproducible baseline before evaluating learned and generative inpainting models.
 
-### Research papers
+### References
 
-#### Telea (2004) — Fast Marching Method inpainting
+#### Telea (2004) — An Image Inpainting Technique Based on the Fast Marching Method
 
-- Reference: Telea, A. (2004). *An Image Inpainting Technique Based on the Fast Marching Method.*
-- Type: classical inpainting method paper.
-- Relevant point: Telea proposes a fast marching method for digital inpainting, filling damaged regions progressively from their boundaries using nearby image information.
-- How it influenced this project: This is the core method behind the OpenCV Telea baseline used in the project. The method is suitable as a fast deterministic baseline for local inpainting, especially for smaller missing regions.
+Relevant point:  
+Telea proposes a fast marching method for digital inpainting, where missing regions are filled progressively from their boundaries using nearby image information. The method is fast, simple to implement, and suitable for filling small damaged image regions. :contentReference[oaicite:7]{index=7}
 
-#### Bertalmio et al. (2000) — foundational image inpainting
+How Notebook 4 uses it:  
+Notebook 4 uses OpenCV’s implementation of the Telea method as the deterministic classical baseline. A fixed radius is used across all cases to keep the baseline reproducible and comparable.
 
-- Reference: Bertalmio, M., Sapiro, G., Caselles, V., & Ballester, C. (2000). *Image Inpainting.*
-- Type: foundational inpainting paper.
-- Relevant point: The paper frames digital inpainting as the automatic filling of user-selected missing or damaged regions by propagating surrounding image information into the target area.
-- How it influenced this project: This supports the general framing of the task as controlled image inpainting over known damaged regions.
+#### Bertalmio et al. (2000) — Image Inpainting
 
-#### Bertalmio, Bertozzi, and Sapiro (2001) — Navier-Stokes inpainting
+Relevant point:  
+This foundational paper frames image inpainting as filling user-selected missing regions by propagating surrounding image information into the target area.
 
-- Reference: Bertalmio, M., Bertozzi, A. L., & Sapiro, G. (2001). *Navier-Stokes, Fluid Dynamics, and Image and Video Inpainting.*
-- Type: classical PDE-based inpainting paper.
-- Relevant point: The paper connects inpainting with fluid-dynamics/PDE-based propagation of image structures.
-- How it influenced this project: This paper helps position OpenCV-style classical inpainting methods as pre-deep-learning restoration baselines.
+How Notebook 4 uses it:  
+Notebook 4 uses this general inpainting framing: the binary synthetic damage mask defines the missing region, and the algorithm attempts to fill that known target area.
 
-#### Quan et al. (2024) — deep learning inpainting survey
+#### Quan et al. (2024) — Deep Learning-based Image and Video Inpainting: A Survey
 
-- Reference: Quan, W., Chen, J., Liu, Y., Yan, D.-M., & Wonka, P. (2024). *Deep Learning-based Image and Video Inpainting: A Survey.*
-- Type: survey paper.
-- Relevant point: The survey reviews modern deep learning inpainting methods, including CNN, GAN, VAE, transformer, and diffusion-based approaches, as well as common evaluation settings and challenges.
-- How it influenced this project: This supports the project’s staged comparison between a classical baseline and later learned inpainting methods.
+Relevant point:  
+The survey reviews modern inpainting methods and helps position classical inpainting methods relative to CNN-, GAN-, transformer-, and diffusion-based approaches.
 
----
-
-### Technical documentation
+How Notebook 4 uses it:  
+Notebook 4 uses OpenCV Telea as the pre-deep-learning baseline before later adding LaMa and Stable Diffusion. This supports the staged model stack: classical baseline first, then learned inpainting, then generative diffusion inpainting.
 
 #### OpenCV inpainting documentation
 
-- Source: OpenCV inpainting documentation.
-- Type: technical documentation.
-- Relevant point: OpenCV inpainting uses an input image and a single-channel mask where non-zero mask pixels indicate the region to be inpainted.
-- How it influenced this project: This confirms the implementation convention used in the OpenCV Telea notebook: damaged image plus binary mask, with mask value 255 defining the restoration area.
+Relevant point:  
+OpenCV’s inpainting function accepts an input image and an inpainting mask, with non-zero mask pixels indicating the area to be restored.
 
----
+How Notebook 4 uses it:  
+Notebook 4 passes the white-filled damaged image and binary mask into OpenCV Telea. The same mask convention used in earlier notebooks is preserved.
 
 ### Project decision
 
-The project uses OpenCV Telea as the first restoration baseline with a fixed radius of 3. The same radius is applied across all 50 paintings and all five mask types to ensure deterministic and comparable baseline results.
+The project uses OpenCV Telea with a fixed inpainting radius of `3`.
 
-The baseline is expected to perform better on small local scratches and small missing regions than on large losses or mixed damage. This expected limitation is useful because the project evaluates not only restoration quality, but also when and where each model type fails.
+The same radius is applied to all:
 
----
+- 50 paintings,
+- 5 mask types,
+- 250 total damage cases.
+
+Zero-control cases are passed through the same metadata pipeline for consistency, while non-zero masks provide the actual restoration baseline.
+
+OpenCV Telea is expected to behave better on thin scratches and small local damage than on large missing regions or complex mixed damage. This limitation is useful because the thesis evaluates where different restoration methods succeed or fail.
 
 ### Notes for final thesis writing
 
+This section should introduce the classical baseline.
+
 Possible thesis wording:
 
-> OpenCV Telea was included as a deterministic classical inpainting baseline. The method is based on Telea’s fast marching approach, where missing regions are filled progressively from their boundaries using nearby image information. Classical inpainting methods provide useful non-learning reference points because they are fast, deterministic, and reproducible, but they are not expected to recover large semantic structures or painting-specific stylistic details. In this thesis, OpenCV Telea therefore serves as a baseline for comparing later learned inpainting models.
+> OpenCV Telea was included as a deterministic classical inpainting baseline. The method fills missing regions progressively from their boundaries using nearby image information. It provides a fast and reproducible non-learning reference point, but it is not expected to recover large semantic structures or painting-specific stylistic detail. In this thesis, OpenCV Telea therefore serves as the first baseline against which learned and generative inpainting methods are compared.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether OpenCV Navier-Stokes should also be included as a second classical baseline or whether Telea alone is sufficient.
+- Consider a small radius-sensitivity check for OpenCV Telea, for example radius 1, 3, and 5, but only if the supervisor wants baseline ablation.
+- In the final thesis, use OpenCV results mainly to show why classical local interpolation is insufficient for large or complex painting damage.
 
 ## 5. Classical Metric Evaluation
 
 ### Decision supported
 
-Classical full-reference image metrics are used to evaluate the OpenCV Telea baseline against the clean reference images.
+The classical metric notebook evaluates OpenCV Telea outputs against the clean reference paintings using full-reference image quality metrics.
 
-The project computes MSE, MAE, PSNR, and SSIM for both damaged and restored images. Metrics are evaluated across multiple regions because full-image scores can hide restoration failures when the damaged area is small.
+The decision supported by this notebook is to include classical pixel-level and structural metrics as the first quantitative evaluation layer.
 
----
-
-### Research papers
-
-#### Wang et al. (2004) — SSIM
-
-- Reference: Wang, Z., Bovik, A. C., Sheikh, H. R., & Simoncelli, E. P. (2004). *Image Quality Assessment: From Error Visibility to Structural Similarity.*
-- Type: image quality assessment paper.
-- Relevant point: The paper introduces SSIM as a structural similarity metric designed to move beyond simple pixel-error visibility.
-- How it influenced this project: SSIM is included as a classical structural metric alongside MSE, MAE, and PSNR. The project computes SSIM only on spatial image regions, not on sparse masked pixels.
-
-#### Zhang et al. (2018) — LPIPS and limitations of shallow metrics
-
-- Reference: Zhang, R., Isola, P., Efros, A. A., Shechtman, E., & Wang, O. (2018). *The Unreasonable Effectiveness of Deep Features as a Perceptual Metric.*
-- Type: perceptual metric paper.
-- Relevant point: The paper shows that traditional metrics such as PSNR and SSIM do not always align with human perceptual similarity.
-- How it influenced this project: Classical metrics are treated as necessary but insufficient. This motivates the later use of perceptual and feature-based metrics such as LPIPS, CLIP, and DINOv2.
-
-#### Horé and Ziou (2010) — PSNR and SSIM relationship
-
-- Reference: Horé, A., & Ziou, D. (2010). *Image Quality Metrics: PSNR vs. SSIM.*
-- Type: image quality metric comparison paper.
-- Relevant point: The paper discusses differences between PSNR and SSIM as image quality measures.
-- How it influenced this project: The project includes both distortion-based and structural metrics rather than relying on a single score.
-
----
-
-### Project decision
-
-The project reports classical metrics across multiple evaluation regions:
-
-- full image,
-- content region,
-- masked region,
-- mask bounding-box crop.
-
-The masked region is especially important because it corresponds directly to the restoration target. Full-image metrics are retained but interpreted cautiously because unchanged pixels can dominate the score.
-
-SSIM is not computed over sparse masked pixels. Instead, SSIM is computed on image-like spatial regions, including the full image, the content region, and the mask bounding-box crop.
-
----
-
-### Notes for final thesis writing
-
-Possible thesis wording:
-
-> Classical full-reference metrics were computed to quantify pixel-level and structural similarity between the clean reference paintings, damaged inputs, and restored outputs. MSE, MAE, PSNR, and SSIM were evaluated across full-image, content-region, masked-region, and mask-bounding-box regions. The masked region directly measures the artificial restoration target, while the content region avoids distortion from preprocessing padding. SSIM was not computed on sparse masked pixels because it assumes local spatial image structure. These classical metrics provide useful baseline measurements, but they are not treated as sufficient evidence of perceptual or art-historical restoration quality.
-
-## 6. Difference-Map Diagnostic Evaluation
-
-### Decision supported
-
-Difference maps are used as visual diagnostics to complement scalar full-reference metrics.
-
-Scalar metrics such as MSE, MAE, PSNR, and SSIM summarize restoration quality numerically, but they do not show where errors occur. Difference maps visualize the spatial distribution of damaged-input error, restored-output error, and restoration improvement.
-
----
-
-### Research connection
-
-This step builds on the image-quality assessment motivation discussed in the classical metrics section. Full-reference metrics provide useful numerical summaries, but visual diagnostics are needed to interpret spatial error patterns.
-
-Relevant references remain:
-
-- Wang et al. (2004), for structural similarity and the motivation to move beyond simple error visibility.
-- Zhang et al. (2018), for the argument that traditional pixel-level metrics do not always align with perceptual similarity.
-- Horé and Ziou (2010), for comparison of PSNR and SSIM as image quality metrics.
-
----
-
-### Project decision
-
-For each OpenCV restoration case, the project computes mean absolute RGB error maps:
-
-- clean vs damaged,
-- clean vs restored.
-
-A signed improvement map is then computed as:
-
-`damaged_error - restored_error`
-
-Positive values indicate reduced error after restoration. Negative values indicate worsened pixels.
-
-Diagnostic figures are generated for selected cases first, then for all 250 OpenCV restoration cases. The selected diagnostic cases include strongest and weakest masked-region MSE-improvement cases, plus one mixed-damage case per painting category.
-
----
-
-### Notes for final thesis writing
-
-Possible thesis wording:
-
-> Difference maps were generated to complement scalar full-reference metrics by visualizing where restoration errors remained or improved. For each case, absolute error maps were computed between the clean reference and both the damaged and restored images. A signed improvement map was then computed by subtracting restored error from damaged-input error. This allowed inspection of whether numerical improvement corresponded to meaningful local restoration or merely to replacement of high-contrast synthetic damage with smoother interpolated regions.
-
-## 7. LPIPS Perceptual Metric Evaluation
-
-### Decision supported
-
-LPIPS is used as a perceptual full-reference metric to complement classical pixel-level and structural metrics.
-
-The project computes LPIPS between:
-
-- clean reference and damaged input,
-- clean reference and OpenCV-restored output.
-
-LPIPS is evaluated over full images, painting content regions, and mask bounding-box crops.
-
----
-
-### Research papers
-
-#### Zhang et al. (2018) — LPIPS
-
-- Reference: Zhang, R., Isola, P., Efros, A. A., Shechtman, E., & Wang, O. (2018). *The Unreasonable Effectiveness of Deep Features as a Perceptual Metric.*
-- Type: perceptual image similarity paper.
-- Relevant point: The paper shows that distances in deep feature spaces can better align with human perceptual similarity than traditional low-level metrics such as PSNR and SSIM.
-- How it influenced this project: LPIPS is included to complement classical full-reference metrics and to test whether OpenCV restoration outputs are perceptually closer to the clean reference than the damaged inputs.
-
----
-
-### Project decision
-
-LPIPS is computed only on image-like spatial regions:
-
-- full image,
-- content region,
-- mask bounding-box crop.
-
-The project does not compute LPIPS directly on sparse masked pixels because LPIPS depends on spatial feature activations. The mask bounding-box crop is used as the local perceptual comparison region around the damaged area.
-
-LPIPS improvement is computed as:
-
-`damaged_lpips - restored_lpips`
-
-Positive improvement indicates that the restored output is perceptually closer to the clean reference than the damaged input.
-
----
-
-### Notes for final thesis writing
-
-Possible thesis wording:
-
-> LPIPS was included as a perceptual full-reference metric to complement classical pixel-level and structural measures. Unlike MSE, MAE, PSNR, and SSIM, LPIPS compares images in a learned feature space and has been shown to better reflect perceptual similarity in many image-comparison settings. In this thesis, LPIPS was computed for full images, painting content regions, and mask-bounding-box crops. Sparse masked pixels were not used directly because LPIPS assumes spatial image inputs. The resulting LPIPS scores were compared with classical metric rankings to identify cases where pixel-level improvement and perceptual similarity diverged.
-
-## 8. CLIP and DINOv2 Feature-Space Similarity
-
-### Decision supported
-
-CLIP and DINOv2 are used as pretrained feature-space diagnostics to complement classical metrics and LPIPS.
-
-The project computes cosine similarity between image embeddings for:
-
-- clean reference vs damaged input,
-- clean reference vs restored output.
-
-The feature-space improvement is computed as:
-
-`restored_similarity - damaged_similarity`
-
-Positive improvement indicates that the restored output is closer to the clean reference in the corresponding pretrained feature space.
-
----
-
-### Interpretation limitation
-
-CLIP and DINOv2 are not painting-restoration-specific evaluation models. Their embeddings are useful as pretrained feature-space diagnostics, but they do not determine historical correctness, conservation validity, or restoration faithfulness.
-
-Observed disagreement between CLIP, DINOv2, LPIPS, and classical metrics is therefore not treated as an error. Instead, disagreement is used diagnostically to identify cases where pixel-level recovery, perceptual similarity, and feature-space similarity diverge.
-
-In the OpenCV Telea baseline, large-loss mask-bounding-box crops showed weak CLIP improvement and negative average DINOv2 improvement. This is interpreted as a diagnostic signal that OpenCV can remove obvious visible damage while still failing to recover original local visual structure in a pretrained self-supervised feature space.
-
-### Research papers
-
-#### Radford et al. (2021) — CLIP
-
-- Reference: Radford, A., Kim, J. W., Hallacy, C., Ramesh, A., Goh, G., Agarwal, S., Sastry, G., Askell, A., Mishkin, P., Clark, J., Krueger, G., & Sutskever, I. (2021). *Learning Transferable Visual Models From Natural Language Supervision.*
-- Type: image-text contrastive representation learning paper.
-- Relevant point: CLIP learns transferable image representations through contrastive learning on image-text pairs.
-- How it influenced this project: CLIP image embeddings are used as a broad semantic/visual feature-space signal for comparing damaged and restored image regions against the clean reference.
-
-#### Oquab et al. (2023) — DINOv2
-
-- Reference: Oquab, M., Darcet, T., Moutakanni, T., Vo, H. V., Szafraniec, M., Khalidov, V., Fernandez, P., HAZIZA, D., Massa, F., El-Nouby, A., Assran, M., Ballas, N., Galuba, W., Howes, R., Huang, P.-Y., Li, S.-W., Misra, I., Rabbat, M., Sharma, V., Synnaeve, G., Xu, H., Jegou, H., Mairal, J., Labatut, P., Joulin, A., & Bojanowski, P. (2023). *DINOv2: Learning Robust Visual Features without Supervision.*
-- Type: self-supervised visual foundation model paper.
-- Relevant point: DINOv2 provides strong general-purpose visual features without relying on language supervision.
-- How it influenced this project: DINOv2 embeddings are used as an additional visual feature-space diagnostic, distinct from CLIP and LPIPS.
-
----
-
-### Project decision
-
-Feature similarity is computed only on image-like spatial regions:
-
-- full image,
-- content region,
-- mask bounding-box crop.
-
-The project does not compute CLIP or DINOv2 similarity directly on sparse masked pixels because both models expect spatial image inputs.
-
-The mask bounding-box crop is used as the local feature-comparison region around the damaged area.
-
----
-
-### Notes for final thesis writing
-
-Possible thesis wording:
-
-> CLIP and DINOv2 feature similarities were included to complement classical full-reference metrics and LPIPS. CLIP provides an image-text-supervised representation space, while DINOv2 provides a self-supervised visual representation space. In this thesis, both were used as diagnostic feature spaces rather than final restoration-quality judges. Similarity was computed between clean and damaged regions and between clean and restored regions. Improvement was defined as restored similarity minus damaged similarity. Cases where CLIP, DINOv2, LPIPS, and classical metric rankings diverged were treated as important diagnostic examples, because they show that restoration quality cannot be fully captured by any single metric family.
-
-## 9. OpenCV Baseline Report Interpretation
-
-### Decision supported
-
-The OpenCV Telea baseline report consolidates the first complete 50-painting evaluation pass.
-
-The report is used to interpret the deterministic classical baseline before introducing pretrained or generative inpainting models. It combines classical metrics, LPIPS, CLIP/DINOv2 feature similarities, error-map figures, and diagnostic case selection.
-
----
-
-### Project decision
-
-The report does not treat any single metric as the final measure of restoration quality. Instead, it compares multiple metric families and selected visual examples.
-
-The report emphasizes that OpenCV Telea can reduce obvious synthetic white damage while still failing to recover faithful local structure, especially for large-loss cases.
-
-Metric disagreement is interpreted as part of the evaluation framework. Cases where pixel-level metrics, perceptual metrics, feature-space metrics, and visual diagnostics diverge are useful for identifying restoration failure modes.
-
----
-
-### Notes for final thesis writing
-
-Possible thesis wording:
-
-> An interim OpenCV Telea baseline report was generated after the full 50-painting evaluation pass. The report consolidates classical metrics, LPIPS, CLIP and DINOv2 feature similarities, diagnostic error maps, and selected cases. The baseline showed reliable improvement over white-filled synthetic damage, especially for scratch-like and local masks. However, large missing regions remained difficult, and feature-space metrics revealed cases where visible damage removal did not correspond to faithful structural recovery. These findings support the thesis argument that trustworthy evaluation of AI-assisted painting restoration requires multiple complementary metrics and visual diagnostics rather than a single scalar score.
-
-## 10. LaMa Implementation Planning
-
-### Decision supported
-
-LaMa is selected as the next restoration model after the OpenCV Telea baseline.
-
-OpenCV Telea provides a deterministic classical interpolation baseline. LaMa provides the next step: a pretrained open inpainting model designed for larger and more complex masks.
-
----
-
-### Research paper
-
-#### Suvorov et al. — LaMa
-
-- Reference: Suvorov, R., Logacheva, E., Mashikhin, A., Remizova, A., Ashukha, A., Silvestrov, A., Kong, N., Goka, H., Park, K., & Lempitsky, V. *Resolution-robust Large Mask Inpainting with Fourier Convolutions.*
-- Type: pretrained image inpainting model.
-- Relevant point: LaMa uses architectural and training choices intended to improve large-mask inpainting, including Fast Fourier Convolutions and large-mask training.
-- How it influenced this project: LaMa is selected as the first pretrained open inpainting baseline after OpenCV Telea because it is expected to handle larger missing regions better than a purely local classical method.
-
----
-
-### Implementation decision
-
-The LaMa paper and official project are treated as the method source. For practical execution in this repository, the planned runtime implementation is IOPaint with `model=lama`.
-
-This implementation choice is made for reproducibility and batch integration. IOPaint provides a command-line workflow for processing image and mask folders, which fits the project’s existing 50-painting pipeline.
-
-The repository will use temporary staging folders with matched image and mask filenames before collecting outputs into the project’s standard restored-image directory.
-
----
-
-### Interpretation limitation
-
-LaMa is not painting-restoration-specific. It is trained as a general image inpainting model and may rely on natural-image priors that do not fully match historical paintings, brushstroke texture, abstraction, surrealism, or conservation-style restoration.
-
-A visually plausible LaMa output is not necessarily a historically faithful restoration. Since this project uses synthetic damage, the clean reference is known, allowing LaMa outputs to be evaluated against ground truth using the same multi-metric framework already applied to OpenCV Telea.
-
-Possible thesis wording:
-
-> LaMa was selected as the first pretrained open inpainting baseline after OpenCV Telea. Its architecture is designed for large-mask inpainting and therefore provides a useful comparison against the local classical OpenCV baseline. However, LaMa is not trained specifically for painting restoration, so its outputs are evaluated as candidate restorations rather than assumed faithful reconstructions. The implementation uses a practical IOPaint command-line workflow while retaining the LaMa paper and official project as the methodological source.
-
-## 11. LaMa Restoration Runtime Integration
-
-### Decision supported
-
-LaMa was implemented as the first pretrained open inpainting baseline after OpenCV Telea.
-
-The LaMa paper and official project remain the methodological source. The practical runtime used in this repository is IOPaint with `model=lama`, wrapped through `src/restoration_eval/restoration_lama.py`.
-
----
-
-### Implementation relevance
-
-The LaMa runtime integration supports the thesis framework by adding a learned pretrained inpainting model after a deterministic classical baseline.
-
-This allows the evaluation framework to compare:
-
-- a local classical inpainting method: OpenCV Telea,
-- a pretrained learned inpainting method: LaMa.
-
-This comparison is important because the models have different expected behavior. OpenCV Telea mainly performs local interpolation from surrounding pixels. LaMa uses learned image priors and a larger effective receptive field, so it may better handle larger missing regions but may also introduce plausible yet incorrect content.
-
----
-
-### Reproducibility note
-
-The repository does not call LaMa manually from notebook cells. Instead, the LaMa runtime is wrapped in `src/restoration_eval/restoration_lama.py`.
-
-The module stages damaged images and masks into temporary folders with matching filenames, runs IOPaint LaMa through a controlled subprocess call, collects outputs into the project’s standard restored-image folder, and writes restoration metadata.
-
-The subprocess environment forces UTF-8 output and disables decorative terminal behavior where possible. This was necessary because IOPaint/Rich progress output produced a Windows console encoding issue during notebook execution.
-
----
-
-### Interpretation limitation
-
-LaMa outputs are not treated as historically faithful restoration. LaMa is a general pretrained inpainting model, not a painting-conservation-specific model.
-
-The generated images are therefore candidate restorations under controlled synthetic damage. Their quality must be evaluated against the known clean references using the same multi-metric framework applied to OpenCV Telea.
-
-The selected visual inspection figures generated in Notebook 11 are diagnostic sanity checks only. They are not final quality rankings.
-
-Possible thesis wording:
-
-> LaMa was integrated as the first pretrained learned inpainting baseline after OpenCV Telea. The implementation uses IOPaint as a practical batch runtime while retaining the LaMa paper and official project as the methodological source. Outputs are evaluated as candidate restorations rather than assumed faithful reconstructions, since LaMa is not trained specifically for painting conservation.
-
-## 12. LaMa Classical Metric Evaluation
-
-### Decision supported
-
-LaMa outputs were evaluated using the same classical full-reference metric framework previously applied to OpenCV Telea.
-
-This supports direct model comparison because the two baselines are evaluated under the same controlled synthetic damage conditions, using the same clean references, masks, and evaluation regions.
-
----
-
-### Metrics used
-
-The classical metrics are:
+The metrics are:
 
 - MSE,
 - MAE,
 - PSNR,
 - SSIM.
 
-These metrics measure pixel-level or structure-based similarity between the clean reference and the damaged/restored images.
+The notebook evaluates metrics across multiple regions:
 
-The metric regions are:
+- full image,
+- painting-content region,
+- masked region,
+- mask bounding-box crop.
+
+This region-aware design is important because full-image metrics can hide restoration failures when the damaged region is small.
+
+### References
+
+#### Wang et al. (2004) — Image Quality Assessment: From Error Visibility to Structural Similarity
+
+Relevant point:  
+Wang et al. introduce SSIM as a structural image-quality metric designed to move beyond simple pixel-error visibility. SSIM compares local luminance, contrast, and structure, so it assumes spatial image neighborhoods.
+
+How Notebook 5 uses it:  
+Notebook 5 includes SSIM as the structural metric in the classical metric stack. SSIM is computed only on image-like spatial regions: full image, content region, and mask bounding-box crop. It is not treated as suitable for unordered sparse masked pixels.
+
+#### Hore and Ziou (2010) — Image Quality Metrics: PSNR vs. SSIM
+
+Relevant point:  
+This paper compares PSNR and SSIM and highlights that distortion-based and structural metrics capture different aspects of image quality.
+
+How Notebook 5 uses it:  
+Notebook 5 includes both PSNR and SSIM rather than relying on only one classical metric. PSNR provides a signal based on pixel-error magnitude, while SSIM provides a structural similarity signal.
+
+#### Zhang et al. (2018) — The Unreasonable Effectiveness of Deep Features as a Perceptual Metric
+
+Relevant point:  
+Zhang et al. show that traditional metrics such as PSNR and SSIM do not always align with human perceptual similarity.
+
+How Notebook 5 uses it:  
+Notebook 5 treats classical metrics as necessary but insufficient. The notebook establishes the classical metric baseline, while later notebooks add LPIPS, CLIP, and DINOv2 to address perceptual and feature-space limitations.
+
+#### Quan et al. (2024) — Deep Learning-based Image and Video Inpainting: A Survey
+
+Relevant point:  
+The survey discusses modern inpainting methods and common evaluation practices, including the continued use of full-reference metrics alongside perceptual and learned metrics.
+
+How Notebook 5 uses it:  
+Notebook 5 uses classical metrics as the first evaluation layer before later model comparisons. The metrics are retained because the project uses synthetic damage, so the clean reference is known.
+
+### Project decision
+
+The project computes MSE, MAE, PSNR, and SSIM for OpenCV Telea results.
+
+The main local interpretation uses:
+
+- masked-region MSE and PSNR for direct damaged-pixel comparison,
+- mask-bounding-box SSIM for local structural comparison,
+- full-image and content-region scores as secondary context.
+
+Full-image scores are interpreted cautiously because unchanged pixels dominate the result.
+
+SSIM is treated differently from MSE and PSNR because it requires spatial context. This decision later becomes important in Notebook 26, where the final metric-region policy is refined.
+
+### Notes for final thesis writing
+
+This section should explain why classical metrics are included but not treated as final restoration truth.
+
+Possible thesis wording:
+
+> Classical full-reference metrics were computed to quantify pixel-level and structural similarity between clean reference paintings, damaged inputs, and restored outputs. MSE, MAE, and PSNR were used as distortion-based measures, while SSIM was used as a structural similarity measure. Metrics were computed across full-image, content-region, masked-region, and mask-bounding-box regions to avoid hiding local restoration failures behind mostly unchanged image areas. Classical metrics were treated as useful but insufficient, motivating later perceptual and feature-space evaluation layers.
+
+### Potential improvements / supervisor feedback
+
+- Consider adding a short metric-region-policy figure in the thesis.
+- Consider including a limitation that classical full-reference metrics are possible only because the experiment uses synthetic damage with known clean references.
+
+---
+
+## 6. Difference-Map Diagnostic Evaluation
+
+### Decision supported
+
+The difference-map notebook adds visual diagnostic evaluation for OpenCV Telea results.
+
+The decision supported by this notebook is that scalar metrics alone are not enough. Difference maps are needed to show where restoration errors remain, improve, or worsen.
+
+The notebook generates spatial maps for:
+
+- clean vs damaged absolute error,
+- clean vs restored absolute error,
+- signed restoration improvement,
+- masked signed restoration improvement.
+
+### References
+
+#### Wang et al. (2004) — SSIM
+
+Relevant point:  
+Wang et al. motivate image-quality assessment beyond direct pixel-error visibility, but scalar metrics still summarize quality into compact scores.
+
+How Notebook 6 uses it:  
+Notebook 6 complements scalar structural and pixel metrics with spatial diagnostics. Where SSIM and MSE summarize quality numerically, difference maps show where local errors occur.
+
+#### Zhang et al. (2018) — LPIPS
+
+Relevant point:  
+Zhang et al. show that traditional pixel-level metrics may not align with perceptual similarity.
+
+How Notebook 6 uses it:  
+Notebook 6 uses visual error maps to inspect cases where scalar pixel metrics may not tell the full story. This prepares the framework for later perceptual and feature-space metrics.
+
+#### Quan et al. (2024) — Deep Learning-based Image and Video Inpainting: A Survey
+
+Relevant point:  
+Modern inpainting evaluation often combines quantitative metrics with qualitative examples because inpainting quality is spatially and perceptually complex.
+
+How Notebook 6 uses it:  
+Notebook 6 formalizes the qualitative diagnostic layer rather than relying on manually selected “nice-looking” examples. Diagnostic cases are selected based on metric behavior.
+
+### Project decision
+
+The project generates difference-map diagnostics for OpenCV Telea restoration outputs.
+
+For each selected or generated case, the notebook shows:
+
+- clean reference,
+- binary mask,
+- damaged input,
+- restored output,
+- clean-vs-damaged error,
+- clean-vs-restored error,
+- restoration improvement map.
+
+The signed improvement map is computed as:
+
+`damaged_error - restored_error`
+
+Positive values indicate that restoration reduced error relative to the damaged input. Negative values indicate that the restored output became farther from the clean reference.
+
+### Notes for final thesis writing
+
+This section should support the argument that the framework combines scalar and spatial evidence.
+
+Possible thesis wording:
+
+> Difference maps were generated to complement scalar full-reference metrics by visualizing where restoration errors remained or improved. Absolute error maps were computed between the clean reference and both the damaged and restored images. A signed improvement map was then calculated by subtracting restored error from damaged-input error. This enabled inspection of whether numerical improvement corresponded to meaningful local restoration behavior.
+
+### Potential improvements / supervisor feedback
+
+- Consider standardizing the difference-map color scale across all models for fair visual comparison.
+- Consider adding side-by-side difference maps to the final per-case report template.
+- Consider adding texture/error overlays after Notebook 31, especially for cases where texture metrics disagree with pixel metrics.
+
+---
+
+## 7. LPIPS Perceptual Metric Evaluation
+
+### Decision supported
+
+The LPIPS notebook adds a perceptual full-reference metric to the OpenCV Telea evaluation branch.
+
+The decision supported by this notebook is to include learned perceptual similarity as a complementary metric family because classical pixel-level and structural metrics are not sufficient for restoration evaluation.
+
+The notebook computes LPIPS between:
+
+- clean reference and damaged input,
+- clean reference and restored output.
+
+LPIPS improvement is computed as:
+
+`damaged_lpips - restored_lpips`
+
+Positive improvement means the restoration is perceptually closer to the clean reference than the damaged input.
+
+### References
+
+#### Zhang et al. (2018) — The Unreasonable Effectiveness of Deep Features as a Perceptual Metric
+
+Relevant point:  
+Zhang et al. introduce LPIPS and show that distances in deep feature spaces can better align with human perceptual judgments than traditional metrics such as PSNR and SSIM.
+
+How Notebook 7 uses it:  
+Notebook 7 computes LPIPS as a perceptual-distance metric for restoration outputs. It is used to test whether OpenCV-restored regions are closer to the clean reference in learned perceptual feature space.
+
+#### Quan et al. (2024) — Deep Learning-based Image and Video Inpainting: A Survey
+
+Relevant point:  
+The survey discusses modern inpainting evaluation and the need to evaluate generated outputs with multiple metric types rather than only pixel-level measures.
+
+How Notebook 7 uses it:  
+Notebook 7 adds LPIPS as the next metric family after classical metrics, supporting the project’s multi-metric evaluation design.
+
+#### Fontoura Júnior et al. (2023) — Assessing the Effectiveness of Inpainting Techniques in Cultural Heritage
+
+Relevant point:  
+The paper evaluates image inpainting in a cultural heritage context and supports the need for careful assessment beyond simple visual inspection or one metric.
+
+How Notebook 7 uses it:  
+Notebook 7 uses LPIPS as a perceptual metric in a controlled cultural-heritage-inspired restoration benchmark. The notebook does not claim LPIPS is conservation-specific, but uses it as one diagnostic layer.
+
+### Project decision
+
+The project computes LPIPS on image-like regions only:
+
+- full image,
+- content region,
+- mask bounding-box crop.
+
+LPIPS is not computed directly on sparse masked pixels because LPIPS depends on spatial feature activations from image patches.
+
+The mask-bounding-box crop acts as the local perceptual comparison region around the damaged area.
+
+### Notes for final thesis writing
+
+This section should explain why perceptual similarity is added after classical metrics.
+
+Possible thesis wording:
+
+> LPIPS was included as a learned perceptual-distance metric to complement classical pixel-level and structural measures. Since LPIPS operates on spatial image inputs, it was computed on the full image, painting-content region, and mask-bounding-box crop rather than on sparse masked pixels. The mask-bounding-box crop provided a local perceptual comparison region around the damaged area. LPIPS scores were interpreted as perceptual diagnostic evidence, not as proof of conservation correctness.
+
+### Potential improvements / supervisor feedback
+
+- Consider comparing LPIPS behavior against texture metrics after Notebook 31.
+- Consider reporting LPIPS disagreement cases where perceptual improvement conflicts with MSE or DINOv2.
+
+---
+
+## 8. CLIP and DINOv2 Feature-Space Similarity
+
+### Decision supported
+
+The feature-similarity notebook adds pretrained visual feature-space diagnostics to the OpenCV Telea evaluation branch.
+
+The decision supported by this notebook is to evaluate restoration outputs not only through pixel, structural, and perceptual metrics, but also through broader pretrained visual representations.
+
+The notebook computes cosine similarity between embeddings for:
+
+- clean reference vs damaged input,
+- clean reference vs restored output.
+
+Feature-space improvement is computed as:
+
+`restored_similarity - damaged_similarity`
+
+Positive improvement means the restored output is closer to the clean reference in that feature space.
+
+### References
+
+#### Radford et al. (2021) — Learning Transferable Visual Models From Natural Language Supervision
+
+Relevant point:  
+CLIP learns transferable visual representations through contrastive image-text training.
+
+How Notebook 8 uses it:  
+Notebook 8 uses CLIP image embeddings as a broad semantic/visual feature-space diagnostic. CLIP is not used as a conservation judge. It is used to detect whether restored outputs move closer to the clean reference in a pretrained visual representation space.
+
+#### Oquab et al. (2023) — DINOv2: Learning Robust Visual Features without Supervision
+
+Relevant point:  
+DINOv2 learns robust general-purpose visual features through self-supervised learning and is designed to provide strong visual representations without language supervision.
+
+How Notebook 8 uses it:  
+Notebook 8 uses DINOv2 embeddings as a complementary feature-space diagnostic distinct from CLIP. DINOv2 provides a self-supervised visual representation, while CLIP provides an image-text-supervised representation.
+
+#### Zhang et al. (2018) — LPIPS
+
+Relevant point:  
+LPIPS motivates the use of deep features for perceptual similarity and shows why shallow pixel metrics may be insufficient.
+
+How Notebook 8 uses it:  
+Notebook 8 extends the deep-feature evaluation idea beyond LPIPS by using pretrained foundation-model embeddings as diagnostic feature spaces.
+
+#### Fontoura Júnior et al. (2023) — Assessing the Effectiveness of Inpainting Techniques in Cultural Heritage
+
+Relevant point:  
+The cultural heritage inpainting evaluation context supports using several complementary criteria to assess inpainting results.
+
+How Notebook 8 uses it:  
+Notebook 8 adds CLIP and DINOv2 as additional non-conservation-specific but useful diagnostic signals in the controlled restoration framework.
+
+### Project decision
+
+The project computes CLIP and DINOv2 similarity on image-like spatial regions:
+
+- full image,
+- content region,
+- mask bounding-box crop.
+
+Sparse masked pixels are not used directly because CLIP and DINOv2 expect spatial image inputs.
+
+The mask-bounding-box crop is used as the local feature-space comparison region around the damaged area.
+
+The selected feature models are:
+
+- CLIP: `openai/clip-vit-base-patch32`,
+- DINOv2: project helper model `dinov2_vitb14`.
+
+### Notes for final thesis writing
+
+This section should explain why CLIP and DINOv2 are diagnostic feature spaces, not final restoration authorities.
+
+Possible thesis wording:
+
+> CLIP and DINOv2 feature similarities were included to complement classical and LPIPS metrics with pretrained visual representations. CLIP provides an image-text-supervised representation space, while DINOv2 provides a self-supervised visual representation space. Similarity was computed between clean and damaged regions and between clean and restored regions. Improvements were interpreted as diagnostic evidence of feature-space closeness to the known clean reference, not as proof of historical or conservation faithfulness.
+
+### Potential improvements / supervisor feedback
+
+- Consider adding a semantic/iconographic consistency layer after supervisor feedback, but keep it separate from this feature-similarity notebook.
+- Consider comparing DINOv2 and texture metrics for high-texture brushwork paintings.
+- Consider reporting cases where CLIP improves but DINOv2 worsens, because this may indicate semantic plausibility without local structural fidelity.
+
+---
+
+## 9. OpenCV Baseline Report Interpretation
+
+### Decision supported
+
+The OpenCV baseline report consolidates the first complete model-specific evaluation branch.
+
+The decision supported by this notebook is to treat OpenCV Telea as a fully evaluated baseline, not only as a restoration-output generator.
+
+The report combines:
+
+- classical metrics,
+- LPIPS,
+- CLIP and DINOv2 feature similarity,
+- difference-map diagnostics,
+- selected visual cases,
+- mask-type summaries,
+- category summaries.
+
+### References
+
+#### Telea (2004) — Fast Marching Method inpainting
+
+Relevant point:  
+Telea defines the classical inpainting method behind the OpenCV baseline.
+
+How Notebook 9 uses it:  
+Notebook 9 interprets OpenCV Telea results as a deterministic classical baseline. The report does not treat Telea as painting-specific or conservation-grade.
+
+#### Wang et al. (2004) — SSIM
+
+Relevant point:  
+SSIM motivates structural image-quality assessment beyond pixel error.
+
+How Notebook 9 uses it:  
+Notebook 9 includes SSIM results as part of the classical metric summary and interprets them alongside MSE, PSNR, LPIPS, CLIP, and DINOv2.
+
+#### Zhang et al. (2018) — LPIPS
+
+Relevant point:  
+LPIPS motivates perceptual similarity evaluation using deep features.
+
+How Notebook 9 uses it:  
+Notebook 9 includes LPIPS summaries to show whether OpenCV-restored outputs improve perceptual closeness to the clean reference.
+
+#### Radford et al. (2021) — CLIP
+
+Relevant point:  
+CLIP provides transferable image representations learned through image-text supervision.
+
+How Notebook 9 uses it:  
+Notebook 9 uses CLIP summaries as a broad feature-space diagnostic, not as a restoration-quality verdict.
+
+#### Oquab et al. (2023) — DINOv2
+
+Relevant point:  
+DINOv2 provides robust self-supervised visual representations.
+
+How Notebook 9 uses it:  
+Notebook 9 uses DINOv2 summaries as a visual feature-space diagnostic that complements CLIP and LPIPS.
+
+#### Fontoura Júnior et al. (2023) — Cultural heritage inpainting evaluation
+
+Relevant point:  
+The paper supports careful, multi-criteria evaluation of inpainting in cultural heritage contexts.
+
+How Notebook 9 uses it:  
+Notebook 9 frames the OpenCV report as a multi-layer diagnostic report rather than a single-score evaluation.
+
+### Project decision
+
+The project generates a standalone OpenCV Telea report as the first complete model-level artifact.
+
+The report does not treat any single metric as definitive. Instead, it uses disagreement between metric families as diagnostic evidence.
+
+The report emphasizes that OpenCV Telea can reduce obvious white synthetic damage, especially in scratch-like or small-loss cases, but often fails to recover faithful local structure in larger or more complex damage cases.
+
+### Notes for final thesis writing
+
+This section should support the thesis argument that even a simple baseline can appear improved under some metrics while still failing under others.
+
+Possible thesis wording:
+
+> The OpenCV Telea baseline report consolidated the first complete evaluation branch. It combined classical metrics, LPIPS, CLIP and DINOv2 feature similarities, and spatial diagnostic maps. The results showed that OpenCV can reduce obvious synthetic damage, particularly for thin scratches and small local masks, but it is limited for larger missing regions. Metric disagreement in the report supports the thesis argument that restoration trustworthiness cannot be summarized by a single scalar score.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether OpenCV report figures should remain as model-specific appendix material or be merged into the final consolidated report.
+- Consider adding texture metric summaries to an extended OpenCV report after Notebook 31.
+- Consider using OpenCV examples in the final thesis as a clear baseline failure/success comparison.
+- Avoid over-updating the old OpenCV report; preserve it as a stable intermediate artifact and add new texture-aware interpretation in the extended final report.
+
+## 10. LaMa Implementation Planning
+
+### Decision supported
+
+The LaMa planning notebook selects LaMa as the first pretrained learned inpainting baseline after the OpenCV Telea classical baseline.
+
+This notebook supports the decision to extend the model stack from:
+
+- deterministic local interpolation: OpenCV Telea,
+
+to:
+
+- pretrained learned image inpainting: LaMa.
+
+LaMa is selected because it is specifically designed for large-mask inpainting and can use broader image context than local classical interpolation methods.
+
+### References
+
+#### Suvorov et al. (2022) — Resolution-Robust Large Mask Inpainting with Fourier Convolutions
+
+Relevant point:  
+LaMa introduces a resolution-robust inpainting approach based on Fast Fourier Convolutions, large receptive fields, and training strategies intended to improve large-mask inpainting.
+
+How Notebook 10 uses it:  
+Notebook 10 uses the LaMa paper as the methodological reason for adding LaMa after OpenCV Telea. Since the controlled benchmark includes `loss_large` and `mixed_damage` masks, LaMa provides a stronger learned baseline for cases where local interpolation is expected to struggle.
+
+#### Quan et al. (2024) — Deep Learning-based Image and Video Inpainting: A Survey
+
+Relevant point:  
+The survey places modern learned inpainting approaches in the broader progression from classical methods to CNN-, GAN-, transformer-, and diffusion-based systems.
+
+How Notebook 10 uses it:  
+Notebook 10 uses this broader survey context to justify the staged model stack: classical baseline first, learned pretrained inpainting second, diffusion-based inpainting later.
+
+#### Fontoura Júnior et al. (2023) — Assessing the Effectiveness of Inpainting Techniques in Cultural Heritage
+
+Relevant point:  
+The paper evaluates inpainting techniques in a cultural heritage context and supports careful comparison of inpainting methods instead of assuming one model family is universally superior.
+
+How Notebook 10 uses it:  
+Notebook 10 frames LaMa as a candidate restoration model to be evaluated under controlled painting damage, not as an automatically trustworthy restoration system.
+
+### Project decision
+
+The project selects LaMa as the second restoration model in the controlled 50-painting experiment.
+
+The implementation is planned through IOPaint using `model=lama`, while the LaMa paper remains the methodological source.
+
+This practical runtime decision is made because IOPaint supports batch-oriented command-line execution and fits the existing project structure.
+
+### Notes for final thesis writing
+
+This section should introduce LaMa as the first learned pretrained inpainting baseline.
+
+Possible thesis wording:
+
+> LaMa was selected as the first pretrained learned inpainting baseline after OpenCV Telea. Its architecture was designed for large-mask inpainting and therefore provides a useful comparison against a deterministic local interpolation baseline. Since LaMa is not trained specifically for painting conservation, its outputs are evaluated as candidate restorations rather than assumed faithful reconstructions.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether LaMa is sufficient as the main non-diffusion learned baseline or whether another modern inpainting model should be added.
+- Clarify in the thesis that IOPaint is the runtime wrapper, while the LaMa paper is the method reference.
+- Consider documenting LaMa’s domain gap more explicitly, since it is trained for general image inpainting rather than painting conservation.
+- If final compute allows, compare LaMa against a more recent transformer or diffusion inpainting model, but only if this does not derail the thesis.
+
+---
+
+## 11. LaMa Restoration Runtime Integration
+
+### Decision supported
+
+The LaMa runtime notebook integrates LaMa into the project pipeline as a reproducible batch restoration method.
+
+This notebook supports the decision to treat LaMa as a fully operational restoration baseline, not just as a planned model.
+
+The practical implementation uses:
+
+- IOPaint runtime,
+- `model=lama`,
+- temporary staging folders,
+- standardized image and mask filenames,
+- project metadata output.
+
+### References
+
+#### Suvorov et al. (2022) — LaMa
+
+Relevant point:  
+The LaMa paper defines the inpainting method being evaluated.
+
+How Notebook 11 uses it:  
+Notebook 11 generates restoration outputs using an implementation of LaMa so that the method can be evaluated under the same controlled synthetic damage cases as OpenCV Telea.
+
+#### IOPaint documentation and implementation
+
+Relevant point:  
+IOPaint provides a practical runtime interface for LaMa and supports command-line batch inpainting workflows.
+
+How Notebook 11 uses it:  
+Notebook 11 uses IOPaint as the execution layer. The notebook stages damaged images and masks into temporary folders with matching filenames, invokes IOPaint through a subprocess, and collects outputs into the project’s standardized restored-image directory.
+
+#### Hugging Face / general inpainting mask conventions
+
+Relevant point:  
+Modern inpainting runtimes generally require paired image and binary mask inputs, with the mask identifying the inpaint region.
+
+How Notebook 11 uses it:  
+Notebook 11 reuses the same damaged image and binary mask files generated earlier in the pipeline. This preserves model comparability because LaMa receives the same controlled damage cases as OpenCV.
+
+### Project decision
+
+The project integrates LaMa through a wrapper module:
+
+`src/restoration_eval/restoration_lama.py`
+
+The wrapper:
+
+- stages input images and masks,
+- ensures filename matching,
+- runs IOPaint LaMa through a controlled subprocess call,
+- collects restored outputs,
+- writes standardized restoration metadata,
+- handles Windows console encoding issues by forcing UTF-8 output where needed.
+
+Zero-control cases are handled consistently with the project’s metadata pipeline.
+
+### Notes for final thesis writing
+
+This section should describe the implementation choice without overclaiming.
+
+Possible thesis wording:
+
+> LaMa was executed through IOPaint as a practical batch runtime. Damaged images and binary masks were staged into temporary folders with matching filenames, processed using the LaMa model, and collected into the project’s standardized output structure. This implementation choice allowed LaMa outputs to be evaluated using the same metadata, masks, and metric framework as OpenCV Telea.
+
+### Potential improvements / supervisor feedback
+
+None
+
+---
+
+## 12. LaMa Classical Metric Evaluation
+
+### Decision supported
+
+The LaMa classical metric notebook evaluates LaMa outputs using the same classical full-reference metric framework used for OpenCV Telea.
+
+This supports direct model comparison because both models are evaluated against:
+
+- the same clean references,
+- the same damaged inputs,
+- the same masks,
+- the same evaluation regions,
+- the same metric definitions.
+
+### References
+
+#### Wang et al. (2004) — SSIM
+
+Relevant point:  
+SSIM measures structural similarity using local spatial image neighborhoods.
+
+How Notebook 12 uses it:  
+Notebook 12 computes SSIM for LaMa outputs on spatial image-like regions, including the mask-bounding-box crop. This keeps SSIM interpretation consistent with the OpenCV metric notebook.
+
+#### Hore and Ziou (2010) — PSNR vs. SSIM
+
+Relevant point:  
+PSNR and SSIM measure different aspects of image quality: pixel-error distortion and structural similarity.
+
+How Notebook 12 uses it:  
+Notebook 12 computes both PSNR and SSIM for LaMa so that LaMa can be compared to OpenCV across classical metric families.
+
+#### Zhang et al. (2018) — LPIPS
+
+Relevant point:  
+LPIPS shows that classical metrics may not align with perceptual similarity.
+
+How Notebook 12 uses it:  
+Notebook 12 treats classical metrics as one evaluation layer only. The notebook prepares the LaMa branch for later LPIPS and feature-space evaluation.
+
+#### Suvorov et al. (2022) — LaMa
+
+Relevant point:  
+LaMa is designed for learned large-mask inpainting.
+
+How Notebook 12 uses it:  
+Notebook 12 evaluates whether LaMa’s expected strength on larger masks is reflected in full-reference classical metrics under the controlled painting benchmark.
+
+### Project decision
+
+The project computes MSE, MAE, PSNR, and SSIM for LaMa outputs.
+
+The same region structure used for OpenCV is retained:
 
 - full image,
 - content region,
 - masked region,
 - mask bounding-box crop.
 
-The masked-region rows focus on the actual damaged pixels. The mask-bounding-box crop provides an image-like local region around the damage, allowing SSIM to be computed in a spatially meaningful way.
+Masked-region MSE and PSNR directly evaluate the damaged pixels. Mask-bounding-box SSIM provides local structural comparison using spatial context.
 
----
+### Notes for final thesis writing
 
-### Interpretation limitation
-
-Classical metrics are useful for controlled synthetic restoration because the clean reference is known. However, they are not sufficient as standalone restoration-quality measures.
-
-A high MSE or MAE improvement indicates numerical closeness to the clean reference, especially within masked pixels. It does not necessarily mean the restoration is perceptually convincing, semantically correct, or historically faithful.
-
-This is especially important for LaMa because it is a learned pretrained inpainting model. It may generate visually plausible content that reduces pixel error in some cases, while still altering painterly texture, structure, or historical detail.
-
-The classical metric results should therefore be interpreted together with:
-
-- visual diagnostic examples,
-- LPIPS perceptual similarity,
-- CLIP and DINOv2 feature-space similarity,
-- model-comparison analysis.
+This section should emphasize paired evaluation consistency.
 
 Possible thesis wording:
 
-> Classical full-reference metrics were computed for LaMa using the same region-based framework applied to OpenCV Telea. These metrics quantify numerical similarity to the known clean reference under controlled synthetic damage. However, classical metric improvement is not treated as sufficient evidence of faithful restoration, especially for learned inpainting models that may generate plausible but incorrect content.
+> LaMa outputs were evaluated using the same classical metric framework as OpenCV Telea. This enabled paired comparison across identical paintings, masks, and damage conditions. Classical metrics quantified numerical similarity to the known clean reference, but they were not treated as sufficient evidence of restoration quality because LaMa may generate plausible content that is not necessarily perceptually or historically faithful.
+
+### Potential improvements / supervisor feedback
+
+- Consider adding a classical-metric comparison table showing LaMa vs OpenCV by mask type.
+- Consider reporting whether LaMa’s advantage increases with larger mask types.
+- Preserve the interpretation that classical metrics are valid under synthetic damage but unavailable in real restoration cases without clean references.
+
+---
 
 ## 13. LaMa Difference/Error-Map Diagnostics
 
 ### Decision supported
 
-Spatial error-map diagnostics were generated for LaMa using the same visual diagnostic framework previously applied to OpenCV Telea.
+The LaMa difference-map notebook generates spatial diagnostic figures for LaMa outputs using the same visual diagnostic framework used for OpenCV Telea.
 
-This supports direct comparison between restoration models because the same clean references, damaged inputs, masks, and visualization structure are used.
+This supports direct qualitative and spatial comparison between models.
 
----
+The notebook visualizes:
 
-### Diagnostic maps generated
-
-Each diagnostic figure contains:
-
-- clean reference image,
-- binary damage mask,
+- clean reference,
+- binary mask,
 - damaged input,
-- restored output,
+- LaMa restoration,
 - clean-vs-damaged absolute error,
 - clean-vs-restored absolute error,
 - signed restoration improvement,
-- masked signed restoration improvement.
+- masked signed improvement.
 
-The signed improvement map is computed by subtracting the restored error map from the damaged error map. Positive values indicate that restoration reduced error relative to the damaged input. Negative values indicate regions where the restored image became farther from the clean reference.
+### References
 
----
+#### Wang et al. (2004) — SSIM and image quality assessment
 
-### Interpretation limitation
+Relevant point:  
+Scalar image-quality measures summarize image similarity but do not localize errors visually.
 
-Error maps provide spatial diagnostic evidence, but they are not final restoration-quality judgments.
+How Notebook 13 uses it:  
+Notebook 13 complements scalar metrics with spatial maps so that LaMa’s local behavior can be inspected visually.
 
-They help reveal where a model reduces pixel-level error, where residual errors remain, and where restoration may worsen local differences. However, they do not directly measure historical correctness, conservation validity, or semantic faithfulness.
+#### Zhang et al. (2018) — LPIPS
+
+Relevant point:  
+Perceptual similarity may diverge from direct pixel-level error.
+
+How Notebook 13 uses it:  
+Notebook 13 uses difference maps as a diagnostic bridge between classical metrics and later perceptual metrics. It helps identify cases where numerical error reduction may still look visually problematic.
+
+#### Fontoura Júnior et al. (2023) — Cultural heritage inpainting evaluation
+
+Relevant point:  
+Cultural heritage inpainting assessment benefits from careful visual and quantitative evaluation because restoration quality cannot be reduced to a single measure.
+
+How Notebook 13 uses it:  
+Notebook 13 creates visual diagnostics for LaMa so that the report can discuss where learned inpainting succeeds, fails, or changes local structure.
+
+### Project decision
+
+The project generates LaMa error-map diagnostics with the same structure as OpenCV diagnostics.
+
+The signed improvement map is computed as:
+
+`damaged_error - restored_error`
+
+Positive values indicate reduced error after restoration. Negative values indicate that the restored image became farther from the clean reference.
+
+The notebook uses selected diagnostic cases rather than relying only on manually pleasing examples.
+
+### Notes for final thesis writing
+
+This section should support the visual-diagnostic part of the methodology.
 
 Possible thesis wording:
 
-> Error-map diagnostics were used to spatially localize restoration behavior. Positive signed-improvement regions indicate areas where the restored output became numerically closer to the clean reference, while negative regions identify local degradation relative to the damaged input. These maps complement scalar metrics by showing where errors occur, but they are interpreted as diagnostic evidence rather than standalone measures of restoration quality.
+> Spatial error-map diagnostics were generated for LaMa using the same structure as the OpenCV baseline. These maps localized where LaMa reduced or increased error relative to the damaged input. The maps were interpreted as diagnostic evidence rather than final restoration judgments, because visual plausibility and reference similarity can diverge in learned inpainting outputs.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether LaMa and OpenCV diagnostic maps should be shown side-by-side in the final thesis.
+- Consider adding texture-aware overlays after Notebook 31 for selected LaMa cases.
+- Consider standardizing all error-map scales across OpenCV, LaMa, and Stable Diffusion for fair visual comparison.
+- Use LaMa error maps to identify thesis examples where learned inpainting improves metrics but smooths texture.
+
+---
 
 ## 14. LaMa LPIPS Perceptual Metric Evaluation
 
 ### Decision supported
 
-LaMa was evaluated with LPIPS using the same perceptual metric framework previously applied to OpenCV Telea.
+The LaMa LPIPS notebook evaluates LaMa outputs with the same perceptual metric framework used for OpenCV Telea.
 
-This supports direct model comparison because both models are evaluated against the same clean references, damaged inputs, masks, and spatial evaluation regions.
+This supports direct comparison between a classical method and a learned inpainting model in perceptual feature space.
 
----
+The notebook computes LPIPS between:
 
-### Metric interpretation
+- clean reference and damaged input,
+- clean reference and LaMa-restored output.
 
-LPIPS measures perceptual distance between two images using deep neural network feature activations. Lower LPIPS indicates higher perceptual similarity.
-
-For this project, LPIPS is computed for:
-
-- clean reference versus damaged input,
-- clean reference versus restored output.
-
-LPIPS improvement is defined as:
+LPIPS improvement is computed as:
 
 `damaged_lpips - restored_lpips`
 
-A positive value indicates that the restoration moved the image closer to the clean reference in LPIPS space.
+Positive improvement means the restoration is perceptually closer to the clean reference.
 
----
+### References
 
-### Evaluation regions
+#### Zhang et al. (2018) — LPIPS
 
-LPIPS is computed over image-like regions:
+Relevant point:  
+LPIPS uses deep feature distances and was shown to align better with perceptual similarity than traditional metrics such as PSNR and SSIM in many image comparison settings.
+
+How Notebook 14 uses it:  
+Notebook 14 computes LPIPS for LaMa outputs to evaluate whether LaMa restorations are perceptually closer to the clean reference than the damaged inputs.
+
+#### Suvorov et al. (2022) — LaMa
+
+Relevant point:  
+LaMa is a learned inpainting model designed to synthesize missing image content, especially for larger masks.
+
+How Notebook 14 uses it:  
+Notebook 14 uses LPIPS to test whether LaMa’s learned completions improve perceptual similarity, not only pixel-level similarity.
+
+#### Quan et al. (2024) — Deep Learning-based Image and Video Inpainting: A Survey
+
+Relevant point:  
+Modern inpainting evaluation commonly uses multiple metric families, including perceptual metrics, because generated outputs can differ from reference images in complex ways.
+
+How Notebook 14 uses it:  
+Notebook 14 adds LPIPS as the perceptual evaluation layer for LaMa, matching the multi-metric design already applied to OpenCV.
+
+### Project decision
+
+The project computes LPIPS for LaMa on image-like spatial regions:
 
 - full image,
 - content region,
 - mask bounding-box crop.
 
-Sparse masked pixels are not evaluated directly with LPIPS because LPIPS expects spatial image patches rather than unordered pixel sets. The mask bounding-box crop provides a local image region around the damage while preserving spatial structure.
+Sparse masked pixels are not used because LPIPS expects spatial image patches.
 
----
+The mask-bounding-box crop is used as the local perceptual comparison region around the damage.
 
-### Interpretation limitation
+### Notes for final thesis writing
 
-LPIPS provides a perceptual similarity signal, but it is not a conservation-specific or historically grounded restoration metric.
-
-A better LPIPS score does not necessarily mean that a restoration is historically accurate, semantically faithful, or acceptable for conservation use. It indicates perceptual closeness to the known clean reference under controlled synthetic damage.
+This section should explain that LPIPS is reused consistently across model branches.
 
 Possible thesis wording:
 
-> LPIPS was included to complement pixel-level metrics with a perceptual similarity measure. Since LPIPS operates on spatial image patches, it was computed over the full image, content region, and mask-bounding-box crop rather than sparse masked pixels. The resulting scores help identify whether restoration outputs are perceptually closer to the clean reference, but they are interpreted alongside classical metrics, feature-space metrics, and visual diagnostics rather than as standalone evidence of restoration quality.
+> LPIPS was computed for LaMa using the same region policy as the OpenCV baseline: full image, painting-content region, and mask-bounding-box crop. The metric provides a learned perceptual-distance signal and helps identify whether LaMa outputs are perceptually closer to the clean reference. It is interpreted as a diagnostic metric, not as a conservation-specific judgment.
+
+### Potential improvements / supervisor feedback
+
+- Consider analyzing cases where LaMa improves LPIPS but worsens DINOv2 or texture distance.
+- Add a limitation that LPIPS is not trained specifically for painting conservation.
+- Consider reporting LPIPS results mainly on the mask-bounding-box crop in the final thesis.
+
+---
 
 ## 15. LaMa CLIP and DINOv2 Feature-Space Similarity Evaluation
 
 ### Decision supported
 
-LaMa was evaluated with CLIP and DINOv2 feature-space similarity using the same framework previously applied to OpenCV Telea.
+The LaMa feature-similarity notebook evaluates LaMa outputs using CLIP and DINOv2 embeddings.
 
-This supports direct model comparison because both baselines are evaluated against the same clean references, damaged inputs, masks, and spatial evaluation regions.
+This supports model comparison in pretrained visual feature spaces and matches the feature-evaluation framework already applied to OpenCV Telea.
 
----
+The notebook computes cosine similarity between:
 
-### Metrics used
+- clean reference vs damaged input,
+- clean reference vs LaMa-restored output.
 
-The feature-space metrics are based on cosine similarity between feature embeddings.
-
-For each evaluated region, similarities are computed for:
-
-- clean reference versus damaged input,
-- clean reference versus restored output.
-
-Feature-similarity improvement is defined as:
+Feature-space improvement is computed as:
 
 `restored_similarity - damaged_similarity`
 
-A positive value indicates that the restored output moved closer to the clean reference in the selected feature space.
+Positive improvement indicates that the restoration moved closer to the clean reference in the selected feature space.
 
----
+### References
 
-### Models used
+#### Radford et al. (2021) — CLIP
 
-The feature models are:
+Relevant point:  
+CLIP provides transferable image representations learned through image-text contrastive training.
 
-- CLIP: `openai/clip-vit-base-patch32`,
-- DINOv2: `dinov2_vits14`.
+How Notebook 15 uses it:  
+Notebook 15 uses CLIP image embeddings as a broad semantic/visual feature-space diagnostic for LaMa outputs. CLIP is not used as a conservation-specific restoration metric.
 
-CLIP provides a broad image-text pretrained visual representation. DINOv2 provides a self-supervised visual representation that can be useful for structural and visual similarity analysis.
+#### Oquab et al. (2023) — DINOv2
 
----
+Relevant point:  
+DINOv2 provides robust self-supervised visual features that can capture visual structure without language supervision.
 
-### Evaluation regions
+How Notebook 15 uses it:  
+Notebook 15 uses DINOv2 embeddings as a complementary self-supervised visual feature space for evaluating LaMa restoration similarity.
 
-Feature-space similarity is computed over image-like regions:
+#### Zhang et al. (2018) — LPIPS
+
+Relevant point:  
+LPIPS supports the broader idea that learned deep feature spaces can be useful for perceptual comparison.
+
+How Notebook 15 uses it:  
+Notebook 15 extends learned-feature evaluation beyond LPIPS by using foundation-model embeddings for diagnostic similarity.
+
+#### Fontoura Júnior et al. (2023) — Cultural heritage inpainting evaluation
+
+Relevant point:  
+Cultural heritage inpainting requires careful multi-criteria assessment.
+
+How Notebook 15 uses it:  
+Notebook 15 adds CLIP and DINOv2 as complementary evidence in the controlled painting restoration framework, while keeping their limitations explicit.
+
+### Project decision
+
+The project computes CLIP and DINOv2 similarity for LaMa on:
 
 - full image,
 - content region,
 - mask bounding-box crop.
 
-Sparse masked pixels are not evaluated directly because CLIP and DINOv2 expect spatial image inputs rather than unordered pixel sets. The mask bounding-box crop provides a local image region around the damage while preserving spatial structure.
+Sparse masked pixels are not used because both feature models expect spatial image inputs.
 
----
+The selected feature models are:
 
-### Interpretation limitation
+- CLIP: `openai/clip-vit-base-patch32`,
+- DINOv2: project helper model `dinov2_vitb14`.
 
-CLIP and DINOv2 similarities provide feature-space evidence, but they are not conservation-specific measures.
+### Notes for final thesis writing
 
-Higher feature similarity does not necessarily mean that a restoration is historically accurate, semantically faithful, or acceptable for conservation use. These metrics are interpreted together with classical metrics, LPIPS, spatial error maps, and selected visual diagnostics.
+This section should explain that CLIP and DINOv2 are reused consistently across model branches.
 
 Possible thesis wording:
 
-> CLIP and DINOv2 feature-space similarities were included to complement pixel-level and perceptual metrics with pretrained visual representations. Similarity improvements indicate whether restored outputs move closer to the clean reference in feature space. However, these models are not trained specifically for painting conservation, so their scores are interpreted as diagnostic signals rather than standalone evidence of restoration quality.
+> CLIP and DINOv2 feature-space similarities were computed for LaMa outputs using the same region policy as the OpenCV baseline. These metrics provide diagnostic feature-space evidence but do not determine restoration correctness. Disagreement between CLIP, DINOv2, LPIPS, and classical metrics was retained because it reveals different restoration behavior across metric families.
+
+### Potential improvements / supervisor feedback
+
+- Consider reporting CLIP/DINOv2 disagreements as qualitative diagnostic examples.
+- After Notebook 31, compare DINOv2 similarity with texture metrics for high-texture paintings.
+- Later semantic/iconographic checks should be separated from this feature-similarity metric, because CLIP similarity alone is not an iconographic validation method.
+
+---
 
 ## 16. LaMa Standalone Baseline Report
 
 ### Decision supported
 
-A standalone LaMa baseline report was generated to consolidate the model's evaluation results across classical, perceptual, feature-space, and visual diagnostic evidence.
+The LaMa report notebook consolidates the full LaMa evaluation branch into a standalone report.
 
-This report supports the broader evaluation-framework goal by showing how one learned inpainting baseline behaves across multiple metric families and painting categories.
-
----
-
-### Report scope
-
-The LaMa report focuses on the 200 non-zero damage cases from the controlled 50-painting subset.
+This supports the decision to evaluate LaMa as a complete model baseline across multiple evidence layers before comparing it against other models.
 
 The report combines:
 
-- masked-region classical metrics,
-- mask-bounding-box LPIPS metrics,
-- mask-bounding-box CLIP and DINOv2 feature-space metrics,
-- selected diagnostic error-map figures,
-- summaries by mask type and painting category,
-- metric correlation analysis,
-- selected strongest and weakest diagnostic cases.
+- restoration metadata,
+- classical metrics,
+- LPIPS,
+- CLIP and DINOv2 feature similarity,
+- difference-map diagnostics,
+- mask-type summaries,
+- category summaries,
+- selected visual examples.
 
-Zero-control cases are excluded from the main report dataframe because they contain no damaged region, but they remain part of the metric validation notebooks.
+### References
 
----
+#### Suvorov et al. (2022) — LaMa
 
-### Interpretation limitation
+Relevant point:  
+LaMa provides the method basis for the learned inpainting baseline.
 
-The standalone report is a diagnostic summary, not a final restoration-quality judgment.
+How Notebook 16 uses it:  
+Notebook 16 interprets LaMa results as outputs from a learned pretrained inpainting model designed for large-mask scenarios, while still treating them as candidates requiring evaluation.
 
-LaMa is treated as a learned pretrained inpainting baseline. The report does not claim that LaMa produces historically faithful painting restoration. Instead, it evaluates whether the framework can reveal where LaMa improves, fails, or produces disagreement across metric families.
+#### Zhang et al. (2018) — LPIPS
+
+Relevant point:  
+LPIPS supports perceptual similarity evaluation beyond classical metrics.
+
+How Notebook 16 uses it:  
+Notebook 16 includes LPIPS summaries to interpret LaMa behavior in perceptual feature space.
+
+#### Radford et al. (2021) — CLIP
+
+Relevant point:  
+CLIP provides a broad transferable image representation.
+
+How Notebook 16 uses it:  
+Notebook 16 includes CLIP feature-similarity summaries as diagnostic evidence.
+
+#### Oquab et al. (2023) — DINOv2
+
+Relevant point:  
+DINOv2 provides robust self-supervised visual features.
+
+How Notebook 16 uses it:  
+Notebook 16 includes DINOv2 summaries to complement CLIP and LPIPS.
+
+#### Fontoura Júnior et al. (2023) — Cultural heritage inpainting evaluation
+
+Relevant point:  
+The paper supports multi-criteria assessment of inpainting in heritage-related contexts.
+
+How Notebook 16 uses it:  
+Notebook 16 frames the LaMa report as a diagnostic multi-metric artifact rather than a single-score model judgment.
+
+### Project decision
+
+The project creates a standalone LaMa report for the 200 non-zero damage cases.
+
+Zero-control cases remain part of the validation pipeline but are excluded from the main report dataframe because they contain no damaged region.
+
+The report emphasizes that LaMa is a learned pretrained inpainting baseline, not a painting-conservation-specific model.
+
+### Notes for final thesis writing
+
+This section should describe LaMa’s report as an intermediate model-level artifact.
 
 Possible thesis wording:
 
-> The LaMa baseline report consolidates scalar metrics and spatial diagnostics into a single model-specific artifact. It is used to inspect learned inpainting behavior across damage types and painting categories, while preserving the distinction between numerical improvement, perceptual similarity, feature-space alignment, and conservation-level restoration faithfulness.
+> A standalone LaMa report was generated to consolidate its evaluation across classical, perceptual, feature-space, and visual diagnostic layers. The report supports model-level interpretation while preserving the distinction between numerical improvement, perceptual similarity, feature-space alignment, and restoration faithfulness.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether standalone model reports should be included in the thesis appendix or only summarized in the final consolidated report.
+- Consider generating an extended LaMa report after texture metrics are available.
+- Avoid rewriting the stable old LaMa report unless necessary; use the extended final report for new texture/heatmap additions.
+- Consider using LaMa report cases as examples where learned inpainting outperforms classical interpolation.
+
+---
 
 ## 17. OpenCV Telea versus LaMa Comparison
 
 ### Decision supported
 
-A direct comparison between OpenCV Telea and LaMa was generated to evaluate two different restoration paradigms under the same controlled experimental setup.
+The OpenCV-versus-LaMa comparison notebook directly compares two restoration paradigms under identical controlled damage conditions.
 
-The compared model families are:
+The compared paradigms are:
 
 - deterministic local interpolation: OpenCV Telea,
-- learned pretrained inpainting: LaMa.
+- pretrained learned inpainting: LaMa.
 
-This comparison supports the thesis goal of building a trustworthy evaluation framework rather than only reporting isolated model scores.
+This notebook supports the broader thesis goal of evaluating restoration behavior through a framework rather than isolated model scores.
 
----
+### References
 
-### Comparison design
+#### Telea (2004) — Fast Marching Method inpainting
 
-The comparison is case-paired. Each OpenCV Telea output is matched to the corresponding LaMa output using:
+Relevant point:  
+Telea provides the classical deterministic baseline.
 
+How Notebook 17 uses it:  
+Notebook 17 compares OpenCV Telea’s local interpolation behavior against LaMa’s learned inpainting behavior.
+
+#### Suvorov et al. (2022) — LaMa
+
+Relevant point:  
+LaMa provides the learned inpainting baseline designed for larger and more complex masks.
+
+How Notebook 17 uses it:  
+Notebook 17 tests whether LaMa’s expected advantage over a local classical method appears under the controlled 50-painting synthetic damage setup.
+
+#### Wang et al. (2004) — SSIM
+
+Relevant point:  
+SSIM provides structural similarity evaluation.
+
+How Notebook 17 uses it:  
+Notebook 17 includes structural similarity as one component of the local metric comparison, while respecting that SSIM requires an image-like region.
+
+#### Zhang et al. (2018) — LPIPS
+
+Relevant point:  
+LPIPS provides perceptual-distance comparison in learned feature space.
+
+How Notebook 17 uses it:  
+Notebook 17 uses LPIPS as one metric family in the paired OpenCV-LaMa comparison.
+
+#### Radford et al. (2021) — CLIP
+
+Relevant point:  
+CLIP provides image-text-supervised visual feature representations.
+
+How Notebook 17 uses it:  
+Notebook 17 uses CLIP similarity improvement as one diagnostic feature-space comparison between OpenCV and LaMa.
+
+#### Oquab et al. (2023) — DINOv2
+
+Relevant point:  
+DINOv2 provides self-supervised visual feature representations.
+
+How Notebook 17 uses it:  
+Notebook 17 uses DINOv2 similarity improvement as a second diagnostic feature-space comparison.
+
+#### Fontoura Júnior et al. (2023) — Cultural heritage inpainting evaluation
+
+Relevant point:  
+Cultural heritage inpainting assessment benefits from multi-metric comparison and careful interpretation.
+
+How Notebook 17 uses it:  
+Notebook 17 treats metric disagreement between OpenCV and LaMa as diagnostic evidence, not as noise to remove.
+
+### Project decision
+
+The project performs a paired case-level comparison between OpenCV Telea and LaMa.
+
+Pairing is based on shared case identity:
+
+- `case_id`,
 - `painting_id`,
-- `mask_id`,
 - `mask_type`.
-
-This ensures that both models are evaluated on identical paintings, masks, damaged inputs, and clean references.
 
 The main local comparison uses:
 
 - masked-region classical metrics,
-- mask-bounding-box LPIPS metrics,
-- mask-bounding-box CLIP and DINOv2 feature-space metrics.
+- mask-bounding-box LPIPS,
+- mask-bounding-box CLIP similarity,
+- mask-bounding-box DINOv2 similarity.
 
-The resulting unified comparison table contains 200 non-zero damage cases.
+For each metric, winner columns are computed. A compact overall metric vote is then derived from these metric winners.
 
----
+The vote is interpreted as a diagnostic summary, not as final restoration truth.
 
-### Metric deltas and winners
+### Notes for final thesis writing
 
-For each paired case, LaMa-minus-OpenCV deltas were computed for the main metric improvements.
-
-Winner columns were added for:
-
-- masked-region MSE improvement,
-- mask-bounding-box LPIPS improvement,
-- mask-bounding-box CLIP similarity improvement,
-- mask-bounding-box DINOv2 similarity improvement.
-
-A compact overall metric vote was computed from these winner columns. This vote is interpreted only as a diagnostic summary, not as a final restoration-quality label.
-
----
-
-### Metric disagreement analysis
-
-Metric disagreement cases were exported separately.
-
-These cases include examples where:
-
-- LaMa improves MSE more than OpenCV but loses DINOv2 feature similarity,
-- LaMa improves LPIPS more than OpenCV but loses DINOv2 feature similarity,
-- the two models split wins across metric families,
-- the overall metric vote is mixed or tied.
-
-These cases are especially important for the thesis because they show that pixel-level, perceptual, and feature-space metrics can expose different restoration behaviors.
+This section should support the thesis argument that different model types fail differently.
 
 Possible thesis wording:
 
-> The OpenCV Telea versus LaMa comparison demonstrates why AI-assisted painting restoration should not be evaluated with a single scalar metric. A model may improve local pixel error while failing to improve perceptual or feature-space similarity. The framework therefore treats metric disagreement as diagnostic evidence rather than noise.
+> The OpenCV Telea versus LaMa comparison paired both models on identical paintings, masks, and damage cases. This enabled direct comparison between deterministic local interpolation and learned pretrained inpainting. Metric disagreement was retained as diagnostic evidence because one model may improve local pixel error while another performs better in perceptual or feature-space similarity.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether the two-model comparison should remain as an intermediate result or be folded into the final three-/four-model comparison chapter.
+- After Notebook 31, compare texture winners against the OpenCV-LaMa metric vote.
+- Consider reporting model behavior by mask type, especially whether LaMa gains more over OpenCV for `loss_large` and `mixed_damage`.
+- Keep the overall metric vote clearly labeled as a diagnostic summary, not a conservation-quality score.
 
 ## 18. Stable Diffusion Inpainting Restoration Generation
 
 ### Decision supported
 
-Stable Diffusion Inpainting was added as the first diffusion-based generative inpainting baseline in the controlled 50-painting evaluation framework.
+The Stable Diffusion restoration notebook adds the first diffusion-based generative inpainting model to the controlled 50-painting framework.
 
-This extends the model coverage beyond:
+This extends the evaluated model stack from:
 
 - deterministic local interpolation: OpenCV Telea,
-- learned pretrained inpainting: LaMa,
+- pretrained learned inpainting: LaMa,
 
-to include:
+to:
 
-- prompt-conditioned diffusion-based generative inpainting: Stable Diffusion Inpainting.
+- prompt-conditioned diffusion-based inpainting: Stable Diffusion Inpainting.
 
----
+The notebook supports the decision to evaluate generative inpainting separately from classical and learned deterministic baselines because diffusion models can produce visually plausible but non-reference-faithful completions.
 
-### Model and prompt policy
+### References
 
-The baseline uses:
+#### Rombach et al. (2022) — High-Resolution Image Synthesis with Latent Diffusion Models
+
+Relevant point:  
+Latent Diffusion Models perform image generation in a compressed latent space, enabling high-resolution image synthesis and image editing tasks with lower computational cost than pixel-space diffusion.
+
+How Notebook 18 uses it:  
+Notebook 18 uses Stable Diffusion Inpainting as the diffusion-based restoration baseline. The notebook builds on the latent-diffusion model family by testing how a prompt-conditioned generative model behaves on controlled painting damage.
+
+#### Hugging Face Diffusers Stable Diffusion Inpainting documentation
+
+Relevant point:  
+The Diffusers inpainting pipeline uses an input image, a binary mask, and a text prompt to guide inpainting. White mask pixels indicate the region to repaint and black pixels indicate the region to preserve.
+
+How Notebook 18 uses it:  
+Notebook 18 uses the project’s existing damaged images and binary masks with the Stable Diffusion inpainting pipeline. The notebook keeps the same mask convention used by OpenCV and LaMa, supporting fair paired evaluation.
+
+#### RunwayML Stable Diffusion Inpainting model card
+
+Relevant point:  
+The `runwayml/stable-diffusion-inpainting` model is a Stable Diffusion model adapted for image inpainting.
+
+How Notebook 18 uses it:  
+Notebook 18 uses this model as the project’s Stable Diffusion baseline. The same model, prompt, negative prompt, inference steps, guidance scale, seed, and inference resolution are applied across all painting cases to reduce prompt-engineering bias.
+
+#### Li et al. (2023) — Diffusion Models for Image Restoration and Enhancement: A Comprehensive Survey
+
+Relevant point:  
+The survey reviews diffusion models for restoration and enhancement tasks and highlights their ability to generate plausible image content while also requiring careful evaluation.
+
+How Notebook 18 uses it:  
+Notebook 18 treats Stable Diffusion as a generative restoration candidate rather than a restoration authority. The outputs are generated for later evaluation through reference metrics, visual diagnostics, and uncertainty analysis.
+
+#### Fontoura Júnior et al. (2023) — Assessing the Effectiveness of Inpainting Techniques in Cultural Heritage
+
+Relevant point:  
+The paper supports careful evaluation of inpainting in cultural heritage contexts and warns against relying only on visual plausibility.
+
+How Notebook 18 uses it:  
+Notebook 18 applies Stable Diffusion to painting restoration under controlled synthetic damage but keeps interpretation cautious. The generated completions are evaluated as candidate outputs, not accepted as conservation-grade restoration.
+
+### Project decision
+
+The project uses:
 
 `runwayml/stable-diffusion-inpainting`
 
-A fixed prompt and fixed negative prompt were used across all paintings. This avoids adapting prompts per artwork and reduces prompt-engineering bias.
+The notebook uses a fixed prompt and fixed negative prompt for all paintings.
 
 The fixed prompt asks the model to restore the damaged painting area while preserving style, color, brushwork, composition, and surrounding context.
 
-The fixed negative prompt discourages modern objects, text, watermarks, altered faces, extra objects, cartoon-like outputs, digital-art artifacts, and unrealistic texture.
+The fixed negative prompt discourages:
 
----
+- modern objects,
+- text,
+- watermarks,
+- altered faces,
+- extra objects,
+- cartoon-like outputs,
+- digital-art artifacts,
+- unrealistic texture.
 
-### Inference design
-
-The Stable Diffusion baseline was run with:
+Inference settings:
 
 - seed: `2026`,
 - inference steps: `30`,
 - guidance scale: `7.5`,
-- inference size: `512 × 512`.
+- inference size: `512 × 512`,
+- output size: `768 × 768`.
 
-The 512 × 512 inference resolution was selected for GPU memory stability. Outputs were resized back to the processed image size for downstream metric compatibility.
+Zero-control cases are copied directly instead of being passed through Stable Diffusion. This preserves their sanity-check role and avoids arbitrary generative changes where no damage exists.
 
-Zero-control cases were copied directly rather than passed through the model. This preserves the zero-control sanity-check role and avoids introducing arbitrary generative changes where no damage exists.
+### Notes for final thesis writing
 
----
-
-### Interpretation limitation
-
-Stable Diffusion Inpainting is prompt-conditioned and generative. Its outputs may appear plausible while still being historically inaccurate, structurally inconsistent, or conservation-inappropriate.
-
-The model is therefore not treated as a restoration authority. It is treated as a generative baseline whose outputs will be evaluated using the same classical, perceptual, feature-space, and visual diagnostic framework applied to OpenCV Telea and LaMa.
+This section should introduce Stable Diffusion as the first generative model in the model stack.
 
 Possible thesis wording:
 
-> Stable Diffusion Inpainting was included to test how a prompt-conditioned diffusion model behaves under the same controlled damage conditions as deterministic and learned inpainting baselines. A fixed prompt policy was used to reduce prompt-engineering bias. The generated outputs are interpreted as diagnostic model behavior, not as evidence of historically faithful restoration.
+> Stable Diffusion Inpainting was included as a prompt-conditioned diffusion baseline. Unlike OpenCV Telea and LaMa, Stable Diffusion is generative and can produce multiple plausible completions for the same damaged region. A fixed prompt policy was used across all paintings to reduce prompt-engineering bias. The generated outputs were evaluated as candidate restorations rather than treated as historically or conservation-faithful reconstructions.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether the fixed prompt policy is acceptable for the final thesis or whether category-specific prompts should be tested as an ablation.
+- Consider documenting the exact prompt and negative prompt in the appendix.
+- Consider whether inference size should be increased if stronger compute becomes available.
+- For the final 300-painting experiment, confirm whether Stable Diffusion should be rerun with the same seed/settings or tuned after supervisor feedback.
+
+---
 
 ## 19. Stable Diffusion Classical Metric Evaluation
 
 ### Decision supported
 
-Stable Diffusion Inpainting was evaluated using the same classical metric structure previously applied to OpenCV Telea and LaMa.
+The Stable Diffusion classical metric notebook evaluates Stable Diffusion outputs using the same classical metric structure applied to OpenCV Telea and LaMa.
 
-This keeps the evaluation framework model-agnostic and allows direct comparison between:
+This supports model-agnostic comparison across:
 
 - deterministic inpainting,
 - learned pretrained inpainting,
-- diffusion-based generative inpainting.
+- generative diffusion inpainting.
 
----
-
-### Metric design
-
-The classical metric notebook computes pixel-level and structural restoration measurements between:
+The notebook computes full-reference classical metrics between:
 
 - clean reference and damaged input,
 - clean reference and Stable Diffusion restored output.
 
-The evaluated regions are:
+### References
 
-- full image,
-- content region,
-- masked damaged region,
-- mask bounding-box crop.
+#### Wang et al. (2004) — SSIM
 
-The masked-region metrics are the most direct local measure of synthetic damage repair because they evaluate only the damaged pixels.
+Relevant point:  
+SSIM measures structural similarity using local spatial neighborhoods.
 
----
+How Notebook 19 uses it:  
+Notebook 19 includes SSIM as the structural component of the classical metric stack for Stable Diffusion. Because SSIM requires spatial structure, it is interpreted most meaningfully on image-like regions such as the mask-bounding-box crop.
 
-### Output design
+#### Hore and Ziou (2010) — PSNR vs. SSIM
 
-The final metric table contains 900 rows.
+Relevant point:  
+PSNR and SSIM capture different aspects of image quality, so both can be useful in full-reference image evaluation.
 
-Non-zero damage masks contribute four region rows per case:
+How Notebook 19 uses it:  
+Notebook 19 computes both pixel-error-based metrics and structural metrics for Stable Diffusion outputs. This allows comparison with earlier OpenCV and LaMa metric branches.
+
+#### Zhang et al. (2018) — LPIPS
+
+Relevant point:  
+LPIPS shows that traditional metrics such as PSNR and SSIM may not align with perceptual similarity.
+
+How Notebook 19 uses it:  
+Notebook 19 treats classical metrics as one diagnostic layer only. It prepares the Stable Diffusion branch for later LPIPS and feature-space evaluation.
+
+#### Li et al. (2023) — Diffusion Models for Image Restoration and Enhancement: A Comprehensive Survey
+
+Relevant point:  
+Diffusion restoration outputs can be visually plausible but may not match a reference exactly, making careful metric interpretation necessary.
+
+How Notebook 19 uses it:  
+Notebook 19 interprets classical metrics cautiously for Stable Diffusion because generative outputs may alter texture, color, or local structure while still appearing plausible.
+
+### Project decision
+
+The project computes classical metrics for Stable Diffusion over:
 
 - full image,
 - content region,
 - masked region,
 - mask bounding-box crop.
 
-Zero-control masks contribute only:
+The final metric table contains 900 rows:
 
-- full image,
-- content region.
+- non-zero damage cases contribute four region rows,
+- zero-control cases contribute full-image and content-region rows only.
 
-This keeps zero-control cases useful for sanity checking without inventing a masked-region metric where no damaged pixels exist.
+Masked-region metrics are used for direct damaged-pixel evaluation. SSIM is later moved to the mask-bounding-box crop in the refined metric-region policy because sparse masked pixels do not provide an appropriate structural image neighborhood.
 
----
+### Notes for final thesis writing
 
-### Interpretation limitation
-
-Classical metrics measure pixel-level and structural similarity. They are useful for controlled comparison but are not sufficient to judge restoration quality in paintings.
-
-For Stable Diffusion specifically, a generated result may look plausible while receiving weak classical scores if it changes valid texture, color, or structure. Conversely, a strong classical score does not guarantee art-historical or conservation faithfulness.
+This section should explain that classical metrics remain useful for diffusion outputs but are not sufficient.
 
 Possible thesis wording:
 
-> Classical metrics were used as a controlled low-level comparison layer for Stable Diffusion Inpainting. Because diffusion models may generate plausible but non-faithful content, these metrics are interpreted as diagnostic signals rather than final restoration-quality judgments.
+> Stable Diffusion outputs were evaluated using the same classical full-reference metrics as the earlier baselines. These metrics quantify numerical closeness to the known clean reference under synthetic damage. However, because Stable Diffusion is generative, classical metric interpretation requires caution: a visually coherent completion can still deviate from the original painting in color, texture, or structure.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether Stable Diffusion classical metrics should be interpreted separately from deterministic model metrics because the model is stochastic.
+- Consider adding a short discussion that pixel-level metrics may penalize plausible but non-reference-identical generations.
+- Keep masked-region MSE and PSNR as direct restoration-target metrics.
+
+---
 
 ## 20. Stable Diffusion Difference and Error-Map Diagnostics
 
 ### Decision supported
 
-Stable Diffusion Inpainting was evaluated with spatial difference/error-map diagnostics after classical metric computation.
+The Stable Diffusion difference-map notebook adds spatial diagnostics for Stable Diffusion outputs.
 
-This diagnostic layer supports interpretation beyond aggregate scores by localizing where restoration improved or worsened relative to the clean reference.
+This supports interpretation beyond scalar metrics by showing where the generative restoration improved or worsened relative to the clean reference.
 
----
+This diagnostic layer is especially important for generative inpainting because a completion may look coherent while changing valid painting structure, texture, or color.
 
-### Diagnostic design
+### References
 
-The generated figures compare the clean reference, damage mask, damaged input, restored output, damaged absolute error, restored absolute error, signed improvement, and masked signed improvement.
+#### Wang et al. (2004) — SSIM and structural similarity
 
-Signed improvement is used to identify spatial regions where restoration reduces or increases error relative to the damaged input.
+Relevant point:  
+Scalar structural similarity metrics summarize image quality but do not localize where errors occur.
 
-This is especially relevant for generative inpainting models because a generated output may look plausible while still changing valid image structure, texture, or color.
+How Notebook 20 uses it:  
+Notebook 20 complements structural and pixel metrics with visual error maps, allowing spatial inspection of Stable Diffusion’s restoration behavior.
 
----
+#### Zhang et al. (2018) — LPIPS
 
-### Case-selection policy
+Relevant point:  
+Perceptual similarity can diverge from pixel-level error.
 
-Visual diagnostic cases were selected using a fixed policy rather than manual visual preference.
+How Notebook 20 uses it:  
+Notebook 20 uses spatial error maps as a bridge between classical metrics and later perceptual evaluation. It helps identify cases where Stable Diffusion may improve appearance but remain far from the reference.
 
-The policy includes:
+#### Li et al. (2023) — Diffusion restoration survey
 
-- best cases by masked-region MSE improvement,
-- worst cases by masked-region MSE improvement,
-- median representative cases,
-- classical metric-disagreement cases,
-- category/mask representative cases.
+Relevant point:  
+Diffusion models can generate visually plausible restorations, but generated outputs require careful evaluation because plausibility does not guarantee faithfulness.
 
-This supports more balanced qualitative interpretation and reduces cherry-picking risk.
+How Notebook 20 uses it:  
+Notebook 20 uses difference maps to expose local deviations that may be hidden by visual plausibility.
 
----
+#### Fontoura Júnior et al. (2023) — Cultural heritage inpainting evaluation
 
-### Interpretation limitation
+Relevant point:  
+Heritage inpainting evaluation should combine quantitative and qualitative evidence.
 
-Difference maps compare against the known clean target because the damage is synthetic. This is suitable for controlled evaluation but does not mean the same ground-truth comparison would be available in real restoration settings.
+How Notebook 20 uses it:  
+Notebook 20 creates standardized diagnostic visualizations for Stable Diffusion rather than relying on manually chosen attractive examples.
+
+### Project decision
+
+The project generates Stable Diffusion error-map diagnostics using the same structure as earlier model branches.
+
+Each diagnostic figure contains:
+
+- clean reference,
+- binary mask,
+- damaged input,
+- restored output,
+- damaged absolute error,
+- restored absolute error,
+- signed improvement,
+- masked signed improvement.
+
+Signed improvement is computed as:
+
+`damaged_error - restored_error`
+
+Positive values indicate that restoration reduced error relative to the damaged input. Negative values indicate that restoration increased error relative to the clean reference.
+
+### Notes for final thesis writing
+
+This section should support the argument that visual plausibility and reference fidelity can diverge.
 
 Possible thesis wording:
 
-> Spatial error-map diagnostics were used to complement aggregate metrics by showing where restoration outputs improved or degraded relative to the clean reference. For generative inpainting models, this is important because plausible-looking completions may still introduce localized deviations from the original painting.
+> Spatial error-map diagnostics were generated for Stable Diffusion to localize where generative restoration reduced or increased error relative to the clean reference. This was important because diffusion outputs can appear visually coherent while still deviating from the original painting. Difference maps therefore helped separate visual plausibility from reference-based restoration fidelity.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether Stable Diffusion error maps should be shown alongside uncertainty heatmaps after Notebook 32.
+- Consider using error maps to select examples where Stable Diffusion appears plausible but performs poorly against the clean reference.
+- Standardize visual scales across OpenCV, LaMa, and Stable Diffusion for final thesis figures.
+- Consider adding per-case report pages that include both error maps and uncertainty heatmaps.
+
+---
 
 ## 21. Stable Diffusion LPIPS Perceptual Evaluation
 
 ### Decision supported
 
-Stable Diffusion Inpainting was evaluated with LPIPS as a perceptual-distance metric.
+The Stable Diffusion LPIPS notebook evaluates Stable Diffusion outputs using learned perceptual distance.
 
-LPIPS complements classical metrics by comparing images in learned feature space rather than only through direct pixel-level differences.
-
----
-
-### Metric design
+This supports the multi-metric framework by adding perceptual similarity to the Stable Diffusion branch, matching the evaluation structure already applied to OpenCV and LaMa.
 
 The notebook computes LPIPS between:
 
 - clean reference and damaged input,
 - clean reference and Stable Diffusion restored output.
 
-Lower LPIPS means lower perceptual distance from the clean reference.
+LPIPS improvement is computed as:
 
-LPIPS improvement is computed so that positive values indicate that the restoration is perceptually closer to the clean reference than the damaged input.
+`damaged_lpips - restored_lpips`
 
----
+Positive improvement means the restoration is perceptually closer to the clean reference.
 
-### Region design
+### References
 
-LPIPS was computed for:
+#### Zhang et al. (2018) — LPIPS
+
+Relevant point:  
+LPIPS compares images using deep feature distances and can align better with human perceptual judgments than traditional metrics such as PSNR and SSIM.
+
+How Notebook 21 uses it:  
+Notebook 21 computes LPIPS for Stable Diffusion outputs to evaluate whether generated restorations become perceptually closer to the clean reference.
+
+#### Li et al. (2023) — Diffusion Models for Image Restoration and Enhancement: A Comprehensive Survey
+
+Relevant point:  
+Diffusion restoration outputs can be plausible and high quality, but they need evaluation beyond visual inspection.
+
+How Notebook 21 uses it:  
+Notebook 21 uses LPIPS as one perceptual diagnostic for Stable Diffusion, while acknowledging that perceptual similarity does not prove restoration faithfulness.
+
+#### Fontoura Júnior et al. (2023) — Cultural heritage inpainting evaluation
+
+Relevant point:  
+Cultural heritage inpainting evaluation benefits from multiple complementary metrics.
+
+How Notebook 21 uses it:  
+Notebook 21 adds LPIPS to the Stable Diffusion evaluation branch as one metric family in the broader trustworthiness framework.
+
+### Project decision
+
+The project computes LPIPS for Stable Diffusion on image-like regions:
 
 - full image,
 - content region,
 - mask bounding-box crop.
 
-Sparse masked-region pixels were not used because LPIPS expects image-like spatial inputs. The mask bounding-box crop is therefore used as the local damage-region proxy.
+Sparse masked-region pixels are not used because LPIPS expects spatial image patches.
 
-The final output contains 700 metric rows:
+The final output contains 700 rows:
 
 - 250 full-image rows,
 - 250 content-region rows,
 - 200 mask-bounding-box crop rows.
 
----
+### Notes for final thesis writing
 
-### Interpretation limitation
-
-LPIPS can capture perceptual similarity better than simple pixel metrics, but it still does not guarantee art-historical or conservation faithfulness.
-
-For Stable Diffusion, a result can have favorable perceptual similarity while still hallucinating plausible but incorrect content.
+This section should explain why LPIPS is useful but limited for diffusion outputs.
 
 Possible thesis wording:
 
-> LPIPS was used as a perceptual-distance layer for Stable Diffusion Inpainting. Because diffusion-based restoration may produce plausible but non-faithful content, LPIPS is interpreted as one diagnostic signal rather than as a final restoration-quality judgment.
+> LPIPS was used as a learned perceptual-distance metric for Stable Diffusion Inpainting. Since LPIPS operates on spatial image patches, it was computed on full-image, content-region, and mask-bounding-box regions rather than sparse masked pixels. For diffusion outputs, LPIPS was interpreted cautiously because a perceptually plausible result may still hallucinate content or alter painting-specific details.
+
+### Potential improvements / supervisor feedback
+
+- After Notebook 31, compare LPIPS and texture distance disagreement cases.
+- Consider using LPIPS to select perceptual-success but reference-failure examples for the thesis.
+- Note clearly that LPIPS is not a conservation-specific metric.
+
+---
 
 ## 22. Stable Diffusion CLIP and DINOv2 Feature-Similarity Evaluation
 
 ### Decision supported
 
-Stable Diffusion Inpainting was evaluated using CLIP and DINOv2 feature-space similarity metrics.
+The Stable Diffusion feature-similarity notebook evaluates Stable Diffusion outputs using CLIP and DINOv2 embeddings.
 
-This adds semantic and structural feature-space diagnostics to the existing classical, spatial error-map, and LPIPS evaluations.
+This supports semantic and visual feature-space diagnostics beyond classical and LPIPS metrics.
 
----
+The notebook computes cosine similarity between:
 
-### Metric design
+- clean reference vs damaged input,
+- clean reference vs Stable Diffusion restored output.
 
-The notebook computes feature-space cosine similarity between:
+Feature-space improvement is computed as:
 
-- clean reference and damaged input,
-- clean reference and Stable Diffusion restored output.
+`restored_similarity - damaged_similarity`
 
-Higher similarity means the image is closer to the clean reference in the corresponding feature space.
+Positive improvement means the restored output is closer to the clean reference in the selected feature space.
 
-Improvement is computed so that positive values indicate that the restored output is closer to the clean reference than the damaged input.
+### References
 
----
+#### Radford et al. (2021) — CLIP
 
-### Region design
+Relevant point:  
+CLIP learns transferable visual representations using image-text contrastive training.
 
-Feature similarity was computed for:
+How Notebook 22 uses it:  
+Notebook 22 uses CLIP embeddings as a broad semantic/visual feature-space diagnostic for Stable Diffusion outputs. This is useful because diffusion outputs may look semantically plausible while still diverging from the clean reference.
+
+#### Oquab et al. (2023) — DINOv2
+
+Relevant point:  
+DINOv2 provides robust self-supervised visual features and does not rely on image-text supervision.
+
+How Notebook 22 uses it:  
+Notebook 22 uses DINOv2 as a complementary visual representation to CLIP. This helps diagnose structural and visual feature-space similarity separately from language-supervised CLIP behavior.
+
+#### Li et al. (2023) — Diffusion restoration survey
+
+Relevant point:  
+Diffusion restoration requires careful evaluation because generated outputs can be plausible without being reference-faithful.
+
+How Notebook 22 uses it:  
+Notebook 22 uses feature-space metrics to audit Stable Diffusion beyond pixel and perceptual scores.
+
+#### Fontoura Júnior et al. (2023) — Cultural heritage inpainting evaluation
+
+Relevant point:  
+Heritage inpainting evaluation should use multiple forms of evidence rather than visual plausibility alone.
+
+How Notebook 22 uses it:  
+Notebook 22 adds CLIP and DINOv2 as additional diagnostic evidence for a painting-restoration-inspired benchmark.
+
+### Project decision
+
+The project computes CLIP and DINOv2 similarity for Stable Diffusion on:
 
 - full image,
 - content region,
 - mask bounding-box crop.
 
-Sparse masked-region pixels were not used because CLIP and DINOv2 expect image-like spatial inputs. The mask bounding-box crop is therefore used as the local damage-region proxy.
+Sparse masked pixels are not used because both models expect spatial image inputs.
 
-The final output contains 700 metric rows:
+The selected models are:
 
-- 250 full-image rows,
-- 250 content-region rows,
-- 200 mask-bounding-box crop rows.
+- CLIP: `openai/clip-vit-base-patch32`,
+- DINOv2: project helper model `dinov2_vitb14`.
 
----
+The feature-space metrics are interpreted as diagnostics, not as evidence of conservation correctness.
 
-### Interpretation limitation
+### Notes for final thesis writing
 
-CLIP and DINOv2 provide useful feature-space similarity signals, but they do not directly measure conservation correctness.
-
-For Stable Diffusion, a generated output may increase semantic or structural similarity while still hallucinating historically incorrect content. Conversely, feature-space disagreement can reveal cases where surface-level visual plausibility hides structural inconsistency.
+This section should emphasize that feature similarity is helpful for diffusion auditing but not definitive.
 
 Possible thesis wording:
 
-> CLIP and DINOv2 feature similarities were used to evaluate Stable Diffusion Inpainting beyond pixel-level and perceptual-distance metrics. These feature-space scores are interpreted as diagnostic signals for semantic and structural consistency, not as proof of restoration faithfulness.
+> CLIP and DINOv2 feature similarities were computed for Stable Diffusion outputs to complement classical and LPIPS metrics. These pretrained feature spaces helped diagnose whether restorations moved closer to the clean reference in broad visual representation space. Because Stable Diffusion is generative, feature-space improvement was interpreted as one diagnostic signal rather than proof of faithful restoration.
+
+### Potential improvements / supervisor feedback
+
+- Consider separating semantic consistency from feature similarity after supervisor feedback.
+- Compare DINOv2 and texture metrics after Notebook 31, especially for high-texture brushwork.
+- Use cases where CLIP improves but DINOv2 or texture metrics worsen as examples of metric disagreement.
+
+---
 
 ## 23. Stable Diffusion Baseline Report
 
 ### Decision supported
 
-A consolidated Stable Diffusion baseline report was generated after completing restoration generation, classical metrics, spatial error maps, LPIPS, and CLIP/DINOv2 feature similarity.
+The Stable Diffusion report notebook consolidates the full Stable Diffusion evaluation branch into a model-specific diagnostic report.
 
-This report acts as a model-level diagnostic summary before multi-model comparison.
+This supports model-level interpretation before the three-model comparison.
 
----
-
-### Report design
-
-The report combines quantitative and visual evidence from the Stable Diffusion evaluation branch.
-
-It includes:
+The report combines:
 
 - restoration metadata,
 - classical metric summaries,
-- LPIPS perceptual-distance summaries,
-- CLIP/DINOv2 feature-similarity summaries,
+- LPIPS summaries,
+- CLIP and DINOv2 feature-similarity summaries,
 - local metric outcome summaries,
-- selected report cases,
-- embedded visual diagnostic examples,
+- visual diagnostic examples,
 - spatial error-map examples.
 
----
+### References
 
-### Local metric policy
+#### Rombach et al. (2022) — Latent Diffusion Models
 
-The report uses the most appropriate local region for each metric family:
+Relevant point:  
+Latent Diffusion Models provide the foundation for Stable Diffusion-style generative image synthesis and editing.
 
-- classical metrics: sparse masked region,
+How Notebook 23 uses it:  
+Notebook 23 interprets Stable Diffusion as a generative inpainting model, meaning its outputs require different caution than deterministic interpolation methods.
+
+#### Zhang et al. (2018) — LPIPS
+
+Relevant point:  
+LPIPS provides learned perceptual similarity.
+
+How Notebook 23 uses it:  
+Notebook 23 includes LPIPS summaries as part of the Stable Diffusion report’s perceptual evidence.
+
+#### Radford et al. (2021) — CLIP
+
+Relevant point:  
+CLIP provides transferable image-text-supervised visual features.
+
+How Notebook 23 uses it:  
+Notebook 23 includes CLIP feature-similarity summaries as diagnostic evidence.
+
+#### Oquab et al. (2023) — DINOv2
+
+Relevant point:  
+DINOv2 provides robust self-supervised visual features.
+
+How Notebook 23 uses it:  
+Notebook 23 includes DINOv2 summaries as a complementary visual feature-space signal.
+
+#### Li et al. (2023) — Diffusion Models for Image Restoration and Enhancement
+
+Relevant point:  
+The survey motivates careful evaluation of diffusion restoration outputs because generated content can be visually plausible without being reference-faithful.
+
+How Notebook 23 uses it:  
+Notebook 23 explicitly separates visual plausibility from restoration faithfulness when interpreting Stable Diffusion results.
+
+#### Fontoura Júnior et al. (2023) — Cultural heritage inpainting evaluation
+
+Relevant point:  
+Cultural heritage inpainting assessment requires careful, multi-criteria evaluation.
+
+How Notebook 23 uses it:  
+Notebook 23 frames the Stable Diffusion report as a diagnostic artifact rather than a model-quality verdict.
+
+### Project decision
+
+The project creates a standalone Stable Diffusion report after completing:
+
+- restoration generation,
+- classical metrics,
+- difference/error maps,
+- LPIPS,
+- CLIP and DINOv2 feature similarity.
+
+The report uses the local metric policy:
+
+- classical metrics: masked region,
 - LPIPS: mask bounding-box crop,
 - CLIP/DINOv2: mask bounding-box crop.
 
-This keeps the local comparison methodologically consistent with each metric type.
-
----
-
-### Case-selection policy
-
-Selected report cases were chosen using a fixed diagnostic policy:
+Selected report cases are chosen using a fixed diagnostic policy:
 
 - highest number of improved metrics,
 - lowest number of improved metrics,
 - mixed metric outcomes,
 - category/mask representatives.
 
-This reduces cherry-picking risk and supports balanced qualitative interpretation.
+This reduces cherry-picking risk.
 
----
+### Notes for final thesis writing
 
-### Interpretation limitation
-
-The report explicitly separates visual plausibility from restoration faithfulness.
-
-Stable Diffusion may generate coherent and visually persuasive completions, but these completions can still be inconsistent with the clean reference or art-historical expectations.
+This section should introduce the Stable Diffusion report as a model-level diagnostic summary.
 
 Possible thesis wording:
 
-> The Stable Diffusion baseline report consolidates quantitative metrics and visual diagnostics into a model-level summary. Because Stable Diffusion is generative, the report treats visual plausibility as a separate issue from measured similarity and conservation faithfulness.
+> A standalone Stable Diffusion report was generated to consolidate quantitative and visual diagnostics for the generative inpainting baseline. Because Stable Diffusion can produce visually persuasive but non-reference-faithful completions, the report separated visual plausibility from measured similarity and later motivated multi-seed uncertainty analysis.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether the old Stable Diffusion report should remain as a model-specific appendix artifact.
+- Add texture metric summaries only in the extended final report rather than rewriting this old report.
+- Add uncertainty heatmap links after Notebook 32 in the new uncertainty heatmap report.
+- Use selected Stable Diffusion cases to demonstrate the thesis claim that visual plausibility is not restoration trustworthiness.
+
+---
 
 ## 24. Three-Model Comparison: OpenCV Telea, LaMa, and Stable Diffusion
 
 ### Decision supported
 
-A three-model comparison was generated to compare the completed restoration baselines before adding SDXL.
-
-Compared models:
+The three-model comparison notebook compares the first completed model stack:
 
 - OpenCV Telea,
 - LaMa,
 - Stable Diffusion Inpainting.
 
-This comparison acts as the first multi-model evaluation checkpoint in the thesis pipeline.
+This notebook supports the central thesis direction: building a trustworthy evaluation framework for AI-assisted painting restoration rather than only reporting isolated model scores.
 
----
+The comparison evaluates deterministic, learned, and generative inpainting models under identical controlled damage conditions.
 
-### Comparison design
+### References
 
-The comparison was paired by case identity:
+#### Telea (2004) — Fast Marching Method inpainting
+
+Relevant point:  
+Telea provides the deterministic classical baseline.
+
+How Notebook 24 uses it:  
+Notebook 24 includes OpenCV Telea as the local interpolation baseline in the three-model comparison.
+
+#### Suvorov et al. (2022) — LaMa
+
+Relevant point:  
+LaMa provides the learned pretrained inpainting baseline designed for larger missing regions.
+
+How Notebook 24 uses it:  
+Notebook 24 includes LaMa as the learned inpainting baseline and compares whether it outperforms OpenCV and Stable Diffusion under the controlled benchmark.
+
+#### Rombach et al. (2022) — Latent Diffusion Models
+
+Relevant point:  
+Latent diffusion provides the generative model foundation for Stable Diffusion.
+
+How Notebook 24 uses it:  
+Notebook 24 includes Stable Diffusion as the prompt-conditioned generative inpainting baseline.
+
+#### Wang et al. (2004) — SSIM
+
+Relevant point:  
+SSIM provides structural similarity but requires spatial image neighborhoods.
+
+How Notebook 24 uses it:  
+Notebook 24 initially includes SSIM in the local metric comparison. The later Notebook 26 refinement corrects the region policy by moving SSIM to the mask-bounding-box crop.
+
+#### Zhang et al. (2018) — LPIPS
+
+Relevant point:  
+LPIPS provides learned perceptual-distance comparison.
+
+How Notebook 24 uses it:  
+Notebook 24 uses LPIPS as a perceptual metric family in the three-model local comparison.
+
+#### Radford et al. (2021) — CLIP
+
+Relevant point:  
+CLIP provides image-text-supervised visual feature representations.
+
+How Notebook 24 uses it:  
+Notebook 24 uses CLIP similarity improvement as one feature-space metric in the three-model comparison.
+
+#### Oquab et al. (2023) — DINOv2
+
+Relevant point:  
+DINOv2 provides self-supervised visual feature representations.
+
+How Notebook 24 uses it:  
+Notebook 24 uses DINOv2 similarity improvement as another feature-space metric in the three-model comparison.
+
+#### Li et al. (2023) — Diffusion restoration survey
+
+Relevant point:  
+Diffusion restoration models require careful evaluation because generative plausibility and reference fidelity can diverge.
+
+How Notebook 24 uses it:  
+Notebook 24 interprets Stable Diffusion results cautiously and treats metric disagreement as meaningful evidence.
+
+#### Fontoura Júnior et al. (2023) — Cultural heritage inpainting evaluation
+
+Relevant point:  
+Cultural heritage inpainting should be evaluated with multiple complementary criteria.
+
+How Notebook 24 uses it:  
+Notebook 24 compares multiple metric families and explicitly records disagreement cases.
+
+### Project decision
+
+The project performs a paired three-model comparison over the 200 non-zero damage cases.
+
+Pairing is based on:
 
 - `case_id`,
 - `painting_id`,
-- `mask_id`,
 - `mask_type`.
 
-The local comparison used the 200 non-zero damage cases.
+The initial local comparison policy uses:
 
-Metric-region policy:
-
-- classical metrics: sparse masked region,
+- classical metrics: masked region,
 - LPIPS: mask bounding-box crop,
 - CLIP/DINOv2: mask bounding-box crop.
 
-This preserves consistency with the model-level report methodology.
-
----
-
-### Metric winner policy
-
-Six local metrics were compared:
+Metric winners are computed for:
 
 - MSE improvement,
 - PSNR improvement,
@@ -1302,163 +2043,277 @@ Six local metrics were compared:
 - CLIP similarity improvement,
 - DINOv2 similarity improvement.
 
-For each case and metric, the model with the highest improvement value was marked as the metric winner.
+A compact majority vote is computed across metric winners.
 
-A per-case majority vote was then calculated across the six metrics.
+Metric disagreement cases are exported separately because disagreement between pixel, structural, perceptual, and feature-space metrics is central to the thesis argument.
 
----
+### Notes for final thesis writing
 
-### Metric disagreement
-
-The comparison explicitly records cases where metric families disagree.
-
-These disagreement cases are important because restoration quality is multi-dimensional. A model may improve pixel-level similarity while performing worse in perceptual or feature-space similarity, or vice versa.
+This section should explain the first full model comparison and prepare the reader for Notebook 26’s refined metric-region policy.
 
 Possible thesis wording:
 
-> Metric-disagreement cases were retained as diagnostic evidence rather than discarded. They indicate situations where restoration quality cannot be summarized reliably by a single metric family.
+> The three-model comparison evaluated OpenCV Telea, LaMa, and Stable Diffusion Inpainting on identical non-zero damage cases. Each model was compared across classical, perceptual, and feature-space metrics. Metric winners and majority votes were used as diagnostic summaries, not as conservation-quality labels. Cases of metric disagreement were retained because they reveal that restoration quality cannot be reliably captured by a single metric family.
 
----
+### Potential improvements / supervisor feedback
 
-### Interpretation limitation
-
-The comparison evaluates controlled synthetic-damage behavior. It does not establish real conservation quality.
-
-Stable Diffusion requires special caution because its outputs are generative. A visually coherent completion can still differ from the clean reference or from historically plausible restoration.
-
-Possible thesis wording:
-
-> The three-model comparison ranks models by metric improvement under controlled damage conditions. These rankings are interpreted as diagnostic behavior, not as claims of conservation-grade restoration quality.
+- Keep Notebook 24 as an initial comparison checkpoint, not the final comparison, because Notebook 26 refines the metric-region policy.
+- Ask whether the majority-vote approach is acceptable as a compact diagnostic summary.
+- Consider adding texture metrics from Notebook 31 to an extended comparison report.
+- Consider adding SDXL later if stronger compute is available.
+- Consider reporting disagreement cases prominently because they are more thesis-interesting than yet another leaderboard pretending to be wisdom.
 
 ## 25. SDXL Feasibility Audit
 
 ### Decision supported
 
-SDXL Inpainting was considered as a fourth restoration baseline, but was not included in the full local controlled evaluation after feasibility testing.
+The SDXL feasibility notebook evaluates whether SDXL Inpainting can be included as a fourth full restoration baseline in the local controlled experiment.
 
-This decision was based on local runtime and memory constraints, not on a complete model-quality evaluation.
+The decision supported by this notebook is to exclude SDXL from the full local 50-painting evaluation because the available hardware does not support a practical balance between runtime, memory use, and restoration quality.
 
----
+This is recorded as a feasibility limitation, not as a model-quality conclusion.
 
-### Tested model
+### References
 
-Planned model:
+#### Podell et al. (2023) — SDXL: Improving Latent Diffusion Models for High-Resolution Image Synthesis
+
+Relevant point:  
+SDXL improves latent diffusion image generation using a larger architecture and refined conditioning design. It is a stronger and more recent diffusion model family than the earlier Stable Diffusion baseline.
+
+How Notebook 25 uses it:  
+Notebook 25 treats SDXL Inpainting as a reasonable candidate fourth model because it represents a stronger diffusion-based inpainting family. The notebook does not fully evaluate SDXL quality; it tests whether the model is feasible on the local machine.
+
+#### Hugging Face Diffusers SDXL Inpainting documentation and model card
+
+Relevant point:  
+The SDXL Inpainting pipeline is significantly more memory-intensive than earlier Stable Diffusion inpainting pipelines and often requires memory-saving techniques such as CPU offload, reduced precision, reduced inference size, or other optimizations.
+
+How Notebook 25 uses it:  
+Notebook 25 uses Diffusers SDXL Inpainting with memory-saving settings to test whether local execution is possible on the available 6 GB RTX 3060 Laptop GPU.
+
+#### Li et al. (2023) — Diffusion Models for Image Restoration and Enhancement: A Comprehensive Survey
+
+Relevant point:  
+The survey positions diffusion models as powerful restoration candidates, but also highlights the need for practical evaluation and careful interpretation.
+
+How Notebook 25 uses it:  
+Notebook 25 uses this context to justify trying SDXL as a diffusion restoration candidate, while treating local feasibility as a necessary condition before adding it to the full model comparison.
+
+#### Rombach et al. (2022) — High-Resolution Image Synthesis with Latent Diffusion Models
+
+Relevant point:  
+Latent diffusion models make high-resolution generation more tractable than pixel-space diffusion, but still require substantial compute for larger or more advanced models.
+
+How Notebook 25 uses it:  
+Notebook 25 frames SDXL as part of the latent-diffusion model family and tests whether the local hardware can support it under the thesis experiment constraints.
+
+### Project decision
+
+The project tested:
 
 `diffusers/stable-diffusion-xl-1.0-inpainting-0.1`
 
-The model was selected because SDXL represents a stronger and more recent diffusion-based inpainting baseline than the earlier Stable Diffusion Inpainting model.
+Local hardware:
 
----
+- NVIDIA GeForce RTX 3060 Laptop GPU,
+- 6 GB VRAM.
 
-### Local feasibility findings
+Findings:
 
-The local environment used an NVIDIA GeForce RTX 3060 Laptop GPU with 6 GB VRAM.
+- SDXL pipeline import and loading were possible.
+- Running without CPU offload caused CUDA out-of-memory errors.
+- CPU offload made execution possible but too slow for full controlled evaluation.
+- A 6-step 512 × 512 smoke test completed but did not produce meaningful restoration.
+- A 12-step stronger smoke test completed but required roughly 10 minutes for one case and showed overgeneration/global alteration.
 
-The SDXL pipeline could be loaded and executed only with memory-saving settings.
+The project therefore excludes SDXL from the full local controlled evaluation.
 
-Running without CPU offload caused CUDA out-of-memory errors.
+This exclusion is recorded as:
 
-With CPU offload enabled, SDXL became technically executable but too slow for a full 200-case non-zero evaluation.
+- a hardware/runtime feasibility limitation,
+- not a conclusion that SDXL is worse than the other models.
 
-Two reduced smoke-test configurations were tested:
+### Notes for final thesis writing
 
-- 6 inference steps, guidance scale 4.5, 512 × 512 inference, 768 × 768 output,
-- 12 inference steps, guidance scale 6.0, strength 1.0, 512 × 512 inference, 768 × 768 output.
-
-The 6-step setting completed but did not meaningfully restore the masked region.
-
-The 12-step setting produced a completed image region but showed strong hallucination and global visual alteration, while requiring approximately 10 minutes for one case.
-
----
-
-### Methodological decision
-
-SDXL was excluded from the full local controlled evaluation because the available hardware did not support a practical balance between runtime and restoration quality.
-
-The exclusion is recorded as a feasibility limitation.
+This section should be used to explain why SDXL is not part of the final fully evaluated local model stack.
 
 Possible thesis wording:
 
-> SDXL Inpainting was planned as an additional diffusion baseline, but local feasibility testing showed that the available 6 GB GPU environment did not support a practical full evaluation. Low-step settings produced insufficient restoration quality, while stronger settings caused excessive runtime and overgeneration. SDXL was therefore excluded from the full controlled evaluation and retained as future work for stronger compute environments.
+> SDXL Inpainting was considered as a fourth restoration baseline, but local feasibility testing showed that the available 6 GB GPU environment could not support a practical full evaluation. Low-step settings were technically executable but did not produce meaningful restoration, while stronger settings caused excessive runtime and visible overgeneration. SDXL was therefore excluded from the full local controlled evaluation and retained as future work for a stronger compute environment.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether SDXL must be included in the final thesis if university GPU resources become available.
+- If SDXL is required, request access to at least 12 GB VRAM, preferably 16 GB or more.
+- If remote compute becomes available, rerun SDXL as a fourth full model using the same controlled masks and metric framework.
+- Keep the current SDXL result framed as a feasibility audit, not as model comparison evidence.
 
 ---
-
-### Future work
-
-SDXL should be revisited if stronger GPU resources become available.
-
-Recommended minimum compute:
-
-- 12 GB VRAM as a lower bound,
-- 16 GB or more preferred,
-- A100, A40, RTX 3090, RTX 4090, L40, or equivalent class hardware if available.
-
-With suitable compute, SDXL could be rerun as a fourth full baseline and compared against OpenCV Telea, LaMa, and Stable Diffusion Inpainting.
 
 ## 26. Refined Metric-Region Policy
 
 ### Decision supported
 
-The local metric-region policy was refined after the initial three-model comparison showed that sparse masked-region SSIM produced invalid local comparison values.
+The refined metric-region notebook corrects the local comparison policy after the initial three-model comparison revealed that sparse masked-region SSIM was invalid or not meaningful.
 
-The decision was to retain SSIM, but evaluate it on the mask-bounding-box crop instead of the sparse masked region.
+The decision supported by this notebook is to keep SSIM in the framework, but evaluate it on the mask-bounding-box crop instead of sparse masked pixels.
 
----
+This notebook is important because it shows the framework is not blindly collecting metrics. It audits whether each metric is being applied to a region type that matches the metric’s assumptions. Miraculous, really: metrics being used where they make sense.
 
-### Rationale
+### References
 
-MSE and PSNR are direct pixel-error metrics. They can be meaningfully computed over sparse damaged pixels.
+#### Wang et al. (2004) — Image Quality Assessment: From Error Visibility to Structural Similarity
 
-SSIM is a structural-similarity metric. It depends on local image neighborhoods and is therefore better suited to an image-like crop than to an irregular sparse mask region.
+Relevant point:  
+SSIM is based on local luminance, contrast, and structural comparisons. It assumes spatial neighborhoods and image-like regions.
 
-LPIPS, CLIP, and DINOv2 also require image-like inputs and were already evaluated on the mask-bounding-box crop for local comparison.
+How Notebook 26 uses it:  
+Notebook 26 uses this assumption to justify moving SSIM from sparse masked pixels to the mask-bounding-box crop. Sparse masked pixels do not preserve the local spatial neighborhood required for meaningful structural similarity.
 
----
+#### Hore and Ziou (2010) — Image Quality Metrics: PSNR vs. SSIM
 
-### Final local comparison policy
+Relevant point:  
+PSNR and SSIM measure different forms of image quality. PSNR is based on pixel-error magnitude, while SSIM compares structural properties.
 
-- MSE improvement: sparse masked region,
-- PSNR improvement: sparse masked region,
-- SSIM improvement: mask-bounding-box crop,
-- LPIPS improvement: mask-bounding-box crop,
-- CLIP similarity improvement: mask-bounding-box crop,
-- DINOv2 similarity improvement: mask-bounding-box crop.
+How Notebook 26 uses it:  
+Notebook 26 separates the region policy for pixel-error metrics and structural metrics. MSE and PSNR remain on the sparse masked region, while SSIM is moved to the mask-bounding-box crop.
 
----
+#### Zhang et al. (2018) — LPIPS
 
-### Methodological interpretation
+Relevant point:  
+LPIPS depends on spatial feature activations from image patches.
 
-This refinement does not remove SSIM from the framework. Instead, it aligns SSIM with a region type that preserves local spatial context.
+How Notebook 26 uses it:  
+Notebook 26 aligns SSIM with the same local image-like region already used for LPIPS: the mask-bounding-box crop. This supports a coherent local region policy for spatial/feature-based metrics.
+
+#### Radford et al. (2021) — CLIP
+
+Relevant point:  
+CLIP image embeddings are computed from spatial image inputs, not sparse unordered pixel sets.
+
+How Notebook 26 uses it:  
+Notebook 26 keeps CLIP local comparison on the mask-bounding-box crop, consistent with the metric’s image-input assumptions.
+
+#### Oquab et al. (2023) — DINOv2
+
+Relevant point:  
+DINOv2 also operates on spatial image inputs and produces visual representations from image patches.
+
+How Notebook 26 uses it:  
+Notebook 26 keeps DINOv2 local comparison on the mask-bounding-box crop, matching the policy used for CLIP and LPIPS.
+
+#### Fontoura Júnior et al. (2023) — Cultural heritage inpainting evaluation
+
+Relevant point:  
+Cultural heritage inpainting evaluation requires careful metric interpretation and should avoid overclaiming from inappropriate metrics.
+
+How Notebook 26 uses it:  
+Notebook 26 implements this principle by auditing the metric-region policy and correcting SSIM usage instead of keeping invalid sparse-region SSIM values.
+
+### Project decision
+
+The final refined local metric-region policy is:
+
+- MSE improvement: `masked_region`,
+- PSNR improvement: `masked_region`,
+- SSIM improvement: `mask_bbox_crop`,
+- LPIPS improvement: `mask_bbox_crop`,
+- CLIP similarity improvement: `mask_bbox_crop`,
+- DINOv2 similarity improvement: `mask_bbox_crop`.
+
+Rationale:
+
+- MSE and PSNR can be computed directly over sparse damaged pixels.
+- SSIM requires local spatial structure, so it is computed on the mask-bounding-box crop.
+- LPIPS, CLIP, and DINOv2 require image-like spatial inputs, so they remain on the mask-bounding-box crop.
+
+The refined comparison is saved separately rather than overwriting the earlier three-model comparison. This preserves an audit trail from the initial comparison to the corrected final policy.
+
+### Notes for final thesis writing
+
+This section should be one of the strongest methodology sections because it shows region-aware metric design.
 
 Possible thesis wording:
 
-> SSIM was retained as a structural-similarity metric, but sparse masked-region SSIM was excluded from final local model ranking because it does not provide a stable image-like neighborhood. For the final comparison, SSIM was evaluated on the mask-bounding-box crop, while MSE and PSNR remained on the sparse masked region.
+> After the initial three-model comparison, the local metric-region policy was refined because sparse masked-region SSIM did not provide meaningful comparison values. SSIM was retained, but moved to the mask-bounding-box crop where local spatial context is preserved. MSE and PSNR remained on the masked region because they directly measure pixel-level error over the restoration target. LPIPS, CLIP, and DINOv2 were also evaluated on the mask-bounding-box crop because they require image-like spatial inputs. This refinement demonstrates that metric selection and metric-region selection are both part of trustworthy restoration evaluation.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether the final thesis should include a formal metric-region policy table.
+- Ask whether the refined policy should be treated as the only final ranking policy, with the initial comparison retained only as an audit trail.
+- Consider adding metric-policy ablation after supervisor feedback.
+- Consider testing bbox margin sensitivity, for example 16, 32, and 64 pixels.
+- After Notebook 31, add GLCM and Gabor texture metrics to the same region-policy table.
 
 ---
 
-### Output
-
-The refined comparison was saved as a separate set of comparison-level outputs rather than overwriting the initial comparison.
-
-This preserves an audit trail from the initial comparison to the final refined comparison policy.
-
-## 27. Diffusion uncertainty analysis
+## 27. Diffusion Uncertainty Analysis
 
 ### Decision supported
 
-A multi-seed uncertainty analysis was added for Stable Diffusion Inpainting.
+The diffusion uncertainty notebook adds multi-seed uncertainty analysis for Stable Diffusion Inpainting.
 
-The motivation is that diffusion models are stochastic generative models. A single generated restoration output does not fully describe model behavior. Repeated sampling with different seeds can reveal whether the model produces stable restorations or multiple inconsistent plausible completions.
+The decision supported by this notebook is that a single Stable Diffusion output is not enough to characterize model behavior because diffusion inpainting is stochastic.
 
----
+Repeated generation with different seeds can reveal whether the model produces stable restorations or multiple inconsistent plausible completions for the same damaged input.
 
-### Experimental design
+### References
 
-The analysis uses a balanced diagnostic subset:
+#### Rombach et al. (2022) — High-Resolution Image Synthesis with Latent Diffusion Models
+
+Relevant point:  
+Latent diffusion models generate images through stochastic sampling in latent space. This makes output variability an inherent part of diffusion-based generation.
+
+How Notebook 27 uses it:  
+Notebook 27 evaluates Stable Diffusion with multiple seeds for the same painting and mask to measure output variability instead of relying on one generated sample.
+
+#### Li et al. (2023) — Diffusion Models for Image Restoration and Enhancement: A Comprehensive Survey
+
+Relevant point:  
+Diffusion restoration models can generate high-quality outputs but require careful evaluation because generated results may vary and visual plausibility does not guarantee reference fidelity.
+
+How Notebook 27 uses it:  
+Notebook 27 treats uncertainty as a trustworthiness issue. If multiple seeds produce inconsistent restorations, this becomes diagnostic evidence even if one output looks plausible.
+
+#### Zhang et al. (2018) — LPIPS
+
+Relevant point:  
+LPIPS provides perceptual distance between image patches using learned feature activations.
+
+How Notebook 27 uses it:  
+Notebook 27 computes pairwise LPIPS distances between multiple seed outputs. Higher pairwise LPIPS indicates greater perceptual variability across generated restorations.
+
+#### Radford et al. (2021) — CLIP
+
+Relevant point:  
+CLIP provides a pretrained image representation space.
+
+How Notebook 27 uses it:  
+Notebook 27 computes pairwise CLIP similarity between seed outputs to measure feature-space stability across generations.
+
+#### Oquab et al. (2023) — DINOv2
+
+Relevant point:  
+DINOv2 provides robust self-supervised visual features.
+
+How Notebook 27 uses it:  
+Notebook 27 computes pairwise DINOv2 similarity between seed outputs as a complementary feature-space uncertainty signal.
+
+#### Recent inpainting self-consistency work
+
+Relevant point:  
+Recent inpainting-evaluation work has proposed consistency-based evaluation ideas, where repeated or re-inpainted outputs can be assessed for stability rather than relying only on one output.
+
+How Notebook 27 uses it:  
+Notebook 27 applies a related idea in a simpler form: repeated Stable Diffusion outputs for the same damaged input are compared to quantify seed-based variability.
+
+### Project decision
+
+The project runs Stable Diffusion uncertainty analysis on a balanced diagnostic subset:
 
 - 5 painting categories,
 - 2 paintings per category,
-- 4 non-zero synthetic damage masks,
+- 4 non-zero mask types,
 - 40 total cases.
 
 Each case is generated with four seeds:
@@ -1468,21 +2323,15 @@ Each case is generated with four seeds:
 - `2028`,
 - `2029`.
 
-This gives 160 Stable Diffusion uncertainty outputs.
+This produces 160 uncertainty-generation outputs.
 
-The subset is not intended to replace the full 200-case non-zero comparison. Instead, it provides a controlled uncertainty probe across categories, damage types, and Stable Diffusion performance profiles.
-
----
-
-### Uncertainty indicators
-
-The notebook computes uncertainty using several complementary indicators.
+The notebook computes:
 
 Image-space indicators:
 
-- pixel-wise seed standard deviation,
-- masked-region seed standard deviation,
-- mask-bounding-box seed standard deviation,
+- pixel-wise standard deviation across seeds,
+- masked-region standard deviation,
+- mask-bounding-box standard deviation,
 - mean absolute deviation from the seed-mean output.
 
 Perceptual indicators:
@@ -1491,151 +2340,527 @@ Perceptual indicators:
 
 Feature-space indicators:
 
-- pairwise CLIP cosine similarity,
-- pairwise DINOv2 cosine similarity,
+- pairwise CLIP similarity,
+- pairwise DINOv2 similarity,
 - CLIP uncertainty distance,
 - DINOv2 uncertainty distance.
 
 A combined uncertainty index is created by min-max normalizing selected uncertainty indicators and averaging them.
 
----
+The uncertainty results are linked back to the refined reference-based model comparison.
 
-### Link to refined model comparison
+### Notes for final thesis writing
 
-The uncertainty results are linked back to the refined three-model comparison.
+This section should support RQ3 and the trustworthiness argument.
 
-This allows four diagnostic interpretations:
+Possible thesis wording:
 
-1. High uncertainty and low reference performance:
-   - unstable and weak against the reference.
+> Since diffusion-based inpainting is stochastic, a single generated restoration cannot fully characterize model behavior. Multi-seed uncertainty analysis was therefore used to measure whether Stable Diffusion produced stable or variable restorations for identical damaged inputs. High seed variability was interpreted as a trustworthiness warning, particularly when paired with weak reference-based performance.
 
-2. High uncertainty and higher reference performance:
-   - one seed may perform well, but the model is unstable.
+Another possible thesis wording:
 
-3. Low uncertainty and low reference performance:
-   - the model is consistently wrong or consistently biased.
+> The uncertainty analysis shows that visual plausibility and output stability are separate evaluation dimensions. A generated restoration may appear coherent while still being one of several inconsistent completions sampled by the same model for the same damaged region.
 
-4. Low uncertainty and higher reference performance:
-   - relatively stable and comparatively stronger behavior.
+### Potential improvements / supervisor feedback
 
-This framing supports the trustworthiness focus of the thesis.
-
----
-
-### Possible thesis wording
-
-> Since diffusion-based inpainting is stochastic, a single generated restoration cannot fully characterize model behavior. Multi-seed uncertainty analysis was therefore used to measure whether Stable Diffusion produced stable or variable restorations for identical damaged inputs. High seed variability was interpreted as a trustworthiness warning, particularly when paired with weak reference-based metrics.
-
-Another possible wording:
-
-> The uncertainty analysis shows that visual plausibility and output stability are separate evaluation dimensions. A generated restoration may look coherent while still being one of several inconsistent completions sampled by the model.
+- Ask whether the 40-case uncertainty subset is sufficient for the thesis or whether the full 200 non-zero cases should be run. (Most likely, full can be run.)
+- Add uncertainty heatmaps in Notebook 32 to show where seed variability occurs spatially.
+- If SDXL is later evaluated, repeat uncertainty analysis for SDXL.
+- Consider testing whether four seeds are enough or whether six/eight seeds are needed for final reporting.
+- Treat uncertainty as diagnostic, not as a complete probabilistic confidence estimate.
 
 ---
 
-### Methodological caveat
-
-The uncertainty analysis is diagnostic rather than exhaustive. It uses 40 balanced cases rather than all 200 non-zero damaged cases. This choice keeps the analysis computationally practical while still covering all categories and damage types.
-
-A full 200-case uncertainty sweep remains possible but is not necessary for the current controlled evaluation unless broader uncertainty coverage is requested.
-
-## 28. Final controlled evaluation report
+## 28. Final Controlled Evaluation Report
 
 ### Decision supported
 
-A final consolidated controlled-evaluation report was created for the 50-painting benchmark.
+The final controlled report notebook consolidates the completed 50-painting pilot framework into one thesis-ready artifact.
 
-The purpose of the report is to synthesize all completed experimental outputs into one thesis-ready artifact.
+The decision supported by this notebook is to synthesize the model stack, metric framework, refined region policy, SDXL feasibility audit, Stable Diffusion uncertainty, and final interpretation into a single report.
 
----
+This report is the main supervisor-facing summary before later extensions.
 
-### Consolidated evaluation layers
+### References
 
-The report combines the following evaluation layers:
+#### Telea (2004) — Fast Marching Method inpainting
 
-1. Dataset and synthetic damage design,
-2. OpenCV Telea deterministic baseline,
-3. LaMa deep inpainting model,
-4. Stable Diffusion Inpainting generative model,
-5. SDXL feasibility audit,
-6. refined metric-region policy,
-7. refined three-model comparison,
-8. Stable Diffusion multi-seed uncertainty analysis,
-9. uncertainty-performance linkage,
-10. final visual examples and thesis interpretation.
+Relevant point:  
+Telea provides the deterministic classical baseline.
 
----
+How Notebook 28 uses it:  
+Notebook 28 includes OpenCV Telea as the classical baseline in the final controlled evaluation summary.
 
-### Final model interpretation
+#### Suvorov et al. (2022) — LaMa
 
-OpenCV Telea is retained as a deterministic classical baseline.
+Relevant point:  
+LaMa provides the learned pretrained inpainting baseline.
 
-LaMa is the strongest model under the refined reference-based metric comparison.
+How Notebook 28 uses it:  
+Notebook 28 summarizes LaMa as the strongest model under the refined reference-based comparison in the 50-painting benchmark.
 
-Stable Diffusion Inpainting is treated as a generative restoration candidate. It may produce visually plausible completions, but it rarely wins the refined reference-based majority comparison and requires uncertainty analysis because repeated seeds can produce different outputs.
+#### Rombach et al. (2022) — Latent Diffusion Models
 
-SDXL Inpainting is treated as feasibility-audited but excluded from full local comparison due local hardware constraints.
+Relevant point:  
+Latent diffusion provides the generative foundation for Stable Diffusion-style inpainting.
 
----
+How Notebook 28 uses it:  
+Notebook 28 interprets Stable Diffusion as a generative restoration candidate that requires caution and uncertainty analysis.
 
-### Final methodological interpretation
+#### Podell et al. (2023) — SDXL
 
-The final report supports a trustworthiness-oriented evaluation framework.
+Relevant point:  
+SDXL represents a stronger and more recent diffusion model family.
 
-The framework does not rely on a single score. Instead, it combines:
+How Notebook 28 uses it:  
+Notebook 28 records SDXL as feasibility-audited but excluded from full local evaluation due compute limitations.
 
-- pixel-level metrics,
-- structural metrics,
-- perceptual metrics,
-- feature similarity metrics,
-- metric-region policy,
-- visual comparison,
-- model feasibility audit,
-- multi-seed generative uncertainty.
+#### Wang et al. (2004) — SSIM
 
-This is important because in painting restoration, a visually plausible output is not necessarily historically or reference-faithful.
+Relevant point:  
+SSIM requires spatial image neighborhoods.
 
----
+How Notebook 28 uses it:  
+Notebook 28 reports the refined metric-region policy where SSIM is evaluated on the mask-bounding-box crop.
 
-### Possible thesis wording
+#### Zhang et al. (2018) — LPIPS
 
-> The final controlled evaluation demonstrates that AI-assisted painting restoration should be evaluated through multiple complementary lenses. Reference-based similarity remains important, but it does not capture all relevant trustworthiness concerns. In particular, generative models require uncertainty analysis because different seeds may produce different plausible completions for the same damaged region.
+Relevant point:  
+LPIPS provides learned perceptual-distance evaluation.
 
-Another possible wording:
+How Notebook 28 uses it:  
+Notebook 28 includes LPIPS as one of the local metric families used in the refined model comparison.
+
+#### Radford et al. (2021) — CLIP
+
+Relevant point:  
+CLIP provides image-text-supervised feature-space diagnostics.
+
+How Notebook 28 uses it:  
+Notebook 28 includes CLIP similarity as a feature-space metric in the final controlled evaluation.
+
+#### Oquab et al. (2023) — DINOv2
+
+Relevant point:  
+DINOv2 provides self-supervised feature-space diagnostics.
+
+How Notebook 28 uses it:  
+Notebook 28 includes DINOv2 similarity as a second feature-space metric in the final controlled evaluation.
+
+#### Li et al. (2023) — Diffusion restoration survey
+
+Relevant point:  
+Diffusion restoration outputs require careful evaluation because visual plausibility, stability, and reference fidelity can diverge.
+
+How Notebook 28 uses it:  
+Notebook 28 uses this framing to interpret Stable Diffusion’s low reference-based win rate together with multi-seed uncertainty results.
+
+#### Fontoura Júnior et al. (2023) — Cultural heritage inpainting evaluation
+
+Relevant point:  
+Cultural heritage inpainting requires multi-criteria evaluation and cautious interpretation.
+
+How Notebook 28 uses it:  
+Notebook 28 frames the entire 50-painting experiment as a trustworthiness evaluation framework rather than a restoration-quality leaderboard.
+
+#### Van Vijle et al. (2025) — Machine Learning for Painting Conservation: A State-of-the-Art Review
+
+Relevant point:  
+The review identifies virtual restoration as an important machine-learning application in painting conservation and emphasizes reliability and data limitations.
+
+How Notebook 28 uses it:  
+Notebook 28 uses this painting-conservation context to support the project’s cautious claim: the framework evaluates restoration trustworthiness, not conservation truth.
+
+### Project decision
+
+The final controlled report synthesizes:
+
+- 50 paintings,
+- 5 painting categories,
+- 5 mask types,
+- 250 total cases,
+- 200 non-zero damage cases,
+- OpenCV Telea,
+- LaMa,
+- Stable Diffusion Inpainting,
+- SDXL feasibility audit,
+- refined metric-region policy,
+- three-model comparison,
+- Stable Diffusion uncertainty analysis,
+- uncertainty-performance linkage,
+- visual examples,
+- final interpretation.
+
+The final report emphasizes:
+
+> Visual plausibility is not the same as restoration trustworthiness.
+
+The report does not claim that any model performs historically correct painting restoration. It shows how a framework can reveal differences between pixel fidelity, structural similarity, perceptual similarity, feature similarity, model feasibility, and generative uncertainty.
+
+### Notes for final thesis writing
+
+This section should become the backbone of the final experimental-results chapter.
+
+Possible thesis wording:
+
+> The controlled 50-painting evaluation demonstrates that AI-assisted painting restoration should be evaluated through multiple complementary lenses. Reference-based similarity remains important, but it does not capture all relevant trustworthiness concerns. Generative models require additional uncertainty analysis because different seeds may produce different plausible completions for the same damaged region. The experiment therefore supports the thesis claim that visual plausibility is not equivalent to restoration trustworthiness.
+
+Another possible thesis wording:
 
 > LaMa achieved the strongest reference-based performance in the controlled benchmark, while Stable Diffusion highlighted the distinction between visual plausibility and restoration trustworthiness. Its outputs can appear coherent, but multi-seed analysis shows that diffusion-based restoration may be unstable across repeated generations.
 
----
+### Potential improvements / supervisor feedback
 
-### Main final artifact
+- Ask whether SDXL must be included if stronger compute is available.
+- Ask whether the uncertainty subset should be expanded from 40 cases to all 200 non-zero cases.
+- Add Notebook 31 texture metrics to the extended final report.
+- Add Notebook 32 uncertainty heatmaps to make spatial uncertainty visible.
+- Add Notebook 33 per-case/per-painting report templates to strengthen the framework artifact.
+- After feedback, consider semantic consistency, metadata analysis, and metric-policy ablation.
 
-`outputs/reports/final_controlled_50_evaluation_report.html`
-
-<!-- NOTEBOOK_30_SUPERVISOR_PACKAGE -->
-
-## 30. Supervisor package and proposal alignment
+## 29. Streamlit Dashboard Asset Preparation
 
 ### Decision supported
 
-A supervisor package was created to connect the completed controlled experiment back to the thesis proposal framing.
+The dashboard asset-preparation notebook converts the completed 50-painting evaluation outputs into lightweight dashboard-ready files.
 
-The package emphasizes that the thesis contribution is an evaluation framework rather than a new restoration model.
+The decision supported by this notebook is to treat the Streamlit dashboard as a structured inspection interface for the evaluation framework, not as a separate experiment.
 
-### Proposal alignment
+The notebook prepares dashboard assets from:
 
-The package maps the current experiment to three remembered research directions:
+- final controlled dataset summaries,
+- refined three-model comparison outputs,
+- Stable Diffusion uncertainty outputs,
+- selected visual case metadata,
+- key findings,
+- report manifests.
+
+This supports reproducible exploration of the controlled experiment without forcing the dashboard to directly load every raw metric file and intermediate artifact.
+
+### References
+
+#### Heer and Shneiderman (2012) — Interactive Dynamics for Visual Analysis
+
+Relevant point:  
+The paper describes principles for interactive visual analysis, including filtering, selection, coordination, and exploration across views.
+
+How Notebook 29 uses it:  
+Notebook 29 prepares dashboard tables and manifest files so that the Streamlit interface can support interactive inspection of models, mask types, categories, uncertainty cases, visual examples, and report outputs.
+
+#### Munzner (2014) — Visualization Analysis and Design
+
+Relevant point:  
+Munzner emphasizes designing visualization systems around tasks, data types, and intended analytical use rather than simply plotting available data.
+
+How Notebook 29 uses it:  
+Notebook 29 organizes the dashboard around thesis-relevant inspection tasks: understanding dataset design, comparing models, reviewing metric-region policy, inspecting uncertainty, exploring visual cases, and accessing reports.
+
+#### Fontoura Júnior et al. (2023) — Assessing the Effectiveness of Inpainting Techniques in Cultural Heritage
+
+Relevant point:  
+Cultural heritage inpainting evaluation benefits from careful multi-criteria assessment and visual inspection.
+
+How Notebook 29 uses it:  
+Notebook 29 prepares dashboard assets that expose multiple evaluation layers rather than a single ranking. This supports the cultural-heritage evaluation principle that inpainting results should be inspected through several complementary forms of evidence.
+
+#### Van Vijle et al. (2025) — Machine Learning for Painting Conservation: A State-of-the-Art Review
+
+Relevant point:  
+The review emphasizes reliability and careful interpretation in machine-learning applications for painting conservation.
+
+How Notebook 29 uses it:  
+Notebook 29 supports reliability-aware inspection by making metric results, uncertainty outputs, and visual examples accessible in one dashboard structure.
+
+### Project decision
+
+The project creates a dashboard-ready asset layer under:
+
+`outputs/dashboard/`
+
+The notebook produces:
+
+- dashboard overview summary,
+- dashboard asset manifest,
+- key findings JSON,
+- report manifest JSON,
+- model comparison dashboard CSV,
+- uncertainty cases dashboard CSV,
+- visual case dashboard CSV.
+
+The dashboard is designed around sections for:
+
+- overview,
+- dataset and damage design,
+- model stack,
+- metric-region policy,
+- final model comparison,
+- Stable Diffusion uncertainty,
+- visual case explorer,
+- key findings,
+- reports and reproducibility.
+
+### Notes for final thesis writing
+
+This section should describe the dashboard as a framework artifact.
+
+Possible thesis wording:
+
+> A Streamlit dashboard was prepared as an interactive inspection layer for the evaluation framework. Dashboard-ready CSV and JSON assets were generated from the completed metric, uncertainty, and report outputs. The dashboard was designed to support structured exploration of dataset design, model comparison, metric-region policy, uncertainty behavior, visual examples, and final reports. It is not treated as an additional experiment, but as a reproducibility and interpretation interface for the controlled evaluation.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether the dashboard should be included as a formal thesis artifact.
+- Add texture metrics to the dashboard after Notebook 31.
+- Add uncertainty heatmaps to the dashboard after Notebook 32.
+- Add per-case and per-painting report links after Notebook 33.
+- After supervisor feedback, add semantic consistency, metadata analysis, and ablation-study pages if those extensions are approved.
+
+---
+
+## 30. Supervisor Package and Proposal Alignment
+
+### Decision supported
+
+The supervisor-package notebook creates a compact review package that connects the completed controlled experiment back to the thesis proposal.
+
+The decision supported by this notebook is to make the current framework reviewable before scaling or adding scope-heavy extensions.
+
+The package emphasizes that the thesis contribution is an evaluation framework, not a new restoration model.
+
+### References
+
+#### Van Vijle et al. (2025) — Machine Learning for Painting Conservation: A State-of-the-Art Review
+
+Relevant point:  
+The review identifies virtual restoration as an important machine-learning application in painting conservation and emphasizes reliability, data limitations, and careful validation.
+
+How Notebook 30 uses it:  
+Notebook 30 frames the supervisor package around trustworthy evaluation rather than restoration claims. It supports the project’s cautious position that the framework evaluates model behavior under controlled synthetic damage, not conservation truth.
+
+#### Fontoura Júnior et al. (2023) — Assessing the Effectiveness of Inpainting Techniques in Cultural Heritage
+
+Relevant point:  
+The paper supports multi-criteria evaluation of inpainting methods in cultural heritage contexts.
+
+How Notebook 30 uses it:  
+Notebook 30 organizes the package around the multi-layer evaluation framework: dataset, damage design, model stack, metric policy, model comparison, uncertainty, limitations, and supervisor questions.
+
+#### Li et al. (2023) — Diffusion Models for Image Restoration and Enhancement: A Comprehensive Survey
+
+Relevant point:  
+The survey motivates careful evaluation of diffusion restoration outputs and highlights the need to interpret generative restoration cautiously.
+
+How Notebook 30 uses it:  
+Notebook 30 uses this framing when explaining Stable Diffusion uncertainty and SDXL feasibility to the supervisor.
+
+#### Suvorov et al. (2022) — LaMa
+
+Relevant point:  
+LaMa provides the learned inpainting baseline in the evaluated model stack.
+
+How Notebook 30 uses it:  
+Notebook 30 summarizes LaMa as part of the fully evaluated model stack and links it to the proposal’s pretrained-model comparison direction.
+
+#### Rombach et al. (2022) — Latent Diffusion Models
+
+Relevant point:  
+Latent diffusion provides the generative basis for Stable Diffusion.
+
+How Notebook 30 uses it:  
+Notebook 30 explains why diffusion outputs require uncertainty analysis and careful interpretation.
+
+#### Podell et al. (2023) — SDXL
+
+Relevant point:  
+SDXL represents a stronger diffusion-model family that was considered for full evaluation.
+
+How Notebook 30 uses it:  
+Notebook 30 records SDXL as feasibility-audited but not fully evaluated due to local hardware constraints.
+
+### Project decision
+
+The project creates a supervisor review package under:
+
+`outputs/supervisor_package/`
+
+The package includes:
+
+- `README_supervisor.md`,
+- `proposal_alignment.md`,
+- `methodology_summary.md`,
+- `results_summary.md`,
+- `limitations_and_deviations.md`,
+- `supervisor_questions.md`,
+- `next_steps.md`,
+- `package_manifest.json`,
+- compact data summaries,
+- selected figures,
+- copied methodology and model-audit notes.
+
+The package maps the current work to three thesis research directions:
 
 1. multi-metric restoration trustworthiness,
 2. pretrained model comparison across painting and damage conditions,
 3. diffusion uncertainty from multiple restoration candidates.
 
-### Current interpretation
+The package identifies the main supervisor decisions still needed:
 
-The completed 50-painting controlled experiment supports the main framework claim:
+- final dataset scale,
+- whether SDXL is required,
+- whether uncertainty should be expanded,
+- whether the dashboard should become a formal artifact,
+- which extensions should be included before final thesis execution.
 
-> Visual plausibility is not the same as restoration trustworthiness.
+### Notes for final thesis writing
 
-The package also identifies remaining clarification points for the supervisor, especially around final dataset scale, uncertainty subset size, SDXL feasibility, and dashboard formalization.
+This section should support the transition from pilot experiment to final thesis planning.
 
-### Main artifact
+Possible thesis wording:
 
-`outputs/supervisor_package/`
+> A supervisor review package was prepared after the controlled 50-painting experiment. The package linked the completed implementation back to the proposal’s research questions and summarized methodology, results, limitations, deviations, and next-step decisions. This review package was used to clarify final scope before scaling the experiment or adding further extensions.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether the current 50-painting framework is sufficient as a validated pilot or whether the final thesis must scale to 300 paintings. (Scaling up needed most probably)
+- Ask whether SDXL must be evaluated on stronger hardware.
+- Ask whether the Stable Diffusion uncertainty subset is sufficient or should be expanded.
+- Ask whether semantic consistency, metadata analysis, and metric-policy ablation should be included after feedback.
+- Consider creating `outputs/supervisor_package_extended/` after Notebooks 31–35 instead of overwriting the current stable package.
+
+---
+
+## 31. Texture Metrics
+
+### Decision supported
+
+The texture-metrics notebook adds a dedicated texture-aware evaluation layer to the controlled 50-painting framework.
+
+The decision supported by this notebook is to evaluate whether restored local regions preserve texture structure relative to the clean reference.
+
+This extends the existing metric stack beyond:
+
+- pixel fidelity,
+- structural similarity,
+- perceptual similarity,
+- CLIP feature similarity,
+- DINOv2 feature similarity,
+
+by adding local texture-continuity diagnostics.
+
+The notebook computes texture metrics on the `mask_bbox_crop` region because texture descriptors require spatial image structure.
+
+### References
+
+#### Jain et al. (2023) — Keys To Better Image Inpainting: Structure and Texture Go Hand in Hand
+
+Relevant point:  
+The paper argues that image inpainting quality depends on both structure generation and texture synthesis.
+
+How Notebook 31 uses it:  
+Notebook 31 operationalizes this structure-texture motivation by adding texture metrics to the restoration evaluation framework. The notebook does not implement Jain et al.’s model. Instead, it uses the paper’s argument to justify measuring texture preservation as a separate diagnostic layer beyond PSNR, SSIM, LPIPS, CLIP, and DINOv2.
+
+#### Sun et al. (2024) — Ancient Paintings Inpainting Based on Dual Encoders and Multi-Scale Feature Fusion
+
+Relevant point:  
+The paper treats texture and detail extraction as important for ancient painting inpainting.
+
+How Notebook 31 uses it:  
+Notebook 31 uses this as painting-specific support for evaluating local texture preservation. This is especially relevant for high-texture brushwork, large losses, and mixed damage cases.
+
+#### Liu et al. (2024) — Ancient Painting Inpainting Based on Multi-Layer Feature Fusion
+
+Relevant point:  
+The paper discusses detail preservation and frequency-domain or multi-layer feature enhancement for ancient painting inpainting.
+
+How Notebook 31 uses it:  
+Notebook 31 uses this as support for including frequency- and orientation-aware texture descriptors. Gabor responses provide a lightweight way to measure local frequency/orientation texture differences between clean and restored crops.
+
+#### Van Vijle et al. (2025) — Machine Learning for Painting Conservation: A State-of-the-Art Review
+
+Relevant point:  
+The review identifies virtual restoration as an active machine-learning application in painting conservation and emphasizes reliability, data limitations, and validation concerns.
+
+How Notebook 31 uses it:  
+Notebook 31 frames texture metrics as an additional reliability-oriented diagnostic layer. The texture scores are not treated as conservation truth, but as evidence about local texture consistency under controlled synthetic damage.
+
+#### Fontoura Júnior et al. (2023) — Assessing the Effectiveness of Inpainting Techniques in Cultural Heritage
+
+Relevant point:  
+The paper supports careful evaluation of inpainting in cultural heritage contexts using multiple criteria.
+
+How Notebook 31 uses it:  
+Notebook 31 adds texture-aware evaluation as another criterion in the controlled restoration framework. This supports the project’s broader claim that restoration trustworthiness requires several complementary signals.
+
+#### Zhang et al. (2018) — LPIPS
+
+Relevant point:  
+LPIPS motivates learned perceptual similarity and shows that pixel-level metrics are insufficient for perceptual evaluation.
+
+How Notebook 31 uses it:  
+Notebook 31 complements LPIPS rather than replacing it. LPIPS gives learned perceptual distance, while GLCM and Gabor provide more explicit local texture descriptors.
+
+#### Oquab et al. (2023) — DINOv2
+
+Relevant point:  
+DINOv2 provides robust visual features but does not explicitly isolate local texture preservation.
+
+How Notebook 31 uses it:  
+Notebook 31 adds texture metrics as a complementary local descriptor layer. This is useful for cases where DINOv2 feature similarity and explicit texture-distance metrics disagree.
+
+### Project decision
+
+Texture metrics are computed on:
+
+`mask_bbox_crop`
+
+This region is selected because:
+
+- GLCM requires spatial gray-level co-occurrence structure,
+- Gabor responses require local spatial frequency/orientation information,
+- sparse masked pixels do not form a stable texture-analysis domain,
+- the choice aligns texture metrics with the refined SSIM, LPIPS, CLIP, and DINOv2 local-region policy.
+
+The notebook computes:
+
+- GLCM contrast difference,
+- GLCM homogeneity difference,
+- GLCM energy difference,
+- GLCM correlation difference,
+- Gabor response descriptor differences,
+- normalized combined texture distance.
+
+Lower texture distance means that the restored crop is closer to the clean reference crop in local texture structure.
+
+The texture metrics are computed for:
+
+- OpenCV Telea,
+- LaMa,
+- Stable Diffusion Inpainting.
+
+The outputs include:
+
+- per-model texture metric files,
+- unified texture comparison,
+- summary by model,
+- summary by mask type,
+- summary by painting category,
+- texture disagreement cases.
+
+### Notes for final thesis writing
+
+This section should support the claim that trustworthy restoration evaluation should include local texture continuity.
+
+Possible thesis wording:
+
+> A texture-aware metric layer was added to evaluate whether restored regions preserve local surface structure and brushstroke-like detail. GLCM and Gabor descriptors were computed on the mask-bounding-box crop because texture descriptors require spatial context. This layer was interpreted as a diagnostic measure of local texture consistency rather than as evidence of conservation correctness.
+
+Another possible thesis wording:
+
+> Texture metrics complement the existing metric stack by targeting a restoration failure mode that may not be fully captured by pixel, perceptual, or feature-space similarity: local smoothing or alteration of brushstroke-like structure. The resulting texture distance values were therefore used as diagnostic evidence of local texture preservation.
+
+### Potential improvements / supervisor feedback
+
+- Consider adding LBP if the supervisor wants a broader texture descriptor set.
+- Consider separating texture results for the `high_texture_brushwork` category.
+- Consider adding visual examples where texture metrics disagree with LPIPS, DINOv2, or the refined model vote.
+- Consider adding texture overlays or texture-difference maps to the per-case reports.
