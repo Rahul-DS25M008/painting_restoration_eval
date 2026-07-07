@@ -1,108 +1,165 @@
 # Supervisor Review Package
 
-Generated: 2026-07-06 19:01:57
-
 Project:
 
 **Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration**
 
-## Purpose of this package
-
-This package summarizes the current state of the thesis experiment without requiring review of every notebook and intermediate artifact.
-
-The work is framed as an **evaluation framework**, not as a proposal for a new restoration model.
-
-The central thesis claim is:
+Core claim:
 
 > Visual plausibility is not the same as restoration trustworthiness.
 
+This folder contains the current supervisor-facing review package for the pre-feedback thesis checkpoint.
+
+The package is generated/refreshed by:
+
+- `notebooks/35_refresh_supervisor_package_cleaned.ipynb`
+
+The files in this folder are refreshed in place. Duplicate `v2`, `final_final`, or parallel summary files are intentionally avoided.
+
+## Main files to review
+
+### 1. Supervisor summary
+
+- `supervisor_summary.md`
+
+Start here.
+
+This file summarizes:
+
+- current experiment status,
+- what was added since the original package,
+- refined model comparison,
+- texture and brushstroke-proxy diagnostics,
+- Stable Diffusion uncertainty heatmaps,
+- per-case diagnostic reports,
+- updated Streamlit dashboard,
+- remaining work after supervisor feedback.
+
+### 2. Feedback agenda
+
+- `supervisor_feedback_agenda.md`
+
+Use this for the meeting structure.
+
+It lists the recommended presentation order and the main decisions to ask the supervisor.
+
+### 3. Open questions
+
+- `supervisor_open_questions.md`
+
+This file lists the unresolved scope decisions, including:
+
+- whether the 50-painting controlled subset is sufficient,
+- whether uncertainty should be expanded to all 200 non-zero cases,
+- whether SDXL should remain feasibility-audited only,
+- whether semantic/iconographic checks should be added,
+- whether metadata-driven analysis should be added,
+- whether metric-policy ablation should be added,
+- whether the dashboard should be treated as a formal supporting artifact.
+
+### 4. Artifact index
+
+- `supervisor_artifact_index.csv`
+
+This file lists the main notebooks, reports, metrics, and dashboard artifacts relevant for supervisor review.
+
+### 5. Key findings
+
+- `supervisor_key_findings.json`
+
+This machine-readable file stores the main thesis-facing findings and the supervisor decisions needed for each.
+
+### 6. Package manifest
+
+- `supervisor_package_manifest.json`
+
+This file records package metadata, source artifacts, output files, and the current feedback-ready status.
+
+## Main artifacts outside this folder
+
+### Streamlit dashboard
+
+Run from the repository root:
+
+    streamlit run streamlit_app.py
+
+Recommended pages to show:
+
+1. Overview
+2. Model Comparison
+3. Texture Diagnostics
+4. Diffusion Uncertainty
+5. Case Reports
+6. Reports
+
+### Case report index
+
+- `outputs/reports/case_diagnostics/case_report_index.html`
+
+This is the main entry point for selected per-case diagnostic reports.
+
+### Stable Diffusion uncertainty heatmap report
+
+- `outputs/reports/stable_diffusion_uncertainty_heatmap_report_50.html`
+
+This shows spatial seed-based uncertainty heatmaps for selected Stable Diffusion cases.
+
+### Dashboard assets
+
+- `outputs/dashboard/`
+
+Prepared by:
+
+- `notebooks/34_prepare_final_dashboard_assets_cleaned.ipynb`
+
+These files are consumed by the Streamlit dashboard.
+
 ## Current experiment status
 
-The controlled evaluation currently includes:
+The current controlled evaluation includes:
 
 - 50 paintings,
 - 5 painting categories,
-- 250 total synthetic damage cases,
-- 200 non-zero restoration comparison cases.
+- 200 non-zero restoration comparison cases,
+- OpenCV Telea fully evaluated,
+- LaMa fully evaluated,
+- Stable Diffusion Inpainting fully evaluated,
+- SDXL Inpainting feasibility-audited only.
 
-Fully evaluated models:
+Additional diagnostic layers now included:
 
-- OpenCV Telea,
-- LaMa,
-- Stable Diffusion Inpainting.
+- texture and brushstroke-proxy diagnostics,
+- Stable Diffusion uncertainty heatmaps,
+- selected per-case diagnostic reports,
+- final dashboard assets,
+- updated Streamlit dashboard.
 
-Feasibility-audited model:
+## Interpretation boundaries
 
-- SDXL Inpainting.
+Stable Diffusion uncertainty heatmaps show seed-based spatial variability, not calibrated confidence.
 
-## Main quantitative finding
+Brushstroke-proxy metrics are directional texture proxies, not semantic brushstroke recognition, authentication, or conservation truth.
 
-Under the refined metric-region comparison:
+Case reports are inspection artifacts, not new metric computations.
 
-- LaMa majority-vote wins: 155/200,
-- OpenCV Telea majority-vote wins: 21/200,
-- Stable Diffusion Inpainting majority-vote wins: 1/200.
+The dashboard is a review interface, not the primary research result.
 
-This supports the current interpretation that LaMa is strongest under reference-based metrics, while Stable Diffusion may produce visually plausible but less reference-faithful restorations.
+## Files intentionally removed
 
-## Stable Diffusion uncertainty
+Older standalone notes were removed after Notebook 35 because their content is now consolidated into the refreshed supervisor package files.
 
-Stable Diffusion was evaluated with multi-seed uncertainty analysis:
+Removed/obsolete files:
 
-- 40 balanced diagnostic cases,
-- 160 generated seed outputs,
-- 4 seeds per case.
-
-The highest uncertainty case in the current subset is:
-
-- `p011_loss_large`,
-- mask type: `loss_large`,
-- combined uncertainty index: 0.9834.
-
-## SDXL status
-
-SDXL Inpainting was tested locally but excluded from full local evaluation because the available 6GB GPU did not provide a practical runtime-quality balance.
-
-This is documented as a computational feasibility limitation, not as a full model-quality conclusion about SDXL.
-
-## Important files in this package
-
-### Main summaries
-
-- `data/final_controlled_50_key_results_summary.csv`
-- `data/research_question_coverage_summary.csv`
-- `data/final_controlled_50_model_stack_summary.csv`
-- `data/final_controlled_50_metric_policy_summary.csv`
-- `data/final_controlled_50_model_win_summary.csv`
-- `data/final_controlled_50_uncertainty_summary.csv`
-- `data/final_controlled_50_sdxl_feasibility_summary.csv`
-
-### Main reports
-
-- `reports/final_controlled_50_evaluation_report.html`
-- `reports/opencv_lama_stable_diffusion_refined_metric_comparison_report_50.html`
-- `reports/stable_diffusion_uncertainty_report_50.html`
-
-### Supervisor-facing notes
-
-- `proposal_alignment.md`
-- `methodology_summary.md`
-- `results_summary.md`
 - `limitations_and_deviations.md`
-- `supervisor_questions.md`
-- `next_steps.md`
+- `methodology_summary.md`
+- `proposal_alignment.md`
+- `results_summary.md`
 
-### Selected figures
+Their current replacements are:
 
-- `selected_figures/`
-
-## Requested supervisor feedback
-
-The most important feedback points are:
-
-1. Whether the current research-question coverage is sufficient.
-2. Whether the 50-painting controlled subset is sufficient for the next thesis checkpoint.
-3. Whether the 40-case Stable Diffusion uncertainty subset is sufficient or should be expanded.
-4. Whether SDXL feasibility-only treatment is acceptable.
-5. Whether the refined metric-region policy is acceptable.
-6. Whether the thesis framing should emphasize evaluation-framework trustworthiness rather than model ranking.
+- `supervisor_summary.md`
+- `supervisor_open_questions.md`
+- `supervisor_feedback_agenda.md`
+- `supervisor_key_findings.json`
+- `supervisor_artifact_index.csv`
+- `supervisor_package_manifest.json`
