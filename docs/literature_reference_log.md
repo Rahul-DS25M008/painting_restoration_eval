@@ -2874,3 +2874,100 @@ Another possible thesis wording:
 - Use the `high_texture_brushwork` focused summary when discussing texture-heavy paintings.
 - Consider adding visual examples where texture or brushstroke-proxy metrics disagree with LPIPS, DINOv2, or the refined model vote.
 - Consider adding texture overlays, orientation maps, or texture-difference maps to the per-case reports.
+
+---
+
+## 32. Stable Diffusion Uncertainty Heatmaps
+
+### Decision supported
+
+The uncertainty-heatmap notebook converts the Stable Diffusion multi-seed uncertainty outputs from Notebook 27 into spatial uncertainty visualizations.
+
+The decision supported by this notebook is to make diffusion uncertainty visually inspectable rather than only reporting case-level scalar uncertainty values.
+
+Notebook 27 already generated repeated Stable Diffusion Inpainting outputs for the same damaged inputs using four random seeds. Notebook 32 does not rerun Stable Diffusion. It reuses the existing 40-case uncertainty subset and computes per-pixel variation across seed outputs.
+
+This supports the thesis argument that visual plausibility is not equivalent to restoration trustworthiness. A diffusion model may generate plausible-looking completions while still being spatially unstable across repeated generations.
+
+### References
+
+#### Rombach et al. (2022) — Latent Diffusion Models
+
+Relevant point:  
+Latent diffusion models provide the generative basis for Stable Diffusion and enable stochastic image generation through sampling.
+
+How Notebook 32 uses it:  
+Notebook 32 interprets repeated Stable Diffusion outputs as seed-based samples from a generative restoration process. The notebook visualizes where those sampled completions differ spatially for the same damaged input.
+
+#### Li et al. (2023) — Diffusion Models for Image Restoration and Enhancement: A Comprehensive Survey
+
+Relevant point:  
+Diffusion restoration outputs require careful evaluation because visual plausibility, reference fidelity, and output stability can diverge.
+
+How Notebook 32 uses it:  
+Notebook 32 extends the uncertainty analysis by showing spatial variability maps. These maps support the thesis claim that diffusion-based restoration should not be evaluated using only a single generated output or a single reference-based score.
+
+#### Fontoura Júnior et al. (2023) — Assessing the Effectiveness of Inpainting Techniques in Cultural Heritage
+
+Relevant point:  
+Cultural heritage inpainting evaluation benefits from multi-criteria assessment and visual inspection.
+
+How Notebook 32 uses it:  
+Notebook 32 adds a visual diagnostic layer for uncertainty. The heatmaps make it possible to inspect where the generative model varies across seeds, complementing scalar metrics and selected case reports.
+
+#### Van Vijle et al. (2025) — Machine Learning for Painting Conservation: A State-of-the-Art Review
+
+Relevant point:  
+Painting-conservation applications require careful validation and cautious interpretation of machine-learning outputs.
+
+How Notebook 32 uses it:  
+Notebook 32 treats uncertainty heatmaps as reliability diagnostics, not as proof of conservation correctness. The notebook supports the broader framework goal of evaluating model behavior rather than claiming historical restoration truth.
+
+### Project decision
+
+Notebook 32 reuses the existing Stable Diffusion uncertainty subset:
+
+- 40 non-zero damaged cases,
+- 4 seeds per case,
+- 160 generated Stable Diffusion outputs.
+
+The notebook computes per-pixel standard deviation across seed outputs and summarizes uncertainty over:
+
+- full image,
+- masked region,
+- mask-bounding-box crop,
+- outside-mask region,
+- outside boundary ring around the mask.
+
+The boundary-ring summary is used as a transition/spillover diagnostic. It measures instability around the outside edge of the mask and should not be described as a complete inside-and-outside boundary analysis unless the implementation is later extended.
+
+Main outputs include:
+
+- `outputs/metrics/stable_diffusion_uncertainty_heatmap_manifest_50.csv`
+- `outputs/metrics/stable_diffusion_uncertainty_heatmap_summary_by_case_50.csv`
+- `outputs/metrics/stable_diffusion_uncertainty_heatmap_summary_by_mask_type_50.csv`
+- `outputs/metrics/stable_diffusion_uncertainty_heatmap_summary_by_category_50.csv`
+- `outputs/metrics/stable_diffusion_uncertainty_heatmap_vs_refined_performance_50.csv`
+- `outputs/metrics/stable_diffusion_uncertainty_heatmap_selected_cases_50.csv`
+- `outputs/reports/stable_diffusion_uncertainty_heatmap_report_50.html`
+
+The report links to image files rather than embedding all images directly, so it should be opened within the repository output structure.
+
+### Notes for final thesis writing
+
+This section should support the uncertainty and trustworthiness chapter.
+
+Possible thesis wording:
+
+> Spatial uncertainty heatmaps were generated from multi-seed Stable Diffusion outputs by computing per-pixel variation across repeated generations for the same damaged input. These heatmaps visualize where the diffusion model produced unstable completions. Masked-region, mask-bounding-box, outside-mask, and boundary-ring uncertainty summaries were computed to distinguish instability inside the restoration target from transition-region and spillover behavior. The resulting maps were interpreted as seed-based variability diagnostics, not calibrated confidence estimates.
+
+Another possible thesis wording:
+
+> The heatmap analysis shows that Stable Diffusion uncertainty is spatially structured. Larger losses produced the highest masked-region variability, while boundary-ring variability exposed transition instability around some damage regions. This supports the thesis claim that generative plausibility, reference fidelity, and output stability are separate evaluation dimensions.
+
+### Potential improvements / supervisor feedback
+
+- Ask whether the 40-case heatmap subset is sufficient or whether uncertainty heatmaps should be expanded to all 200 non-zero cases.
+- Consider adding a symmetric inner-plus-outer boundary band if the supervisor wants a stricter boundary-transition analysis.
+- Add uncertainty heatmap links to the Streamlit dashboard in Notebook 34.
+- Use selected high-uncertainty cases in Notebook 33 per-case reports.
