@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Case Diagnostic Report — p041_scratch_thin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 32px;
+            line-height: 1.5;
+            color: #222;
+        }
+        h1, h2, h3 {
+            color: #111;
+        }
+        .note {
+            background: #f5f5f5;
+            border-left: 4px solid #555;
+            padding: 12px;
+            margin: 16px 0;
+        }
+        .metric-table {
+            border-collapse: collapse;
+            margin: 12px 0 24px 0;
+            font-size: 13px;
+            width: 100%;
+        }
+        .metric-table th, .metric-table td {
+            border: 1px solid #ccc;
+            padding: 6px 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .metric-table th {
+            background: #eee;
+            width: 280px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+        }
+        .side-by-side {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        a {
+            color: #0645ad;
+        }
+    </style>
+</head>
+<body>
+    <p><a href="../case_report_index.html">Back to case report index</a></p>
+
+    <h1>Case Diagnostic Report — p041_scratch_thin</h1>
+
+    <div class="note">
+        <strong>Category:</strong> high_texture_brushwork<br>
+        <strong>Mask type:</strong> scratch_thin<br>
+        <strong>Selection reasons:</strong> high_texture_brushwork_representative
+    </div>
+
+    <h2>Visual diagnostic grid</h2>
+    <img src="../../../figures/case_diagnostics/selected_case_grids/p041_scratch_thin_case_diagnostic_grid.png" width="1100">
+
+    
+    <h2>Refined metric summary</h2>
+    <table class="metric-table">
+        
+            <tr>
+                <th>overall_metric_vote</th>
+                <td>opencv_telea</td>
+            </tr>
+            
+            <tr>
+                <th>opencv_telea_metric_wins</th>
+                <td>4</td>
+            </tr>
+            
+            <tr>
+                <th>lama_metric_wins</th>
+                <td>2</td>
+            </tr>
+            
+            <tr>
+                <th>stable_diffusion_inpainting_metric_wins</th>
+                <td>0</td>
+            </tr>
+            
+            <tr>
+                <th>mixed_metric_outcome</th>
+                <td>True</td>
+            </tr>
+            
+    </table>
+    
+
+    
+    <h2>Texture and brushstroke-proxy diagnostics</h2>
+    <table class="metric-table">
+        
+            <tr>
+                <th>has_texture_disagreement</th>
+                <td>True</td>
+            </tr>
+            
+    </table>
+    
+
+    
+    <h2>Stable Diffusion uncertainty diagnostics</h2>
+    <table class="metric-table">
+        
+            <tr>
+                <th>has_uncertainty_heatmap</th>
+                <td>True</td>
+            </tr>
+            
+            <tr>
+                <th>uncertainty_masked_mean_uncertainty</th>
+                <td>10.9162</td>
+            </tr>
+            
+            <tr>
+                <th>uncertainty_masked_p95_uncertainty</th>
+                <td>26.4232</td>
+            </tr>
+            
+            <tr>
+                <th>uncertainty_bbox_mean_uncertainty</th>
+                <td>4.6866</td>
+            </tr>
+            
+            <tr>
+                <th>uncertainty_bbox_p95_uncertainty</th>
+                <td>13.2879</td>
+            </tr>
+            
+            <tr>
+                <th>uncertainty_boundary_mean_uncertainty</th>
+                <td>7.0152</td>
+            </tr>
+            
+            <tr>
+                <th>uncertainty_boundary_p95_uncertainty</th>
+                <td>18.5682</td>
+            </tr>
+            
+            <tr>
+                <th>uncertainty_outside_mask_mean_uncertainty</th>
+                <td>3.9339</td>
+            </tr>
+            
+            <tr>
+                <th>uncertainty_outside_mask_p95_uncertainty</th>
+                <td>11.8803</td>
+            </tr>
+            
+            <tr>
+                <th>uncertainty_masked_vs_global_mean_uncertainty_ratio</th>
+                <td>2.6798</td>
+            </tr>
+            
+            <tr>
+                <th>uncertainty_boundary_vs_global_mean_uncertainty_ratio</th>
+                <td>1.7221</td>
+            </tr>
+            
+            <tr>
+                <th>uncertainty_selected_selection_reasons</th>
+                <td>highest_outside_mask_uncertainty; lowest_masked_uncertainty</td>
+            </tr>
+            
+    </table>
+    
+
+    
+        <h2>Uncertainty heatmap assets</h2>
+        <div class="side-by-side">
+            <div>
+                <h3>Heatmap</h3>
+                <img src="../../../figures/uncertainty_heatmaps/heatmap_images/p041_scratch_thin_uncertainty_heatmap.png" width="500">
+            </div>
+            <div>
+                <h3>Overlay</h3>
+                <img src="../../../figures/uncertainty_heatmaps/overlay_images/p041_scratch_thin_uncertainty_overlay.png" width="500">
+            </div>
+        </div>
+        
+
+    
+    <h2>Source paths</h2>
+    <table class="metric-table">
+        
+            <tr>
+                <th>clean_image_path_relative</th>
+                <td>data/processed/clean/p041_clean.png</td>
+            </tr>
+            
+            <tr>
+                <th>damaged_image_path_relative</th>
+                <td>data/processed/masked/p041_scratch_thin_damaged.png</td>
+            </tr>
+            
+            <tr>
+                <th>mask_image_path_relative</th>
+                <td>data/processed/masks/p041_scratch_thin_mask.png</td>
+            </tr>
+            
+            <tr>
+                <th>opencv_image_path_relative</th>
+                <td>data/processed/restored/opencv_telea/p041_scratch_thin_restored_opencv_telea.png</td>
+            </tr>
+            
+            <tr>
+                <th>lama_image_path_relative</th>
+                <td>data/processed/restored/lama/p041_scratch_thin_restored_lama.png</td>
+            </tr>
+            
+            <tr>
+                <th>stable_diffusion_image_path_relative</th>
+                <td>data/processed/restored/stable_diffusion_inpainting/p041_scratch_thin_restored_stable_diffusion_inpainting.png</td>
+            </tr>
+            
+            <tr>
+                <th>uncertainty_heatmap_png_path</th>
+                <td>outputs/figures/uncertainty_heatmaps/heatmap_images/p041_scratch_thin_uncertainty_heatmap.png</td>
+            </tr>
+            
+            <tr>
+                <th>uncertainty_overlay_png_path</th>
+                <td>outputs/figures/uncertainty_heatmaps/overlay_images/p041_scratch_thin_uncertainty_overlay.png</td>
+            </tr>
+            
+            <tr>
+                <th>case_diagnostic_grid_path</th>
+                <td>outputs/figures/case_diagnostics/selected_case_grids/p041_scratch_thin_case_diagnostic_grid.png</td>
+            </tr>
+            
+    </table>
+    
+
+    <h2>Interpretation note</h2>
+    <p>
+        This case report combines visual outputs and diagnostic summaries already generated in earlier notebooks.
+        It is intended for inspection and thesis reporting, not as a new metric computation.
+    </p>
+</body>
+</html>
