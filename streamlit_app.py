@@ -28,11 +28,12 @@ st.set_page_config(
 PROJECT_ROOT = Path(__file__).resolve().parent
 
 DASHBOARD_DIR = PROJECT_ROOT / "outputs" / "dashboard"
-DASHBOARD_DATA_DIR = DASHBOARD_DIR / "data"
-DASHBOARD_MANIFEST_DIR = DASHBOARD_DIR / "manifests"
+DASHBOARD_DATA_DIR = DASHBOARD_DIR / "data"          # legacy Notebook 29/30 location
+DASHBOARD_MANIFEST_DIR = DASHBOARD_DIR / "manifests" # legacy Notebook 29/30 location
 
 METRICS_DIR = PROJECT_ROOT / "outputs" / "metrics"
 REPORTS_DIR = PROJECT_ROOT / "outputs" / "reports"
+FIGURES_DIR = PROJECT_ROOT / "outputs" / "figures"
 
 
 # =============================================================================
@@ -70,7 +71,12 @@ def resolve_project_path(path_value: str | Path | None) -> Path | None:
     except TypeError:
         pass
 
-    path = Path(str(path_value))
+    path_text = str(path_value).strip()
+
+    if not path_text:
+        return None
+
+    path = Path(path_text)
 
     if path.is_absolute():
         return path
@@ -78,26 +84,40 @@ def resolve_project_path(path_value: str | Path | None) -> Path | None:
     return PROJECT_ROOT / path
 
 
-def project_relative(path: Path) -> str:
+def project_relative(path: Path | None) -> str:
+    if path is None:
+        return ""
+
     try:
         return path.relative_to(PROJECT_ROOT).as_posix()
     except ValueError:
         return path.as_posix()
 
 
+def path_exists(path_value: str | Path | None) -> bool:
+    resolved = resolve_project_path(path_value)
+    return bool(resolved is not None and resolved.exists())
+
+
 # =============================================================================
 # Manifest-aware asset loading
 # =============================================================================
 
+# New Notebook 34 assets live directly in outputs/dashboard/.
+dashboard_summary = load_json(str(DASHBOARD_DIR / "dashboard_summary.json"))
+dashboard_asset_manifest = load_json(str(DASHBOARD_DIR / "dashboard_asset_manifest.json"))
+
+# Legacy assets from earlier dashboard-prep notebooks are still supported so the
+# current UI does not lose sections if old assets are present.
 overview = load_json(str(DASHBOARD_MANIFEST_DIR / "dashboard_overview_summary.json"))
 assets_manifest = load_json(str(DASHBOARD_MANIFEST_DIR / "dashboard_assets_manifest.json"))
 key_findings_manifest = load_json(str(DASHBOARD_MANIFEST_DIR / "dashboard_key_findings.json"))
 reports_manifest = load_json(str(DASHBOARD_MANIFEST_DIR / "dashboard_reports_manifest.json"))
 
 
-def build_asset_lookup(manifest: dict[str, Any]) -> dict[str, Path]:
+def build_legacy_asset_lookup(manifest: dict[str, Any]) -> dict[str, Path]:
     """
-    Build a flexible lookup from dashboard_assets_manifest.json.
+    Build a flexible lookup from legacy dashboard_assets_manifest.json.
 
     Supports multiple possible key/path field names because generated manifests
     are not always polite enough to use one schema forever.
@@ -129,7 +149,25 @@ def build_asset_lookup(manifest: dict[str, Any]) -> dict[str, Path]:
     return lookup
 
 
-ASSET_LOOKUP = build_asset_lookup(assets_manifest)
+def build_notebook34_asset_lookup(manifest: dict[str, Any]) -> dict[str, Path]:
+    """Build lookup from Notebook 34 dashboard_asset_manifest.json."""
+    lookup: dict[str, Path] = {}
+
+    for asset_key, asset_metadata in manifest.get("assets", {}).items():
+        path_value = asset_metadata.get("path")
+
+        if path_value:
+            resolved_path = resolve_project_path(path_value)
+
+            if resolved_path is not None:
+                lookup[str(asset_key)] = resolved_path
+
+    return lookup
+
+
+LEGACY_ASSET_LOOKUP = build_legacy_asset_lookup(assets_manifest)
+DASHBOARD34_ASSET_LOOKUP = build_notebook34_asset_lookup(dashboard_asset_manifest)
+ASSET_LOOKUP = {**LEGACY_ASSET_LOOKUP, **DASHBOARD34_ASSET_LOOKUP}
 
 
 def find_existing_file(candidate_paths: list[Path]) -> Path | None:
@@ -148,10 +186,12 @@ def load_asset_csv(
     show_warning: bool = False,
 ) -> pd.DataFrame:
     """
-    Load a dashboard CSV using:
-    1. asset manifest keys,
-    2. outputs/dashboard/data fallback filenames,
-    3. outputs/metrics fallback filenames.
+    Load a CSV using:
+    1. Notebook 34 asset manifest keys,
+    2. legacy asset manifest keys,
+    3. outputs/dashboard/ filenames,
+    4. outputs/dashboard/data fallback filenames,
+    5. outputs/metrics fallback filenames.
     """
     candidate_paths: list[Path] = []
 
@@ -160,6 +200,7 @@ def load_asset_csv(
             candidate_paths.append(ASSET_LOOKUP[key])
 
     for filename in fallback_filenames:
+        candidate_paths.append(DASHBOARD_DIR / filename)
         candidate_paths.append(DASHBOARD_DATA_DIR / filename)
         candidate_paths.append(METRICS_DIR / filename)
 
@@ -177,6 +218,62 @@ def load_asset_csv(
 # Load data
 # =============================================================================
 
+# Notebook 34 outputs.
+dashboard_model_winner_summary_df = load_asset_csv(
+    ["dashboard_model_winner_summary"],
+    ["dashboard_model_winner_summary.csv"],
+    label="dashboard model winner summary",
+)
+
+dashboard_metric_vote_summary_df = load_asset_csv(
+    ["dashboard_metric_vote_summary"],
+    ["dashboard_metric_vote_summary.csv"],
+    label="dashboard metric vote summary",
+)
+
+dashboard_texture_summary_df = load_asset_csv(
+    ["dashboard_texture_summary"],
+    ["dashboard_texture_summary.csv"],
+    label="dashboard texture summary",
+)
+
+dashboard_texture_disagreements_df = load_asset_csv(
+    ["dashboard_texture_disagreements"],
+    ["dashboard_texture_disagreements.csv"],
+    label="dashboard texture disagreements",
+)
+
+dashboard_uncertainty_summary_df = load_asset_csv(
+    ["dashboard_uncertainty_summary"],
+    ["dashboard_uncertainty_summary.csv"],
+    label="dashboard uncertainty summary",
+)
+
+dashboard_uncertainty_selected_cases_df = load_asset_csv(
+    ["dashboard_uncertainty_selected_cases"],
+    ["dashboard_uncertainty_selected_cases.csv"],
+    label="dashboard uncertainty selected cases",
+)
+
+dashboard_case_report_manifest_df = load_asset_csv(
+    ["dashboard_case_report_manifest"],
+    ["dashboard_case_report_manifest.csv"],
+    label="dashboard case report manifest",
+)
+
+dashboard_selected_cases_df = load_asset_csv(
+    ["dashboard_selected_cases"],
+    ["dashboard_selected_cases.csv"],
+    label="dashboard selected cases",
+)
+
+dashboard_figure_manifest_df = load_asset_csv(
+    ["dashboard_figure_manifest"],
+    ["dashboard_figure_manifest.csv"],
+    label="dashboard figure manifest",
+)
+
+# Legacy/pre-existing outputs retained for current sections.
 dataset_summary_df = load_asset_csv(
     ["dataset_summary_csv"],
     ["final_controlled_50_dataset_summary.csv"],
@@ -215,7 +312,7 @@ per_metric_winner_summary_df = load_asset_csv(
 
 model_comparison_cases_df = load_asset_csv(
     ["model_comparison_cases_csv"],
-    ["dashboard_model_comparison_cases.csv"],
+    ["dashboard_model_comparison_cases.csv", "comparison_unified_refined_opencv_lama_stable_diffusion_50.csv"],
     label="model comparison cases",
 )
 
@@ -231,6 +328,7 @@ comparison_by_category_df = load_asset_csv(
     label="comparison by category",
 )
 
+# Legacy diffusion uncertainty tables plus Notebook 32 heatmap tables.
 uncertainty_summary_df = load_asset_csv(
     ["uncertainty_summary_csv"],
     ["final_controlled_50_uncertainty_summary.csv"],
@@ -239,25 +337,25 @@ uncertainty_summary_df = load_asset_csv(
 
 uncertainty_cases_df = load_asset_csv(
     ["uncertainty_cases_csv"],
-    ["dashboard_uncertainty_cases.csv"],
+    ["dashboard_uncertainty_cases.csv", "stable_diffusion_uncertainty_heatmap_summary_by_case_50.csv"],
     label="uncertainty cases",
 )
 
 uncertainty_by_mask_type_df = load_asset_csv(
     ["uncertainty_by_mask_type_csv"],
-    ["stable_diffusion_uncertainty_combined_summary_by_mask_type_50.csv"],
+    ["stable_diffusion_uncertainty_heatmap_summary_by_mask_type_50.csv", "stable_diffusion_uncertainty_combined_summary_by_mask_type_50.csv"],
     label="uncertainty by mask type",
 )
 
 uncertainty_by_category_df = load_asset_csv(
     ["uncertainty_by_category_csv"],
-    ["stable_diffusion_uncertainty_combined_summary_by_category_50.csv"],
+    ["stable_diffusion_uncertainty_heatmap_summary_by_category_50.csv", "stable_diffusion_uncertainty_combined_summary_by_category_50.csv"],
     label="uncertainty by category",
 )
 
 uncertainty_vs_performance_df = load_asset_csv(
     ["uncertainty_vs_performance_csv"],
-    ["stable_diffusion_uncertainty_vs_refined_performance_50.csv"],
+    ["stable_diffusion_uncertainty_heatmap_vs_refined_performance_50.csv", "stable_diffusion_uncertainty_vs_refined_performance_50.csv"],
     label="uncertainty vs performance",
 )
 
@@ -463,33 +561,28 @@ def readable_value(value: Any, fallback: str = "Not available") -> str:
     return str(value)
 
 
-def readable_uncertainty_value(value: Any) -> str:
+def readable_float(value: Any, fallback: str = "Not available", digits: int = 4) -> str:
     if value is None:
-        return "Not part of uncertainty subset"
+        return fallback
 
     try:
         if pd.isna(value):
-            return "Not part of uncertainty subset"
+            return fallback
     except TypeError:
         pass
 
-    if isinstance(value, float):
-        return f"{value:.4f}"
+    try:
+        return f"{float(value):.{digits}f}"
+    except Exception:
+        return str(value)
 
-    return str(value)
+
+def readable_uncertainty_value(value: Any) -> str:
+    return readable_float(value, fallback="Not part of uncertainty subset")
 
 
 def readable_metric_vote(value: Any) -> str:
-    if value is None:
-        return "No refined vote recorded for this visual case"
-
-    try:
-        if pd.isna(value):
-            return "No refined vote recorded for this visual case"
-    except TypeError:
-        pass
-
-    return str(value)
+    return readable_value(value, fallback="No refined vote recorded for this visual case")
 
 
 def visual_reason_explanation(reason: str | None) -> str:
@@ -529,6 +622,37 @@ def visual_reason_explanation(reason: str | None) -> str:
     )
 
 
+def split_dashboard_summary_by_section(df: pd.DataFrame, section: str) -> pd.DataFrame:
+    if df.empty or "dashboard_section" not in df.columns:
+        return pd.DataFrame()
+
+    return df[df["dashboard_section"] == section].dropna(axis=1, how="all").copy()
+
+
+def render_local_asset_link(label: str, path_value: str | Path | None) -> None:
+    resolved_path = resolve_project_path(path_value)
+
+    if resolved_path is None:
+        st.markdown(f"- **{label}**: `not available`")
+        return
+
+    exists = resolved_path.exists()
+    st.markdown(
+        f"- **{label}**: `{project_relative(resolved_path)}` "
+        f"{'✅ local file exists' if exists else '⚠️ missing locally'}"
+    )
+
+
+def render_image_from_path(path_value: str | Path | None, caption: str | None = None) -> None:
+    resolved_path = resolve_project_path(path_value)
+
+    if resolved_path and resolved_path.exists():
+        st.image(str(resolved_path), use_container_width=True)
+        st.caption(caption or project_relative(resolved_path))
+    else:
+        st.warning("Image file not found.")
+
+
 # =============================================================================
 # Sidebar navigation
 # =============================================================================
@@ -544,7 +668,9 @@ page = st.sidebar.radio(
         "Model Stack",
         "Metric Policy",
         "Model Comparison",
+        "Texture Diagnostics",
         "Diffusion Uncertainty",
+        "Case Reports",
         "Visual Explorer",
         "Key Findings",
         "Reports",
@@ -586,23 +712,32 @@ if page == "Overview":
         (
             "This dashboard summarizes the controlled 50-painting thesis experiment. "
             "It is not a restoration tool. It is a review interface for checking how different "
-            "models behave under controlled synthetic damage, region-aware metrics, and uncertainty diagnostics."
+            "models behave under controlled synthetic damage, region-aware metrics, texture diagnostics, "
+            "and seed-based uncertainty analysis."
         ),
     )
+
+    summary_dataset = dashboard_summary.get("dataset", {})
+    summary_models = dashboard_summary.get("models", {})
+    summary_case_reports = dashboard_summary.get("case_reports", {})
 
     controlled_subset = overview.get("controlled_subset", {})
     refined_comparison = overview.get("refined_comparison", {})
     uncertainty_analysis = overview.get("uncertainty_analysis", {})
-    models = overview.get("models", {})
+    legacy_models = overview.get("models", {})
+
+    paintings = summary_dataset.get("controlled_paintings", controlled_subset.get("paintings", "NA"))
+    non_zero_cases = summary_dataset.get("non_zero_cases", controlled_subset.get("non_zero_comparison_cases", "NA"))
+    categories = summary_dataset.get("painting_categories", [])
+    mask_types = summary_dataset.get("mask_types_non_zero", [])
 
     st.markdown("### Controlled benchmark")
 
     col1, col2, col3, col4 = st.columns(4)
-
-    col1.metric("Paintings", controlled_subset.get("paintings", "NA"))
-    col2.metric("Damage cases", controlled_subset.get("damage_cases", "NA"))
-    col3.metric("Non-zero cases", controlled_subset.get("non_zero_comparison_cases", "NA"))
-    col4.metric("Categories", controlled_subset.get("painting_categories", "NA"))
+    col1.metric("Paintings", paintings)
+    col2.metric("Non-zero cases", non_zero_cases)
+    col3.metric("Categories", len(categories) if categories else controlled_subset.get("painting_categories", "NA"))
+    col4.metric("Non-zero mask types", len(mask_types) if mask_types else "NA")
 
     explain_box(
         "Why zero-control and non-zero cases are separated",
@@ -617,7 +752,7 @@ if page == "Overview":
 
     col1, col2, col3 = st.columns(3)
 
-    total_cases = refined_comparison.get("total_non_zero_cases", "NA")
+    total_cases = refined_comparison.get("total_non_zero_cases", non_zero_cases)
 
     col1.metric(
         "LaMa majority wins",
@@ -632,7 +767,14 @@ if page == "Overview":
         f"{refined_comparison.get('stable_diffusion_inpainting_majority_cases', 'NA')}/{total_cases}",
     )
 
-    if not model_win_summary_df.empty:
+    if not dashboard_model_winner_summary_df.empty:
+        simple_bar(
+            dashboard_model_winner_summary_df,
+            x="refined_winner",
+            y="cases",
+            title="Refined Winner Cases by Model",
+        )
+    elif not model_win_summary_df.empty:
         simple_bar(
             model_win_summary_df,
             x="model",
@@ -650,12 +792,29 @@ if page == "Overview":
         kind="success",
     )
 
+    st.markdown("### Final diagnostic layers")
+
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Selected case reports", summary_case_reports.get("selected_cases", len(dashboard_selected_cases_df)))
+    col2.metric(
+        "Cases with heatmaps",
+        summary_case_reports.get("selected_cases_with_uncertainty_heatmaps", "NA"),
+    )
+    col3.metric(
+        "Texture disagreement cases",
+        summary_case_reports.get("selected_cases_with_texture_disagreement", "NA"),
+    )
+    col4.metric(
+        "Dashboard assets",
+        len(dashboard_asset_manifest.get("assets", {})) if dashboard_asset_manifest else "NA",
+    )
+
     st.markdown("### Stable Diffusion uncertainty headline")
 
     col1, col2, col3 = st.columns(3)
-    col1.metric("Uncertainty cases", uncertainty_analysis.get("cases", "NA"))
-    col2.metric("Seed outputs", uncertainty_analysis.get("seed_outputs", "NA"))
-    col3.metric("Seeds per case", uncertainty_analysis.get("seeds_per_case", "NA"))
+    col1.metric("Uncertainty cases", uncertainty_analysis.get("cases", 40))
+    col2.metric("Seed outputs", uncertainty_analysis.get("seed_outputs", 160))
+    col3.metric("Seeds per case", uncertainty_analysis.get("seeds_per_case", 4))
 
     explain_box(
         "Why uncertainty is subset-based",
@@ -667,25 +826,24 @@ if page == "Overview":
         kind="warning",
     )
 
-    if not visual_cases_df.empty:
-        count_bar(
-            visual_cases_df,
-            column="final_visual_source",
-            title="Visual Cases by Source",
-        )
-
     st.markdown("### Model stack")
 
     col1, col2 = st.columns(2)
 
+    fully_evaluated = summary_models.get("evaluated_models", legacy_models.get("fully_evaluated", []))
+    feasibility_audited = summary_models.get(
+        "feasibility_audited_not_fully_evaluated",
+        legacy_models.get("feasibility_audited", []),
+    )
+
     with col1:
         st.markdown("**Fully evaluated**")
-        for model in models.get("fully_evaluated", []):
+        for model in fully_evaluated:
             st.markdown(f"- `{model}`")
 
     with col2:
         st.markdown("**Feasibility audited**")
-        for model in models.get("feasibility_audited", []):
+        for model in feasibility_audited:
             st.markdown(f"- `{model}`")
 
 
@@ -701,7 +859,7 @@ elif page == "Dataset & Damage":
         (
             "The benchmark uses a controlled 50-painting subset with five painting categories. "
             "Each painting receives five mask conditions, including a zero-control case and four non-zero "
-            "damage types."
+            "damage types. The refined comparison and the case reports focus on the 200 non-zero cases."
         ),
     )
 
@@ -712,6 +870,20 @@ elif page == "Dataset & Damage":
 
     with col2:
         dataframe_block("Damage summary", damage_summary_df)
+
+    if dataset_summary_df.empty:
+        dataset_from_summary_df = pd.DataFrame(
+            {
+                "field": ["controlled_paintings", "non_zero_cases", "painting_categories", "mask_types_non_zero"],
+                "value": [
+                    dashboard_summary.get("dataset", {}).get("controlled_paintings", "NA"),
+                    dashboard_summary.get("dataset", {}).get("non_zero_cases", "NA"),
+                    ", ".join(dashboard_summary.get("dataset", {}).get("painting_categories", [])),
+                    ", ".join(dashboard_summary.get("dataset", {}).get("mask_types_non_zero", [])),
+                ],
+            }
+        )
+        dataframe_block("Dataset summary from Notebook 34", dataset_from_summary_df)
 
     if not damage_summary_df.empty:
         x_col = pick_first_existing_column(
@@ -750,6 +922,31 @@ elif page == "Model Stack":
     st.header("Model Stack")
 
     dataframe_block("Evaluated and audited models", model_stack_df, height=420)
+
+    if model_stack_df.empty:
+        fallback_model_df = pd.DataFrame(
+            {
+                "model": [
+                    "OpenCV Telea",
+                    "LaMa",
+                    "Stable Diffusion Inpainting",
+                    "SDXL Inpainting",
+                ],
+                "evaluation_status": [
+                    "fully_evaluated",
+                    "fully_evaluated",
+                    "fully_evaluated",
+                    "feasibility_audited_only",
+                ],
+                "role": [
+                    "deterministic classical baseline",
+                    "learning-based inpainting baseline",
+                    "generative inpainting and uncertainty target",
+                    "resource feasibility audit",
+                ],
+            }
+        )
+        dataframe_block("Model stack from final dashboard state", fallback_model_df, height=260)
 
     explain_box(
         "Model interpretation",
@@ -796,11 +993,29 @@ elif page == "Metric Policy":
 
     dataframe_block("Final metric-region policy", metric_policy_df, height=420)
 
+    if metric_policy_df.empty:
+        fallback_policy_df = pd.DataFrame(
+            {
+                "metric_family": ["MSE", "PSNR", "SSIM", "LPIPS", "CLIP", "DINOv2", "Texture / brushstroke-proxy"],
+                "final_region": ["masked_region", "masked_region", "mask_bbox_crop", "mask_bbox_crop", "mask_bbox_crop", "mask_bbox_crop", "mask_bbox_crop"],
+                "reason": [
+                    "pixel-error metric targeted to damaged pixels",
+                    "pixel-fidelity metric targeted to damaged pixels",
+                    "requires local spatial context",
+                    "perceptual crop comparison requires context",
+                    "feature comparison requires context",
+                    "feature comparison requires context",
+                    "local texture descriptors require spatial context",
+                ],
+            }
+        )
+        dataframe_block("Fallback final metric-region policy", fallback_policy_df, height=300)
+
     explain_box(
         "Final policy interpretation",
         (
             "No single metric is treated as absolute truth. The framework combines pixel fidelity, structural similarity, "
-            "perceptual similarity, feature-space similarity, visual diagnostics, and uncertainty analysis."
+            "perceptual similarity, feature-space similarity, texture diagnostics, visual inspection, and uncertainty analysis."
         ),
         kind="success",
     )
@@ -822,39 +1037,59 @@ elif page == "Model Comparison":
         ),
     )
 
-    simple_bar(
-        model_win_summary_df,
-        x="model",
-        y="majority_vote_cases",
-        title="Refined Majority-Vote Cases by Model",
-    )
+    if not dashboard_model_winner_summary_df.empty:
+        simple_bar(
+            dashboard_model_winner_summary_df,
+            x="refined_winner",
+            y="cases",
+            title="Refined Winner Cases by Model",
+        )
+    else:
+        simple_bar(
+            model_win_summary_df,
+            x="model",
+            y="majority_vote_cases",
+            title="Refined Majority-Vote Cases by Model",
+        )
 
-    if not model_comparison_cases_df.empty:
+    if not dashboard_metric_vote_summary_df.empty:
+        simple_bar(
+            dashboard_metric_vote_summary_df,
+            x="model",
+            y="total_metric_votes",
+            title="Total Refined Metric Votes by Model",
+        )
+
+    comparison_source_df = model_comparison_cases_df.copy()
+
+    if not comparison_source_df.empty:
         vote_col = pick_first_existing_column(
-            model_comparison_cases_df,
-            ["refined_overall_metric_vote", "overall_metric_vote"],
+            comparison_source_df,
+            ["refined_overall_metric_vote", "overall_metric_vote", "refined_winner"],
         )
 
         if vote_col:
             count_bar(
-                model_comparison_cases_df,
+                comparison_source_df,
                 column=vote_col,
                 title="Case-Level Refined Metric Vote Distribution",
             )
 
-        if "mask_type" in model_comparison_cases_df.columns:
-            count_bar(
-                model_comparison_cases_df,
-                column="mask_type",
-                title="Compared Cases by Damage Type",
-            )
-
-        if "category" in model_comparison_cases_df.columns:
-            count_bar(
-                model_comparison_cases_df,
-                column="category",
-                title="Compared Cases by Painting Category",
-            )
+        col1, col2 = st.columns(2)
+        with col1:
+            if "mask_type" in comparison_source_df.columns:
+                count_bar(
+                    comparison_source_df,
+                    column="mask_type",
+                    title="Compared Cases by Damage Type",
+                )
+        with col2:
+            if "category" in comparison_source_df.columns:
+                count_bar(
+                    comparison_source_df,
+                    column="category",
+                    title="Compared Cases by Painting Category",
+                )
 
     explain_box(
         "Why majority vote is used",
@@ -865,8 +1100,13 @@ elif page == "Model Comparison":
         ),
     )
 
-    with st.expander("Model win summary", expanded=True):
-        dataframe_block("Model win summary", model_win_summary_df, height=260)
+    with st.expander("Model winner summary", expanded=True):
+        dataframe_block("Notebook 34 winner summary", dashboard_model_winner_summary_df, height=220)
+        if dashboard_model_winner_summary_df.empty:
+            dataframe_block("Legacy model win summary", model_win_summary_df, height=260)
+
+    with st.expander("Metric vote summary", expanded=True):
+        dataframe_block("Notebook 34 metric vote summary", dashboard_metric_vote_summary_df, height=260)
 
     with st.expander("Per-metric winner summary", expanded=False):
         dataframe_block("Per-metric winner summary", per_metric_winner_summary_df)
@@ -879,10 +1119,10 @@ elif page == "Model Comparison":
 
     st.markdown("### Case-level explorer")
 
-    if model_comparison_cases_df.empty:
+    if comparison_source_df.empty:
         st.info("No case-level comparison table available.")
     else:
-        filtered_df = model_comparison_cases_df.copy()
+        filtered_df = comparison_source_df.copy()
 
         col1, col2, col3 = st.columns(3)
 
@@ -909,7 +1149,7 @@ elif page == "Model Comparison":
         with col3:
             vote_col = pick_first_existing_column(
                 filtered_df,
-                ["refined_overall_metric_vote", "overall_metric_vote"],
+                ["refined_overall_metric_vote", "overall_metric_vote", "refined_winner"],
             )
 
             if vote_col:
@@ -931,6 +1171,9 @@ elif page == "Model Comparison":
             "title",
             "refined_overall_metric_vote",
             "overall_metric_vote",
+            "refined_opencv_metric_wins",
+            "refined_lama_metric_wins",
+            "refined_stable_diffusion_metric_wins",
             "opencv_telea_metric_wins",
             "lama_metric_wins",
             "stable_diffusion_inpainting_metric_wins",
@@ -945,6 +1188,112 @@ elif page == "Model Comparison":
 
 
 # =============================================================================
+# Page: Texture Diagnostics
+# =============================================================================
+
+elif page == "Texture Diagnostics":
+    st.header("Texture & Brushstroke-Proxy Diagnostics")
+
+    explain_box(
+        "What this section adds",
+        (
+            "Texture diagnostics inspect local surface-like structure that reference metrics may not capture cleanly. "
+            "The brushstroke-proxy layer uses gradient and orientation descriptors as a directional texture proxy. "
+            "It is not semantic brushstroke recognition, artist authentication, or conservation truth."
+        ),
+        kind="warning",
+    )
+
+    texture_winner_section_df = split_dashboard_summary_by_section(
+        dashboard_texture_summary_df,
+        "texture_winner_summary_nonzero",
+    )
+    brushstroke_section_df = split_dashboard_summary_by_section(
+        dashboard_texture_summary_df,
+        "brushstroke_proxy_summary_by_model",
+    )
+    high_texture_section_df = split_dashboard_summary_by_section(
+        dashboard_texture_summary_df,
+        "high_texture_brushwork_summary",
+    )
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        dataframe_block("Texture winner summary", texture_winner_section_df, height=280)
+
+    with col2:
+        dataframe_block("Brushstroke-proxy summary by model", brushstroke_section_df, height=280)
+
+    dataframe_block("High-texture brushwork focus", high_texture_section_df, height=260)
+
+    st.markdown("### Texture/refined disagreement cases")
+
+    if dashboard_texture_disagreements_df.empty:
+        st.info("No texture disagreement cases available.")
+    else:
+        filtered_df = dashboard_texture_disagreements_df.copy()
+
+        col1, col2 = st.columns(2)
+        with col1:
+            if "category" in filtered_df.columns:
+                categories = sorted(filtered_df["category"].dropna().unique())
+                selected_categories = st.multiselect(
+                    "Texture category filter",
+                    categories,
+                    default=categories,
+                )
+                filtered_df = filtered_df[filtered_df["category"].isin(selected_categories)]
+
+        with col2:
+            if "mask_type" in filtered_df.columns:
+                masks = sorted(filtered_df["mask_type"].dropna().unique())
+                selected_masks = st.multiselect(
+                    "Texture mask filter",
+                    masks,
+                    default=masks,
+                )
+                filtered_df = filtered_df[filtered_df["mask_type"].isin(selected_masks)]
+
+        st.caption(f"Filtered texture disagreement cases: {len(filtered_df)}")
+
+        compact_table(
+            filtered_df,
+            [
+                "case_id",
+                "painting_id",
+                "category",
+                "mask_type",
+                "refined_winner",
+                "overall_metric_vote",
+                "texture_winner",
+                "texture_winner_model",
+                "combined_texture_distance_winner",
+                "brushstroke_proxy_distance_mean_winner",
+                "texture_refined_agreement",
+            ],
+            height=420,
+        )
+
+        if "texture_winner_model" in filtered_df.columns:
+            count_bar(
+                filtered_df,
+                column="texture_winner_model",
+                title="Texture Disagreement Cases by Texture Winner",
+            )
+
+    explain_box(
+        "Thesis interpretation",
+        (
+            "This layer supports the trustworthiness framework by showing that a restoration can look acceptable "
+            "under aggregate reference metrics while still behaving differently under local texture diagnostics. "
+            "This is especially relevant for high-texture brushwork cases."
+        ),
+        kind="success",
+    )
+
+
+# =============================================================================
 # Page: Diffusion Uncertainty
 # =============================================================================
 
@@ -955,48 +1304,55 @@ elif page == "Diffusion Uncertainty":
         "What uncertainty means here",
         (
             "Stable Diffusion can generate different restorations for the same damaged image depending on the random seed. "
-            "The uncertainty analysis measures how much those outputs vary. High uncertainty does not automatically mean "
-            "bad restoration, but it is a warning signal that the model is unstable for that case."
+            "The uncertainty heatmap analysis measures spatial variation across seed outputs. High uncertainty does not "
+            "automatically mean bad restoration, but it is a warning signal that the model is unstable for that case."
         ),
     )
 
-    dataframe_block("Uncertainty summary", uncertainty_summary_df, height=220)
+    dataframe_block("Dashboard uncertainty summary", dashboard_uncertainty_summary_df, height=260)
 
-    if not uncertainty_cases_df.empty:
-        col1, col2 = st.columns(2)
-
-        with col1:
-            numeric_histogram(
-                uncertainty_cases_df,
-                column="combined_uncertainty_index",
-                title="Distribution of Combined Uncertainty Index",
-                color="mask_type" if "mask_type" in uncertainty_cases_df.columns else None,
-            )
-
-        with col2:
-            if "mask_type" in uncertainty_cases_df.columns:
-                count_bar(
-                    uncertainty_cases_df,
-                    column="mask_type",
-                    title="Uncertainty Subset Cases by Damage Type",
-                )
+    uncertainty_mask_section_df = split_dashboard_summary_by_section(
+        dashboard_uncertainty_summary_df,
+        "uncertainty_by_mask_type",
+    )
+    uncertainty_category_section_df = split_dashboard_summary_by_section(
+        dashboard_uncertainty_summary_df,
+        "uncertainty_by_category",
+    )
 
     col1, col2 = st.columns(2)
 
     with col1:
-        dataframe_block("Uncertainty by mask type", uncertainty_by_mask_type_df)
+        dataframe_block("Uncertainty by mask type", uncertainty_mask_section_df if not uncertainty_mask_section_df.empty else uncertainty_by_mask_type_df)
 
     with col2:
-        dataframe_block("Uncertainty by category", uncertainty_by_category_df)
+        dataframe_block("Uncertainty by category", uncertainty_category_section_df if not uncertainty_category_section_df.empty else uncertainty_by_category_df)
 
-    st.markdown("### Highest uncertainty cases")
+    st.markdown("### Highest uncertainty / selected heatmap cases")
 
-    if not uncertainty_cases_df.empty and "combined_uncertainty_index" in uncertainty_cases_df.columns:
-        highest_uncertainty_df = (
-            uncertainty_cases_df
-            .sort_values("combined_uncertainty_index", ascending=False)
-            .head(15)
+    selected_uncertainty_source_df = dashboard_uncertainty_selected_cases_df.copy()
+
+    if selected_uncertainty_source_df.empty:
+        selected_uncertainty_source_df = uncertainty_cases_df.copy()
+
+    if not selected_uncertainty_source_df.empty:
+        uncertainty_sort_col = pick_first_existing_column(
+            selected_uncertainty_source_df,
+            [
+                "masked_mean_uncertainty",
+                "uncertainty_masked_mean_uncertainty",
+                "combined_uncertainty_index",
+            ],
         )
+
+        if uncertainty_sort_col:
+            highest_uncertainty_df = (
+                selected_uncertainty_source_df
+                .sort_values(uncertainty_sort_col, ascending=False)
+                .head(15)
+            )
+        else:
+            highest_uncertainty_df = selected_uncertainty_source_df.head(15)
 
         compact_table(
             highest_uncertainty_df,
@@ -1005,28 +1361,60 @@ elif page == "Diffusion Uncertainty":
                 "painting_id",
                 "category",
                 "mask_type",
-                "title",
+                "selection_reasons",
+                "selection_count",
+                "masked_mean_uncertainty",
+                "boundary_mean_uncertainty",
+                "outside_mask_mean_uncertainty",
                 "combined_uncertainty_index",
-                "masked_std_mean",
-                "mean_pairwise_lpips",
-                "mean_dinov2_uncertainty_distance",
+                "heatmap_png_path",
+                "overlay_png_path",
             ],
             height=380,
         )
 
-        x_col = pick_first_existing_column(
-            highest_uncertainty_df,
-            ["case_id", "original_case_id"],
+        if uncertainty_sort_col:
+            x_col = pick_first_existing_column(highest_uncertainty_df, ["case_id", "original_case_id"])
+            if x_col:
+                simple_bar(
+                    highest_uncertainty_df,
+                    x=x_col,
+                    y=uncertainty_sort_col,
+                    color="mask_type",
+                    title="Top Stable Diffusion Uncertainty Cases",
+                )
+
+    st.markdown("### Uncertainty heatmap preview")
+
+    preview_df = dashboard_uncertainty_selected_cases_df.copy()
+
+    if preview_df.empty:
+        st.info("No selected uncertainty heatmap cases available.")
+    else:
+        label_col = pick_first_existing_column(preview_df, ["case_id", "original_case_id", "painting_id"])
+
+        selected_index = st.selectbox(
+            "Select uncertainty case",
+            preview_df.index,
+            format_func=lambda idx: (
+                f"{preview_df.loc[idx].get(label_col, idx)}"
+                f" | {preview_df.loc[idx].get('category', 'unknown')}"
+                f" | {preview_df.loc[idx].get('mask_type', 'unknown')}"
+            ),
         )
 
-        if x_col:
-            simple_bar(
-                highest_uncertainty_df,
-                x=x_col,
-                y="combined_uncertainty_index",
-                color="mask_type",
-                title="Top Stable Diffusion Uncertainty Cases",
-            )
+        selected_row = preview_df.loc[selected_index]
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("**Heatmap**")
+            render_image_from_path(selected_row.get("heatmap_png_path"), caption="Seed-variation heatmap")
+        with col2:
+            st.markdown("**Overlay**")
+            render_image_from_path(selected_row.get("overlay_png_path"), caption="Uncertainty overlay")
+
+        with st.expander("Selected uncertainty case details"):
+            st.dataframe(selected_row.to_frame(name="value"), use_container_width=True, height=420)
 
     st.markdown("### Uncertainty vs reference performance")
 
@@ -1040,7 +1428,10 @@ elif page == "Diffusion Uncertainty":
     )
 
     if not uncertainty_vs_performance_df.empty:
-        x_col = "combined_uncertainty_index"
+        x_col = pick_first_existing_column(
+            uncertainty_vs_performance_df,
+            ["masked_mean_uncertainty", "combined_uncertainty_index"],
+        )
         y_col = pick_first_existing_column(
             uncertainty_vs_performance_df,
             [
@@ -1050,12 +1441,12 @@ elif page == "Diffusion Uncertainty":
             ],
         )
 
-        if y_col:
+        if x_col and y_col:
             simple_scatter(
                 uncertainty_vs_performance_df,
                 x=x_col,
                 y=y_col,
-                color="uncertainty_performance_quadrant",
+                color="mask_type" if "mask_type" in uncertainty_vs_performance_df.columns else None,
                 hover_columns=[
                     col
                     for col in ["case_id", "original_case_id", "category", "mask_type", "title"]
@@ -1082,6 +1473,130 @@ elif page == "Diffusion Uncertainty":
 
 
 # =============================================================================
+# Page: Case Reports
+# =============================================================================
+
+elif page == "Case Reports":
+    st.header("Selected Case Diagnostic Reports")
+
+    explain_box(
+        "Purpose of case reports",
+        (
+            "Notebook 33 generated selected case-level reports that combine clean/damaged/mask inputs, all three "
+            "model restorations, refined metric summaries, texture diagnostics, and uncertainty heatmaps when available. "
+            "These are inspection artifacts, not new metric computations."
+        ),
+    )
+
+    if dashboard_selected_cases_df.empty and dashboard_case_report_manifest_df.empty:
+        st.info("No selected case report assets available.")
+    else:
+        source_df = dashboard_selected_cases_df.copy()
+
+        if source_df.empty:
+            source_df = dashboard_case_report_manifest_df.copy()
+
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            if "category" in source_df.columns:
+                categories = sorted(source_df["category"].dropna().unique())
+                selected_categories = st.multiselect("Case category", categories, default=categories)
+                source_df = source_df[source_df["category"].isin(selected_categories)]
+        with col2:
+            if "mask_type" in source_df.columns:
+                masks = sorted(source_df["mask_type"].dropna().unique())
+                selected_masks = st.multiselect("Case mask type", masks, default=masks)
+                source_df = source_df[source_df["mask_type"].isin(selected_masks)]
+        with col3:
+            reason_text = st.text_input("Filter selection reason contains", value="")
+            if reason_text and "selection_reasons" in source_df.columns:
+                source_df = source_df[
+                    source_df["selection_reasons"].astype(str).str.contains(reason_text, case=False, na=False)
+                ]
+
+        st.caption(f"Filtered selected case reports: {len(source_df)}")
+
+        if "has_uncertainty_heatmap" in source_df.columns or "has_texture_disagreement" in source_df.columns:
+            col1, col2 = st.columns(2)
+            with col1:
+                if "has_uncertainty_heatmap" in source_df.columns:
+                    count_bar(source_df, "has_uncertainty_heatmap", "Selected Cases with Uncertainty Heatmaps")
+            with col2:
+                if "has_texture_disagreement" in source_df.columns:
+                    count_bar(source_df, "has_texture_disagreement", "Selected Cases with Texture Disagreement")
+
+        compact_table(
+            source_df,
+            [
+                "case_id",
+                "category",
+                "mask_type",
+                "selection_reasons",
+                "selection_count",
+                "has_uncertainty_heatmap",
+                "has_texture_disagreement",
+                "uncertainty_masked_mean_uncertainty",
+                "uncertainty_boundary_mean_uncertainty",
+                "case_report_html_path",
+                "case_diagnostic_grid_path",
+            ],
+            height=360,
+        )
+
+        if not source_df.empty:
+            label_col = pick_first_existing_column(source_df, ["case_id", "painting_id"])
+            selected_index = st.selectbox(
+                "Select diagnostic case",
+                source_df.index,
+                format_func=lambda idx: (
+                    f"{source_df.loc[idx].get(label_col, idx)}"
+                    f" | {source_df.loc[idx].get('category', 'unknown')}"
+                    f" | {source_df.loc[idx].get('mask_type', 'unknown')}"
+                ),
+            )
+
+            selected_row = source_df.loc[selected_index]
+
+            detail_col, image_col = st.columns([1, 2])
+
+            with detail_col:
+                st.markdown("### Case details")
+                st.markdown(f"**Case ID:** {readable_value(selected_row.get('case_id'))}")
+                st.markdown(f"**Category:** {readable_value(selected_row.get('category'))}")
+                st.markdown(f"**Mask type:** {readable_value(selected_row.get('mask_type'))}")
+                st.markdown(f"**Selection reasons:** {readable_value(selected_row.get('selection_reasons'))}")
+                st.markdown(
+                    f"**Masked uncertainty:** {readable_uncertainty_value(selected_row.get('uncertainty_masked_mean_uncertainty'))}"
+                )
+                st.markdown(
+                    f"**Boundary uncertainty:** {readable_uncertainty_value(selected_row.get('uncertainty_boundary_mean_uncertainty'))}"
+                )
+
+                st.markdown("### Local report files")
+                render_local_asset_link("HTML case report", selected_row.get("case_report_html_path"))
+                render_local_asset_link("Diagnostic grid", selected_row.get("case_diagnostic_grid_path"))
+
+                report_path = resolve_project_path(selected_row.get("case_report_html_path"))
+                if report_path and report_path.exists():
+                    st.caption("Open the HTML path locally from the repository if the browser blocks file links.")
+
+            with image_col:
+                st.markdown("### Diagnostic grid preview")
+                render_image_from_path(selected_row.get("case_diagnostic_grid_path"), caption="Notebook 33 selected case grid")
+
+            with st.expander("Raw selected case row"):
+                st.dataframe(selected_row.to_frame(name="value"), use_container_width=True, height=460)
+
+    st.markdown("### Case report index")
+    render_local_asset_link(
+        "Case report index",
+        dashboard_summary.get("case_reports", {}).get("case_report_index")
+        or dashboard_summary.get("reports", {}).get("case_report_index")
+        or "outputs/reports/case_diagnostics/case_report_index.html",
+    )
+
+
+# =============================================================================
 # Page: Visual Explorer
 # =============================================================================
 
@@ -1089,17 +1604,15 @@ elif page == "Visual Explorer":
     st.header("Visual Case Explorer")
 
     explain_box(
-        "Why some fields are unavailable",
+        "What changed",
         (
-            "Visual cases come from different sources. Some are selected from refined model comparison, some from "
-            "uncertainty analysis, and some from uncertainty-performance quadrants. Therefore, not every visual case "
-            "has every field. For example, a model-comparison case may not have a Stable Diffusion uncertainty index "
-            "because uncertainty was only computed for a balanced 40-case subset."
+            "The original visual explorer is retained for older dashboard visual cases. "
+            "For the final pre-feedback case reports, use the new Case Reports page. "
         ),
     )
 
     if visual_cases_df.empty:
-        st.info("No visual cases available.")
+        st.info("No legacy visual cases available. Use the Case Reports page for Notebook 33 diagnostic reports.")
     else:
         filtered_df = visual_cases_df.copy()
 
@@ -1241,9 +1754,7 @@ elif page == "Key Findings":
         ),
     )
 
-    if not findings:
-        st.info("No key findings manifest available.")
-    else:
+    if findings:
         for finding in findings:
             finding_id = finding.get("finding_id", "")
             title = finding.get("title", "")
@@ -1255,17 +1766,30 @@ elif page == "Key Findings":
 
                 if evidence:
                     st.caption(f"Evidence: {evidence}")
+    else:
+        st.markdown("### Pre-feedback findings")
+        st.success(
+            """
+1. The controlled 50-painting benchmark is complete for 200 non-zero restoration cases.
+2. LaMa dominates the refined reference-based comparison.
+3. OpenCV Telea remains a useful deterministic baseline.
+4. Stable Diffusion rarely wins under reference metrics but is important for studying plausibility and instability.
+5. Texture and brushstroke-proxy diagnostics add a local-structure layer beyond aggregate reference metrics.
+6. Stable Diffusion heatmaps show seed-based spatial variability, not calibrated confidence.
+7. Selected case reports make disagreement and instability inspectable at the individual-case level.
+"""
+        )
 
     st.markdown("### Thesis contribution summary")
 
     st.success(
         """
-The current experiment supports the thesis framing that AI-assisted painting restoration requires 
+The current experiment supports the thesis framing that AI-assisted painting restoration requires
 a trustworthiness evaluation framework.
 
 The strongest contribution is not that one model wins. The stronger contribution is showing that
-reference metrics, visual plausibility, metric-region policy, model uncertainty, and feasibility constraints
-can point to different conclusions.
+reference metrics, visual plausibility, metric-region policy, texture diagnostics, model uncertainty,
+and feasibility constraints can point to different conclusions.
 """
     )
 
@@ -1279,7 +1803,8 @@ Open points:
 2. Is the 40-case uncertainty subset sufficient?
 3. Should SDXL remain feasibility-audited only?
 4. Is the refined metric-region policy accepted?
-5. Should the Streamlit dashboard become a formal supporting artifact?
+5. Are texture/brushstroke-proxy diagnostics framed conservatively enough?
+6. Should the Streamlit dashboard become a formal supporting artifact?
 """
     )
 
@@ -1291,10 +1816,26 @@ Open points:
 elif page == "Reports":
     st.header("Reports & Reproducibility")
 
-    st.markdown("### Reports")
+    st.markdown("### Final report links")
+
+    render_local_asset_link(
+        "Stable Diffusion uncertainty heatmap report",
+        dashboard_summary.get("reports", {}).get("uncertainty_heatmap_report")
+        or "outputs/reports/stable_diffusion_uncertainty_heatmap_report_50.html",
+    )
+    render_local_asset_link(
+        "Selected case report index",
+        dashboard_summary.get("reports", {}).get("case_report_index")
+        or "outputs/reports/case_diagnostics/case_report_index.html",
+    )
+
+    if not dashboard_figure_manifest_df.empty:
+        dataframe_block("Figure and report manifest", dashboard_figure_manifest_df, height=420)
+
+    st.markdown("### Legacy reports manifest")
 
     if not reports:
-        st.info("No reports manifest available.")
+        st.info("No legacy reports manifest available.")
     else:
         reports_df = pd.DataFrame(reports)
         st.dataframe(reports_df, use_container_width=True, height=260)
@@ -1304,13 +1845,7 @@ elif page == "Reports":
             path_value = report.get("path") or report.get("project_relative_path") or ""
 
             if path_value:
-                report_path = resolve_project_path(path_value)
-                exists = report_path.exists() if report_path else False
-
-                st.markdown(
-                    f"- **{label}**: `{path_value}` "
-                    f"{'✅ local file exists' if exists else '⚠️ missing locally'}"
-                )
+                render_local_asset_link(label, path_value)
 
     st.markdown("### Reproducibility note")
 
@@ -1336,6 +1871,9 @@ reproducible execution record.
 elif page == "Debug":
     st.header("Dashboard Debug")
 
+    st.markdown("### Notebook 34 dashboard summary")
+    st.json(dashboard_summary if dashboard_summary else {"status": "dashboard_summary.json not found"})
+
     st.markdown("### Manifest asset lookup")
 
     if ASSET_LOOKUP:
@@ -1351,12 +1889,21 @@ elif page == "Debug":
         )
         st.dataframe(asset_lookup_df, use_container_width=True, height=500)
     else:
-        st.warning("Asset lookup is empty. Check dashboard_assets_manifest.json.")
+        st.warning("Asset lookup is empty. Check dashboard_asset_manifest.json or legacy dashboard_assets_manifest.json.")
 
     st.markdown("### Loaded dataframe shapes")
 
     loaded_shapes = pd.DataFrame(
         [
+            {"name": "dashboard_model_winner_summary_df", "rows": len(dashboard_model_winner_summary_df), "columns": len(dashboard_model_winner_summary_df.columns)},
+            {"name": "dashboard_metric_vote_summary_df", "rows": len(dashboard_metric_vote_summary_df), "columns": len(dashboard_metric_vote_summary_df.columns)},
+            {"name": "dashboard_texture_summary_df", "rows": len(dashboard_texture_summary_df), "columns": len(dashboard_texture_summary_df.columns)},
+            {"name": "dashboard_texture_disagreements_df", "rows": len(dashboard_texture_disagreements_df), "columns": len(dashboard_texture_disagreements_df.columns)},
+            {"name": "dashboard_uncertainty_summary_df", "rows": len(dashboard_uncertainty_summary_df), "columns": len(dashboard_uncertainty_summary_df.columns)},
+            {"name": "dashboard_uncertainty_selected_cases_df", "rows": len(dashboard_uncertainty_selected_cases_df), "columns": len(dashboard_uncertainty_selected_cases_df.columns)},
+            {"name": "dashboard_case_report_manifest_df", "rows": len(dashboard_case_report_manifest_df), "columns": len(dashboard_case_report_manifest_df.columns)},
+            {"name": "dashboard_selected_cases_df", "rows": len(dashboard_selected_cases_df), "columns": len(dashboard_selected_cases_df.columns)},
+            {"name": "dashboard_figure_manifest_df", "rows": len(dashboard_figure_manifest_df), "columns": len(dashboard_figure_manifest_df.columns)},
             {"name": "dataset_summary_df", "rows": len(dataset_summary_df), "columns": len(dataset_summary_df.columns)},
             {"name": "damage_summary_df", "rows": len(damage_summary_df), "columns": len(damage_summary_df.columns)},
             {"name": "model_stack_df", "rows": len(model_stack_df), "columns": len(model_stack_df.columns)},
@@ -1376,17 +1923,19 @@ elif page == "Debug":
         ]
     )
 
-    st.dataframe(loaded_shapes, use_container_width=True, height=500)
+    st.dataframe(loaded_shapes, use_container_width=True, height=620)
 
     st.markdown("### Dashboard directories")
 
     st.code(
         f"""
 PROJECT_ROOT={PROJECT_ROOT}
+DASHBOARD_DIR={DASHBOARD_DIR}
 DASHBOARD_DATA_DIR={DASHBOARD_DATA_DIR}
 DASHBOARD_MANIFEST_DIR={DASHBOARD_MANIFEST_DIR}
 METRICS_DIR={METRICS_DIR}
 REPORTS_DIR={REPORTS_DIR}
+FIGURES_DIR={FIGURES_DIR}
         """.strip(),
         language="text",
     )
