@@ -1,0 +1,92 @@
+{
+  "generated_by": "35_refresh_supervisor_package_cleaned",
+  "generated_at": "2026-07-07T22:29:38",
+  "findings": [
+    {
+      "finding_id": "F1",
+      "title": "Controlled evaluation framework is complete for the pre-feedback checkpoint",
+      "summary": "The current framework covers 50 paintings, 200 non-zero restoration cases, three fully evaluated restoration models, and one feasibility-audited model.",
+      "evidence": [
+        "comparison_unified_refined_opencv_lama_stable_diffusion_50.csv",
+        "dashboard_summary.json"
+      ],
+      "supervisor_decision_needed": "Confirm whether this controlled subset is sufficient for the thesis scope before scaling."
+    },
+    {
+      "finding_id": "F2",
+      "title": "LaMa remains strongest under the refined reference-based metric policy",
+      "summary": "The refined comparison shows LaMa as the dominant model under the selected full-reference metrics and region policy.",
+      "evidence": [
+        "dashboard_model_winner_summary.csv",
+        "comparison_unified_refined_opencv_lama_stable_diffusion_50.csv"
+      ],
+      "supervisor_decision_needed": "Confirm whether the majority-vote summary is an acceptable compact model-comparison result."
+    },
+    {
+      "finding_id": "F3",
+      "title": "Metric-region policy is a central methodological contribution",
+      "summary": "The framework distinguishes masked-region metrics from mask-bounding-box metrics. This prevents structurally inappropriate use of metrics such as SSIM on sparse masked pixels.",
+      "evidence": [
+        "26_refined_metric_region_policy_cleaned.ipynb",
+        "comparison_unified_refined_opencv_lama_stable_diffusion_50.csv"
+      ],
+      "supervisor_decision_needed": "Confirm whether the final metric-region policy should remain fixed for thesis experiments."
+    },
+    {
+      "finding_id": "F4",
+      "title": "Texture and brushstroke-proxy diagnostics add a local-structure layer",
+      "summary": "Notebook 31 adds texture and directional structure diagnostics, including GLCM, Gabor, and brushstroke-proxy features.",
+      "evidence": [
+        "comparison_texture_unified_50.csv",
+        "comparison_texture_case_winners_nonzero_50.csv",
+        "comparison_texture_disagreement_cases_50.csv",
+        "comparison_brushstroke_proxy_summary_by_model_50.csv"
+      ],
+      "supervisor_decision_needed": "Confirm whether these should be part of the core framework or treated as supplementary diagnostics.",
+      "interpretation_boundary": "Brushstroke-proxy metrics are not semantic brushstroke recognition or authentication."
+    },
+    {
+      "finding_id": "F5",
+      "title": "Stable Diffusion uncertainty heatmaps expose spatial instability",
+      "summary": "Notebook 32 converts multi-seed Stable Diffusion variation into spatial uncertainty heatmaps. This reveals where the generative model is unstable within and around damaged regions.",
+      "evidence": [
+        "stable_diffusion_uncertainty_heatmap_summary_by_case_50.csv",
+        "stable_diffusion_uncertainty_heatmap_summary_by_mask_type_50.csv",
+        "stable_diffusion_uncertainty_heatmap_report_50.html"
+      ],
+      "supervisor_decision_needed": "Confirm whether the current 40-case subset is sufficient or should be expanded after feedback.",
+      "interpretation_boundary": "The heatmaps show seed-based spatial variability, not calibrated confidence."
+    },
+    {
+      "finding_id": "F6",
+      "title": "Case reports make aggregate findings inspectable",
+      "summary": "Notebook 33 creates selected per-case diagnostic reports combining visual outputs, refined metrics, texture diagnostics, and uncertainty heatmap evidence.",
+      "evidence": [
+        "case_diagnostic_selected_cases_50.csv",
+        "case_diagnostic_report_manifest_50.csv",
+        "case_report_index.html"
+      ],
+      "supervisor_decision_needed": "Confirm whether selected case reports should be used as thesis evidence examples."
+    },
+    {
+      "finding_id": "F7",
+      "title": "The Streamlit dashboard is now a review interface for the framework",
+      "summary": "Notebook 34 prepares dashboard assets and the updated Streamlit app exposes model comparison, texture diagnostics, uncertainty diagnostics, and selected case reports.",
+      "evidence": [
+        "dashboard_asset_manifest.json",
+        "streamlit_app.py"
+      ],
+      "supervisor_decision_needed": "Confirm whether the dashboard should remain a supporting artifact for the thesis."
+    },
+    {
+      "finding_id": "F8",
+      "title": "Scope expansion should wait until after supervisor feedback",
+      "summary": "Potential extensions include semantic/iconographic consistency checks, metadata-driven analysis, metric-policy ablation, scaling beyond 50 paintings, full uncertainty expansion, SDXL follow-up, and human/expert review.",
+      "evidence": [
+        "supervisor_open_questions.md",
+        "supervisor_feedback_agenda.md"
+      ],
+      "supervisor_decision_needed": "Prioritize which extensions, if any, should be pursued after feedback."
+    }
+  ]
+}

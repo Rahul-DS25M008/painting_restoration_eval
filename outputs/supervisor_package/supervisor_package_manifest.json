@@ -1,0 +1,271 @@
+{
+  "generated_by": "35_refresh_supervisor_package_cleaned",
+  "generated_at": "2026-07-07T22:29:38",
+  "package_directory": "outputs/supervisor_package",
+  "refresh_policy": {
+    "versioning": "Existing supervisor package outputs are refreshed in place.",
+    "no_duplicate_v2_files": true
+  },
+  "outputs": {
+    "supervisor_summary": {
+      "path": "outputs/supervisor_package/supervisor_summary.md",
+      "exists": true,
+      "file_size_kb": 6.29
+    },
+    "supervisor_artifact_index": {
+      "path": "outputs/supervisor_package/supervisor_artifact_index.csv",
+      "exists": true,
+      "file_size_kb": 2.39
+    },
+    "supervisor_key_findings": {
+      "path": "outputs/supervisor_package/supervisor_key_findings.json",
+      "exists": true,
+      "file_size_kb": 5.06
+    },
+    "supervisor_open_questions": {
+      "path": "outputs/supervisor_package/supervisor_open_questions.md",
+      "exists": true,
+      "file_size_kb": 5.16
+    },
+    "supervisor_feedback_agenda": {
+      "path": "outputs/supervisor_package/supervisor_feedback_agenda.md",
+      "exists": true,
+      "file_size_kb": 4.01
+    },
+    "supervisor_package_manifest": {
+      "path": "outputs/supervisor_package/supervisor_package_manifest.json",
+      "exists": false,
+      "file_size_kb": null
+    }
+  },
+  "source_artifacts": {
+    "refined_comparison": {
+      "path": "outputs/metrics/comparison_unified_refined_opencv_lama_stable_diffusion_50.csv",
+      "exists": true
+    },
+    "texture_unified": {
+      "path": "outputs/metrics/comparison_texture_unified_50.csv",
+      "exists": true
+    },
+    "texture_case_winners_nonzero": {
+      "path": "outputs/metrics/comparison_texture_case_winners_nonzero_50.csv",
+      "exists": true
+    },
+    "texture_winner_summary_nonzero": {
+      "path": "outputs/metrics/comparison_texture_winner_summary_nonzero_50.csv",
+      "exists": true
+    },
+    "texture_disagreement_cases": {
+      "path": "outputs/metrics/comparison_texture_disagreement_cases_50.csv",
+      "exists": true
+    },
+    "texture_high_texture_brushwork_summary": {
+      "path": "outputs/metrics/comparison_texture_high_texture_brushwork_summary_50.csv",
+      "exists": true
+    },
+    "brushstroke_proxy_summary_by_model": {
+      "path": "outputs/metrics/comparison_brushstroke_proxy_summary_by_model_50.csv",
+      "exists": true
+    },
+    "uncertainty_heatmap_manifest": {
+      "path": "outputs/metrics/stable_diffusion_uncertainty_heatmap_manifest_50.csv",
+      "exists": true
+    },
+    "uncertainty_heatmap_summary_by_case": {
+      "path": "outputs/metrics/stable_diffusion_uncertainty_heatmap_summary_by_case_50.csv",
+      "exists": true
+    },
+    "uncertainty_heatmap_summary_by_mask_type": {
+      "path": "outputs/metrics/stable_diffusion_uncertainty_heatmap_summary_by_mask_type_50.csv",
+      "exists": true
+    },
+    "uncertainty_heatmap_summary_by_category": {
+      "path": "outputs/metrics/stable_diffusion_uncertainty_heatmap_summary_by_category_50.csv",
+      "exists": true
+    },
+    "uncertainty_heatmap_vs_refined_performance": {
+      "path": "outputs/metrics/stable_diffusion_uncertainty_heatmap_vs_refined_performance_50.csv",
+      "exists": true
+    },
+    "uncertainty_heatmap_selected_cases": {
+      "path": "outputs/metrics/stable_diffusion_uncertainty_heatmap_selected_cases_50.csv",
+      "exists": true
+    },
+    "case_diagnostic_selected_cases": {
+      "path": "outputs/metrics/case_diagnostic_selected_cases_50.csv",
+      "exists": true
+    },
+    "case_diagnostic_report_manifest": {
+      "path": "outputs/metrics/case_diagnostic_report_manifest_50.csv",
+      "exists": true
+    },
+    "dashboard_summary": {
+      "path": "outputs/dashboard/dashboard_summary.json",
+      "exists": true
+    },
+    "dashboard_model_winner_summary": {
+      "path": "outputs/dashboard/dashboard_model_winner_summary.csv",
+      "exists": true
+    },
+    "dashboard_metric_vote_summary": {
+      "path": "outputs/dashboard/dashboard_metric_vote_summary.csv",
+      "exists": true
+    },
+    "dashboard_texture_summary": {
+      "path": "outputs/dashboard/dashboard_texture_summary.csv",
+      "exists": true
+    },
+    "dashboard_texture_disagreements": {
+      "path": "outputs/dashboard/dashboard_texture_disagreements.csv",
+      "exists": true
+    },
+    "dashboard_uncertainty_summary": {
+      "path": "outputs/dashboard/dashboard_uncertainty_summary.csv",
+      "exists": true
+    },
+    "dashboard_uncertainty_selected_cases": {
+      "path": "outputs/dashboard/dashboard_uncertainty_selected_cases.csv",
+      "exists": true
+    },
+    "dashboard_case_report_manifest": {
+      "path": "outputs/dashboard/dashboard_case_report_manifest.csv",
+      "exists": true
+    },
+    "dashboard_selected_cases": {
+      "path": "outputs/dashboard/dashboard_selected_cases.csv",
+      "exists": true
+    },
+    "dashboard_figure_manifest": {
+      "path": "outputs/dashboard/dashboard_figure_manifest.csv",
+      "exists": true
+    },
+    "dashboard_asset_manifest": {
+      "path": "outputs/dashboard/dashboard_asset_manifest.json",
+      "exists": true
+    },
+    "uncertainty_heatmap_report": {
+      "path": "outputs/reports/stable_diffusion_uncertainty_heatmap_report_50.html",
+      "exists": true
+    },
+    "case_report_index": {
+      "path": "outputs/reports/case_diagnostics/case_report_index.html",
+      "exists": true
+    }
+  },
+  "supervisor_facts": {
+    "generated_at": "2026-07-07T22:29:38",
+    "notebook": "35_refresh_supervisor_package_cleaned",
+    "dataset": {
+      "controlled_paintings": 50,
+      "non_zero_cases": 200,
+      "categories": [
+        "abstraction_surrealism",
+        "architecture_structured",
+        "high_texture_brushwork",
+        "landscape_natural",
+        "portrait_figure"
+      ],
+      "non_zero_mask_types": [
+        "loss_large",
+        "loss_small",
+        "mixed_damage",
+        "scratch_thin"
+      ],
+      "category_counts": {
+        "abstraction_surrealism": 40,
+        "architecture_structured": 40,
+        "high_texture_brushwork": 40,
+        "landscape_natural": 40,
+        "portrait_figure": 40
+      },
+      "mask_type_counts": {
+        "loss_large": 50,
+        "loss_small": 50,
+        "mixed_damage": 50,
+        "scratch_thin": 50
+      }
+    },
+    "models": {
+      "fully_evaluated": [
+        "OpenCV Telea",
+        "LaMa",
+        "Stable Diffusion Inpainting"
+      ],
+      "feasibility_audited_only": [
+        "SDXL Inpainting"
+      ]
+    },
+    "refined_comparison": {
+      "winner_column": "overall_metric_vote",
+      "winner_summary": [
+        {
+          "refined_winner": "lama",
+          "case_count": 155,
+          "case_share": 0.775
+        },
+        {
+          "refined_winner": "tie_lama_opencv_telea",
+          "case_count": 23,
+          "case_share": 0.115
+        },
+        {
+          "refined_winner": "opencv_telea",
+          "case_count": 21,
+          "case_share": 0.105
+        },
+        {
+          "refined_winner": "stable_diffusion_inpainting",
+          "case_count": 1,
+          "case_share": 0.005
+        }
+      ],
+      "metric_vote_summary": {
+        "OpenCV Telea": {
+          "metric_vote_column": "opencv_telea_metric_wins",
+          "total_metric_votes": 257.0,
+          "mean_metric_votes": 1.285
+        },
+        "LaMa": {
+          "metric_vote_column": "lama_metric_wins",
+          "total_metric_votes": 924.0,
+          "mean_metric_votes": 4.62
+        },
+        "Stable Diffusion Inpainting": {
+          "metric_vote_column": "stable_diffusion_inpainting_metric_wins",
+          "total_metric_votes": 19.0,
+          "mean_metric_votes": 0.095
+        }
+      }
+    },
+    "new_pre_feedback_additions": {
+      "texture_brushstroke_proxy_notebook": "31_texture_metrics_cleaned.ipynb",
+      "stable_diffusion_uncertainty_heatmaps_notebook": "32_uncertainty_heatmaps_cleaned.ipynb",
+      "case_diagnostic_reports_notebook": "33_case_report_generation_cleaned.ipynb",
+      "dashboard_assets_notebook": "34_prepare_final_dashboard_assets_cleaned.ipynb",
+      "updated_streamlit_app": "streamlit_app.py"
+    },
+    "texture_diagnostics": {
+      "texture_disagreement_cases": 200,
+      "brushstroke_proxy_summary_available": true
+    },
+    "uncertainty_heatmaps": {
+      "cases": 40,
+      "seed_outputs": 40,
+      "seeds_per_case_expected": 4,
+      "interpretation": "Seed-based spatial variability, not calibrated confidence."
+    },
+    "case_reports": {
+      "selected_cases": 30,
+      "selected_cases_with_uncertainty_heatmaps": 17,
+      "selected_cases_with_texture_disagreement": 30,
+      "case_report_index": "outputs/reports/case_diagnostics/case_report_index.html"
+    },
+    "dashboard": {
+      "dashboard_assets_count": 11,
+      "streamlit_app": "streamlit_app.py",
+      "dashboard_assets_dir": "outputs/dashboard"
+    }
+  },
+  "ready_for_supervisor_feedback": true,
+  "recommended_next_action": "Review Streamlit dashboard, selected case reports, and open questions with supervisor before starting scope-expanding experiments."
+}
