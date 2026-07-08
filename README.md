@@ -8,6 +8,8 @@ The project builds and evaluates a controlled framework for assessing AI-assiste
 
 > **Core thesis claim:** visual plausibility is not the same as restoration trustworthiness.
 
+> **Deployment Link:** https://fhtw-painting-restoration.streamlit.app/
+
 ---
 
 ## Current status
