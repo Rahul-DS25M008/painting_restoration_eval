@@ -215,7 +215,7 @@ Recommended pre-feedback position:
 
 > Wait. This can become subjective quickly and should be supervisor-approved before implementation.
 
-## 11. ## Metadata-driven or computed visual grouping
+## 11. Metadata-driven or computed visual grouping
 
 Possible future extension:
 
