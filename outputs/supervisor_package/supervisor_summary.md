@@ -109,8 +109,8 @@ Main additions:
 Current uncertainty subset:
 
 - Cases: **40**
-- Seed outputs: **40**
-- Expected seeds per case: **4**
+- Seeds per case: **4**
+- Seed outputs: **160**
 
 Important interpretation boundary:
 
@@ -170,12 +170,23 @@ Run command:
 The project is now ready for supervisor feedback on:
 
 1. Whether the 50-painting controlled subset is sufficient for the thesis scope.
-2. Whether the refined metric-region policy is acceptable.
-3. Whether texture and brushstroke-proxy diagnostics should remain part of the core framework.
-4. Whether the 40-case Stable Diffusion uncertainty heatmap subset is sufficient before scaling.
-5. Whether SDXL should remain feasibility-audited only.
-6. Whether the Streamlit dashboard should be treated as a formal supporting artifact.
-7. Which optional extensions should be pursued after feedback.
+2. Whether the final experiment should scale toward 300 paintings.
+3. Whether the refined metric-region policy is acceptable.
+4. Whether texture and brushstroke-proxy diagnostics should remain part of the core framework.
+5. Whether the 40-case Stable Diffusion uncertainty heatmap subset is sufficient.
+6. Whether uncertainty heatmaps should be expanded to all 200 non-zero cases.
+7. Whether SDXL should remain feasibility-audited only.
+8. Whether metric-policy ablation should be added.
+9. Whether metadata-driven or computed visual grouping should be added.
+10. Whether color consistency metrics should be added.
+11. Whether boundary/seam consistency metrics should be added.
+12. Whether damage-size sensitivity analysis should be added.
+13. Whether restoration risk scoring or diagnostic risk profiles should be added.
+14. Whether mask/input robustness analysis should be added.
+15. Whether semantic/iconographic consistency checks should be added.
+16. Whether the Streamlit dashboard should be treated as a formal supporting artifact.
+
+These are post-feedback extension options, not committed tasks.
 
 ## Recommended framing for feedback meeting
 
@@ -193,15 +204,35 @@ The most important supervisor decision is not which model wins. The key decision
 
 ## Remaining work after supervisor feedback
 
-The following items should wait until after supervisor feedback:
+The current baseline is frozen as the pre-feedback supervisor-review checkpoint.
 
-1. Semantic or iconographic consistency checks.
-2. Metadata-driven analysis by artist, medium, period, collection, or other artwork metadata.
-3. Metric-policy ablation.
-4. Scaling beyond the controlled 50-painting subset.
-5. Extending uncertainty heatmaps beyond the current 40-case subset.
-6. SDXL follow-up if better hardware or supervisor priority justifies it.
-7. Possible human/expert review protocol.
-8. Thesis chapter structuring and paper-style condensation.
+The following items are possible post-feedback extensions. They should wait until after supervisor feedback and should be prioritized by methodological value, available compute, and final thesis scope.
+
+### Framework-strengthening extensions
+
+1. Metric-policy ablation.
+2. Color consistency metrics.
+3. Boundary/seam consistency metrics.
+4. Damage-size sensitivity analysis.
+5. Restoration risk scoring / diagnostic risk profiles.
+
+### Empirical-expansion extensions
+
+6. Scaling from 50 to 300 paintings.
+7. Expanding Stable Diffusion uncertainty heatmaps from 40 cases to all 200 non-zero cases.
+8. Metadata-driven or computed visual grouping.
+
+### Conditional model and robustness extensions
+
+9. SDXL follow-up if stronger hardware or supervisor priority justifies it.
+10. Mask/input robustness analysis.
+11. Semantic or iconographic consistency checks.
+12. Possible human/expert review protocol.
+
+### Writing and packaging work
+
+13. Thesis-ready tables, captions, methodology text, and result figures.
+14. Thesis chapter structuring.
+15. Paper-style condensation if useful.
 
 These are intentionally not started before feedback to avoid uncontrolled scope expansion.
