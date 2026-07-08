@@ -50,11 +50,17 @@ It lists the recommended presentation order and the main decisions to ask the su
 This file lists the unresolved scope decisions, including:
 
 - whether the 50-painting controlled subset is sufficient,
+- whether the final experiment should scale toward 300 paintings,
 - whether uncertainty should be expanded to all 200 non-zero cases,
 - whether SDXL should remain feasibility-audited only,
-- whether semantic/iconographic checks should be added,
-- whether metadata-driven analysis should be added,
 - whether metric-policy ablation should be added,
+- whether metadata-driven or computed visual grouping should be added,
+- whether color consistency metrics should be added,
+- whether boundary/seam consistency metrics should be added,
+- whether damage-size sensitivity analysis should be added,
+- whether restoration risk scoring or diagnostic risk profiles should be added,
+- whether mask/input robustness analysis should be added,
+- whether semantic/iconographic checks should be added,
 - whether the dashboard should be treated as a formal supporting artifact.
 
 ### 4. Artifact index
@@ -143,6 +149,35 @@ Brushstroke-proxy metrics are directional texture proxies, not semantic brushstr
 Case reports are inspection artifacts, not new metric computations.
 
 The dashboard is a review interface, not the primary research result.
+
+## Post-feedback extension policy
+
+The current baseline is frozen for supervisor review.
+
+The following extension directions are recorded as possible post-feedback work, not as committed implementation tasks:
+
+### Framework-strengthening extensions
+
+- metric-policy ablation,
+- color consistency metrics,
+- boundary/seam consistency metrics,
+- damage-size sensitivity analysis,
+- restoration risk scoring / diagnostic risk profiles.
+
+### Empirical-expansion extensions
+
+- scaling from 50 to 300 paintings,
+- expanding Stable Diffusion uncertainty from the current 40-case subset to all 200 non-zero cases,
+- metadata-driven or computed visual grouping.
+
+### Conditional model and robustness extensions
+
+- SDXL full evaluation if stronger compute is available,
+- mask/input robustness analysis,
+- semantic/iconographic consistency checks,
+- human/expert review if available.
+
+The supervisor should decide which, if any, of these are necessary for the final thesis scope.
 
 ## Files intentionally removed
 
