@@ -821,7 +821,8 @@ if page == "Overview":
         (
             "Uncertainty analysis was run on a balanced 40-case subset rather than all 200 non-zero cases. "
             "This keeps the experiment computationally practical while still covering all painting categories "
-            "and non-zero damage types. This is one of the points to confirm with the supervisor."
+            "and non-zero damage types. Expanding this to all 200 non-zero cases is one possible post-feedback "
+            "extension for the supervisor to prioritize."
         ),
         kind="warning",
     )
@@ -1800,11 +1801,21 @@ and feasibility constraints can point to different conclusions.
 Open points:
 
 1. Is the 50-painting controlled subset sufficient?
-2. Is the 40-case uncertainty subset sufficient?
-3. Should SDXL remain feasibility-audited only?
-4. Is the refined metric-region policy accepted?
-5. Are texture/brushstroke-proxy diagnostics framed conservatively enough?
-6. Should the Streamlit dashboard become a formal supporting artifact?
+2. Should the final experiment scale toward 300 paintings?
+3. Is the refined metric-region policy accepted?
+4. Should texture and brushstroke-proxy diagnostics remain part of the core framework?
+5. Is the 40-case Stable Diffusion uncertainty subset sufficient?
+6. Should uncertainty heatmaps be expanded to all 200 non-zero cases?
+7. Should SDXL remain feasibility-audited only?
+8. Should metric-policy ablation be added after feedback?
+9. Should color consistency metrics be added?
+10. Should boundary/seam consistency metrics be added?
+11. Should damage-size sensitivity analysis be added?
+12. Should restoration risk scoring or diagnostic risk profiles be added?
+13. Should metadata-driven or computed visual grouping be added?
+14. Should mask/input robustness analysis be added?
+15. Should semantic/iconographic checks be added after feedback?
+16. Should the Streamlit dashboard become a formal supporting artifact?
 """
     )
 
