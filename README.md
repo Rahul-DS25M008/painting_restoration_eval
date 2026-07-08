@@ -51,7 +51,9 @@ Current pre-feedback checkpoint:
 
 - The framework is ready for supervisor review.
 - No further experiments are planned before feedback.
-- Remaining additions should be prioritized only after supervisor input.
+- The current baseline is frozen as the supervisor-review checkpoint.
+- Future extensions are listed as post-feedback options, not committed work.
+- The supervisor should help prioritize which extensions, if any, are necessary for the final thesis scope.
 
 ---
 
@@ -204,16 +206,22 @@ outputs/supervisor_package/supervisor_open_questions.md
 The supervisor package asks for clarification on:
 
 1. whether the controlled 50-painting subset is sufficient,
-2. whether the 40-case uncertainty subset is sufficient,
-3. whether uncertainty heatmaps should be expanded to all 200 non-zero cases,
-4. whether SDXL should remain feasibility-audited only,
-5. whether university GPU resources should be requested for full SDXL comparison,
-6. whether the refined metric-region policy is accepted,
-7. whether texture and brushstroke-proxy diagnostics should remain core diagnostics,
-8. whether semantic/iconographic checks should be added after feedback,
-9. whether metadata-driven analysis should be added after feedback,
-10. whether metric-policy ablation should be added after feedback,
-11. whether the Streamlit dashboard should be included as a formal supporting artifact.
+2. whether the final experiment should scale toward 300 paintings,
+3. whether the 40-case Stable Diffusion uncertainty subset is sufficient,
+4. whether uncertainty heatmaps should be expanded to all 200 non-zero cases,
+5. whether SDXL should remain feasibility-audited only,
+6. whether university GPU resources should be requested for full SDXL comparison,
+7. whether the refined metric-region policy is accepted,
+8. whether metric-policy ablation should be added after feedback,
+9. whether texture and brushstroke-proxy diagnostics should remain core diagnostics,
+10. whether metadata-driven or computed visual grouping should be added,
+11. whether color consistency metrics should be added,
+12. whether boundary/seam consistency metrics should be added,
+13. whether damage-size sensitivity analysis should be added,
+14. whether restoration risk scoring or diagnostic risk profiles should be added,
+15. whether mask/input robustness analysis should be added,
+16. whether semantic/iconographic checks should be added after feedback,
+17. whether the Streamlit dashboard should be included as a formal supporting artifact.
 
 Large copied HTML reports are intentionally not committed inside `outputs/supervisor_package/reports/` because they can exceed GitHub size limits. The package references the main generated reports instead.
 
@@ -403,14 +411,18 @@ The cleaned notebook pipeline is currently organized as follows.
 Potential post-feedback notebooks may include:
 
 ```text
-36_semantic_iconographic_consistency_cleaned.ipynb
-37_metadata_driven_analysis_cleaned.ipynb
-38_metric_policy_ablation_cleaned.ipynb
-39_scaling_audit_cleaned.ipynb
-40_sdxl_followup_or_remote_feasibility_cleaned.ipynb
+36_metric_policy_ablation_cleaned.ipynb
+37_color_boundary_damage_sensitivity_cleaned.ipynb
+38_diagnostic_risk_profiles_cleaned.ipynb
+39_uncertainty_expansion_full_cleaned.ipynb
+40_metadata_visual_grouping_cleaned.ipynb
+41_scaling_300_paintings_audit_cleaned.ipynb
+42_sdxl_followup_or_remote_feasibility_cleaned.ipynb
+43_mask_input_robustness_analysis_cleaned.ipynb
+44_semantic_iconographic_consistency_cleaned.ipynb
 ```
 
-These are not started before supervisor feedback unless approved.
+These are not started before supervisor feedback unless approved. The notebook names are provisional and represent possible extension directions, not committed implementation work.
 
 ---
 
@@ -476,6 +488,7 @@ Interpretation boundary:
 
 - Brushstroke-proxy metrics measure directional local texture structure.
 - They do not perform semantic brushstroke recognition, artist authentication, historical verification, or conservation judgment.
+- Possible post-feedback metric additions include color consistency and boundary/seam consistency diagnostics. These would extend the current metric policy without changing the existing refined comparison baseline.
 
 ---
 
@@ -511,7 +524,8 @@ Interpretation boundary:
 - High uncertainty is a warning signal, not automatic proof of poor restoration.
 - Low uncertainty does not prove historical or conservation correctness.
 - The current boundary-ring metric measures an outside ring around the mask, not a symmetric inner-plus-outer boundary band.
-
+- For deterministic models such as OpenCV Telea and the current LaMa runtime, repeated inference with the same input and settings does not produce seed-based variation. For those models, uncertainty-like analysis should be framed as robustness or sensitivity analysis, such as mask perturbation, input perturbation, or configuration sensitivity.
+  
 ---
 
 ## Per-case diagnostic reports
@@ -720,30 +734,51 @@ The current framework is complete enough for supervisor review.
 
 Completed before supervisor feedback:
 
+- controlled 50-painting benchmark,
+- OpenCV Telea, LaMa, and Stable Diffusion evaluation,
+- SDXL feasibility audit,
+- refined metric-region policy,
 - texture-aware and brushstroke-proxy metrics,
-- uncertainty heatmaps,
+- Stable Diffusion multi-seed uncertainty subset,
+- Stable Diffusion uncertainty heatmaps,
 - selected per-case diagnostic reports,
 - updated Streamlit dashboard,
 - refreshed supervisor package.
 
-Post-feedback candidate extensions:
+The following items are frozen as **possible post-feedback extensions**. They are not commitments. The supervisor should decide which, if any, are required for the final thesis scope.
 
-### High-priority only if supervisor requests them
+### Framework-strengthening extensions
 
-- **Metric-policy ablation:** compare old vs refined metric-region policies and alternative vote rules.
-- **Uncertainty expansion:** expand Stable Diffusion uncertainty heatmaps from 40 cases to all 200 non-zero cases.
-- **Scaling audit:** scale beyond the controlled 50-painting subset if the supervisor wants stronger empirical coverage.
+These extensions strengthen the evaluation methodology without necessarily adding a new restoration model.
 
-### Conditional extensions
+- **Metric-policy ablation:** compare old versus refined metric-region policies, reference-only versus perceptual/feature/texture-inclusive policies, and alternative vote rules.
+- **Color consistency metrics:** add local color-difference or color-harmony diagnostics, such as Lab color difference, CIEDE2000-style distance, or local color histogram shifts.
+- **Boundary/seam consistency metrics:** evaluate visible transition artifacts around restoration boundaries using boundary-ring error, gradient discontinuity, color jump, or texture discontinuity.
+- **Damage-size sensitivity analysis:** analyze whether model performance, texture distance, and uncertainty change with mask area or damage severity.
+- **Restoration risk scoring / diagnostic risk profiles:** combine reference performance, metric disagreement, texture distance, uncertainty, boundary behavior, and damage size into interpretable case-level risk flags.
 
-- **SDXL full evaluation:** rerun SDXL on stronger GPU resources if the supervisor considers it necessary.
-- **Metadata-driven analysis:** analyze results by artist, medium, source, period, or other available artwork metadata if metadata quality is sufficient.
-- **Semantic/iconographic consistency checks:** test whether generative outputs preserve high-level content or introduce semantic inventions.
-- **Human/expert review protocol:** add structured human or expert evaluation only if available and in scope.
+### Empirical-expansion extensions
 
-These additions should be prioritized with supervisor input. The current pre-feedback package intentionally avoids further scope expansion before feedback.
+These extensions increase empirical coverage or provide stronger subgroup analysis.
 
----
+- **Scale from 50 to 300 paintings:** expand the controlled dataset if the supervisor wants stronger empirical coverage.
+- **Full Stable Diffusion uncertainty expansion:** expand uncertainty heatmaps from the current 40-case subset to all 200 non-zero cases.
+- **Metadata-driven or computed visual grouping:** analyze behavior by available metadata such as artist, period, medium, source, or by computed visual properties such as texture density, edge density, brightness, color variance, and mask centrality.
+
+### Conditional model and robustness extensions
+
+These extensions are useful only if supervisor priority, compute, and time allow.
+
+- **SDXL full evaluation:** rerun SDXL as a fourth model if stronger GPU resources are available and the supervisor considers it necessary.
+- **Mask/input robustness analysis:** test how OpenCV, LaMa, and Stable Diffusion respond to controlled mask perturbations, fill strategies, brightness/noise changes, or other input variations.
+- **Semantic/iconographic consistency checks:** evaluate whether generative outputs preserve high-level content or introduce semantic inventions. This should remain optional because it can become subjective quickly.
+- **Human/expert review protocol:** add structured human or expert evaluation only if available and clearly in scope.
+
+Recommended post-feedback framing:
+
+> The current baseline is complete. Future work should either strengthen the evaluation framework or expand empirical coverage, but not both indiscriminately.
+
+The current pre-feedback package intentionally avoids further scope expansion before supervisor feedback.
 
 ## Future work
 
@@ -751,26 +786,39 @@ Current likely next steps:
 
 1. Supervisor reviews the package in `outputs/supervisor_package/`.
 2. Confirm whether the 50-painting subset is sufficient.
-3. Confirm whether Stable Diffusion uncertainty should be expanded from 40 to 200 non-zero cases.
-4. Confirm whether SDXL should remain feasibility-audited or be rerun on university GPU.
-5. Confirm whether texture and brushstroke-proxy diagnostics should remain part of the core framework.
-6. Decide whether the Streamlit dashboard should be included as a formal supporting artifact.
-7. Decide whether metric-policy ablation should be added after feedback.
-8. Decide whether semantic/iconographic consistency or metadata-driven analysis is in scope.
-9. Prepare thesis-ready tables, captions, methodology text, and result figures.
-10. Draft methodology, results, limitations, and future work sections.
+3. Confirm whether the final experiment should scale toward 300 paintings.
+4. Confirm whether Stable Diffusion uncertainty should be expanded from 40 to 200 non-zero cases.
+5. Confirm whether SDXL should remain feasibility-audited or be rerun on university GPU.
+6. Confirm whether the refined metric-region policy is accepted.
+7. Confirm whether texture and brushstroke-proxy diagnostics should remain part of the core framework.
+8. Decide whether metric-policy ablation should be added after feedback.
+9. Decide whether color consistency and boundary/seam metrics should be added.
+10. Decide whether damage-size sensitivity analysis should be added.
+11. Decide whether restoration risk scoring or diagnostic risk profiles should be added.
+12. Decide whether metadata-driven or computed visual grouping is in scope.
+13. Decide whether mask/input robustness analysis is in scope.
+14. Decide whether semantic/iconographic consistency checks are in scope.
+15. Decide whether the Streamlit dashboard should be included as a formal supporting artifact.
+16. Prepare thesis-ready tables, captions, methodology text, and result figures.
+17. Draft methodology, results, limitations, and future work sections.
 
-Possible experimental extensions:
+Frozen possible experimental extensions:
 
-- scale beyond 50 paintings,
-- expand uncertainty analysis to all non-zero Stable Diffusion cases,
+- scale from 50 to 300 paintings,
+- expand Stable Diffusion uncertainty analysis to all 200 non-zero cases,
 - rerun SDXL on stronger GPU,
 - perform four-model comparison if SDXL becomes feasible,
-- add additional painting categories or damage patterns,
-- add semantic/iconographic checks,
-- add metadata-driven analysis,
 - add metric-policy ablation,
+- add metadata-driven or computed visual grouping,
+- add color consistency metrics,
+- add boundary/seam consistency metrics,
+- add damage-size sensitivity analysis,
+- add restoration risk scoring or diagnostic risk profiles,
+- add mask/input robustness analysis,
+- add semantic/iconographic checks,
 - add human/expert review if available.
+
+These extensions should be treated as supervisor-prioritized options, not as guaranteed next steps.
 
 ---
 
