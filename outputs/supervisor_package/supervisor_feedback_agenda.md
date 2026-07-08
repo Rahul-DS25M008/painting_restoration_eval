@@ -61,15 +61,21 @@ Purpose:
 The meeting should answer these questions:
 
 1. Is the 50-painting controlled subset sufficient?
-2. Is the refined metric-region policy accepted?
-3. Should texture and brushstroke-proxy diagnostics remain part of the core framework?
-4. Is the 40-case Stable Diffusion uncertainty subset sufficient for the thesis?
-5. Should uncertainty heatmaps be expanded to all 200 non-zero cases?
-6. Should SDXL remain feasibility-audited only?
-7. Should semantic/iconographic checks be added after feedback?
-8. Should metadata-driven analysis be added after feedback?
-9. Should metric-policy ablation be added after feedback?
-10. Should the Streamlit dashboard be treated as a formal supporting artifact?
+2. Should the final experiment scale toward 300 paintings?
+3. Is the refined metric-region policy accepted?
+4. Should texture and brushstroke-proxy diagnostics remain part of the core framework?
+5. Is the 40-case Stable Diffusion uncertainty subset sufficient for the thesis?
+6. Should uncertainty heatmaps be expanded to all 200 non-zero cases?
+7. Should SDXL remain feasibility-audited only?
+8. Should metric-policy ablation be added after feedback?
+9. Should color consistency metrics be added?
+10. Should boundary/seam consistency metrics be added?
+11. Should damage-size sensitivity analysis be added?
+12. Should restoration risk scoring or diagnostic risk profiles be added?
+13. Should metadata-driven or computed visual grouping be added?
+14. Should mask/input robustness analysis be added?
+15. Should semantic/iconographic checks be added after feedback?
+16. Should the Streamlit dashboard be treated as a formal supporting artifact?
 
 ## 4. Recommended presentation order
 
@@ -135,18 +141,42 @@ Show:
 
 ### Step 8 — Ask for scope decisions
 
-Ask supervisor to approve, reject, or prioritize:
+Ask the supervisor to approve, reject, or prioritize the frozen post-feedback extension menu.
 
-- scaling beyond 50 paintings,
-- expanding uncertainty to all 200 non-zero cases,
-- SDXL follow-up,
-- semantic/iconographic checks,
-- metadata-driven analysis,
+Framework-strengthening options:
+
 - metric-policy ablation,
-- human/expert review.
+- color consistency metrics,
+- boundary/seam consistency metrics,
+- damage-size sensitivity analysis,
+- restoration risk scoring / diagnostic risk profiles.
+
+Empirical-expansion options:
+
+- scaling from 50 to 300 paintings,
+- expanding Stable Diffusion uncertainty from 40 cases to all 200 non-zero cases,
+- metadata-driven or computed visual grouping.
+
+Conditional model and robustness options:
+
+- SDXL full evaluation if stronger compute is available,
+- mask/input robustness analysis,
+- semantic/iconographic consistency checks,
+- human/expert review if available.
 
 ## 5. Recommended pre-feedback stance
 
 Do not start major new experiments before supervisor feedback.
 
 The current package is sufficient to ask for methodological approval and scope direction.
+
+Recommended framing:
+
+> The current baseline is complete and frozen for supervisor review. Future work should either strengthen the evaluation framework or expand empirical coverage, but not both indiscriminately.
+
+Preferred post-feedback direction, unless the supervisor requests otherwise:
+
+1. Prioritize framework-strengthening extensions first.
+2. Add empirical expansion only if the supervisor wants stronger coverage.
+3. Add SDXL only if compute is available and the supervisor considers a fourth model necessary.
+4. Treat semantic/iconographic checks and human/expert review as optional because they can expand scope quickly.
