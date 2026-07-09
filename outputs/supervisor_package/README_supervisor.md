@@ -61,7 +61,8 @@ This file lists the unresolved scope decisions, including:
 - whether restoration risk scoring or diagnostic risk profiles should be added,
 - whether mask/input robustness analysis should be added,
 - whether semantic/iconographic checks should be added,
-- whether the dashboard should be treated as a formal supporting artifact.
+- whether the dashboard should be treated as a formal supporting artifact,
+- whether generic restoration prompts should be complemented with style-specific restoration prompts.
 
 ### 4. Artifact index
 
@@ -176,6 +177,7 @@ The following extension directions are recorded as possible post-feedback work, 
 - mask/input robustness analysis,
 - semantic/iconographic consistency checks,
 - human/expert review if available.
+- Compare generic restoration prompts to style-specific restoration prompts
 
 The supervisor should decide which, if any, of these are necessary for the final thesis scope.
 
