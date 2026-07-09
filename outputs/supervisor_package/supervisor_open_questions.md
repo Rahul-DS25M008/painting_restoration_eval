@@ -309,3 +309,18 @@ Question:
 Recommended pre-feedback position:
 
 > Yes, as a supporting artifact and inspection tool, not as the primary research result.
+
+## 16. Restoration Prompts
+
+Possible future extension:
+
+- compare generic restoration prompts to style-specific restoration prompts.
+- Run the metrics on generic restored images and style-specific restored images to see if there's a difference.
+
+Question:
+
+> Does a style-specific restoration prompt improve the quality of restored image compared to a generic one?
+
+Recommended pre-feedback position:
+
+> It can be a nice addition to the existing research questions. Could consider adding a supllementary research question.
