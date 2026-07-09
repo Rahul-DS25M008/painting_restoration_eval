@@ -228,6 +228,7 @@ The following items are possible post-feedback extensions. They should wait unti
 10. Mask/input robustness analysis.
 11. Semantic or iconographic consistency checks.
 12. Possible human/expert review protocol.
+13. Compare generic restoration prompts to style-specific restoration prompts
 
 ### Writing and packaging work
 
