@@ -224,6 +224,7 @@ The supervisor package asks for clarification on:
 15. whether mask/input robustness analysis should be added,
 16. whether semantic/iconographic checks should be added after feedback,
 17. whether the Streamlit dashboard should be included as a formal supporting artifact.
+18. Compare generic restoration prompts to style-specific restoration prompts
 
 Large copied HTML reports are intentionally not committed inside `outputs/supervisor_package/reports/` because they can exceed GitHub size limits. The package references the main generated reports instead.
 
@@ -775,6 +776,7 @@ These extensions are useful only if supervisor priority, compute, and time allow
 - **Mask/input robustness analysis:** test how OpenCV, LaMa, and Stable Diffusion respond to controlled mask perturbations, fill strategies, brightness/noise changes, or other input variations.
 - **Semantic/iconographic consistency checks:** evaluate whether generative outputs preserve high-level content or introduce semantic inventions. This should remain optional because it can become subjective quickly.
 - **Human/expert review protocol:** add structured human or expert evaluation only if available and clearly in scope.
+- **Restoration Prompts:** Compare generic restoration prompts to style-specific restoration prompts
 
 Recommended post-feedback framing:
 
@@ -803,6 +805,7 @@ Current likely next steps:
 15. Decide whether the Streamlit dashboard should be included as a formal supporting artifact.
 16. Prepare thesis-ready tables, captions, methodology text, and result figures.
 17. Draft methodology, results, limitations, and future work sections.
+18. Compare generic restoration prompts to style-specific restoration prompts
 
 Frozen possible experimental extensions:
 
