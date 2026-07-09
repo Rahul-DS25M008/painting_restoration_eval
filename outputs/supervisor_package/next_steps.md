@@ -30,6 +30,9 @@ The following extensions are possible next steps after supervisor review. They a
 
 7. **Semantic/iconographic consistency layer**  
    Explore CLIP-based concept consistency checks or qualitative hallucination flags. Full art-domain object detection should remain future work unless appropriate models or annotations are available.
+   
+8. **Restoration prompts**
+   Compare generic restoration prompts to style-specific restoration prompts
 
 ### Suggested supervisor decision
 
