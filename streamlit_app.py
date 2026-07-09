@@ -1816,6 +1816,7 @@ Open points:
 14. Should mask/input robustness analysis be added?
 15. Should semantic/iconographic checks be added after feedback?
 16. Should the Streamlit dashboard become a formal supporting artifact?
+17. Should generic restoration prompts be supllemented by style-specific restoration prompts?
 """
     )
 
