@@ -404,7 +404,7 @@ def dataframe_block(title: str, df: pd.DataFrame, height: int = 320) -> None:
         return
     safe_df = prepare_dataframe_for_streamlit(df)
     st.dataframe(
-        safe_df,
+        prepare_dataframe_for_streamlit(safe_df),
         width="stretch",
         height=height,
     )
@@ -1245,7 +1245,7 @@ elif page == "Model Comparison":
         compact_table(filtered_df, preferred_columns, height=460)
 
         with st.expander("Show all case-level columns"):
-            st.dataframe(filtered_df, width="stretch", height=460)
+            st.dataframe(prepare_dataframe_for_streamlit(filtered_df), width="stretch", height=460)
 
 
 # =============================================================================
@@ -1475,7 +1475,7 @@ elif page == "Diffusion Uncertainty":
             render_image_from_path(selected_row.get("overlay_png_path"), caption="Uncertainty overlay")
 
         with st.expander("Selected uncertainty case details"):
-            st.dataframe(selected_row.to_frame(name="value"), width="stretch", height=420)
+            st.dataframe(prepare_dataframe_for_streamlit(selected_row.to_frame(name="value")), width="stretch", height=420)
 
     st.markdown("### Uncertainty vs reference performance")
 
@@ -1646,7 +1646,7 @@ elif page == "Case Reports":
                 render_image_from_path(selected_row.get("case_diagnostic_grid_path"), caption="Notebook 33 selected case grid")
 
             with st.expander("Raw selected case row"):
-                st.dataframe(selected_row.to_frame(name="value"), width="stretch", height=460)
+                st.dataframe(prepare_dataframe_for_streamlit(selected_row.to_frame(name="value")), width="stretch", height=460)
 
     st.markdown("### Case report index")
     render_local_asset_link(
@@ -1797,7 +1797,7 @@ elif page == "Visual Explorer":
 
             with st.expander("Show raw row"):
                 raw_row_df = selected_row.to_frame(name="value")
-                st.dataframe(raw_row_df, width="stretch", height=420)
+                st.dataframe(prepare_dataframe_for_streamlit(raw_row_df), width="stretch", height=420)
 
 
 # =============================================================================
@@ -1910,7 +1910,7 @@ elif page == "Reports":
         st.info("No legacy reports manifest available.")
     else:
         reports_df = pd.DataFrame(reports)
-        st.dataframe(reports_df, width="stretch", height=260)
+        st.dataframe(prepare_dataframe_for_streamlit(reports_df), width="stretch", height=260)
 
         for report in reports:
             label = report.get("label") or report.get("name") or "Report"
@@ -1959,7 +1959,7 @@ elif page == "Debug":
                 for key, path in ASSET_LOOKUP.items()
             ]
         )
-        st.dataframe(asset_lookup_df, width="stretch", height=500)
+        st.dataframe(prepare_dataframe_for_streamlit(asset_lookup_df), width="stretch", height=500)
     else:
         st.warning("Asset lookup is empty. Check dashboard_asset_manifest.json or legacy dashboard_assets_manifest.json.")
 
@@ -1995,7 +1995,7 @@ elif page == "Debug":
         ]
     )
 
-    st.dataframe(loaded_shapes, width="stretch", height=620)
+    st.dataframe(prepare_dataframe_for_streamlit(loaded_shapes), width="stretch", height=620)
 
     st.markdown("### Dashboard directories")
 
