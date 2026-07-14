@@ -305,6 +305,14 @@ py -3.11 -m venv .venv
 
 Install dependencies.
 
+Use this minimal requirements block to run the dashboard directly.
+
+```powershell
+python -m pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
+```
+Use this full version of requirements to run individual notebooks and generate outputs again.
+
 ```powershell
 python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements_experiments.txt
