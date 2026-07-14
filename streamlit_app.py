@@ -404,7 +404,7 @@ def dataframe_block(title: str, df: pd.DataFrame, height: int = 320) -> None:
         return
     safe_df = prepare_dataframe_for_streamlit(df)
     st.dataframe(
-        df,
+        safe_df,
         width="stretch",
         height=height,
     )
@@ -943,26 +943,15 @@ elif page == "Dataset & Damage":
 
     st.header("Dataset & Damage")
 
-    st.write(
-        {
-            "shape": dataset_summary_df.shape,
-            "columns": [str(column) for column in dataset_summary_df.columns],
-            "dtypes": {
-                str(column): str(dtype)
-                for column, dtype in dataset_summary_df.dtypes.items()
-            },
-        }
-    )
+    safe_dataset_df = prepare_dataframe_for_streamlit(
+        dataset_summary_df
+    ).head(20)
 
-    print("ABOUT TO RENDER: safe dataset dataframe", flush=True)
+    print("ABOUT TO RENDER: st.table", flush=True)
 
-    safe_dataset_df = prepare_dataframe_for_streamlit(dataset_summary_df)
+    st.table(safe_dataset_df)
 
-    st.dataframe(
-        safe_dataset_df.head(20),
-        width="stretch",
-        height=320,
-    )
+    print("COMPLETED: st.table", flush=True)
 
     print("COMPLETED: safe dataset dataframe", flush=True)
 
