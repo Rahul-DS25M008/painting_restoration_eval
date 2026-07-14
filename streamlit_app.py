@@ -852,68 +852,80 @@ if page == "Overview":
 # Page: Dataset & Damage
 # =============================================================================
 
+# elif page == "Dataset & Damage":
+#     st.header("Dataset & Damage")
+
+#     explain_box(
+#         "Dataset design",
+#         (
+#             "The benchmark uses a controlled 50-painting subset with five painting categories. "
+#             "Each painting receives five mask conditions, including a zero-control case and four non-zero "
+#             "damage types. The refined comparison and the case reports focus on the 200 non-zero cases."
+#         ),
+#     )
+
+#     col1, col2 = st.columns(2)
+
+#     with col1:
+#         dataframe_block("Dataset summary", dataset_summary_df)
+
+#     with col2:
+#         dataframe_block("Damage summary", damage_summary_df)
+
+#     if dataset_summary_df.empty:
+#         dataset_from_summary_df = pd.DataFrame(
+#             {
+#                 "field": ["controlled_paintings", "non_zero_cases", "painting_categories", "mask_types_non_zero"],
+#                 "value": [
+#                     dashboard_summary.get("dataset", {}).get("controlled_paintings", "NA"),
+#                     dashboard_summary.get("dataset", {}).get("non_zero_cases", "NA"),
+#                     ", ".join(dashboard_summary.get("dataset", {}).get("painting_categories", [])),
+#                     ", ".join(dashboard_summary.get("dataset", {}).get("mask_types_non_zero", [])),
+#                 ],
+#             }
+#         )
+#         dataframe_block("Dataset summary from Notebook 34", dataset_from_summary_df)
+
+#     if not damage_summary_df.empty:
+#         x_col = pick_first_existing_column(
+#             damage_summary_df,
+#             ["mask_type", "damage_type", "mask_name"],
+#         )
+#         y_col = pick_first_existing_column(
+#             damage_summary_df,
+#             ["cases", "rows", "count", "damage_cases"],
+#         )
+
+#         if x_col and y_col:
+#             simple_bar(
+#                 damage_summary_df,
+#                 x=x_col,
+#                 y=y_col,
+#                 title="Damage Cases by Mask Type",
+#             )
+
+#     explain_box(
+#         "Methodological boundary",
+#         (
+#             "Synthetic damage is useful because it gives a known clean reference image. "
+#             "That makes full-reference metrics possible. It does not fully reproduce real conservation damage "
+#             "such as pigment aging, varnish effects, craquelure, prior restorations, or historical uncertainty."
+#         ),
+#         kind="warning",
+#     )
+
 elif page == "Dataset & Damage":
+    print("ENTERED: Dataset & Damage", flush=True)
+
     st.header("Dataset & Damage")
 
-    explain_box(
-        "Dataset design",
-        (
-            "The benchmark uses a controlled 50-painting subset with five painting categories. "
-            "Each painting receives five mask conditions, including a zero-control case and four non-zero "
-            "damage types. The refined comparison and the case reports focus on the 200 non-zero cases."
-        ),
-    )
+    print("ABOUT TO RENDER: dataset dataframe", flush=True)
+    dataframe_block("Dataset summary", dataset_summary_df)
 
-    col1, col2 = st.columns(2)
+    print("ABOUT TO RENDER: damage dataframe", flush=True)
+    dataframe_block("Damage summary", damage_summary_df)
 
-    with col1:
-        dataframe_block("Dataset summary", dataset_summary_df)
-
-    with col2:
-        dataframe_block("Damage summary", damage_summary_df)
-
-    if dataset_summary_df.empty:
-        dataset_from_summary_df = pd.DataFrame(
-            {
-                "field": ["controlled_paintings", "non_zero_cases", "painting_categories", "mask_types_non_zero"],
-                "value": [
-                    dashboard_summary.get("dataset", {}).get("controlled_paintings", "NA"),
-                    dashboard_summary.get("dataset", {}).get("non_zero_cases", "NA"),
-                    ", ".join(dashboard_summary.get("dataset", {}).get("painting_categories", [])),
-                    ", ".join(dashboard_summary.get("dataset", {}).get("mask_types_non_zero", [])),
-                ],
-            }
-        )
-        dataframe_block("Dataset summary from Notebook 34", dataset_from_summary_df)
-
-    if not damage_summary_df.empty:
-        x_col = pick_first_existing_column(
-            damage_summary_df,
-            ["mask_type", "damage_type", "mask_name"],
-        )
-        y_col = pick_first_existing_column(
-            damage_summary_df,
-            ["cases", "rows", "count", "damage_cases"],
-        )
-
-        if x_col and y_col:
-            simple_bar(
-                damage_summary_df,
-                x=x_col,
-                y=y_col,
-                title="Damage Cases by Mask Type",
-            )
-
-    explain_box(
-        "Methodological boundary",
-        (
-            "Synthetic damage is useful because it gives a known clean reference image. "
-            "That makes full-reference metrics possible. It does not fully reproduce real conservation damage "
-            "such as pigment aging, varnish effects, craquelure, prior restorations, or historical uncertainty."
-        ),
-        kind="warning",
-    )
-
+    print("COMPLETED: Dataset & Damage", flush=True)
 
 # =============================================================================
 # Page: Model Stack
