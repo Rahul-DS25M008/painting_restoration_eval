@@ -404,7 +404,7 @@ def dataframe_block(title: str, df: pd.DataFrame, height: int = 320) -> None:
         return
     safe_df = prepare_dataframe_for_streamlit(df)
     st.dataframe(
-        prepare_dataframe_for_streamlit(safe_df),
+        safe_df,
         width="stretch",
         height=height,
     )
