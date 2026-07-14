@@ -379,13 +379,35 @@ reports = reports_manifest.get("reports", [])
 # UI helpers
 # =============================================================================
 
+def prepare_dataframe_for_streamlit(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Return a display-safe copy for Streamlit/PyArrow.
+
+    Converts mixed object columns to strings and normalizes column names.
+    """
+    safe_df = df.copy()
+    safe_df.columns = [str(column) for column in safe_df.columns]
+
+    for column in safe_df.columns:
+        if safe_df[column].dtype == "object":
+            safe_df[column] = safe_df[column].map(
+                lambda value: None if pd.isna(value) else str(value)
+            )
+
+    return safe_df
+
 def dataframe_block(title: str, df: pd.DataFrame, height: int = 320) -> None:
     st.markdown(f"### {title}")
-
+    
     if df.empty:
         st.info("No data available for this table.")
-    else:
-        st.dataframe(df, use_container_width=True, height=height)
+        return
+    safe_df = prepare_dataframe_for_streamlit(df)
+    st.dataframe(
+        df,
+        width="stretch",
+        height=height,
+    )
 
 
 def compact_table(df: pd.DataFrame, columns: list[str], height: int = 260) -> None:
@@ -394,12 +416,14 @@ def compact_table(df: pd.DataFrame, columns: list[str], height: int = 260) -> No
         return
 
     available_columns = [column for column in columns if column in df.columns]
+    display_df = df[available_columns] if available_columns else df
+    safe_df = prepare_dataframe_for_streamlit(display_df)
 
-    if available_columns:
-        st.dataframe(df[available_columns], use_container_width=True, height=height)
-    else:
-        st.dataframe(df, use_container_width=True, height=height)
-
+    st.dataframe(
+        safe_df,
+        width="stretch",
+        height=height,
+    )
 
 def explain_box(title: str, text: str, kind: str = "info") -> None:
     markdown_text = f"**{title}**\n\n{text}"
@@ -447,7 +471,7 @@ def simple_bar(
         margin=dict(l=20, r=20, t=60, b=20),
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 def count_bar(
@@ -485,7 +509,7 @@ def count_bar(
         margin=dict(l=20, r=20, t=60, b=20),
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 def numeric_histogram(
@@ -516,7 +540,7 @@ def numeric_histogram(
         margin=dict(l=20, r=20, t=60, b=20),
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 def simple_scatter(
@@ -545,7 +569,7 @@ def simple_scatter(
         margin=dict(l=20, r=20, t=60, b=20),
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 def readable_value(value: Any, fallback: str = "Not available") -> str:
@@ -647,7 +671,7 @@ def render_image_from_path(path_value: str | Path | None, caption: str | None = 
     resolved_path = resolve_project_path(path_value)
 
     if resolved_path and resolved_path.exists():
-        st.image(str(resolved_path), use_container_width=True)
+        st.image(str(resolved_path), width="stretch")
         st.caption(caption or project_relative(resolved_path))
     else:
         st.warning("Image file not found.")
@@ -919,13 +943,28 @@ elif page == "Dataset & Damage":
 
     st.header("Dataset & Damage")
 
-    print("ABOUT TO RENDER: dataset dataframe", flush=True)
-    dataframe_block("Dataset summary", dataset_summary_df)
+    st.write(
+        {
+            "shape": dataset_summary_df.shape,
+            "columns": [str(column) for column in dataset_summary_df.columns],
+            "dtypes": {
+                str(column): str(dtype)
+                for column, dtype in dataset_summary_df.dtypes.items()
+            },
+        }
+    )
 
-    print("ABOUT TO RENDER: damage dataframe", flush=True)
-    dataframe_block("Damage summary", damage_summary_df)
+    print("ABOUT TO RENDER: safe dataset dataframe", flush=True)
 
-    print("COMPLETED: Dataset & Damage", flush=True)
+    safe_dataset_df = prepare_dataframe_for_streamlit(dataset_summary_df)
+
+    st.dataframe(
+        safe_dataset_df.head(20),
+        width="stretch",
+        height=320,
+    )
+
+    print("COMPLETED: safe dataset dataframe", flush=True)
 
 # =============================================================================
 # Page: Model Stack
@@ -1197,7 +1236,7 @@ elif page == "Model Comparison":
         compact_table(filtered_df, preferred_columns, height=460)
 
         with st.expander("Show all case-level columns"):
-            st.dataframe(filtered_df, use_container_width=True, height=460)
+            st.dataframe(filtered_df, width="stretch", height=460)
 
 
 # =============================================================================
@@ -1427,7 +1466,7 @@ elif page == "Diffusion Uncertainty":
             render_image_from_path(selected_row.get("overlay_png_path"), caption="Uncertainty overlay")
 
         with st.expander("Selected uncertainty case details"):
-            st.dataframe(selected_row.to_frame(name="value"), use_container_width=True, height=420)
+            st.dataframe(selected_row.to_frame(name="value"), width="stretch", height=420)
 
     st.markdown("### Uncertainty vs reference performance")
 
@@ -1598,7 +1637,7 @@ elif page == "Case Reports":
                 render_image_from_path(selected_row.get("case_diagnostic_grid_path"), caption="Notebook 33 selected case grid")
 
             with st.expander("Raw selected case row"):
-                st.dataframe(selected_row.to_frame(name="value"), use_container_width=True, height=460)
+                st.dataframe(selected_row.to_frame(name="value"), width="stretch", height=460)
 
     st.markdown("### Case report index")
     render_local_asset_link(
@@ -1742,14 +1781,14 @@ elif page == "Visual Explorer":
                 figure_path = resolve_project_path(selected_row.get("final_figure_path"))
 
                 if figure_path and figure_path.exists():
-                    st.image(str(figure_path), use_container_width=True)
+                    st.image(str(figure_path), width="stretch")
                     st.caption(project_relative(figure_path))
                 else:
                     st.warning("Figure file not found.")
 
             with st.expander("Show raw row"):
                 raw_row_df = selected_row.to_frame(name="value")
-                st.dataframe(raw_row_df, use_container_width=True, height=420)
+                st.dataframe(raw_row_df, width="stretch", height=420)
 
 
 # =============================================================================
@@ -1862,7 +1901,7 @@ elif page == "Reports":
         st.info("No legacy reports manifest available.")
     else:
         reports_df = pd.DataFrame(reports)
-        st.dataframe(reports_df, use_container_width=True, height=260)
+        st.dataframe(reports_df, width="stretch", height=260)
 
         for report in reports:
             label = report.get("label") or report.get("name") or "Report"
@@ -1911,7 +1950,7 @@ elif page == "Debug":
                 for key, path in ASSET_LOOKUP.items()
             ]
         )
-        st.dataframe(asset_lookup_df, use_container_width=True, height=500)
+        st.dataframe(asset_lookup_df, width="stretch", height=500)
     else:
         st.warning("Asset lookup is empty. Check dashboard_asset_manifest.json or legacy dashboard_assets_manifest.json.")
 
@@ -1947,7 +1986,7 @@ elif page == "Debug":
         ]
     )
 
-    st.dataframe(loaded_shapes, use_container_width=True, height=620)
+    st.dataframe(loaded_shapes, width="stretch", height=620)
 
     st.markdown("### Dashboard directories")
 
