@@ -307,7 +307,7 @@ Install dependencies.
 
 ```powershell
 python -m pip install --upgrade pip setuptools wheel
-pip install -r requirements.txt
+pip install -r requirements_experiments.txt
 ```
 
 Optional but recommended for notebook work:
@@ -344,7 +344,7 @@ If generated outputs are missing, the notebooks must be rerun in order. The curr
 
 For full experimental reproduction, the most important requirements are:
 
-- Python environment from `requirements.txt`,
+- Python environment from `requirements_experiments.txt`,
 - raw painting images and metadata,
 - notebook execution in the validated order,
 - sufficient local storage,
