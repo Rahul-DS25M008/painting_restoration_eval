@@ -1,0 +1,12 @@
+check,expected,actual,passed
+metadata_row_count,50,50,True
+unique_painting_ids,50,50,True
+unique_filenames,50,50,True
+category_balance,True,True,True
+source_split,True,True,True
+missing_image_files,0,0,True
+unreadable_images,0,0,True
+invalid_image_dimensions,0,0,True
+metadata_dimension_mismatches,0,0,True
+valid_source_urls,50,50,True
+nonblank_licences,50,50,True

@@ -27,6 +27,10 @@ dataset:
     architecture_structured: 10
     abstraction_surrealism: 10
     high_texture_brushwork: 10
+  expected_source_counts:
+    The Metropolitan Museum of Art: 30
+    Rijksmuseum: 10
+    Art Institute of Chicago: 10
   selection_rules:
     - "Use public-domain or open-access images only."
     - "Use images with sufficient resolution for 768x768 preprocessing."
