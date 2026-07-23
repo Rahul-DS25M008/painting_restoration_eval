@@ -1,0 +1,6 @@
+mask_type,count,mean_generation_attempts,median_generation_attempts,min_generation_attempts,max_generation_attempts,first_attempt_success_count,retry_required_count,generation_warning_count,first_attempt_success_percentage,retry_required_percentage
+zero_control,50,1.0,1.0,1,1,50,0,0,100.0,0.0
+scratch_thin,50,1.32,1.0,1,4,39,11,0,78.0,22.0
+loss_small,50,1.42,1.0,1,5,35,15,0,70.0,30.0
+loss_large,50,3.46,2.0,1,24,19,31,0,38.0,62.0
+mixed_damage,50,1.78,1.0,1,24,39,11,0,78.0,22.0
