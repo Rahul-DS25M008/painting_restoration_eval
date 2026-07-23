@@ -1,0 +1,8 @@
+check,issue_count,passed
+no_pixels_changed_outside_mask,0,True
+all_mask_pixels_use_fill_colour,0,True
+mask_pixel_counts_match_metadata,0,True
+changed_pixel_counts_are_consistent,0,True
+all_zero_controls_unchanged,0,True
+all_nonzero_masks_have_pixels,0,True
+source_checksums_match,0,True

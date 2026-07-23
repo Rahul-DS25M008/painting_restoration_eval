@@ -1,0 +1,8 @@
+check,issue_count,passed
+all_files_exist,0,True
+all_files_readable,0,True
+all_dimensions_correct,0,True
+all_modes_rgb,0,True
+all_formats_png,0,True
+all_filenames_match_metadata,0,True
+all_saved_checksums_match,0,True

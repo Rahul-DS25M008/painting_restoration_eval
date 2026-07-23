@@ -1,0 +1,12 @@
+field,value
+generator_name,canonical_damage_generator
+generator_version,2.0.0
+generation_started_at_utc,2026-07-23T08:50:15.038799+00:00
+generation_completed_at_utc,2026-07-23T08:51:47.885282+00:00
+fill_strategy,white_fill
+fill_colour_rgb,"(255, 255, 255)"
+target_size,768
+painting_count,50
+damage_case_count,250
+damaged_file_count,250
+stale_files_removed,0
