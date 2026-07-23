@@ -1,0 +1,11 @@
+check,observed,expected,passed
+canonical_metadata_rows,105,105,True
+validation_rows,105,105,True
+validation_passed,105,105,True
+effect_mask_files,105,105,True
+degraded_files,105,105,True
+deterministic_cases,21,21,True
+severity_families,6,6,True
+severity_grids,5,5,True
+combined_grids,5,5,True
+required_output_files,11,11,True

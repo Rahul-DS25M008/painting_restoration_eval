@@ -1,0 +1,17 @@
+measure,value
+generator_name,synthetic_degradation
+generator_version,1.0.0
+generated_utc,2026-07-23T21:05:16.431472+00:00
+painting_count,5
+single_degradation_family_count,6
+severity_level_count,3
+combined_degradation_family_count,3
+single_case_count,90
+combined_case_count,15
+total_case_count,105
+validation_passed_count,105
+effect_mask_file_count,105
+degraded_file_count,105
+severity_grid_count,5
+combined_grid_count,5
+global_seed,20260707

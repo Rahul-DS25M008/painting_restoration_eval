@@ -185,6 +185,35 @@ mask_robustness:
     - 255
     - 255
 
+synthetic_degradation:
+  metadata_path: data/processed/metadata/metadata_synthetic_degradation.csv
+  effect_mask_dir: data/processed/masks/synthetic_degradation
+  degraded_dir: data/processed/degraded/synthetic_degradation
+  outputs_dir: outputs/synthetic_degradation
+
+  expected_painting_count: 5
+  global_seed: 20260707
+
+  degradation_types:
+    - blur
+    - water_stain
+    - fading
+    - discolouration
+    - dirt_dust
+    - partial_transparency
+
+  severity_levels:
+    - mild
+    - moderate
+    - severe
+
+  combined_degradations:
+    - fading_discolouration
+    - water_stain_dirt
+    - blur_fading
+
+  fill_strategy: preserve_original
+
 models:
   opencv_telea:
     enabled: true

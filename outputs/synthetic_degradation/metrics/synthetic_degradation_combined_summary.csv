@@ -1,0 +1,4 @@
+degradation_type,severity,component_degradations,component_count,case_count,painting_count,mean_effect_percentage_content,mean_changed_pixels,mean_absolute_difference_effect
+blur_fading,moderate,blur|fading,2,5,5,40.914668009821085,181274.8,3.604362033470962
+fading_discolouration,moderate,fading|discolouration,2,5,5,42.298026004370364,188422.2,2.9958262836563154
+water_stain_dirt,moderate,water_stain|dirt_dust,2,5,5,16.726025582930614,82192.6,5.522655923198487

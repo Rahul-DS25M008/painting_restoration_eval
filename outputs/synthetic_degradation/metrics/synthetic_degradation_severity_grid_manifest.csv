@@ -1,0 +1,6 @@
+painting_id,figure_path,row_count,severity_count
+p001,outputs\synthetic_degradation\figures\p001__synthetic_degradation_severity_grid.png,6,3
+p018,outputs\synthetic_degradation\figures\p018__synthetic_degradation_severity_grid.png,6,3
+p026,outputs\synthetic_degradation\figures\p026__synthetic_degradation_severity_grid.png,6,3
+p039,outputs\synthetic_degradation\figures\p039__synthetic_degradation_severity_grid.png,6,3
+p043,outputs\synthetic_degradation\figures\p043__synthetic_degradation_severity_grid.png,6,3
