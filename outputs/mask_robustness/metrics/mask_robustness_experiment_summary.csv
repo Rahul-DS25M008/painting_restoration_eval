@@ -1,0 +1,16 @@
+measure,value
+generator_name,mask_robustness
+generator_version,1.1.0
+painting_count,5
+mask_family_count,3
+robustness_group_count,15
+variant_count_per_group,5
+total_case_count,75
+validation_pass_count,75
+validation_fail_count,0
+maximum_area_error,0.3041493841126195
+configured_area_tolerance,0.5
+retried_case_count,4
+maximum_generation_attempt_used,2
+unique_mask_checksum_count,75
+generated_grid_count,15

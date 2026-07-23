@@ -1,0 +1,16 @@
+painting_id,base_mask_type,variant_count,grid_path,grid_exists
+p001,loss_large,5,outputs\mask_robustness\figures\p001__loss_large__variant_grid.png,True
+p001,loss_small,5,outputs\mask_robustness\figures\p001__loss_small__variant_grid.png,True
+p001,scratch_thin,5,outputs\mask_robustness\figures\p001__scratch_thin__variant_grid.png,True
+p018,loss_large,5,outputs\mask_robustness\figures\p018__loss_large__variant_grid.png,True
+p018,loss_small,5,outputs\mask_robustness\figures\p018__loss_small__variant_grid.png,True
+p018,scratch_thin,5,outputs\mask_robustness\figures\p018__scratch_thin__variant_grid.png,True
+p026,loss_large,5,outputs\mask_robustness\figures\p026__loss_large__variant_grid.png,True
+p026,loss_small,5,outputs\mask_robustness\figures\p026__loss_small__variant_grid.png,True
+p026,scratch_thin,5,outputs\mask_robustness\figures\p026__scratch_thin__variant_grid.png,True
+p039,loss_large,5,outputs\mask_robustness\figures\p039__loss_large__variant_grid.png,True
+p039,loss_small,5,outputs\mask_robustness\figures\p039__loss_small__variant_grid.png,True
+p039,scratch_thin,5,outputs\mask_robustness\figures\p039__scratch_thin__variant_grid.png,True
+p043,loss_large,5,outputs\mask_robustness\figures\p043__loss_large__variant_grid.png,True
+p043,loss_small,5,outputs\mask_robustness\figures\p043__loss_small__variant_grid.png,True
+p043,scratch_thin,5,outputs\mask_robustness\figures\p043__scratch_thin__variant_grid.png,True

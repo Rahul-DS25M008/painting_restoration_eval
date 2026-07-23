@@ -1,0 +1,10 @@
+check,issue_count,passed
+duplicate_case_ids,0,True
+duplicate_mask_paths,0,True
+duplicate_damaged_paths,0,True
+missing_expected_cases,0,True
+unexpected_metadata_cases,0,True
+missing_mask_files,0,True
+missing_damaged_files,0,True
+orphan_mask_files,0,True
+orphan_damaged_files,0,True

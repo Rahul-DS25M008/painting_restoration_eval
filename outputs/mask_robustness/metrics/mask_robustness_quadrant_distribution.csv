@@ -1,0 +1,13 @@
+base_mask_type,centroid_quadrant,case_count,painting_count
+loss_large,top_right,4,2
+loss_large,bottom_left,6,3
+loss_large,top_left,7,4
+loss_small,bottom_right,10,4
+loss_small,top_left,7,4
+scratch_thin,top_left,9,4
+scratch_thin,bottom_right,5,3
+loss_large,bottom_right,8,4
+loss_small,bottom_left,5,4
+scratch_thin,bottom_left,5,2
+loss_small,top_right,3,3
+scratch_thin,top_right,6,3

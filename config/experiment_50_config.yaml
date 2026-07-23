@@ -157,6 +157,34 @@ damage_size_sensitivity:
     - 255
     - 255
 
+mask_robustness:
+  metadata_path: data/processed/metadata/metadata_mask_robustness.csv
+  mask_dir: data/processed/masks/mask_robustness
+  damaged_dir: data/processed/damaged/mask_robustness
+  outputs_dir: outputs/mask_robustness
+
+  base_mask_types:
+    - scratch_thin
+    - loss_small
+    - loss_large
+
+  target_percentages:
+    scratch_thin: 2.0
+    loss_small: 4.5
+    loss_large: 12.5
+
+  variants_per_mask_type: 5
+  expected_painting_count: 5
+  global_seed: 20260606
+
+  maximum_percentage_error: 0.50
+
+  fill_strategy: constant_rgb
+  fill_color:
+    - 255
+    - 255
+    - 255
+
 models:
   opencv_telea:
     enabled: true
