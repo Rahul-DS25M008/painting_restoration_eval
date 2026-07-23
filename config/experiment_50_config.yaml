@@ -129,6 +129,34 @@ damage_conditions:
     target_area_ratio_max: 0.15
     description: "Combination of scratches, irregular losses, scattered losses, and edge damage."
 
+damage_size_sensitivity:
+  metadata_path: data/processed/metadata/metadata_damage_size_sensitivity.csv
+  mask_dir: data/processed/masks/damage_size_sensitivity
+  damaged_dir: data/processed/damaged/damage_size_sensitivity
+  outputs_dir: outputs/damage_size_sensitivity
+
+  target_percentages:
+    - 2
+    - 4
+    - 6
+    - 8
+    - 10
+    - 15
+    - 20
+
+  base_mask_types:
+    - loss_large
+
+  expected_painting_count: 5
+  global_seed: 20260505
+  maximum_percentage_error: 0.50
+
+  fill_strategy: constant_rgb
+  fill_color:
+    - 255
+    - 255
+    - 255
+
 models:
   opencv_telea:
     enabled: true

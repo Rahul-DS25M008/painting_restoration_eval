@@ -1,0 +1,35 @@
+{
+  "all_cases_valid": true,
+  "base_mask_types": [
+    "loss_large"
+  ],
+  "canonical_metadata_path": "data\\processed\\metadata\\metadata_damage_size_sensitivity.csv",
+  "case_count": 35,
+  "experiment": "damage_size_sensitivity",
+  "experiment_manifest_path": "outputs\\damage_size_sensitivity\\damage_size_sensitivity_manifest.csv",
+  "figure_manifest_path": "outputs\\damage_size_sensitivity\\figures\\damage_progressions\\damage_progression_figure_manifest.csv",
+  "fill_strategy": "constant_rgb",
+  "generator_name": "damage_size_sensitivity",
+  "generator_version": "1.1.0",
+  "global_seed": 20260505,
+  "maximum_allowed_percentage_error": 0.5,
+  "maximum_observed_percentage_error": 0.025570324283560097,
+  "notebook": "05_damage_size_sensitivity",
+  "overall_summary_path": "outputs\\damage_size_sensitivity\\summaries\\overall_summary.csv",
+  "painting_count": 5,
+  "painting_level_summary_path": "outputs\\damage_size_sensitivity\\summaries\\painting_level_summary.csv",
+  "progression_figure_count": 5,
+  "status": "complete",
+  "target_level_count": 7,
+  "target_level_summary_path": "outputs\\damage_size_sensitivity\\summaries\\target_level_summary.csv",
+  "target_percentages_content": [
+    2.0,
+    4.0,
+    6.0,
+    8.0,
+    10.0,
+    15.0,
+    20.0
+  ],
+  "validation_results_path": "outputs\\damage_size_sensitivity\\damage_size_sensitivity_validation.csv"
+}
