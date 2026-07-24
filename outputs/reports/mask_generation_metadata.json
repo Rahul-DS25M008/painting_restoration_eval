@@ -1,0 +1,29 @@
+{
+    "stage": "03_mask_generation",
+    "generated_at": "2026-07-24T20:18:31.798371",
+    "experiment_name": "painting_restoration_50_subset",
+    "experiment_version": "1.0.0",
+    "generator_name": "canonical_synthetic_damage_masks",
+    "generator_version": "2.0.0",
+    "config_version": "1.1.0",
+    "painting_count": 50,
+    "configured_mask_types": [
+        "zero_control",
+        "scratch_thin",
+        "loss_small",
+        "loss_large",
+        "mixed_damage"
+    ],
+    "expected_masks": 250,
+    "generated_masks": 250,
+    "validation_passed": true,
+    "figures": {
+        "mask_area_percentage_distribution": "outputs\\figures\\masks\\mask_area_percentage_distribution.png",
+        "mask_connected_component_distribution": "outputs\\figures\\masks\\mask_connected_component_distribution.png",
+        "mask_bbox_fill_ratio_distribution": "outputs\\figures\\masks\\mask_bbox_fill_ratio_distribution.png",
+        "mask_largest_component_fraction_distribution": "outputs\\figures\\masks\\mask_largest_component_fraction_distribution.png",
+        "mask_border_touch_percentage": "outputs\\figures\\masks\\mask_border_touch_percentage.png",
+        "mask_generation_attempt_distribution": "outputs\\figures\\masks\\mask_generation_attempt_distribution.png",
+        "representative_mask_overlays": "outputs\\figures\\masks\\representative_mask_overlays.png"
+    }
+}
