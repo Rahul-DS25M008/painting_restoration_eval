@@ -1,0 +1,3 @@
+map_type,vmin,vmax,percentile_policy,sample_count
+absolute_error,0.0,255.0,masked_pixels_99.5,3600000
+signed_improvement,-253.0,253.0,masked_absolute_values_99.5,1800000
