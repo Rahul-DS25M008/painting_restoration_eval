@@ -1,6 +1,0 @@
-mask_type,rows,cases,mean_clip_damaged_similarity,mean_clip_restored_similarity,mean_clip_similarity_improvement,median_clip_similarity_improvement,clip_improvement_rate,mean_dinov2_damaged_similarity,mean_dinov2_restored_similarity,mean_dinov2_similarity_improvement,median_dinov2_similarity_improvement,dinov2_improvement_rate,mean_region_pixel_count
-loss_large,150,50,0.8552,0.8919,0.0367,0.03548,0.79333,0.81548,0.74961,-0.06586,-0.05936,0.27333,406007.07333
-loss_small,150,50,0.89876,0.9939,0.09514,0.08954,1.0,0.90796,0.97708,0.06912,0.0315,0.99333,489403.76
-mixed_damage,150,50,0.8414,0.97497,0.13357,0.13458,1.0,0.76293,0.91831,0.15538,0.12409,0.96667,538795.30667
-scratch_thin,150,50,0.89722,0.99927,0.10204,0.10266,1.0,0.85271,0.99753,0.14483,0.11697,1.0,538267.44667
-zero_control,100,50,1.0,1.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,522240.0

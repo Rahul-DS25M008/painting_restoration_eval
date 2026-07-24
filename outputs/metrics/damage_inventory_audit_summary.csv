@@ -1,9 +1,0 @@
-check,issue_count,passed
-duplicate_case_ids,0,True
-duplicate_damaged_filenames,0,True
-duplicate_damaged_paths,0,True
-missing_expected_case_ids,0,True
-unexpected_metadata_case_ids,0,True
-missing_damaged_files,0,True
-orphan_damaged_files,0,True
-filename_path_consistency,0,True

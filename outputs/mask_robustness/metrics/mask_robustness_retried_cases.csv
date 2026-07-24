@@ -1,5 +1,0 @@
-case_id,painting_id,base_mask_type,variant_index,generation_attempt_index,target_percentage_content,realised_percentage_content,absolute_percentage_error_content,touches_content_border
-p001__loss_small__variant_02,p001,loss_small,2,2,4.5,4.493464052287582,0.006535947712418277,True
-p001__loss_small__variant_05,p001,loss_small,5,2,4.5,4.497391905480141,0.0026080945198589944,True
-p039__loss_small__variant_01,p039,loss_small,1,2,4.5,4.500498670212766,0.0004986702127656173,False
-p043__loss_small__variant_01,p043,loss_small,1,2,4.5,4.495916871249318,0.00408312875068173,True

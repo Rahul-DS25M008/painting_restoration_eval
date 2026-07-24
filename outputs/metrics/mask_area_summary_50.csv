@@ -1,6 +1,0 @@
-mask_type,count,target_area_pct,target_area_min_pct,target_area_max_pct,mean_actual_area_pct,std_actual_area_pct,min_actual_area_pct,max_actual_area_pct,mean_area_error_pct,max_area_error_pct,mean_actual_area_pixels
-zero_control,50,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-scratch_thin,50,2.0,1.0,3.0,2.1363,0.4984,1.1081,2.9782,0.4296,0.9782,9614.46
-loss_small,50,4.5,3.0,6.0,4.0246,0.6469,3.0869,5.5021,0.6743,1.4131,18175.36
-loss_large,50,12.5,10.0,15.0,12.3288,1.3686,10.1506,14.9143,1.1736,2.4143,56236.98
-mixed_damage,50,11.5,8.0,15.0,9.66,1.3449,8.084,13.2845,2.0755,3.416,43420.0

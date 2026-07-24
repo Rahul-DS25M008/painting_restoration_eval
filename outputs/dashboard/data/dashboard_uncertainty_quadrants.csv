@@ -1,5 +1,0 @@
-uncertainty_performance_quadrant,cases,mean_combined_uncertainty_index,mean_sd_metric_wins,mean_masked_std,mean_pairwise_lpips,mean_dinov2_uncertainty_distance
-middle_region,20,0.1594528770989385,0.0,0.0660355687141418,0.0855509108398109,0.0616022000710169
-low_uncertainty_low_reference_performance,10,0.0456033927401308,0.0,0.0442320339381694,0.0348080350706974,0.0244700153668721
-high_uncertainty_high_reference_performance,5,0.4893743587550754,2.2,0.0985284030437469,0.2956161191066105,0.2040377348661422
-high_uncertainty_low_reference_performance,5,0.5624333662568622,0.0,0.1012895166873932,0.3190162301063537,0.3326776777704556

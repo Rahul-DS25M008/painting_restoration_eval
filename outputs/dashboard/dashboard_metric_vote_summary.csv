@@ -1,4 +1,0 @@
-model,metric_vote_column,total_metric_votes,mean_metric_votes,cases
-OpenCV Telea,opencv_telea_metric_wins,257.0,1.285,200
-LaMa,lama_metric_wins,924.0,4.62,200
-Stable Diffusion Inpainting,stable_diffusion_inpainting_metric_wins,19.0,0.095,200

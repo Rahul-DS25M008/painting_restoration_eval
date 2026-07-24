@@ -1,5 +1,0 @@
-mask_type,cases,mean_mse_delta,mean_lpips_delta,mean_clip_delta,mean_dinov2_delta,lama_mse_win_rate,lama_lpips_win_rate,lama_clip_win_rate,lama_dinov2_win_rate,lama_overall_vote_win_rate,opencv_overall_vote_win_rate,mixed_vote_rate,mixed_metric_outcome_rate,lama_mse_win_but_dinov2_loss_rate,lama_lpips_win_but_dinov2_loss_rate
-loss_large,50,555.6425,0.12208,0.13188,0.25763,0.84,1.0,1.0,1.0,1.0,0.0,0.0,0.16,0.0,0.0
-loss_small,50,244.87214,0.01611,0.00489,0.02092,0.8,1.0,0.96,1.0,0.98,0.0,0.02,0.22,0.0,0.0
-mixed_damage,50,287.2705,0.02606,0.0174,0.05912,0.9,1.0,1.0,1.0,1.0,0.0,0.0,0.1,0.0,0.0
-scratch_thin,50,67.80452,0.00161,7e-05,-0.0008,0.64,0.76,0.54,0.46,0.5,0.34,0.16,0.6,0.22,0.32

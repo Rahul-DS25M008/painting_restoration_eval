@@ -1,6 +1,0 @@
-painting_id,figure_path,figure_exists,figure_size_bytes,target_level_count,passed
-p001,outputs\damage_size_sensitivity\figures\damage_progressions\p001_damage_progression.png,True,1429495,7,True
-p018,outputs\damage_size_sensitivity\figures\damage_progressions\p018_damage_progression.png,True,1166883,7,True
-p026,outputs\damage_size_sensitivity\figures\damage_progressions\p026_damage_progression.png,True,1584947,7,True
-p039,outputs\damage_size_sensitivity\figures\damage_progressions\p039_damage_progression.png,True,1592642,7,True
-p043,outputs\damage_size_sensitivity\figures\damage_progressions\p043_damage_progression.png,True,1722509,7,True

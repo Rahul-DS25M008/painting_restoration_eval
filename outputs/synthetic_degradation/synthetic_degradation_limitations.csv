@@ -1,8 +1,0 @@
-degradation_type,physical_limitation
-blur,"Models local optical softening only. It does not simulate layered varnish haze, pigment migration, craquelure, or depth-dependent scattering."
-water_stain,"Models an irregular translucent stain and boundary ring. It does not model capillary transport, tidelines, mould, support deformation, or chemical interaction with pigments and binders."
-fading,"Models reduced saturation, contrast, and mild lightening. It does not model pigment-specific photochemical fading or wavelength-dependent exposure."
-discolouration,"Models a controlled colour-channel shift. It does not represent pigment, binder, varnish, oxidation, or ageing chemistry."
-dirt_dust,"Models particulate and grime-like surface effects. It does not model adhesion, particle composition, cleaning history, or layered deposits."
-partial_transparency,"Models local blending toward a neutral substrate colour. It does not represent true paint loss, thinning, abrasion, ground exposure, or multilayer optical behaviour."
-combined_degradations,"Combined cases apply selected operators in sequence. They do not model causal interaction, shared material mechanisms, or conservation-treatment history."

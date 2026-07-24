@@ -1,8 +1,0 @@
-item,value
-total_rows,250.0
-unique_paintings,50.0
-successful_rows,250.0
-error_rows,0.0
-model_inference_rows,200.0
-copied_zero_control_rows,50.0
-mean_case_runtime_seconds,8.397577275023796

@@ -1,2 +1,0 @@
-comparison_level,cases,lama_mse_win_rate,opencv_mse_win_rate,mse_tie_rate,lama_lpips_win_rate,opencv_lpips_win_rate,lpips_tie_rate,lama_clip_win_rate,opencv_clip_win_rate,clip_tie_rate,lama_dinov2_win_rate,opencv_dinov2_win_rate,dinov2_tie_rate,lama_overall_vote_win_rate,opencv_overall_vote_win_rate,mixed_vote_rate,mixed_metric_outcome_rate,lama_all_main_metrics_win_rate,opencv_all_main_metrics_win_rate
-overall,200,0.795,0.205,0.0,0.94,0.06,0.0,0.875,0.125,0.0,0.865,0.135,0.0,0.87,0.085,0.045,0.27,0.71,0.02

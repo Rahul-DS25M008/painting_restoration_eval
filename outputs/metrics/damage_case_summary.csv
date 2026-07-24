@@ -1,6 +1,0 @@
-mask_type,case_count,painting_count,total_damaged_pixels,mean_damaged_pixels,median_damaged_pixels,min_damaged_pixels,max_damaged_pixels,mean_damage_percentage_content,median_damage_percentage_content,mean_damage_percentage_full,total_file_size_bytes,mean_file_size_bytes
-zero_control,50,50,0,0.0,0.0,0,0,0.0,0.0,0.0,36126399,722527.98
-scratch_thin,50,50,480723,9614.46,9433.0,6085,15664,2.1363,2.138,1.6301,36293710,725874.2
-loss_small,50,50,908768,18175.36,18344.5,12394,25311,4.0246,3.9334,3.0815,34974053,699481.06
-loss_large,50,50,2811849,56236.98,54922.0,37439,83018,12.3288,12.2767,9.5345,31844524,636890.48
-mixed_damage,50,50,2171000,43420.0,42955.5,34209,52887,9.66,9.3117,7.3615,33708068,674161.36

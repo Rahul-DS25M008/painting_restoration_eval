@@ -1,5 +1,0 @@
-mask_type,cases,mean_damage_area_content_pct,mean_mse_improvement,mean_restored_mse,mean_lpips_improvement,mean_restored_lpips,mean_clip_improvement,clip_improvement_rate,mean_dinov2_improvement,dinov2_improvement_rate
-loss_large,50,12.8222,23999.73331,1580.9898,0.18588,0.29941,0.02631,0.74,-0.12213,0.16
-loss_small,50,4.4385,25902.88156,616.99864,0.16653,0.02622,0.09881,1.0,0.05793,1.0
-mixed_damage,50,10.13509,26381.81926,855.77489,0.26445,0.04943,0.1324,1.0,0.1728,1.0
-scratch_thin,50,2.19846,28319.66895,325.06396,0.25659,0.00363,0.10116,1.0,0.14765,1.0

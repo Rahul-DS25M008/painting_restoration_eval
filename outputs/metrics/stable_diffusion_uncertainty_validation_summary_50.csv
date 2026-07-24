@@ -1,5 +1,0 @@
-check,status,details
-expected_generation_rows,passed,160 generated outputs
-all_generation_status_ok,passed,All generation rows have status ok
-all_generation_files_exist,passed,All generated output files exist
-unique_generation_ids,passed,Each case/seed pair has one generation row

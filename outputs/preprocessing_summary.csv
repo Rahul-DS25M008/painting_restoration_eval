@@ -1,2 +1,0 @@
-expected_paintings,processed_rows,validated_rows,missing_files,unreadable_files,invalid_geometry,invalid_padding_color,validation_issues,target_size,preprocessing_method,mean_content_area_percentage,min_content_area_percentage,max_content_area_percentage,all_checks_passed
-50,50,50,0,0,0,0,0,768,aspect_ratio_resize_median_rgb_pad,77.0833,56.6406,100.0,True

@@ -1,4 +1,0 @@
-base_mask_type,case_count,touches_content_border_count,touches_left_count,touches_right_count,touches_top_count,touches_bottom_count
-loss_large,25,0,0,0,0,0
-loss_small,25,17,4,4,6,8
-scratch_thin,25,23,12,10,15,9

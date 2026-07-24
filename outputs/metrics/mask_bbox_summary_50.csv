@@ -1,6 +1,0 @@
-mask_type,count,mean_bbox_area_pixels,mean_bbox_width,mean_bbox_height,mean_bbox_fill_ratio,mean_bbox_aspect_ratio,mean_minimum_distance_to_border_pixels,touching_border_count,touching_border_percentage
-zero_control,50,0.0,0.0,0.0,0.0,0.0,,0,0.0
-scratch_thin,50,430884.98,677.0,645.6,0.0226,1.3101,0.0,50,100.0
-loss_small,50,250862.36,510.04,495.64,0.0791,1.4187,31.1,0,0.0
-loss_large,50,105826.78,325.0,321.62,0.5605,1.2031,59.68,0,0.0
-mixed_damage,50,441638.88,687.48,652.68,0.0996,1.3153,0.0,50,100.0

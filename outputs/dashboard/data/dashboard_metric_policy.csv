@@ -1,7 +1,0 @@
-metric,final_local_region,reason,used_in_final_comparison
-MSE improvement,masked_region,Direct pixel-error metric; suitable for sparse damaged pixels.,True
-PSNR improvement,masked_region,Derived from pixel error; suitable for sparse damaged pixels.,True
-SSIM improvement,mask_bbox_crop,Structural metric requiring image-like local context; sparse masked-region SSIM was invalid.,True
-LPIPS improvement,mask_bbox_crop,Perceptual metric requiring image-like input.,True
-CLIP similarity improvement,mask_bbox_crop,Feature metric requiring image-like crop around the restored region.,True
-DINOv2 similarity improvement,mask_bbox_crop,Feature metric requiring image-like crop around the restored region.,True

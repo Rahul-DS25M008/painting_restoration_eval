@@ -1,6 +1,0 @@
-category,rows,cases,mean_damaged_mse,mean_restored_mse,mean_mse_improvement,mean_damaged_mae,mean_restored_mae,mean_mae_improvement,mean_damaged_psnr,mean_restored_psnr,mean_psnr_improvement,mean_damaged_ssim,mean_restored_ssim,mean_ssim_improvement,mean_region_pixel_count
-abstraction_surrealism,180,50,5931.7555,492.9764,5438.7791,36.4359,6.5455,29.8904,14.7821,27.4454,12.6633,0.9203,0.9573,0.037,392566.9
-architecture_structured,180,50,7612.3011,234.9856,7377.3155,44.7338,5.0029,39.7309,13.1676,30.1883,17.0206,0.909,0.9542,0.0452,357633.6389
-high_texture_brushwork,180,50,7923.2861,208.1827,7715.1033,46.0922,4.7323,41.36,12.8508,30.2928,17.442,0.9098,0.9551,0.0453,371109.85
-landscape_natural,180,50,6464.3338,240.186,6224.1478,39.8556,5.1088,34.7468,14.3116,29.555,15.2434,0.9124,0.9534,0.041,350709.45
-portrait_figure,180,50,11291.5619,190.9507,11100.6111,55.5473,4.1945,51.3528,11.4005,31.4007,20.0002,0.9026,0.9625,0.0599,370128.0333

@@ -1,9 +1,0 @@
-audit,issue_rows,passed
-duplicate_case_rows,0,True
-duplicate_mask_id_rows,0,True
-duplicate_filename_rows,0,True
-duplicate_path_rows,0,True
-missing_file_rows,0,True
-orphan_file_rows,0,True
-missing_mask_type_rows,0,True
-unexpected_mask_type_rows,0,True

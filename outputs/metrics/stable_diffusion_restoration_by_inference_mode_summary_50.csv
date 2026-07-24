@@ -1,3 +1,0 @@
-inference_mode,cases,successful_cases,error_cases,mean_case_runtime_seconds
-copied_zero_control,50,50,0,0.0
-model_inference,200,200,0,8.39758

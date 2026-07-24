@@ -1,5 +1,0 @@
-model_name,display_name,model_type,evaluation_status,cases_restored,non_zero_cases_compared,role_in_framework,main_interpretation
-opencv_telea,OpenCV Telea,classical inpainting baseline,fully_evaluated,250,200,deterministic classical baseline,Useful baseline for local interpolation behavior; limited semantic restoration capacity.
-lama,LaMa,deep learning inpainting model,fully_evaluated,250,200,strong reference-based inpainting model,Dominated the refined reference-based metric comparison across most cases.
-stable_diffusion_inpainting,Stable Diffusion Inpainting,latent diffusion inpainting model,fully_evaluated_plus_uncertainty_analysis,250,200,generative restoration candidate,Can produce visually plausible completions but is less reference-faithful and may be unstable across seeds.
-sdxl_inpainting,SDXL Inpainting,larger latent diffusion inpainting model,feasibility_audit_only,smoke/probe only,0,excluded local full-evaluation candidate,Excluded from full local evaluation due runtime and 6GB VRAM feasibility constraints.

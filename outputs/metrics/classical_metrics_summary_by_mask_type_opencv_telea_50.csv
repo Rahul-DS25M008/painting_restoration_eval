@@ -1,6 +1,0 @@
-mask_type,rows,cases,mean_damaged_mse,mean_restored_mse,mean_mse_improvement,mean_damaged_mae,mean_restored_mae,mean_mae_improvement,mean_damaged_psnr,mean_restored_psnr,mean_psnr_improvement,mean_damaged_ssim,mean_restored_ssim,mean_ssim_improvement,mean_region_pixel_count
-loss_large,200,50,11323.983,692.3707,10631.6123,65.5425,11.2286,54.314,10.0675,22.683,12.6155,0.8031,0.8669,0.0638,304707.235
-loss_small,200,50,7656.2517,177.8278,7478.4238,43.9286,4.0025,39.926,14.2766,31.6697,17.3931,0.9478,0.9776,0.0298,334144.56
-mixed_damage,200,50,8715.1308,274.1615,8440.9693,49.229,5.4084,43.8206,12.0471,27.4431,15.396,0.8917,0.9582,0.0665,384264.205
-scratch_thin,200,50,7605.5491,86.1934,7519.3557,41.6982,2.3859,39.3122,16.8189,37.31,20.4911,0.9411,0.9943,0.0531,373697.085
-zero_control,100,50,0.0,0.0,0.0,0.0,0.0,0.0,,,,1.0,1.0,0.0,522240.0

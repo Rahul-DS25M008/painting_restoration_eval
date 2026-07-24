@@ -1,3 +1,0 @@
-timestamp,model_name,model_id,gpu,vram_gb,test_case,setting,num_inference_steps,guidance_scale,strength,inference_size,output_size,use_cpu_offload,runtime_seconds,runtime_minutes,status,observation
-2026-07-05 23:54:05,sdxl_inpainting,diffusers/stable-diffusion-xl-1.0-inpainting-0.1,NVIDIA GeForce RTX 3060 Laptop GPU,6,p001_loss_large,6_steps_512_cpu_offload,6,4.5,,512,768,True,267.4,4.56,completed_but_not_usable,Masked region not meaningfully restored.
-2026-07-05 23:54:05,sdxl_inpainting,diffusers/stable-diffusion-xl-1.0-inpainting-0.1,NVIDIA GeForce RTX 3060 Laptop GPU,6,p001_loss_large,12_steps_512_strength_1_cpu_offload,12,6.0,1.0,512,768,True,594.0,9.9,completed_but_not_usable,Masked region filled but output showed strong hallucination and global visual alteration.

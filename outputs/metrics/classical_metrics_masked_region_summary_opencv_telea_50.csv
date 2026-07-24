@@ -1,5 +1,0 @@
-mask_type,cases,mean_damaged_mse,mean_restored_mse,mean_mse_improvement,mean_damaged_mae,mean_restored_mae,mean_mae_improvement,mean_damaged_psnr,mean_restored_psnr,mean_psnr_improvement,improvement_rate_mse,improvement_rate_mae,mean_region_pixel_count
-loss_large,50,25580.7231,1580.9898,23999.7333,148.1165,25.4762,122.6403,4.5927,17.2082,12.6155,1.0,1.0,58769.48
-loss_small,50,26519.8802,616.9986,25902.8816,152.0709,13.8619,138.209,4.3729,21.766,17.3931,1.0,1.0,19951.84
-mixed_damage,50,27237.5942,855.7749,26381.8193,153.7445,16.875,136.8694,4.2923,19.6883,15.396,1.0,1.0,45450.92
-scratch_thin,50,28644.7329,325.064,28319.6689,157.0701,9.0014,148.0687,4.0641,24.5552,20.4911,1.0,1.0,10000.84

@@ -1,4 +1,0 @@
-hypothesis_id,hypothesis,current_evidence,status
-H1,A multi-metric framework will reveal restoration quality differences that are not visible from PSNR/SSIM alone.,"The final framework combines MSE, PSNR, SSIM, LPIPS, CLIP, DINOv2, visual diagnostics, metric disagreement cases, and refined metric-region policy.",supported_by_current_experiment
-H2,Pretrained models will behave differently across painting categories and damage types.,"OpenCV Telea, LaMa, and Stable Diffusion were compared over 200 non-zero damage cases, with summaries by mask type and painting category.",supported_for_current_model_stack
-H3,Variation among multiple diffusion restoration candidates can act as a warning signal for generative restoration uncertainty.,"Stable Diffusion was evaluated on a balanced 40-case subset using four seeds per case, producing image-space, LPIPS, CLIP/DINOv2, and combined uncertainty summaries.",supported_diagnostically_but_scope_needs_supervisor_confirmation

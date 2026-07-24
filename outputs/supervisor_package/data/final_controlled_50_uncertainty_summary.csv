@@ -1,9 +1,0 @@
-item,value,description
-uncertainty_cases,40,Balanced diagnostic uncertainty subset.
-uncertainty_generated_outputs,160,40 cases × 4 seeds.
-pairwise_lpips_comparisons,240,Six pairwise seed comparisons per case.
-pairwise_feature_comparisons,240,CLIP and DINOv2 pairwise seed comparisons.
-highest_uncertainty_case,p011_loss_large,landscape_natural | loss_large | index=0.9834
-lowest_uncertainty_case,p011_scratch_thin,landscape_natural | scratch_thin | index=0.0043
-highest_uncertainty_mask_type,loss_large,mean index=0.5175
-highest_uncertainty_category,landscape_natural,mean index=0.3130

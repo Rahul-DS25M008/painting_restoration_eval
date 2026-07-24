@@ -1,6 +1,0 @@
-mask_type,count,generation_success_count,saved_file_validation_success_count,binary_success_count,content_only_success_count,area_tolerance_success_count,padding_overlap_mask_count,total_validation_issues,generation_success_percentage,saved_file_validation_success_percentage,binary_success_percentage,content_only_success_percentage,area_tolerance_success_percentage
-zero_control,50,50,50,50,50,50,0,0,100.0,100.0,100.0,100.0,100.0
-scratch_thin,50,50,50,50,50,50,0,0,100.0,100.0,100.0,100.0,100.0
-loss_small,50,50,50,50,50,50,0,0,100.0,100.0,100.0,100.0,100.0
-loss_large,50,50,50,50,50,50,0,0,100.0,100.0,100.0,100.0,100.0
-mixed_damage,50,50,50,50,50,50,0,0,100.0,100.0,100.0,100.0,100.0

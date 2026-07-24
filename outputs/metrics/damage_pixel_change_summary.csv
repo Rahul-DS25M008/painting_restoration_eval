@@ -1,6 +1,0 @@
-mask_type,case_count,total_mask_pixels,total_changed_pixels,total_already_fill_pixels,total_outside_mask_changes,total_inside_mask_fill_failures,mean_changed_pixels,mean_already_fill_pixels,observed_change_rate_within_mask
-zero_control,50,0,0,0,0,0,0.0,0.0,0.0
-scratch_thin,50,480723,480723,0,0,0,9614.46,0.0,1.0
-loss_small,50,908768,908765,3,0,0,18175.3,0.06,0.999997
-loss_large,50,2811849,2811842,7,0,0,56236.84,0.14,0.999998
-mixed_damage,50,2171000,2170998,2,0,0,43419.96,0.04,0.999999
