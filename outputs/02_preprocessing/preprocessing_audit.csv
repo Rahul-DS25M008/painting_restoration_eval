@@ -1,0 +1,10 @@
+check,value
+processed_rows,50
+expected_rows,50
+target_size,768
+mean_resize_scale,0.203642
+mean_content_area_percent,77.0833
+mean_padding_area_percent,22.9167
+minimum_content_area_percent,56.6406
+maximum_content_area_percent,100.0
+validation_passed,True
