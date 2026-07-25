@@ -1,0 +1,49 @@
+notebook,audit_stage,check,observed,expected,passed,created_at_utc
+09_opencv_metrics_classical,restoration_metadata_gate,restoration_metadata_nonempty,410,"""> 0""",True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,restoration_metadata_gate,restoration_case_ids_unique,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,restoration_metadata_gate,all_restoration_statuses_ok,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,restoration_metadata_gate,required_datasets_present,"[""canonical"", ""damage_size"", ""mask_robustness"", ""synthetic_degradation""]","[""canonical"", ""damage_size""]",True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,restoration_metadata_gate,no_unsupported_datasets,[],[],True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,restoration_metadata_gate,model_name_consistent,"[""opencv_telea""]","[""opencv_telea""]",True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,clean_metadata_gate,clean_metadata_nonempty,50,"""> 0""",True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,clean_metadata_gate,painting_ids_unique,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,clean_metadata_gate,content_coordinates_valid,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,metric_input_gate,metric_input_row_count,410,410,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,metric_input_gate,all_paintings_matched,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,metric_input_gate,metric_case_ids_unique,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,metric_input_gate,content_metadata_complete,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,metric_input_gate,dataset_names_preserved,"[""canonical"", ""damage_size"", ""mask_robustness"", ""synthetic_degradation""]","[""canonical"", ""damage_size"", ""mask_robustness"", ""synthetic_degradation""]",True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,path_validation_gate,path_validation_row_count,410,410,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,path_validation_gate,all_required_files_exist,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,path_validation_gate,mask_areas_available,410,410,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,expected_manifest_gate,expected_metric_manifest_nonempty,2295,"""> 0""",True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,expected_manifest_gate,expected_metric_row_ids_unique,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,expected_manifest_gate,all_cases_have_full_image,410,410,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,expected_manifest_gate,zero_controls_exclude_target_regions,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,smoke_test_gate,smoke_test_no_case_failures,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,smoke_test_gate,smoke_test_expected_row_count,27,27,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,smoke_test_gate,smoke_test_no_missing_rows,[],[],True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,smoke_test_gate,smoke_test_no_unexpected_rows,[],[],True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,smoke_test_gate,smoke_test_metric_row_ids_unique,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,smoke_test_gate,smoke_test_ssim_policy_valid,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,smoke_test_gate,smoke_test_status_ok,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,full_metric_validation_gate,no_case_failures,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,full_metric_validation_gate,expected_total_row_count,2295,2295,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,full_metric_validation_gate,no_missing_metric_rows,[],[],True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,full_metric_validation_gate,no_unexpected_metric_rows,[],[],True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,full_metric_validation_gate,metric_row_ids_unique,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,full_metric_validation_gate,all_metric_statuses_ok,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,full_metric_validation_gate,all_regions_nonempty,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,full_metric_validation_gate,error_metrics_nonnegative,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,full_metric_validation_gate,ssim_policy_valid,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,full_metric_validation_gate,ssim_values_in_range,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,full_metric_validation_gate,zero_control_region_policy_valid,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,full_metric_validation_gate,dataset_region_counts_match,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,save_reload_gate,metric_csv_exists,true,true,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,save_reload_gate,reloaded_row_count,2295,2295,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,save_reload_gate,reloaded_metric_row_ids_unique,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,save_reload_gate,reloaded_metric_row_ids_match,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,save_reload_gate,reloaded_statuses_ok,0,0,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,runtime_summary_gate,all_cases_in_runtime_summary,410,410,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,runtime_summary_gate,case_runtimes_finite,410,410,True,2026-07-25T22:41:30.116107+00:00
+09_opencv_metrics_classical,runtime_summary_gate,no_recorded_failures,0,0,True,2026-07-25T22:41:30.116107+00:00
