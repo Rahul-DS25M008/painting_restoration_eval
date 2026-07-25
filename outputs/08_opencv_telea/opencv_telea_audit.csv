@@ -1,0 +1,55 @@
+notebook,model_name,generated_at_utc,audit_section,check,observed,expected,passed
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,input_manifest,manifest_nonempty,410,> 0,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,input_manifest,global_case_ids_unique,0,0,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,input_manifest,required_values_nonnull,False,False,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,input_manifest,required_values_nonempty,False,False,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,input_manifest,all_input_paths_exist,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,input_manifest,required_datasets_present,"['canonical', 'damage_size']","['canonical', 'damage_size']",True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,expected_manifest,expected_manifest_nonempty,410,> 0,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,expected_manifest,restoration_case_ids_unique,0,0,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,expected_manifest,expected_output_paths_unique,0,0,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,expected_manifest,expected_case_count_matches_input,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,expected_manifest,required_datasets_have_cases,"['canonical', 'damage_size', 'mask_robustness', 'synthetic_degradation']","['canonical', 'damage_size']",True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,pre_generation_cleanup,temporary_directory_absent,False,False,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,pre_generation_cleanup,restoration_directory_empty,0,0,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,pre_generation_cleanup,canonical_metadata_absent,False,False,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,pre_generation_cleanup,canonical_audit_absent,False,False,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,smoke_test,generation_status_ok,ok,ok,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,smoke_test,file_validation_passed,True,True,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,smoke_test,behavior_validation_passed,True,True,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,smoke_test,runtime_positive,1.214224600000307,> 0,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,smoke_test,opencv_version_recorded,4.11.0,4.11.0,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,smoke_test,inpainting_radius_recorded,3,3,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,smoke_test_cleanup,temporary_smoke_test_directory,False,False,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,restoration_execution,generated_metadata_row_count,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,restoration_execution,successful_restoration_count,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,restoration_execution,failed_restoration_count,0,0,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,restoration_execution,restoration_ids_unique,0,0,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,restoration_execution,runtime_values_nonnegative,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,restoration_execution,opencv_version_consistent,['4.11.0'],['4.11.0'],True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,restoration_execution,inpainting_radius_consistent,[3],[3],True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,restoration_execution,algorithm_consistent,['cv2.INPAINT_TELEA'],['cv2.INPAINT_TELEA'],True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,file_validation,validation_row_count,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,file_validation,all_restored_files_exist,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,file_validation,all_restored_files_readable,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,file_validation,all_restored_sizes_valid,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,file_validation,all_restored_modes_rgb,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,file_validation,all_recorded_checksums_match,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,file_validation,all_file_validations_passed,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,behavior_validation,behavior_validation_row_count,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,behavior_validation,outside_mask_preserved,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,behavior_validation,empty_masks_leave_images_unchanged,55,55,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,behavior_validation,nonempty_masks_change_target_region,355,355,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,behavior_validation,all_behavior_validations_passed,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,inventory,expected_inventory_row_count,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,inventory,no_missing_restored_files,0,0,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,inventory,no_unexpected_restored_files,0,0,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,inventory,all_inventory_records_passed,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,determinism,representative_case_per_dataset,4,4,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,determinism,all_regenerations_succeeded,4,4,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,determinism,all_regenerated_checksums_match,4,4,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,metadata_save,metadata_file_exists,True,True,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,metadata_save,metadata_file_nonempty,719288,> 0,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,metadata_save,reloaded_metadata_row_count,410,410,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,metadata_save,reloaded_case_ids_unique,0,0,True
+08_opencv_telea_restoration,opencv_telea,2026-07-25T20:26:51.102447+00:00,metadata_save,reloaded_statuses_ok,410,410,True
