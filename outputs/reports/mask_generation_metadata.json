@@ -1,6 +1,6 @@
 {
     "stage": "03_mask_generation",
-    "generated_at": "2026-07-24T20:18:31.798371",
+    "generated_at": "2026-07-26T15:48:23.765051",
     "experiment_name": "painting_restoration_50_subset",
     "experiment_version": "1.0.0",
     "generator_name": "canonical_synthetic_damage_masks",

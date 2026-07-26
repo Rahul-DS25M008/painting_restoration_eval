@@ -4,7 +4,7 @@
 
 **Status:** PASSED
 
-Generated at: 2026-07-25T20:49:06.550353+00:00
+Generated at: 2026-07-26T14:08:14.207250+00:00
 
 ## Purpose
 
@@ -32,10 +32,10 @@ This notebook applies the OpenCV Telea classical inpainting baseline to normaliz
 
 | dataset_name | telea_applicability | case_count | successful_cases | failed_cases | total_runtime_seconds | mean_runtime_seconds | median_runtime_seconds | minimum_runtime_seconds | maximum_runtime_seconds |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| canonical | primary | 250 | 250 | 0 | 118.216 | 0.4729 | 0.465435 | 0.269066 | 0.83025 |
-| damage_size | primary | 35 | 35 | 0 | 18.097 | 0.5171 | 0.489979 | 0.321983 | 0.822646 |
-| mask_robustness | primary | 75 | 75 | 0 | 35.255 | 0.4701 | 0.441835 | 0.30395 | 0.685556 |
-| synthetic_degradation | supplementary | 50 | 50 | 0 | 24.471 | 0.4894 | 0.445519 | 0.295455 | 1.181796 |
+| canonical | primary | 250 | 250 | 0 | 110.054 | 0.4402 | 0.437054 | 0.24615 | 0.676054 |
+| damage_size | primary | 35 | 35 | 0 | 16.927 | 0.4836 | 0.459164 | 0.295386 | 0.72053 |
+| mask_robustness | primary | 75 | 75 | 0 | 35.176 | 0.469 | 0.44588 | 0.290579 | 0.710515 |
+| synthetic_degradation | supplementary | 50 | 50 | 0 | 25.386 | 0.5077 | 0.459038 | 0.301418 | 1.198466 |
 
 ## Failure summary
 

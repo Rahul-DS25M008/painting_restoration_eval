@@ -1,7 +1,18 @@
 {
   "notebook": "08_opencv_telea_restoration",
-  "generated_at_utc": "2026-07-25T20:48:36.903571+00:00",
+  "generated_at_utc": "2026-07-26T14:08:14.050695+00:00",
   "experiment_passed": true,
+  "runtime_environment": {
+    "execution_device": "cpu",
+    "execution_backend": "opencv_cpu",
+    "operating_system": "Windows-11-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 165 Stepping 2, GenuineIntel",
+    "python_version": "3.12.6",
+    "opencv_version": "4.11.0",
+    "numpy_version": "1.26.4",
+    "pandas_version": "2.3.3",
+    "pillow_version": "9.5.0"
+  },
   "method": {
     "model_name": "opencv_telea",
     "algorithm": "cv2.INPAINT_TELEA",
@@ -10,7 +21,9 @@
     "opencv_version": "4.11.0",
     "generator_name": "restoration_eval.restoration_opencv",
     "generator_version": "2.0.0",
-    "deterministic": true
+    "deterministic": true,
+    "automatic_retries": false,
+    "default_retry_count": 0
   },
   "inputs": {
     "canonical": "data/processed/metadata/metadata_damaged_images.csv",
@@ -63,7 +76,7 @@
     },
     {
       "metric": "total_runtime_seconds",
-      "value": 196.03860349941533
+      "value": 187.54243889957434
     },
     {
       "metric": "figure_count",
@@ -80,40 +93,40 @@
       "input_cases": 250,
       "successful_cases": 250,
       "failed_cases": 0,
-      "total_runtime_seconds": 118.21590159996413,
-      "mean_runtime_seconds": 0.47286360639985653,
-      "median_runtime_seconds": 0.465435299964156,
-      "max_runtime_seconds": 0.8302497999975458
+      "total_runtime_seconds": 110.05416459956905,
+      "mean_runtime_seconds": 0.4402166583982762,
+      "median_runtime_seconds": 0.4370544499834068,
+      "max_runtime_seconds": 0.6760536000365391
     },
     {
       "dataset_name": "damage_size",
       "input_cases": 35,
       "successful_cases": 35,
       "failed_cases": 0,
-      "total_runtime_seconds": 18.096895699971355,
-      "mean_runtime_seconds": 0.5170541628563244,
-      "median_runtime_seconds": 0.48997890000464395,
-      "max_runtime_seconds": 0.8226462000166066
+      "total_runtime_seconds": 16.926571099844296,
+      "mean_runtime_seconds": 0.48361631713840847,
+      "median_runtime_seconds": 0.45916420000139624,
+      "max_runtime_seconds": 0.7205304999952205
     },
     {
       "dataset_name": "mask_robustness",
       "input_cases": 75,
       "successful_cases": 75,
       "failed_cases": 0,
-      "total_runtime_seconds": 35.25492519966792,
-      "mean_runtime_seconds": 0.47006566932890564,
-      "median_runtime_seconds": 0.44183530000736937,
-      "max_runtime_seconds": 0.6855557999806479
+      "total_runtime_seconds": 35.17576760001248,
+      "mean_runtime_seconds": 0.46901023466683306,
+      "median_runtime_seconds": 0.4458800000138581,
+      "max_runtime_seconds": 0.7105145999812521
     },
     {
       "dataset_name": "synthetic_degradation",
       "input_cases": 50,
       "successful_cases": 50,
       "failed_cases": 0,
-      "total_runtime_seconds": 24.470880999811925,
-      "mean_runtime_seconds": 0.4894176199962385,
-      "median_runtime_seconds": 0.44551940000383183,
-      "max_runtime_seconds": 1.1817960999906063
+      "total_runtime_seconds": 25.385935600148514,
+      "mean_runtime_seconds": 0.5077187120029703,
+      "median_runtime_seconds": 0.4590377499698661,
+      "max_runtime_seconds": 1.1984656999702565
     }
   ],
   "runtime_summary": [
@@ -123,11 +136,11 @@
       "case_count": 250,
       "successful_cases": 250,
       "failed_cases": 0,
-      "total_runtime_seconds": 118.215902,
-      "mean_runtime_seconds": 0.472864,
-      "median_runtime_seconds": 0.465435,
-      "minimum_runtime_seconds": 0.269066,
-      "maximum_runtime_seconds": 0.83025
+      "total_runtime_seconds": 110.054165,
+      "mean_runtime_seconds": 0.440217,
+      "median_runtime_seconds": 0.437054,
+      "minimum_runtime_seconds": 0.24615,
+      "maximum_runtime_seconds": 0.676054
     },
     {
       "dataset_name": "damage_size",
@@ -135,11 +148,11 @@
       "case_count": 35,
       "successful_cases": 35,
       "failed_cases": 0,
-      "total_runtime_seconds": 18.096896,
-      "mean_runtime_seconds": 0.517054,
-      "median_runtime_seconds": 0.489979,
-      "minimum_runtime_seconds": 0.321983,
-      "maximum_runtime_seconds": 0.822646
+      "total_runtime_seconds": 16.926571,
+      "mean_runtime_seconds": 0.483616,
+      "median_runtime_seconds": 0.459164,
+      "minimum_runtime_seconds": 0.295386,
+      "maximum_runtime_seconds": 0.72053
     },
     {
       "dataset_name": "mask_robustness",
@@ -147,11 +160,11 @@
       "case_count": 75,
       "successful_cases": 75,
       "failed_cases": 0,
-      "total_runtime_seconds": 35.254925,
-      "mean_runtime_seconds": 0.470066,
-      "median_runtime_seconds": 0.441835,
-      "minimum_runtime_seconds": 0.30395,
-      "maximum_runtime_seconds": 0.685556
+      "total_runtime_seconds": 35.175768,
+      "mean_runtime_seconds": 0.46901,
+      "median_runtime_seconds": 0.44588,
+      "minimum_runtime_seconds": 0.290579,
+      "maximum_runtime_seconds": 0.710515
     },
     {
       "dataset_name": "synthetic_degradation",
@@ -159,11 +172,11 @@
       "case_count": 50,
       "successful_cases": 50,
       "failed_cases": 0,
-      "total_runtime_seconds": 24.470881,
-      "mean_runtime_seconds": 0.489418,
-      "median_runtime_seconds": 0.445519,
-      "minimum_runtime_seconds": 0.295455,
-      "maximum_runtime_seconds": 1.181796
+      "total_runtime_seconds": 25.385936,
+      "mean_runtime_seconds": 0.507719,
+      "median_runtime_seconds": 0.459038,
+      "minimum_runtime_seconds": 0.301418,
+      "maximum_runtime_seconds": 1.198466
     }
   ],
   "failure_summary": [
@@ -280,7 +293,7 @@
       "regeneration_status": "ok",
       "regenerated_restored_path": "outputs\\08_opencv_telea\\_temporary\\determinism\\canonical\\canonical__p001_loss_large_restored_opencv_telea.png",
       "regenerated_restored_sha256": "639e64fb1d4f8a415159507ccfb9c6b0603c80c1caf984e5cd85f984826a7dcd",
-      "regeneration_runtime_seconds": 0.6435667999903671,
+      "regeneration_runtime_seconds": 0.6498809000477195,
       "canonical_restored_sha256": "639e64fb1d4f8a415159507ccfb9c6b0603c80c1caf984e5cd85f984826a7dcd",
       "checksum_matches": true,
       "determinism_passed": true
@@ -292,7 +305,7 @@
       "regeneration_status": "ok",
       "regenerated_restored_path": "outputs\\08_opencv_telea\\_temporary\\determinism\\damage_size\\damage_size__p001__loss_large__size_02pct_restored_opencv_telea.png",
       "regenerated_restored_sha256": "7ccbd16f508ceba2cfbdb9f3de5b15bdce0a858db275da549311f05d4c858fb4",
-      "regeneration_runtime_seconds": 0.5355066999909468,
+      "regeneration_runtime_seconds": 0.5347161000245251,
       "canonical_restored_sha256": "7ccbd16f508ceba2cfbdb9f3de5b15bdce0a858db275da549311f05d4c858fb4",
       "checksum_matches": true,
       "determinism_passed": true
@@ -304,7 +317,7 @@
       "regeneration_status": "ok",
       "regenerated_restored_path": "outputs\\08_opencv_telea\\_temporary\\determinism\\mask_robustness\\mask_robustness__p001__loss_large__variant_01_restored_opencv_telea.png",
       "regenerated_restored_sha256": "35c31a565fa2cc487f0a16e63385c0c8a48949ddde740e073e9c1279e219905c",
-      "regeneration_runtime_seconds": 0.6320359000237659,
+      "regeneration_runtime_seconds": 0.6332361999666318,
       "canonical_restored_sha256": "35c31a565fa2cc487f0a16e63385c0c8a48949ddde740e073e9c1279e219905c",
       "checksum_matches": true,
       "determinism_passed": true
@@ -316,7 +329,7 @@
       "regeneration_status": "ok",
       "regenerated_restored_path": "outputs\\08_opencv_telea\\_temporary\\determinism\\synthetic_degradation\\synthetic_degradation__p001__dirt_dust__mild_restored_opencv_telea.png",
       "regenerated_restored_sha256": "9d1331c2f80c0a3afeea233b92bb8a2beb595ba9ea79fecf0617f737feb03f04",
-      "regeneration_runtime_seconds": 0.5234285999904387,
+      "regeneration_runtime_seconds": 0.5260760000091977,
       "canonical_restored_sha256": "9d1331c2f80c0a3afeea233b92bb8a2beb595ba9ea79fecf0617f737feb03f04",
       "checksum_matches": true,
       "determinism_passed": true
@@ -566,7 +579,7 @@
       },
       {
         "check": "runtime_positive",
-        "observed": 1.214224600000307,
+        "observed": 1.0628560000332072,
         "expected": "> 0",
         "passed": true
       },
@@ -641,6 +654,36 @@
         ],
         "expected": [
           "cv2.INPAINT_TELEA"
+        ],
+        "passed": true
+      },
+      {
+        "check": "execution_device_consistent",
+        "observed": [
+          "cpu"
+        ],
+        "expected": [
+          "cpu"
+        ],
+        "passed": true
+      },
+      {
+        "check": "execution_backend_consistent",
+        "observed": [
+          "opencv_cpu"
+        ],
+        "expected": [
+          "opencv_cpu"
+        ],
+        "passed": true
+      },
+      {
+        "check": "retry_count_consistent",
+        "observed": [
+          0
+        ],
+        "expected": [
+          0
         ],
         "passed": true
       }
@@ -776,7 +819,7 @@
       },
       {
         "check": "metadata_file_nonempty",
-        "observed": 719288,
+        "observed": 762016,
         "expected": "> 0",
         "passed": true
       },
@@ -797,6 +840,36 @@
         "observed": 410,
         "expected": 410,
         "passed": true
+      },
+      {
+        "check": "execution_metadata_columns_present",
+        "observed": [
+          "execution_backend",
+          "execution_device",
+          "operating_system",
+          "processor",
+          "python_version",
+          "retry_count"
+        ],
+        "expected": [
+          "execution_backend",
+          "execution_device",
+          "operating_system",
+          "processor",
+          "python_version",
+          "retry_count"
+        ],
+        "passed": true
+      },
+      {
+        "check": "reloaded_retry_counts_zero",
+        "observed": [
+          0
+        ],
+        "expected": [
+          0
+        ],
+        "passed": true
       }
     ],
     "audit_save": [
@@ -808,20 +881,20 @@
       },
       {
         "check": "audit_file_nonempty",
-        "observed": 7351,
+        "observed": 8270,
         "expected": "> 0",
         "passed": true
       },
       {
         "check": "audit_row_count_preserved",
-        "observed": 54,
-        "expected": 54,
+        "observed": 59,
+        "expected": 59,
         "passed": true
       },
       {
         "check": "all_audit_checks_passed",
-        "observed": 54,
-        "expected": 54,
+        "observed": 59,
+        "expected": 59,
         "passed": true
       }
     ],
