@@ -1,0 +1,7 @@
+notebook,model_name,generated_at_utc,audit_section,check,observed,expected,passed
+14_lama_restoration,lama,2026-07-27T23:01:04.055449+00:00,restoration_execution,total_rows,410,>=1,True
+14_lama_restoration,lama,2026-07-27T23:01:04.055449+00:00,restoration_execution,failed_rows,0,0,True
+14_lama_restoration,lama,2026-07-27T23:01:04.055449+00:00,restoration_execution,dataset_names,"['canonical', 'damage_size', 'mask_robustness', 'synthetic_degradation']","['canonical', 'damage_size', 'mask_robustness', 'synthetic_degradation']",True
+14_lama_restoration,lama,2026-07-27T23:01:04.055449+00:00,file_validation,failed_file_validations,0,0,True
+14_lama_restoration,lama,2026-07-27T23:01:04.055449+00:00,behavior_validation,failed_behavior_validations,0,0,True
+14_lama_restoration,lama,2026-07-27T23:01:04.055449+00:00,inventory,failed_inventory_rows,0,0,True
