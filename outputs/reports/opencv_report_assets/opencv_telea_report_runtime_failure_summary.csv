@@ -1,0 +1,6 @@
+source_table,rows,ok_rows,non_ok_rows,runtime_column,runtime_seconds_total,runtime_seconds_mean
+restoration_metadata,410,410,0,runtime_seconds,187.54243889957434,0.4574205826818886
+classical_metrics,2295,0,2295,case_runtime_seconds,4909.00938119815,2.1390019090188015
+lpips_metrics,1175,0,1175,case_runtime_seconds,429.5546615992207,0.3655784354035921
+feature_similarity_metrics,1175,0,1175,case_runtime_seconds,761.865044896258,0.6483957828904324
+spatial_diagnostics,410,0,410,generation_runtime_seconds,2486.8696927997516,6.065535836096955

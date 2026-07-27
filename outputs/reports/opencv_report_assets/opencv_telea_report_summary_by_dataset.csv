@@ -1,0 +1,5 @@
+report_dataset_name,cases,zero_control_cases,nonzero_cases,difference_map_cases,mean_spatial_flag_count,cases_with_spatial_flags,mean_spatial_boundary_mean_improvement,median_spatial_boundary_mean_improvement,positive_rate_spatial_boundary_mean_improvement,available_rows_spatial_boundary_mean_improvement,mean_spatial_outside_mask_mean_improvement,median_spatial_outside_mask_mean_improvement,positive_rate_spatial_outside_mask_mean_improvement,available_rows_spatial_outside_mask_mean_improvement
+"('canonical',)",250,50,200,250,0.0,0,55.83036,55.66792,0.8,200,0.0,0.0,0.0,250
+"('damage_size',)",35,0,35,35,0.0,0,73.66908,70.62953,1.0,35,0.0,0.0,0.0,35
+"('mask_robustness',)",75,0,75,75,0.0,0,66.47765,68.49618,1.0,75,0.0,0.0,0.0,75
+"('synthetic_degradation',)",50,0,50,50,2.3,43,-1.47061,-1.29338,0.04,45,0.0,0.0,0.0,50
