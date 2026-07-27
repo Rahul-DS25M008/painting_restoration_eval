@@ -1,40 +1,84 @@
 """
-LPIPS perceptual metric utilities for the painting restoration evaluation project.
+LPIPS perceptual metrics for restoration evaluation.
 
-This module computes LPIPS distances for damaged and restored images against
-the clean reference image.
+The module compares damaged and restored images against the clean reference
+using image-like spatial regions only:
 
-Lower LPIPS means higher perceptual similarity.
+- full_image;
+- content_region;
+- mask_bbox_crop for non-zero masks.
 
-Evaluation regions:
-- full_image
-- content_region
-- mask_bbox_crop
-
-Sparse masked pixels are intentionally not used directly for LPIPS because
-LPIPS expects image-like spatial inputs, not unordered masked pixels.
+Sparse masked pixels are intentionally excluded because LPIPS operates on
+ordered image patches, not unordered pixel selections.
 """
 
 from __future__ import annotations
 
+import importlib
+import importlib.metadata
+import platform
+import time
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 import numpy as np
 import pandas as pd
 from PIL import Image
 
-import torch
-import torchvision.transforms as T
 
+LPIPS_MODULE_NAME = "restoration_eval.metrics_lpips"
+LPIPS_METRIC_SCHEMA_VERSION = "2.0.0"
 
 DEFAULT_LPIPS_NET = "alex"
-DEFAULT_CROP_RESIZE = 256
-DEFAULT_MASK_BBOX_MARGIN = 32
+DEFAULT_LPIPS_INPUT_SIZE = 256
+DEFAULT_MASK_BBOX_MARGIN = 8
+DEFAULT_MASK_BINARY_THRESHOLD = 127
+
+LPIPS_EVALUATION_REGIONS = (
+    "full_image",
+    "content_region",
+    "mask_bbox_crop",
+)
 
 
-def get_device(prefer_cuda: bool = True) -> torch.device:
-    """Return CUDA device if available and requested, otherwise CPU."""
+def get_package_version(package_name: str) -> str:
+    """Return an installed package version, or ``not-installed``."""
+    try:
+        return importlib.metadata.version(package_name)
+    except importlib.metadata.PackageNotFoundError:
+        return "not-installed"
+
+
+def validate_lpips_runtime_dependencies() -> pd.DataFrame:
+    """Check the optional packages needed for LPIPS computation."""
+    dependency_rows = []
+
+    for module_name, package_name, required in (
+        ("torch", "torch", True),
+        ("lpips", "lpips", True),
+        ("PIL", "Pillow", True),
+    ):
+        module_spec = importlib.util.find_spec(module_name)
+        installed = module_spec is not None
+        dependency_rows.append(
+            {
+                "component": package_name,
+                "module": module_name,
+                "version": get_package_version(package_name),
+                "required": required,
+                "installed": installed,
+                "passed": installed or not required,
+            }
+        )
+
+    return pd.DataFrame(dependency_rows)
+
+
+def get_device(prefer_cuda: bool = True):
+    """Return a torch device, preferring CUDA when requested and available."""
+    torch = importlib.import_module("torch")
+
     if prefer_cuda and torch.cuda.is_available():
         return torch.device("cuda")
 
@@ -43,14 +87,10 @@ def get_device(prefer_cuda: bool = True) -> torch.device:
 
 def load_lpips_model(
     net: str = DEFAULT_LPIPS_NET,
-    device: torch.device | None = None,
+    device: Any | None = None,
 ):
-    """Load an LPIPS model.
-
-    Importing lpips inside this function keeps the rest of the package importable
-    even when lpips is not installed.
-    """
-    import lpips
+    """Load an LPIPS model lazily so package import stays lightweight."""
+    lpips = importlib.import_module("lpips")
 
     if device is None:
         device = get_device()
@@ -61,45 +101,8 @@ def load_lpips_model(
     return model
 
 
-def pil_to_lpips_tensor(
-    image: Image.Image,
-    device: torch.device,
-) -> torch.Tensor:
-    """Convert a PIL image to an LPIPS tensor in [-1, 1].
-
-    LPIPS expects shape [1, 3, H, W].
-    """
-    transform = T.Compose(
-        [
-            T.ToTensor(),
-            T.Normalize(
-                mean=(0.5, 0.5, 0.5),
-                std=(0.5, 0.5, 0.5),
-            ),
-        ]
-    )
-
-    return transform(image.convert("RGB")).unsqueeze(0).to(device)
-
-
-def compute_lpips_distance(
-    image_a: Image.Image,
-    image_b: Image.Image,
-    lpips_model,
-    device: torch.device,
-) -> float:
-    """Compute LPIPS distance between two PIL images."""
-    tensor_a = pil_to_lpips_tensor(image_a, device)
-    tensor_b = pil_to_lpips_tensor(image_b, device)
-
-    with torch.no_grad():
-        value = lpips_model(tensor_a, tensor_b)
-
-    return float(value.item())
-
-
-def load_rgb_image(path: Path) -> Image.Image:
-    """Load an image as RGB PIL image."""
+def load_rgb_image(path: Path | str) -> Image.Image:
+    """Load an image file as RGB."""
     path = Path(path)
 
     if not path.exists():
@@ -109,8 +112,11 @@ def load_rgb_image(path: Path) -> Image.Image:
         return image.convert("RGB")
 
 
-def load_mask_bool(path: Path) -> np.ndarray:
-    """Load a binary mask where True indicates the damaged/restored region."""
+def load_mask_bool(
+    path: Path | str,
+    threshold: int = DEFAULT_MASK_BINARY_THRESHOLD,
+) -> np.ndarray:
+    """Load a mask as a boolean array where True marks damage."""
     path = Path(path)
 
     if not path.exists():
@@ -119,140 +125,194 @@ def load_mask_bool(path: Path) -> np.ndarray:
     with Image.open(path) as image:
         mask_arr = np.asarray(image.convert("L"))
 
-    return mask_arr > 0
+    return mask_arr > threshold
 
 
-def get_content_box_from_row(row: pd.Series) -> tuple[int, int, int, int]:
-    """Get the preprocessing content box from metadata.
+def pil_to_lpips_tensor(
+    image: Image.Image,
+    device: Any,
+):
+    """Convert a PIL image to an LPIPS tensor in the expected [-1, 1] range."""
+    torch = importlib.import_module("torch")
 
-    Returns PIL crop box:
-    (left, upper, right, lower)
-    """
-    required_columns = [
+    image_arr = np.asarray(image.convert("RGB"), dtype=np.float32) / 255.0
+    tensor = torch.from_numpy(image_arr).permute(2, 0, 1).unsqueeze(0)
+    tensor = tensor.mul(2.0).sub(1.0)
+
+    return tensor.to(device)
+
+
+def compute_lpips_distance(
+    image_a: Image.Image,
+    image_b: Image.Image,
+    lpips_model: Any,
+    device: Any,
+) -> float:
+    """Compute LPIPS distance between two same-sized PIL images."""
+    if image_a.size != image_b.size:
+        raise ValueError(
+            f"LPIPS image-size mismatch: {image_a.size} vs {image_b.size}"
+        )
+
+    torch = importlib.import_module("torch")
+    tensor_a = pil_to_lpips_tensor(image_a, device)
+    tensor_b = pil_to_lpips_tensor(image_b, device)
+
+    with torch.no_grad():
+        value = lpips_model(tensor_a, tensor_b)
+
+    return float(value.item())
+
+
+def resize_for_lpips(
+    image: Image.Image,
+    size: int = DEFAULT_LPIPS_INPUT_SIZE,
+) -> Image.Image:
+    """Resize an image region to a square LPIPS input size."""
+    return image.convert("RGB").resize(
+        (int(size), int(size)),
+        Image.Resampling.LANCZOS,
+    )
+
+
+def clip_box(
+    box: tuple[int, int, int, int],
+    image_size: tuple[int, int],
+) -> tuple[int, int, int, int] | None:
+    """Clip a PIL-style crop box to image bounds."""
+    left, upper, right, lower = box
+    width, height = image_size
+
+    left = max(0, min(int(left), width))
+    right = max(0, min(int(right), width))
+    upper = max(0, min(int(upper), height))
+    lower = max(0, min(int(lower), height))
+
+    if right <= left or lower <= upper:
+        return None
+
+    return left, upper, right, lower
+
+
+def get_content_box_from_row(
+    row: pd.Series,
+    image_size: tuple[int, int],
+) -> tuple[int, int, int, int]:
+    """Get the recorded content-region box in PIL crop coordinates."""
+    required_columns = (
         "content_x_min",
         "content_y_min",
         "content_x_max",
         "content_y_max",
-    ]
+    )
 
     missing_columns = [
-        col for col in required_columns
-        if col not in row.index
+        column
+        for column in required_columns
+        if column not in row.index
     ]
 
     if missing_columns:
         raise ValueError(f"Missing content-region columns: {missing_columns}")
 
-    left = int(row["content_x_min"])
-    upper = int(row["content_y_min"])
-    right = int(row["content_x_max"])
-    lower = int(row["content_y_max"])
+    content_box = clip_box(
+        (
+            int(row["content_x_min"]),
+            int(row["content_y_min"]),
+            int(row["content_x_max"]),
+            int(row["content_y_max"]),
+        ),
+        image_size=image_size,
+    )
 
-    if right <= left or lower <= upper:
+    if content_box is None:
         raise ValueError(
-            f"Invalid content box: left={left}, upper={upper}, right={right}, lower={lower}"
+            "Invalid content box: "
+            f"{[row[column] for column in required_columns]}"
         )
 
-    return left, upper, right, lower
+    return content_box
 
 
 def get_mask_bbox(
     mask_bool: np.ndarray,
     margin: int = DEFAULT_MASK_BBOX_MARGIN,
 ) -> tuple[int, int, int, int] | None:
-    """Return padded mask bounding box in PIL crop convention.
+    """Return a padded mask bounding box in PIL crop coordinates."""
+    if margin < 0:
+        raise ValueError("mask_bbox_margin must be non-negative.")
 
-    Returns:
-    (left, upper, right, lower)
+    y_coords, x_coords = np.where(mask_bool)
 
-    Returns None when the mask has no positive pixels.
-    """
-    ys, xs = np.where(mask_bool)
-
-    if len(xs) == 0 or len(ys) == 0:
+    if len(x_coords) == 0:
         return None
 
     height, width = mask_bool.shape
 
-    left = max(0, int(xs.min()) - margin)
-    right = min(width, int(xs.max()) + margin + 1)
-    upper = max(0, int(ys.min()) - margin)
-    lower = min(height, int(ys.max()) + margin + 1)
-
-    if right <= left or lower <= upper:
-        return None
-
-    return left, upper, right, lower
+    return clip_box(
+        (
+            int(x_coords.min()) - int(margin),
+            int(y_coords.min()) - int(margin),
+            int(x_coords.max()) + int(margin) + 1,
+            int(y_coords.max()) + int(margin) + 1,
+        ),
+        image_size=(width, height),
+    )
 
 
 def make_square_crop_box(
     box: tuple[int, int, int, int],
     image_size: tuple[int, int],
 ) -> tuple[int, int, int, int]:
-    """Expand a crop box to a square while staying inside image bounds.
-
-    image_size is PIL convention: (width, height).
-    """
+    """Expand a crop box to a square while staying inside the image."""
     left, upper, right, lower = box
     width, height = image_size
 
     crop_width = right - left
     crop_height = lower - upper
-    side = max(crop_width, crop_height)
+    side = min(max(crop_width, crop_height), width, height)
 
     center_x = (left + right) // 2
     center_y = (upper + lower) // 2
 
-    new_left = center_x - side // 2
-    new_upper = center_y - side // 2
-    new_right = new_left + side
-    new_lower = new_upper + side
+    square_left = center_x - side // 2
+    square_upper = center_y - side // 2
+    square_right = square_left + side
+    square_lower = square_upper + side
 
-    if new_left < 0:
-        new_right -= new_left
-        new_left = 0
+    if square_left < 0:
+        square_right -= square_left
+        square_left = 0
 
-    if new_upper < 0:
-        new_lower -= new_upper
-        new_upper = 0
+    if square_upper < 0:
+        square_lower -= square_upper
+        square_upper = 0
 
-    if new_right > width:
-        shift = new_right - width
-        new_left -= shift
-        new_right = width
+    if square_right > width:
+        shift = square_right - width
+        square_left -= shift
+        square_right = width
 
-    if new_lower > height:
-        shift = new_lower - height
-        new_upper -= shift
-        new_lower = height
+    if square_lower > height:
+        shift = square_lower - height
+        square_upper -= shift
+        square_lower = height
 
-    new_left = max(0, new_left)
-    new_upper = max(0, new_upper)
-
-    if new_right <= new_left or new_lower <= new_upper:
-        raise ValueError(
-            f"Invalid square crop box: "
-            f"left={new_left}, upper={new_upper}, right={new_right}, lower={new_lower}"
-        )
-
-    return int(new_left), int(new_upper), int(new_right), int(new_lower)
-
-
-def resize_for_lpips(
-    image: Image.Image,
-    size: int = DEFAULT_CROP_RESIZE,
-) -> Image.Image:
-    """Resize an image region to a square LPIPS input size."""
-    return image.convert("RGB").resize(
-        (size, size),
-        Image.Resampling.LANCZOS,
+    clipped_box = clip_box(
+        (square_left, square_upper, square_right, square_lower),
+        image_size=image_size,
     )
+
+    if clipped_box is None:
+        raise ValueError(f"Invalid square crop box derived from {box}.")
+
+    return clipped_box
 
 
 def crop_image_region(
     image: Image.Image,
     box: tuple[int, int, int, int],
-    resize_to: int = DEFAULT_CROP_RESIZE,
+    resize_to: int = DEFAULT_LPIPS_INPUT_SIZE,
 ) -> Image.Image:
     """Crop an image region and resize it for LPIPS."""
     return resize_for_lpips(
@@ -261,82 +321,189 @@ def crop_image_region(
     )
 
 
-def _build_lpips_record(
-    row: pd.Series,
-    evaluation_region: str,
-    damaged_lpips: float,
-    restored_lpips: float,
-    region_box: tuple[int, int, int, int],
-    region_pixel_count: int,
-    lpips_net: str,
-    crop_resize: int,
-    device_name: str,
-    status: str = "ok",
-    issue: str = "",
-) -> dict[str, Any]:
-    """Build one LPIPS metric record."""
-    left, upper, right, lower = region_box
+def _is_null_like(value: Any) -> bool:
+    try:
+        return bool(pd.isna(value))
+    except TypeError:
+        return False
 
+
+def _row_value(row: pd.Series, key: str, default: Any = "") -> Any:
+    value = row.get(key, default)
+    return default if _is_null_like(value) else value
+
+
+def _safe_difference(left: float, right: float) -> float:
+    if np.isnan(left) or np.isnan(right):
+        return float("nan")
+
+    return float(left - right)
+
+
+def _box_to_region_info(
+    box: tuple[int, int, int, int],
+) -> dict[str, int]:
+    left, upper, right, lower = box
     return {
-        "case_id": row["case_id"],
-        "painting_id": row["painting_id"],
-        "category": row.get("category", ""),
-        "title": row.get("title", ""),
-        "mask_id": row["mask_id"],
-        "mask_type": row["mask_type"],
-        "model_name": row["model_name"],
-        "evaluation_region": evaluation_region,
-        "region_pixel_count": int(region_pixel_count),
         "region_x_min": int(left),
         "region_y_min": int(upper),
         "region_x_max": int(right),
         "region_y_max": int(lower),
-        "damaged_area_pixels": row.get("damaged_area_pixels", np.nan),
-        "damaged_area_percentage_content": row.get("damaged_area_percentage_content", np.nan),
-        "damaged_area_percentage_full": row.get("damaged_area_percentage_full", np.nan),
+    }
+
+
+def _build_lpips_record(
+    row: pd.Series,
+    evaluation_region: str,
+    region_box: tuple[int, int, int, int],
+    damaged_lpips: float,
+    restored_lpips: float,
+    lpips_net: str,
+    lpips_input_size: int,
+    mask_bbox_margin: int,
+    mask_binary_threshold: int,
+    device_name: str,
+    torch_version: str,
+    lpips_package_version: str,
+    metric_runtime_seconds: float,
+    case_runtime_seconds: float,
+    status: str = "ok",
+    issue: str = "",
+) -> dict[str, Any]:
+    """Build one standardized LPIPS output record."""
+    restoration_case_id = _row_value(
+        row,
+        "restoration_case_id",
+        _row_value(row, "case_id"),
+    )
+    metric_case_id = _row_value(row, "metric_case_id", restoration_case_id)
+    dataset_name = _row_value(row, "dataset_name", "canonical")
+    mask_type = _row_value(
+        row,
+        "metric_mask_type",
+        _row_value(row, "mask_type"),
+    )
+    mask_id = _row_value(row, "metric_mask_id", _row_value(row, "mask_id"))
+    source_case_id = _row_value(
+        row,
+        "source_case_id",
+        _row_value(row, "case_id"),
+    )
+    source_case_id_original = _row_value(
+        row,
+        "source_case_id_original",
+        source_case_id,
+    )
+    is_zero_control = bool(_row_value(row, "is_zero_control", False))
+    left, upper, right, lower = region_box
+
+    return {
+        "lpips_row_id": (
+            f"{metric_case_id}__{evaluation_region}__lpips"
+        ),
+        "lpips_case_id": metric_case_id,
+        "metric_case_id": metric_case_id,
+        "restoration_case_id": restoration_case_id,
+        "source_case_id": source_case_id,
+        "source_case_id_original": source_case_id_original,
+        "case_id": _row_value(row, "case_id", source_case_id),
+        "dataset_name": dataset_name,
+        "metric_applicability": _row_value(row, "metric_applicability", "primary"),
+        "painting_id": _row_value(row, "painting_id"),
+        "category": _row_value(row, "category"),
+        "title": _row_value(row, "title"),
+        "artist": _row_value(row, "artist"),
+        "style": _row_value(row, "style", _row_value(row, "style_or_period")),
+        "model_name": _row_value(row, "model_name"),
+        "mask_id": mask_id,
+        "mask_type": mask_type,
+        "metric_mask_id": mask_id,
+        "metric_mask_type": mask_type,
+        "evaluation_region": evaluation_region,
+        "region_pixel_count": int((right - left) * (lower - upper)),
+        "region_x_min": int(left),
+        "region_y_min": int(upper),
+        "region_x_max": int(right),
+        "region_y_max": int(lower),
+        "mask_area_pixels": int(_row_value(row, "mask_area_pixels", 0)),
+        "is_zero_control": is_zero_control,
+        "mask_threshold_rule": f"> {mask_binary_threshold}",
+        "mask_bbox_margin": int(mask_bbox_margin),
+        "lpips_net": lpips_net,
+        "lpips_input_size": int(lpips_input_size),
         "damaged_lpips": float(damaged_lpips),
         "restored_lpips": float(restored_lpips),
-        "lpips_improvement": float(damaged_lpips - restored_lpips),
-        "lpips_net": lpips_net,
-        "crop_resize": int(crop_resize),
+        "lpips_improvement": _safe_difference(damaged_lpips, restored_lpips),
+        "metric_runtime_seconds": float(metric_runtime_seconds),
+        "case_runtime_seconds": float(case_runtime_seconds),
+        "lpips_schema_version": LPIPS_METRIC_SCHEMA_VERSION,
+        "lpips_implementation_name": LPIPS_MODULE_NAME,
         "device": device_name,
+        "python_version": platform.python_version(),
+        "numpy_version": np.__version__,
+        "pandas_version": pd.__version__,
+        "pillow_version": Image.__version__,
+        "torch_version": torch_version,
+        "lpips_package_version": lpips_package_version,
         "status": status,
         "issue": issue,
     }
 
 
+def expected_lpips_rows_from_metadata(
+    restoration_metadata: pd.DataFrame,
+) -> int:
+    """Return expected LPIPS row count for the image-like region policy."""
+    if "mask_path" not in restoration_metadata.columns:
+        raise ValueError("Restoration metadata missing required column: mask_path")
+
+    nonzero_mask_cases = 0
+
+    for mask_path in restoration_metadata["mask_path"]:
+        if np.any(load_mask_bool(mask_path)):
+            nonzero_mask_cases += 1
+
+    return (
+        len(restoration_metadata) * 2
+        + nonzero_mask_cases
+    )
+
+
+def expected_lpips_region_counts_from_metadata(
+    restoration_metadata: pd.DataFrame,
+) -> dict[str, int]:
+    """Return expected row counts by LPIPS evaluation region."""
+    nonzero_mask_cases = sum(
+        bool(np.any(load_mask_bool(mask_path)))
+        for mask_path in restoration_metadata["mask_path"]
+    )
+
+    return {
+        "full_image": len(restoration_metadata),
+        "content_region": len(restoration_metadata),
+        "mask_bbox_crop": nonzero_mask_cases,
+    }
+
+
 def compute_lpips_metrics_for_restorations(
     restoration_metadata: pd.DataFrame,
-    lpips_model,
-    device: torch.device,
+    lpips_model: Any,
+    device: Any,
     lpips_net: str = DEFAULT_LPIPS_NET,
-    target_size: int = 768,
+    target_size: int | tuple[int, int] | None = 768,
     mask_bbox_margin: int = DEFAULT_MASK_BBOX_MARGIN,
-    crop_resize: int = DEFAULT_CROP_RESIZE,
-    progress_every: int | None = 50,
+    lpips_input_size: int = DEFAULT_LPIPS_INPUT_SIZE,
+    mask_binary_threshold: int = DEFAULT_MASK_BINARY_THRESHOLD,
+    progress_every: int | None = 25,
 ) -> pd.DataFrame:
     """Compute LPIPS metrics for restoration outputs.
 
-    Comparisons:
-    - clean vs damaged
-    - clean vs restored
-
-    Evaluation regions:
-    - full_image: all cases
-    - content_region: all cases
-    - mask_bbox_crop: non-zero mask cases only
-
-    Expected rows for 50 paintings × 5 mask types:
-    - 250 full_image
-    - 250 content_region
-    - 200 mask_bbox_crop
-    = 700 rows
+    Each case receives full-image and content-region rows. Non-zero masks also
+    receive a mask-bounding-box crop row.
     """
     required_columns = [
         "case_id",
         "painting_id",
-        "mask_id",
-        "mask_type",
         "model_name",
         "clean_path",
         "damaged_path",
@@ -347,274 +514,406 @@ def compute_lpips_metrics_for_restorations(
         "content_x_max",
         "content_y_max",
     ]
-
     missing_columns = [
-        col for col in required_columns
-        if col not in restoration_metadata.columns
+        column
+        for column in required_columns
+        if column not in restoration_metadata.columns
     ]
 
     if missing_columns:
-        raise ValueError(f"Restoration metadata missing required columns: {missing_columns}")
+        raise ValueError(
+            f"Restoration metadata missing required columns: {missing_columns}"
+        )
 
-    total_cases = len(restoration_metadata)
-    expected_metric_rows = total_cases * 2 + int((restoration_metadata["mask_type"] != "zero_control").sum())
+    if restoration_metadata.empty:
+        raise ValueError("Restoration metadata is empty.")
 
-    print(f"Starting LPIPS computation for {total_cases} restoration cases...")
-    print(f"Expected LPIPS metric rows: {expected_metric_rows}")
-    print(f"Device: {device}")
-    print(f"LPIPS net: {lpips_net}")
+    if target_size is None:
+        expected_size = None
+    elif isinstance(target_size, int):
+        expected_size = (target_size, target_size)
+    else:
+        expected_size = tuple(target_size)
+
+    sort_columns = [
+        column
+        for column in ("dataset_name", "painting_id", "mask_type", "case_id")
+        if column in restoration_metadata.columns
+    ]
+    sorted_metadata = (
+        restoration_metadata
+        .sort_values(sort_columns, kind="stable")
+        .reset_index(drop=True)
+    )
 
     records: list[dict[str, Any]] = []
-
+    total_cases = len(sorted_metadata)
+    computation_start_time = time.perf_counter()
     device_name = str(device)
+    torch_version = get_package_version("torch")
+    lpips_package_version = get_package_version("lpips")
 
-    for idx, (_, row) in enumerate(
-        restoration_metadata.sort_values(["painting_id", "mask_type"]).iterrows(),
-        start=1,
-    ):
+    print("Starting LPIPS metric computation")
+    print(f"  Cases: {total_cases}")
+    print(f"  Target size: {expected_size or 'not enforced'}")
+    print(f"  LPIPS net: {lpips_net}")
+    print(f"  LPIPS input size: {lpips_input_size}")
+    print(f"  Device: {device_name}")
+
+    for case_index, (_, row) in enumerate(sorted_metadata.iterrows(), start=1):
+        case_start_time = time.perf_counter()
+
+        if progress_every and (
+            case_index == 1
+            or case_index % progress_every == 0
+            or case_index == total_cases
+        ):
+            elapsed = time.perf_counter() - computation_start_time
+            print(
+                f"Computing LPIPS case {case_index}/{total_cases} "
+                f"({row['case_id']}) | elapsed {elapsed:.2f}s"
+            )
+
         try:
-            clean_img = load_rgb_image(Path(row["clean_path"]))
-            damaged_img = load_rgb_image(Path(row["damaged_path"]))
-            restored_img = load_rgb_image(Path(row["restored_path"]))
-            mask_bool = load_mask_bool(Path(row["mask_path"]))
+            clean_image = load_rgb_image(row["clean_path"])
+            damaged_image = load_rgb_image(row["damaged_path"])
+            restored_image = load_rgb_image(row["restored_path"])
+            mask_bool = load_mask_bool(
+                row["mask_path"],
+                threshold=mask_binary_threshold,
+            )
 
-            if clean_img.size != damaged_img.size or clean_img.size != restored_img.size:
+            if clean_image.size != damaged_image.size or clean_image.size != restored_image.size:
                 raise ValueError(
                     f"Image size mismatch for case {row['case_id']}: "
-                    f"clean={clean_img.size}, damaged={damaged_img.size}, restored={restored_img.size}"
+                    f"clean={clean_image.size}, damaged={damaged_image.size}, "
+                    f"restored={restored_image.size}"
                 )
 
-            if clean_img.size != (target_size, target_size):
+            if mask_bool.shape != (clean_image.size[1], clean_image.size[0]):
                 raise ValueError(
-                    f"Unexpected image size for case {row['case_id']}: {clean_img.size}"
+                    f"Mask shape mismatch for case {row['case_id']}: "
+                    f"mask={mask_bool.shape}, image={clean_image.size}"
                 )
 
-            if mask_bool.shape != (target_size, target_size):
+            if expected_size is not None and clean_image.size != expected_size:
                 raise ValueError(
-                    f"Unexpected mask shape for case {row['case_id']}: {mask_bool.shape}"
+                    f"Unexpected image size for case {row['case_id']}: "
+                    f"{clean_image.size}, expected {expected_size}"
                 )
 
-            # 1. Full image LPIPS.
-            full_box = (0, 0, clean_img.size[0], clean_img.size[1])
+            region_boxes = {
+                "full_image": (
+                    0,
+                    0,
+                    clean_image.size[0],
+                    clean_image.size[1],
+                ),
+                "content_region": get_content_box_from_row(
+                    row,
+                    image_size=clean_image.size,
+                ),
+            }
 
-            clean_full = resize_for_lpips(clean_img, size=crop_resize)
-            damaged_full = resize_for_lpips(damaged_img, size=crop_resize)
-            restored_full = resize_for_lpips(restored_img, size=crop_resize)
-
-            damaged_lpips_full = compute_lpips_distance(
-                clean_full,
-                damaged_full,
-                lpips_model,
-                device,
-            )
-            restored_lpips_full = compute_lpips_distance(
-                clean_full,
-                restored_full,
-                lpips_model,
-                device,
-            )
-
-            records.append(
-                _build_lpips_record(
-                    row=row,
-                    evaluation_region="full_image",
-                    damaged_lpips=damaged_lpips_full,
-                    restored_lpips=restored_lpips_full,
-                    region_box=full_box,
-                    region_pixel_count=target_size * target_size,
-                    lpips_net=lpips_net,
-                    crop_resize=crop_resize,
-                    device_name=device_name,
-                )
-            )
-
-            # 2. Content region LPIPS.
-            content_box = get_content_box_from_row(row)
-
-            clean_content = crop_image_region(clean_img, content_box, resize_to=crop_resize)
-            damaged_content = crop_image_region(damaged_img, content_box, resize_to=crop_resize)
-            restored_content = crop_image_region(restored_img, content_box, resize_to=crop_resize)
-
-            damaged_lpips_content = compute_lpips_distance(
-                clean_content,
-                damaged_content,
-                lpips_model,
-                device,
-            )
-            restored_lpips_content = compute_lpips_distance(
-                clean_content,
-                restored_content,
-                lpips_model,
-                device,
-            )
-
-            content_left, content_upper, content_right, content_lower = content_box
-
-            records.append(
-                _build_lpips_record(
-                    row=row,
-                    evaluation_region="content_region",
-                    damaged_lpips=damaged_lpips_content,
-                    restored_lpips=restored_lpips_content,
-                    region_box=content_box,
-                    region_pixel_count=(content_right - content_left) * (content_lower - content_upper),
-                    lpips_net=lpips_net,
-                    crop_resize=crop_resize,
-                    device_name=device_name,
-                )
-            )
-
-            # 3. Mask bbox crop LPIPS, only for non-zero masks.
             mask_box = get_mask_bbox(mask_bool, margin=mask_bbox_margin)
-
             if mask_box is not None:
-                square_mask_box = make_square_crop_box(mask_box, image_size=clean_img.size)
-
-                clean_mask_crop = crop_image_region(
-                    clean_img,
-                    square_mask_box,
-                    resize_to=crop_resize,
-                )
-                damaged_mask_crop = crop_image_region(
-                    damaged_img,
-                    square_mask_box,
-                    resize_to=crop_resize,
-                )
-                restored_mask_crop = crop_image_region(
-                    restored_img,
-                    square_mask_box,
-                    resize_to=crop_resize,
+                region_boxes["mask_bbox_crop"] = make_square_crop_box(
+                    mask_box,
+                    image_size=clean_image.size,
                 )
 
-                damaged_lpips_mask_crop = compute_lpips_distance(
-                    clean_mask_crop,
-                    damaged_mask_crop,
+            row_records: list[dict[str, Any]] = []
+
+            for evaluation_region, region_box in region_boxes.items():
+                metric_start_time = time.perf_counter()
+
+                clean_region = crop_image_region(
+                    clean_image,
+                    region_box,
+                    resize_to=lpips_input_size,
+                )
+                damaged_region = crop_image_region(
+                    damaged_image,
+                    region_box,
+                    resize_to=lpips_input_size,
+                )
+                restored_region = crop_image_region(
+                    restored_image,
+                    region_box,
+                    resize_to=lpips_input_size,
+                )
+
+                damaged_lpips = compute_lpips_distance(
+                    clean_region,
+                    damaged_region,
                     lpips_model,
                     device,
                 )
-                restored_lpips_mask_crop = compute_lpips_distance(
-                    clean_mask_crop,
-                    restored_mask_crop,
+                restored_lpips = compute_lpips_distance(
+                    clean_region,
+                    restored_region,
                     lpips_model,
                     device,
                 )
 
-                left, upper, right, lower = square_mask_box
-
-                records.append(
+                metric_runtime_seconds = time.perf_counter() - metric_start_time
+                row_records.append(
                     _build_lpips_record(
                         row=row,
-                        evaluation_region="mask_bbox_crop",
-                        damaged_lpips=damaged_lpips_mask_crop,
-                        restored_lpips=restored_lpips_mask_crop,
-                        region_box=square_mask_box,
-                        region_pixel_count=(right - left) * (lower - upper),
+                        evaluation_region=evaluation_region,
+                        region_box=region_box,
+                        damaged_lpips=damaged_lpips,
+                        restored_lpips=restored_lpips,
                         lpips_net=lpips_net,
-                        crop_resize=crop_resize,
+                        lpips_input_size=lpips_input_size,
+                        mask_bbox_margin=mask_bbox_margin,
+                        mask_binary_threshold=mask_binary_threshold,
                         device_name=device_name,
+                        torch_version=torch_version,
+                        lpips_package_version=lpips_package_version,
+                        metric_runtime_seconds=metric_runtime_seconds,
+                        case_runtime_seconds=0.0,
                     )
                 )
 
+            case_runtime_seconds = time.perf_counter() - case_start_time
+            for record in row_records:
+                record["case_runtime_seconds"] = float(case_runtime_seconds)
+            records.extend(row_records)
+
         except Exception as exc:
+            case_runtime_seconds = time.perf_counter() - case_start_time
             records.append(
                 {
+                    "lpips_row_id": f"{row.get('case_id', '')}__error__lpips",
+                    "lpips_case_id": row.get("metric_case_id", row.get("case_id", "")),
+                    "metric_case_id": row.get("metric_case_id", row.get("case_id", "")),
+                    "restoration_case_id": row.get(
+                        "restoration_case_id",
+                        row.get("case_id", ""),
+                    ),
+                    "source_case_id": row.get("source_case_id", row.get("case_id", "")),
+                    "source_case_id_original": row.get(
+                        "source_case_id_original",
+                        row.get("source_case_id", row.get("case_id", "")),
+                    ),
                     "case_id": row.get("case_id", ""),
+                    "dataset_name": row.get("dataset_name", "canonical"),
+                    "metric_applicability": row.get(
+                        "metric_applicability",
+                        "primary",
+                    ),
                     "painting_id": row.get("painting_id", ""),
                     "category": row.get("category", ""),
                     "title": row.get("title", ""),
-                    "mask_id": row.get("mask_id", ""),
-                    "mask_type": row.get("mask_type", ""),
+                    "artist": row.get("artist", ""),
+                    "style": row.get("style", row.get("style_or_period", "")),
                     "model_name": row.get("model_name", ""),
+                    "mask_id": row.get("metric_mask_id", row.get("mask_id", "")),
+                    "mask_type": row.get("metric_mask_type", row.get("mask_type", "")),
+                    "metric_mask_id": row.get("metric_mask_id", row.get("mask_id", "")),
+                    "metric_mask_type": row.get(
+                        "metric_mask_type",
+                        row.get("mask_type", ""),
+                    ),
                     "evaluation_region": "error",
                     "region_pixel_count": 0,
                     "region_x_min": None,
                     "region_y_min": None,
                     "region_x_max": None,
                     "region_y_max": None,
-                    "damaged_area_pixels": row.get("damaged_area_pixels", np.nan),
-                    "damaged_area_percentage_content": row.get("damaged_area_percentage_content", np.nan),
-                    "damaged_area_percentage_full": row.get("damaged_area_percentage_full", np.nan),
+                    "mask_area_pixels": row.get("mask_area_pixels", 0),
+                    "is_zero_control": row.get("is_zero_control", False),
+                    "mask_threshold_rule": f"> {mask_binary_threshold}",
+                    "mask_bbox_margin": int(mask_bbox_margin),
+                    "lpips_net": lpips_net,
+                    "lpips_input_size": int(lpips_input_size),
                     "damaged_lpips": np.nan,
                     "restored_lpips": np.nan,
                     "lpips_improvement": np.nan,
-                    "lpips_net": lpips_net,
-                    "crop_resize": crop_resize,
+                    "metric_runtime_seconds": 0.0,
+                    "case_runtime_seconds": float(case_runtime_seconds),
+                    "lpips_schema_version": LPIPS_METRIC_SCHEMA_VERSION,
+                    "lpips_implementation_name": LPIPS_MODULE_NAME,
                     "device": device_name,
+                    "python_version": platform.python_version(),
+                    "numpy_version": np.__version__,
+                    "pandas_version": pd.__version__,
+                    "pillow_version": Image.__version__,
+                    "torch_version": torch_version,
+                    "lpips_package_version": lpips_package_version,
                     "status": "error",
                     "issue": f"{type(exc).__name__}: {exc}",
                 }
             )
 
-        if progress_every is not None:
-            if idx == 1 or idx % progress_every == 0 or idx == total_cases:
-                print(f"Processed {idx}/{total_cases} restoration cases...")
+            print(
+                f"  Error in LPIPS case {case_index}/{total_cases} "
+                f"({row.get('case_id', '')}): {type(exc).__name__}: {exc}"
+            )
 
-    print("LPIPS computation finished.")
-    return pd.DataFrame(records)
+    metrics_df = pd.DataFrame(records)
+    elapsed_total = time.perf_counter() - computation_start_time
+
+    print("LPIPS metric computation complete")
+    print(f"  Runtime: {elapsed_total:.2f} seconds")
+    print(f"  Output rows: {len(metrics_df)}")
+
+    if "evaluation_region" in metrics_df.columns:
+        print("  Region counts:")
+        print(metrics_df["evaluation_region"].value_counts().to_string())
+
+    if "status" in metrics_df.columns:
+        print("  Status counts:")
+        print(metrics_df["status"].value_counts(dropna=False).to_string())
+
+    return metrics_df
 
 
 def validate_lpips_metrics(
     lpips_df: pd.DataFrame,
-    expected_rows: int = 700,
-) -> pd.DataFrame:
-    """Validate LPIPS metric output structure."""
-    required_columns = [
-        "case_id",
-        "painting_id",
-        "mask_type",
+    expected_rows: int | None = None,
+    expected_region_counts: dict[str, int] | None = None,
+    key_columns: Iterable[str] = (
+        "dataset_name",
+        "lpips_case_id",
         "model_name",
         "evaluation_region",
+    ),
+) -> pd.DataFrame:
+    """Validate LPIPS output structure, row counts, status, and uniqueness."""
+    required_columns = [
+        "lpips_row_id",
+        "lpips_case_id",
+        "restoration_case_id",
+        "dataset_name",
+        "painting_id",
+        "model_name",
+        "evaluation_region",
+        "region_pixel_count",
         "damaged_lpips",
         "restored_lpips",
         "lpips_improvement",
+        "lpips_schema_version",
+        "lpips_implementation_name",
         "status",
         "issue",
     ]
 
     missing_columns = [
-        col for col in required_columns
-        if col not in lpips_df.columns
+        column
+        for column in required_columns
+        if column not in lpips_df.columns
     ]
 
-    validation_rows: list[dict[str, Any]] = []
-
-    validation_rows.append(
+    validation_rows: list[dict[str, Any]] = [
         {
             "check": "required_columns",
-            "passed": len(missing_columns) == 0,
+            "passed": not missing_columns,
             "detail": (
                 "All required columns present."
                 if not missing_columns
                 else f"Missing columns: {missing_columns}"
             ),
         }
-    )
+    ]
 
-    validation_rows.append(
-        {
-            "check": "row_count",
-            "passed": len(lpips_df) == expected_rows,
-            "detail": f"Expected {expected_rows}, found {len(lpips_df)}.",
-        }
-    )
-
-    if "status" in lpips_df.columns:
-        error_rows = int((lpips_df["status"] != "ok").sum())
+    if expected_rows is not None:
         validation_rows.append(
             {
-                "check": "status_ok",
+                "check": "row_count",
+                "passed": len(lpips_df) == expected_rows,
+                "detail": f"Expected {expected_rows}, found {len(lpips_df)}.",
+            }
+        )
+
+    if "status" in lpips_df.columns:
+        error_rows = int((lpips_df["status"] == "error").sum())
+        validation_rows.append(
+            {
+                "check": "no_error_rows",
                 "passed": error_rows == 0,
-                "detail": f"Rows with non-ok status: {error_rows}.",
+                "detail": f"Error rows: {error_rows}.",
+            }
+        )
+
+    available_key_columns = [
+        column
+        for column in key_columns
+        if column in lpips_df.columns
+    ]
+
+    if len(available_key_columns) == len(tuple(key_columns)):
+        duplicate_rows = int(
+            lpips_df.duplicated(available_key_columns, keep=False).sum()
+        )
+        validation_rows.append(
+            {
+                "check": "unique_lpips_keys",
+                "passed": duplicate_rows == 0,
+                "detail": f"Rows participating in duplicate keys: {duplicate_rows}.",
+            }
+        )
+
+    if expected_region_counts is not None and "evaluation_region" in lpips_df.columns:
+        actual_region_counts = lpips_df["evaluation_region"].value_counts().to_dict()
+        mismatches = {
+            region: {
+                "expected": expected_count,
+                "actual": int(actual_region_counts.get(region, 0)),
+            }
+            for region, expected_count in expected_region_counts.items()
+            if int(actual_region_counts.get(region, 0)) != int(expected_count)
+        }
+        validation_rows.append(
+            {
+                "check": "region_counts",
+                "passed": not mismatches,
+                "detail": (
+                    "All evaluation-region counts match expectations."
+                    if not mismatches
+                    else f"Mismatches: {mismatches}"
+                ),
             }
         )
 
     if "evaluation_region" in lpips_df.columns:
-        region_counts = lpips_df["evaluation_region"].value_counts().to_dict()
+        invalid_regions = sorted(
+            set(lpips_df["evaluation_region"].dropna().astype(str))
+            - set(LPIPS_EVALUATION_REGIONS)
+        )
+        invalid_regions = [
+            region
+            for region in invalid_regions
+            if region != "error"
+        ]
         validation_rows.append(
             {
-                "check": "region_counts",
-                "passed": True,
-                "detail": str(region_counts),
+                "check": "region_policy",
+                "passed": not invalid_regions,
+                "detail": (
+                    "All LPIPS rows use image-like evaluation regions."
+                    if not invalid_regions
+                    else f"Invalid LPIPS regions: {invalid_regions}"
+                ),
+            }
+        )
+
+    if "region_pixel_count" in lpips_df.columns and "status" in lpips_df.columns:
+        invalid_counts = int(
+            (
+                lpips_df["status"].eq("ok")
+                & lpips_df["region_pixel_count"].le(0)
+            ).sum()
+        )
+        validation_rows.append(
+            {
+                "check": "positive_region_pixel_counts",
+                "passed": invalid_counts == 0,
+                "detail": (
+                    f"Successful rows with non-positive region size: "
+                    f"{invalid_counts}."
+                ),
             }
         )
 
@@ -625,35 +924,41 @@ def summarize_lpips_metrics(
     lpips_df: pd.DataFrame,
     group_columns: list[str],
 ) -> pd.DataFrame:
-    """Summarize LPIPS metrics by one or more grouping columns."""
+    """Summarize LPIPS metrics for notebook display and reports."""
     if not group_columns:
         raise ValueError("At least one group column is required.")
 
     missing_group_columns = [
-        col for col in group_columns
-        if col not in lpips_df.columns
+        column
+        for column in group_columns
+        if column not in lpips_df.columns
     ]
-
     if missing_group_columns:
-        raise ValueError(f"LPIPS dataframe missing group columns: {missing_group_columns}")
+        raise ValueError(
+            f"LPIPS dataframe missing group columns: {missing_group_columns}"
+        )
+
+    summary_df = lpips_df.copy()
+    if "status" in summary_df.columns:
+        summary_df = summary_df[summary_df["status"] != "error"].copy()
 
     return (
-        lpips_df
-        .groupby(group_columns, dropna=False)
+        summary_df
+        .groupby(group_columns, dropna=False, sort=False)
         .agg(
-            rows=("case_id", "count"),
-            cases=("case_id", "nunique"),
-            mean_damaged_lpips=("damaged_lpips", "mean"),
-            mean_restored_lpips=("restored_lpips", "mean"),
-            mean_lpips_improvement=("lpips_improvement", "mean"),
+            rows=("lpips_row_id", "count"),
+            cases=("lpips_case_id", "nunique"),
             median_damaged_lpips=("damaged_lpips", "median"),
             median_restored_lpips=("restored_lpips", "median"),
             median_lpips_improvement=("lpips_improvement", "median"),
+            mean_damaged_lpips=("damaged_lpips", "mean"),
+            mean_restored_lpips=("restored_lpips", "mean"),
+            mean_lpips_improvement=("lpips_improvement", "mean"),
             improvement_rate=("lpips_improvement", lambda values: (values > 0).mean()),
-            mean_region_pixel_count=("region_pixel_count", "mean"),
+            median_region_pixel_count=("region_pixel_count", "median"),
         )
         .reset_index()
-        .round(5)
+        .round(6)
     )
 
 
@@ -662,25 +967,33 @@ def rank_lpips_cases(
     evaluation_region: str = "mask_bbox_crop",
     top_n: int = 10,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Return strongest and weakest cases by LPIPS improvement."""
+    """Return strongest and weakest LPIPS-improvement cases."""
     region_df = (
-        lpips_df[
-            (lpips_df["evaluation_region"] == evaluation_region)
-            & (lpips_df["status"] == "ok")
+        lpips_df.loc[
+            lpips_df["evaluation_region"].eq(evaluation_region)
+            & lpips_df["status"].eq("ok")
         ]
         .copy()
     )
 
     strongest_df = (
         region_df
-        .sort_values("lpips_improvement", ascending=False)
+        .sort_values(
+            ["lpips_improvement", "lpips_case_id"],
+            ascending=[False, True],
+            kind="stable",
+        )
         .head(top_n)
         .reset_index(drop=True)
     )
 
     weakest_df = (
         region_df
-        .sort_values("lpips_improvement", ascending=True)
+        .sort_values(
+            ["lpips_improvement", "lpips_case_id"],
+            ascending=[True, True],
+            kind="stable",
+        )
         .head(top_n)
         .reset_index(drop=True)
     )
