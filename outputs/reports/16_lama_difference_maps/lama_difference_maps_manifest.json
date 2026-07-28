@@ -1,0 +1,76 @@
+{
+  "notebook": "16_lama_difference_maps",
+  "model_name": "lama",
+  "spatial_schema_version": "1.0.0",
+  "implementation": "restoration_eval.error_maps",
+  "run_started_at_utc": "2026-07-28T10:53:06.469331+00:00",
+  "manifest_created_at_utc": "2026-07-28T12:25:14.793257+00:00",
+  "configuration": {
+    "target_size": 768,
+    "mask_binary_threshold": 0,
+    "boundary_width_pixels": 3,
+    "boundary_mode": "both",
+    "absolute_error_percentile": 99.5,
+    "signed_improvement_percentile": 99.5,
+    "scale_sample_region": "masked",
+    "generate_all_case_figures": true,
+    "include_zero_control_figures": true,
+    "figure_dpi": 150
+  },
+  "summary": {
+    "ready_case_count": 360,
+    "spatial_diagnostic_rows": 360,
+    "case_asset_rows": 360,
+    "selected_figure_rows": 40,
+    "all_case_figure_rows": 360,
+    "selected_unique_cases": 37,
+    "validation_checks": 10,
+    "validation_passed": true
+  },
+  "artifacts": {
+    "spatial_diagnostics": {
+      "label": "Canonical LaMa spatial diagnostics",
+      "type": "csv",
+      "required": true,
+      "exists": true,
+      "path": "data/processed/metrics/spatial_diagnostics_lama.csv",
+      "file_size_bytes": 618205
+    },
+    "visualization_scales": {
+      "label": "LaMa visualization scales",
+      "type": "csv",
+      "required": true,
+      "exists": true,
+      "path": "data/processed/metrics/spatial_diagnostic_scales_lama.csv",
+      "file_size_bytes": 753
+    },
+    "case_assets": {
+      "label": "LaMa spatial diagnostic case asset index",
+      "type": "csv",
+      "required": true,
+      "exists": true,
+      "path": "data/processed/metrics/spatial_diagnostic_case_assets_lama.csv",
+      "file_size_bytes": 1404903
+    },
+    "selected_figure_manifest": {
+      "label": "Selected LaMa difference-map figure manifest",
+      "type": "csv",
+      "required": true,
+      "exists": true,
+      "path": "outputs/16_lama_difference_maps/lama_difference_map_manifest_selected.csv",
+      "file_size_bytes": 78370
+    },
+    "all_figure_manifest": {
+      "label": "All-case LaMa difference-map figure manifest",
+      "type": "csv",
+      "required": true,
+      "exists": true,
+      "path": "outputs/16_lama_difference_maps/lama_difference_map_manifest_all.csv",
+      "file_size_bytes": 599615
+    }
+  },
+  "validation": {
+    "path": "outputs/16_lama_difference_maps/lama_difference_map_validation.csv",
+    "passed": true
+  }
+}
