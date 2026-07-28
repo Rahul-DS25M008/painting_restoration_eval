@@ -1,0 +1,28 @@
+check,passed,detail,observed,expected,details,non_null_count,unexpected_non_null_count,missing_expected_count
+required_columns,True,All required columns present.,,,,,,
+row_count,True,"Expected 2260, found 2260.",,,,,,
+no_error_rows,True,Error rows: 0; warning rows: 0.,,,,,,
+unique_metric_keys,True,Rows participating in duplicate metric keys: 0.,,,,,,
+region_counts,True,All evaluation-region counts match expectations.,,,,,,
+positive_region_pixel_counts,True,Successful rows with non-positive region size: 0.,,,,,,
+metric_case_key_unique,True,,2260,2260,One metric row per dataset/case/model/evaluation_region.,,,
+all_status_ok,True,,['ok'],['ok'],All computed metric rows should be successful.,,,
+dataset_name_not_null,True,,2260,2260,Critical metadata column `dataset_name` should be populated.,,,
+case_id_not_null,True,,2260,2260,Critical metadata column `case_id` should be populated.,,,
+painting_id_not_null,True,,2260,2260,Critical metadata column `painting_id` should be populated.,,,
+category_not_null,True,,2260,2260,Critical metadata column `category` should be populated.,,,
+mask_type_not_null,True,,2260,2260,Critical metadata column `mask_type` should be populated.,,,
+model_name_not_null,True,,2260,2260,Critical metadata column `model_name` should be populated.,,,
+evaluation_region_not_null,True,,2260,2260,Critical metadata column `evaluation_region` should be populated.,,,
+damaged_mse_valid_or_expected_null,True,,2260,2260,Metric should be finite for all rows.,2260.0,0.0,0.0
+restored_mse_valid_or_expected_null,True,,2260,2260,Metric should be finite for all rows.,2260.0,0.0,0.0
+mse_improvement_valid_or_expected_null,True,,2260,2260,Metric should be finite for all rows.,2260.0,0.0,0.0
+damaged_mae_valid_or_expected_null,True,,2260,2260,Metric should be finite for all rows.,2260.0,0.0,0.0
+restored_mae_valid_or_expected_null,True,,2260,2260,Metric should be finite for all rows.,2260.0,0.0,0.0
+mae_improvement_valid_or_expected_null,True,,2260,2260,Metric should be finite for all rows.,2260.0,0.0,0.0
+damaged_psnr_valid_or_expected_null,True,,2260,2260,PSNR may be infinite when MSE is exactly zero; finite and infinite PSNR values are both valid.,2260.0,0.0,0.0
+restored_psnr_valid_or_expected_null,True,,2260,2260,PSNR may be infinite when MSE is exactly zero; finite and infinite PSNR values are both valid.,2260.0,0.0,0.0
+psnr_improvement_valid_or_expected_null,True,,2260,2260,PSNR may be infinite when MSE is exactly zero; finite and infinite PSNR values are both valid.,2260.0,0.0,0.0
+damaged_ssim_valid_or_expected_null,True,,1180,1180,SSIM is intentionally null for sparse regions and finite for full-image/content/bbox regions.,1180.0,0.0,0.0
+restored_ssim_valid_or_expected_null,True,,1180,1180,SSIM is intentionally null for sparse regions and finite for full-image/content/bbox regions.,1180.0,0.0,0.0
+ssim_improvement_valid_or_expected_null,True,,1180,1180,SSIM is intentionally null for sparse regions and finite for full-image/content/bbox regions.,1180.0,0.0,0.0
