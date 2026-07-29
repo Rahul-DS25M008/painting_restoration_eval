@@ -41,3 +41,4 @@ plotly
 # Notebook support
 ipykernel
 jupyter>=1.1,<2
+jmespath

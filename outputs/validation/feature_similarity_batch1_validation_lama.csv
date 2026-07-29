@@ -1,0 +1,8 @@
+check_name,observed,expected,passed,issue
+input_paths_exist,4,4,True,
+lpips_handoff_ready,ready_for_downstream_analysis,ready_for_downstream_analysis,True,
+restoration_cases_nonempty,410,> 0,True,
+nonzero_mask_cases_nonempty,355,> 0,True,
+expected_region_counts_complete,"{'full_image': 410, 'content_region': 410, 'mask_bbox_crop': 355}","['full_image', 'content_region', 'mask_bbox_crop']",True,
+expected_row_formula,1175,cases * 2 + nonzero masks,True,
+helper_and_dependencies_valid,True,True,True,

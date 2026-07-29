@@ -1,0 +1,7 @@
+check_name,observed,expected,passed,issue
+batch5_preflight_passed,True,True,True,
+expected_figures_created,"['feature_damaged_vs_restored_similarity', 'feature_dataset_region_heatmap', 'feature_improvement_distribution_by_region', 'feature_mask_area_sensitivity', 'feature_mask_crop_ranking_diagnostic', 'feature_region_mean_improvement', 'feature_zero_control_comparison']","['feature_damaged_vs_restored_similarity', 'feature_dataset_region_heatmap', 'feature_improvement_distribution_by_region', 'feature_mask_area_sensitivity', 'feature_mask_crop_ranking_diagnostic', 'feature_region_mean_improvement', 'feature_zero_control_comparison']",True,
+figure_files_exist,7,7,True,
+figure_files_nonempty,7,7,True,
+figure_manifest_saved,True,True,True,
+figure_manifest_nonempty,7,> 0,True,
