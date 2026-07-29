@@ -1,0 +1,12 @@
+check,passed,detail,validation_source,observed,expected,severity
+required_columns,True,All required columns present.,helper_contract,,,
+row_count,True,"Expected 1175, found 1175.",helper_contract,,,
+no_error_rows,True,Error rows: 0.,helper_contract,,,
+unique_lpips_keys,True,Rows participating in duplicate keys: 0.,helper_contract,,,
+region_counts,True,All evaluation-region counts match expectations.,helper_contract,,,
+region_policy,True,All LPIPS rows use image-like evaluation regions.,helper_contract,,,
+positive_region_pixel_counts,True,Successful rows with non-positive region size: 0.,helper_contract,,,
+raw_metrics_file_exists,True,,batch5_extra,True,True,error
+raw_metrics_row_count,True,,batch5_extra,1175,1175,error
+all_region_counts_match,True,,batch5_extra,3,3,error
+no_nonfinite_ok_metric_values,True,,batch5_extra,0,0,error

@@ -1,0 +1,8 @@
+check,passed,detail
+required_columns,True,All required columns present.
+row_count,True,"Expected 8, found 8."
+no_error_rows,True,Error rows: 0.
+unique_lpips_keys,True,Rows participating in duplicate keys: 0.
+region_counts,True,All evaluation-region counts match expectations.
+region_policy,True,All LPIPS rows use image-like evaluation regions.
+positive_region_pixel_counts,True,Successful rows with non-positive region size: 0.

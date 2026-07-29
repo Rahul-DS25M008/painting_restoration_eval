@@ -1,0 +1,6 @@
+is_zero_control,evaluation_region,rows,cases,median_damaged_lpips,median_restored_lpips,median_lpips_improvement,mean_damaged_lpips,mean_restored_lpips,mean_lpips_improvement,improvement_rate,median_region_pixel_count
+False,content_region,360,360,0.202242,0.012898,0.172066,0.212405,0.030313,0.182092,0.861111,438528.0
+False,full_image,360,360,0.169817,0.008694,0.141527,0.181087,0.02308,0.158006,0.861111,589824.0
+False,mask_bbox_crop,355,355,0.294946,0.019286,0.261275,0.326297,0.082943,0.243354,0.873239,376996.0
+True,content_region,50,50,0.0,0.0,0.0,0.0,0.0,0.0,0.0,446208.0
+True,full_image,50,50,0.0,0.0,0.0,0.0,0.0,0.0,0.0,589824.0

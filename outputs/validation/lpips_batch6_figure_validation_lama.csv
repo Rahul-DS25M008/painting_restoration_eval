@@ -1,0 +1,4 @@
+check,observed,expected,passed,severity
+diagnostic_figures_created,6,6,True,error
+figure_manifest_saved,True,True,True,error
+figure_manifest_nonempty,6,> 0,True,error

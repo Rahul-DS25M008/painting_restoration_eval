@@ -1,0 +1,2 @@
+model_name,rows,cases,median_damaged_lpips,median_restored_lpips,median_lpips_improvement,mean_damaged_lpips,mean_restored_lpips,mean_lpips_improvement,improvement_rate,median_region_pixel_count
+lama,1175,410,0.192625,0.009952,0.173675,0.219143,0.041418,0.177724,0.791489,509184.0
