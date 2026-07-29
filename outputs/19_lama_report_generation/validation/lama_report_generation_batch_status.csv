@@ -1,0 +1,6 @@
+batch,validation_path,validation_exists,validation_size_bytes,validation_passed
+batch_1,outputs/19_lama_report_generation/validation/lama_report_generation_batch1_validation.csv,True,2432,True
+batch_2,outputs/19_lama_report_generation/validation/lama_report_generation_batch2_validation.csv,True,2985,True
+batch_3,outputs/19_lama_report_generation/validation/lama_report_generation_batch3_validation.csv,True,1084,True
+batch_4,outputs/19_lama_report_generation/validation/lama_report_generation_batch4_validation.csv,True,1011,True
+batch_5,outputs/19_lama_report_generation/validation/lama_report_generation_batch5_validation.csv,True,593,True

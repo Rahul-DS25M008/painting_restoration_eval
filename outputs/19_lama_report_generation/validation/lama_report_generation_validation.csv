@@ -1,0 +1,12 @@
+check_name,observed,expected,passed,issue
+all_prior_batch_validations_passed,"{""batch_1"": true, ""batch_2"": true, ""batch_3"": true, ""batch_4"": true, ""batch_5"": true}",all true,True,
+report_dataframe_expected_rows,355,355,True,
+report_case_ids_unique,355,355,True,
+selected_cases_subset_of_report,"{""not_in_report"": [], ""selected_cases"": 18}","{""not_in_report"": []}",True,
+required_csv_outputs_exist,"{""batch_status"": true, ""figure_manifest"": true, ""metric_correlations"": true, ""metric_overview"": true, ""report_dataframe"": true, ""report_status_cards"": true, ""report_summaries"": true, ""selected_case_report_table"": true, ""selected_cases"": true, ""table_shapes"": true}",all true,True,
+required_csv_outputs_nonempty,"{""batch_status"": 650, ""figure_manifest"": 11685, ""metric_correlations"": 681, ""metric_overview"": 1173, ""report_dataframe"": 1468035, ""report_status_cards"": 223, ""report_summaries"": 4428, ""selected_case_report_table"": 8128, ""selected_cases"": 81682, ""table_shapes"": 1060}",all > 0,True,
+figure_manifest_exists,True,True,True,
+html_report_exists,True,True,True,
+stage_manifest_exists,True,True,True,
+handoff_manifest_exists,True,True,True,
+artifact_index_exists,True,True,True,

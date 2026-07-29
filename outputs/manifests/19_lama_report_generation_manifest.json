@@ -1,0 +1,282 @@
+{
+  "manifest_type": "lama_report_generation_stage",
+  "notebook": {
+    "id": "19_lama_report_generation",
+    "name": "19_lama_report_generation.ipynb",
+    "model_name": "lama",
+    "report_schema_version": "2.0.0"
+  },
+  "created_at_utc": "2026-07-29T22:43:49.309278+00:00",
+  "truth_source_scope": {
+    "purpose": "final standalone LaMa synthesis report and downstream handoff",
+    "main_report_region": "mask_bbox_crop",
+    "expected_restoration_cases": 410,
+    "expected_report_cases": 355,
+    "zero_controls_in_main_report": false
+  },
+  "input_paths": {
+    "processed_clean_metadata": "data/processed/metadata/metadata_processed_clean.csv",
+    "lama_restoration_manifest": "data/processed/metadata/metadata_restored_lama.csv",
+    "classical_metrics": "outputs/metrics/classical_metrics_lama.csv",
+    "lpips_raw_metrics": "outputs/metrics/lpips_metrics_lama.csv",
+    "lpips_compact_metrics": "outputs/metrics/lpips_metrics_lama_compact.csv",
+    "feature_raw_metrics": "outputs/metrics/feature_similarity_metrics_lama.csv",
+    "feature_compact_metrics": "outputs/metrics/feature_similarity_metrics_lama_compact.csv",
+    "lpips_handoff_manifest": "outputs/metrics/lpips_handoff_manifest_lama.json",
+    "feature_handoff_manifest": "outputs/metrics/feature_similarity_handoff_manifest_lama.json",
+    "error_map_manifest": "outputs/metrics/diagnostics/lama_diagnostic_panel_manifest.csv",
+    "report_helper_module": "src/restoration_eval/reporting.py"
+  },
+  "candidate_resolution": [
+    {
+      "artifact": "classical_metrics",
+      "resolved_path": "outputs/metrics/classical_metrics_lama.csv",
+      "found": true,
+      "checked_paths": [
+        "outputs/metrics/classical_metrics_lama.csv",
+        "outputs/metrics/classical_metrics_lama_compact.csv",
+        "outputs/metrics/classical_metrics_lama_full.csv",
+        "outputs/metrics/classical_metrics_lama_50.csv"
+      ]
+    },
+    {
+      "artifact": "error_map_manifest",
+      "resolved_path": "outputs/metrics/diagnostics/lama_diagnostic_panel_manifest.csv",
+      "found": true,
+      "checked_paths": [
+        "outputs/metrics/diagnostics/lama_diagnostic_panel_manifest.csv",
+        "outputs/metrics/final_tables/lama_classical_metrics_artifact_manifest.csv",
+        "outputs/metrics/error_map_manifest_all_lama.csv",
+        "outputs/metrics/error_map_manifest_lama.csv",
+        "outputs/metrics/difference_map_manifest_lama.csv",
+        "outputs/metrics/error_map_manifest_all_lama_50.csv",
+        "outputs/figures/16_lama_classical_metrics/error_maps_lama/error_map_manifest_lama.csv",
+        "outputs/figures/16_lama_classical_metrics/difference_maps_lama/difference_map_manifest_lama.csv"
+      ]
+    }
+  ],
+  "planned_outputs": {
+    "report_dataframe": "outputs/metrics/lama_report_dataframe.csv",
+    "selected_cases": "outputs/metrics/lama_report_selected_cases.csv",
+    "report_summaries": "outputs/metrics/lama_report_summaries.csv",
+    "report_metric_correlations": "outputs/metrics/lama_report_metric_correlations.csv",
+    "report_figure_manifest": "outputs/figures/19_lama_report_generation/report_diagnostics_lama/lama_report_figure_manifest.csv",
+    "html_report": "outputs/reports/lama_restoration_evaluation_report.html",
+    "batch1_validation": "outputs/validation/lama_report_generation_batch1_validation.csv",
+    "final_validation": "outputs/validation/lama_report_generation_validation.csv",
+    "stage_manifest": "outputs/manifests/19_lama_report_generation_manifest.json",
+    "handoff_manifest": "outputs/metrics/lama_report_handoff_manifest.json"
+  },
+  "planned_batches": {
+    "batch_1": "setup_contracts_and_input_gates",
+    "batch_2": "load_inputs_and_verify_upstream_contracts",
+    "batch_3": "build_report_dataframe_and_summaries",
+    "batch_4": "select_diagnostic_cases_and_validate_figures",
+    "batch_5": "generate_plots_and_html_report",
+    "batch_6": "final_validation_and_handoff_manifest"
+  },
+  "batches": {
+    "batch_1": {
+      "completed_at_utc": "2026-07-29T22:43:49.327576+00:00",
+      "purpose": "setup_contracts_and_input_gates",
+      "validation": "outputs/validation/lama_report_generation_batch1_validation.csv",
+      "validation_passed": true,
+      "helper_sha256": "97c7655aa321066f74c2130eac4afce6dffd342d9ff837d8bc7270e79fe6577a"
+    },
+    "batch_2": {
+      "completed_at_utc": "2026-07-29T22:44:17.211979+00:00",
+      "purpose": "load_inputs_and_verify_upstream_contracts",
+      "validation": "outputs/validation/lama_report_generation_batch2_validation.csv",
+      "validation_passed": true,
+      "loaded_table_shapes": [
+        {
+          "table": "processed_metadata",
+          "rows": 50,
+          "columns": 47
+        },
+        {
+          "table": "restored_metadata",
+          "rows": 410,
+          "columns": 219
+        },
+        {
+          "table": "classical_metrics",
+          "rows": 2260,
+          "columns": 51
+        },
+        {
+          "table": "lpips_raw_metrics",
+          "rows": 1175,
+          "columns": 47
+        },
+        {
+          "table": "lpips_compact_metrics",
+          "rows": 1175,
+          "columns": 25
+        },
+        {
+          "table": "feature_raw_metrics",
+          "rows": 1175,
+          "columns": 59
+        },
+        {
+          "table": "feature_compact_metrics",
+          "rows": 1175,
+          "columns": 48
+        },
+        {
+          "table": "error_map_manifest",
+          "rows": 12,
+          "columns": 6
+        }
+      ],
+      "upstream_handoffs": [
+        {
+          "upstream": "lpips",
+          "path": "outputs/metrics/lpips_handoff_manifest_lama.json",
+          "handoff_status": "ready_for_downstream_analysis",
+          "validation_passed": false,
+          "raw_contract": {}
+        },
+        {
+          "upstream": "feature_similarity",
+          "path": "outputs/metrics/feature_similarity_handoff_manifest_lama.json",
+          "handoff_status": "ready_for_downstream_analysis",
+          "validation_passed": true,
+          "raw_contract": {
+            "cases": 410,
+            "expected_rows": 1175,
+            "actual_rows": 1175,
+            "expected_region_counts": {
+              "full_image": 410,
+              "content_region": 410,
+              "mask_bbox_crop": 355
+            },
+            "actual_region_counts": {
+              "full_image": 410,
+              "content_region": 410,
+              "mask_bbox_crop": 355
+            },
+            "status_counts": {
+              "ok": 1175
+            },
+            "schema_version": "2.0.0"
+          }
+        }
+      ],
+      "contracts": {
+        "expected_restoration_cases": 410,
+        "expected_report_cases": 355,
+        "expected_metric_region_counts": {
+          "full_image": 410,
+          "content_region": 410,
+          "mask_bbox_crop": 355
+        },
+        "classical_selected_region": "masked_region",
+        "lpips_report_region": "mask_bbox_crop",
+        "feature_report_region": "mask_bbox_crop",
+        "zero_control_cases": 55,
+        "report_case_ids": 355
+      },
+      "resolved_inputs": {
+        "classical_metrics": "outputs/metrics/classical_metrics_lama.csv",
+        "diagnostic_manifest": "outputs/metrics/diagnostics/lama_diagnostic_panel_manifest.csv",
+        "lpips_handoff_manifest": "outputs/metrics/lpips_handoff_manifest_lama.json",
+        "feature_handoff_manifest": "outputs/metrics/feature_similarity_handoff_manifest_lama.json"
+      }
+    },
+    "batch_3": {
+      "completed_at_utc": "2026-07-29T22:44:25.231525+00:00",
+      "purpose": "build_report_dataframe_and_compact_summaries",
+      "validation": "outputs/validation/lama_report_generation_batch3_validation.csv",
+      "validation_passed": true,
+      "outputs": {
+        "report_dataframe": "outputs/metrics/lama_report_dataframe.csv",
+        "report_summaries": "outputs/metrics/lama_report_summaries.csv",
+        "report_metric_correlations": "outputs/metrics/lama_report_metric_correlations.csv"
+      },
+      "report_contract": {
+        "report_schema_version": "2.0.0",
+        "model_name": "lama",
+        "include_zero_control": false,
+        "classical_report_region": "masked_region",
+        "lpips_report_region": "mask_bbox_crop",
+        "feature_report_region": "mask_bbox_crop",
+        "input_rows": {
+          "processed_metadata": 50,
+          "restored_metadata": 410,
+          "classical_metrics": 2260,
+          "lpips_metrics": 1175,
+          "feature_metrics": 1175,
+          "error_map_manifest": 12
+        },
+        "report_rows": 355,
+        "report_dataset_counts": {
+          "canonical": 200,
+          "mask_robustness": 75,
+          "synthetic_degradation": 45,
+          "damage_size": 35
+        },
+        "report_mask_counts": {
+          "NaN": 155,
+          "loss_large": 50,
+          "loss_small": 50,
+          "mixed_damage": 50,
+          "scratch_thin": 50
+        }
+      },
+      "table_shapes": {
+        "report_dataframe": {
+          "rows": 355,
+          "columns": 262
+        },
+        "compact_summaries": {
+          "rows": 33,
+          "columns": 23
+        },
+        "metric_correlations": {
+          "rows": 8,
+          "columns": 8
+        }
+      },
+      "summary_table_shapes": [
+        {
+          "summary_table": "overview",
+          "rows": 8,
+          "columns": 2
+        },
+        {
+          "summary_table": "by_dataset",
+          "rows": 4,
+          "columns": 13
+        },
+        {
+          "summary_table": "by_mask_type",
+          "rows": 5,
+          "columns": 13
+        },
+        {
+          "summary_table": "by_category",
+          "rows": 5,
+          "columns": 13
+        },
+        {
+          "summary_table": "by_dataset_mask",
+          "rows": 7,
+          "columns": 14
+        },
+        {
+          "summary_table": "runtime_and_failures",
+          "rows": 4,
+          "columns": 7
+        },
+        {
+          "summary_table": "metric_correlations",
+          "rows": 8,
+          "columns": 8
+        }
+      ],
+      "diagnostic_paths_joined": 0
+    }
+  }
+}

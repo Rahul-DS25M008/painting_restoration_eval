@@ -1,0 +1,244 @@
+{
+  "schema_version": "2.0.0",
+  "notebook_id": "19_lama_report_generation",
+  "notebook_name": "19_lama_report_generation.ipynb",
+  "model_name": "lama",
+  "created_at_utc": "2026-07-29T23:35:14.956834+00:00",
+  "status": "ready_for_downstream_analysis",
+  "report_contract": {
+    "expected_restoration_cases": 410,
+    "expected_report_cases": 355,
+    "expected_report_region": "mask_bbox_crop",
+    "expected_report_status": "ready_for_downstream_analysis",
+    "zero_controls_excluded_from_report_dataframe": true,
+    "difference_map_manifest": "outputs/16_lama_difference_maps/lama_difference_map_manifest_all.csv"
+  },
+  "validation": {
+    "final_validation": "outputs/19_lama_report_generation/validation/lama_report_generation_validation.csv",
+    "final_validation_passed": true,
+    "batch_validation_status": {
+      "batch_1": true,
+      "batch_2": true,
+      "batch_3": true,
+      "batch_4": true,
+      "batch_5": true
+    },
+    "checks_total": 11,
+    "checks_passed": 11
+  },
+  "artifacts": {
+    "report_dataframe": {
+      "artifact": "report_dataframe",
+      "artifact_type": "csv",
+      "path": "outputs/19_lama_report_generation/metrics/lama_report_dataframe.csv",
+      "required": true,
+      "exists": true,
+      "size_bytes": 1468035,
+      "sha256": "c032781d43c9cd27aeac949dad95fe80acf8680e6664b6c2df958ec345416669"
+    },
+    "selected_cases": {
+      "artifact": "selected_cases",
+      "artifact_type": "csv",
+      "path": "outputs/19_lama_report_generation/metrics/lama_report_selected_cases.csv",
+      "required": true,
+      "exists": true,
+      "size_bytes": 81682,
+      "sha256": "314347ee1b207bae8f0fbf4da83b13291ae24cc08d8b1d0e0ea32bcfa6eaa2cf"
+    },
+    "report_summaries": {
+      "artifact": "report_summaries",
+      "artifact_type": "csv",
+      "path": "outputs/19_lama_report_generation/metrics/lama_report_summaries.csv",
+      "required": true,
+      "exists": true,
+      "size_bytes": 4428,
+      "sha256": "1b690573ed7f624d076a0525c9abbea0a9425b283a4eec525a8128532b09dd99"
+    },
+    "metric_correlations": {
+      "artifact": "metric_correlations",
+      "artifact_type": "csv",
+      "path": "outputs/19_lama_report_generation/metrics/lama_report_metric_correlations.csv",
+      "required": true,
+      "exists": true,
+      "size_bytes": 681,
+      "sha256": "30e3e1a1eb7bd259afc220cf758c0678efcd5e3055754f3acc6face8217f6d6d"
+    },
+    "metric_overview": {
+      "artifact": "metric_overview",
+      "artifact_type": "csv",
+      "path": "outputs/19_lama_report_generation/metrics/lama_report_metric_overview.csv",
+      "required": true,
+      "exists": true,
+      "size_bytes": 1173,
+      "sha256": "13a8b792c9b3f0201af89941ad8f246248942739b565f748744552729d274b92"
+    },
+    "report_status_cards": {
+      "artifact": "report_status_cards",
+      "artifact_type": "csv",
+      "path": "outputs/19_lama_report_generation/metrics/lama_report_status_cards.csv",
+      "required": true,
+      "exists": true,
+      "size_bytes": 223,
+      "sha256": "21de48205203f588170678af846e5a404e5aaa5c8845755d34d5e3fea0529bfe"
+    },
+    "report_findings": {
+      "artifact": "report_findings",
+      "artifact_type": "csv",
+      "path": "outputs/19_lama_report_generation/metrics/lama_report_findings.csv",
+      "required": false,
+      "exists": true,
+      "size_bytes": 749,
+      "sha256": "54a76b4f13b1ca131686b9aeaa8bbd6f4dc5c46109f5d6f81a591272ce012a3e"
+    },
+    "selected_case_report_table": {
+      "artifact": "selected_case_report_table",
+      "artifact_type": "csv",
+      "path": "outputs/19_lama_report_generation/metrics/lama_report_selected_case_table.csv",
+      "required": true,
+      "exists": true,
+      "size_bytes": 8128,
+      "sha256": "8c2dc8d0b166c017796b02635d4bf58094afc710ba2f10301d51858edc8f0b14"
+    },
+    "figure_manifest": {
+      "artifact": "figure_manifest",
+      "artifact_type": "csv",
+      "path": "outputs/19_lama_report_generation/figures/report_diagnostics_lama/lama_report_figure_manifest.csv",
+      "required": true,
+      "exists": true,
+      "size_bytes": 11685,
+      "sha256": "4b997b88880998ac41424c0694984154880e219e0bbf303617e1a780a46b1e89"
+    },
+    "case_panel_manifest": {
+      "artifact": "case_panel_manifest",
+      "artifact_type": "csv",
+      "path": "outputs/19_lama_report_generation/figures/report_diagnostics_lama/lama_report_selected_case_panel_manifest.csv",
+      "required": false,
+      "exists": true,
+      "size_bytes": 15948,
+      "sha256": "56da89838a4fcd60839bd50c6e0cff59b117c861c4067c9f1d36df397dc0e114"
+    },
+    "table_shapes": {
+      "artifact": "table_shapes",
+      "artifact_type": "csv",
+      "path": "outputs/19_lama_report_generation/validation/lama_report_generation_table_shapes.csv",
+      "required": true,
+      "exists": true,
+      "size_bytes": 1060,
+      "sha256": "cdd72d6625f4ed1a71570e7288d8a24fb8b2d9e98b40cc62e09f677f79baece0"
+    },
+    "batch_status": {
+      "artifact": "batch_status",
+      "artifact_type": "csv",
+      "path": "outputs/19_lama_report_generation/validation/lama_report_generation_batch_status.csv",
+      "required": true,
+      "exists": true,
+      "size_bytes": 650,
+      "sha256": "9803efe5fa45379116510ad90d094d88eeb44bf7ac9e650b3d8c5e23edc26914"
+    },
+    "html_report": {
+      "artifact": "html_report",
+      "artifact_type": "html",
+      "path": "outputs/19_lama_report_generation/reports/lama_restoration_evaluation_report.html",
+      "required": true,
+      "exists": true,
+      "size_bytes": 49476,
+      "sha256": "c0ad04557c3e28a5eb2c3b95188065f3ada5746b4c469ba2f22e307e3d4935c9"
+    },
+    "stage_manifest": {
+      "artifact": "stage_manifest",
+      "artifact_type": "json",
+      "path": "outputs/19_lama_report_generation/manifests/19_lama_report_generation_manifest.json",
+      "required": true,
+      "exists": true,
+      "size_bytes": 16714,
+      "sha256": "c41d54e5d67f4cc18bdf8f88d6503d47b5aa1b07ae69eee4c388a88d3742f35d"
+    },
+    "final_validation": {
+      "artifact": "final_validation",
+      "artifact_type": "csv",
+      "path": "outputs/19_lama_report_generation/validation/lama_report_generation_validation.csv",
+      "required": true,
+      "exists": false,
+      "size_bytes": 0,
+      "sha256": ""
+    },
+    "handoff_manifest": {
+      "artifact": "handoff_manifest",
+      "artifact_type": "json",
+      "path": "outputs/19_lama_report_generation/metrics/lama_report_handoff_manifest.json",
+      "required": true,
+      "exists": true,
+      "size_bytes": 8654,
+      "sha256": "8036319d002d56735802445542cb703300ad3690f5cc5e1d40ac935e8a8288e0"
+    }
+  },
+  "table_shapes": [
+    {
+      "table": "report_dataframe",
+      "rows": 355,
+      "columns": 264,
+      "path": "outputs/19_lama_report_generation/metrics/lama_report_dataframe.csv"
+    },
+    {
+      "table": "selected_cases",
+      "rows": 18,
+      "columns": 273,
+      "path": "outputs/19_lama_report_generation/metrics/lama_report_selected_cases.csv"
+    },
+    {
+      "table": "report_summaries",
+      "rows": 33,
+      "columns": 23,
+      "path": "outputs/19_lama_report_generation/metrics/lama_report_summaries.csv"
+    },
+    {
+      "table": "metric_correlations",
+      "rows": 8,
+      "columns": 8,
+      "path": "outputs/19_lama_report_generation/metrics/lama_report_metric_correlations.csv"
+    },
+    {
+      "table": "figure_manifest",
+      "rows": 25,
+      "columns": 9,
+      "path": "outputs/19_lama_report_generation/figures/report_diagnostics_lama/lama_report_figure_manifest.csv"
+    },
+    {
+      "table": "metric_overview",
+      "rows": 6,
+      "columns": 10,
+      "path": "outputs/19_lama_report_generation/metrics/lama_report_metric_overview.csv"
+    },
+    {
+      "table": "report_status_cards",
+      "rows": 8,
+      "columns": 2,
+      "path": "outputs/19_lama_report_generation/metrics/lama_report_status_cards.csv"
+    },
+    {
+      "table": "report_findings",
+      "rows": 5,
+      "columns": 1,
+      "path": "outputs/19_lama_report_generation/metrics/lama_report_findings.csv"
+    },
+    {
+      "table": "selected_case_report_table",
+      "rows": 18,
+      "columns": 13,
+      "path": "outputs/19_lama_report_generation/metrics/lama_report_selected_case_table.csv"
+    },
+    {
+      "table": "case_panel_manifest",
+      "rows": 18,
+      "columns": 21,
+      "path": "outputs/19_lama_report_generation/figures/report_diagnostics_lama/lama_report_selected_case_panel_manifest.csv"
+    }
+  ],
+  "downstream_notes": [
+    "Use lama_report_dataframe.csv as the canonical non-zero LaMa report table.",
+    "Use lama_report_selected_cases.csv and the figure manifest for qualitative examples.",
+    "Use lama_restoration_evaluation_report.html as the human-readable synthesis report.",
+    "Use this handoff manifest as the Notebook 19 completion contract."
+  ],
+  "updated_at_utc": "2026-07-29T23:35:15.024741+00:00"
+}

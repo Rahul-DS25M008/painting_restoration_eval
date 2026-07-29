@@ -1,0 +1,9 @@
+,mse_improvement,mae_improvement,psnr_improvement,ssim_improvement,lpips_improvement,clip_similarity_improvement,dinov2_similarity_improvement,mean_similarity_improvement
+mse_improvement,1.0,0.9737,0.7561,,0.6312,0.4758,0.3485,0.4443
+mae_improvement,0.9737,1.0,0.853,,0.7101,0.5518,0.4107,0.5196
+psnr_improvement,0.7561,0.853,1.0,,0.6857,0.4986,0.4002,0.4884
+ssim_improvement,,,,,,,,
+lpips_improvement,0.6312,0.7101,0.6857,,1.0,0.8306,0.6277,0.7883
+clip_similarity_improvement,0.4758,0.5518,0.4986,,0.8306,1.0,0.618,0.8595
+dinov2_similarity_improvement,0.3485,0.4107,0.4002,,0.6277,0.618,1.0,0.933
+mean_similarity_improvement,0.4443,0.5196,0.4884,,0.7883,0.8595,0.933,1.0
