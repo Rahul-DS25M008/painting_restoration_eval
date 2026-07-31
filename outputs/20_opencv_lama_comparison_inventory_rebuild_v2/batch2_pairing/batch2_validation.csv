@@ -1,0 +1,7 @@
+check_name,observed,expected,passed,failure_message
+restoration_pairs_have_rows,410,> 0,True,
+metric_long_has_rows,41430,> 0,True,
+metric_pairs_have_rows,20910,> 0,True,
+no_duplicate_restoration_or_metric_pair_keys,0,0 duplicate keys,True,
+metric_pairs_include_classical_lpips_clip_dinov2,"[""clip"", ""dinov2"", ""lpips"", ""mse"", ""psnr"", ""ssim""]","[""clip"", ""dinov2"", ""lpips"", ""mse"", ""psnr"", ""ssim""]",True,
+metric_pair_key_includes_case_id,"[""case_id"", ""dataset_name"", ""painting_id"", ""mask_id"", ""mask_type"", ""evaluation_region"", ""metric_family"", ""metric_name"", ""metric_value_type""]",case_id included in metric pairing key,True,

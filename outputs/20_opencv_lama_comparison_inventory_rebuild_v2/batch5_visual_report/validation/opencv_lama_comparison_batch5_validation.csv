@@ -1,0 +1,10 @@
+check_name,observed,expected,passed,failure_message
+batch5_input_cases_have_rows,410,> 0,True,
+batch5_selected_cases_have_rows,24,> 0,True,
+batch5_selected_cases_unique,True,True,True,
+batch5_image_path_audit_written,outputs/20_opencv_lama_comparison_inventory_rebuild_v2/batch5_visual_report/tables/opencv_lama_batch5_image_path_audit.csv,existing non-empty CSV,True,
+batch5_panels_generated_for_selected_cases,24,24,True,
+batch5_figure_manifest_written,outputs/20_opencv_lama_comparison_inventory_rebuild_v2/batch5_visual_report/tables/opencv_lama_batch5_figure_manifest.csv,existing non-empty CSV,True,
+batch5_manifest_figures_exist,True,True,True,
+batch5_html_report_written,outputs/20_opencv_lama_comparison_inventory_rebuild_v2/batch5_visual_report/reports/opencv_lama_batch5_comparison_report.html,existing non-empty HTML,True,
+batch5_required_outputs_exist,"{""figure_manifest"": true, ""html_report"": true, ""image_path_audit"": true, ""selected_cases"": true}",all True,True,
