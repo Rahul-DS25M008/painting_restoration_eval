@@ -44,7 +44,7 @@ from skimage.morphology import binary_dilation, binary_erosion, disk
 
 
 METRIC_MODULE_NAME = "restoration_eval.metrics_classical"
-METRIC_VERSION = "2.0.0"
+METRIC_VERSION = "2.1.0"
 
 BASE_REGIONS = ("full_image", "content_region")
 MASKED_CASE_REGIONS = (
@@ -68,6 +68,29 @@ CLASSICAL_METRIC_COLUMNS = [
     "damaged_ssim",
     "restored_ssim",
     "ssim_improvement",
+]
+
+CANDIDATE_METADATA_COLUMNS = [
+    "restoration_case_id",
+    "candidate_id",
+    "source_case_key",
+    "source_case_id",
+    "source_case_id_original",
+    "prompt_policy_id",
+    "prompt_variant_id",
+    "prompt_template_name",
+    "prompt_ablation_subset",
+    "candidate_index",
+    "candidate_seed",
+    "effective_candidate_seed",
+    "inference_mode",
+    "execution_device",
+    "cuda_device_name",
+    "restoration_generator_version",
+    "restored_path",
+    "damaged_path",
+    "mask_path",
+    "clean_path",
 ]
 
 
@@ -396,6 +419,14 @@ def _row_value(row: pd.Series, key: str, default: Any = "") -> Any:
     return default if pd.isna(value) else value
 
 
+def _candidate_metadata_record(row: pd.Series) -> dict[str, Any]:
+    """Preserve Stable Diffusion candidate metadata in every metric row."""
+    return {
+        column: _row_value(row, column)
+        for column in CANDIDATE_METADATA_COLUMNS
+    }
+
+
 def _build_metric_record(
     row: pd.Series,
     evaluation_region: str,
@@ -426,6 +457,7 @@ def _build_metric_record(
         "mask_id": _row_value(row, "mask_id"),
         "mask_type": _row_value(row, "mask_type"),
         "model_name": _row_value(row, "model_name"),
+        **_candidate_metadata_record(row),
         "evaluation_region": evaluation_region,
         "region_pixel_count": int(region_pixel_count),
         "region_x_min": region_info.get("region_x_min"),
@@ -755,6 +787,7 @@ def compute_classical_metrics_for_restorations(
                 "mask_id": _row_value(row, "mask_id"),
                 "mask_type": _row_value(row, "mask_type"),
                 "model_name": _row_value(row, "model_name"),
+                **_candidate_metadata_record(row),
                 "evaluation_region": "error",
                 "region_pixel_count": 0,
                 "region_x_min": None,

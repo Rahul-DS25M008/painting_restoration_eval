@@ -1,0 +1,373 @@
+{
+  "notebook_id": "22_stable_diffusion_classical_metrics",
+  "notebook_title": "Stable Diffusion Classical Metrics",
+  "created_at_utc": "2026-08-07T17:39:24.062823+00:00",
+  "project_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
+  "output_root": "outputs/22_stable_diffusion_classical_metrics",
+  "helper": {
+    "module": "restoration_eval.metrics_classical",
+    "metric_version": "2.1.0",
+    "base_regions": [
+      "full_image",
+      "content_region"
+    ],
+    "masked_case_regions": [
+      "masked_region",
+      "mask_bbox_crop",
+      "boundary_region",
+      "outside_mask_region"
+    ],
+    "all_regions": [
+      "full_image",
+      "content_region",
+      "masked_region",
+      "mask_bbox_crop",
+      "boundary_region",
+      "outside_mask_region"
+    ]
+  },
+  "expected_counts_from_notebook21": {
+    "candidate_rows": 945,
+    "zero_control_rows": 94,
+    "nonzero_rows": 851,
+    "expected_metric_rows": 5294,
+    "formula": "94 zero controls * 2 base regions + 851 non-zero candidates * 6 regions"
+  },
+  "required_upstream_artifacts": [
+    {
+      "artifact_key": "notebook21_handoff_manifest",
+      "artifact_type": "json",
+      "required": true,
+      "notes": "Notebook 21 final handoff manifest.",
+      "path": "outputs\\21_stable_diffusion_restoration\\manifests\\stable_diffusion_handoff_manifest.json",
+      "exists": true,
+      "size_bytes": 21956
+    },
+    {
+      "artifact_key": "notebook21_artifact_index",
+      "artifact_type": "csv",
+      "required": true,
+      "notes": "Notebook 21 artifact index.",
+      "path": "outputs\\21_stable_diffusion_restoration\\manifests\\stable_diffusion_stage_artifact_index.csv",
+      "exists": true,
+      "size_bytes": 16278
+    },
+    {
+      "artifact_key": "sd_candidate_manifest",
+      "artifact_type": "csv",
+      "required": true,
+      "notes": "Candidate-level input table, expected 945 rows after Notebook 21.",
+      "path": "outputs\\21_stable_diffusion_restoration\\stable_diffusion_candidate_manifest.csv",
+      "exists": true,
+      "size_bytes": 2904218
+    },
+    {
+      "artifact_key": "sd_restoration_audit",
+      "artifact_type": "csv",
+      "required": true,
+      "notes": "Generation audit, expected all status ok after final Notebook 21 run.",
+      "path": "outputs\\21_stable_diffusion_restoration\\stable_diffusion_restoration_audit.csv",
+      "exists": true,
+      "size_bytes": 3512362
+    },
+    {
+      "artifact_key": "sd_restoration_validation",
+      "artifact_type": "csv",
+      "required": true,
+      "notes": "Notebook 21 output validation table.",
+      "path": "outputs\\21_stable_diffusion_restoration\\validation\\stable_diffusion_restoration_validation.csv",
+      "exists": true,
+      "size_bytes": 438181
+    },
+    {
+      "artifact_key": "metadata_processed_clean",
+      "artifact_type": "csv",
+      "required": true,
+      "notes": "Fallback source for clean paths and painting metadata when needed.",
+      "path": "data\\processed\\metadata\\metadata_processed_clean.csv",
+      "exists": true,
+      "size_bytes": 30443
+    }
+  ],
+  "planned_output_artifacts": [
+    {
+      "artifact_key": "batch0_project_inventory_snapshot",
+      "batch": "batch0",
+      "artifact_type": "csv",
+      "required": true,
+      "notes": "Inventory snapshot captured at notebook start.",
+      "path": "outputs\\22_stable_diffusion_classical_metrics\\inventory\\batch0_project_inventory_snapshot.csv",
+      "exists": true,
+      "size_bytes": 1693039
+    },
+    {
+      "artifact_key": "batch0_validation",
+      "batch": "batch0",
+      "artifact_type": "csv",
+      "required": true,
+      "notes": "Batch 0 validation checks.",
+      "path": "outputs\\22_stable_diffusion_classical_metrics\\validation\\batch0_validation.csv",
+      "exists": false,
+      "size_bytes": 0
+    },
+    {
+      "artifact_key": "stage_manifest",
+      "batch": "batch0_to_final",
+      "artifact_type": "json",
+      "required": true,
+      "notes": "Notebook-wide stage manifest updated during the run.",
+      "path": "outputs\\22_stable_diffusion_classical_metrics\\manifests\\stable_diffusion_classical_metrics_stage_manifest.json",
+      "exists": false,
+      "size_bytes": 0
+    },
+    {
+      "artifact_key": "metric_input_cases",
+      "batch": "batch1",
+      "artifact_type": "csv",
+      "required": true,
+      "notes": "Standardized candidate-level metric input table.",
+      "path": "outputs\\22_stable_diffusion_classical_metrics\\tables\\stable_diffusion_classical_metric_input_cases.csv",
+      "exists": false,
+      "size_bytes": 0
+    },
+    {
+      "artifact_key": "classical_metrics",
+      "batch": "batch3",
+      "artifact_type": "csv",
+      "required": true,
+      "notes": "Main candidate-level classical metrics table.",
+      "path": "outputs\\22_stable_diffusion_classical_metrics\\metrics\\stable_diffusion_classical_metrics.csv",
+      "exists": false,
+      "size_bytes": 0
+    },
+    {
+      "artifact_key": "classical_metrics_summary",
+      "batch": "batch4",
+      "artifact_type": "csv",
+      "required": true,
+      "notes": "Single consolidated summary table with summary_scope column.",
+      "path": "outputs\\22_stable_diffusion_classical_metrics\\analysis\\stable_diffusion_classical_metrics_summary.csv",
+      "exists": false,
+      "size_bytes": 0
+    },
+    {
+      "artifact_key": "selected_cases",
+      "batch": "batch4",
+      "artifact_type": "csv",
+      "required": true,
+      "notes": "Representative cases for visual/diagnostic review.",
+      "path": "outputs\\22_stable_diffusion_classical_metrics\\analysis\\stable_diffusion_classical_metric_selected_cases.csv",
+      "exists": false,
+      "size_bytes": 0
+    },
+    {
+      "artifact_key": "final_validation",
+      "batch": "batch5",
+      "artifact_type": "csv",
+      "required": true,
+      "notes": "End-of-notebook validation checks.",
+      "path": "outputs\\22_stable_diffusion_classical_metrics\\validation\\stable_diffusion_classical_metrics_final_validation.csv",
+      "exists": false,
+      "size_bytes": 0
+    },
+    {
+      "artifact_key": "artifact_index",
+      "batch": "batch5",
+      "artifact_type": "csv",
+      "required": true,
+      "notes": "Final index of important notebook outputs.",
+      "path": "outputs\\22_stable_diffusion_classical_metrics\\manifests\\stable_diffusion_classical_metrics_artifact_index.csv",
+      "exists": false,
+      "size_bytes": 0
+    },
+    {
+      "artifact_key": "handoff_manifest",
+      "batch": "batch5",
+      "artifact_type": "json",
+      "required": true,
+      "notes": "Final manifest for downstream notebooks.",
+      "path": "outputs\\22_stable_diffusion_classical_metrics\\manifests\\stable_diffusion_classical_metrics_handoff_manifest.json",
+      "exists": false,
+      "size_bytes": 0
+    }
+  ],
+  "batch_plan": [
+    {
+      "batch": "batch0",
+      "purpose": "setup, paths, inventory snapshot, helper version/API check"
+    },
+    {
+      "batch": "batch1",
+      "purpose": "load Notebook 21 handoff and build standardized metric input cases"
+    },
+    {
+      "batch": "batch2",
+      "purpose": "smoke-test classical metrics on representative candidates"
+    },
+    {
+      "batch": "batch3",
+      "purpose": "compute full candidate-level classical metrics"
+    },
+    {
+      "batch": "batch4",
+      "purpose": "summaries, rankings, selected cases, diagnostic figures"
+    },
+    {
+      "batch": "batch5",
+      "purpose": "final validation, artifact index, handoff manifest"
+    }
+  ],
+  "batch1": {
+    "completed_at_utc": "2026-08-07T17:50:24.135616+00:00",
+    "input_rows": 945,
+    "zero_control_rows": 94,
+    "nonzero_rows": 851,
+    "expected_metric_rows": 5294,
+    "expected_region_counts": {
+      "full_image": 945,
+      "content_region": 945,
+      "masked_region": 851,
+      "mask_bbox_crop": 851,
+      "boundary_region": 851,
+      "outside_mask_region": 851
+    },
+    "outputs": {
+      "metric_input_cases": "outputs/22_stable_diffusion_classical_metrics/tables/stable_diffusion_classical_metric_input_cases.csv",
+      "batch1_validation": "outputs/22_stable_diffusion_classical_metrics/validation/batch1_input_validation.csv"
+    }
+  },
+  "batch2": {
+    "completed_at_utc": "2026-08-07T18:00:42.854772+00:00",
+    "smoke_input_rows": 6,
+    "smoke_selection_group_counts": {
+      "zero_control": 2,
+      "generic_prompt": 2,
+      "contextual_prompt": 2
+    },
+    "expected_metric_rows": 28,
+    "expected_region_counts": {
+      "full_image": 6,
+      "content_region": 6,
+      "masked_region": 4,
+      "mask_bbox_crop": 4,
+      "boundary_region": 4,
+      "outside_mask_region": 4
+    },
+    "actual_metric_rows": 28,
+    "actual_region_counts": {
+      "full_image": 6,
+      "content_region": 6,
+      "masked_region": 4,
+      "boundary_region": 4,
+      "outside_mask_region": 4,
+      "mask_bbox_crop": 4
+    },
+    "status_counts": {
+      "ok": 28
+    },
+    "outputs": {
+      "smoke_metrics": "outputs/22_stable_diffusion_classical_metrics/validation/stable_diffusion_classical_metrics_smoke.csv",
+      "batch2_validation": "outputs/22_stable_diffusion_classical_metrics/validation/batch2_smoke_validation.csv"
+    }
+  },
+  "batch3": {
+    "completed_at_utc": "2026-08-07T18:39:55.629317+00:00",
+    "input_rows": 945,
+    "zero_control_rows": 94,
+    "nonzero_rows": 851,
+    "expected_metric_rows": 5294,
+    "actual_metric_rows": 5294,
+    "expected_region_counts": {
+      "full_image": 945,
+      "content_region": 945,
+      "masked_region": 851,
+      "mask_bbox_crop": 851,
+      "boundary_region": 851,
+      "outside_mask_region": 851
+    },
+    "actual_region_counts": {
+      "full_image": 945,
+      "content_region": 945,
+      "masked_region": 851,
+      "boundary_region": 851,
+      "outside_mask_region": 851,
+      "mask_bbox_crop": 851
+    },
+    "status_counts": {
+      "ok": 5294
+    },
+    "filename_length_policy": {
+      "writes_only_consolidated_fixed_name_csvs": true,
+      "no_per_candidate_or_prompt_derived_filenames": true,
+      "fixed_output_filename_lengths": {
+        "stable_diffusion_classical_metrics.csv": 38,
+        "stable_diffusion_classical_metrics_validation.csv": 49
+      },
+      "fixed_output_relative_path_lengths": {
+        "outputs/22_stable_diffusion_classical_metrics/metrics/stable_diffusion_classical_metrics.csv": 92,
+        "outputs/22_stable_diffusion_classical_metrics/validation/stable_diffusion_classical_metrics_validation.csv": 106
+      }
+    },
+    "parameters": {
+      "target_size": 768,
+      "mask_bbox_margin": 8,
+      "boundary_width": 3,
+      "progress_every": 25
+    },
+    "outputs": {
+      "classical_metrics": "outputs/22_stable_diffusion_classical_metrics/metrics/stable_diffusion_classical_metrics.csv",
+      "classical_metrics_validation": "outputs/22_stable_diffusion_classical_metrics/validation/stable_diffusion_classical_metrics_validation.csv"
+    }
+  },
+  "batch4": {
+    "completed_at_utc": "2026-08-07T18:40:20.342316+00:00",
+    "summary_rows": 135,
+    "summary_scopes": [
+      "by_category",
+      "by_evaluation_region",
+      "by_mask_type",
+      "by_prompt_policy",
+      "by_prompt_variant",
+      "by_region_and_mask_type",
+      "masked_region_by_category",
+      "masked_region_by_mask_type",
+      "masked_region_by_prompt_variant",
+      "overall"
+    ],
+    "selected_cases": 11,
+    "diagnostic_figures": 11,
+    "filename_length_policy": {
+      "uses_fixed_short_figure_filenames": true,
+      "figure_filename_pattern": "b4_fig_###.png",
+      "max_figure_filename_length": 14,
+      "max_figure_relative_path_length": 114,
+      "no_case_or_prompt_derived_figure_filenames": true
+    },
+    "outputs": {
+      "classical_metrics_summary": "outputs/22_stable_diffusion_classical_metrics/analysis/stable_diffusion_classical_metrics_summary.csv",
+      "selected_cases": "outputs/22_stable_diffusion_classical_metrics/analysis/stable_diffusion_classical_metric_selected_cases.csv",
+      "figure_manifest": "outputs/22_stable_diffusion_classical_metrics/figures/stable_diffusion_classical_metric_figure_manifest.csv",
+      "diagnostic_figure_dir": "outputs/22_stable_diffusion_classical_metrics/figures/stable_diffusion_classical_metric_diagnostics",
+      "batch4_validation": "outputs/22_stable_diffusion_classical_metrics/validation/batch4_analysis_validation.csv"
+    }
+  },
+  "batch5": {
+    "completed_at_utc": "2026-08-07T18:57:54.654620+00:00",
+    "status": "passed",
+    "final_validation_rows": 22,
+    "final_validation_passed_rows": 22,
+    "artifact_index_rows": 22,
+    "required_artifacts_missing": [],
+    "outputs": {
+      "final_validation": "outputs/22_stable_diffusion_classical_metrics/validation/stable_diffusion_classical_metrics_final_validation.csv",
+      "artifact_index": "outputs/22_stable_diffusion_classical_metrics/manifests/stable_diffusion_classical_metrics_artifact_index.csv",
+      "handoff_manifest": "outputs/22_stable_diffusion_classical_metrics/manifests/stable_diffusion_classical_metrics_handoff_manifest.json",
+      "stage_manifest": "outputs/22_stable_diffusion_classical_metrics/manifests/stable_diffusion_classical_metrics_stage_manifest.json"
+    }
+  },
+  "completed_at_utc": "2026-08-07T18:57:54.656630+00:00",
+  "status": "passed",
+  "artifact_index": "outputs/22_stable_diffusion_classical_metrics/manifests/stable_diffusion_classical_metrics_artifact_index.csv",
+  "handoff_manifest": "outputs/22_stable_diffusion_classical_metrics/manifests/stable_diffusion_classical_metrics_handoff_manifest.json",
+  "final_validation": "outputs/22_stable_diffusion_classical_metrics/validation/stable_diffusion_classical_metrics_final_validation.csv"
+}

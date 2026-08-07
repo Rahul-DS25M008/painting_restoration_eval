@@ -1,0 +1,13 @@
+check_name,observed,expected,passed,failure_message
+batch2_smoke_input_not_empty,6,>= 6,True,
+batch2_smoke_zero_control_cases_present,2,>= 2,True,
+batch2_smoke_generic_cases_present,2,>= 2,True,
+batch2_smoke_contextual_cases_present,2,>= 2,True,
+batch2_smoke_expected_metric_rows_positive,28,> 0,True,
+batch2_smoke_metric_rows_match_expected,28,28,True,
+batch2_smoke_metric_status_ok,{'ok': 28},{'ok': 28},True,
+batch2_smoke_required_output_columns_present,[],[],True,
+batch2_smoke_candidate_metadata_passthrough,0,0,True,
+batch2_smoke_prompt_metadata_passthrough,0,0,True,
+batch2_smoke_candidate_region_keys_unique,0,0,True,
+batch2_smoke_helper_validation_passed,"{0: True, 1: True, 2: True, 3: True, 4: True, 5: True}",all True,True,
