@@ -1,0 +1,13 @@
+check_name,observed_value,expected_value,passed,failure_message,validated_at_utc
+batch3_validation_passed,True,True,True,,2026-08-07T21:32:49.628511+00:00
+summary_required_columns_present,[],[],True,,2026-08-07T21:32:49.628511+00:00
+summary_row_count,945,945,True,,2026-08-07T21:32:49.628511+00:00
+map_ids_unique,0,0,True,,2026-08-07T21:32:49.628511+00:00
+candidate_ids_unique,0,0,True,,2026-08-07T21:32:49.628511+00:00
+selected_case_count,11,11,True,,2026-08-07T21:32:49.628511+00:00
+core_numeric_values_finite_for_masked_rows,True,True,True,,2026-08-07T21:32:49.628511+00:00
+zero_control_rows_have_expected_label,True,True,True,,2026-08-07T21:32:49.628511+00:00
+review_priority_ranks_unique,True,True,True,,2026-08-07T21:32:49.628511+00:00
+review_priority_ranks_complete,True,True,True,,2026-08-07T21:32:49.628511+00:00
+map_asset_status_ok,0,0,True,,2026-08-07T21:32:49.628511+00:00
+summary_written,outputs/23_stable_diffusion_difference_maps/analysis/stable_diffusion_difference_map_summary.csv,file exists,True,,2026-08-07T21:32:49.628511+00:00

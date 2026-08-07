@@ -1,0 +1,325 @@
+{
+  "schema_version": "stable_diffusion_difference_maps_stage_manifest_v1",
+  "notebook_id": "23_stable_diffusion_difference_maps",
+  "notebook_label": "Stable Diffusion Difference Maps",
+  "stage": "batch5_final_validation_artifact_index_handoff",
+  "stage_status": "passed",
+  "created_at_utc": "2026-08-07T20:18:08.868575+00:00",
+  "project_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
+  "output_root": "outputs/23_stable_diffusion_difference_maps",
+  "helper": {
+    "module": "restoration_eval.error_maps",
+    "version": "3.0.0",
+    "default_asset_types": [
+      "damaged_error",
+      "restored_error",
+      "signed_improvement",
+      "masked_signed_improvement",
+      "boundary_signed_improvement",
+      "mask_overlay",
+      "boundary_overlay"
+    ],
+    "required_api": [
+      "ERROR_MAP_VERSION",
+      "DEFAULT_MAP_ASSET_TYPES",
+      "MAP_ASSET_SPECS",
+      "compute_absolute_error_map",
+      "compute_signed_improvement_map",
+      "compute_case_maps",
+      "compute_error_map_summary",
+      "compute_global_visualization_scales",
+      "generate_candidate_map_assets_for_cases",
+      "generate_error_map_figures_for_cases",
+      "validate_map_image_manifest",
+      "validate_error_map_manifest",
+      "make_map_id",
+      "short_map_filename"
+    ]
+  },
+  "upstream_contract": {
+    "notebook22_handoff_manifest": {
+      "relative_path": "outputs/22_stable_diffusion_classical_metrics/manifests/stable_diffusion_classical_metrics_handoff_manifest.json",
+      "file_exists": true,
+      "present_in_inventory": true,
+      "extension": ".json"
+    },
+    "notebook22_final_validation": {
+      "relative_path": "outputs/22_stable_diffusion_classical_metrics/validation/stable_diffusion_classical_metrics_final_validation.csv",
+      "file_exists": true,
+      "present_in_inventory": true,
+      "extension": ".csv"
+    },
+    "candidate_input_cases": {
+      "relative_path": "outputs/22_stable_diffusion_classical_metrics/tables/stable_diffusion_classical_metric_input_cases.csv",
+      "file_exists": true,
+      "present_in_inventory": true,
+      "extension": ".csv"
+    },
+    "classical_metrics": {
+      "relative_path": "outputs/22_stable_diffusion_classical_metrics/metrics/stable_diffusion_classical_metrics.csv",
+      "file_exists": true,
+      "present_in_inventory": true,
+      "extension": ".csv"
+    },
+    "selected_cases": {
+      "relative_path": "outputs/22_stable_diffusion_classical_metrics/analysis/stable_diffusion_classical_metric_selected_cases.csv",
+      "file_exists": true,
+      "present_in_inventory": true,
+      "extension": ".csv"
+    }
+  },
+  "batch0_outputs": {
+    "inventory_snapshot": "outputs/23_stable_diffusion_difference_maps/inventory/batch0_project_inventory_snapshot.csv",
+    "batch0_validation": "outputs/23_stable_diffusion_difference_maps/validation/batch0_validation.csv",
+    "stage_manifest": "outputs/23_stable_diffusion_difference_maps/manifests/stable_diffusion_difference_maps_stage_manifest.json"
+  },
+  "planned_map_asset_policy": {
+    "save_all_candidate_map_images": true,
+    "default_assets_per_candidate": 7,
+    "asset_types": [
+      "damaged_error",
+      "restored_error",
+      "signed_improvement",
+      "masked_signed_improvement",
+      "boundary_signed_improvement",
+      "mask_overlay",
+      "boundary_overlay"
+    ],
+    "filename_policy": "fixed short sequential names; metadata stored in CSV manifests",
+    "example_filename": "dm_000001_der.png"
+  },
+  "known_column_notes": {
+    "candidate_input_required_columns": [
+      "candidate_id",
+      "clean_path",
+      "damaged_path",
+      "restored_path",
+      "mask_path"
+    ],
+    "candidate_input_recommended_columns": [
+      "restoration_case_id",
+      "case_id",
+      "painting_id",
+      "category",
+      "mask_type",
+      "prompt_policy_id",
+      "prompt_variant_id",
+      "candidate_seed"
+    ],
+    "candidate_input_missing_recommended_columns": []
+  },
+  "updated_at_utc": "2026-08-07T21:39:48.248515+00:00",
+  "batch1": {
+    "status": "passed",
+    "candidate_input_source": "outputs/22_stable_diffusion_classical_metrics/tables/stable_diffusion_classical_metric_input_cases.csv",
+    "classical_metrics_source": "outputs/22_stable_diffusion_classical_metrics/metrics/stable_diffusion_classical_metrics.csv",
+    "selected_cases_source": "outputs/22_stable_diffusion_classical_metrics/analysis/stable_diffusion_classical_metric_selected_cases.csv",
+    "outputs": {
+      "difference_map_input_cases": "outputs/23_stable_diffusion_difference_maps/tables/stable_diffusion_difference_map_input_cases.csv",
+      "batch1_validation": "outputs/23_stable_diffusion_difference_maps/validation/batch1_input_validation.csv"
+    },
+    "row_counts": {
+      "source_candidates": 945,
+      "difference_map_input_cases": 945,
+      "classical_metric_rows": 5294,
+      "selected_cases": 11
+    },
+    "all_map_image_contract": {
+      "save_all_candidate_map_images": true,
+      "asset_types": [
+        "damaged_error",
+        "restored_error",
+        "signed_improvement",
+        "masked_signed_improvement",
+        "boundary_signed_improvement",
+        "mask_overlay",
+        "boundary_overlay"
+      ],
+      "assets_per_candidate": 7,
+      "expected_total_map_assets": 6615,
+      "filename_policy": "fixed short sequential map IDs; metadata stays in CSV",
+      "max_expected_filename_length": 17,
+      "max_expected_relative_path_length": 94
+    },
+    "path_validation": {
+      "missing_source_path_counts": {
+        "clean_path": 0,
+        "damaged_path": 0,
+        "mask_path": 0,
+        "restored_path": 0
+      },
+      "missing_source_file_counts": {
+        "clean_path": 0,
+        "damaged_path": 0,
+        "mask_path": 0,
+        "restored_path": 0
+      }
+    }
+  },
+  "batch2": {
+    "status": "passed",
+    "config": {
+      "absolute_percentile": 99.5,
+      "signed_percentile": 99.5,
+      "maximum_samples_per_case": 10000,
+      "random_seed": 42,
+      "sample_region": "masked",
+      "mask_threshold": 0,
+      "boundary_width_pixels": 3,
+      "boundary_mode": "both",
+      "progress_every": 25
+    },
+    "outputs": {
+      "scales": "outputs/23_stable_diffusion_difference_maps/tables/stable_diffusion_difference_map_scales.csv",
+      "audit": "outputs/23_stable_diffusion_difference_maps/metrics/stable_diffusion_difference_map_audit.csv",
+      "image_manifest": "outputs/23_stable_diffusion_difference_maps/manifests/stable_diffusion_difference_map_image_manifest.csv",
+      "batch2_validation": "outputs/23_stable_diffusion_difference_maps/validation/batch2_map_audit_validation.csv",
+      "maps_root": "outputs/23_stable_diffusion_difference_maps/maps"
+    },
+    "row_counts": {
+      "input_candidates": 945,
+      "audit_rows": 945,
+      "image_manifest_rows": 945
+    },
+    "map_asset_contract": {
+      "save_all_candidate_map_images": true,
+      "asset_types": [
+        "damaged_error",
+        "restored_error",
+        "signed_improvement",
+        "masked_signed_improvement",
+        "boundary_signed_improvement",
+        "mask_overlay",
+        "boundary_overlay"
+      ],
+      "assets_per_candidate": 7,
+      "expected_total_assets": 6615,
+      "existing_manifest_asset_count": 6615,
+      "unique_manifest_asset_paths": 6615,
+      "png_files_under_maps": 6615,
+      "max_filename_length": 17
+    },
+    "scale_limits": {
+      "error_vmin": 0.0,
+      "error_vmax": 255.0,
+      "improvement_vmin": -242.33334350585938,
+      "improvement_vmax": 242.33334350585938
+    }
+  },
+  "batch3": {
+    "status": "passed",
+    "outputs": {
+      "selected_cases": "outputs/23_stable_diffusion_difference_maps/analysis/stable_diffusion_difference_map_selected_cases.csv",
+      "figure_manifest": "outputs/23_stable_diffusion_difference_maps/figures/stable_diffusion_difference_map_figure_manifest.csv",
+      "selected_panel_dir": "outputs/23_stable_diffusion_difference_maps/figures/stable_diffusion_difference_map_selected_panels",
+      "batch3_validation": "outputs/23_stable_diffusion_difference_maps/validation/batch3_selected_figures_validation.csv"
+    },
+    "row_counts": {
+      "selected_cases": 11,
+      "figure_manifest_rows": 11
+    },
+    "asset_contract": {
+      "selected_richer_panels": true,
+      "panel_filename_policy": "short deterministic filenames: dm_panel_001.png",
+      "linked_batch2_map_assets": [
+        "damaged_error",
+        "restored_error",
+        "signed_improvement",
+        "masked_signed_improvement",
+        "boundary_signed_improvement",
+        "mask_overlay",
+        "boundary_overlay"
+      ],
+      "panel_count": 11,
+      "max_panel_filename_length": 16
+    },
+    "visual_interpretation_scope": {
+      "xai_scope": "spatial diagnostic explainability assets, not model-internal attribution",
+      "included_views": [
+        "clean reference",
+        "damaged input",
+        "stable diffusion restored",
+        "mask and boundary overlay",
+        "clean-vs-damaged absolute error",
+        "clean-vs-restored absolute error",
+        "signed improvement",
+        "masked signed improvement",
+        "boundary signed improvement"
+      ]
+    }
+  },
+  "batch4": {
+    "status": "passed",
+    "outputs": {
+      "compact_analysis_summary": "outputs/23_stable_diffusion_difference_maps/analysis/stable_diffusion_difference_map_summary.csv",
+      "batch4_validation": "outputs/23_stable_diffusion_difference_maps/validation/batch4_analysis_validation.csv"
+    },
+    "row_counts": {
+      "compact_analysis_rows": 945,
+      "selected_cases": 11,
+      "global_summary_rows_displayed": 6,
+      "outcome_count_rows_displayed": 6,
+      "grouped_summary_rows_displayed": 19
+    },
+    "ranking_columns": [
+      "review_priority_rank",
+      "masked_improvement_rank_desc",
+      "restored_error_rank_asc",
+      "masked_harm_rank_desc",
+      "boundary_improvement_rank_desc",
+      "outside_mask_change_rank_desc"
+    ],
+    "analysis_thresholds": {
+      "mostly_improved_negative_percentage_max": 5.0,
+      "mixed_negative_percentage_min": 20.0,
+      "likely_harmful_negative_percentage_min": 50.0,
+      "near_zero_improvement_abs_max": 0.25
+    },
+    "interpretation_note": "Outcome labels are compact inspection flags for ranking and review; they are not final trustworthiness scores."
+  },
+  "batch5": {
+    "status": "passed",
+    "outputs": {
+      "final_validation": "outputs/23_stable_diffusion_difference_maps/validation/stable_diffusion_difference_maps_final_validation.csv",
+      "artifact_index": "outputs/23_stable_diffusion_difference_maps/manifests/stable_diffusion_difference_maps_artifact_index.csv",
+      "handoff_manifest": "outputs/23_stable_diffusion_difference_maps/manifests/stable_diffusion_difference_maps_handoff_manifest.json",
+      "stage_manifest": "outputs/23_stable_diffusion_difference_maps/manifests/stable_diffusion_difference_maps_stage_manifest.json",
+      "compact_analysis_summary": "outputs/23_stable_diffusion_difference_maps/analysis/stable_diffusion_difference_map_summary.csv",
+      "selected_cases": "outputs/23_stable_diffusion_difference_maps/analysis/stable_diffusion_difference_map_selected_cases.csv",
+      "batch2_map_audit": "outputs/23_stable_diffusion_difference_maps/metrics/stable_diffusion_difference_map_audit.csv",
+      "batch2_image_manifest": "outputs/23_stable_diffusion_difference_maps/manifests/stable_diffusion_difference_map_image_manifest.csv"
+    },
+    "counts": {
+      "candidate_rows_expected": 945,
+      "candidate_rows_observed": 945,
+      "selected_cases_expected": 11,
+      "selected_cases_observed": 11,
+      "batch2_audit_rows": 945,
+      "batch2_map_asset_types": 7,
+      "batch2_map_assets_expected": 6615,
+      "artifact_index_rows": 6638
+    },
+    "contracts": {
+      "map_assets_must_exist": true,
+      "selected_panels_must_exist": true,
+      "batch2_map_asset_filename_max_length": 80,
+      "batch3_panel_filename_max_length": 20,
+      "expected_map_asset_types": [
+        "damaged_error",
+        "restored_error",
+        "signed_improvement",
+        "masked_signed_improvement",
+        "boundary_signed_improvement",
+        "mask_overlay",
+        "boundary_overlay"
+      ],
+      "final_summary_scope": "candidate_difference_map_analysis"
+    },
+    "final_validation": {
+      "path": "outputs/23_stable_diffusion_difference_maps/validation/stable_diffusion_difference_maps_final_validation.csv",
+      "passed": true,
+      "checks_passed": 19,
+      "checks_total": 19
+    }
+  }
+}

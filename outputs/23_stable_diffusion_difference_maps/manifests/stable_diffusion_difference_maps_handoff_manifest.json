@@ -1,0 +1,56 @@
+{
+  "schema_version": "stable_diffusion_difference_maps_handoff_manifest_v1",
+  "notebook_id": "23_stable_diffusion_difference_maps",
+  "notebook_label": "Stable Diffusion Difference Maps",
+  "status": "passed",
+  "generated_at_utc": "2026-08-07T21:39:21.079098+00:00",
+  "output_root": "outputs/23_stable_diffusion_difference_maps",
+  "outputs": {
+    "final_validation": "outputs/23_stable_diffusion_difference_maps/validation/stable_diffusion_difference_maps_final_validation.csv",
+    "artifact_index": "outputs/23_stable_diffusion_difference_maps/manifests/stable_diffusion_difference_maps_artifact_index.csv",
+    "handoff_manifest": "outputs/23_stable_diffusion_difference_maps/manifests/stable_diffusion_difference_maps_handoff_manifest.json",
+    "stage_manifest": "outputs/23_stable_diffusion_difference_maps/manifests/stable_diffusion_difference_maps_stage_manifest.json",
+    "compact_analysis_summary": "outputs/23_stable_diffusion_difference_maps/analysis/stable_diffusion_difference_map_summary.csv",
+    "selected_cases": "outputs/23_stable_diffusion_difference_maps/analysis/stable_diffusion_difference_map_selected_cases.csv",
+    "batch2_map_audit": "outputs/23_stable_diffusion_difference_maps/metrics/stable_diffusion_difference_map_audit.csv",
+    "batch2_image_manifest": "outputs/23_stable_diffusion_difference_maps/manifests/stable_diffusion_difference_map_image_manifest.csv"
+  },
+  "counts": {
+    "candidate_rows_expected": 945,
+    "candidate_rows_observed": 945,
+    "selected_cases_expected": 11,
+    "selected_cases_observed": 11,
+    "batch2_audit_rows": 945,
+    "batch2_map_asset_types": 7,
+    "batch2_map_assets_expected": 6615,
+    "artifact_index_rows": 6638
+  },
+  "contracts": {
+    "map_assets_must_exist": true,
+    "selected_panels_must_exist": true,
+    "batch2_map_asset_filename_max_length": 80,
+    "batch3_panel_filename_max_length": 20,
+    "expected_map_asset_types": [
+      "damaged_error",
+      "restored_error",
+      "signed_improvement",
+      "masked_signed_improvement",
+      "boundary_signed_improvement",
+      "mask_overlay",
+      "boundary_overlay"
+    ],
+    "final_summary_scope": "candidate_difference_map_analysis"
+  },
+  "handoff_notes": {
+    "xai_scope": "spatial diagnostic explainability assets, not model-internal attribution",
+    "outcome_labels": "ranking and review flags only; not final trustworthiness scores",
+    "zero_control_rows": "rows with no masked region are expected to have masked metrics missing and label zero_control_no_mask"
+  },
+  "finalized_at_utc": "2026-08-07T21:39:48.245172+00:00",
+  "final_validation": {
+    "path": "outputs/23_stable_diffusion_difference_maps/validation/stable_diffusion_difference_maps_final_validation.csv",
+    "passed": true,
+    "checks_passed": 19,
+    "checks_total": 19
+  }
+}

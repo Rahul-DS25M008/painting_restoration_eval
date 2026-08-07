@@ -1,0 +1,16 @@
+check_name,observed_value,expected_value,passed,failure_message,validated_at_utc
+batch2_validation_passed,True,True,True,,2026-08-07T21:14:26.030705+00:00
+selected_case_count,11,11,True,,2026-08-07T21:14:26.030705+00:00
+selected_map_ids_unique,0,0,True,,2026-08-07T21:14:26.030705+00:00
+selected_candidate_ids_unique,0,0,True,,2026-08-07T21:14:26.030705+00:00
+linked_batch2_map_assets_exist,"{'damaged_error_map_path': 11, 'restored_error_map_path': 11, 'signed_improvement_map_path': 11, 'masked_signed_improvement_map_path': 11, 'boundary_signed_improvement_map_path': 11, 'mask_overlay_path': 11, 'boundary_overlay_path': 11}",all 11,True,,2026-08-07T21:14:26.030705+00:00
+panel_figures_exist,11,11,True,,2026-08-07T21:14:26.030705+00:00
+panel_filenames_short,16,<= 20,True,,2026-08-07T21:14:26.030705+00:00
+selected_cases_written,outputs/23_stable_diffusion_difference_maps/analysis/stable_diffusion_difference_map_selected_cases.csv,file exists,True,,2026-08-07T21:14:26.030705+00:00
+figure_manifest_written,outputs/23_stable_diffusion_difference_maps/figures/stable_diffusion_difference_map_figure_manifest.csv,file exists,True,,2026-08-07T21:14:26.030705+00:00
+required_columns_present,[],[],True,,
+row_count,11,11,True,Panel manifest row count mismatch.,
+unique_candidate_id,0,0,True,Duplicate candidate_id values found.,
+status_ok,0,0,True,Rows with non-ok status found.,
+figures_exist,11,11,True,Missing figure files: 0.,
+figures_nonempty,11,11,True,One or more panel figures are empty or missing.,

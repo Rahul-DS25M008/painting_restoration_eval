@@ -1,0 +1,20 @@
+check_name,observed_value,expected_value,passed,failure_message,validated_at_utc
+batch2_validation_passed,True,True,True,,2026-08-07T21:39:48.176325+00:00
+batch3_validation_passed,True,True,True,,2026-08-07T21:39:48.179363+00:00
+batch4_validation_passed,True,True,True,,2026-08-07T21:39:48.185090+00:00
+batch4_summary_row_count,945,945,True,,2026-08-07T21:39:48.185090+00:00
+batch2_audit_row_count,945,945,True,,2026-08-07T21:39:48.185090+00:00
+selected_case_count,11,11,True,,2026-08-07T21:39:48.185090+00:00
+map_asset_path_columns_present,"['damaged_error_map_path', 'restored_error_map_path', 'signed_improvement_map_path', 'masked_signed_improvement_map_path', 'boundary_signed_improvement_map_path', 'mask_overlay_path', 'boundary_overlay_path']",7 asset path columns,True,,2026-08-07T21:39:48.185090+00:00
+expected_map_asset_count,6615,6615,True,,2026-08-07T21:39:48.185090+00:00
+map_asset_files_exist,6615,6615,True,,2026-08-07T21:39:48.185090+00:00
+image_manifest_covers_audit_assets,6615,6615,True,,2026-08-07T21:39:48.185090+00:00
+map_asset_filenames_short,17,<= 80,True,,2026-08-07T21:39:48.185090+00:00
+selected_panel_files_exist,11,11,True,,2026-08-07T21:39:48.185090+00:00
+selected_panel_filenames_short,16,<= 20,True,,2026-08-07T21:39:48.185090+00:00
+artifact_index_missing_files,0,0,True,,2026-08-07T21:39:48.185090+00:00
+handoff_manifest_required_keys_present,"['contracts', 'counts', 'handoff_notes', 'notebook_id', 'notebook_label', 'outputs', 'schema_version', 'status']","['contracts', 'counts', 'handoff_notes', 'notebook_id', 'notebook_label', 'outputs', 'schema_version', 'status']",True,,2026-08-07T21:39:48.185090+00:00
+artifact_index_written,outputs/23_stable_diffusion_difference_maps/manifests/stable_diffusion_difference_maps_artifact_index.csv,file exists,True,,2026-08-07T21:39:48.185090+00:00
+handoff_manifest_written,outputs/23_stable_diffusion_difference_maps/manifests/stable_diffusion_difference_maps_handoff_manifest.json,file exists,True,,2026-08-07T21:39:48.185090+00:00
+stage_manifest_written,outputs/23_stable_diffusion_difference_maps/manifests/stable_diffusion_difference_maps_stage_manifest.json,file exists,True,,2026-08-07T21:39:48.185090+00:00
+final_validation_written,outputs/23_stable_diffusion_difference_maps/validation/stable_diffusion_difference_maps_final_validation.csv,file exists,True,,2026-08-07T21:39:48.194269+00:00

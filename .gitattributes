@@ -1,1 +1,7 @@
 outputs/reports/*.html filter=lfs diff=lfs merge=lfs -text
+outputs/**/*.png filter=lfs diff=lfs merge=lfs -text
+outputs/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+outputs/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+outputs/**/*.webp filter=lfs diff=lfs merge=lfs -text
+outputs/**/*.tif filter=lfs diff=lfs merge=lfs -text
+outputs/**/*.tiff filter=lfs diff=lfs merge=lfs -text
