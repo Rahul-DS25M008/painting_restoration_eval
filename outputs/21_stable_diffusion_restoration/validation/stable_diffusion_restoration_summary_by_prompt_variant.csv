@@ -1,0 +1,2 @@
+prompt_variant_id,candidates,source_cases,successful_candidates,error_candidates,mean_runtime_seconds,median_runtime_seconds
+p00_generic,465,465,465,0,9.0739188574196,10.342574800000875

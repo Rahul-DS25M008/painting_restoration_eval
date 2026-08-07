@@ -1,0 +1,7 @@
+item,value
+total_rows,480.0
+unique_source_cases,120.0
+unique_candidates,480.0
+successful_rows,480.0
+error_rows,0.0
+mean_runtime_seconds,8.658020690625047

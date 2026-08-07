@@ -1,0 +1,3 @@
+inference_mode,candidates,source_cases,successful_candidates,error_candidates,mean_runtime_seconds,median_runtime_seconds
+copied_zero_control,50,50,50,0,0.012610380000260192,0.0131436500014388
+model_inference,415,415,415,0,10.165642770361687,10.373919000005117

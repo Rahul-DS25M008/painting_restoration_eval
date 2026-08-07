@@ -1,0 +1,6 @@
+prompt_variant_id,prompt_template_name,prompt_variant_family,prompt_variant_order,rows,source_cases,validation_pass_rate,output_written_rate,mean_output_change_from_damaged,median_output_change_from_damaged,mean_max_abs_diff,mean_runtime_seconds,median_runtime_seconds,metadata_missing_rows
+p00_generic,generic_restoration,generic,0,120,120,1.0,1.0,6.4477696830843705,5.1117692170319735,192.34166666666667,9.302271027500199,10.395031400003063,0
+p01_style_period,style_period_context,contextual,1,120,120,1.0,1.0,6.439415547877183,4.961517333984375,191.89166666666668,8.656825085833164,9.467570399996475,120
+p02_artist,artist_context,contextual,2,120,120,1.0,1.0,6.369052048671393,4.918434708206743,192.875,8.651504545000353,9.453829950005456,0
+p03_artist_style_period,artist_style_period_context,contextual,3,120,120,1.0,1.0,6.3927360534667965,5.005071569372106,193.13333333333333,8.652047679166815,9.450466449998203,120
+p04_full_context,artwork_full_context,contextual,4,120,120,1.0,1.0,6.404465941440912,5.195994341814959,194.025,8.671705452499857,9.456566699998803,120
