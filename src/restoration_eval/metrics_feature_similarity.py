@@ -27,7 +27,8 @@ from PIL import Image
 
 
 FEATURE_SIMILARITY_MODULE_NAME = "restoration_eval.metrics_feature_similarity"
-FEATURE_SIMILARITY_METRIC_SCHEMA_VERSION = "2.0.0"
+FEATURE_SIMILARITY_METRIC_SCHEMA_VERSION = "2.1.0"
+FEATURE_SIMILARITY_EMBEDDING_SCHEMA_VERSION = "1.0.0"
 
 DEFAULT_CLIP_MODEL_NAME = "openai/clip-vit-base-patch32"
 DEFAULT_CLIP_MODEL_REVISION = "default"
@@ -60,6 +61,7 @@ def validate_feature_similarity_runtime_dependencies() -> pd.DataFrame:
         ("torch", "torch", True),
         ("torchvision", "torchvision", True),
         ("transformers", "transformers", True),
+        ("jmespath", "jmespath", True),
         ("safetensors", "safetensors", True),
         ("PIL", "Pillow", True),
     ):
@@ -380,6 +382,35 @@ def _to_bool(value: Any) -> bool:
     return bool(value)
 
 
+def _to_int(value: Any, default: int = 0) -> int:
+    if _is_null_like(value):
+        return default
+
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def infer_zero_control_flag(row: pd.Series) -> bool:
+    """Infer zero-control/empty-mask status from available metadata."""
+    explicit_flag = _to_bool(_row_value(row, "is_zero_control", False))
+    mask_type = str(
+        _row_value(row, "metric_mask_type", _row_value(row, "mask_type", ""))
+    ).strip().lower()
+    mask_id = str(
+        _row_value(row, "metric_mask_id", _row_value(row, "mask_id", ""))
+    ).strip().lower()
+    mask_area_pixels = _to_int(_row_value(row, "mask_area_pixels", 0), default=0)
+
+    return (
+        explicit_flag
+        or mask_type == "zero_control"
+        or mask_id.endswith("zero_control")
+        or mask_area_pixels <= 0
+    )
+
+
 def _safe_difference(left: float, right: float) -> float:
     if np.isnan(left) or np.isnan(right):
         return float("nan")
@@ -524,7 +555,61 @@ def compute_dinov2_embedding(
     return extract_feature_tensor(features, source_name="DINOv2")
 
 
-def compute_feature_similarities_for_region(
+def embedding_tensor_to_numpy(embedding: Any, dtype: str = "float32") -> np.ndarray:
+    """Convert a model embedding tensor to a flat CPU numpy vector."""
+    try:
+        torch = importlib.import_module("torch")
+    except ModuleNotFoundError:
+        torch = None
+
+    if torch is not None and isinstance(embedding, torch.Tensor):
+        vector = embedding.detach().float().cpu().numpy()
+    else:
+        vector = np.asarray(embedding, dtype=np.float32)
+
+    vector = np.asarray(vector).reshape(-1)
+
+    if dtype:
+        vector = vector.astype(dtype, copy=False)
+
+    return vector
+
+
+def normalize_embedding_arrays(
+    embedding_arrays: dict[str, np.ndarray],
+    dtype: str = "float32",
+) -> dict[str, np.ndarray]:
+    """Return consistently typed embedding arrays for stable NPZ output."""
+    return {
+        str(key): embedding_tensor_to_numpy(value, dtype=dtype)
+        for key, value in embedding_arrays.items()
+    }
+
+
+def save_feature_embedding_bundle(
+    embedding_arrays: dict[str, np.ndarray],
+    output_path: Path | str,
+    dtype: str = "float32",
+    compressed: bool = True,
+) -> Path:
+    """Save retained feature embeddings as a compressed NPZ bundle."""
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    normalized_arrays = normalize_embedding_arrays(
+        embedding_arrays,
+        dtype=dtype,
+    )
+
+    if compressed:
+        np.savez_compressed(output_path, **normalized_arrays)
+    else:
+        np.savez(output_path, **normalized_arrays)
+
+    return output_path
+
+
+def compute_feature_similarities_and_embeddings_for_region(
     clean_region: Image.Image,
     damaged_region: Image.Image,
     restored_region: Image.Image,
@@ -533,8 +618,9 @@ def compute_feature_similarities_for_region(
     dinov2_model: Any,
     device: Any,
     feature_input_size: int = DEFAULT_FEATURE_INPUT_SIZE,
-) -> dict[str, float]:
-    """Compute CLIP and DINOv2 similarities for one spatial region."""
+    embedding_dtype: str = "float32",
+) -> tuple[dict[str, float], dict[str, np.ndarray]]:
+    """Compute similarities and retain CLIP/DINOv2 embeddings for one region."""
     clean_region = resize_for_feature_model(clean_region, size=feature_input_size)
     damaged_region = resize_for_feature_model(damaged_region, size=feature_input_size)
     restored_region = resize_for_feature_model(restored_region, size=feature_input_size)
@@ -589,7 +675,7 @@ def compute_feature_similarities_for_region(
         restored_dinov2,
     )
 
-    return {
+    similarities = {
         "clip_damaged_similarity": clip_damaged_similarity,
         "clip_restored_similarity": clip_restored_similarity,
         "clip_similarity_improvement": _safe_difference(
@@ -617,6 +703,41 @@ def compute_feature_similarities_for_region(
             )
         ),
     }
+
+    embeddings = {
+        "clip__clean": embedding_tensor_to_numpy(clean_clip, dtype=embedding_dtype),
+        "clip__damaged": embedding_tensor_to_numpy(damaged_clip, dtype=embedding_dtype),
+        "clip__restored": embedding_tensor_to_numpy(restored_clip, dtype=embedding_dtype),
+        "dinov2__clean": embedding_tensor_to_numpy(clean_dinov2, dtype=embedding_dtype),
+        "dinov2__damaged": embedding_tensor_to_numpy(damaged_dinov2, dtype=embedding_dtype),
+        "dinov2__restored": embedding_tensor_to_numpy(restored_dinov2, dtype=embedding_dtype),
+    }
+
+    return similarities, embeddings
+
+
+def compute_feature_similarities_for_region(
+    clean_region: Image.Image,
+    damaged_region: Image.Image,
+    restored_region: Image.Image,
+    clip_model: Any,
+    clip_processor: Any,
+    dinov2_model: Any,
+    device: Any,
+    feature_input_size: int = DEFAULT_FEATURE_INPUT_SIZE,
+) -> dict[str, float]:
+    """Compute CLIP and DINOv2 similarities for one spatial region."""
+    similarities, _ = compute_feature_similarities_and_embeddings_for_region(
+        clean_region=clean_region,
+        damaged_region=damaged_region,
+        restored_region=restored_region,
+        clip_model=clip_model,
+        clip_processor=clip_processor,
+        dinov2_model=dinov2_model,
+        device=device,
+        feature_input_size=feature_input_size,
+    )
+    return similarities
 
 
 def _build_feature_record(
@@ -664,7 +785,8 @@ def _build_feature_record(
         "source_case_id_original",
         source_case_id,
     )
-    is_zero_control = _to_bool(_row_value(row, "is_zero_control", False))
+    is_zero_control = infer_zero_control_flag(row)
+    mask_area_pixels = _to_int(_row_value(row, "mask_area_pixels", 0), default=0)
     region_id = f"{metric_case_id}__{evaluation_region}"
     left, upper, right, lower = region_box
 
@@ -691,7 +813,7 @@ def _build_feature_record(
         "evaluation_region": evaluation_region,
         "region_pixel_count": int((right - left) * (lower - upper)),
         **_box_to_region_info(region_box),
-        "mask_area_pixels": int(_row_value(row, "mask_area_pixels", 0)),
+        "mask_area_pixels": mask_area_pixels,
         "is_zero_control": is_zero_control,
         "mask_threshold_rule": f"> {mask_binary_threshold}",
         "mask_bbox_margin": int(mask_bbox_margin),
@@ -720,6 +842,89 @@ def _build_feature_record(
         "status": status,
         "issue": issue,
     }
+
+
+def _make_embedding_npz_key(
+    feature_row_id: str,
+    model_family: str,
+    image_role: str,
+) -> str:
+    """Create an NPZ-safe key for one retained embedding vector."""
+    raw_key = f"{feature_row_id}__{model_family}__{image_role}"
+    return "".join(
+        character if character.isalnum() or character in {"_", "-", "."} else "_"
+        for character in raw_key
+    )
+
+
+def _embedding_id_for_role(record: dict[str, Any], image_role: str) -> str:
+    if image_role == "clean":
+        return str(record.get("clean_embedding_id", ""))
+    if image_role == "damaged":
+        return str(record.get("damaged_embedding_id", ""))
+    if image_role == "restored":
+        return str(record.get("restored_embedding_id", ""))
+    raise ValueError(f"Unsupported embedding image role: {image_role}")
+
+
+def _append_embedding_records(
+    embedding_manifest_records: list[dict[str, Any]],
+    embedding_arrays: dict[str, np.ndarray],
+    record: dict[str, Any],
+    region_embeddings: dict[str, np.ndarray],
+    embedding_dtype: str,
+) -> None:
+    """Append embedding vectors and metadata for one successful feature row."""
+    for model_family in ("clip", "dinov2"):
+        for image_role in ("clean", "damaged", "restored"):
+            source_key = f"{model_family}__{image_role}"
+            if source_key not in region_embeddings:
+                continue
+
+            npz_key = _make_embedding_npz_key(
+                str(record["feature_row_id"]),
+                model_family=model_family,
+                image_role=image_role,
+            )
+            vector = embedding_tensor_to_numpy(
+                region_embeddings[source_key],
+                dtype=embedding_dtype,
+            )
+            embedding_arrays[npz_key] = vector
+            embedding_manifest_records.append(
+                {
+                    "embedding_manifest_schema_version": FEATURE_SIMILARITY_EMBEDDING_SCHEMA_VERSION,
+                    "feature_row_id": record["feature_row_id"],
+                    "feature_case_id": record["feature_case_id"],
+                    "metric_case_id": record["metric_case_id"],
+                    "restoration_case_id": record["restoration_case_id"],
+                    "source_case_id": record["source_case_id"],
+                    "source_case_id_original": record["source_case_id_original"],
+                    "case_id": record["case_id"],
+                    "dataset_name": record["dataset_name"],
+                    "painting_id": record["painting_id"],
+                    "model_name": record["model_name"],
+                    "mask_id": record["mask_id"],
+                    "mask_type": record["mask_type"],
+                    "metric_mask_id": record["metric_mask_id"],
+                    "metric_mask_type": record["metric_mask_type"],
+                    "evaluation_region": record["evaluation_region"],
+                    "image_role": image_role,
+                    "model_family": model_family,
+                    "embedding_id": _embedding_id_for_role(record, image_role),
+                    "embedding_group_id": record["embedding_group_id"],
+                    "npz_key": npz_key,
+                    "vector_dim": int(vector.size),
+                    "dtype": str(vector.dtype),
+                    "feature_input_size": record["feature_input_size"],
+                    "clip_model_name": record["clip_model_name"],
+                    "clip_model_revision": record["clip_model_revision"],
+                    "dinov2_model_name": record["dinov2_model_name"],
+                    "dinov2_model_revision": record["dinov2_model_revision"],
+                    "device": record["device"],
+                    "status": record["status"],
+                }
+            )
 
 
 def expected_feature_similarity_rows_from_metadata(
@@ -774,8 +979,16 @@ def compute_feature_similarity_for_restorations(
     feature_input_size: int = DEFAULT_FEATURE_INPUT_SIZE,
     mask_binary_threshold: int = DEFAULT_MASK_BINARY_THRESHOLD,
     progress_every: int | None = 25,
-) -> pd.DataFrame:
-    """Compute CLIP and DINOv2 feature similarities for restoration outputs."""
+    return_embeddings: bool = False,
+    embedding_dtype: str = "float32",
+) -> pd.DataFrame | tuple[pd.DataFrame, pd.DataFrame, dict[str, np.ndarray]]:
+    """Compute CLIP and DINOv2 feature similarities for restoration outputs.
+
+    By default this returns the historical metrics dataframe. When
+    ``return_embeddings`` is true, it returns ``(metrics_df,
+    embedding_manifest_df, embedding_arrays)`` so notebooks can retain model
+    vectors in an NPZ bundle without storing high-dimensional values in CSV.
+    """
     required_columns = [
         "case_id",
         "painting_id",
@@ -822,6 +1035,8 @@ def compute_feature_similarity_for_restorations(
     )
 
     records: list[dict[str, Any]] = []
+    embedding_manifest_records: list[dict[str, Any]] = []
+    embedding_arrays: dict[str, np.ndarray] = {}
     total_cases = len(sorted_metadata)
     computation_start_time = time.perf_counter()
     device_name = str(device)
@@ -918,39 +1133,63 @@ def compute_feature_similarity_for_restorations(
                     region_box,
                     resize_to=feature_input_size,
                 )
-                similarities = compute_feature_similarities_for_region(
-                    clean_region=clean_region,
-                    damaged_region=damaged_region,
-                    restored_region=restored_region,
-                    clip_model=clip_model,
-                    clip_processor=clip_processor,
-                    dinov2_model=dinov2_model,
-                    device=device,
-                    feature_input_size=feature_input_size,
-                )
-                metric_runtime_seconds = time.perf_counter() - metric_start_time
-                row_records.append(
-                    _build_feature_record(
-                        row=row,
-                        evaluation_region=evaluation_region,
-                        region_box=region_box,
-                        similarities=similarities,
-                        clip_model_name=clip_model_name,
-                        clip_model_revision=clip_model_revision,
-                        dinov2_model_name=dinov2_model_name,
-                        dinov2_model_revision=dinov2_model_revision,
-                        feature_input_size=feature_input_size,
-                        mask_bbox_margin=mask_bbox_margin,
-                        mask_binary_threshold=mask_binary_threshold,
-                        device_name=device_name,
-                        torch_version=torch_version,
-                        torchvision_version=torchvision_version,
-                        transformers_version=transformers_version,
-                        metric_runtime_seconds=metric_runtime_seconds,
-                        case_runtime_seconds=0.0,
+                if return_embeddings:
+                    similarities, region_embeddings = (
+                        compute_feature_similarities_and_embeddings_for_region(
+                            clean_region=clean_region,
+                            damaged_region=damaged_region,
+                            restored_region=restored_region,
+                            clip_model=clip_model,
+                            clip_processor=clip_processor,
+                            dinov2_model=dinov2_model,
+                            device=device,
+                            feature_input_size=feature_input_size,
+                            embedding_dtype=embedding_dtype,
+                        )
                     )
-                )
+                else:
+                    similarities = compute_feature_similarities_for_region(
+                        clean_region=clean_region,
+                        damaged_region=damaged_region,
+                        restored_region=restored_region,
+                        clip_model=clip_model,
+                        clip_processor=clip_processor,
+                        dinov2_model=dinov2_model,
+                        device=device,
+                        feature_input_size=feature_input_size,
+                    )
+                    region_embeddings = {}
 
+                metric_runtime_seconds = time.perf_counter() - metric_start_time
+                feature_record = _build_feature_record(
+                    row=row,
+                    evaluation_region=evaluation_region,
+                    region_box=region_box,
+                    similarities=similarities,
+                    clip_model_name=clip_model_name,
+                    clip_model_revision=clip_model_revision,
+                    dinov2_model_name=dinov2_model_name,
+                    dinov2_model_revision=dinov2_model_revision,
+                    feature_input_size=feature_input_size,
+                    mask_bbox_margin=mask_bbox_margin,
+                    mask_binary_threshold=mask_binary_threshold,
+                    device_name=device_name,
+                    torch_version=torch_version,
+                    torchvision_version=torchvision_version,
+                    transformers_version=transformers_version,
+                    metric_runtime_seconds=metric_runtime_seconds,
+                    case_runtime_seconds=0.0,
+                )
+                row_records.append(feature_record)
+
+                if return_embeddings:
+                    _append_embedding_records(
+                        embedding_manifest_records=embedding_manifest_records,
+                        embedding_arrays=embedding_arrays,
+                        record=feature_record,
+                        region_embeddings=region_embeddings,
+                        embedding_dtype=embedding_dtype,
+                    )
             case_runtime_seconds = time.perf_counter() - case_start_time
             for record in row_records:
                 record["case_runtime_seconds"] = float(case_runtime_seconds)
@@ -963,6 +1202,10 @@ def compute_feature_similarity_for_restorations(
                 row.get("case_id", ""),
             )
             metric_case_id = row.get("metric_case_id", restoration_case_id)
+            mask_id = row.get("metric_mask_id", row.get("mask_id", ""))
+            mask_type = row.get("metric_mask_type", row.get("mask_type", ""))
+            mask_area_pixels = _to_int(row.get("mask_area_pixels", 0), default=0)
+            is_zero_control = infer_zero_control_flag(row)
             records.append(
                 {
                     "feature_row_id": f"{metric_case_id}__error__feature_similarity",
@@ -983,21 +1226,18 @@ def compute_feature_similarity_for_restorations(
                     "artist": row.get("artist", ""),
                     "style": row.get("style", row.get("style_or_period", "")),
                     "model_name": row.get("model_name", ""),
-                    "mask_id": row.get("metric_mask_id", row.get("mask_id", "")),
-                    "mask_type": row.get("metric_mask_type", row.get("mask_type", "")),
-                    "metric_mask_id": row.get("metric_mask_id", row.get("mask_id", "")),
-                    "metric_mask_type": row.get(
-                        "metric_mask_type",
-                        row.get("mask_type", ""),
-                    ),
+                    "mask_id": mask_id,
+                    "mask_type": mask_type,
+                    "metric_mask_id": mask_id,
+                    "metric_mask_type": mask_type,
                     "evaluation_region": "error",
                     "region_pixel_count": 0,
                     "region_x_min": None,
                     "region_y_min": None,
                     "region_x_max": None,
                     "region_y_max": None,
-                    "mask_area_pixels": row.get("mask_area_pixels", 0),
-                    "is_zero_control": row.get("is_zero_control", False),
+                    "mask_area_pixels": mask_area_pixels,
+                    "is_zero_control": is_zero_control,
                     "mask_threshold_rule": f"> {mask_binary_threshold}",
                     "mask_bbox_margin": int(mask_bbox_margin),
                     "feature_input_size": int(feature_input_size),
@@ -1052,7 +1292,53 @@ def compute_feature_similarity_for_restorations(
         print("  Status counts:")
         print(metrics_df["status"].value_counts(dropna=False).to_string())
 
+    if return_embeddings:
+        embedding_manifest_df = pd.DataFrame(embedding_manifest_records)
+        print(f"  Retained embeddings: {len(embedding_manifest_df)}")
+        return metrics_df, embedding_manifest_df, embedding_arrays
+
     return metrics_df
+
+
+def compute_feature_similarity_for_restorations_with_embeddings(
+    restoration_metadata: pd.DataFrame,
+    clip_model: Any,
+    clip_processor: Any,
+    dinov2_model: Any,
+    device: Any,
+    clip_model_name: str = DEFAULT_CLIP_MODEL_NAME,
+    clip_model_revision: str = DEFAULT_CLIP_MODEL_REVISION,
+    dinov2_model_name: str = DEFAULT_DINOV2_MODEL_NAME,
+    dinov2_model_revision: str = DEFAULT_DINOV2_MODEL_REVISION,
+    target_size: int | tuple[int, int] | None = 768,
+    mask_bbox_margin: int = DEFAULT_MASK_BBOX_MARGIN,
+    feature_input_size: int = DEFAULT_FEATURE_INPUT_SIZE,
+    mask_binary_threshold: int = DEFAULT_MASK_BINARY_THRESHOLD,
+    progress_every: int | None = 25,
+    embedding_dtype: str = "float32",
+) -> tuple[pd.DataFrame, pd.DataFrame, dict[str, np.ndarray]]:
+    """Compute feature similarities and return retained embedding artifacts."""
+    metrics_df, embedding_manifest_df, embedding_arrays = (
+        compute_feature_similarity_for_restorations(
+            restoration_metadata=restoration_metadata,
+            clip_model=clip_model,
+            clip_processor=clip_processor,
+            dinov2_model=dinov2_model,
+            device=device,
+            clip_model_name=clip_model_name,
+            clip_model_revision=clip_model_revision,
+            dinov2_model_name=dinov2_model_name,
+            dinov2_model_revision=dinov2_model_revision,
+            target_size=target_size,
+            mask_bbox_margin=mask_bbox_margin,
+            feature_input_size=feature_input_size,
+            mask_binary_threshold=mask_binary_threshold,
+            progress_every=progress_every,
+            return_embeddings=True,
+            embedding_dtype=embedding_dtype,
+        )
+    )
+    return metrics_df, embedding_manifest_df, embedding_arrays
 
 
 def validate_feature_similarity_metrics(
@@ -1276,6 +1562,153 @@ def validate_feature_similarity_metrics(
                         if mismatch_count == 0
                         else f"Improvement mismatch rows: {mismatch_count}."
                     ),
+                }
+            )
+
+    return pd.DataFrame(validation_rows)
+
+
+def validate_feature_embedding_manifest(
+    embedding_manifest_df: pd.DataFrame,
+    embedding_arrays: dict[str, np.ndarray] | None = None,
+    expected_feature_rows: int | None = None,
+    expected_vectors_per_feature_row: int = 6,
+) -> pd.DataFrame:
+    """Validate retained embedding manifest structure and optional NPZ keys."""
+    required_columns = [
+        "embedding_manifest_schema_version",
+        "feature_row_id",
+        "feature_case_id",
+        "metric_case_id",
+        "evaluation_region",
+        "image_role",
+        "model_family",
+        "embedding_id",
+        "embedding_group_id",
+        "npz_key",
+        "vector_dim",
+        "dtype",
+        "status",
+    ]
+    missing_columns = [
+        column
+        for column in required_columns
+        if column not in embedding_manifest_df.columns
+    ]
+
+    validation_rows: list[dict[str, Any]] = [
+        {
+            "check": "required_columns",
+            "passed": not missing_columns,
+            "detail": (
+                "All required embedding manifest columns present."
+                if not missing_columns
+                else f"Missing columns: {missing_columns}"
+            ),
+        }
+    ]
+
+    if expected_feature_rows is not None:
+        expected_embedding_rows = (
+            int(expected_feature_rows)
+            * int(expected_vectors_per_feature_row)
+        )
+        validation_rows.append(
+            {
+                "check": "embedding_row_count",
+                "passed": len(embedding_manifest_df) == expected_embedding_rows,
+                "detail": (
+                    f"Expected {expected_embedding_rows}, "
+                    f"found {len(embedding_manifest_df)}."
+                ),
+            }
+        )
+
+    if "npz_key" in embedding_manifest_df.columns:
+        duplicate_npz_keys = int(
+            embedding_manifest_df["npz_key"].duplicated(keep=False).sum()
+        )
+        validation_rows.append(
+            {
+                "check": "unique_npz_keys",
+                "passed": duplicate_npz_keys == 0,
+                "detail": f"Rows participating in duplicate npz_key values: {duplicate_npz_keys}.",
+            }
+        )
+
+    if {"model_family", "image_role"}.issubset(embedding_manifest_df.columns):
+        invalid_model_families = sorted(
+            set(embedding_manifest_df["model_family"].dropna().astype(str))
+            - {"clip", "dinov2"}
+        )
+        invalid_image_roles = sorted(
+            set(embedding_manifest_df["image_role"].dropna().astype(str))
+            - {"clean", "damaged", "restored"}
+        )
+        validation_rows.append(
+            {
+                "check": "known_embedding_axes",
+                "passed": not invalid_model_families and not invalid_image_roles,
+                "detail": (
+                    "All embedding rows use expected model/image-role axes."
+                    if not invalid_model_families and not invalid_image_roles
+                    else (
+                        f"Invalid model families: {invalid_model_families}; "
+                        f"invalid image roles: {invalid_image_roles}."
+                    )
+                ),
+            }
+        )
+
+    if "vector_dim" in embedding_manifest_df.columns:
+        vector_dims = pd.to_numeric(
+            embedding_manifest_df["vector_dim"],
+            errors="coerce",
+        )
+        invalid_dims = int((vector_dims.isna() | vector_dims.le(0)).sum())
+        validation_rows.append(
+            {
+                "check": "positive_vector_dims",
+                "passed": invalid_dims == 0,
+                "detail": f"Embedding rows with invalid vector_dim: {invalid_dims}.",
+            }
+        )
+
+    if embedding_arrays is not None and "npz_key" in embedding_manifest_df.columns:
+        expected_keys = set(embedding_manifest_df["npz_key"].dropna().astype(str))
+        actual_keys = set(str(key) for key in embedding_arrays.keys())
+        missing_keys = sorted(expected_keys - actual_keys)
+        extra_keys = sorted(actual_keys - expected_keys)
+        validation_rows.append(
+            {
+                "check": "manifest_npz_key_match",
+                "passed": not missing_keys and not extra_keys,
+                "detail": (
+                    "Embedding manifest keys match retained arrays."
+                    if not missing_keys and not extra_keys
+                    else (
+                        f"Missing keys: {missing_keys[:10]}; "
+                        f"extra keys: {extra_keys[:10]}."
+                    )
+                ),
+            }
+        )
+
+        if not missing_keys:
+            dimension_mismatches = 0
+            if "vector_dim" in embedding_manifest_df.columns:
+                for _, row in embedding_manifest_df.iterrows():
+                    npz_key = str(row["npz_key"])
+                    expected_dim = _to_int(row["vector_dim"], default=-1)
+                    actual_dim = int(np.asarray(embedding_arrays[npz_key]).reshape(-1).size)
+                    if expected_dim != actual_dim:
+                        dimension_mismatches += 1
+
+            validation_rows.append(
+                {
+                    "check": "manifest_vector_dims_match_arrays",
+                    "passed": dimension_mismatches == 0,
+                    "detail": f"Embedding dimension mismatches: {dimension_mismatches}.",
                 }
             )
 

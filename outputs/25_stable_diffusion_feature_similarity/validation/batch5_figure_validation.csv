@@ -1,0 +1,10 @@
+check_name,actual,expected,passed,failure_message,checked_at_utc
+batch4_validation_passed,True,True,True,,2026-08-08T18:17:26+00:00
+aggregate_plot_count,5,>= 5,True,,2026-08-08T18:17:26+00:00
+selected_panel_count,60,60,True,,2026-08-08T18:17:26+00:00
+figure_manifest_written,outputs/25_stable_diffusion_feature_similarity/figures/stable_diffusion_feature_similarity_figure_manifest.csv,file exists,True,,2026-08-08T18:17:26+00:00
+figure_manifest_not_empty,65,> 0,True,,2026-08-08T18:17:26+00:00
+figure_rows_all_ok,0,0,True,,2026-08-08T18:17:26+00:00
+figure_files_all_exist,0,0,True,,2026-08-08T18:17:26+00:00
+figure_files_nonempty,0,0,True,,2026-08-08T18:17:26+00:00
+figure_dimensions_present,65,65,True,,2026-08-08T18:17:26+00:00

@@ -1,0 +1,20 @@
+check_name,actual,expected,passed,failure_message,checked_at_utc
+batch1_validation_passed,True,True,True,,2026-08-08T17:44:18+00:00
+smoke_case_count,3,3,True,,2026-08-08T17:44:18+00:00
+smoke_case_roles_present,"{'empty_nonzero_mask': 1, 'nonzero_positive_mask': 1, 'zero_control': 1}","{'nonzero_positive_mask': 1, 'zero_control': 1, 'empty_nonzero_mask': 1}",True,,2026-08-08T17:44:18+00:00
+smoke_expected_feature_rows,7,7,True,,2026-08-08T17:44:18+00:00
+smoke_expected_region_counts,"{'full_image': 3, 'content_region': 3, 'mask_bbox_crop': 1}","{'full_image': 3, 'content_region': 3, 'mask_bbox_crop': 1}",True,,2026-08-08T17:44:18+00:00
+smoke_metrics_row_count,7,7,True,,2026-08-08T17:44:18+00:00
+smoke_metrics_region_counts,"{'full_image': 3, 'content_region': 3, 'mask_bbox_crop': 1}","{'full_image': 3, 'content_region': 3, 'mask_bbox_crop': 1}",True,,2026-08-08T17:44:18+00:00
+smoke_no_error_rows,0,0,True,,2026-08-08T17:44:18+00:00
+smoke_metrics_written,outputs/25_stable_diffusion_feature_similarity/validation/stable_diffusion_feature_similarity_smoke.csv,file exists,True,,2026-08-08T17:44:18+00:00
+helper_required_columns,All required columns present.,passed,True,,2026-08-08T17:44:18+00:00
+helper_row_count,"Expected 7, found 7.",passed,True,,2026-08-08T17:44:18+00:00
+helper_no_error_rows,Error rows: 0.,passed,True,,2026-08-08T17:44:18+00:00
+helper_unique_feature_keys,Rows participating in duplicate keys: 0.,passed,True,,2026-08-08T17:44:18+00:00
+helper_region_counts,All evaluation-region counts match expectations.,passed,True,,2026-08-08T17:44:18+00:00
+helper_region_policy,All feature rows use image-like evaluation regions.,passed,True,,2026-08-08T17:44:18+00:00
+helper_positive_region_pixel_counts,Successful rows with non-positive region size: 0.,passed,True,,2026-08-08T17:44:18+00:00
+helper_similarity_value_ranges,"All successful cosine similarities are finite and within [-1, 1].",passed,True,,2026-08-08T17:44:18+00:00
+helper_clip_improvement_direction,clip_similarity_improvement equals restored - damaged.,passed,True,,2026-08-08T17:44:18+00:00
+helper_dinov2_improvement_direction,dinov2_similarity_improvement equals restored - damaged.,passed,True,,2026-08-08T17:44:18+00:00

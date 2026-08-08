@@ -1,0 +1,24 @@
+check_name,actual,expected,passed,failure_message,checked_at_utc
+batch0_validation_passed,True,True,True,,2026-08-08T17:35:46+00:00
+upstream_input_cases_loaded,945,945,True,,2026-08-08T17:35:46+00:00
+required_columns_present,[],[],True,,2026-08-08T17:35:46+00:00
+recommended_columns_reported,[],reported only,True,,2026-08-08T17:35:46+00:00
+case_id_present_and_groupable,"{'missing_case_id_rows': 0, 'unique_case_ids': 465, 'duplicate_case_id_rows': 480}",case_id may repeat across candidates; candidate_id/restoration_case_id must be unique,True,,2026-08-08T17:35:46+00:00
+candidate_id_unique,0,0,True,,2026-08-08T17:35:46+00:00
+restoration_case_id_unique,0,0,True,,2026-08-08T17:35:46+00:00
+zero_control_count,94,94,True,,2026-08-08T17:35:46+00:00
+positive_mask_case_count,834,834,True,,2026-08-08T17:35:46+00:00
+empty_mask_case_count,111,111,True,,2026-08-08T17:35:46+00:00
+empty_nonzero_mask_case_count,17,17,True,,2026-08-08T17:35:46+00:00
+all_required_files_exist,0,0,True,,2026-08-08T17:35:46+00:00
+all_required_files_non_empty,0,0,True,,2026-08-08T17:35:46+00:00
+all_required_files_readable,0,0,True,,2026-08-08T17:35:46+00:00
+content_boxes_valid,0,0,True,,2026-08-08T17:35:46+00:00
+rgb_dimensions_match,0,0,True,,2026-08-08T17:35:46+00:00
+mask_dimensions_match_clean,0,0,True,,2026-08-08T17:35:46+00:00
+all_cases_valid_for_feature_similarity,0,0,True,,2026-08-08T17:35:46+00:00
+region_counts_match_contract,"{'full_image': 945, 'content_region': 945, 'mask_bbox_crop': 834}","{'full_image': 945, 'content_region': 945, 'mask_bbox_crop': 834}",True,,2026-08-08T17:35:46+00:00
+helper_region_counts_match_observed,"{'full_image': 945, 'content_region': 945, 'mask_bbox_crop': 834}","{'full_image': 945, 'content_region': 945, 'mask_bbox_crop': 834}",True,,2026-08-08T17:35:46+00:00
+expected_feature_rows_match_contract,2724,2724,True,,2026-08-08T17:35:46+00:00
+helper_expected_feature_rows_match_contract,2724,2724,True,,2026-08-08T17:35:46+00:00
+feature_input_cases_written,outputs/25_stable_diffusion_feature_similarity/tables/stable_diffusion_feature_input_cases.csv,file exists,True,,2026-08-08T17:35:46+00:00

@@ -1,0 +1,14 @@
+check_name,actual,expected,passed,failure_message,checked_at_utc
+batch3_validation_passed,True,True,True,,2026-08-08T18:03:21+00:00
+batch3_metrics_loaded,2724,2724,True,,2026-08-08T18:03:21+00:00
+batch4_no_metric_error_rows,0,0,True,,2026-08-08T18:03:21+00:00
+batch4_region_counts_match_contract,"{'full_image': 945, 'content_region': 945, 'mask_bbox_crop': 834}","{'full_image': 945, 'content_region': 945, 'mask_bbox_crop': 834}",True,,2026-08-08T18:03:21+00:00
+batch4_summary_written,outputs/25_stable_diffusion_feature_similarity/analysis/stable_diffusion_feature_similarity_summary.csv,file exists,True,,2026-08-08T18:03:21+00:00
+batch4_selected_cases_written,outputs/25_stable_diffusion_feature_similarity/analysis/stable_diffusion_feature_similarity_selected_cases.csv,file exists,True,,2026-08-08T18:03:21+00:00
+batch4_summary_not_empty,90,> 0,True,,2026-08-08T18:03:21+00:00
+batch4_selected_cases_not_empty,60,> 0,True,,2026-08-08T18:03:21+00:00
+batch4_required_summary_scopes_present,[],[],True,,2026-08-08T18:03:21+00:00
+batch4_overall_case_count_matches_contract,945,945,True,,2026-08-08T18:03:21+00:00
+batch4_direction_labels_present,"['both_improved', 'clip_improved_dinov2_not', 'neither_improved']",at least one direction label,True,,2026-08-08T18:03:21+00:00
+batch4_disagreement_diagnostics_present,2724,2724,True,,2026-08-08T18:03:21+00:00
+batch4_selection_reason_count,5,>= 3,True,,2026-08-08T18:03:21+00:00

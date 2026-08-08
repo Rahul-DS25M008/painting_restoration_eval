@@ -1,0 +1,24 @@
+check_name,actual,expected,passed,failure_message,checked_at_utc
+project_root_exists,.,directory exists,True,,2026-08-08T17:18:00+00:00
+output_root_created,outputs/25_stable_diffusion_feature_similarity,directory exists,True,,2026-08-08T17:18:00+00:00
+inventory_script_exists,tools/build_project_inventory.py,file exists,True,,2026-08-08T17:18:00+00:00
+inventory_refresh_completed,0,0,True,,2026-08-08T17:18:00+00:00
+project_inventory_exists,outputs/inventory/project_file_inventory.csv,file exists,True,,2026-08-08T17:18:00+00:00
+project_inventory_non_empty,10831,> 0,True,,2026-08-08T17:18:00+00:00
+batch0_inventory_snapshot_written,outputs/25_stable_diffusion_feature_similarity/inventory/batch0_project_inventory_snapshot.csv,file exists,True,,2026-08-08T17:18:00+00:00
+helper_required_api_present,[],[],True,,2026-08-08T17:18:00+00:00
+helper_metric_schema_version,2.1.0,>= 2.1.0,True,,2026-08-08T17:18:00+00:00
+helper_embedding_schema_version,1.0.0,1.0.0,True,,2026-08-08T17:18:00+00:00
+helper_regions_match_contract,"['content_region', 'full_image', 'mask_bbox_crop']","['content_region', 'full_image', 'mask_bbox_crop']",True,,2026-08-08T17:18:00+00:00
+helper_supports_return_embeddings,True,True,True,,2026-08-08T17:18:00+00:00
+helper_embedding_wrapper_signature,True,True,True,,2026-08-08T17:18:00+00:00
+upstream_input_cases_exists,outputs/24_stable_diffusion_lpips_metrics/tables/stable_diffusion_lpips_input_cases.csv,file exists,True,,2026-08-08T17:18:00+00:00
+upstream_input_cases_non_empty,945,> 0,True,,2026-08-08T17:18:00+00:00
+upstream_candidate_row_count,945,945,True,,2026-08-08T17:18:00+00:00
+upstream_zero_control_count,94,94,True,,2026-08-08T17:18:00+00:00
+upstream_final_validation_exists,outputs/24_stable_diffusion_lpips_metrics/validation/stable_diffusion_lpips_metrics_final_validation.csv,file exists,True,,2026-08-08T17:18:00+00:00
+upstream_final_validation_passed,True,True,True,,2026-08-08T17:18:00+00:00
+upstream_handoff_manifest_exists,outputs/24_stable_diffusion_lpips_metrics/manifests/stable_diffusion_lpips_metrics_handoff_manifest.json,file exists,True,,2026-08-08T17:18:00+00:00
+upstream_handoff_status_passed,passed,passed,True,,2026-08-08T17:18:00+00:00
+expected_feature_row_contract,2724,2724,True,,2026-08-08T17:18:00+00:00
+expected_embedding_row_contract,16344,16344,True,,2026-08-08T17:18:00+00:00
