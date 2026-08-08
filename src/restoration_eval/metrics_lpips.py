@@ -6,7 +6,7 @@ using image-like spatial regions only:
 
 - full_image;
 - content_region;
-- mask_bbox_crop for non-zero masks.
+- mask_bbox_crop for non-empty masks.
 
 Sparse masked pixels are intentionally excluded because LPIPS operates on
 ordered image patches, not unordered pixel selections.
@@ -18,7 +18,6 @@ import importlib
 import importlib.metadata
 import platform
 import time
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -28,7 +27,7 @@ from PIL import Image
 
 
 LPIPS_MODULE_NAME = "restoration_eval.metrics_lpips"
-LPIPS_METRIC_SCHEMA_VERSION = "2.0.0"
+LPIPS_METRIC_SCHEMA_VERSION = "2.1.0"
 
 DEFAULT_LPIPS_NET = "alex"
 DEFAULT_LPIPS_INPUT_SIZE = 256
@@ -41,6 +40,25 @@ LPIPS_EVALUATION_REGIONS = (
     "mask_bbox_crop",
 )
 
+SEED_AND_CANDIDATE_COLUMNS = (
+    "candidate_id",
+    "candidate_index",
+    "candidate_seed",
+    "effective_candidate_seed",
+    "prompt_policy_id",
+    "prompt_variant_id",
+    "prompt_template_name",
+    "prompt_variant_family",
+    "prompt_variant_order",
+    "prompt_ablation_subset",
+    "inference_mode",
+    "execution_device",
+    "scheduler_name",
+    "num_inference_steps",
+    "guidance_scale",
+    "strength",
+)
+
 
 def get_package_version(package_name: str) -> str:
     """Return an installed package version, or ``not-installed``."""
@@ -51,7 +69,7 @@ def get_package_version(package_name: str) -> str:
 
 
 def validate_lpips_runtime_dependencies() -> pd.DataFrame:
-    """Check the optional packages needed for LPIPS computation."""
+    """Check optional packages needed for LPIPS computation."""
     dependency_rows = []
 
     for module_name, package_name, required in (
@@ -68,7 +86,7 @@ def validate_lpips_runtime_dependencies() -> pd.DataFrame:
                 "version": get_package_version(package_name),
                 "required": required,
                 "installed": installed,
-                "passed": installed or not required,
+                "passed": bool(installed or not required),
             }
         )
 
@@ -324,7 +342,7 @@ def crop_image_region(
 def _is_null_like(value: Any) -> bool:
     try:
         return bool(pd.isna(value))
-    except TypeError:
+    except (TypeError, ValueError):
         return False
 
 
@@ -340,15 +358,21 @@ def _safe_difference(left: float, right: float) -> float:
     return float(left - right)
 
 
-def _box_to_region_info(
-    box: tuple[int, int, int, int],
-) -> dict[str, int]:
-    left, upper, right, lower = box
+def _normalise_bool(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    if _is_null_like(value):
+        return False
+    if isinstance(value, (int, np.integer)):
+        return bool(value)
+    return str(value).strip().lower() in {"true", "1", "yes", "y"}
+
+
+def _candidate_metadata(row: pd.Series) -> dict[str, Any]:
     return {
-        "region_x_min": int(left),
-        "region_y_min": int(upper),
-        "region_x_max": int(right),
-        "region_y_max": int(lower),
+        column: _row_value(row, column)
+        for column in SEED_AND_CANDIDATE_COLUMNS
+        if column in row.index
     }
 
 
@@ -376,7 +400,8 @@ def _build_lpips_record(
         "restoration_case_id",
         _row_value(row, "case_id"),
     )
-    metric_case_id = _row_value(row, "metric_case_id", restoration_case_id)
+    candidate_id = _row_value(row, "candidate_id", restoration_case_id)
+    metric_case_id = _row_value(row, "metric_case_id", candidate_id)
     dataset_name = _row_value(row, "dataset_name", "canonical")
     mask_type = _row_value(
         row,
@@ -394,15 +419,14 @@ def _build_lpips_record(
         "source_case_id_original",
         source_case_id,
     )
-    is_zero_control = bool(_row_value(row, "is_zero_control", False))
+    is_zero_control = _normalise_bool(_row_value(row, "is_zero_control", False))
     left, upper, right, lower = region_box
 
-    return {
-        "lpips_row_id": (
-            f"{metric_case_id}__{evaluation_region}__lpips"
-        ),
+    record = {
+        "lpips_row_id": f"{metric_case_id}__{evaluation_region}__lpips",
         "lpips_case_id": metric_case_id,
         "metric_case_id": metric_case_id,
+        "candidate_id": candidate_id,
         "restoration_case_id": restoration_case_id,
         "source_case_id": source_case_id,
         "source_case_id_original": source_case_id_original,
@@ -425,7 +449,7 @@ def _build_lpips_record(
         "region_y_min": int(upper),
         "region_x_max": int(right),
         "region_y_max": int(lower),
-        "mask_area_pixels": int(_row_value(row, "mask_area_pixels", 0)),
+        "mask_area_pixels": int(float(_row_value(row, "mask_area_pixels", 0) or 0)),
         "is_zero_control": is_zero_control,
         "mask_threshold_rule": f"> {mask_binary_threshold}",
         "mask_bbox_margin": int(mask_bbox_margin),
@@ -449,39 +473,41 @@ def _build_lpips_record(
         "issue": issue,
     }
 
+    record.update(_candidate_metadata(row))
+    return record
+
 
 def expected_lpips_rows_from_metadata(
     restoration_metadata: pd.DataFrame,
+    mask_binary_threshold: int = DEFAULT_MASK_BINARY_THRESHOLD,
 ) -> int:
     """Return expected LPIPS row count for the image-like region policy."""
-    if "mask_path" not in restoration_metadata.columns:
-        raise ValueError("Restoration metadata missing required column: mask_path")
-
-    nonzero_mask_cases = 0
-
-    for mask_path in restoration_metadata["mask_path"]:
-        if np.any(load_mask_bool(mask_path)):
-            nonzero_mask_cases += 1
-
-    return (
+    return int(
         len(restoration_metadata) * 2
-        + nonzero_mask_cases
+        + expected_lpips_region_counts_from_metadata(
+            restoration_metadata,
+            mask_binary_threshold=mask_binary_threshold,
+        )["mask_bbox_crop"]
     )
 
 
 def expected_lpips_region_counts_from_metadata(
     restoration_metadata: pd.DataFrame,
+    mask_binary_threshold: int = DEFAULT_MASK_BINARY_THRESHOLD,
 ) -> dict[str, int]:
     """Return expected row counts by LPIPS evaluation region."""
+    if "mask_path" not in restoration_metadata.columns:
+        raise ValueError("Restoration metadata missing required column: mask_path")
+
     nonzero_mask_cases = sum(
-        bool(np.any(load_mask_bool(mask_path)))
+        bool(np.any(load_mask_bool(mask_path, threshold=mask_binary_threshold)))
         for mask_path in restoration_metadata["mask_path"]
     )
 
     return {
-        "full_image": len(restoration_metadata),
-        "content_region": len(restoration_metadata),
-        "mask_bbox_crop": nonzero_mask_cases,
+        "full_image": int(len(restoration_metadata)),
+        "content_region": int(len(restoration_metadata)),
+        "mask_bbox_crop": int(nonzero_mask_cases),
     }
 
 
@@ -496,11 +522,7 @@ def compute_lpips_metrics_for_restorations(
     mask_binary_threshold: int = DEFAULT_MASK_BINARY_THRESHOLD,
     progress_every: int | None = 25,
 ) -> pd.DataFrame:
-    """Compute LPIPS metrics for restoration outputs.
-
-    Each case receives full-image and content-region rows. Non-zero masks also
-    receive a mask-bounding-box crop row.
-    """
+    """Compute LPIPS metrics for restoration outputs."""
     required_columns = [
         "case_id",
         "painting_id",
@@ -537,7 +559,14 @@ def compute_lpips_metrics_for_restorations(
 
     sort_columns = [
         column
-        for column in ("dataset_name", "painting_id", "mask_type", "case_id")
+        for column in (
+            "dataset_name",
+            "painting_id",
+            "mask_type",
+            "candidate_index",
+            "candidate_id",
+            "case_id",
+        )
         if column in restoration_metadata.columns
     ]
     sorted_metadata = (
@@ -683,11 +712,16 @@ def compute_lpips_metrics_for_restorations(
 
         except Exception as exc:
             case_runtime_seconds = time.perf_counter() - case_start_time
+            metric_case_id = row.get(
+                "metric_case_id",
+                row.get("candidate_id", row.get("case_id", "")),
+            )
             records.append(
                 {
-                    "lpips_row_id": f"{row.get('case_id', '')}__error__lpips",
-                    "lpips_case_id": row.get("metric_case_id", row.get("case_id", "")),
-                    "metric_case_id": row.get("metric_case_id", row.get("case_id", "")),
+                    "lpips_row_id": f"{metric_case_id}__error__lpips",
+                    "lpips_case_id": metric_case_id,
+                    "metric_case_id": metric_case_id,
+                    "candidate_id": row.get("candidate_id", ""),
                     "restoration_case_id": row.get(
                         "restoration_case_id",
                         row.get("case_id", ""),
@@ -699,10 +733,7 @@ def compute_lpips_metrics_for_restorations(
                     ),
                     "case_id": row.get("case_id", ""),
                     "dataset_name": row.get("dataset_name", "canonical"),
-                    "metric_applicability": row.get(
-                        "metric_applicability",
-                        "primary",
-                    ),
+                    "metric_applicability": row.get("metric_applicability", "primary"),
                     "painting_id": row.get("painting_id", ""),
                     "category": row.get("category", ""),
                     "title": row.get("title", ""),
@@ -744,6 +775,7 @@ def compute_lpips_metrics_for_restorations(
                     "lpips_package_version": lpips_package_version,
                     "status": "error",
                     "issue": f"{type(exc).__name__}: {exc}",
+                    **_candidate_metadata(row),
                 }
             )
 
@@ -785,6 +817,7 @@ def validate_lpips_metrics(
     required_columns = [
         "lpips_row_id",
         "lpips_case_id",
+        "candidate_id",
         "restoration_case_id",
         "dataset_name",
         "painting_id",
@@ -859,7 +892,7 @@ def validate_lpips_metrics(
         actual_region_counts = lpips_df["evaluation_region"].value_counts().to_dict()
         mismatches = {
             region: {
-                "expected": expected_count,
+                "expected": int(expected_count),
                 "actual": int(actual_region_counts.get(region, 0)),
             }
             for region, expected_count in expected_region_counts.items()
@@ -917,17 +950,34 @@ def validate_lpips_metrics(
             }
         )
 
+    numeric_columns = [
+        column
+        for column in ("damaged_lpips", "restored_lpips", "lpips_improvement")
+        if column in lpips_df.columns
+    ]
+    if numeric_columns and "status" in lpips_df.columns:
+        ok_numeric_df = (
+            lpips_df.loc[lpips_df["status"].eq("ok"), numeric_columns]
+            .apply(pd.to_numeric, errors="coerce")
+        )
+        finite_ok_values = bool(np.isfinite(ok_numeric_df.to_numpy(dtype=float)).all())
+        validation_rows.append(
+            {
+                "check": "finite_successful_lpips_values",
+                "passed": finite_ok_values,
+                "detail": "Successful LPIPS values are finite.",
+            }
+        )
+
     return pd.DataFrame(validation_rows)
 
 
 def summarize_lpips_metrics(
     lpips_df: pd.DataFrame,
     group_columns: list[str],
+    summary_scope: str | None = None,
 ) -> pd.DataFrame:
     """Summarize LPIPS metrics for notebook display and reports."""
-    if not group_columns:
-        raise ValueError("At least one group column is required.")
-
     missing_group_columns = [
         column
         for column in group_columns
@@ -942,24 +992,46 @@ def summarize_lpips_metrics(
     if "status" in summary_df.columns:
         summary_df = summary_df[summary_df["status"] != "error"].copy()
 
-    return (
-        summary_df
-        .groupby(group_columns, dropna=False, sort=False)
-        .agg(
-            rows=("lpips_row_id", "count"),
-            cases=("lpips_case_id", "nunique"),
-            median_damaged_lpips=("damaged_lpips", "median"),
-            median_restored_lpips=("restored_lpips", "median"),
-            median_lpips_improvement=("lpips_improvement", "median"),
-            mean_damaged_lpips=("damaged_lpips", "mean"),
-            mean_restored_lpips=("restored_lpips", "mean"),
-            mean_lpips_improvement=("lpips_improvement", "mean"),
-            improvement_rate=("lpips_improvement", lambda values: (values > 0).mean()),
-            median_region_pixel_count=("region_pixel_count", "median"),
+    if group_columns:
+        grouped = (
+            summary_df
+            .groupby(group_columns, dropna=False, sort=False)
+            .agg(
+                rows=("lpips_row_id", "count"),
+                cases=("lpips_case_id", "nunique"),
+                median_damaged_lpips=("damaged_lpips", "median"),
+                median_restored_lpips=("restored_lpips", "median"),
+                median_lpips_improvement=("lpips_improvement", "median"),
+                mean_damaged_lpips=("damaged_lpips", "mean"),
+                mean_restored_lpips=("restored_lpips", "mean"),
+                mean_lpips_improvement=("lpips_improvement", "mean"),
+                improvement_rate=("lpips_improvement", lambda values: (values > 0).mean()),
+                median_region_pixel_count=("region_pixel_count", "median"),
+            )
+            .reset_index()
         )
-        .reset_index()
-        .round(6)
-    )
+    else:
+        grouped = pd.DataFrame(
+            [
+                {
+                    "rows": int(len(summary_df)),
+                    "cases": int(summary_df["lpips_case_id"].nunique()),
+                    "median_damaged_lpips": summary_df["damaged_lpips"].median(),
+                    "median_restored_lpips": summary_df["restored_lpips"].median(),
+                    "median_lpips_improvement": summary_df["lpips_improvement"].median(),
+                    "mean_damaged_lpips": summary_df["damaged_lpips"].mean(),
+                    "mean_restored_lpips": summary_df["restored_lpips"].mean(),
+                    "mean_lpips_improvement": summary_df["lpips_improvement"].mean(),
+                    "improvement_rate": (summary_df["lpips_improvement"] > 0).mean(),
+                    "median_region_pixel_count": summary_df["region_pixel_count"].median(),
+                }
+            ]
+        )
+
+    if summary_scope is not None:
+        grouped.insert(0, "summary_scope", summary_scope)
+
+    return grouped.round(6)
 
 
 def rank_lpips_cases(

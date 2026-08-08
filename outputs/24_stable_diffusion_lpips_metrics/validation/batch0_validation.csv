@@ -1,0 +1,13 @@
+check_name,observed,expected,passed,failure_message
+inventory_refreshed,outputs/inventory/project_file_inventory.csv,file exists,True,
+inventory_snapshot_written,outputs/24_stable_diffusion_lpips_metrics/inventory/batch0_project_inventory_snapshot.csv,file exists,True,
+helper_api_complete,[],[],True,
+helper_region_policy,"('full_image', 'content_region', 'mask_bbox_crop')","('full_image', 'content_region', 'mask_bbox_crop')",True,
+runtime_dependencies_available,[],[],True,
+required_upstream_artifacts_exist,[],[],True,
+required_upstream_artifacts_in_inventory,[],[],True,
+upstream_row_counts_match,[],[],True,
+upstream_validation_files_passed,[],[],True,
+upstream_completion_markers_readable,[],[],True,
+primary_input_required_columns_present,[],[],True,
+seed_prompt_columns_present,[],[],True,

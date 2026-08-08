@@ -1,0 +1,19 @@
+check_name,observed,expected,passed,failure_message,validation_source
+batch2_validation_passed,outputs/24_stable_diffusion_lpips_metrics/validation/batch2_smoke_validation.csv,all checks passed,True,,notebook_batch3_manual_checks
+full_metrics_written,outputs/24_stable_diffusion_lpips_metrics/metrics/stable_diffusion_lpips_metrics.csv,file exists,True,,notebook_batch3_manual_checks
+input_case_count,945,945,True,,notebook_batch3_manual_checks
+full_row_count,2724,2724,True,,notebook_batch3_manual_checks
+all_input_cases_present,"{'missing_case_ids': [], 'extra_case_ids': []}","{'missing_case_ids': [], 'extra_case_ids': []}",True,,notebook_batch3_manual_checks
+per_case_region_counts_match,[],[],True,,notebook_batch3_manual_checks
+region_counts,"{'full_image': 945, 'content_region': 945, 'mask_bbox_crop': 834}","{'full_image': 945, 'content_region': 945, 'mask_bbox_crop': 834}",True,,notebook_batch3_manual_checks
+status_counts,{'ok': 2724},{'ok': 2724},True,,notebook_batch3_manual_checks
+zero_control_has_no_mask_bbox_crop,0,0,True,,notebook_batch3_manual_checks
+finite_full_lpips_values,True,True,True,,notebook_batch3_manual_checks
+required_columns,,,True,All required columns present.,metrics_lpips.validate_lpips_metrics
+row_count,,,True,"Expected 2724, found 2724.",metrics_lpips.validate_lpips_metrics
+no_error_rows,,,True,Error rows: 0.,metrics_lpips.validate_lpips_metrics
+unique_lpips_keys,,,True,Rows participating in duplicate keys: 0.,metrics_lpips.validate_lpips_metrics
+region_counts,,,True,All evaluation-region counts match expectations.,metrics_lpips.validate_lpips_metrics
+region_policy,,,True,All LPIPS rows use image-like evaluation regions.,metrics_lpips.validate_lpips_metrics
+positive_region_pixel_counts,,,True,Successful rows with non-positive region size: 0.,metrics_lpips.validate_lpips_metrics
+finite_successful_lpips_values,,,True,Successful LPIPS values are finite.,metrics_lpips.validate_lpips_metrics
