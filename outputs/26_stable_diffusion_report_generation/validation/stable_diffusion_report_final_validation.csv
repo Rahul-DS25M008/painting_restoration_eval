@@ -1,0 +1,17 @@
+check_name,severity,actual,expected,passed,failure_message,checked_at_utc
+output_directories_created,error,"""D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\26_stable_diffusion_report_generation\\validation | D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\26_stable_diffusion_report_generation\\manifests""","""directories exist""",True,,2026-08-10T11:29:09.183522+00:00
+final_html_report_exists,error,"""D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\26_stable_diffusion_report_generation\\reports\\stable_diffusion_report.html""","""file exists""",True,,2026-08-10T11:29:09.183522+00:00
+final_html_report_large_enough,error,2426923,""">= 25000""",True,,2026-08-10T11:29:09.183522+00:00
+required_html_sections_present,error,0,0,True,,2026-08-10T11:29:09.183522+00:00
+no_external_image_references,error,0,0,True,,2026-08-10T11:29:09.183522+00:00
+figure_manifest_exists,error,"""D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\26_stable_diffusion_report_generation\\figures\\stable_diffusion_report_figure_manifest.csv""","""file exists""",True,,2026-08-10T11:29:09.183522+00:00
+figure_manifest_nonempty,error,13,"""> 0""",True,,2026-08-10T11:29:09.183522+00:00
+figure_manifest_required_columns_present,error,[],[],True,,2026-08-10T11:29:09.183522+00:00
+all_manifest_figure_files_exist,error,13,13,True,,2026-08-10T11:29:09.183522+00:00
+all_manifest_figures_html_ready,error,true,true,True,,2026-08-10T11:29:09.183522+00:00
+embedded_image_count_matches_manifest,error,13,13,True,,2026-08-10T11:29:09.183522+00:00
+report_audit_exists,error,"""D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\26_stable_diffusion_report_generation\\metrics\\stable_diffusion_report_audit.csv""","""file exists""",True,,2026-08-10T11:29:09.186037+00:00
+report_audit_nonempty,error,945,"""> 0""",True,,2026-08-10T11:29:09.186037+00:00
+summary_nonempty,error,132,"""> 0""",True,,2026-08-10T11:29:09.186037+00:00
+selected_representatives_nonempty,error,7,"""> 0""",True,,2026-08-10T11:29:09.186037+00:00
+batch5_recorded_or_inferred_passed,error,"""passed""","""passed""",True,,2026-08-10T11:29:09.186037+00:00

@@ -1,0 +1,100 @@
+{
+  "notebook_id": "26_stable_diffusion_report_generation",
+  "notebook_title": "Stable Diffusion Report Generation",
+  "report_subject": "Stable Diffusion restoration report",
+  "report_version": "refactor_v1",
+  "stage": "batch6_final_validation_artifact_index_handoff",
+  "stage_status": "passed",
+  "updated_at_utc": "2026-08-10T11:29:09+00:00",
+  "output_root": "outputs/26_stable_diffusion_report_generation",
+  "batch0": {
+    "status": "passed",
+    "inventory_source": "outputs/inventory/project_file_inventory.csv",
+    "inventory_snapshot": "outputs/26_stable_diffusion_report_generation/inventory/batch0_project_inventory_snapshot.csv",
+    "validation": "outputs/26_stable_diffusion_report_generation/validation/batch0_validation.csv",
+    "inventory_source_rows": 10914,
+    "inventory_snapshot_rows": 10914,
+    "inventory_snapshot_columns": 23,
+    "stable_diffusion_related_rows": 7826,
+    "expected_upstream_inputs_detected_preview": 15,
+    "expected_upstream_inputs_total_preview": 15,
+    "checks_passed": 10,
+    "checks_total": 10
+  },
+  "planned_outputs": {
+    "batch0_inventory_snapshot": "outputs/26_stable_diffusion_report_generation/inventory/batch0_project_inventory_snapshot.csv",
+    "batch0_validation": "outputs/26_stable_diffusion_report_generation/validation/batch0_validation.csv",
+    "final_artifact_index": "outputs/26_stable_diffusion_report_generation/manifests/stable_diffusion_report_artifact_index.csv",
+    "final_handoff_manifest": "outputs/26_stable_diffusion_report_generation/manifests/stable_diffusion_report_handoff_manifest.json",
+    "stage_manifest": "outputs/26_stable_diffusion_report_generation/manifests/stable_diffusion_report_stage_manifest.json"
+  },
+  "batch2": {
+    "status": "passed",
+    "report_audit": "outputs/26_stable_diffusion_report_generation/metrics/stable_diffusion_report_audit.csv",
+    "anchor_key_columns": [
+      "candidate_id"
+    ],
+    "source_restoration_rows": 945,
+    "candidate_rows": 945,
+    "output_rows": 945,
+    "output_columns": 414,
+    "metric_columns": 71,
+    "difference_map_columns": 59,
+    "prompt_columns": 18,
+    "seed_columns": 15,
+    "runtime_columns": 6,
+    "memory_columns": 6
+  },
+  "batch3": {
+    "status": "passed",
+    "summary_csv": "outputs/26_stable_diffusion_report_generation/analysis/stable_diffusion_report_summary.csv",
+    "representative_candidates_csv": "outputs/26_stable_diffusion_report_generation/analysis/stable_diffusion_report_representative_candidates.csv",
+    "summary_rows": 132,
+    "representative_policy_rows": 8,
+    "selected_representatives": 7,
+    "metric_columns_used": 24,
+    "difference_map_columns_used": 60
+  },
+  "batch4": {
+    "status": "passed",
+    "figure_manifest_csv": "outputs/26_stable_diffusion_report_generation/figures/stable_diffusion_report_figure_manifest.csv",
+    "figure_manifest_rows": 13,
+    "aggregate_plot_count": 6,
+    "candidate_panel_count": 7,
+    "selected_representative_count": 7,
+    "html_ready_assets": 13,
+    "restored_candidate_panels": 7,
+    "damaged_input_panels": 7,
+    "clean_reference_panels": 7,
+    "difference_map_candidate_panels": 7,
+    "metric_columns_used": 24,
+    "path_columns_scanned": 98
+  },
+  "batch5": {
+    "status": "passed",
+    "html_report": "outputs/26_stable_diffusion_report_generation/reports/stable_diffusion_report.html",
+    "html_report_size_bytes": 2426923,
+    "embedded_png_images": 13,
+    "expected_manifest_images": 13,
+    "candidate_audit_rows": 945,
+    "selected_representatives": 7,
+    "metric_columns_used": 48,
+    "aggregate_plots": 6,
+    "representative_candidate_panels": 7
+  },
+  "batch6": {
+    "status": "passed",
+    "final_validation_csv": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\26_stable_diffusion_report_generation\\validation\\stable_diffusion_report_final_validation.csv",
+    "artifact_index_csv": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\26_stable_diffusion_report_generation\\manifests\\stable_diffusion_report_artifact_index.csv",
+    "handoff_manifest_json": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\26_stable_diffusion_report_generation\\manifests\\stable_diffusion_report_handoff_manifest.json",
+    "stage_manifest_json": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\26_stable_diffusion_report_generation\\manifests\\stable_diffusion_report_stage_manifest.json",
+    "standalone_html_report": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\26_stable_diffusion_report_generation\\reports\\stable_diffusion_report.html",
+    "validation_checks": 16,
+    "validation_checks_passed": 16,
+    "html_report_size_bytes": 2426923,
+    "embedded_png_images": 13,
+    "expected_manifest_images": 13,
+    "candidate_audit_rows": 945,
+    "selected_representatives": 7
+  }
+}
