@@ -1,0 +1,82 @@
+config_schema_version: "preprocessing_config.v1"
+
+dataset:
+  dataset_id: "painting_restoration_eval"
+  dataset_version: "1.0.0"
+  dataset_scope: "controlled_50"
+  execution_profile: "controlled_50"
+  input_schema_version: "artworks.v1"
+  output_schema_version: "preprocessed_images.v1"
+  audit_schema_version: "preprocessing_audit.v1"
+
+inputs:
+  artworks_path: "outputs/01_dataset_verification/data/artworks.csv"
+  artifacts_path: "outputs/01_dataset_verification/manifests/artifacts.csv"
+  run_manifest_path: "outputs/01_dataset_verification/manifests/run_manifest.json"
+  required_artifact_key: "dataset.artworks"
+  required_upstream_run_status: "completed"
+
+output:
+  notebook_stem: "02_image_preprocessing"
+  image_directory: "images/clean"
+  image_filename_template: "{painting_id}.png"
+  table_path: "data/preprocessed_images.csv"
+  audit_path: "metrics/preprocessing_audit.csv"
+  preview_path: "figures/preprocessing_preview.png"
+
+processing:
+  method: "aspect_ratio_resize_median_rgb_pad"
+  version: "2.0.0"
+  target_width: 768
+  target_height: 768
+  output_mode: "RGB"
+  output_format: "PNG"
+  output_extension: ".png"
+  interpolation: "lanczos"
+  dimension_rounding: "round_half_up"
+  preserve_aspect_ratio: true
+  crop_content: false
+  padding_method: "median_rgb_source_pixels"
+  odd_padding_remainder: "right_bottom"
+  coordinate_convention: "xyxy_exclusive_zero_based"
+  png_compress_level: 6
+  png_optimize: false
+  strip_output_metadata: true
+
+orientation:
+  expected_exif_orientation: 1
+  non_default_action: "block"
+  policy_label: "require_exif_orientation_1_no_transform"
+
+color:
+  missing_icc_action: "assume_srgb_no_pixel_conversion"
+  embedded_srgb_action: "preserve_pixels_strip_profile"
+  non_srgb_action: "block"
+  accepted_profile_description_tokens:
+    - "srgb"
+
+expected:
+  accepted_input_count: 50
+  processed_output_count: 50
+  audit_row_count: 45
+  categories:
+    - "portrait_figure"
+    - "landscape_natural"
+    - "architecture_structured"
+    - "abstraction_surrealism"
+    - "high_texture_brushwork"
+
+smoke:
+  group_by: "category"
+  items_per_group: 1
+  sort_by:
+    - "category"
+    - "painting_id"
+
+preview:
+  group_by: "category"
+  items_per_group: 1
+  sort_by:
+    - "category"
+    - "painting_id"
+  figure_dpi: 160

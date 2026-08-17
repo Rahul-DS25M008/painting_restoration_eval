@@ -93,6 +93,30 @@ DATASET_AUDIT_COLUMNS = (
     "details",
 )
 
+PREPROCESSED_IMAGES_COLUMNS = (
+    "dataset_id", "dataset_version", "dataset_scope", "processed_image_id",
+    "painting_id", "dataset_sort_index", "source_path", "source_sha256",
+    "processed_filename", "processed_path", "original_width",
+    "original_height", "width", "height", "mode", "format", "size_bytes",
+    "sha256", "resize_scale", "resized_width", "resized_height",
+    "interpolation", "pad_left", "pad_top", "pad_right", "pad_bottom",
+    "padding_method", "padding_color_r", "padding_color_g",
+    "padding_color_b", "content_x_min", "content_y_min", "content_x_max",
+    "content_y_max", "content_width", "content_height",
+    "content_area_pixels", "padding_area_pixels", "canvas_area_pixels",
+    "content_area_fraction", "padding_area_fraction", "source_orientation",
+    "orientation_policy", "input_icc_profile_status", "color_space_policy",
+    "output_icc_profile_present", "coordinate_convention",
+    "preprocessing_method", "preprocessing_version", "status",
+)
+
+PREPROCESSING_AUDIT_COLUMNS = (
+    "audit_row_id", "dataset_id", "dataset_version", "dataset_scope",
+    "audit_section", "group_field", "group_value", "metric_name",
+    "metric_value", "metric_unit", "numerator", "denominator", "status",
+    "details",
+)
+
 @dataclass(frozen=True)
 class DataFrameSchema:
     """Declarative contract for one persisted or in-memory table."""
@@ -306,12 +330,39 @@ DATASET_AUDIT_SCHEMA = DataFrameSchema(
         "audit_section", "metric_name", "status",
     ),
 )
+PREPROCESSED_IMAGES_SCHEMA = DataFrameSchema(
+    name="preprocessed_images",
+    version="preprocessed_images.v1",
+    required_columns=PREPROCESSED_IMAGES_COLUMNS,
+    primary_key=("processed_image_id",),
+    non_nullable=PREPROCESSED_IMAGES_COLUMNS,
+    allowed_values={
+        "mode": frozenset({"RGB"}),
+        "format": frozenset({"PNG"}),
+        "coordinate_convention": frozenset({"xyxy_exclusive_zero_based"}),
+        "status": frozenset({"passed"}),
+    },
+)
+
+PREPROCESSING_AUDIT_SCHEMA = DataFrameSchema(
+    name="preprocessing_audit",
+    version="preprocessing_audit.v1",
+    required_columns=PREPROCESSING_AUDIT_COLUMNS,
+    primary_key=("audit_row_id",),
+    non_nullable=(
+        "audit_row_id", "dataset_id", "dataset_version", "dataset_scope",
+        "audit_section", "metric_name", "status",
+    ),
+)
+
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
     VALIDATION_CHECKS_SCHEMA.name: VALIDATION_CHECKS_SCHEMA,
     RAW_ARTWORK_METADATA_SCHEMA.name: RAW_ARTWORK_METADATA_SCHEMA,
     ARTWORKS_SCHEMA.name: ARTWORKS_SCHEMA,
     DATASET_AUDIT_SCHEMA.name: DATASET_AUDIT_SCHEMA,
+    PREPROCESSED_IMAGES_SCHEMA.name: PREPROCESSED_IMAGES_SCHEMA,
+    PREPROCESSING_AUDIT_SCHEMA.name: PREPROCESSING_AUDIT_SCHEMA,
 }
 
 
