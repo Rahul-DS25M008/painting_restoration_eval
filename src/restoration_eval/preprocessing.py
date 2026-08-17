@@ -142,6 +142,7 @@ def validate_preprocessing_config(config: Mapping[str, Any]) -> list[str]:
         "artifacts_path",
         "run_manifest_path",
         "required_artifact_key",
+        "required_registry_key",
         "required_upstream_run_status",
     ):
         if not str(inputs.get(key, "")).strip():

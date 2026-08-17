@@ -48,6 +48,11 @@ class PreprocessingTests(unittest.TestCase):
     def test_configuration_and_notebook01_handoff_contracts(self) -> None:
         self.assertEqual(validate_preprocessing_config(self.config), [])
         self.assertEqual(validate_artworks_handoff(self.artworks, self.config), [])
+        self.assertEqual(self.config["inputs"]["required_artifact_key"], "artworks")
+        self.assertEqual(
+            self.config["inputs"]["required_registry_key"],
+            "dataset.artworks",
+        )
         self.assertEqual(self.config["expected"]["accepted_input_count"], 50)
         self.assertEqual(
             self.config["expected"]["audit_row_count"],

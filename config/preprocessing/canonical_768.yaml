@@ -13,7 +13,8 @@ inputs:
   artworks_path: "outputs/01_dataset_verification/data/artworks.csv"
   artifacts_path: "outputs/01_dataset_verification/manifests/artifacts.csv"
   run_manifest_path: "outputs/01_dataset_verification/manifests/run_manifest.json"
-  required_artifact_key: "dataset.artworks"
+  required_artifact_key: "artworks"
+  required_registry_key: "dataset.artworks"
   required_upstream_run_status: "completed"
 
 output:

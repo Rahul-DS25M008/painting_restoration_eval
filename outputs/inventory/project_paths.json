@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-17T12:14:31.021595Z",
+  "updated_at_utc": "2026-08-17T21:54:53.429938Z",
   "artifacts": [
     {
       "artifact_key": "dataset.artworks",
@@ -59,6 +59,62 @@
       "checksum": "a477a1dfd3df7d109889356bc32df0c97c64d350264419977157af5a26072e2a"
     },
     {
+      "artifact_key": "preprocessing.audit",
+      "producer_notebook": "02_image_preprocessing",
+      "relative_path": "outputs/02_image_preprocessing/metrics/preprocessing_audit.csv",
+      "artifact_type": "audit_table",
+      "artifact_role": "audit_reporting",
+      "schema_version": "preprocessing_audit.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": 45,
+      "file_count": 1,
+      "checksum": "7da20017f1e456c6cdcccc2776c552cadad15d30b4734480cefb1cc8ad72c249"
+    },
+    {
+      "artifact_key": "preprocessing.clean_images",
+      "producer_notebook": "02_image_preprocessing",
+      "relative_path": "outputs/02_image_preprocessing/images/clean",
+      "artifact_type": "image_collection",
+      "artifact_role": "primary_downstream",
+      "schema_version": "clean_image_collection.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": 50,
+      "file_count": 50,
+      "checksum": "287a4a24bcbc1ff6c2aca29e0900cf592ac67ceed920bd997a8dcf531bad347a"
+    },
+    {
+      "artifact_key": "preprocessing.figure_preview",
+      "producer_notebook": "02_image_preprocessing",
+      "relative_path": "outputs/02_image_preprocessing/figures/preprocessing_preview.png",
+      "artifact_type": "figure",
+      "artifact_role": "qa_reporting",
+      "schema_version": "figure.preprocessing_preview.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "96e040125fac9c56f05f974d12c8a17c31f06c07532cc9e643c6619f7955c5f2"
+    },
+    {
+      "artifact_key": "preprocessing.geometry",
+      "producer_notebook": "02_image_preprocessing",
+      "relative_path": "outputs/02_image_preprocessing/data/preprocessed_images.csv",
+      "artifact_type": "dataset_table",
+      "artifact_role": "primary_downstream",
+      "schema_version": "preprocessed_images.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": 50,
+      "file_count": 1,
+      "checksum": "b6f29c2c71450403042b1bb6c522ea6e50942a940428918b89dac466e0b7152f"
+    },
+    {
       "artifact_key": "validation.01_dataset_verification",
       "producer_notebook": "01_dataset_verification",
       "relative_path": "outputs/01_dataset_verification/validation/checks.csv",
@@ -71,6 +127,20 @@
       "row_count": 50,
       "file_count": 1,
       "checksum": "64f185a96efdbc9694d054aa05d6abca6536e5955805a37a1b1c29a93f905e86"
+    },
+    {
+      "artifact_key": "validation.02_image_preprocessing",
+      "producer_notebook": "02_image_preprocessing",
+      "relative_path": "outputs/02_image_preprocessing/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": 50,
+      "file_count": 1,
+      "checksum": "bce1145d62d392e3bbdaee4ffb4855cfc503acbd2a115a9ddd2ca7ed48737513"
     }
   ]
 }
