@@ -1,0 +1,145 @@
+config_schema_version: "dataset_config.v1"
+
+dataset:
+  dataset_id: "painting_restoration_eval"
+  dataset_version: "1.0.0"
+  dataset_scope: "controlled_50"
+  execution_profile: "controlled_50"
+  metadata_schema_version: "raw_artwork_metadata.v1"
+  artworks_schema_version: "artworks.v1"
+  audit_schema_version: "dataset_audit.v1"
+
+paths:
+  metadata_path: "data/raw/metadata/metadata_50.csv"
+  raw_image_dir: "data/raw/images"
+
+expected:
+  total_paintings: 50
+  referenced_image_count: 50
+  audit_row_count: 101
+  categories:
+    portrait_figure: 10
+    landscape_natural: 10
+    architecture_structured: 10
+    abstraction_surrealism: 10
+    high_texture_brushwork: 10
+  sources:
+    The Metropolitan Museum of Art: 30
+    Rijksmuseum: 10
+    Art Institute of Chicago: 10
+
+metadata:
+  required_columns:
+    - painting_id
+    - category
+    - title
+    - artist
+    - date
+    - style_or_period
+    - medium
+    - source
+    - source_url
+    - license
+    - filename
+    - original_width
+    - original_height
+    - selection_reason
+    - visual_complexity_note
+    - status
+    - notes
+  required_nonblank_columns:
+    - painting_id
+    - category
+    - title
+    - artist
+    - source
+    - source_url
+    - license
+    - filename
+    - original_width
+    - original_height
+    - selection_reason
+    - visual_complexity_note
+    - status
+  descriptive_completeness_fields:
+    - title
+    - artist
+    - date
+    - style_or_period
+    - medium
+    - source
+    - source_url
+    - license
+  optional_descriptive_fields:
+    - date
+    - style_or_period
+    - medium
+  prompt_metadata_fields:
+    - artist
+    - date
+    - style_or_period
+    - medium
+
+validation:
+  painting_id_regex: '^p\d{3}$'
+  filename_must_match_painting_id: true
+  accepted_selection_statuses:
+    - selected
+  accepted_source_license_pairs:
+    - source: "The Metropolitan Museum of Art"
+      license: "Public Domain / Open Access"
+      rights_status: "public_domain_open_access"
+    - source: "Rijksmuseum"
+      license: "Public domain"
+      rights_status: "public_domain"
+    - source: "Art Institute of Chicago"
+      license: "CC0 Public Domain Designation"
+      rights_status: "cc0_public_domain"
+  source_url_schemes:
+    - http
+    - https
+  allowed_extensions:
+    - .jpg
+    - .jpeg
+  allowed_image_formats:
+    - JPEG
+  allowed_image_modes:
+    - RGB
+  minimum_width: 768
+  minimum_height: 768
+  exact_duplicate_algorithm: "sha256"
+  near_duplicate:
+    method: "dhash64"
+    method_version: "dhash64.v1"
+    hash_size: 8
+    hamming_distance_threshold: 5
+    apply_exif_orientation: true
+
+preview:
+  group_by: "category"
+  items_per_group: 2
+  sort_by:
+    - category
+    - painting_id
+
+bias_notes:
+  - bias_id: "institutional_source_concentration"
+    bias_category: "source_representation"
+    statement: "The controlled subset contains works from only three institutions, with 60 percent sourced from The Metropolitan Museum of Art."
+    evidence_basis: "Configured and observed source counts."
+  - bias_id: "open_access_selection_bias"
+    bias_category: "acquisition"
+    statement: "Restricting acquisition to public-domain or open-access material favors institutions and works with suitable digitization and rights metadata."
+    evidence_basis: "Dataset selection rule and accepted licence mappings."
+  - bias_id: "purposeful_visual_category_sampling"
+    bias_category: "sampling"
+    statement: "The five balanced visual categories are a purposive evaluation design and are not a population-representative sample of painting history."
+    evidence_basis: "Configured category quotas and selection reasons."
+  - bias_id: "metadata_availability_imbalance"
+    bias_category: "metadata"
+    statement: "Optional date, style, and medium metadata is concentrated in portrait and high-texture records and is absent from three categories."
+    evidence_basis: "Observed field completeness by category."
+  - bias_id: "historical_geographic_representation_unresolved"
+    bias_category: "historical_geographic_representation"
+    statement: "Historical and geographic representation cannot be quantified reliably from the current fields and requires explicit enrichment before population-level claims."
+    evidence_basis: "Missing optional period metadata and absence of a normalized geographic field."

@@ -1,5 +1,76 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-17T09:29:41.518257Z",
-  "artifacts": []
+  "updated_at_utc": "2026-08-17T12:14:31.021595Z",
+  "artifacts": [
+    {
+      "artifact_key": "dataset.artworks",
+      "producer_notebook": "01_dataset_verification",
+      "relative_path": "outputs/01_dataset_verification/data/artworks.csv",
+      "artifact_type": "dataset_table",
+      "artifact_role": "primary_downstream",
+      "schema_version": "artworks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": 50,
+      "file_count": 1,
+      "checksum": "e6b9ed016a433edc227f5fe96422106956677138774001aa772d951dc401a5dd"
+    },
+    {
+      "artifact_key": "dataset.audit",
+      "producer_notebook": "01_dataset_verification",
+      "relative_path": "outputs/01_dataset_verification/metrics/dataset_audit.csv",
+      "artifact_type": "audit_table",
+      "artifact_role": "audit_reporting",
+      "schema_version": "dataset_audit.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": 101,
+      "file_count": 1,
+      "checksum": "8051e7e58cd7777f6e740ba14e39723ad97cb94d47d991de8f98cd113d4a2ac1"
+    },
+    {
+      "artifact_key": "dataset.figure_distribution",
+      "producer_notebook": "01_dataset_verification",
+      "relative_path": "outputs/01_dataset_verification/figures/dataset_distribution.png",
+      "artifact_type": "figure",
+      "artifact_role": "reporting",
+      "schema_version": "figure.dataset_distribution.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "fd733c61ca27b5ce7acc49189f07d8c3c84e58a60396d7681ecb11f214f93d01"
+    },
+    {
+      "artifact_key": "dataset.figure_preview",
+      "producer_notebook": "01_dataset_verification",
+      "relative_path": "outputs/01_dataset_verification/figures/dataset_preview.png",
+      "artifact_type": "figure",
+      "artifact_role": "qa_reporting",
+      "schema_version": "figure.dataset_preview.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "a477a1dfd3df7d109889356bc32df0c97c64d350264419977157af5a26072e2a"
+    },
+    {
+      "artifact_key": "validation.01_dataset_verification",
+      "producer_notebook": "01_dataset_verification",
+      "relative_path": "outputs/01_dataset_verification/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": 50,
+      "file_count": 1,
+      "checksum": "64f185a96efdbc9694d054aa05d6abca6536e5955805a37a1b1c29a93f905e86"
+    }
+  ]
 }

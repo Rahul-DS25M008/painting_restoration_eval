@@ -66,6 +66,32 @@ VALIDATION_CHECK_COLUMNS = (
     "details",
 )
 
+RAW_ARTWORK_METADATA_COLUMNS = (
+    "painting_id", "category", "title", "artist", "date",
+    "style_or_period", "medium", "source", "source_url", "license",
+    "filename", "original_width", "original_height", "selection_reason",
+    "visual_complexity_note", "status", "notes",
+)
+
+ARTWORKS_COLUMNS = (
+    "dataset_id", "dataset_version", "dataset_scope", "painting_id",
+    "dataset_sort_index", "title", "artist", "date_or_period",
+    "style_or_period", "category", "medium", "source", "source_url",
+    "license", "rights_status", "source_selection_status", "raw_image_path",
+    "raw_filename", "raw_width", "raw_height", "raw_mode", "raw_format",
+    "raw_size_bytes", "raw_sha256", "raw_dhash64", "raw_exif_orientation",
+    "raw_icc_profile_present", "raw_icc_profile_description",
+    "metadata_completeness_pct", "prompt_metadata_field_count",
+    "prompt_metadata_status", "selection_reason", "visual_complexity_note",
+    "source_notes", "acceptance_status", "exclusion_reason",
+)
+
+DATASET_AUDIT_COLUMNS = (
+    "audit_row_id", "dataset_id", "dataset_version", "dataset_scope",
+    "audit_section", "group_field", "group_value", "metric_name",
+    "metric_value", "metric_unit", "numerator", "denominator", "status",
+    "details",
+)
 
 @dataclass(frozen=True)
 class DataFrameSchema:
@@ -238,9 +264,54 @@ VALIDATION_CHECKS_SCHEMA = DataFrameSchema(
     },
 )
 
+RAW_ARTWORK_METADATA_SCHEMA = DataFrameSchema(
+    name="raw_artwork_metadata",
+    version="raw_artwork_metadata.v1",
+    required_columns=RAW_ARTWORK_METADATA_COLUMNS,
+    primary_key=("painting_id",),
+    non_nullable=(
+        "painting_id", "category", "title", "artist", "source",
+        "source_url", "license", "filename", "original_width",
+        "original_height", "selection_reason", "visual_complexity_note",
+        "status",
+    ),
+)
+
+ARTWORKS_SCHEMA = DataFrameSchema(
+    name="artworks",
+    version="artworks.v1",
+    required_columns=ARTWORKS_COLUMNS,
+    primary_key=("painting_id",),
+    non_nullable=(
+        "dataset_id", "dataset_version", "dataset_scope", "painting_id",
+        "dataset_sort_index", "title", "artist", "category", "source",
+        "source_url", "license", "rights_status", "source_selection_status",
+        "raw_image_path", "raw_filename", "metadata_completeness_pct",
+        "prompt_metadata_field_count", "prompt_metadata_status",
+        "selection_reason", "visual_complexity_note", "acceptance_status",
+    ),
+    allowed_values={
+        "prompt_metadata_status": frozenset({"none", "partial", "complete"}),
+        "acceptance_status": frozenset({"accepted", "excluded"}),
+    },
+)
+
+DATASET_AUDIT_SCHEMA = DataFrameSchema(
+    name="dataset_audit",
+    version="dataset_audit.v1",
+    required_columns=DATASET_AUDIT_COLUMNS,
+    primary_key=("audit_row_id",),
+    non_nullable=(
+        "audit_row_id", "dataset_id", "dataset_version", "dataset_scope",
+        "audit_section", "metric_name", "status",
+    ),
+)
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
     VALIDATION_CHECKS_SCHEMA.name: VALIDATION_CHECKS_SCHEMA,
+    RAW_ARTWORK_METADATA_SCHEMA.name: RAW_ARTWORK_METADATA_SCHEMA,
+    ARTWORKS_SCHEMA.name: ARTWORKS_SCHEMA,
+    DATASET_AUDIT_SCHEMA.name: DATASET_AUDIT_SCHEMA,
 }
 
 
