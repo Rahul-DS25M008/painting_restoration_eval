@@ -1,8 +1,3 @@
-check_name,observed,expected,passed,failure_message
-batch4_analysis_has_rows,410,> 0,True,
-batch4_all_summary_sections_created,"[""by_category"", ""by_category_style_or_period"", ""by_damage_family"", ""by_dataset_damage_family"", ""by_dataset_name"", ""by_mask_damage_family"", ""by_mask_type"", ""by_style_or_period"", ""overall""]","[""overall"", ""by_mask_type"", ""by_category"", ""by_style_or_period"", ""by_dataset_name"", ""by_damage_family"", ""by_dataset_damage_family"", ""by_mask_damage_family"", ""by_category_style_or_period""]",True,
-batch4_compact_summaries_have_rows,67,> 0,True,
-batch4_runtime_summary_has_both_models,"[""lama"", ""opencv_telea""]","[""lama"", ""opencv_telea""]",True,
-batch4_failure_patterns_have_both_models,"[""lama"", ""opencv_telea""]","[""lama"", ""opencv_telea""]",True,
-batch4_category_column_created,5,>= 1,True,
-batch4_style_or_period_column_created,14,>= 1,True,
+version https://git-lfs.github.com/spec/v1
+oid sha256:89e81e565d5424354fe06859142965ffa336e093794167ff1f9e11b5ea72b64a
+size 917

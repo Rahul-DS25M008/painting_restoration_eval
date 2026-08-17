@@ -1,13 +1,3 @@
-check_name,observed,expected,passed,failure_message
-batch4_validation_passed,outputs/24_stable_diffusion_lpips_metrics/validation/batch4_analysis_validation.csv,all checks passed,True,
-figure_directory_exists,outputs/24_stable_diffusion_lpips_metrics/figures/lpips_diagnostics,directory exists,True,
-figure_manifest_written,outputs/24_stable_diffusion_lpips_metrics/figures/stable_diffusion_lpips_figure_manifest.csv,file exists,True,
-figure_manifest_non_empty,19,> 0,True,
-required_manifest_columns_present,[],[],True,
-figure_ids_unique,0,0,True,
-aggregate_figures_created,5,>= 4,True,
-selected_case_panels_created,14,>= 14,True,
-all_selected_groups_have_panel,[],[],True,
-selected_case_panels_map_to_batch4,[],[],True,
-all_manifest_paths_exist,19,19,True,
-all_manifest_paths_nonempty,19,19,True,
+version https://git-lfs.github.com/spec/v1
+oid sha256:041540ca104f91f491bde74820370c4ac6189c08923de17f99dafdcda8202180
+size 811

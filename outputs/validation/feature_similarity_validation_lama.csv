@@ -1,20 +1,3 @@
-check_name,observed,expected,passed,issue,validation_source
-raw_feature_metrics_file_saved,True,True,True,,batch_3
-raw_feature_metrics_nonempty,1175,> 0,True,,batch_3
-raw_feature_row_count,1175,1175,True,,batch_3
-raw_feature_region_counts,"{'full_image': 410, 'content_region': 410, 'mask_bbox_crop': 355}","{'full_image': 410, 'content_region': 410, 'mask_bbox_crop': 355}",True,,batch_3
-raw_feature_status_has_no_errors,{'ok': 1175},no error rows,True,,batch_3
-raw_required_columns_present,[],[],True,,batch_3
-raw_improvement_values_finite,True,True,True,,batch_3
-embedding_ids_retained,True,True,True,,batch_3
-helper_validation_passed,True,True,True,,batch_3
-required_columns,see_issue,pass,True,All required columns present.,helper
-row_count,see_issue,pass,True,"Expected 1175, found 1175.",helper
-no_error_rows,see_issue,pass,True,Error rows: 0.,helper
-unique_feature_keys,see_issue,pass,True,Rows participating in duplicate keys: 0.,helper
-region_counts,see_issue,pass,True,All evaluation-region counts match expectations.,helper
-region_policy,see_issue,pass,True,All feature rows use image-like evaluation regions.,helper
-positive_region_pixel_counts,see_issue,pass,True,Successful rows with non-positive region size: 0.,helper
-similarity_value_ranges,see_issue,pass,True,"All successful cosine similarities are finite and within [-1, 1].",helper
-clip_improvement_direction,see_issue,pass,True,clip_similarity_improvement equals restored - damaged.,helper
-dinov2_improvement_direction,see_issue,pass,True,dinov2_similarity_improvement equals restored - damaged.,helper
+version https://git-lfs.github.com/spec/v1
+oid sha256:2c76103053bf8c84789c65d234a391d166a8b4013ce3ef0dfca5e2b6e0838515
+size 1596

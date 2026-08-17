@@ -1,10 +1,3 @@
-check_name,observed,expected,passed,failure_message
-batch0_project_root_detected,D:\Masters\FH\Thesis\painting-restoration-eval,project root containing src/restoration_eval and tools/build_project_inventory.py,True,
-batch0_output_root_is_correct_notebook_folder,outputs/22_stable_diffusion_classical_metrics,outputs/22_stable_diffusion_classical_metrics,True,
-batch0_inventory_csv_exists,outputs/inventory/project_file_inventory.csv,file exists,True,
-batch0_inventory_snapshot_written,outputs/22_stable_diffusion_classical_metrics/inventory/batch0_project_inventory_snapshot.csv,file exists,True,
-batch0_helper_version,2.1.0,2.1.0,True,
-batch0_helper_region_policy,"('full_image', 'content_region', 'masked_region', 'mask_bbox_crop', 'boundary_region', 'outside_mask_region')","('full_image', 'content_region', 'masked_region', 'mask_bbox_crop', 'boundary_region', 'outside_mask_region')",True,
-batch0_helper_candidate_metadata_passthrough,[],[],True,
-batch0_required_upstream_artifacts_exist,[],[],True,
-batch0_stage_manifest_written,outputs/22_stable_diffusion_classical_metrics/manifests/stable_diffusion_classical_metrics_stage_manifest.json,file exists,True,
+version https://git-lfs.github.com/spec/v1
+oid sha256:7299881208643d539b08caf0e0e82c16c7ba907f881a9010338c34a2f028ef6c
+size 1174

@@ -1,13 +1,3 @@
-check_name,observed,expected,passed,failure_message
-batch7_prompt_scope_nonempty,600,> 0,True,
-batch7_has_generic_baseline_rows_for_subset,120,>= 1,True,
-batch7_has_contextual_prompt_rows,480,>= 1,True,
-batch7_comparison_pairs_nonempty,480,> 0,True,
-batch7_prompt_summary_written,outputs/21_stable_diffusion_restoration/analysis/stable_diffusion_prompt_comparison_summary.csv,file exists,True,
-batch7_selected_cases_written,outputs/21_stable_diffusion_restoration/analysis/stable_diffusion_prompt_ablation_selected_cases.csv,file exists,True,
-batch7_selected_cases_nonempty,12,> 0,True,
-batch7_visual_panels_written,12,12,True,
-batch7_figure_manifest_written,outputs/21_stable_diffusion_restoration/manifests/stable_diffusion_prompt_ablation_figure_manifest.csv,file exists,True,
-batch7_manifest_files_exist,[],[],True,
-batch7_html_report_written,outputs/21_stable_diffusion_restoration/reports/stable_diffusion_prompt_ablation_report.html,file exists,True,
-batch7_html_report_nonempty,38489,> 1000 bytes,True,
+version https://git-lfs.github.com/spec/v1
+oid sha256:bc627c8dfc4a65bbe3ab8437b97a25a460c887b5aac62b062da1f8f7645f9bdd
+size 1024

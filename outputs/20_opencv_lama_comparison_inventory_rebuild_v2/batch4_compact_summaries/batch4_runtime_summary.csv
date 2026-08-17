@@ -1,17 +1,3 @@
-model_name,summary_mask_type,summary_damage_family,case_count,runtime_available_cases,runtime_missing_cases,runtime_mean_seconds,runtime_median_seconds,runtime_p95_seconds,runtime_max_seconds,deterministic_failure_cases,top_failure_patterns
-lama,loss_large,canonical,50,50,0,1.4609382327775366,1.4609382327775366,1.4609382327775366,1.4609382327775366,0,success_or_not_flagged=50
-lama,loss_small,canonical,50,50,0,1.4609382327775366,1.4609382327775366,1.4609382327775366,1.4609382327775366,0,success_or_not_flagged=50
-lama,mixed_damage,canonical,50,50,0,1.4609382327775366,1.4609382327775366,1.4609382327775366,1.4609382327775366,0,success_or_not_flagged=50
-lama,scratch_thin,canonical,50,50,0,1.4609382327775366,1.4609382327775366,1.4609382327775366,1.4609382327775366,0,success_or_not_flagged=50
-lama,unknown_mask,damage_size,35,35,0,1.4609382327775366,1.4609382327775366,1.4609382327775366,1.4609382327775366,0,success_or_not_flagged=35
-lama,unknown_mask,mask_robustness,75,75,0,1.4609382327775366,1.4609382327775366,1.4609382327775366,1.4609382327775366,0,success_or_not_flagged=75
-lama,unknown_mask,synthetic_degradation,50,50,0,1.4609382327775366,1.4609382327775366,1.4609382327775366,1.4609382327775366,0,success_or_not_flagged=50
-lama,zero_control,zero_control,50,50,0,0.0,0.0,0.0,0.0,50,issue:zero_control_copied_without_model_inference=50
-opencv_telea,loss_large,canonical,50,50,0,0.49209094200166875,0.4829880500037689,0.6516852150147315,0.6760536000365391,0,success_or_not_flagged=50
-opencv_telea,loss_small,canonical,50,50,0,0.4214571239973884,0.4068963000026997,0.5475252650066977,0.5930532999918796,0,success_or_not_flagged=50
-opencv_telea,mixed_damage,canonical,50,50,0,0.48003924599615855,0.473158799984958,0.6051824049762217,0.6422706000157632,0,success_or_not_flagged=50
-opencv_telea,scratch_thin,canonical,50,50,0,0.41579477400402537,0.4108263500093017,0.5493201749923173,0.5956975999870338,0,success_or_not_flagged=50
-opencv_telea,unknown_mask,damage_size,35,35,0,0.48361631713840847,0.4591642000013962,0.6539714200131128,0.7205304999952205,0,success_or_not_flagged=35
-opencv_telea,unknown_mask,mask_robustness,75,75,0,0.46901023466683306,0.4458800000138581,0.6674837500031572,0.7105145999812521,0,success_or_not_flagged=75
-opencv_telea,unknown_mask,synthetic_degradation,50,50,0,0.5077187120029703,0.4590377499698661,0.7492800300242378,1.1984656999702563,0,success_or_not_flagged=50
-opencv_telea,zero_control,zero_control,50,50,0,0.39170120599213987,0.38879514997825027,0.5181875600013882,0.5527208999847062,0,success_or_not_flagged=50
+version https://git-lfs.github.com/spec/v1
+oid sha256:f57dee9441d78c74c0281c33d6566b4c3ccc2c0d87988c722b4ae3e105a848f5
+size 2574

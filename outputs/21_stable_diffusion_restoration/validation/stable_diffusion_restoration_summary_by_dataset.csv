@@ -1,5 +1,3 @@
-dataset_name,candidates,source_cases,successful_candidates,error_candidates,mean_runtime_seconds,median_runtime_seconds
-canonical,250,250,250,0,7.948059593600221,9.796928800002206
-damage_size_sensitivity,35,35,35,0,10.434072765715038,10.425516200004495
-mask_robustness,75,75,75,0,10.459665402667403,10.44968260001042
-synthetic_degradation,105,105,105,0,10.311332555237875,10.355498999997508
+version https://git-lfs.github.com/spec/v1
+oid sha256:36d2a46fb4096bc744f4980405b67964fedc0e73efe821b9648752ae82cbcc3a
+size 396

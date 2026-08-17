@@ -1,9 +1,3 @@
-metric,value
-Processed paintings,50
-Configured mask types,5
-Expected masks,250
-Metadata rows,250
-PNG files,250
-Unique case IDs,250
-Unique mask IDs,250
-Unique filenames,250
+version https://git-lfs.github.com/spec/v1
+oid sha256:260f1b41572f5098bc63cd9f58ed1eb40ec7c7b38efdb0ffb19bac7bf7a01e40
+size 181

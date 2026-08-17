@@ -1,24 +1,3 @@
-dataset_name,mask_type,evaluation_region,rows,cases,median_damaged_lpips,median_restored_lpips,median_lpips_improvement,mean_damaged_lpips,mean_restored_lpips,mean_lpips_improvement,improvement_rate,median_region_pixel_count
-canonical,loss_large,full_image,50,50,0.160147,0.049922,0.113187,0.167426,0.048077,0.119349,1.0,589824.0
-canonical,loss_large,content_region,50,50,0.196355,0.064041,0.13739,0.207005,0.062582,0.144423,1.0,446208.0
-canonical,loss_large,mask_bbox_crop,50,50,0.560892,0.222329,0.329846,0.553725,0.21381,0.339915,1.0,109561.0
-canonical,loss_small,full_image,50,50,0.138883,0.005977,0.129848,0.150301,0.006418,0.143882,1.0,589824.0
-canonical,loss_small,content_region,50,50,0.162714,0.007695,0.15484,0.179524,0.008858,0.170666,1.0,446208.0
-canonical,loss_small,mask_bbox_crop,50,50,0.19852,0.010257,0.183368,0.195694,0.011834,0.18386,1.0,360000.0
-canonical,mixed_damage,full_image,50,50,0.330681,0.019307,0.311908,0.323036,0.018766,0.30427,1.0,589824.0
-canonical,mixed_damage,content_region,50,50,0.38365,0.02556,0.353851,0.370493,0.024578,0.345914,1.0,446208.0
-canonical,mixed_damage,mask_bbox_crop,50,50,0.333898,0.020656,0.31682,0.327529,0.019484,0.308045,1.0,589824.0
-canonical,scratch_thin,full_image,50,50,0.266257,0.001236,0.265683,0.260849,0.001798,0.259051,1.0,589824.0
-canonical,scratch_thin,content_region,50,50,0.295204,0.001342,0.289784,0.294863,0.002382,0.29248,1.0,446208.0
-canonical,scratch_thin,mask_bbox_crop,50,50,0.27177,0.001373,0.270451,0.270624,0.002064,0.26856,1.0,589824.0
-canonical,zero_control,full_image,50,50,0.0,0.0,0.0,0.0,0.0,0.0,0.0,589824.0
-canonical,zero_control,content_region,50,50,0.0,0.0,0.0,0.0,0.0,0.0,0.0,446208.0
-damage_size,,full_image,35,35,0.120067,0.02421,0.093615,0.138317,0.03224,0.106078,1.0,589824.0
-damage_size,,content_region,35,35,0.158148,0.032889,0.114342,0.171084,0.043498,0.127586,1.0,433152.0
-damage_size,,mask_bbox_crop,35,35,0.634861,0.218724,0.404265,0.625275,0.212885,0.41239,1.0,71289.0
-mask_robustness,,full_image,75,75,0.176548,0.005844,0.167265,0.196569,0.018124,0.178445,1.0,589824.0
-mask_robustness,,content_region,75,75,0.221993,0.008312,0.20104,0.230284,0.023462,0.206822,1.0,433152.0
-mask_robustness,,mask_bbox_crop,75,75,0.311139,0.00983,0.264808,0.34384,0.069721,0.274119,1.0,351649.0
-synthetic_degradation,,full_image,50,50,0.002532,0.007721,-0.002239,0.010535,0.041365,-0.03083,0.0,589824.0
-synthetic_degradation,,content_region,50,50,0.003703,0.010805,-0.003124,0.012246,0.05421,-0.041963,0.0,433152.0
-synthetic_degradation,,mask_bbox_crop,45,45,0.007215,0.053171,-0.028777,0.017429,0.097893,-0.080465,0.0,318096.0
+version https://git-lfs.github.com/spec/v1
+oid sha256:3c30e870f172f8802ada8be0c13308c56842d613ca6ea7a6117bebc023062d55
+size 2635

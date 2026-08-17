@@ -1,17 +1,3 @@
-check_name,observed,expected,passed,issue,validation_source
-smoke_metrics_file_saved,True,True,True,,batch_2
-smoke_metrics_nonempty,5,> 0,True,,batch_2
-smoke_row_count,5,5,True,,batch_2
-smoke_region_counts,"{'full_image': 2, 'content_region': 2, 'mask_bbox_crop': 1}","{'full_image': 2, 'content_region': 2, 'mask_bbox_crop': 1}",True,,batch_2
-smoke_no_error_rows,0,0,True,,batch_2
-smoke_helper_validation_passed,True,True,True,,batch_2
-required_columns,see_issue,pass,True,All required columns present.,helper
-row_count,see_issue,pass,True,"Expected 5, found 5.",helper
-no_error_rows,see_issue,pass,True,Error rows: 0.,helper
-unique_feature_keys,see_issue,pass,True,Rows participating in duplicate keys: 0.,helper
-region_counts,see_issue,pass,True,All evaluation-region counts match expectations.,helper
-region_policy,see_issue,pass,True,All feature rows use image-like evaluation regions.,helper
-positive_region_pixel_counts,see_issue,pass,True,Successful rows with non-positive region size: 0.,helper
-similarity_value_ranges,see_issue,pass,True,"All successful cosine similarities are finite and within [-1, 1].",helper
-clip_improvement_direction,see_issue,pass,True,clip_similarity_improvement equals restored - damaged.,helper
-dinov2_improvement_direction,see_issue,pass,True,dinov2_similarity_improvement equals restored - damaged.,helper
+version https://git-lfs.github.com/spec/v1
+oid sha256:42ab86b9961d0c7c6e1d29787726813ce4af4481fd722e828618791881a16334
+size 1362

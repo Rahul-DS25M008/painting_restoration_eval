@@ -1,26 +1,3 @@
-check_name,observed_value,expected_value,passed,failure_message,validated_at_utc
-inventory_script_exists,tools/build_project_inventory.py,file exists,True,,2026-08-07T20:18:08.846616+00:00
-inventory_refresh_completed,0,0,True,,2026-08-07T20:18:08.846616+00:00
-global_inventory_csv_exists,outputs/inventory/project_file_inventory.csv,file exists,True,,2026-08-07T20:18:08.848636+00:00
-global_inventory_not_empty,4150,> 0,True,,2026-08-07T20:18:08.848636+00:00
-batch0_inventory_snapshot_written,outputs/23_stable_diffusion_difference_maps/inventory/batch0_project_inventory_snapshot.csv,file exists,True,,2026-08-07T20:18:08.848636+00:00
-helper_module_imported,restoration_eval.error_maps,restoration_eval.error_maps,True,,2026-08-07T20:18:08.848636+00:00
-helper_version_present,3.0.0,non-empty version string,True,,2026-08-07T20:18:08.848636+00:00
-helper_required_api_present,[],[],True,,2026-08-07T20:18:08.848636+00:00
-helper_default_asset_types_match_contract,"['damaged_error', 'restored_error', 'signed_improvement', 'masked_signed_improvement', 'boundary_signed_improvement', 'mask_overlay', 'boundary_overlay']","['damaged_error', 'restored_error', 'signed_improvement', 'masked_signed_improvement', 'boundary_signed_improvement', 'mask_overlay', 'boundary_overlay']",True,,2026-08-07T20:18:08.848636+00:00
-helper_asset_specs_cover_default_assets,"['boundary_overlay', 'boundary_signed_improvement', 'damaged_error', 'mask_overlay', 'masked_signed_improvement', 'restored_error', 'signed_improvement']","['boundary_overlay', 'boundary_signed_improvement', 'damaged_error', 'mask_overlay', 'masked_signed_improvement', 'restored_error', 'signed_improvement']",True,,2026-08-07T20:18:08.848636+00:00
-upstream_notebook22_handoff_manifest_exists,outputs/22_stable_diffusion_classical_metrics/manifests/stable_diffusion_classical_metrics_handoff_manifest.json,file exists,True,,2026-08-07T20:18:08.851727+00:00
-upstream_notebook22_handoff_manifest_present_in_inventory,outputs/22_stable_diffusion_classical_metrics/manifests/stable_diffusion_classical_metrics_handoff_manifest.json,present in refreshed inventory,True,,2026-08-07T20:18:08.851727+00:00
-upstream_notebook22_final_validation_exists,outputs/22_stable_diffusion_classical_metrics/validation/stable_diffusion_classical_metrics_final_validation.csv,file exists,True,,2026-08-07T20:18:08.851727+00:00
-upstream_notebook22_final_validation_present_in_inventory,outputs/22_stable_diffusion_classical_metrics/validation/stable_diffusion_classical_metrics_final_validation.csv,present in refreshed inventory,True,,2026-08-07T20:18:08.856104+00:00
-upstream_candidate_input_cases_exists,outputs/22_stable_diffusion_classical_metrics/tables/stable_diffusion_classical_metric_input_cases.csv,file exists,True,,2026-08-07T20:18:08.858648+00:00
-upstream_candidate_input_cases_present_in_inventory,outputs/22_stable_diffusion_classical_metrics/tables/stable_diffusion_classical_metric_input_cases.csv,present in refreshed inventory,True,,2026-08-07T20:18:08.858648+00:00
-upstream_classical_metrics_exists,outputs/22_stable_diffusion_classical_metrics/metrics/stable_diffusion_classical_metrics.csv,file exists,True,,2026-08-07T20:18:08.862731+00:00
-upstream_classical_metrics_present_in_inventory,outputs/22_stable_diffusion_classical_metrics/metrics/stable_diffusion_classical_metrics.csv,present in refreshed inventory,True,,2026-08-07T20:18:08.862731+00:00
-upstream_selected_cases_exists,outputs/22_stable_diffusion_classical_metrics/analysis/stable_diffusion_classical_metric_selected_cases.csv,file exists,True,,2026-08-07T20:18:08.862731+00:00
-upstream_selected_cases_present_in_inventory,outputs/22_stable_diffusion_classical_metrics/analysis/stable_diffusion_classical_metric_selected_cases.csv,present in refreshed inventory,True,,2026-08-07T20:18:08.868575+00:00
-notebook22_final_validation_passed,True,True,True,,2026-08-07T20:18:08.868575+00:00
-candidate_input_required_columns_present,[],[],True,,2026-08-07T20:18:08.868575+00:00
-selected_cases_required_columns_present,[],[],True,,2026-08-07T20:18:08.868575+00:00
-classical_metrics_required_columns_present,[],[],True,,2026-08-07T20:18:08.868575+00:00
-short_filename_policy_defined,dm_000001_der.png,length <= 20 and no case-derived filename,True,,2026-08-07T20:18:08.868575+00:00
+version https://git-lfs.github.com/spec/v1
+oid sha256:0f9fa05eacf0dd70f9ea8b31a4b8dbbc7150a6595fae7bc51fc21aed79626fe0
+size 4319

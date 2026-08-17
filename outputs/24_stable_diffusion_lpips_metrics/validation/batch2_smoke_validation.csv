@@ -1,20 +1,3 @@
-check_name,observed,expected,passed,failure_message,validation_source
-batch1_validation_passed,outputs/24_stable_diffusion_lpips_metrics/validation/batch1_input_validation.csv,all checks passed,True,,notebook_batch2_manual_checks
-lpips_model_loaded,cuda,model object and device available,True,,notebook_batch2_manual_checks
-smoke_metrics_written,outputs/24_stable_diffusion_lpips_metrics/validation/stable_diffusion_lpips_smoke.csv,file exists,True,,notebook_batch2_manual_checks
-smoke_case_mapping_to_batch1,3,3,True,,notebook_batch2_manual_checks
-smoke_row_count,8,8,True,,notebook_batch2_manual_checks
-smoke_region_counts,"{'full_image': 3, 'content_region': 3, 'mask_bbox_crop': 2}","{'full_image': 3, 'content_region': 3, 'mask_bbox_crop': 2}",True,,notebook_batch2_manual_checks
-smoke_has_zero_control_case,1,>= 1,True,,notebook_batch2_manual_checks
-smoke_has_mask_bbox_case,2,>= 1,True,,notebook_batch2_manual_checks
-zero_control_has_no_mask_bbox_crop,0,0,True,,notebook_batch2_manual_checks
-no_smoke_error_rows,0,0,True,,notebook_batch2_manual_checks
-finite_smoke_lpips_values,True,True,True,,notebook_batch2_manual_checks
-required_columns,,,True,All required columns present.,metrics_lpips.validate_lpips_metrics
-row_count,,,True,"Expected 8, found 8.",metrics_lpips.validate_lpips_metrics
-no_error_rows,,,True,Error rows: 0.,metrics_lpips.validate_lpips_metrics
-unique_lpips_keys,,,True,Rows participating in duplicate keys: 0.,metrics_lpips.validate_lpips_metrics
-region_counts,,,True,All evaluation-region counts match expectations.,metrics_lpips.validate_lpips_metrics
-region_policy,,,True,All LPIPS rows use image-like evaluation regions.,metrics_lpips.validate_lpips_metrics
-positive_region_pixel_counts,,,True,Successful rows with non-positive region size: 0.,metrics_lpips.validate_lpips_metrics
-finite_successful_lpips_values,,,True,Successful LPIPS values are finite.,metrics_lpips.validate_lpips_metrics
+version https://git-lfs.github.com/spec/v1
+oid sha256:6e077fc2193ea01d0eed1d930fc2a31e59a4244243ff09cdf8f200b8b928a31d
+size 1944

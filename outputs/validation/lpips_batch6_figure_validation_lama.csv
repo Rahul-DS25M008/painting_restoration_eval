@@ -1,4 +1,3 @@
-check,observed,expected,passed,severity
-diagnostic_figures_created,6,6,True,error
-figure_manifest_saved,True,True,True,error
-figure_manifest_nonempty,6,> 0,True,error
+version https://git-lfs.github.com/spec/v1
+oid sha256:5a889a55914cce8a64fb6487f3ad50ab774ae16c2ac2674ff664332fabf0470e
+size 171

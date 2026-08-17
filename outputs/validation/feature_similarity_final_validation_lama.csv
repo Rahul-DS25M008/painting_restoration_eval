@@ -1,22 +1,3 @@
-check_name,observed,expected,passed,issue
-required_artifacts_exist,"{""batch1_validation"": true, ""batch3_validation"": true, ""batch4_validation"": true, ""batch5_validation"": true, ""category_region_summary"": true, ""compact_metrics"": true, ""dataset_region_summary"": true, ""figure_manifest"": true, ""mask_region_summary"": true, ""overall_summary"": true, ""ranked_by_region"": true, ""raw_metrics"": true, ""stage_manifest"": true, ""zero_control_summary"": true}",all true,True,
-required_artifacts_nonempty,"{""batch1_validation"": 510, ""batch3_validation"": 1596, ""batch4_validation"": 2277, ""batch5_validation"": 792, ""category_region_summary"": 3298, ""compact_metrics"": 1224285, ""dataset_region_summary"": 2591, ""figure_manifest"": 4780, ""mask_region_summary"": 3213, ""overall_summary"": 1046, ""ranked_by_region"": 340928, ""raw_metrics"": 1379909, ""stage_manifest"": 11898, ""zero_control_summary"": 1054}",all > 0,True,
-batch_validation_csvs_passed,"{""batch1_validation"": true, ""batch3_validation"": true, ""batch4_validation"": true, ""batch5_validation"": true}",all true,True,
-stage_manifest_batches_present,"[""batch_1"", ""batch_2"", ""batch_3"", ""batch_4"", ""batch_5""]","[""batch_1"", ""batch_2"", ""batch_3"", ""batch_4"", ""batch_5""]",True,
-stage_manifest_batches_validated,"{""batch_1"": true, ""batch_2"": true, ""batch_3"": true, ""batch_4"": true, ""batch_5"": true}",all true,True,
-raw_metric_contract_present,"{""actual_region_counts"": {""content_region"": 410, ""full_image"": 410, ""mask_bbox_crop"": 355}, ""actual_rows"": 1175, ""cases"": 410, ""expected_region_counts"": {""content_region"": 410, ""full_image"": 410, ""mask_bbox_crop"": 355}, ""expected_rows"": 1175, ""schema_version"": ""2.0.0"", ""status_counts"": {""ok"": 1175}}",batch_3.raw_metric_contract,True,
-raw_metrics_row_count,1175,1175,True,
-raw_metrics_region_counts,"{""content_region"": 410, ""full_image"": 410, ""mask_bbox_crop"": 355}","{""content_region"": 410, ""full_image"": 410, ""mask_bbox_crop"": 355}",True,
-raw_status_has_no_errors,0,0,True,
-raw_metric_values_finite,True,True,True,
-compact_metrics_row_count,1175,1175,True,
-compact_handoff_columns_present,[],[],True,
-summary_tables_nonempty,"{""category_region"": 15, ""dataset_region"": 12, ""mask_region"": 17, ""overall"": 3, ""zero_control"": 3}",all > 0,True,
-ranking_directions_present,"[""strongest"", ""weakest""]","[""strongest"", ""weakest""]",True,
-ranking_metrics_present,"[""clip_similarity_improvement"", ""dinov2_similarity_improvement"", ""mean_similarity_improvement""]","[""clip_similarity_improvement"", ""dinov2_similarity_improvement"", ""mean_similarity_improvement""]",True,
-ranking_regions_present,"[""content_region"", ""full_image"", ""mask_bbox_crop""]","[""content_region"", ""full_image"", ""mask_bbox_crop""]",True,
-figure_manifest_nonempty,7,> 0,True,
-figure_files_exist_and_nonempty,"{""outputs/figures/18_lama_feature_similarity/feature_similarity_diagnostics_lama/feature_damaged_vs_restored_similarity_lama.png"": {""exists"": true, ""size_bytes"": 167763}, ""outputs/figures/18_lama_feature_similarity/feature_similarity_diagnostics_lama/feature_dataset_region_heatmap_lama.png"": {""exists"": true, ""size_bytes"": 85995}, ""outputs/figures/18_lama_feature_similarity/feature_similarity_diagnostics_lama/feature_improvement_distribution_by_region_lama.png"": {""exists"": true, ""size_bytes"": 50510}, ""outputs/figures/18_lama_feature_similarity/feature_similarity_diagnostics_lama/feature_mask_area_sensitivity_lama.png"": {""exists"": true, ""size_bytes"": 105387}, ""outputs/figures/18_lama_feature_similarity/feature_similarity_diagnostics_lama/feature_mask_crop_ranking_diagnostic_lama.png"": {""exists"": true, ""size_bytes"": 124866}, ""outputs/figures/18_lama_feature_similarity/feature_similarity_diagnostics_lama/feature_region_mean_improvement_lama.png"": {""exists"": true, ""size_bytes"": 63452}, ""outputs/figures/18_lama_feature_similarity/feature_similarity_diagnostics_lama/feature_zero_control_comparison_lama.png"": {""exists"": true, ""size_bytes"": 63721}}",all exist and size_bytes > 0,True,
-handoff_manifest_saved,True,True,True,
-handoff_manifest_nonempty,11164,> 0,True,
-handoff_status_ready,ready_for_downstream_analysis,ready_for_downstream_analysis,True,
+version https://git-lfs.github.com/spec/v1
+oid sha256:28334d516d90040cdb4143d30386f9a382c07b8ac913ac2eaafef40c192f1cbf
+size 4331

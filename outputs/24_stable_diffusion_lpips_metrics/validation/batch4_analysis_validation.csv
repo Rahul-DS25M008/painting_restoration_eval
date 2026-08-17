@@ -1,13 +1,3 @@
-check_name,observed,expected,passed,failure_message
-batch3_validation_passed,outputs/24_stable_diffusion_lpips_metrics/validation/stable_diffusion_lpips_metrics_validation.csv,all checks passed,True,
-summary_written,outputs/24_stable_diffusion_lpips_metrics/analysis/stable_diffusion_lpips_summary.csv,file exists,True,
-selected_cases_written,outputs/24_stable_diffusion_lpips_metrics/analysis/stable_diffusion_lpips_selected_cases.csv,file exists,True,
-summary_non_empty,83,> 0,True,
-selected_cases_non_empty,56,> 0,True,
-expected_summary_scopes_present,"['by_category_region', 'by_dataset_region', 'by_evaluation_region', 'by_mask_type_region', 'by_prompt_family_region', 'by_zero_control_region', 'overall']","['overall', 'by_evaluation_region', 'by_dataset_region', 'by_mask_type_region', 'by_zero_control_region', 'by_category_region', 'by_prompt_family_region']",True,
-summary_numeric_values_finite,True,True,True,
-required_selected_columns_present,[],[],True,
-expected_selected_groups_present,"['strongest_improvement__content_region', 'strongest_improvement__full_image', 'strongest_improvement__mask_bbox_crop', 'weakest_or_regressed__content_region', 'weakest_or_regressed__full_image', 'weakest_or_regressed__mask_bbox_crop', 'zero_control_largest_regression']","['strongest_improvement__mask_bbox_crop', 'weakest_or_regressed__mask_bbox_crop', 'strongest_improvement__content_region', 'weakest_or_regressed__content_region', 'strongest_improvement__full_image', 'weakest_or_regressed__full_image', 'zero_control_largest_regression']",True,
-selected_case_keys_unique,0,0,True,
-selected_cases_map_to_metrics,[],[],True,
-selected_case_paths_exist,"{'clean_path': 0, 'damaged_path': 0, 'restored_path': 0, 'mask_path': 0}","{'clean_path': 0, 'damaged_path': 0, 'restored_path': 0, 'mask_path': 0}",True,
+version https://git-lfs.github.com/spec/v1
+oid sha256:2563fb59c3288573eca242dec773f575a76538667f9d3b9858d68389d6442334
+size 1825

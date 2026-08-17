@@ -1,12 +1,3 @@
-check,expected,actual,passed
-metadata_row_count,50,50,True
-unique_painting_ids,50,50,True
-unique_filenames,50,50,True
-category_balance,True,True,True
-source_distribution,True,True,True
-missing_image_files,0,0,True
-unreadable_images,0,0,True
-invalid_image_dimensions,0,0,True
-metadata_dimension_mismatches,0,0,True
-valid_source_urls,50,50,True
-nonblank_licenses,50,50,True
+version https://git-lfs.github.com/spec/v1
+oid sha256:17df57450ed92458752e04e5715f60a8db6075a3658a9aee01112add1404c1b4
+size 384

@@ -1,0 +1,106 @@
+{
+  "run_schema_version": "inventory_run.v1",
+  "inventory_schema_version": "project_file_inventory.v1",
+  "inventory_run_id": "inventory_20260816T221115Z_ea0155f0",
+  "status": "completed",
+  "generated_at_utc": "2026-08-16T22:11:15.344793Z",
+  "completed_at_utc": "2026-08-16T22:11:18.480499Z",
+  "duration_seconds": 3.159,
+  "repository_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
+  "inventory_relative_path": "outputs/inventory/project_file_inventory.csv",
+  "inventory_sha256": "699a831d1cfe7a0bd235f56af1bbd64dbdd1705a06ca0fa83ab296c24187e3be",
+  "inventory_size_bytes": 5478112,
+  "hash_configuration": {
+    "mode": "partial",
+    "algorithm": "sha256_first_n_bytes",
+    "partial_bytes": 1048576
+  },
+  "incremental_reuse": {
+    "enabled": true,
+    "cache_status": "verified",
+    "source_run_id": "inventory_20260816T220017Z_3c14beb3",
+    "reused_file_count": 10961,
+    "inspected_file_count": 1
+  },
+  "scan_configuration": {
+    "skipped_directory_names": [
+      ".git",
+      ".ipynb_checkpoints",
+      ".mypy_cache",
+      ".pytest_cache",
+      ".ruff_cache",
+      ".venv",
+      "__pycache__",
+      "env",
+      "node_modules",
+      "venv"
+    ],
+    "excluded_generated_inventory_files": [
+      "inventory_run.json",
+      "project_file_inventory.csv",
+      "project_file_inventory_summary.csv"
+    ]
+  },
+  "environment": {
+    "python_version": "3.12.6",
+    "python_implementation": "CPython",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "summary": {
+    "file_count": 10962,
+    "total_size_bytes": 6129037073,
+    "read_error_file_count": 0,
+    "read_error_count": 0,
+    "counts_by_format": {
+      "csv": 289,
+      "docx": 1,
+      "html": 6,
+      "jpeg": 50,
+      "json": 36,
+      "markdown": 22,
+      "no_extension": 2,
+      "notebook": 39,
+      "npz": 1,
+      "png": 10492,
+      "python": 20,
+      "text": 2,
+      "yaml": 2
+    },
+    "counts_by_file_kind": {
+      "clean_image": 50,
+      "damaged_image": 1619,
+      "figure_image": 28,
+      "html": 6,
+      "image": 50,
+      "json": 36,
+      "manifest_table": 31,
+      "markdown": 22,
+      "mask_image": 3208,
+      "metric_table": 75,
+      "notebook": 39,
+      "other": 4,
+      "python": 20,
+      "restored_image": 5587,
+      "summary_table": 11,
+      "table": 66,
+      "text": 2,
+      "validation_table": 106,
+      "yaml": 2
+    },
+    "counts_by_extension": {
+      ".csv": 289,
+      ".docx": 1,
+      ".html": 6,
+      ".ipynb": 39,
+      ".jpg": 50,
+      ".json": 36,
+      ".md": 22,
+      ".npz": 1,
+      ".png": 10492,
+      ".py": 20,
+      ".txt": 2,
+      ".yaml": 2,
+      "[none]": 2
+    }
+  }
+}

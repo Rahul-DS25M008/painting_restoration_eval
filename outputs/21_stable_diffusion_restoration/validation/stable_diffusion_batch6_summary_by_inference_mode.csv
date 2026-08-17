@@ -1,3 +1,3 @@
-inference_mode,candidates,source_cases,successful_candidates,error_candidates,mean_runtime_seconds,median_runtime_seconds
-copied_zero_control,94,50,94,0,0.009604809574313424,0.00735600000189145
-model_inference,851,415,851,0,9.840563276263397,9.779301400005352
+version https://git-lfs.github.com/spec/v1
+oid sha256:87f1d52b54cd5685b4f943d515deaab12afbe087579794d4d71a9eb5b06677ee
+size 263

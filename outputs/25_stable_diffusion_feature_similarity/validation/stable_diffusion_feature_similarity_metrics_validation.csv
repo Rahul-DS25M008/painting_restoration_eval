@@ -1,32 +1,3 @@
-check_name,actual,expected,passed,failure_message,checked_at_utc
-batch1_validation_passed,True,True,True,,2026-08-08T18:01:19+00:00
-batch2_validation_passed,True,True,True,,2026-08-08T18:01:19+00:00
-full_feature_case_count,945,945,True,,2026-08-08T18:01:19+00:00
-full_expected_feature_rows,2724,2724,True,,2026-08-08T18:01:19+00:00
-full_expected_region_counts,"{'full_image': 945, 'content_region': 945, 'mask_bbox_crop': 834}","{'full_image': 945, 'content_region': 945, 'mask_bbox_crop': 834}",True,,2026-08-08T18:01:19+00:00
-feature_metrics_row_count,2724,2724,True,,2026-08-08T18:01:19+00:00
-feature_metrics_region_counts,"{'full_image': 945, 'content_region': 945, 'mask_bbox_crop': 834}","{'full_image': 945, 'content_region': 945, 'mask_bbox_crop': 834}",True,,2026-08-08T18:01:19+00:00
-feature_metrics_no_error_rows,0,0,True,,2026-08-08T18:01:19+00:00
-embedding_manifest_row_count,16344,16344,True,,2026-08-08T18:01:19+00:00
-embedding_array_count,16344,16344,True,,2026-08-08T18:01:19+00:00
-embedding_npz_array_count,16344,16344,True,,2026-08-08T18:01:19+00:00
-feature_metrics_written,outputs/25_stable_diffusion_feature_similarity/metrics/stable_diffusion_feature_similarity_metrics.csv,file exists,True,,2026-08-08T18:01:19+00:00
-embedding_manifest_written,outputs/25_stable_diffusion_feature_similarity/manifests/stable_diffusion_feature_similarity_embedding_manifest.csv,file exists,True,,2026-08-08T18:01:19+00:00
-embeddings_npz_written,outputs/25_stable_diffusion_feature_similarity/metrics/stable_diffusion_feature_similarity_embeddings.npz,file exists,True,,2026-08-08T18:01:19+00:00
-helper_metrics_required_columns,All required columns present.,passed,True,,2026-08-08T18:01:19+00:00
-helper_metrics_row_count,"Expected 2724, found 2724.",passed,True,,2026-08-08T18:01:19+00:00
-helper_metrics_no_error_rows,Error rows: 0.,passed,True,,2026-08-08T18:01:19+00:00
-helper_metrics_unique_feature_keys,Rows participating in duplicate keys: 0.,passed,True,,2026-08-08T18:01:19+00:00
-helper_metrics_region_counts,All evaluation-region counts match expectations.,passed,True,,2026-08-08T18:01:19+00:00
-helper_metrics_region_policy,All feature rows use image-like evaluation regions.,passed,True,,2026-08-08T18:01:19+00:00
-helper_metrics_positive_region_pixel_counts,Successful rows with non-positive region size: 0.,passed,True,,2026-08-08T18:01:19+00:00
-helper_metrics_similarity_value_ranges,"All successful cosine similarities are finite and within [-1, 1].",passed,True,,2026-08-08T18:01:19+00:00
-helper_metrics_clip_improvement_direction,clip_similarity_improvement equals restored - damaged.,passed,True,,2026-08-08T18:01:19+00:00
-helper_metrics_dinov2_improvement_direction,dinov2_similarity_improvement equals restored - damaged.,passed,True,,2026-08-08T18:01:19+00:00
-helper_embeddings_required_columns,All required embedding manifest columns present.,passed,True,,2026-08-08T18:01:19+00:00
-helper_embeddings_embedding_row_count,"Expected 16344, found 16344.",passed,True,,2026-08-08T18:01:19+00:00
-helper_embeddings_unique_npz_keys,Rows participating in duplicate npz_key values: 0.,passed,True,,2026-08-08T18:01:19+00:00
-helper_embeddings_known_embedding_axes,All embedding rows use expected model/image-role axes.,passed,True,,2026-08-08T18:01:19+00:00
-helper_embeddings_positive_vector_dims,Embedding rows with invalid vector_dim: 0.,passed,True,,2026-08-08T18:01:19+00:00
-helper_embeddings_manifest_npz_key_match,Embedding manifest keys match retained arrays.,passed,True,,2026-08-08T18:01:19+00:00
-helper_embeddings_manifest_vector_dims_match_arrays,Embedding dimension mismatches: 0.,passed,True,,2026-08-08T18:01:19+00:00
+version https://git-lfs.github.com/spec/v1
+oid sha256:9e31d0e682ce1239e5c3445574f16b97ea452e390d400ab7348695f6fd70749b
+size 3678

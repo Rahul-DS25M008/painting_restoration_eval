@@ -1,0 +1,937 @@
+# Painting Restoration Thesis Refactoring and Implementation Guidelines
+
+## 1. Document status
+
+This document is the approved project-wide implementation contract for refactoring and extending the repository for the thesis:
+
+**Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration**
+
+It governs notebook design, helper modules, configuration, paths, generated artifacts, validation, manifests, reporting, dashboard preparation, reproducibility, and migration from the current repository layout.
+
+The repository will be rebuilt from Notebook 01 onward. No existing notebook is treated as complete merely because it was previously refactored or executed successfully.
+
+The central methodological boundary remains:
+
+> Visual plausibility is not equivalent to historical correctness, conservation approval, or restoration trustworthiness.
+
+## 2. Approved architectural decisions
+
+The following decisions are approved:
+
+1. The final pipeline uses the consolidated 35-notebook architecture documented in `docs/final_notebook_roadmap.md`.
+2. Generated content will migrate from `data/processed/` and legacy global output folders into notebook-owned output folders.
+3. `outputs/inventory/` is the sole global output exception.
+4. Restoration notebooks remain model-specific.
+5. Metric notebooks are model-agnostic and organized by evidence family.
+6. Handoffs use normalized manifests joined by stable identifiers rather than progressively wider tables.
+7. One canonical region helper defines every evaluation region used throughout the project.
+8. Notebook 34 remains a separate dashboard and deployment validation stage.
+9. Python 3.11 is the provisional default because it is recommended by `requirements_experiments.txt` and used in the README setup instructions. Python 3.12 may be adopted later only after compatibility is verified during execution.
+
+## 3. Scope and interpretation boundaries
+
+The framework evaluates candidate restoration outputs under controlled synthetic damage and algorithmically defined synthetic degradation.
+
+It does not:
+
+- certify conservation-ready restoration;
+- establish historical reconstruction correctness;
+- infer artist intent;
+- authenticate brushstrokes or authorship;
+- treat visual realism as evidence of fidelity;
+- treat any individual metric as ground truth;
+- interpret seed variation as calibrated confidence;
+- convert multiple signals into a universal conservation score.
+
+The framework must keep these evidence families distinct but comparable:
+
+- reference fidelity;
+- perceptual similarity;
+- feature-space and semantic consistency;
+- texture and brushstroke-proxy consistency;
+- colour consistency;
+- seam and boundary consistency;
+- outside-mask alteration;
+- generative uncertainty;
+- failure modes;
+- compute and scalability;
+- human-review requirements.
+
+## 4. Truth-source hierarchy
+
+When project sources disagree, use this precedence:
+
+1. The user's latest explicit instruction.
+2. The approved master additions and implementation checklist.
+3. This implementation guideline.
+4. The approved detailed notebook roadmap.
+5. The approved notebook-specific batch and input/output contract.
+6. Versioned configuration and schema definitions.
+7. Validated upstream manifests.
+8. The current project inventory.
+9. Existing notebooks, helpers, reports, and generated outputs.
+
+Existing code and outputs provide evidence about prior behavior. They do not override the approved design.
+
+## 5. Notebook lineage and status
+
+`Origin` records lineage only. It does not indicate completion.
+
+Allowed origin descriptions:
+
+- **Existing Notebook (number):** a recently refactored notebook that may still require minor or major changes.
+- **Existing Previous Version of Notebook (number), Pre-refactor:** an original working notebook that requires substantial refactoring.
+- **Consolidates Existing Previous Versions of Notebooks (numbers), Pre-refactor:** a new consolidated stage replacing multiple older notebooks.
+- **New Notebook:** a stage introduced by the final architecture.
+
+Each roadmap entry and notebook manifest must separately record:
+
+- `refactor_status`;
+- `validation_status`;
+- `origin`;
+- `depends_on`;
+- `applicable_dataset_scopes`;
+- `applicable_experiment_scopes`;
+- `expensive_execution`;
+- `completion_gate_passed`.
+
+No notebook may be labelled complete until its final completion gate passes under the current approved contract.
+
+## 6. Standard refactoring workflow
+
+The workflow for every notebook is:
+
+1. Refresh the project inventory.
+2. Inspect the latest inventory, approved requirements, upstream manifests, current notebook, relevant helpers, and current configuration.
+3. Determine whether helpers require no change, targeted changes, or complete replacement.
+4. Define every planned cell batch before generating notebook code.
+5. Define and approve the exact input/output contract before Batch 1 is generated.
+6. Create the correctly numbered and named notebook with Batch 1 only.
+7. Provide later batches as complete cells in chat for manual insertion, execution, and testing.
+8. Inspect the executed final notebook and generated artifacts.
+9. Validate the notebook against the approved truth sources and input/output contract.
+10. Provide targeted replacement cells or helper changes when issues are isolated.
+11. Rerun the required cells and repeat validation.
+12. Update the project paths registry only after the notebook passes its completion gate.
+13. Refresh the project inventory again so the next notebook receives the validated state.
+
+The inventory refresh is a controlled write operation. During explicitly read-only phases, the existing inventory may be inspected but must not be regenerated.
+
+## 7. Repository layout
+
+The intended high-level structure is:
+
+```text
+painting-restoration-eval/
+  config/
+  data/
+    raw/
+    model_audit/
+  docs/
+  notebooks/
+  outputs/
+    inventory/
+    <notebook-owned folders>/
+  src/
+    restoration_eval/
+  tools/
+  tests/
+  streamlit_app.py
+  requirements.txt
+  requirements_experiments.txt
+```
+
+### 7.1 Source data
+
+`data/` contains externally acquired or manually curated inputs only:
+
+```text
+data/
+  raw/
+    images/
+    metadata/
+  model_audit/
+```
+
+Source inputs must not be overwritten by notebooks.
+
+### 7.2 Generated data
+
+All generated datasets, images, metrics, figures, reports, and validation outputs belong under the exact producing notebook stem:
+
+```text
+outputs/<notebook_stem>/
+```
+
+Examples:
+
+```text
+outputs/02_image_preprocessing/images/clean/
+outputs/03_canonical_mask_generation/images/masks/
+outputs/04_canonical_damaged_image_generation/images/damaged/
+outputs/09_opencv_telea_restoration/images/restored/
+outputs/13_classical_metrics/metrics/classical_metrics.csv
+```
+
+Generated content currently under `data/processed/` is legacy material. It remains read-only during migration until notebook-owned replacements are validated. It may be removed only during an explicitly approved cleanup stage.
+
+### 7.3 Sole global output exception
+
+`outputs/inventory/` is the only project-level output folder not owned by a numbered notebook.
+
+It contains:
+
+```text
+outputs/inventory/
+  project_file_inventory.csv
+  inventory_run.json
+  project_paths.json
+  project_paths.md
+```
+
+Legacy global folders such as these are retired after validated migration:
+
+```text
+outputs/metrics/
+outputs/figures/
+outputs/reports/
+outputs/validation/
+outputs/manifests/
+outputs/dashboard/
+outputs/supervisor_package/
+```
+
+## 8. Notebook-owned output structure
+
+A notebook may create only the subfolders it needs:
+
+```text
+outputs/<notebook_stem>/
+  data/
+  images/
+  metrics/
+  figures/
+  reports/
+  manifests/
+  validation/
+  logs/
+  work/
+```
+
+Definitions:
+
+- `data/`: canonical non-metric tabular outputs and registries.
+- `images/`: generated masks, damaged images, degraded images, restorations, candidates, and map images.
+- `metrics/`: canonical quantitative evidence tables.
+- `figures/`: selected human-facing plots, grids, and diagnostic panels.
+- `reports/`: HTML, Markdown, or other stage reports.
+- `manifests/`: run, artifact, candidate, embedding, and handoff manifests.
+- `validation/`: final validation checks and compact failure details.
+- `logs/`: logs required for audit or debugging.
+- `work/`: resumable temporary state for expensive computation; never a canonical downstream input.
+
+Rules:
+
+- Do not create empty subfolders.
+- A notebook writes only within its own output root.
+- Upstream notebook folders are read-only inputs.
+- Downstream code consumes declared artifacts rather than scanning directories for plausible files.
+- Temporary test outputs must be isolated under the current notebook's `work/` folder.
+
+## 9. Configuration structure
+
+The monolithic configuration should be migrated gradually toward:
+
+```text
+config/
+  project.yaml
+  datasets/
+    controlled_50.yaml
+    expanded_main.yaml
+  experiments/
+    canonical_damage.yaml
+    damage_size.yaml
+    mask_robustness.yaml
+    synthetic_degradation.yaml
+  models/
+    opencv_telea.yaml
+    lama.yaml
+    stable_diffusion.yaml
+    sdxl.yaml
+  evaluation/
+    regions.yaml
+    metrics.yaml
+    flags.yaml
+  reporting.yaml
+```
+
+Configuration requirements:
+
+- Every file has a schema/configuration version.
+- Paths are repository-relative.
+- Seeds and numerical policies are explicit.
+- Scientific defaults are configuration values, not hidden notebook literals.
+- Model availability and experiment applicability are explicit states.
+- A configuration snapshot and checksum are recorded in each run manifest.
+
+Supported execution profiles:
+
+```text
+smoke
+controlled_50
+expanded_main
+```
+
+Scaling from 50 paintings toward approximately 300 is an execution profile, not a duplicate notebook pipeline.
+
+## 10. Project inventory contract
+
+The inventory remains a discovery, audit, and path-verification tool. It must not dynamically choose notebook inputs.
+
+The updated inventory should:
+
+- exclude Git metadata, environments, caches, checkpoints, and its own generated files;
+- record a schema version and inventory run ID;
+- record generation timestamp and repository root;
+- record repository-relative normalized paths;
+- support CSV, TSV, JSON, YAML, Parquet, notebooks, HTML, Markdown, text, and image formats;
+- record file type, size, modification time, and depth;
+- record CSV row count, column count, and columns;
+- record JSON top-level type and keys where practical;
+- record image dimensions, mode, and format;
+- record notebook cell counts and saved error-output counts where practical;
+- make full or partial hashing configurable;
+- record read errors without aborting the full inventory;
+- produce a compact summary inside `inventory_run.json` rather than a second summary CSV unless a CSV is proven necessary.
+
+Each notebook reads the inventory in Batch 1 and records:
+
+- inventory path;
+- inventory run ID;
+- inventory checksum;
+- inventory generation time;
+- whether every declared input appears in the inventory.
+
+Notebooks must not save notebook-local inventory snapshots.
+
+## 11. Project paths registry
+
+`project_paths.json` is the machine-readable authoritative registry. `project_paths.md` is generated from it for human review.
+
+The registry is updated only after a notebook passes its completion gate.
+
+Each registered artifact records:
+
+```text
+artifact_key
+producer_notebook
+relative_path
+artifact_type
+artifact_role
+schema_version
+dataset_scope
+experiment_scope
+validation_status
+row_count
+file_count
+checksum
+```
+
+The registry must not contain temporary, failed, stale, or QA-only artifacts unless they are deliberately retained for audit.
+
+## 12. Input/output contract
+
+Before Batch 1, every notebook requires an approved contract containing:
+
+| Field | Requirement |
+|---|---|
+| Input key | Stable logical identifier |
+| Producer | Source data, configuration, tool, or upstream notebook |
+| Relative path | Exact expected path |
+| Required | Required or optional |
+| Format | CSV, JSON, YAML, PNG, NPZ, HTML, etc. |
+| Schema version | Required schema identifier |
+| Required columns/keys | Exact minimum schema |
+| Expected cardinality | Expected rows, files, cases, candidates, or regions |
+| Applicability | Dataset, experiment, model, and candidate scopes |
+| Output key | Stable artifact identifier |
+| Output path | Exact notebook-owned path |
+| Artifact role | Primary, downstream, reporting, QA, or temporary |
+| Downstream consumers | Notebooks or application components using it |
+
+Notebook code should declare explicit `INPUTS` and `OUTPUTS` mappings. It must not select files by modification time, filename similarity, or an unqualified “latest” convention.
+
+## 13. Canonical identifiers
+
+Identifiers must be stable, deterministic, compact, and independent of filesystem locations.
+
+Required identifier families include:
+
+```text
+dataset_id
+dataset_version
+dataset_scope
+experiment_id
+configuration_id
+painting_id
+case_id
+mask_id
+degradation_id
+restoration_id
+model_id
+candidate_id
+region_id
+metric_row_id
+artifact_id
+run_id
+```
+
+Identifiers must not encode long prompts, titles, artist names, or full configuration prose.
+
+## 14. Normalized data contracts
+
+The repository must not propagate all upstream columns into every downstream table.
+
+### 14.1 Artwork table
+
+Owns artwork identity and metadata:
+
+```text
+painting_id
+dataset_id
+category
+style_or_period
+artist
+date_or_period
+medium
+source
+source_url
+license
+metadata_completeness
+raw_image_path
+```
+
+### 14.2 Processed-image table
+
+Owns preprocessing information:
+
+```text
+painting_id
+processed_image_id
+processed_path
+width
+height
+content_x_min
+content_y_min
+content_x_max
+content_y_max
+padding values
+preprocessing_version
+status
+```
+
+### 14.3 Mask/degradation tables
+
+Own generator parameters, seeds, morphology, spatial support, target/realized area, and paths. Canonical damage, damage-size, robustness, and synthetic degradation remain separate experiment tables with a shared minimum case schema.
+
+### 14.4 Unified case registry
+
+Contains only core cross-experiment fields and foreign keys:
+
+```text
+case_id
+dataset_id
+dataset_scope
+experiment_id
+painting_id
+input_image_path
+clean_image_path
+mask_or_effect_id
+mask_or_effect_path
+damage_or_degradation_type
+target_damage_fraction
+realized_damage_fraction
+source_manifest_path
+status
+```
+
+### 14.5 Model eligibility table
+
+Defines whether a case/method combination is methodologically valid:
+
+```text
+case_id
+model_id
+eligible
+eligibility_reason
+input_semantics
+mask_semantics
+restoration_objective
+```
+
+This is particularly important for non-binary degradations. “Where applicable” must be replaced with auditable eligibility rules.
+
+### 14.6 Restoration/candidate table
+
+Contains model-specific execution evidence without copying all upstream metadata:
+
+```text
+restoration_id
+case_id
+model_id
+candidate_id
+candidate_index
+seed
+prompt_policy_id
+model_version
+configuration_id
+restored_path
+runtime_seconds
+device
+precision
+retry_count
+status
+issue
+```
+
+### 14.7 Canonical metric table
+
+Metric-family outputs use a consistent long-form interface:
+
+```text
+metric_row_id
+case_id
+candidate_id
+model_id
+metric_family
+metric_name
+region_id
+damaged_value
+restored_value
+improvement_value
+improvement_direction
+metric_version
+status
+issue
+```
+
+Metadata needed for grouped analysis is joined through stable identifiers.
+
+## 15. Universal manifest and validation outputs
+
+Every completed notebook normally produces:
+
+```text
+manifests/run_manifest.json
+manifests/artifacts.csv
+validation/checks.csv
+```
+
+### 15.1 Run manifest
+
+Minimum fields:
+
+```text
+run_id
+notebook_id
+notebook_name
+origin
+run_status
+started_at_utc
+completed_at_utc
+git_commit
+git_dirty
+inventory_run_id
+dataset_versions
+configuration_paths
+configuration_checksums
+helper_versions
+python_version
+package_versions
+hardware
+inputs
+outputs
+expected_counts
+observed_counts
+validation_summary
+known_limitations
+```
+
+### 15.2 Artifact manifest
+
+Minimum fields:
+
+```text
+artifact_id
+artifact_key
+producer_notebook
+artifact_type
+artifact_role
+relative_path
+format
+dataset_scope
+experiment_id
+schema_version
+row_count
+file_count
+size_bytes
+checksum
+validation_status
+```
+
+### 15.3 Validation table
+
+Use one compact table instead of one CSV per batch:
+
+```text
+validation_stage
+check_id
+check_description
+severity
+expected
+observed
+passed
+details
+```
+
+Batch-level validation may exist in memory. Only the consolidated final table is persisted unless a separate failure table is required downstream.
+
+## 16. Output minimization
+
+Persist an artifact only if it is:
+
+- the canonical output of the notebook;
+- a declared downstream input;
+- required for reproducibility;
+- required for a report, dashboard, thesis, or publication;
+- a deliberately retained audit artifact.
+
+Do not persist:
+
+- every in-memory grouping;
+- multiple differently named copies of the same table;
+- per-batch inventory snapshots;
+- redundant validation CSVs;
+- temporary smoke-test tables after final validation;
+- ad hoc “final”, “latest”, “new”, “fixed”, or “v2” copies.
+
+## 17. Filename and path rules
+
+- Use lowercase ASCII `snake_case`.
+- Notebook folders use the exact notebook stem.
+- Do not repeat the full notebook name inside every filename.
+- Prefer filenames shorter than 80 characters.
+- Prefer repository-relative paths shorter than 180 characters.
+- Use compact stable IDs for per-case assets.
+- Never embed prompt text, artwork titles, or artist names in filenames.
+- Avoid ambiguous suffixes such as `final`, `latest`, `new`, and `fixed`.
+- Version scientific schemas and algorithms inside manifests/configuration, not filenames.
+- Persist repository-relative paths using forward slashes.
+
+## 18. Shared helper policy
+
+Notebooks orchestrate; helpers compute, validate, and persist reusable structures.
+
+Helpers must:
+
+- accept paths and configuration explicitly;
+- avoid hardcoded repository output paths;
+- avoid hidden writes;
+- return structured results;
+- use deterministic seeds when relevant;
+- validate important arguments;
+- provide docstrings and type hints;
+- expose algorithm/schema versions where scientifically relevant;
+- separate computation from display and reporting;
+- preserve error details instead of silently dropping failed cases.
+
+Foundation modules should include:
+
+```text
+paths.py
+schemas.py
+regions.py
+manifests.py
+validation.py
+```
+
+Substantial incompatible helper redesign allows full-file replacement. Isolated defects should receive targeted changes.
+
+## 19. Canonical region helper
+
+`src/restoration_eval/regions.py` is the only authoritative spatial-region implementation.
+
+It must support:
+
+- full image;
+- painting-content region;
+- exact masked pixels;
+- mask bounding-box crop with configurable margin;
+- inner boundary band;
+- outer boundary band;
+- symmetric inner-plus-outer boundary ring;
+- outside-mask content region;
+- optional outside boundary ring;
+- degradation/effect support region;
+- patch/sliding-window regions for semantic analysis.
+
+Every region object records:
+
+```text
+region_id
+region_type
+spatial_support
+x_min
+y_min
+x_max
+y_max
+pixel_count
+width
+height
+parameters
+validity_status
+```
+
+Metric helpers must reject mathematically invalid metric-region combinations. Sparse masked-pixel SSIM must never be reintroduced simply to populate a dataframe column.
+
+## 20. Metric architecture
+
+Restoration remains model-specific because inference, hardware, prompts, failures, retries, and candidates differ by model.
+
+Evaluation is model-agnostic:
+
+- one classical-metric notebook;
+- one LPIPS notebook;
+- one CLIP/DINOv2 notebook;
+- one spatial-diagnostics notebook;
+- one local-consistency notebook;
+- one uncertainty notebook;
+- one semantic/structural notebook.
+
+All validated model manifests are passed through the same helper implementation and region policy.
+
+Optional SDXL availability is determined from a validated result manifest, not from the presence of source code or a notebook.
+
+Allowed availability states:
+
+```text
+full_evaluation_complete
+partial_evaluation
+feasibility_only
+unavailable
+failed
+```
+
+## 21. Notebook batch design
+
+Before code generation, define every batch and approve its inputs, outputs, side effects, expected cardinality, and validation checks.
+
+### Batch 1 — Contract and initialization
+
+- purpose, scope, exclusions, and research responsibility;
+- imports and environment checks;
+- repository-root resolution;
+- configuration loading;
+- inventory loading;
+- explicit `INPUTS` and `OUTPUTS` declarations;
+- output-root validation;
+- expected schemas and counts;
+- preflight validation;
+- dry-run summary.
+
+### Batch 2 — Input loading and validation
+
+- load declared inputs;
+- validate schema versions and keys;
+- validate unique identifiers;
+- validate file references;
+- validate input/output scope compatibility;
+- stop on blocking failures.
+
+### Batch 3 — Smoke or representative test
+
+- run a deterministic bounded example where applicable;
+- validate outputs and invariants;
+- render compact visual inspection;
+- keep temporary outputs under `work/`.
+
+### Batch 4 — Full execution
+
+- run approved dataset and experiment scopes;
+- support resume/checkpoint behavior for expensive stages;
+- record failures and retries;
+- never silently skip cases.
+
+### Batch 5 — Scientific and filesystem validation
+
+- verify row and file counts;
+- verify unique keys;
+- verify output dimensions and formats;
+- detect stale and orphaned files;
+- reload persisted outputs;
+- evaluate experiment-specific invariants.
+
+### Batch 6 — Analysis and visualization
+
+- generate necessary summaries;
+- render representative cases selected by explicit rules;
+- save only downstream or thesis-relevant figures;
+- use standardized labels, scales, palettes, and captions.
+
+### Batch 7 — Persistence and handoff
+
+- save canonical outputs;
+- write run and artifact manifests;
+- write consolidated validation checks;
+- confirm every persisted path belongs to the notebook output root.
+
+### Batch 8 — Completion gate
+
+- map every truth-source requirement to implementation evidence;
+- verify all declared inputs and outputs;
+- identify optional omissions and reasons;
+- confirm rerun/idempotence behavior;
+- produce a final pass/fail table.
+
+Not every notebook needs eight batches. Expensive inference notebooks may subdivide execution, but the final notebook must remain linear and coherent.
+
+## 22. Notebook quality requirements
+
+A final notebook must:
+
+- run top to bottom in a fresh kernel;
+- contain clear Markdown sections explaining purpose, methods, inputs, outputs, and limitations;
+- contain no hotfix, repair, duplicate, or replacement cells;
+- contain no undeclared dependency on prior interactive state;
+- avoid repeated imports and repeated helper definitions;
+- keep reusable computation out of local notebook functions;
+- use project-relative persisted paths;
+- validate inputs before expensive work;
+- reload and verify persisted outputs;
+- present concise tables rather than unbounded dataframe dumps;
+- render selected representative visuals;
+- save full-resolution visual artifacts externally;
+- avoid excessive embedded image output;
+- end with the completion-gate table.
+
+Notebook status Markdown inherited from older files must be reset. A previous `Status: Complete` label is not accepted for the new refactoring cycle.
+
+## 23. Visualization policy
+
+Visual evidence is mandatory where it materially supports interpretation.
+
+Requirements:
+
+- standardized plot dimensions, fonts, palettes, labels, and captions;
+- comparable error-map and heatmap normalization where comparison is intended;
+- explicit indication when normalization is global, per-model, per-case, or percentile-clipped;
+- mask, content-box, mask-box, and boundary overlays where relevant;
+- rule-based case selection to reduce cherry-picking;
+- selected low-resolution previews may remain rendered in notebooks;
+- full-resolution assets are saved externally and registered;
+- large galleries must not be embedded into notebooks.
+
+## 24. Stale and orphaned artifacts
+
+Default behavior is detect and report.
+
+Automatic cleanup is permitted only when:
+
+- an explicit cleanup flag is enabled;
+- the resolved target is the current notebook's exact output root;
+- the target is printed and validated before removal;
+- upstream, source, Git, environment, and project-root paths are excluded;
+- cleanup actions are recorded in validation output.
+
+Migration cleanup of legacy folders is a separate explicitly approved operation and must not occur implicitly inside a notebook.
+
+## 25. Expensive execution and resume policy
+
+Restoration, LPIPS, feature extraction, uncertainty, SDXL, and large-scale map generation may use resumable execution.
+
+Resume rules:
+
+- completion is determined by validated IDs and checksums, not file existence alone;
+- existing successful candidates may be reused only when configuration, model revision, helper version, and input checksums match;
+- failed and partial cases remain visible in manifests;
+- checkpoints live under the notebook's `work/` folder;
+- canonical outputs are consolidated only after the approved scope completes.
+
+## 26. Reproducibility environment
+
+Python 3.11 is the provisional default.
+
+Before final model reruns:
+
+- reconcile conflicting package pins;
+- verify model and CUDA compatibility;
+- separate dashboard-only dependencies if necessary;
+- record exact package versions;
+- record Python, operating system, CPU, GPU, CUDA, and VRAM;
+- record Git commit and dirty-state information;
+- record configuration and helper checksums;
+- record all relevant seeds and model revisions.
+
+If Python 3.12 is adopted, the change must be documented with compatibility evidence and environment declarations must be updated consistently.
+
+## 27. Version control and large artifacts
+
+- Preserve existing user changes unless explicitly instructed otherwise.
+- Do not commit environments, caches, notebook checkpoints, replaceable temporary files, or unnecessary logs.
+- Generated images under notebook-owned `outputs/` are covered by existing Git LFS patterns.
+- After migration, no authoritative generated images should remain under `data/processed/`.
+- Large HTML reports should use linked images rather than embedded base64 content.
+- Notebook sizes should remain reviewable; very large embedded outputs must be reduced.
+
+## 28. Error correction workflow
+
+When a final notebook has isolated issues, provide:
+
+1. The affected cell number and heading.
+2. The reason it fails or violates the contract.
+3. A complete replacement cell.
+4. The cells that must be rerun before it.
+5. The cells that must be rerun after it.
+6. Expected validation evidence after rerun.
+
+When a helper has isolated issues, provide targeted changes. Replace the whole helper only when its API or structure is fundamentally incompatible with the approved design.
+
+## 29. Completion gate
+
+A notebook is complete only when all applicable checks pass:
+
+- every approved responsibility is implemented;
+- every required input exists and matches its schema;
+- every required output exists and reloads successfully;
+- expected row and file counts match;
+- primary keys are unique;
+- paths are repository-relative and valid;
+- no writes occurred outside the notebook output root;
+- stale/orphan detection passed or has documented approved exceptions;
+- scientific invariants passed;
+- visual QA was completed where applicable;
+- run, artifact, and validation manifests are complete;
+- project paths registry was updated;
+- inventory was refreshed after completion;
+- limitations and deviations are documented;
+- the notebook runs linearly from a clean kernel.
+
+Only after this gate passes may the notebook become an approved upstream dependency.
+
+## 30. Cleanup sequencing
+
+Repository cleanup occurs only after this guideline and the detailed roadmap are accepted.
+
+Recommended cleanup order:
+
+1. Create a read-only cleanup inventory of legacy and current artifacts.
+2. Classify each path as source input, notebook source, helper/configuration, authoritative artifact, reproducibility evidence, replaceable generated output, stale duplicate, or temporary material.
+3. Preserve all source inputs, notebooks, helpers, configurations, documentation, Git metadata, and necessary deployment files.
+4. Present the exact proposed deletion/migration list for approval.
+5. Perform approved cleanup using exact resolved targets.
+6. Refresh the inventory.
+7. Create only foundational folders required before Notebook 01.
+8. Let each notebook create its own output subfolders during execution.
+
+Broad pre-creation of all 35 output trees is discouraged because it creates empty and misleading folders.
+

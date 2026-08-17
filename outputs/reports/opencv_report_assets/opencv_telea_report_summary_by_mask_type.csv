@@ -1,7 +1,3 @@
-report_mask_type,cases,zero_control_cases,nonzero_cases,difference_map_cases,mean_spatial_flag_count,cases_with_spatial_flags,mean_spatial_boundary_mean_improvement,median_spatial_boundary_mean_improvement,positive_rate_spatial_boundary_mean_improvement,available_rows_spatial_boundary_mean_improvement,mean_spatial_outside_mask_mean_improvement,median_spatial_outside_mask_mean_improvement,positive_rate_spatial_outside_mask_mean_improvement,available_rows_spatial_outside_mask_mean_improvement
-"('',)",160,0,160,160,0.71875,43,48.37461,56.97164,0.7,155,0.0,0.0,0.0,160
-"('loss_large',)",50,0,50,50,0.0,0,69.00932,72.38224,1.0,50,0.0,0.0,0.0,50
-"('loss_small',)",50,0,50,50,0.0,0,67.03727,68.42854,1.0,50,0.0,0.0,0.0,50
-"('mixed_damage',)",50,0,50,50,0.0,0,50.28154,53.86475,1.0,50,0.0,0.0,0.0,50
-"('scratch_thin',)",50,0,50,50,0.0,0,36.99332,39.45999,1.0,50,0.0,0.0,0.0,50
-"('zero_control',)",50,50,0,50,0.0,0,,,0.0,0,0.0,0.0,0.0,50
+version https://git-lfs.github.com/spec/v1
+oid sha256:efccfbcb4ecce068c8e620d7b74e7108210f0b61360210df58aadfdf77275c68
+size 942

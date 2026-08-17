@@ -1,15 +1,3 @@
-check_name,observed,expected,passed,failure_message
-batch8_required_artifacts_exist,[],[],True,
-batch8_artifact_index_written,outputs/21_stable_diffusion_restoration/manifests/stable_diffusion_stage_artifact_index.csv,file exists,True,
-batch8_audit_nonempty,945,> 0,True,
-batch8_candidate_manifest_matches_audit_rows,945,945,True,
-batch8_audit_candidate_ids_unique,0,0,True,
-batch8_audit_status_ok,"{""ok"": 945}","{""ok"": 945}",True,
-batch8_outputs_written,945,945,True,
-batch8_validation_rows_match_audit,945,945,True,
-batch8_validation_passed,"{""true"": 945}","{""true"": 945}",True,
-batch8_zero_controls_exact_copy,94,94,True,
-batch8_nonzero_outputs_changed,851,851,True,
-batch8_no_output_anomalies,0,0,True,
-batch8_prompt_ablation_report_ready,"{""figure_manifest_rows"": 14, ""html_report_exists"": true, ""prompt_scope_rows"": 600, ""selected_cases"": 12}","prompt scope, selected cases, figures, and HTML report ready",True,
-batch8_figure_manifest_paths_exist,0,0,True,
+version https://git-lfs.github.com/spec/v1
+oid sha256:3e3ae16aca2eb4410cc942c8b3bcc8a3490b984d6e0de4d7953a72f4533a42b0
+size 995

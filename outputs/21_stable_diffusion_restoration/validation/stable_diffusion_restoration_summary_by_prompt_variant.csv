@@ -1,2 +1,3 @@
-prompt_variant_id,candidates,source_cases,successful_candidates,error_candidates,mean_runtime_seconds,median_runtime_seconds
-p00_generic,465,465,465,0,9.0739188574196,10.342574800000875
+version https://git-lfs.github.com/spec/v1
+oid sha256:1eaa06fb27ed6426a7cd59a6d0db2e20bcb9cbb0595d486b43c946486590565c
+size 188

@@ -1,34 +1,3 @@
-summary_table,item,value,dataset_name,cases,mean_mse_improvement,median_mse_improvement,mean_lpips_improvement,median_lpips_improvement,mean_clip_similarity_improvement,median_clip_similarity_improvement,mean_dinov2_similarity_improvement,median_dinov2_similarity_improvement,mean_feature_similarity_improvement,feature_improvement_rate,mean_runtime_seconds,mask_type,category,rows,ok_rows,failed_rows,median_runtime_seconds,max_runtime_seconds
-overview,Paintings,50,,,,,,,,,,,,,,,,,,,,
-overview,Painting categories,5,,,,,,,,,,,,,,,,,,,,
-overview,Restoration rows,410,,,,,,,,,,,,,,,,,,,,
-overview,Report cases,355,,,,,,,,,,,,,,,,,,,,
-overview,Zero-control restoration rows,55,,,,,,,,,,,,,,,,,,,,
-overview,Datasets,"canonical, damage_size, mask_robustness, synthetic_degradation",,,,,,,,,,,,,,,,,,,,
-overview,Mask types in report,"loss_large, loss_small, mixed_damage, scratch_thin",,,,,,,,,,,,,,,,,,,,
-overview,Model,lama,,,,,,,,,,,,,,,,,,,,
-by_dataset,,,canonical,200.0,26852.898037,27161.071442,0.275095,0.268348,0.137435,0.129401,0.158084,0.120055,0.147759,1.0,1.460938,,,,,,,
-by_dataset,,,damage_size,35.0,26667.047511,23642.714783,0.41239,0.404265,0.212076,0.221072,0.120004,0.118968,0.16604,1.0,1.460938,,,,,,,
-by_dataset,,,mask_robustness,75.0,30922.268961,28711.128632,0.274119,0.264808,0.128423,0.116801,0.088306,0.062053,0.108365,1.0,1.460938,,,,,,,
-by_dataset,,,synthetic_degradation,45.0,-170.946195,-18.199776,-0.080465,-0.028777,-0.029774,-0.003277,-0.053592,-0.005893,-0.041683,0.0,1.460938,,,,,,,
-by_mask_type,,,,50.0,24443.101354,24683.065491,0.339915,0.329846,0.19274,0.191421,0.176975,0.152687,0.184857,1.0,1.460938,loss_large,,,,,,
-by_mask_type,,,,50.0,26642.677037,26131.403191,0.18386,0.183368,0.100472,0.100247,0.072543,0.049601,0.086507,1.0,1.460938,loss_small,,,,,,
-by_mask_type,,,,50.0,27154.329602,28490.907806,0.308045,0.31682,0.158643,0.166863,0.243539,0.185953,0.201091,1.0,1.460938,mixed_damage,,,,,,
-by_mask_type,,,,50.0,29171.484156,29626.925224,0.26856,0.270451,0.097885,0.091019,0.139279,0.109687,0.118582,1.0,1.460938,scratch_thin,,,,,,
-by_mask_type,,,,155.0,20934.35004,22426.906769,0.202398,0.24254,0.101384,0.107541,0.054267,0.04941,0.077826,0.709677,1.460938,,,,,,,
-by_category,,,,70.0,16481.627007,17633.785805,0.16537,0.174263,0.077478,0.070578,0.074761,0.07151,0.07612,0.885714,1.460938,,abstraction_surrealism,,,,,
-by_category,,,,70.0,22560.384589,23075.667511,0.2888,0.333911,0.145837,0.143454,0.096908,0.073175,0.121372,0.885714,1.460938,,architecture_structured,,,,,
-by_category,,,,71.0,25055.556867,28573.878479,0.227565,0.253738,0.12476,0.126189,0.118562,0.068851,0.121661,0.873239,1.460938,,high_texture_brushwork,,,,,
-by_category,,,,72.0,20742.475692,22460.779541,0.237658,0.253983,0.139073,0.134678,0.156845,0.133937,0.147959,0.861111,1.460938,,landscape_natural,,,,,
-by_category,,,,72.0,36250.837007,42464.159351,0.296256,0.31683,0.120809,0.123101,0.115286,0.095989,0.118048,0.861111,1.460938,,portrait_figure,,,,,
-by_dataset_mask,,,canonical,50.0,24443.101354,24683.065491,0.339915,0.329846,0.19274,0.191421,0.176975,0.152687,0.184857,1.0,1.460938,loss_large,,,,,,
-by_dataset_mask,,,canonical,50.0,26642.677037,26131.403191,0.18386,0.183368,0.100472,0.100247,0.072543,0.049601,0.086507,1.0,1.460938,loss_small,,,,,,
-by_dataset_mask,,,canonical,50.0,27154.329602,28490.907806,0.308045,0.31682,0.158643,0.166863,0.243539,0.185953,0.201091,1.0,1.460938,mixed_damage,,,,,,
-by_dataset_mask,,,canonical,50.0,29171.484156,29626.925224,0.26856,0.270451,0.097885,0.091019,0.139279,0.109687,0.118582,1.0,1.460938,scratch_thin,,,,,,
-by_dataset_mask,,,damage_size,35.0,26667.047511,23642.714783,0.41239,0.404265,0.212076,0.221072,0.120004,0.118968,0.16604,1.0,1.460938,,,,,,,
-by_dataset_mask,,,mask_robustness,75.0,30922.268961,28711.128632,0.274119,0.264808,0.128423,0.116801,0.088306,0.062053,0.108365,1.0,1.460938,,,,,,,
-by_dataset_mask,,,synthetic_degradation,45.0,-170.946195,-18.199776,-0.080465,-0.028777,-0.029774,-0.003277,-0.053592,-0.005893,-0.041683,0.0,1.460938,,,,,,,
-runtime_and_failures,,,canonical,,,,,,,,,,,,1.168751,,,250.0,250.0,0.0,1.460938,1.460938
-runtime_and_failures,,,damage_size,,,,,,,,,,,,1.460938,,,35.0,35.0,0.0,1.460938,1.460938
-runtime_and_failures,,,mask_robustness,,,,,,,,,,,,1.460938,,,75.0,75.0,0.0,1.460938,1.460938
-runtime_and_failures,,,synthetic_degradation,,,,,,,,,,,,1.460938,,,50.0,50.0,0.0,1.460938,1.460938
+version https://git-lfs.github.com/spec/v1
+oid sha256:1b690573ed7f624d076a0525c9abbea0a9425b283a4eec525a8128532b09dd99
+size 4428

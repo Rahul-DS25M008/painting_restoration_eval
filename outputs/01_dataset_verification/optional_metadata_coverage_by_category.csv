@@ -1,16 +1,3 @@
-category,column,present_count,missing_count,total_count,coverage_percentage
-abstraction_surrealism,date,0,10,10,0.0
-abstraction_surrealism,medium,0,10,10,0.0
-abstraction_surrealism,style_or_period,0,10,10,0.0
-architecture_structured,date,0,10,10,0.0
-architecture_structured,medium,0,10,10,0.0
-architecture_structured,style_or_period,0,10,10,0.0
-high_texture_brushwork,date,8,2,10,80.0
-high_texture_brushwork,medium,8,2,10,80.0
-high_texture_brushwork,style_or_period,8,2,10,80.0
-landscape_natural,date,0,10,10,0.0
-landscape_natural,medium,0,10,10,0.0
-landscape_natural,style_or_period,0,10,10,0.0
-portrait_figure,date,10,0,10,100.0
-portrait_figure,medium,10,0,10,100.0
-portrait_figure,style_or_period,10,0,10,100.0
+version https://git-lfs.github.com/spec/v1
+oid sha256:f084cba2fd72e720ec1fc0c282c26615f61c826c5a6ca8a9806df6bf348370b9
+size 730

@@ -1,13 +1,3 @@
-check_name,observed,expected,passed,failure_message
-batch4_generic_candidate_rows,465,465,True,
-batch4_run_returned_all_generic_rows,465,465,True,
-batch4_run_status_ok,"{""ok"": 465}","{""ok"": 465}",True,
-batch4_outputs_written,465,465,True,
-batch4_main_audit_written,outputs/21_stable_diffusion_restoration/stable_diffusion_restoration_audit.csv,file exists,True,
-batch4_main_audit_candidate_ids_unique,0,0,True,
-batch4_main_audit_has_all_generic_candidates,465,465,True,
-batch4_validation_rows_match_audit,465,465,True,
-batch4_generic_validation_passed,"{""true"": 465}","{""true"": 465}",True,
-batch4_generic_nonzero_inside_mask_changed,415,415,True,
-batch4_generic_nonzero_outside_mask_preserved,415,415,True,
-batch4_validation_written,outputs/21_stable_diffusion_restoration/validation/stable_diffusion_restoration_validation.csv,file exists,True,
+version https://git-lfs.github.com/spec/v1
+oid sha256:3713a036eb0678c6eb3aaadbb128827c15b4f5094b53b375181c7ae88acdd5fc
+size 867

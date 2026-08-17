@@ -1,10 +1,3 @@
-check_name,observed,expected,passed,issue
-report_helper_exists,True,True,True,
-report_helper_nonempty,53240,> 0,True,
-classical_metrics_candidate_resolved,"{""checked_paths"": [""outputs/metrics/classical_metrics_lama.csv"", ""outputs/metrics/classical_metrics_lama_compact.csv"", ""outputs/metrics/classical_metrics_lama_full.csv"", ""outputs/metrics/classical_metrics_lama_50.csv""], ""resolved_path"": ""outputs/metrics/classical_metrics_lama.csv""}",one existing classical metrics path,True,
-error_map_manifest_candidate_resolved,"{""checked_paths"": [""outputs/16_lama_difference_maps/lama_difference_map_manifest_all.csv"", ""outputs/16_lama_difference_maps/lama_difference_map_manifest_selected.csv"", ""outputs/metrics/difference_map_manifest_all_lama.csv"", ""outputs/metrics/difference_map_manifest_lama.csv"", ""outputs/metrics/error_map_manifest_all_lama.csv"", ""outputs/metrics/error_map_manifest_lama.csv""], ""resolved_path"": ""outputs/16_lama_difference_maps/lama_difference_map_manifest_all.csv""}",one existing error/difference-map manifest path,True,
-required_inputs_exist,"{""classical_metrics"": true, ""difference_map_manifest"": true, ""feature_compact_metrics"": true, ""feature_handoff_manifest"": true, ""feature_raw_metrics"": true, ""lama_restoration_manifest"": true, ""lpips_compact_metrics"": true, ""lpips_handoff_manifest"": true, ""lpips_raw_metrics"": true, ""processed_clean_metadata"": true, ""report_helper_module"": true}",all true,True,
-required_inputs_nonempty,"{""classical_metrics"": 2530737, ""difference_map_manifest"": 599615, ""feature_compact_metrics"": 1224285, ""feature_handoff_manifest"": 11164, ""feature_raw_metrics"": 1379909, ""lama_restoration_manifest"": 1055479, ""lpips_compact_metrics"": 526051, ""lpips_handoff_manifest"": 2222, ""lpips_raw_metrics"": 856763, ""processed_clean_metadata"": 30443, ""report_helper_module"": 53240}",all > 0,True,
-lpips_handoff_ready,ready_for_downstream_analysis,ready_for_downstream_analysis,True,
-feature_handoff_ready,ready_for_downstream_analysis,ready_for_downstream_analysis,True,
-planned_output_directories_exist,"{""batch1_validation"": true, ""final_validation"": true, ""handoff_manifest"": true, ""html_report"": true, ""report_dataframe"": true, ""report_figure_manifest"": true, ""report_metric_correlations"": true, ""report_summaries"": true, ""selected_cases"": true, ""stage_manifest"": true}",all true,True,
+version https://git-lfs.github.com/spec/v1
+oid sha256:e3da9578bb023f325c5093c56f8e24ebac1bcec4d12701d2c1be8a9afb698025
+size 2432

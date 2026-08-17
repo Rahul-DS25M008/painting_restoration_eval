@@ -1,3 +1,3 @@
-scale_name,cmap,vmin,vmax,percentile,sampled_value_count,sample_region,random_seed,maximum_samples_per_case,sampled_case_count,mask_threshold,error_map_version
-absolute_error,magma,0.0,255.0,99.5,9450000,masked,42,10000,945,0,3.0.0
-signed_improvement,coolwarm,-242.33334350585938,242.33334350585938,99.5,9234961,masked,42,10000,945,0,3.0.0
+version https://git-lfs.github.com/spec/v1
+oid sha256:42ae930811fdbdc5e98d9e24d34905e22ab51a7141bef8a22298cbc196ce049d
+size 343

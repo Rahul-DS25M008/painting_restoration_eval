@@ -1,15 +1,3 @@
-check_name,observed,expected,passed,failure_message
-batch3_smoke_candidate_count,5,3 to 5 rows,True,
-batch3_smoke_nonzero_candidate_count,4,>= 3,True,
-batch3_smoke_zero_control_candidate_count,1,0 or 1,True,
-batch3_smoke_audit_rows,5,5,True,
-batch3_smoke_status_ok,"{""ok"": 5}","{""ok"": 5}",True,
-batch3_smoke_cuda_used,"{""cuda"": 5}","{""cuda"": 5}",True,
-batch3_smoke_outputs_written,5,5,True,
-batch3_smoke_model_inference_branch_exercised,"{""copied_zero_control"": 1, ""model_inference"": 4}",contains model_inference,True,
-batch3_smoke_validation_passed,"{""true"": 5}","{""true"": 5}",True,
-batch3_smoke_nonzero_inside_mask_changed,"[true, true, true, true]","[true, true, true, true]",True,
-batch3_smoke_nonzero_outside_mask_preserved,"[true, true, true, true]","[true, true, true, true]",True,
-batch3_smoke_zero_control_exact_copy,[true],[true],True,
-batch3_smoke_audit_file_written,outputs/21_stable_diffusion_restoration/validation/stable_diffusion_smoke_audit.csv,file exists,True,
-batch3_smoke_validation_file_written,outputs/21_stable_diffusion_restoration/validation/stable_diffusion_smoke_validation.csv,file exists,True,
+version https://git-lfs.github.com/spec/v1
+oid sha256:fafa2929a37b41bafaf3b6e185cf6a6906535d9cf94c8b5c2238fff3c9f0b47c
+size 1155

@@ -1,14 +1,3 @@
-check_name,observed,expected,passed,failure_message
-batch5_contextual_candidate_rows,480,480,True,
-batch5_no_generic_candidates_rerun,0,0,True,
-batch5_contextual_only_prompt_subset,[],[],True,
-batch5_run_returned_all_contextual_rows,480,480,True,
-batch5_run_status_ok,"{""ok"": 480}","{""ok"": 480}",True,
-batch5_outputs_written,480,480,True,
-batch5_main_audit_candidate_ids_unique,0,0,True,
-batch5_main_audit_has_all_contextual_candidates,480,480,True,
-batch5_main_audit_still_has_generic_candidates,465,>= 1,True,
-batch5_prompt_ablation_validation_rows,480,480,True,
-batch5_prompt_ablation_validation_passed,"{""true"": 480}","{""true"": 480}",True,
-batch5_main_audit_written,outputs/21_stable_diffusion_restoration/stable_diffusion_restoration_audit.csv,file exists,True,
-batch5_prompt_ablation_validation_written,outputs/21_stable_diffusion_restoration/validation/stable_diffusion_prompt_ablation_validation.csv,file exists,True,
+version https://git-lfs.github.com/spec/v1
+oid sha256:90dfdc4ae7b64613423f4975be4698ebf4061035d3b03bb57b7fa6db95c9ffde
+size 948

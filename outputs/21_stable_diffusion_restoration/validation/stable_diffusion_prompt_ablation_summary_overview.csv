@@ -1,7 +1,3 @@
-item,value
-total_rows,480.0
-unique_source_cases,120.0
-unique_candidates,480.0
-successful_rows,480.0
-error_rows,0.0
-mean_runtime_seconds,8.658020690625047
+version https://git-lfs.github.com/spec/v1
+oid sha256:ef43503b9b41ada84100eb51695b89df9854c017070aedb60f79fd9d128f9886
+size 161

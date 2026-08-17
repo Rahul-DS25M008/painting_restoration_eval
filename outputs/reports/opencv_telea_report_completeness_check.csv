@@ -1,11 +1,3 @@
-check_name,actual,expected,passed,detail
-markdown_report_exists,True,True,True,D:\Masters\FH\Thesis\painting-restoration-eval\outputs\reports\opencv_telea_report_generation.md
-html_report_exists,True,True,True,D:\Masters\FH\Thesis\painting-restoration-eval\outputs\reports\opencv_telea_report.html
-required_report_sections_present,14,14,True,
-markdown_image_links_resolve,13,13,True,0 missing Markdown image references
-html_image_links_resolve,13,13,True,0 missing HTML image references
-report_figure_manifest_paths_resolve,6,6,True,path column: path
-representative_cases_paths_resolve,7,7,True,path column: representative_panel_path
-planned_evidence_items_documented,8,8,True,Every planned item should have one row in the evidence coverage table.
-planned_evidence_items_available_or_explicit,7,8,True,Unavailable evidence is acceptable only when explicitly documented.
-batch_5_output_inventory_exists,6,6,True,"Checks report markdown, HTML, case metrics, representative manifest, figure manifest, and asset index."
+version https://git-lfs.github.com/spec/v1
+oid sha256:79b4c671022a347f5b35777a36f293d99ffe75cfa575648af5532abcd632092b
+size 1027

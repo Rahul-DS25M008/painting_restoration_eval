@@ -1,25 +1,3 @@
-check_name,observed,expected,passed,issue,artifact,path_project_relative,size_bytes,check,severity
-artifact_exists__raw_lpips_metrics,True,True,True,,raw_lpips_metrics,outputs\metrics\lpips_metrics_lama.csv,856763.0,,
-artifact_exists__compact_lpips_metrics,True,True,True,,compact_lpips_metrics,outputs\metrics\lpips_metrics_lama_compact.csv,526051.0,,
-artifact_exists__dataset_region_summary,True,True,True,,dataset_region_summary,outputs\metrics\lpips_summary_by_dataset_region_lama.csv,1449.0,,
-artifact_exists__mask_region_summary,True,True,True,,mask_region_summary,outputs\metrics\lpips_summary_by_mask_region_lama.csv,2635.0,,
-artifact_exists__category_region_summary,True,True,True,,category_region_summary,outputs\metrics\lpips_summary_by_category_region_lama.csv,1909.0,,
-artifact_exists__zero_control_summary,True,True,True,,zero_control_summary,outputs\metrics\lpips_summary_zero_control_lama.csv,644.0,,
-artifact_exists__ranked_by_region,True,True,True,,ranked_by_region,outputs\metrics\lpips_ranked_cases_by_region_lama.csv,43432.0,,
-artifact_exists__batch5_validation,True,True,True,,batch5_validation,outputs\validation\lpips_batch5_validation_lama.csv,853.0,,
-artifact_exists__diagnostic_figure_manifest,True,True,True,,diagnostic_figure_manifest,outputs\figures\17_lama_lpips_metrics\lpips_diagnostics_lama\lpips_diagnostic_figure_manifest_lama.csv,2731.0,,
-artifact_exists__batch6_validation,True,True,True,,batch6_validation,outputs\validation\lpips_batch6_figure_validation_lama.csv,171.0,,
-artifact_exists__stage_manifest,True,True,True,,stage_manifest,outputs\manifests\17_lama_lpips_metrics_manifest.json,5650.0,,
-,1175,1175,True,,handoff_tables,,,raw_lpips_row_count,error
-,"{'full_image': 410, 'content_region': 410, 'mask_bbox_crop': 355}","{'full_image': 410, 'content_region': 410, 'mask_bbox_crop': 355}",True,,handoff_tables,,,raw_lpips_region_counts,error
-,[],[],True,,handoff_tables,,,raw_required_columns_present,error
-,True,True,True,,handoff_tables,,,raw_ok_metric_values_finite,error
-,1175,> 0,True,,handoff_tables,,,compact_metrics_nonempty,error
-,"{'dataset_region': 12, 'mask_region': 23, 'category_region': 15, 'zero_control': 5}",all > 0,True,,handoff_tables,,,summary_tables_nonempty,error
-,120,> 0,True,,handoff_tables,,,ranked_cases_nonempty,error
-,True,True,True,,handoff_tables,,,batch5_validation_passed,error
-,True,True,True,,handoff_tables,,,batch6_validation_passed,error
-,True,True,True,,handoff_tables,,,diagnostic_figures_exist,error
-,True,True,True,,stage_manifest,outputs\manifests\17_lama_lpips_metrics_manifest.json,5650.0,stage_manifest_exists,error
-,[],[],True,,stage_manifest,outputs\manifests\17_lama_lpips_metrics_manifest.json,5650.0,stage_manifest_expected_batches_present,error
-,[],[],True,,stage_manifest,outputs\manifests\17_lama_lpips_metrics_manifest.json,5650.0,stage_manifest_batches_passed,error
+version https://git-lfs.github.com/spec/v1
+oid sha256:9c138f3447629b0c0bccce14826d4188f35289a4a1f5aad287791d1fbe23fba0
+size 2894

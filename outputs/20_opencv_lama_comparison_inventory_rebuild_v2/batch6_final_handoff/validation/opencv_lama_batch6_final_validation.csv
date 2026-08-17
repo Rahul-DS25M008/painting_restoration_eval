@@ -1,11 +1,3 @@
-check_name,observed,expected,passed,failure_message
-batch6_stage_manifest_readable,outputs/20_opencv_lama_comparison_inventory_rebuild_v2/stage_manifest.json,existing readable JSON,True,
-batch6_stage_manifest_has_outputs,24,> 0,True,
-batch6_artifact_index_has_rows,54,> 0,True,
-batch6_required_artifacts_exist,0,0,True,
-batch6_required_artifacts_non_empty,0,0,True,
-batch6_batch3_unified_cases_available,"{""csv_exists"": true, ""dataframe_rows"": 410}",dataframe rows > 0 or CSV exists,True,
-batch6_batch4_compact_summaries_available,"{""csv_exists"": true, ""dataframe_rows"": 67}",dataframe rows > 0 or CSV exists,True,
-batch6_batch5_selected_cases_available,"{""csv_exists"": true, ""dataframe_rows"": 24}",dataframe rows > 0 or CSV exists,True,
-batch6_batch5_html_report_available,outputs/20_opencv_lama_comparison_inventory_rebuild_v2/batch5_visual_report/reports/opencv_lama_batch5_comparison_report.html,existing non-empty HTML,True,
-batch6_batch5_figure_manifest_valid,True,True,True,
+version https://git-lfs.github.com/spec/v1
+oid sha256:bdf7a0bae098deaf70201e5b03509223f7aff55c103aa042cb9179e72477a6f4
+size 1005

@@ -1,6 +1,3 @@
-finding
-Mask-level perceptual behavior: strongest median lpips_improvement appears in loss_large (0.3298); weakest appears in loss_small (0.1834).
-Mask-level feature behavior: strongest median mean_similarity_improvement appears in loss_large (0.1803); weakest appears in loss_small (0.0775).
-Dataset-level feature behavior: strongest median mean_similarity_improvement appears in damage_size (0.1523); weakest appears in synthetic_degradation (-0.0044).
-Category-level feature behavior: strongest median mean_similarity_improvement appears in landscape_natural (0.1568); weakest appears in abstraction_surrealism (0.0782).
-"18 selected cases were direct metric-priority cases; the rest preserve dataset, mask, category, and visual coverage."
+version https://git-lfs.github.com/spec/v1
+oid sha256:54a76b4f13b1ca131686b9aeaa8bbd6f4dc5c46109f5d6f81a591272ce012a3e
+size 749

@@ -1,11 +1,3 @@
-table,rows,columns,path
-report_dataframe,355,264,outputs/19_lama_report_generation/metrics/lama_report_dataframe.csv
-selected_cases,18,273,outputs/19_lama_report_generation/metrics/lama_report_selected_cases.csv
-report_summaries,33,23,outputs/19_lama_report_generation/metrics/lama_report_summaries.csv
-metric_correlations,8,8,outputs/19_lama_report_generation/metrics/lama_report_metric_correlations.csv
-figure_manifest,25,9,outputs/19_lama_report_generation/figures/report_diagnostics_lama/lama_report_figure_manifest.csv
-metric_overview,6,10,outputs/19_lama_report_generation/metrics/lama_report_metric_overview.csv
-report_status_cards,8,2,outputs/19_lama_report_generation/metrics/lama_report_status_cards.csv
-report_findings,5,1,outputs/19_lama_report_generation/metrics/lama_report_findings.csv
-selected_case_report_table,18,13,outputs/19_lama_report_generation/metrics/lama_report_selected_case_table.csv
-case_panel_manifest,18,21,outputs/19_lama_report_generation/figures/report_diagnostics_lama/lama_report_selected_case_panel_manifest.csv
+version https://git-lfs.github.com/spec/v1
+oid sha256:cdd72d6625f4ed1a71570e7288d8a24fb8b2d9e98b40cc62e09f677f79baece0
+size 1060

@@ -1,12 +1,3 @@
-check_name,observed,expected,passed,issue
-batch4_validation_passed,True,True,True,
-plots_generated,7,>= 5,True,
-selected_case_panels_generated,18,18,True,
-figure_manifest_exists,True,True,True,
-figure_manifest_nonempty,11685,> 0,True,
-figure_manifest_paths_exist,True,True,True,
-selected_case_panel_paths_exist,True,True,True,
-html_report_exists,True,True,True,
-html_report_nonempty,49476,> 0,True,
-batch5_outputs_exist,"{""figure_manifest"": true, ""html_report"": true}",all true,True,
-batch5_outputs_nonempty,"{""figure_manifest"": 11685, ""html_report"": 49476}",all > 0,True,
+version https://git-lfs.github.com/spec/v1
+oid sha256:26e2a6f96233e2526d6bd5d0262ed543188cc41d497087bdb8b9259e2295c614
+size 593

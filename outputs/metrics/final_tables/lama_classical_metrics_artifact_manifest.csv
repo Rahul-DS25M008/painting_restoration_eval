@@ -1,8 +1,3 @@
-artifact,path,status
-classical_metrics_lama,outputs/metrics/classical_metrics_lama.csv,created
-classical_metrics_lama_summary,outputs/metrics/classical_metrics_lama_summary.csv,created
-classical_metrics_lama_audit,outputs/metrics/classical_metrics_lama_audit.csv,created
-lama_diagnostic_cases,outputs/metrics/diagnostics/lama_diagnostic_cases.csv,created
-lama_diagnostic_panel_manifest,outputs/metrics/diagnostics/lama_diagnostic_panel_manifest.csv,created
-lama_dataset_region_metric_table,outputs/metrics/final_tables/lama_dataset_region_metric_table.csv,created
-lama_damage_setting_metric_table,outputs/metrics/final_tables/lama_damage_setting_metric_table.csv,created
+version https://git-lfs.github.com/spec/v1
+oid sha256:a87aa964b7c5d27a05e8ba38321bc91edb3b6fa858dbe4e062517c7100799567
+size 679

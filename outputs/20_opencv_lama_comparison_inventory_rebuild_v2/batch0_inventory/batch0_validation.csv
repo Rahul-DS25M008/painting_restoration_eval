@@ -1,9 +1,3 @@
-check_name,observed,expected,passed,failure_message
-inventory_file_exists,outputs/inventory/project_file_inventory.csv,existing inventory CSV,True,
-inventory_has_rows,3047,> 0,True,
-required_inventory_columns_present,[],no missing inventory columns,True,
-all_required_source_rows_found_in_inventory,[],all required sources present in inventory,True,
-all_required_sources_exist_on_disk,[],all required sources exist on disk,True,
-all_required_sources_are_csv_like,[],all required sources have CSV-like file_kind,True,
-all_required_sources_have_clean_csv_scan,[],all required sources have blank csv_error,True,
-all_required_source_columns_present_in_inventory,[],all required columns present in inventory csv_columns,True,
+version https://git-lfs.github.com/spec/v1
+oid sha256:04629ea3318108762e57e36df0ec9789c1d0d4b100a8db11a7e7f3cb0fece365
+size 730
