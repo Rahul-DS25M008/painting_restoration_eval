@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.0.0"
+SCHEMAS_MODULE_VERSION = "1.1.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -115,6 +115,50 @@ PREPROCESSING_AUDIT_COLUMNS = (
     "audit_section", "group_field", "group_value", "metric_name",
     "metric_value", "metric_unit", "numerator", "denominator", "status",
     "details",
+)
+
+CANONICAL_MASKS_COLUMNS = (
+    "dataset_id", "dataset_version", "dataset_scope", "experiment_id",
+    "case_id", "painting_id", "processed_image_id",
+    "processed_image_path", "processed_image_sha256", "mask_id",
+    "mask_type", "mask_type_index", "mask_filename", "mask_path",
+    "generator_name", "generator_version", "config_schema_version",
+    "config_version", "preset_id", "preset_version",
+    "seed_scheme_version", "global_seed", "painting_seed", "mask_seed",
+    "retry_seed", "maximum_generation_attempts", "generation_attempts",
+    "accepted_attempt", "retry_policy",
+    "target_damaged_content_fraction", "lower_damaged_content_fraction",
+    "upper_damaged_content_fraction",
+    "distance_to_target_fraction", "distance_to_allowed_range_fraction",
+    "generator_parameters", "morphology_settings", "content_x_min",
+    "content_y_min", "content_x_max", "content_y_max", "content_width",
+    "content_height", "content_area_pixels", "padding_area_pixels",
+    "canvas_area_pixels", "damaged_pixel_count",
+    "damaged_content_pixel_count", "padding_overlap_pixels",
+    "damaged_content_fraction", "damaged_full_fraction", "bbox_x_min",
+    "bbox_y_min", "bbox_x_max", "bbox_y_max", "bbox_width",
+    "bbox_height", "bbox_area_pixels", "bbox_fill_ratio",
+    "bbox_aspect_ratio", "connected_component_count",
+    "largest_component_pixels", "smallest_component_pixels",
+    "mean_component_pixels", "median_component_pixels",
+    "component_area_std_pixels", "component_area_cv",
+    "largest_component_fraction",
+    "component_density_per_100k_content_pixels",
+    "mean_component_aspect_ratio", "maximum_component_aspect_ratio",
+    "mask_perimeter_pixels", "mask_compactness", "touches_content_boundary",
+    "minimum_distance_to_content_boundary_pixels", "mask_width",
+    "mask_height", "mask_mode", "mask_format", "mask_size_bytes",
+    "mask_sha256", "mask_unique_values", "binary_values_valid",
+    "zero_control_rule_valid", "content_only_valid",
+    "area_within_target_tolerance", "morphology_status",
+    "generation_status", "status", "issue",
+)
+
+MASK_AUDIT_COLUMNS = (
+    "audit_row_id", "dataset_id", "dataset_version", "dataset_scope",
+    "experiment_id", "audit_section", "group_field", "group_value",
+    "comparison_group_value", "metric_name", "metric_value",
+    "metric_unit", "numerator", "denominator", "status", "details",
 )
 
 @dataclass(frozen=True)
@@ -355,6 +399,41 @@ PREPROCESSING_AUDIT_SCHEMA = DataFrameSchema(
     ),
 )
 
+CANONICAL_MASKS_SCHEMA = DataFrameSchema(
+    name="canonical_masks",
+    version="canonical_masks.v1",
+    required_columns=CANONICAL_MASKS_COLUMNS,
+    primary_key=("mask_id",),
+    non_nullable=tuple(
+        column for column in CANONICAL_MASKS_COLUMNS if column != "issue"
+    ),
+    allowed_values={
+        "mask_mode": frozenset({"L"}),
+        "mask_format": frozenset({"PNG"}),
+        "binary_values_valid": frozenset({True}),
+        "zero_control_rule_valid": frozenset({True}),
+        "content_only_valid": frozenset({True}),
+        "area_within_target_tolerance": frozenset({True}),
+        "morphology_status": frozenset({"passed"}),
+        "generation_status": frozenset({"passed"}),
+        "status": frozenset({"passed"}),
+    },
+)
+
+MASK_AUDIT_SCHEMA = DataFrameSchema(
+    name="mask_audit",
+    version="mask_audit.v1",
+    required_columns=MASK_AUDIT_COLUMNS,
+    primary_key=("audit_row_id",),
+    non_nullable=(
+        "audit_row_id", "dataset_id", "dataset_version", "dataset_scope",
+        "experiment_id", "audit_section", "metric_name", "status",
+    ),
+    allowed_values={
+        "status": frozenset({"passed", "failed", "informational"}),
+    },
+)
+
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
     VALIDATION_CHECKS_SCHEMA.name: VALIDATION_CHECKS_SCHEMA,
@@ -363,6 +442,8 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     DATASET_AUDIT_SCHEMA.name: DATASET_AUDIT_SCHEMA,
     PREPROCESSED_IMAGES_SCHEMA.name: PREPROCESSED_IMAGES_SCHEMA,
     PREPROCESSING_AUDIT_SCHEMA.name: PREPROCESSING_AUDIT_SCHEMA,
+    CANONICAL_MASKS_SCHEMA.name: CANONICAL_MASKS_SCHEMA,
+    MASK_AUDIT_SCHEMA.name: MASK_AUDIT_SCHEMA,
 }
 
 

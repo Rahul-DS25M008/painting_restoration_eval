@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-17T21:54:53.429938Z",
+  "updated_at_utc": "2026-08-18T11:19:24.175226Z",
   "artifacts": [
     {
       "artifact_key": "dataset.artworks",
@@ -57,6 +57,90 @@
       "row_count": "",
       "file_count": 1,
       "checksum": "a477a1dfd3df7d109889356bc32df0c97c64d350264419977157af5a26072e2a"
+    },
+    {
+      "artifact_key": "masks.audit",
+      "producer_notebook": "03_canonical_mask_generation",
+      "relative_path": "outputs/03_canonical_mask_generation/metrics/mask_audit.csv",
+      "artifact_type": "audit_table",
+      "artifact_role": "audit_reporting",
+      "schema_version": "mask_audit.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "canonical_missing_region",
+      "validation_status": "passed",
+      "row_count": 105,
+      "file_count": 1,
+      "checksum": "15c5ef8d848ad9c501ac960e12181ac9ebf74674b5672e68165e113c0b980b3d"
+    },
+    {
+      "artifact_key": "masks.canonical",
+      "producer_notebook": "03_canonical_mask_generation",
+      "relative_path": "outputs/03_canonical_mask_generation/data/masks.csv",
+      "artifact_type": "dataset_table",
+      "artifact_role": "primary_downstream",
+      "schema_version": "canonical_masks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "canonical_missing_region",
+      "validation_status": "passed",
+      "row_count": 250,
+      "file_count": 1,
+      "checksum": "b517853358812f8f378a7d6bbaba8ffa0582ff5083a9eb6afc4f9ba9701461b3"
+    },
+    {
+      "artifact_key": "masks.canonical_images",
+      "producer_notebook": "03_canonical_mask_generation",
+      "relative_path": "outputs/03_canonical_mask_generation/images/masks",
+      "artifact_type": "image_collection",
+      "artifact_role": "primary_downstream",
+      "schema_version": "canonical_mask_collection.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "canonical_missing_region",
+      "validation_status": "passed",
+      "row_count": 250,
+      "file_count": 250,
+      "checksum": "71c39b7de5fb530c39188d3fd00d6a37c1954a960ec6bc2b3846685dd07498aa"
+    },
+    {
+      "artifact_key": "masks.figure_examples",
+      "producer_notebook": "03_canonical_mask_generation",
+      "relative_path": "outputs/03_canonical_mask_generation/figures/mask_examples.png",
+      "artifact_type": "figure",
+      "artifact_role": "qa_reporting",
+      "schema_version": "figure.mask_examples.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "canonical_missing_region",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "f3010ff41b3d187d5f71eb443c28c3d94d90b12335eb77d7f83da500c9258b13"
+    },
+    {
+      "artifact_key": "masks.figure_morphology",
+      "producer_notebook": "03_canonical_mask_generation",
+      "relative_path": "outputs/03_canonical_mask_generation/figures/mask_morphology.png",
+      "artifact_type": "figure",
+      "artifact_role": "thesis_reporting",
+      "schema_version": "figure.mask_morphology.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "canonical_missing_region",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "c61d9993d4ababd53c6c3abde0b973f1e6e604ad5ca730da59d5ff44f573f4b0"
+    },
+    {
+      "artifact_key": "masks.protocol",
+      "producer_notebook": "03_canonical_mask_generation",
+      "relative_path": "outputs/03_canonical_mask_generation/reports/mask_protocol.md",
+      "artifact_type": "methodology_report",
+      "artifact_role": "methodology_reporting",
+      "schema_version": "mask_protocol.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "canonical_missing_region",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "3808f8eb764f3279135000f20090e7547cd6bd6b9d5ebc8fbe931619714a41dd"
     },
     {
       "artifact_key": "preprocessing.audit",
@@ -141,6 +225,20 @@
       "row_count": 50,
       "file_count": 1,
       "checksum": "bce1145d62d392e3bbdaee4ffb4855cfc503acbd2a115a9ddd2ca7ed48737513"
+    },
+    {
+      "artifact_key": "validation.03_canonical_mask_generation",
+      "producer_notebook": "03_canonical_mask_generation",
+      "relative_path": "outputs/03_canonical_mask_generation/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "canonical_missing_region",
+      "validation_status": "passed",
+      "row_count": 50,
+      "file_count": 1,
+      "checksum": "7e154b2fbee0e5d2d94e0f96c6bc160ae7b5348ad81a55bd06ca8df41534442b"
     }
   ]
 }

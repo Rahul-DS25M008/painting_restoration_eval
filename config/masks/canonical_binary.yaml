@@ -1,0 +1,231 @@
+config_schema_version: "canonical_mask_config.v1"
+config_version: "1.0.0"
+
+dataset:
+  dataset_id: "painting_restoration_eval"
+  dataset_version: "1.0.0"
+  dataset_scope: "controlled_50"
+  execution_profile: "controlled_50"
+  input_schema_version: "preprocessed_images.v1"
+  output_schema_version: "canonical_masks.v1"
+  audit_schema_version: "mask_audit.v1"
+  experiment_id: "canonical_missing_region"
+
+inputs:
+  geometry_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+  clean_images_path: "outputs/02_image_preprocessing/images/clean"
+  artifacts_path: "outputs/02_image_preprocessing/manifests/artifacts.csv"
+  run_manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+  required_artifact_keys:
+    - "preprocessed_images"
+    - "clean_images"
+  required_registry_keys:
+    - "preprocessing.geometry"
+    - "preprocessing.clean_images"
+  required_upstream_run_status: "completed"
+
+output:
+  notebook_stem: "03_canonical_mask_generation"
+  table_path: "data/masks.csv"
+  image_directory: "images/masks"
+  image_path_template: "{painting_id}/{mask_type}.png"
+  audit_path: "metrics/mask_audit.csv"
+  morphology_figure_path: "figures/mask_morphology.png"
+  examples_figure_path: "figures/mask_examples.png"
+  protocol_path: "reports/mask_protocol.md"
+
+generator:
+  name: "canonical_synthetic_damage_masks"
+  version: "3.0.0"
+  seed_scheme_version: "canonical_mask_seed.v1"
+  global_seed: 20260630
+  maximum_generation_attempts: 30
+  retry_policy: "closed_range_then_nearest_range_and_target"
+  retry_failure_action: "block"
+  target_width: 768
+  target_height: 768
+  output_mode: "L"
+  output_format: "PNG"
+  output_extension: ".png"
+  background_value: 0
+  damaged_value: 255
+  restrict_to_content_region: true
+  coordinate_convention: "xyxy_exclusive_zero_based"
+  png_compress_level: 6
+  png_optimize: false
+  strip_output_metadata: true
+
+morphology:
+  component_connectivity: 8
+  perimeter_connectivity: 4
+  compactness_formula: "four_pi_area_over_perimeter_squared"
+  component_variability: "population_standard_deviation_and_cv"
+  boundary_distance: "minimum_chebyshev_pixel_distance_to_content_boundary"
+  irregular_blob_radius_jitter_fraction: 0.12
+
+families:
+  zero_control:
+    index: 0
+    preset_version: "1.0.0"
+    description: "No missing-region damage; measures unnecessary model alteration."
+    lower_damaged_content_fraction: 0.0
+    target_damaged_content_fraction: 0.0
+    upper_damaged_content_fraction: 0.0
+    generator:
+      primitive: "empty"
+
+  scratch_thin:
+    index: 1
+    preset_version: "1.0.0"
+    description: "Thin elongated scratch- or crack-like missing-region damage."
+    lower_damaged_content_fraction: 0.01
+    target_damaged_content_fraction: 0.02
+    upper_damaged_content_fraction: 0.03
+    generator:
+      primitive: "polyline_scratch"
+      line_count_min: 8
+      line_count_max: 16
+      line_width_min: 2
+      line_width_max: 5
+      segment_count_min: 3
+      segment_count_max: 6
+      step_length_min: 40
+      step_length_max: 120
+      angle_jitter_std_radians: 0.45
+      blur_radius: 0.4
+      binary_threshold: 35
+
+  loss_small:
+    index: 2
+    preset_version: "1.0.0"
+    description: "Several small localized irregular missing-paint regions."
+    lower_damaged_content_fraction: 0.03
+    target_damaged_content_fraction: 0.045
+    upper_damaged_content_fraction: 0.06
+    generator:
+      primitive: "irregular_blobs"
+      blob_count_min: 4
+      blob_count_max: 8
+      radius_min: 18
+      radius_max: 45
+      polygon_points_min: 9
+      polygon_points_max: 16
+      blur_radius: 1.5
+      binary_threshold: 80
+
+  loss_large:
+    index: 3
+    preset_version: "1.0.0"
+    description: "One or two large irregular missing regions."
+    lower_damaged_content_fraction: 0.10
+    target_damaged_content_fraction: 0.125
+    upper_damaged_content_fraction: 0.15
+    generator:
+      primitive: "irregular_blobs"
+      blob_count_min: 1
+      blob_count_max: 2
+      radius_min: 85
+      radius_max: 155
+      polygon_points_min: 14
+      polygon_points_max: 24
+      blur_radius: 2.5
+      binary_threshold: 80
+
+  mixed_damage:
+    index: 4
+    preset_version: "1.0.0"
+    description: "Combined scratches, scattered losses, a medium loss, and edge loss."
+    lower_damaged_content_fraction: 0.08
+    target_damaged_content_fraction: 0.115
+    upper_damaged_content_fraction: 0.15
+    generator:
+      primitive: "mixed_union"
+      scratch:
+        line_count_min: 5
+        line_count_max: 11
+        line_width_min: 2
+        line_width_max: 5
+        segment_count_min: 3
+        segment_count_max: 6
+        step_length_min: 40
+        step_length_max: 120
+        angle_jitter_std_radians: 0.45
+        blur_radius: 0.4
+        binary_threshold: 35
+      small_loss:
+        blob_count_min: 3
+        blob_count_max: 6
+        radius_min: 16
+        radius_max: 38
+        polygon_points_min: 8
+        polygon_points_max: 15
+        blur_radius: 1.4
+        binary_threshold: 80
+      medium_loss:
+        blob_count_min: 1
+        blob_count_max: 1
+        radius_min: 55
+        radius_max: 115
+        polygon_points_min: 12
+        polygon_points_max: 22
+        blur_radius: 2.2
+        binary_threshold: 80
+      edge_loss:
+        radius_min: 28
+        radius_max: 70
+        polygon_points_min: 10
+        polygon_points_max: 17
+        blur_radius: 2.0
+        binary_threshold: 80
+
+family_validation:
+  zero_control:
+    damaged_pixel_count: 0
+    connected_component_count: 0
+  scratch_thin:
+    maximum_median_bbox_fill_ratio: 0.05
+    minimum_median_maximum_component_aspect_ratio: 3.0
+  loss_small:
+    minimum_median_connected_component_count: 3.0
+  loss_large:
+    minimum_median_fraction_ratio_to_loss_small: 2.0
+    minimum_median_largest_component_fraction: 0.75
+  mixed_damage:
+    minimum_median_connected_component_count: 4.0
+    minimum_boundary_touch_fraction: 0.80
+    minimum_median_maximum_component_aspect_ratio: 2.0
+  cross_family:
+    maximum_pixel_equivalent_pairs_per_painting: 0
+
+expected:
+  painting_count: 50
+  family_count: 5
+  mask_count: 250
+  audit_row_count: 105
+  validation_row_count: 50
+  artifact_record_count: 7
+  mask_types:
+    - "zero_control"
+    - "scratch_thin"
+    - "loss_small"
+    - "loss_large"
+    - "mixed_damage"
+
+smoke:
+  selection_rule: "closest_to_median_content_area_fraction_then_dataset_sort_index"
+  painting_count: 1
+
+examples:
+  selection_rule: "closest_to_median_content_area_fraction_then_dataset_sort_index"
+  painting_count: 1
+  figure_dpi: 160
+
+exclusions:
+  - "blur"
+  - "fading"
+  - "discolouration"
+  - "dirt"
+  - "dust"
+  - "stains"
+  - "partial_transparency"
+  - "other_non_binary_degradation"
