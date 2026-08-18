@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.1.0"
+SCHEMAS_MODULE_VERSION = "1.2.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -159,6 +159,35 @@ MASK_AUDIT_COLUMNS = (
     "experiment_id", "audit_section", "group_field", "group_value",
     "comparison_group_value", "metric_name", "metric_value",
     "metric_unit", "numerator", "denominator", "status", "details",
+)
+
+CANONICAL_DAMAGE_CASES_COLUMNS = (
+    "dataset_id", "dataset_version", "dataset_scope", "experiment_id",
+    "case_id", "painting_id", "processed_image_id", "mask_id",
+    "mask_type", "damaged_image_id", "clean_image_path", "mask_path",
+    "damaged_image_path", "clean_image_sha256", "mask_sha256",
+    "damaged_image_sha256", "fill_strategy", "fill_color_r",
+    "fill_color_g", "fill_color_b", "mask_pixel_count",
+    "damaged_filename", "width", "height", "mode", "format",
+    "size_bytes", "generator_name", "generator_version",
+    "config_schema_version", "config_version", "generation_status",
+    "status", "issue",
+)
+
+CANONICAL_DAMAGE_AUDIT_COLUMNS = (
+    "dataset_id", "dataset_version", "dataset_scope", "experiment_id",
+    "case_id", "painting_id", "mask_id", "mask_type",
+    "clean_file_exists", "mask_file_exists", "damaged_file_exists",
+    "reload_passed", "clean_width", "clean_height", "mask_width",
+    "mask_height", "damaged_width", "damaged_height", "dimensions_match",
+    "mask_unique_values", "binary_values_valid", "total_mask_pixels",
+    "metadata_mask_pixels", "mask_pixel_count_difference",
+    "preexisting_fill_pixel_count", "expected_changed_pixel_count",
+    "observed_changed_pixel_count", "changed_pixel_count_difference",
+    "outside_mask_changed_pixel_count", "inside_mask_not_fill_pixel_count",
+    "clean_equals_damaged", "zero_control_valid", "clean_sha256_matches",
+    "mask_sha256_matches", "damaged_sha256_matches", "damaged_mode",
+    "damaged_format", "output_contract_valid", "validation_status", "issue",
 )
 
 @dataclass(frozen=True)
@@ -434,6 +463,49 @@ MASK_AUDIT_SCHEMA = DataFrameSchema(
     },
 )
 
+CANONICAL_DAMAGE_CASES_SCHEMA = DataFrameSchema(
+    name="canonical_damage_cases",
+    version="canonical_damage_cases.v1",
+    required_columns=CANONICAL_DAMAGE_CASES_COLUMNS,
+    primary_key=("case_id",),
+    non_nullable=tuple(
+        column for column in CANONICAL_DAMAGE_CASES_COLUMNS if column != "issue"
+    ),
+    allowed_values={
+        "fill_strategy": frozenset({"constant_rgb"}),
+        "mode": frozenset({"RGB"}),
+        "format": frozenset({"PNG"}),
+        "generation_status": frozenset({"passed"}),
+        "status": frozenset({"passed"}),
+    },
+)
+
+CANONICAL_DAMAGE_AUDIT_SCHEMA = DataFrameSchema(
+    name="canonical_damage_audit",
+    version="canonical_damage_audit.v1",
+    required_columns=CANONICAL_DAMAGE_AUDIT_COLUMNS,
+    primary_key=("case_id",),
+    non_nullable=tuple(
+        column for column in CANONICAL_DAMAGE_AUDIT_COLUMNS if column != "issue"
+    ),
+    allowed_values={
+        "clean_file_exists": frozenset({True}),
+        "mask_file_exists": frozenset({True}),
+        "damaged_file_exists": frozenset({True}),
+        "reload_passed": frozenset({True}),
+        "dimensions_match": frozenset({True}),
+        "binary_values_valid": frozenset({True}),
+        "zero_control_valid": frozenset({True}),
+        "clean_sha256_matches": frozenset({True}),
+        "mask_sha256_matches": frozenset({True}),
+        "damaged_sha256_matches": frozenset({True}),
+        "damaged_mode": frozenset({"RGB"}),
+        "damaged_format": frozenset({"PNG"}),
+        "output_contract_valid": frozenset({True}),
+        "validation_status": frozenset({"passed"}),
+    },
+)
+
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
     VALIDATION_CHECKS_SCHEMA.name: VALIDATION_CHECKS_SCHEMA,
@@ -444,6 +516,8 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     PREPROCESSING_AUDIT_SCHEMA.name: PREPROCESSING_AUDIT_SCHEMA,
     CANONICAL_MASKS_SCHEMA.name: CANONICAL_MASKS_SCHEMA,
     MASK_AUDIT_SCHEMA.name: MASK_AUDIT_SCHEMA,
+    CANONICAL_DAMAGE_CASES_SCHEMA.name: CANONICAL_DAMAGE_CASES_SCHEMA,
+    CANONICAL_DAMAGE_AUDIT_SCHEMA.name: CANONICAL_DAMAGE_AUDIT_SCHEMA,
 }
 
 

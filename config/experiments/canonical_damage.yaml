@@ -1,0 +1,93 @@
+config_schema_version: "canonical_damage_config.v1"
+config_version: "1.0.0"
+
+dataset:
+  dataset_id: "painting_restoration_eval"
+  dataset_version: "1.0.0"
+  dataset_scope: "controlled_50"
+  execution_profile: "controlled_50"
+  geometry_schema_version: "preprocessed_images.v1"
+  mask_schema_version: "canonical_masks.v1"
+  output_schema_version: "canonical_damage_cases.v1"
+  audit_schema_version: "canonical_damage_audit.v1"
+  experiment_id: "canonical_missing_region"
+
+inputs:
+  geometry_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+  clean_images_path: "outputs/02_image_preprocessing/images/clean"
+  preprocessing_artifacts_path: "outputs/02_image_preprocessing/manifests/artifacts.csv"
+  preprocessing_run_manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+  masks_path: "outputs/03_canonical_mask_generation/data/masks.csv"
+  mask_images_path: "outputs/03_canonical_mask_generation/images/masks"
+  masks_artifacts_path: "outputs/03_canonical_mask_generation/manifests/artifacts.csv"
+  masks_run_manifest_path: "outputs/03_canonical_mask_generation/manifests/run_manifest.json"
+  required_preprocessing_artifact_keys:
+    - "preprocessed_images"
+    - "clean_images"
+  required_mask_artifact_keys:
+    - "canonical_masks"
+    - "mask_images"
+  required_registry_keys:
+    - "preprocessing.geometry"
+    - "preprocessing.clean_images"
+    - "masks.canonical"
+    - "masks.canonical_images"
+  required_upstream_run_status: "completed"
+
+output:
+  notebook_stem: "04_canonical_damaged_image_generation"
+  cases_path: "data/cases.csv"
+  image_directory: "images/damaged"
+  image_path_template: "{painting_id}/{mask_type}.png"
+  audit_path: "metrics/damage_audit.csv"
+  examples_figure_path: "figures/damage_examples.png"
+
+generator:
+  name: "canonical_damage_generator"
+  version: "3.0.0"
+  fill_strategy: "constant_rgb"
+  fill_color_rgb:
+    - 255
+    - 255
+    - 255
+  zero_control_mask_type: "zero_control"
+  copy_zero_control_bytes: true
+  target_width: 768
+  target_height: 768
+  mask_background_value: 0
+  mask_damaged_value: 255
+  output_mode: "RGB"
+  output_format: "PNG"
+  output_extension: ".png"
+  png_compress_level: 6
+  png_optimize: false
+  strip_output_metadata: true
+  overwrite_existing: true
+  stale_file_action: "remove"
+
+expected:
+  painting_count: 50
+  mask_type_count: 5
+  case_count: 250
+  audit_row_count: 250
+  artifact_record_count: 5
+  mask_types:
+    - "zero_control"
+    - "scratch_thin"
+    - "loss_small"
+    - "loss_large"
+    - "mixed_damage"
+
+smoke:
+  selection_rule: "closest_to_median_content_area_fraction_then_dataset_sort_index"
+  painting_count: 1
+
+examples:
+  selection_rule: "same_as_smoke"
+  painting_count: 1
+  figure_dpi: 160
+  columns:
+    - "clean"
+    - "mask"
+    - "damaged"
+    - "changed_pixels"
