@@ -1,0 +1,156 @@
+config_schema_version: "damage_size_sensitivity_config.v1"
+config_version: "1.0.0"
+
+dataset:
+  dataset_id: "painting_restoration_eval"
+  dataset_version: "1.0.0"
+  dataset_scope: "controlled_50"
+  execution_profile: "controlled_50"
+  geometry_schema_version: "preprocessed_images.v1"
+  mask_schema_version: "canonical_masks.v1"
+  output_schema_version: "damage_size_cases.v1"
+  audit_schema_version: "damage_size_generation_audit.v1"
+  experiment_id: "damage_size_sensitivity"
+
+inputs:
+  geometry_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+  clean_images_path: "outputs/02_image_preprocessing/images/clean"
+  preprocessing_artifacts_path: "outputs/02_image_preprocessing/manifests/artifacts.csv"
+  preprocessing_run_manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+  masks_path: "outputs/03_canonical_mask_generation/data/masks.csv"
+  mask_images_path: "outputs/03_canonical_mask_generation/images/masks"
+  masks_artifacts_path: "outputs/03_canonical_mask_generation/manifests/artifacts.csv"
+  masks_run_manifest_path: "outputs/03_canonical_mask_generation/manifests/run_manifest.json"
+  required_preprocessing_artifact_keys:
+    - "preprocessed_images"
+    - "clean_images"
+  required_mask_artifact_keys:
+    - "canonical_masks"
+    - "mask_images"
+  required_registry_keys:
+    - "preprocessing.geometry"
+    - "preprocessing.clean_images"
+    - "masks.canonical"
+    - "masks.canonical_images"
+  required_upstream_run_status: "completed"
+
+output:
+  notebook_stem: "05_damage_size_sensitivity_dataset_generation"
+  cases_path: "data/cases.csv"
+  mask_directory: "images/masks"
+  damaged_directory: "images/damaged"
+  image_path_template: "{painting_id}/{level_id}.png"
+  audit_path: "metrics/generation_audit.csv"
+  progression_figure_path: "figures/damage_size_progression.png"
+
+cohort:
+  selection_policy: "pinned_one_per_controlled_visual_category"
+  base_mask_type: "loss_large"
+  paintings:
+    - painting_id: "p001"
+      category: "portrait_figure"
+    - painting_id: "p018"
+      category: "landscape_natural"
+    - painting_id: "p026"
+      category: "architecture_structured"
+    - painting_id: "p039"
+      category: "abstraction_surrealism"
+    - painting_id: "p043"
+      category: "high_texture_brushwork"
+
+levels:
+  - level_id: "size_02pct"
+    target_percentage_content: 2.0
+  - level_id: "size_04pct"
+    target_percentage_content: 4.0
+  - level_id: "size_06pct"
+    target_percentage_content: 6.0
+  - level_id: "size_08pct"
+    target_percentage_content: 8.0
+  - level_id: "size_10pct"
+    target_percentage_content: 10.0
+  - level_id: "size_15pct"
+    target_percentage_content: 15.0
+  - level_id: "size_20pct"
+    target_percentage_content: 20.0
+
+generator:
+  name: "damage_size_sensitivity_generator"
+  version: "3.0.0"
+  seed_scheme_version: "damage_size_nested_seed.v1"
+  global_seed: 20260505
+  scaling_method: "isotropic_nearest_neighbor_about_base_centroid"
+  nesting_policy: "strict_previous_level_subset"
+  boundary_correction_policy: "deterministic_radial_boundary_correction"
+  target_pixel_rounding: "round_half_up"
+  maximum_scale_iterations: 32
+  maximum_absolute_percentage_point_error: 0.01
+  fill_strategy: "constant_rgb"
+  fill_color_rgb:
+    - 255
+    - 255
+    - 255
+  target_width: 768
+  target_height: 768
+  mask_background_value: 0
+  mask_damaged_value: 255
+  mask_mode: "L"
+  damaged_mode: "RGB"
+  output_format: "PNG"
+  output_extension: ".png"
+  png_compress_level: 6
+  png_optimize: false
+  strip_output_metadata: true
+  overwrite_existing: true
+  stale_file_action: "remove"
+
+morphology:
+  component_connectivity: 8
+  perimeter_connectivity: 4
+  compactness_formula: "four_pi_area_over_perimeter_squared"
+  centroid_reference: "content_normalized_xy"
+  maximum_centroid_shift_pixels: 2.0
+  maximum_centroid_shift_fraction_of_content_diagonal: 0.005
+  maximum_relative_bbox_aspect_ratio_drift: 0.15
+  maximum_relative_compactness_drift: 0.35
+  require_component_count_preserved: true
+  require_no_content_boundary_contact: true
+  require_strict_nesting: true
+
+expected:
+  painting_count: 5
+  category_count: 5
+  base_mask_type_count: 1
+  target_level_count: 7
+  case_count: 35
+  audit_row_count: 35
+  mask_file_count: 35
+  damaged_file_count: 35
+  artifact_record_count: 6
+  total_output_file_count: 76
+
+smoke:
+  painting_id: "p039"
+  selection_reason: "median_content_area_within_pinned_cohort"
+  target_level_count: 7
+  repeat_count: 2
+  persist_outputs: false
+
+examples:
+  selection_rule: "minimum_median_maximum_content_area_within_pinned_cohort"
+  painting_ids:
+    - "p018"
+    - "p039"
+    - "p001"
+  figure_dpi: 160
+  columns:
+    - "clean"
+    - "size_02pct"
+    - "size_04pct"
+    - "size_06pct"
+    - "size_08pct"
+    - "size_10pct"
+    - "size_15pct"
+    - "size_20pct"
+  overlay_mask_contour: true
+  annotate_realized_percentage: true

@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.2.0"
+SCHEMAS_MODULE_VERSION = "1.3.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -188,6 +188,57 @@ CANONICAL_DAMAGE_AUDIT_COLUMNS = (
     "clean_equals_damaged", "zero_control_valid", "clean_sha256_matches",
     "mask_sha256_matches", "damaged_sha256_matches", "damaged_mode",
     "damaged_format", "output_contract_valid", "validation_status", "issue",
+)
+
+DAMAGE_SIZE_CASES_COLUMNS = (
+    "dataset_id", "dataset_version", "dataset_scope", "experiment_id",
+    "case_id", "painting_id", "processed_image_id", "base_mask_id",
+    "base_mask_type", "level_id", "mask_or_effect_id", "damaged_image_id",
+    "input_image_path", "clean_image_path", "base_mask_path",
+    "mask_or_effect_path", "target_damage_fraction", "target_damage_pixels",
+    "realized_damage_fraction", "realized_damage_pixels",
+    "absolute_percentage_point_error", "scale_factor",
+    "pre_correction_pixels", "correction_added_pixels",
+    "correction_removed_pixels", "previous_level_id", "previous_mask_id",
+    "nested_with_previous", "seed_scheme_version", "global_seed", "case_seed",
+    "damage_or_degradation_type", "fill_strategy", "fill_color_r",
+    "fill_color_g", "fill_color_b", "clean_image_sha256", "base_mask_sha256",
+    "mask_sha256", "damaged_image_sha256", "width", "height", "mask_mode",
+    "damaged_mode", "format", "mask_size_bytes", "damaged_size_bytes",
+    "generator_name", "generator_version", "config_schema_version",
+    "config_version", "source_manifest_path", "generation_status", "status",
+    "issue",
+)
+
+DAMAGE_SIZE_GENERATION_AUDIT_COLUMNS = (
+    "dataset_id", "dataset_version", "dataset_scope", "experiment_id",
+    "case_id", "painting_id", "level_id", "mask_or_effect_id",
+    "previous_level_id", "target_damage_fraction", "target_damage_pixels",
+    "realized_damage_fraction", "realized_damage_pixels",
+    "absolute_percentage_point_error", "area_within_tolerance",
+    "scale_factor", "pre_correction_pixels", "correction_added_pixels",
+    "correction_removed_pixels", "base_centroid_x", "base_centroid_y",
+    "scaled_centroid_x", "scaled_centroid_y", "centroid_shift_pixels",
+    "centroid_shift_fraction_of_content_diagonal",
+    "base_bbox_aspect_ratio", "scaled_bbox_aspect_ratio",
+    "relative_bbox_aspect_ratio_drift", "base_bbox_fill_ratio",
+    "scaled_bbox_fill_ratio", "relative_bbox_fill_ratio_drift",
+    "base_mask_perimeter_pixels", "scaled_mask_perimeter_pixels",
+    "base_mask_compactness", "scaled_mask_compactness",
+    "relative_compactness_drift", "base_connected_component_count",
+    "scaled_connected_component_count", "component_count_delta",
+    "base_largest_component_fraction", "scaled_largest_component_fraction",
+    "largest_component_fraction_drift", "touches_content_boundary",
+    "minimum_distance_to_content_boundary_pixels", "nested_with_previous",
+    "previous_pixels_removed", "pixels_added_from_previous",
+    "clean_file_exists", "base_mask_file_exists", "mask_file_exists",
+    "damaged_file_exists", "reload_passed", "dimensions_match",
+    "mask_unique_values", "binary_values_valid", "content_only_valid",
+    "metadata_mask_pixels_match", "outside_mask_changed_pixel_count",
+    "inside_mask_not_fill_pixel_count", "clean_sha256_matches",
+    "base_mask_sha256_matches", "mask_sha256_matches",
+    "damaged_sha256_matches", "output_contract_valid",
+    "morphology_preservation_status", "validation_status", "issue",
 )
 
 @dataclass(frozen=True)
@@ -506,6 +557,59 @@ CANONICAL_DAMAGE_AUDIT_SCHEMA = DataFrameSchema(
     },
 )
 
+DAMAGE_SIZE_CASES_SCHEMA = DataFrameSchema(
+    name="damage_size_cases",
+    version="damage_size_cases.v1",
+    required_columns=DAMAGE_SIZE_CASES_COLUMNS,
+    primary_key=("case_id",),
+    non_nullable=tuple(
+        column for column in DAMAGE_SIZE_CASES_COLUMNS
+        if column not in {"previous_level_id", "previous_mask_id", "issue"}
+    ),
+    allowed_values={
+        "base_mask_type": frozenset({"loss_large"}),
+        "damage_or_degradation_type": frozenset({"binary_missing_region"}),
+        "fill_strategy": frozenset({"constant_rgb"}),
+        "mask_mode": frozenset({"L"}),
+        "damaged_mode": frozenset({"RGB"}),
+        "format": frozenset({"PNG"}),
+        "nested_with_previous": frozenset({True}),
+        "generation_status": frozenset({"passed"}),
+        "status": frozenset({"passed"}),
+    },
+)
+
+DAMAGE_SIZE_GENERATION_AUDIT_SCHEMA = DataFrameSchema(
+    name="damage_size_generation_audit",
+    version="damage_size_generation_audit.v1",
+    required_columns=DAMAGE_SIZE_GENERATION_AUDIT_COLUMNS,
+    primary_key=("case_id",),
+    non_nullable=tuple(
+        column for column in DAMAGE_SIZE_GENERATION_AUDIT_COLUMNS
+        if column not in {"previous_level_id", "issue"}
+    ),
+    allowed_values={
+        "area_within_tolerance": frozenset({True}),
+        "nested_with_previous": frozenset({True}),
+        "clean_file_exists": frozenset({True}),
+        "base_mask_file_exists": frozenset({True}),
+        "mask_file_exists": frozenset({True}),
+        "damaged_file_exists": frozenset({True}),
+        "reload_passed": frozenset({True}),
+        "dimensions_match": frozenset({True}),
+        "binary_values_valid": frozenset({True}),
+        "content_only_valid": frozenset({True}),
+        "metadata_mask_pixels_match": frozenset({True}),
+        "clean_sha256_matches": frozenset({True}),
+        "base_mask_sha256_matches": frozenset({True}),
+        "mask_sha256_matches": frozenset({True}),
+        "damaged_sha256_matches": frozenset({True}),
+        "output_contract_valid": frozenset({True}),
+        "morphology_preservation_status": frozenset({"passed"}),
+        "validation_status": frozenset({"passed"}),
+    },
+)
+
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
     VALIDATION_CHECKS_SCHEMA.name: VALIDATION_CHECKS_SCHEMA,
@@ -518,6 +622,8 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     MASK_AUDIT_SCHEMA.name: MASK_AUDIT_SCHEMA,
     CANONICAL_DAMAGE_CASES_SCHEMA.name: CANONICAL_DAMAGE_CASES_SCHEMA,
     CANONICAL_DAMAGE_AUDIT_SCHEMA.name: CANONICAL_DAMAGE_AUDIT_SCHEMA,
+    DAMAGE_SIZE_CASES_SCHEMA.name: DAMAGE_SIZE_CASES_SCHEMA,
+    DAMAGE_SIZE_GENERATION_AUDIT_SCHEMA.name: DAMAGE_SIZE_GENERATION_AUDIT_SCHEMA,
 }
 
 

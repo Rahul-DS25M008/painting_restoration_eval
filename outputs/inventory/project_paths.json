@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-18T22:39:56.075203Z",
+  "updated_at_utc": "2026-08-19T18:34:01.747893Z",
   "artifacts": [
     {
       "artifact_key": "damage.audit",
@@ -57,6 +57,76 @@
       "row_count": "",
       "file_count": 1,
       "checksum": "d8d2ce87ec741f453d9c19481bb90dd8ab64594577e96d7fa06a89db1f8fff23"
+    },
+    {
+      "artifact_key": "damage_size.cases",
+      "producer_notebook": "05_damage_size_sensitivity_dataset_generation",
+      "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv",
+      "artifact_type": "dataset_table",
+      "artifact_role": "primary_downstream",
+      "schema_version": "damage_size_cases.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "damage_size_sensitivity",
+      "validation_status": "passed",
+      "row_count": 35,
+      "file_count": 1,
+      "checksum": "be2bc3db98728588642a2ce8eb8f731165e1a112f54b92972f13b4df7bf40501"
+    },
+    {
+      "artifact_key": "damage_size.damaged_images",
+      "producer_notebook": "05_damage_size_sensitivity_dataset_generation",
+      "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/images/damaged",
+      "artifact_type": "image_collection",
+      "artifact_role": "primary_downstream",
+      "schema_version": "damage_size_damaged_collection.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "damage_size_sensitivity",
+      "validation_status": "passed",
+      "row_count": 35,
+      "file_count": 35,
+      "checksum": "a8f1e2dc501abef03ff3daf8f316c168fbb4bcfe7bb4f83c7bb73d63f86bf08f"
+    },
+    {
+      "artifact_key": "damage_size.figure_progression",
+      "producer_notebook": "05_damage_size_sensitivity_dataset_generation",
+      "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/figures/damage_size_progression.png",
+      "artifact_type": "figure",
+      "artifact_role": "thesis_reporting",
+      "schema_version": "figure.damage_size_progression.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "damage_size_sensitivity",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "85a4113d6670aa3dbd0f309b905af9acd750a1fde2256baf2fc41e69066cbbf0"
+    },
+    {
+      "artifact_key": "damage_size.generation_audit",
+      "producer_notebook": "05_damage_size_sensitivity_dataset_generation",
+      "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/metrics/generation_audit.csv",
+      "artifact_type": "audit_table",
+      "artifact_role": "audit_reporting",
+      "schema_version": "damage_size_generation_audit.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "damage_size_sensitivity",
+      "validation_status": "passed",
+      "row_count": 35,
+      "file_count": 1,
+      "checksum": "6933357f5b1e9f68cd24ddc74cc9617e0d9ec1e2468fc2f9865e85d249c923ad"
+    },
+    {
+      "artifact_key": "damage_size.masks",
+      "producer_notebook": "05_damage_size_sensitivity_dataset_generation",
+      "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/images/masks",
+      "artifact_type": "image_collection",
+      "artifact_role": "primary_downstream",
+      "schema_version": "damage_size_mask_collection.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "damage_size_sensitivity",
+      "validation_status": "passed",
+      "row_count": 35,
+      "file_count": 35,
+      "checksum": "e76f157ad4c53729fbd73c191fd96b071692ea18d3cc7e57ebc7f9aa16614583"
     },
     {
       "artifact_key": "dataset.artworks",
@@ -309,6 +379,20 @@
       "row_count": 60,
       "file_count": 1,
       "checksum": "c85598dc73b55e2e4eaf3f4d0e339860564465dbe9d8104dee2d76176be0bf22"
+    },
+    {
+      "artifact_key": "validation.05_damage_size_sensitivity_dataset_generation",
+      "producer_notebook": "05_damage_size_sensitivity_dataset_generation",
+      "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "damage_size_sensitivity",
+      "validation_status": "passed",
+      "row_count": 96,
+      "file_count": 1,
+      "checksum": "bf5b198bb87a2bc510462c2953ed1180a519f6ffb63b67794d0c76dd764d5bf5"
     }
   ]
 }

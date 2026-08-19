@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-18T22:39:56.075203Z`
-- Registered artifacts: 22
+- Updated: `2026-08-19T18:34:01.747893Z`
+- Registered artifacts: 28
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -10,6 +10,11 @@
 | damage.canonical_cases | 04_canonical_damaged_image_generation | `outputs/04_canonical_damaged_image_generation/data/cases.csv` | primary_downstream | passed |
 | damage.canonical_images | 04_canonical_damaged_image_generation | `outputs/04_canonical_damaged_image_generation/images/damaged` | primary_downstream | passed |
 | damage.figure_examples | 04_canonical_damaged_image_generation | `outputs/04_canonical_damaged_image_generation/figures/damage_examples.png` | qa_reporting | passed |
+| damage_size.cases | 05_damage_size_sensitivity_dataset_generation | `outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv` | primary_downstream | passed |
+| damage_size.damaged_images | 05_damage_size_sensitivity_dataset_generation | `outputs/05_damage_size_sensitivity_dataset_generation/images/damaged` | primary_downstream | passed |
+| damage_size.figure_progression | 05_damage_size_sensitivity_dataset_generation | `outputs/05_damage_size_sensitivity_dataset_generation/figures/damage_size_progression.png` | thesis_reporting | passed |
+| damage_size.generation_audit | 05_damage_size_sensitivity_dataset_generation | `outputs/05_damage_size_sensitivity_dataset_generation/metrics/generation_audit.csv` | audit_reporting | passed |
+| damage_size.masks | 05_damage_size_sensitivity_dataset_generation | `outputs/05_damage_size_sensitivity_dataset_generation/images/masks` | primary_downstream | passed |
 | dataset.artworks | 01_dataset_verification | `outputs/01_dataset_verification/data/artworks.csv` | primary_downstream | passed |
 | dataset.audit | 01_dataset_verification | `outputs/01_dataset_verification/metrics/dataset_audit.csv` | audit_reporting | passed |
 | dataset.figure_distribution | 01_dataset_verification | `outputs/01_dataset_verification/figures/dataset_distribution.png` | reporting | passed |
@@ -28,3 +33,4 @@
 | validation.02_image_preprocessing | 02_image_preprocessing | `outputs/02_image_preprocessing/validation/checks.csv` | validation | passed |
 | validation.03_canonical_mask_generation | 03_canonical_mask_generation | `outputs/03_canonical_mask_generation/validation/checks.csv` | validation | passed |
 | validation.04_canonical_damaged_image_generation | 04_canonical_damaged_image_generation | `outputs/04_canonical_damaged_image_generation/validation/checks.csv` | validation | passed |
+| validation.05_damage_size_sensitivity_dataset_generation | 05_damage_size_sensitivity_dataset_generation | `outputs/05_damage_size_sensitivity_dataset_generation/validation/checks.csv` | validation | passed |
