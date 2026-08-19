@@ -1,2651 +1,1148 @@
-"""Deterministic synthetic-degradation dataset generation utilities."""
+"""Deterministic non-binary synthetic-degradation generation for Notebook 07."""
 
 from __future__ import annotations
 
 import hashlib
 import json
-from datetime import datetime, timezone
+import math
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Iterable, Mapping, Sequence
+from typing import Any, Callable, Mapping, Sequence
 
 import numpy as np
 import pandas as pd
-from PIL import Image, ImageDraw, ImageFilter, ImageEnhance
+import yaml
+from PIL import Image, ImageDraw, ImageEnhance, ImageFilter
 
-from restoration_eval.damage import compute_file_sha256
+from .manifests import sha256_file
+from .paths import (
+    find_project_root,
+    require_notebook_output_path,
+    resolve_repo_path,
+    to_repo_relative,
+)
+from .schemas import (
+    PREPROCESSED_IMAGES_SCHEMA,
+    SYNTHETIC_DEGRADATION_CASES_COLUMNS,
+    SYNTHETIC_DEGRADATION_CASES_SCHEMA,
+    SYNTHETIC_DEGRADATION_GENERATION_AUDIT_COLUMNS,
+    SYNTHETIC_DEGRADATION_GENERATION_AUDIT_SCHEMA,
+    validate_dataframe,
+)
 
 
-GENERATOR_NAME = "synthetic_degradation"
-GENERATOR_VERSION = "1.0.0"
+SYNTHETIC_DEGRADATION_MODULE_VERSION = "2.0.0"
+SYNTHETIC_DEGRADATION_CONFIG_SCHEMA_VERSION = "synthetic_degradation_config.v1"
+GENERATOR_NAME = "synthetic_degradation_generator"
+GENERATOR_VERSION = SYNTHETIC_DEGRADATION_MODULE_VERSION
+SEED_SCHEME_VERSION = "synthetic_degradation_seed.v2"
 
-DEFAULT_DEGRADATION_TYPES = (
-    "blur",
+SUPPORTED_SINGLE_FAMILIES = (
+    "gaussian_blur",
+    "motion_blur",
+    "local_defocus",
     "water_stain",
+    "pigment_bleeding",
     "fading",
     "discolouration",
+    "local_darkening",
     "dirt_dust",
     "partial_transparency",
 )
-
-DEFAULT_SEVERITY_LEVELS = (
-    "mild",
-    "moderate",
-    "severe",
+SUPPORTED_COMBINED_FAMILIES = (
+    "fading_discolouration",
+    "water_stain_dirt",
+    "gaussian_blur_fading",
 )
-
-DEFAULT_COMBINED_DEGRADATIONS = {
-    "fading_discolouration": (
-        "fading",
-        "discolouration",
-    ),
-    "water_stain_dirt": (
-        "water_stain",
-        "dirt_dust",
-    ),
-    "blur_fading": (
-        "blur",
-        "fading",
-    ),
-}
-
-SEVERITY_RANK = {
-    "mild": 1,
-    "moderate": 2,
-    "severe": 3,
-}
-
-EFFECT_MASK_FILENAME_SUFFIX = "_effect_mask.png"
-DEGRADED_FILENAME_SUFFIX = "_degraded.png"
+SUPPORTED_SEVERITIES = ("mild", "moderate", "severe")
+SEVERITY_RANK = {name: index for index, name in enumerate(SUPPORTED_SEVERITIES, 1)}
 
 
-def _stable_seed(
-    *parts: object,
-    modulus: int = 2**32 - 1,
-) -> int:
-    payload = "||".join(
-        str(part)
-        for part in parts
-    ).encode("utf-8")
-
-    digest = hashlib.sha256(
-        payload
-    ).digest()
-
-    return int.from_bytes(
-        digest[:8],
-        byteorder="big",
-        signed=False,
-    ) % modulus
+@dataclass(frozen=True)
+class GeneratedDegradation:
+    effect_mask: Image.Image
+    degraded: Image.Image
+    metadata: Mapping[str, Any]
 
 
-def _resolve_existing_path(
-    path_value: str | Path,
-    project_root: str | Path | None = None,
-) -> Path:
-    path = Path(path_value)
+@dataclass(frozen=True)
+class SyntheticDegradationGenerationResult:
+    cases: pd.DataFrame
+    removed_stale_paths: tuple[str, ...]
 
-    if path.is_absolute():
-        return path
 
-    if project_root is not None:
-        candidate = (
-            Path(project_root)
-            / path
+@dataclass(frozen=True)
+class SyntheticDegradationValidationResult:
+    audit: pd.DataFrame
+    orphan_paths: tuple[str, ...]
+
+    @property
+    def passed(self) -> bool:
+        return bool(
+            not self.orphan_paths
+            and len(self.audit) > 0
+            and self.audit["validation_status"].eq("passed").all()
         )
 
-        if candidate.exists():
-            return candidate
 
-    return path
-
-
-def _safe_relative_string(
-    path: str | Path,
-    project_root: str | Path | None = None,
-) -> str:
-    resolved_path = Path(path)
-
-    if project_root is None:
-        return resolved_path.as_posix()
-
-    project_root_path = (
-        Path(project_root).resolve()
-    )
-
-    try:
-        return (
-            resolved_path.resolve()
-            .relative_to(
-                project_root_path
-            )
-            .as_posix()
-        )
-    except ValueError:
-        return resolved_path.as_posix()
+def _mapping(parent: Mapping[str, Any], key: str) -> Mapping[str, Any]:
+    value = parent.get(key)
+    if not isinstance(value, Mapping):
+        raise ValueError(f"Synthetic-degradation configuration key {key!r} must be a mapping")
+    return value
 
 
-def _extract_clean_path_value(
-    row: pd.Series,
-) -> str | Path:
-    candidates = (
-        "processed_path",
-        "clean_path",
-        "image_path",
-        "processed_image_path",
-    )
-
-    for column in candidates:
-        if (
-            column in row.index
-            and pd.notna(row[column])
-        ):
-            return row[column]
-
-    raise ValueError(
-        "Processed metadata does not contain "
-        "a usable clean-image path."
-    )
+def _relative(value: Any) -> bool:
+    text = str(value).strip()
+    return bool(text) and not Path(text).is_absolute() and "\\" not in text
 
 
-def _content_box_from_row(
-    row: pd.Series,
-    target_size: int,
-) -> tuple[int, int, int, int]:
-    column_groups = (
-        (
-            "content_x_min",
-            "content_y_min",
-            "content_x_max",
-            "content_y_max",
-        ),
-        (
-            "content_bbox_left",
-            "content_bbox_top",
-            "content_bbox_right",
-            "content_bbox_bottom",
-        ),
-    )
-
-    for columns in column_groups:
-        if not all(
-            column in row.index
-            and pd.notna(row[column])
-            for column in columns
-        ):
-            continue
-
-        values = tuple(
-            int(round(float(row[column])))
-            for column in columns
-        )
-
-        left, top, right, bottom = values
-
-        if (
-            0 <= left < right <= target_size
-            and 0 <= top < bottom <= target_size
-        ):
-            return values
-
-    raise ValueError(
-        "Processed metadata does not contain "
-        "a valid content bounding box."
-    )
+def _json(value: Any) -> str:
+    return json.dumps(value, sort_keys=True, separators=(",", ":"))
 
 
-def _normalise_degradation_types(
-    degradation_types: Iterable[str],
-) -> tuple[str, ...]:
-    values = tuple(
-        str(value)
-        for value in degradation_types
-    )
-
-    if not values:
-        raise ValueError(
-            "At least one degradation type is required."
-        )
-
-    if len(values) != len(set(values)):
-        raise ValueError(
-            "Degradation types must be unique."
-        )
-
-    unsupported = sorted(
-        set(values)
-        - set(DEFAULT_DEGRADATION_TYPES)
-    )
-
-    if unsupported:
-        raise ValueError(
-            f"Unsupported degradation types: {unsupported}"
-        )
-
-    return values
+def stable_case_seed(*parts: object, modulus: int = 2**32 - 1) -> int:
+    """Return a stable platform-independent integer seed."""
+    payload = "||".join(str(part) for part in parts).encode("utf-8")
+    return int.from_bytes(hashlib.sha256(payload).digest()[:8], "big") % modulus
 
 
-def _normalise_severity_levels(
-    severity_levels: Iterable[str],
-) -> tuple[str, ...]:
-    values = tuple(
-        str(value)
-        for value in severity_levels
-    )
-
-    if not values:
-        raise ValueError(
-            "At least one severity level is required."
-        )
-
-    if len(values) != len(set(values)):
-        raise ValueError(
-            "Severity levels must be unique."
-        )
-
-    unsupported = sorted(
-        set(values)
-        - set(SEVERITY_RANK)
-    )
-
-    if unsupported:
-        raise ValueError(
-            f"Unsupported severity levels: {unsupported}"
-        )
-
-    return tuple(
-        sorted(
-            values,
-            key=lambda value: SEVERITY_RANK[value],
-        )
-    )
+def degradation_id(family_id: str, severity: str) -> str:
+    if family_id not in (*SUPPORTED_SINGLE_FAMILIES, *SUPPORTED_COMBINED_FAMILIES):
+        raise ValueError(f"Unsupported degradation family: {family_id}")
+    if severity not in SUPPORTED_SEVERITIES:
+        raise ValueError(f"Unsupported severity: {severity}")
+    return f"{family_id}__{severity}"
 
 
-def _normalise_combined_degradations(
-    combined_degradations: (
-        Mapping[str, Sequence[str]]
-        | Iterable[str]
-        | None
-    ),
-) -> dict[str, tuple[str, ...]]:
-    if combined_degradations is None:
+def degradation_case_id(painting_id: str, family_id: str, severity: str) -> str:
+    return f"synthetic_degradation__{painting_id}__{degradation_id(family_id, severity)}"
+
+
+def family_configuration(config: Mapping[str, Any]) -> dict[str, dict[str, Any]]:
+    families = config.get("families")
+    if not isinstance(families, list):
         return {}
-
-    if isinstance(
-        combined_degradations,
-        Mapping,
-    ):
-        source = combined_degradations
-    else:
-        source = {
-            str(name): (
-                DEFAULT_COMBINED_DEGRADATIONS[
-                    str(name)
-                ]
-            )
-            for name in combined_degradations
-        }
-
-    result: dict[str, tuple[str, ...]] = {}
-
-    for name, components in source.items():
-        component_values = tuple(
-            str(value)
-            for value in components
-        )
-
-        if len(component_values) < 2:
-            raise ValueError(
-                "Combined degradation must contain "
-                "at least two component operators."
-            )
-
-        unsupported = sorted(
-            set(component_values)
-            - set(DEFAULT_DEGRADATION_TYPES)
-        )
-
-        if unsupported:
-            raise ValueError(
-                f"Unsupported combined components "
-                f"for {name}: {unsupported}"
-            )
-
-        result[str(name)] = component_values
-
-    return result
-
-
-def _severity_parameters(
-    degradation_type: str,
-    severity: str,
-) -> dict[str, Any]:
-    rank = SEVERITY_RANK[severity]
-
-    parameters: dict[str, dict[int, dict[str, Any]]] = {
-        "blur": {
-            1: {
-                "blur_radius": 1.5,
-                "effect_opacity": 0.55,
-            },
-            2: {
-                "blur_radius": 3.0,
-                "effect_opacity": 0.75,
-            },
-            3: {
-                "blur_radius": 5.0,
-                "effect_opacity": 0.95,
-            },
-        },
-        "water_stain": {
-            1: {
-                "stain_opacity": 0.18,
-                "ring_strength": 0.18,
-                "stain_colour_rgb": (
-                    142,
-                    104,
-                    58,
-                ),
-            },
-            2: {
-                "stain_opacity": 0.28,
-                "ring_strength": 0.28,
-                "stain_colour_rgb": (
-                    132,
-                    91,
-                    45,
-                ),
-            },
-            3: {
-                "stain_opacity": 0.40,
-                "ring_strength": 0.38,
-                "stain_colour_rgb": (
-                    116,
-                    72,
-                    34,
-                ),
-            },
-        },
-        "fading": {
-            1: {
-                "saturation_factor": 0.82,
-                "contrast_factor": 0.94,
-                "brightness_factor": 1.03,
-            },
-            2: {
-                "saturation_factor": 0.62,
-                "contrast_factor": 0.86,
-                "brightness_factor": 1.07,
-            },
-            3: {
-                "saturation_factor": 0.42,
-                "contrast_factor": 0.76,
-                "brightness_factor": 1.12,
-            },
-        },
-        "discolouration": {
-            1: {
-                "channel_scale_r": 1.04,
-                "channel_scale_g": 0.99,
-                "channel_scale_b": 0.94,
-            },
-            2: {
-                "channel_scale_r": 1.09,
-                "channel_scale_g": 0.97,
-                "channel_scale_b": 0.86,
-            },
-            3: {
-                "channel_scale_r": 1.15,
-                "channel_scale_g": 0.94,
-                "channel_scale_b": 0.76,
-            },
-        },
-        "dirt_dust": {
-            1: {
-                "particle_density": 0.00020,
-                "particle_radius_min": 1,
-                "particle_radius_max": 3,
-                "particle_opacity": 0.24,
-                "grime_strength": 0.05,
-            },
-            2: {
-                "particle_density": 0.00045,
-                "particle_radius_min": 1,
-                "particle_radius_max": 5,
-                "particle_opacity": 0.36,
-                "grime_strength": 0.10,
-            },
-            3: {
-                "particle_density": 0.00080,
-                "particle_radius_min": 1,
-                "particle_radius_max": 7,
-                "particle_opacity": 0.50,
-                "grime_strength": 0.16,
-            },
-        },
-        "partial_transparency": {
-            1: {
-                "transparency_alpha": 0.12,
-                "substrate_colour_rgb": (
-                    196,
-                    178,
-                    145,
-                ),
-            },
-            2: {
-                "transparency_alpha": 0.24,
-                "substrate_colour_rgb": (
-                    196,
-                    178,
-                    145,
-                ),
-            },
-            3: {
-                "transparency_alpha": 0.40,
-                "substrate_colour_rgb": (
-                    196,
-                    178,
-                    145,
-                ),
-            },
-        },
+    return {
+        str(item.get("family_id", "")): dict(item)
+        for item in families
+        if isinstance(item, Mapping)
     }
 
-    return dict(
-        parameters[
-            degradation_type
-        ][rank]
+
+def combined_configuration(config: Mapping[str, Any]) -> dict[str, dict[str, Any]]:
+    combinations = config.get("combined_degradations")
+    if not isinstance(combinations, list):
+        return {}
+    return {
+        str(item.get("family_id", "")): dict(item)
+        for item in combinations
+        if isinstance(item, Mapping)
+    }
+
+
+def cohort_painting_ids(config: Mapping[str, Any]) -> tuple[str, ...]:
+    cohort = config.get("cohort", {})
+    paintings = cohort.get("paintings", []) if isinstance(cohort, Mapping) else []
+    return tuple(
+        str(item["painting_id"])
+        for item in paintings
+        if isinstance(item, Mapping) and "painting_id" in item
     )
 
 
-def _content_gate(
-    size: tuple[int, int],
-    content_box: tuple[int, int, int, int],
-) -> np.ndarray:
+def validate_synthetic_degradation_config(config: Mapping[str, Any]) -> list[str]:
+    """Return every violation of the approved Notebook 07 contract."""
+    errors: list[str] = []
+    if config.get("config_schema_version") != SYNTHETIC_DEGRADATION_CONFIG_SCHEMA_VERSION:
+        errors.append(
+            f"config_schema_version must equal {SYNTHETIC_DEGRADATION_CONFIG_SCHEMA_VERSION}"
+        )
+    try:
+        dataset = _mapping(config, "dataset")
+        inputs = _mapping(config, "inputs")
+        output = _mapping(config, "output")
+        cohort = _mapping(config, "cohort")
+        generator = _mapping(config, "generator")
+        expected = _mapping(config, "expected")
+        smoke = _mapping(config, "smoke")
+        examples = _mapping(config, "examples")
+        interpretation = _mapping(config, "interpretation")
+    except ValueError as exc:
+        return errors + [str(exc)]
+
+    required_schemas = {
+        "geometry_schema_version": PREPROCESSED_IMAGES_SCHEMA.version,
+        "output_schema_version": SYNTHETIC_DEGRADATION_CASES_SCHEMA.version,
+        "audit_schema_version": SYNTHETIC_DEGRADATION_GENERATION_AUDIT_SCHEMA.version,
+    }
+    for key, value in required_schemas.items():
+        if dataset.get(key) != value:
+            errors.append(f"dataset.{key} must equal {value}")
+    for key in (
+        "dataset_id", "dataset_version", "dataset_scope", "execution_profile",
+        "experiment_id",
+    ):
+        if not str(dataset.get(key, "")).strip():
+            errors.append(f"dataset.{key} must be non-empty")
+
+    for key in (
+        "geometry_path", "clean_images_path", "preprocessing_artifacts_path",
+        "preprocessing_run_manifest_path",
+    ):
+        if not _relative(inputs.get(key, "")):
+            errors.append(f"inputs.{key} must be a normalized repository-relative path")
+
+    output_contract = {
+        "notebook_stem": "07_synthetic_degradation_dataset_generation",
+        "cases_path": "data/cases.csv",
+        "effect_mask_directory": "images/effect_masks",
+        "degraded_directory": "images/degraded",
+        "image_path_template": "{painting_id}/{degradation_id}.png",
+        "audit_path": "metrics/generation_audit.csv",
+        "examples_figure_path": "figures/degradation_examples.png",
+        "protocol_path": "reports/degradation_protocol.md",
+    }
+    for key, value in output_contract.items():
+        if output.get(key) != value:
+            errors.append(f"output.{key} must equal {value!r}")
+
+    paintings = cohort.get("paintings") if isinstance(cohort.get("paintings"), list) else []
+    ids = [str(item.get("painting_id", "")) for item in paintings if isinstance(item, Mapping)]
+    categories = [str(item.get("category", "")) for item in paintings if isinstance(item, Mapping)]
+    if ids != ["p001", "p018", "p026", "p039", "p043"]:
+        errors.append("cohort painting identifiers differ from the approved balanced-five cohort")
+    if len(set(categories)) != 5 or any(not value for value in categories):
+        errors.append("cohort must contain five unique non-empty categories")
+
+    severities = config.get("severity_levels")
+    severity_names = [
+        str(item.get("severity", "")) for item in severities
+        if isinstance(severities, list) and isinstance(item, Mapping)
+    ] if isinstance(severities, list) else []
+    severity_ranks = [
+        int(item.get("severity_rank", -1)) for item in severities
+        if isinstance(item, Mapping)
+    ] if isinstance(severities, list) else []
+    if tuple(severity_names) != SUPPORTED_SEVERITIES or severity_ranks != [1, 2, 3]:
+        errors.append("severity_levels must define mild, moderate, severe with ranks 1, 2, 3")
+
+    families = family_configuration(config)
+    if tuple(families) != SUPPORTED_SINGLE_FAMILIES:
+        errors.append(f"single family order must equal {SUPPORTED_SINGLE_FAMILIES}")
+    for family_id, family in families.items():
+        if family.get("operator") != family_id:
+            errors.append(f"family {family_id!r} operator must use the same stable identifier")
+        if not str(family.get("spatial_support_type", "")).strip():
+            errors.append(f"family {family_id!r} requires spatial_support_type")
+        parameters = family.get("parameters")
+        if not isinstance(parameters, Mapping) or tuple(parameters) != SUPPORTED_SEVERITIES:
+            errors.append(f"family {family_id!r} requires parameters for all severities in order")
+
+    combinations = combined_configuration(config)
+    if tuple(combinations) != SUPPORTED_COMBINED_FAMILIES:
+        errors.append(f"combined family order must equal {SUPPORTED_COMBINED_FAMILIES}")
+    for family_id, combination in combinations.items():
+        components = combination.get("components")
+        if combination.get("severity") != "moderate":
+            errors.append(f"combined family {family_id!r} must use moderate severity")
+        if (
+            not isinstance(components, list)
+            or len(components) < 2
+            or any(component not in SUPPORTED_SINGLE_FAMILIES for component in components)
+        ):
+            errors.append(f"combined family {family_id!r} has invalid components")
+
+    generator_contract = {
+        "name": GENERATOR_NAME,
+        "version": GENERATOR_VERSION,
+        "seed_scheme_version": SEED_SCHEME_VERSION,
+        "target_width": 768,
+        "target_height": 768,
+        "effect_mask_mode": "L",
+        "degraded_mode": "RGB",
+        "output_format": "PNG",
+        "output_extension": ".png",
+        "support_threshold": 1,
+        "active_threshold": 13,
+        "change_threshold_rgb": 0,
+        "progress_interval_cases": 10,
+        "overwrite_existing": True,
+        "stale_file_action": "remove",
+    }
+    for key, value in generator_contract.items():
+        if generator.get(key) != value:
+            errors.append(f"generator.{key} must equal {value!r}")
+
+    count_contract = {
+        "painting_count": 5, "category_count": 5,
+        "single_family_count": 10, "severity_count": 3,
+        "single_case_count": 150, "combined_family_count": 3,
+        "combined_case_count": 15, "case_count": 165,
+        "audit_row_count": 165, "effect_mask_file_count": 165,
+        "degraded_file_count": 165, "artifact_record_count": 7,
+        "total_output_file_count": 337,
+    }
+    for key, value in count_contract.items():
+        if expected.get(key) != value:
+            errors.append(f"expected.{key} must equal {value}")
+
+    if (
+        smoke.get("painting_id") != "p039"
+        or smoke.get("single_severity") != "moderate"
+        or smoke.get("expected_case_count") != 13
+        or smoke.get("repeat_count") != 2
+        or smoke.get("persist_outputs") is not False
+    ):
+        errors.append("smoke contract must be the non-persisted repeated 13-case p039 design")
+    if examples.get("painting_id") != "p039" or examples.get("single_severity") != "moderate":
+        errors.append("examples contract must use p039 at moderate single-family severity")
+    if interpretation.get("branch_type") != "non_binary_procedural_degradation":
+        errors.append("interpretation.branch_type must identify the non-binary branch")
+    if "not exact simulations" not in str(interpretation.get("physical_claim", "")):
+        errors.append("interpretation.physical_claim must state the procedural limitation")
+    return errors
+
+
+def load_synthetic_degradation_config(path: str | Path) -> dict[str, Any]:
+    with Path(path).open("r", encoding="utf-8-sig") as handle:
+        payload = yaml.safe_load(handle)
+    if not isinstance(payload, Mapping):
+        raise ValueError("Synthetic-degradation configuration must load as a mapping")
+    config = dict(payload)
+    errors = validate_synthetic_degradation_config(config)
+    if errors:
+        raise ValueError("Invalid synthetic-degradation configuration: " + "; ".join(errors))
+    return config
+
+
+def resolve_synthetic_degradation_inputs(
+    config: Mapping[str, Any],
+    project_root: str | Path | None = None,
+    *,
+    must_exist: bool = True,
+) -> dict[str, Path]:
+    errors = validate_synthetic_degradation_config(config)
+    if errors:
+        raise ValueError("Invalid synthetic-degradation configuration: " + "; ".join(errors))
+    root = find_project_root(project_root)
+    return {
+        key: resolve_repo_path(value, root, must_exist=must_exist)
+        for key, value in config["inputs"].items()
+        if key.endswith("_path")
+    }
+
+
+def validate_synthetic_degradation_handoff(
+    preprocessed: pd.DataFrame,
+    config: Mapping[str, Any],
+    project_root: str | Path | None = None,
+    *,
+    verify_files: bool = True,
+) -> list[str]:
+    errors = ["configuration: " + error for error in validate_synthetic_degradation_config(config)]
+    schema_result = validate_dataframe(
+        preprocessed,
+        PREPROCESSED_IMAGES_SCHEMA,
+        allow_extra_columns=False,
+    )
+    if not schema_result.passed or schema_result.unexpected_columns:
+        errors.append(f"preprocessed schema violation: {schema_result.to_dict()}")
+    if errors:
+        return errors
+    dataset = config["dataset"]
+    for key in ("dataset_id", "dataset_version", "dataset_scope"):
+        if set(preprocessed[key].astype(str)) != {str(dataset[key])}:
+            errors.append(f"preprocessed {key} does not match configuration")
+    if len(preprocessed) != 50 or preprocessed["painting_id"].duplicated().any():
+        errors.append("preprocessed handoff must contain 50 unique paintings")
+    wanted = set(cohort_painting_ids(config))
+    available = set(preprocessed["painting_id"].astype(str))
+    if not wanted.issubset(available):
+        errors.append(f"preprocessed handoff is missing cohort paintings: {sorted(wanted - available)}")
+    if verify_files:
+        root = find_project_root(project_root)
+        selected = preprocessed.loc[preprocessed["painting_id"].astype(str).isin(wanted)]
+        missing = [
+            str(row.processed_path)
+            for row in selected.itertuples(index=False)
+            if not resolve_repo_path(str(row.processed_path), root, must_exist=False).is_file()
+        ]
+        if missing:
+            errors.append(f"cohort clean images are missing: {missing}")
+    return errors
+
+
+def select_synthetic_degradation_cohort(
+    preprocessed: pd.DataFrame,
+    config: Mapping[str, Any],
+) -> pd.DataFrame:
+    errors = validate_synthetic_degradation_handoff(preprocessed, config, verify_files=False)
+    if errors:
+        raise ValueError("Invalid Notebook 02 handoff: " + "; ".join(errors))
+    category_by_id = {
+        str(item["painting_id"]): str(item["category"])
+        for item in config["cohort"]["paintings"]
+    }
+    order = {painting_id: index for index, painting_id in enumerate(cohort_painting_ids(config))}
+    result = preprocessed.loc[
+        preprocessed["painting_id"].astype(str).isin(order)
+    ].copy()
+    result["category"] = result["painting_id"].astype(str).map(category_by_id)
+    result["_cohort_order"] = result["painting_id"].astype(str).map(order)
+    return result.sort_values("_cohort_order").drop(columns="_cohort_order").reset_index(drop=True)
+
+
+def build_degradation_design(config: Mapping[str, Any]) -> pd.DataFrame:
+    """Build the normalized deterministic 165-case design without touching files."""
+    errors = validate_synthetic_degradation_config(config)
+    if errors:
+        raise ValueError("Invalid synthetic-degradation configuration: " + "; ".join(errors))
+    categories = {
+        str(item["painting_id"]): str(item["category"])
+        for item in config["cohort"]["paintings"]
+    }
+    records: list[dict[str, Any]] = []
+    for painting_id in cohort_painting_ids(config):
+        for family_id in SUPPORTED_SINGLE_FAMILIES:
+            for severity in SUPPORTED_SEVERITIES:
+                records.append(
+                    _design_record(painting_id, categories[painting_id], family_id, severity, (family_id,))
+                )
+        for family_id, combination in combined_configuration(config).items():
+            records.append(
+                _design_record(
+                    painting_id,
+                    categories[painting_id],
+                    family_id,
+                    str(combination["severity"]),
+                    tuple(str(value) for value in combination["components"]),
+                )
+            )
+    design = pd.DataFrame.from_records(records)
+    if len(design) != int(config["expected"]["case_count"]):
+        raise RuntimeError("Constructed design does not match expected case count")
+    if design["case_id"].duplicated().any() or design["degradation_id"].isna().any():
+        raise RuntimeError("Constructed design contains invalid identifiers")
+    return design
+
+
+def _design_record(
+    painting_id: str,
+    category: str,
+    family_id: str,
+    severity: str,
+    components: Sequence[str],
+) -> dict[str, Any]:
+    return {
+        "case_id": degradation_case_id(painting_id, family_id, severity),
+        "degradation_id": degradation_id(family_id, severity),
+        "painting_id": painting_id,
+        "category": category,
+        "degradation_family": family_id,
+        "severity": severity,
+        "severity_rank": SEVERITY_RANK[severity],
+        "is_combined": len(components) > 1,
+        "component_degradations_json": _json(list(components)),
+        "component_count": len(components),
+        "operator_sequence_json": _json(list(components)),
+    }
+
+
+def smoke_design(config: Mapping[str, Any]) -> pd.DataFrame:
+    design = build_degradation_design(config)
+    smoke = config["smoke"]
+    return design.loc[
+        design["painting_id"].eq(str(smoke["painting_id"]))
+        & (
+            design["is_combined"]
+            | design["severity"].eq(str(smoke["single_severity"]))
+        )
+    ].reset_index(drop=True)
+
+
+def _content_box(row: Mapping[str, Any]) -> tuple[int, int, int, int]:
+    return tuple(int(row[key]) for key in ("content_x_min", "content_y_min", "content_x_max", "content_y_max"))
+
+
+def _content_gate(size: tuple[int, int], box: tuple[int, int, int, int]) -> np.ndarray:
     width, height = size
-
-    gate = np.zeros(
-        (height, width),
-        dtype=np.float32,
-    )
-
-    left, top, right, bottom = content_box
-    gate[
-        top:bottom,
-        left:right,
-    ] = 1.0
-
+    gate = np.zeros((height, width), dtype=np.uint8)
+    x0, y0, x1, y1 = box
+    gate[y0:y1, x0:x1] = 255
     return gate
 
 
-def _generate_effect_mask(
+def _soft_blobs(
+    size: tuple[int, int],
+    box: tuple[int, int, int, int],
+    rng: np.random.Generator,
+    *,
+    count: int,
+    coverage_fraction: float,
+    broad: bool = False,
+) -> np.ndarray:
+    width, height = size
+    x0, y0, x1, y1 = box
+    content_width, content_height = x1 - x0, y1 - y0
+    mask = Image.new("L", size, 0)
+    draw = ImageDraw.Draw(mask)
+    base_area = max(1.0, coverage_fraction * content_width * content_height / max(count, 1))
+    for _ in range(count):
+        aspect = float(rng.uniform(0.65, 1.55))
+        blob_width = min(content_width, max(8, int(round(math.sqrt(base_area * aspect) * 1.35))))
+        blob_height = min(content_height, max(8, int(round(math.sqrt(base_area / aspect) * 1.35))))
+        if broad:
+            blob_width = min(content_width, max(blob_width, int(content_width * 0.55)))
+            blob_height = min(content_height, max(blob_height, int(content_height * 0.55)))
+        cx = int(rng.integers(x0 + blob_width // 2, max(x0 + blob_width // 2 + 1, x1 - blob_width // 2)))
+        cy = int(rng.integers(y0 + blob_height // 2, max(y0 + blob_height // 2 + 1, y1 - blob_height // 2)))
+        draw.ellipse(
+            (cx - blob_width // 2, cy - blob_height // 2, cx + blob_width // 2, cy + blob_height // 2),
+            fill=int(rng.integers(190, 256)),
+        )
+    feather = max(2.0, 0.025 * min(content_width, content_height))
+    array = np.asarray(mask.filter(ImageFilter.GaussianBlur(feather)), dtype=np.uint8)
+    return np.minimum(array, _content_gate(size, box))
+
+
+def _ring_stain(
+    size: tuple[int, int],
+    box: tuple[int, int, int, int],
+    rng: np.random.Generator,
+    coverage_fraction: float,
+) -> np.ndarray:
+    width, height = size
+    x0, y0, x1, y1 = box
+    content_width, content_height = x1 - x0, y1 - y0
+    area = coverage_fraction * content_width * content_height
+    radius_x = min(content_width // 2, max(14, int(math.sqrt(area / math.pi) * 1.25)))
+    radius_y = min(content_height // 2, max(14, int(radius_x * rng.uniform(0.65, 1.15))))
+    cx = int(rng.integers(x0 + radius_x, max(x0 + radius_x + 1, x1 - radius_x)))
+    cy = int(rng.integers(y0 + radius_y, max(y0 + radius_y + 1, y1 - radius_y)))
+    mask = Image.new("L", size, 0)
+    draw = ImageDraw.Draw(mask)
+    angle_values = np.linspace(0.0, 2.0 * math.pi, 72, endpoint=False)
+    radial_noise = rng.normal(0.0, 0.075, size=angle_values.size)
+    radial_noise = sum(np.roll(radial_noise, shift) for shift in range(-2, 3)) / 5.0
+    outer_points = [
+        (
+            int(round(cx + radius_x * (1.0 + noise) * math.cos(angle))),
+            int(round(cy + radius_y * (1.0 + noise) * math.sin(angle))),
+        )
+        for angle, noise in zip(angle_values, radial_noise)
+    ]
+    inner_noise = np.roll(radial_noise, 9) * 0.55
+    inner_points = [
+        (
+            int(round(cx + radius_x * 0.70 * (1.0 + noise) * math.cos(angle))),
+            int(round(cy + radius_y * 0.70 * (1.0 + noise) * math.sin(angle))),
+        )
+        for angle, noise in zip(angle_values, inner_noise)
+    ]
+    draw.polygon(outer_points, fill=118)
+    draw.polygon(inner_points, fill=62)
+    draw.line(
+        (*outer_points, outer_points[0]),
+        fill=255,
+        width=max(3, int(min(radius_x, radius_y) * 0.10)),
+        joint="curve",
+    )
+    array = np.asarray(mask.filter(ImageFilter.GaussianBlur(max(2.0, min(radius_x, radius_y) * 0.045))), dtype=np.uint8)
+    return np.minimum(array, _content_gate(size, box))
+
+
+def _speckles(
+    size: tuple[int, int],
+    box: tuple[int, int, int, int],
+    rng: np.random.Generator,
+    parameters: Mapping[str, Any],
+) -> np.ndarray:
+    x0, y0, x1, y1 = box
+    mask = Image.new("L", size, 0)
+    draw = ImageDraw.Draw(mask)
+    radius_max = int(parameters["radius_max"])
+    for _ in range(int(parameters["speck_count"])):
+        x, y = int(rng.integers(x0, x1)), int(rng.integers(y0, y1))
+        radius = int(rng.integers(1, radius_max + 1))
+        draw.ellipse((x - radius, y - radius, x + radius, y + radius), fill=int(rng.integers(120, 256)))
+    for _ in range(int(parameters["streak_count"])):
+        start = (int(rng.integers(x0, x1)), int(rng.integers(y0, y1)))
+        length = int(rng.integers(8, 30))
+        angle = float(rng.uniform(0, 2 * math.pi))
+        end = (int(start[0] + length * math.cos(angle)), int(start[1] + length * math.sin(angle)))
+        draw.line((start, end), fill=int(rng.integers(100, 220)), width=int(rng.integers(1, 3)))
+    array = np.asarray(mask.filter(ImageFilter.GaussianBlur(0.65)), dtype=np.uint8)
+    return np.minimum(array, _content_gate(size, box))
+
+
+def generate_effect_mask(
     size: tuple[int, int],
     content_box: tuple[int, int, int, int],
-    degradation_type: str,
-    severity: str,
-    rng: np.random.Generator,
+    family_id: str,
+    parameters: Mapping[str, Any],
+    seed: int,
+    spatial_support_type: str,
 ) -> Image.Image:
-    width, height = size
-    left, top, right, bottom = content_box
-
-    content_width = right - left
-    content_height = bottom - top
-    rank = SEVERITY_RANK[severity]
-
-    mask = Image.new(
-        "L",
-        size,
-        0,
-    )
-    draw = ImageDraw.Draw(mask)
-
-    if degradation_type in {
-        "fading",
-        "discolouration",
-        "blur",
-        "partial_transparency",
-    }:
-        fraction = {
-            1: 0.28,
-            2: 0.46,
-            3: 0.66,
-        }[rank]
-
-        ellipse_count = {
-            1: 2,
-            2: 3,
-            3: 4,
-        }[rank]
-
-        for _ in range(ellipse_count):
-            ellipse_width = max(
-                8,
-                int(
-                    content_width
-                    * rng.uniform(
-                        fraction * 0.55,
-                        fraction,
-                    )
-                ),
-            )
-            ellipse_height = max(
-                8,
-                int(
-                    content_height
-                    * rng.uniform(
-                        fraction * 0.55,
-                        fraction,
-                    )
-                ),
-            )
-
-            x0 = int(
-                rng.integers(
-                    left,
-                    max(
-                        left + 1,
-                        right - ellipse_width + 1,
-                    ),
-                )
-            )
-            y0 = int(
-                rng.integers(
-                    top,
-                    max(
-                        top + 1,
-                        bottom - ellipse_height + 1,
-                    ),
-                )
-            )
-
-            draw.ellipse(
-                (
-                    x0,
-                    y0,
-                    min(right, x0 + ellipse_width),
-                    min(bottom, y0 + ellipse_height),
-                ),
-                fill=int(
-                    rng.integers(
-                        150,
-                        256,
-                    )
-                ),
-            )
-
-        blur_radius = {
-            1: 22,
-            2: 30,
-            3: 38,
-        }[rank]
-
-        mask = mask.filter(
-            ImageFilter.GaussianBlur(
-                radius=blur_radius
-            )
-        )
-
-    elif degradation_type == "water_stain":
-        ring_count = {
-            1: 1,
-            2: 2,
-            3: 3,
-        }[rank]
-
-        for _ in range(ring_count):
-            ellipse_width = int(
-                content_width
-                * rng.uniform(
-                    0.22,
-                    0.48,
-                )
-            )
-            ellipse_height = int(
-                content_height
-                * rng.uniform(
-                    0.18,
-                    0.42,
-                )
-            )
-
-            x0 = int(
-                rng.integers(
-                    left,
-                    max(
-                        left + 1,
-                        right - ellipse_width + 1,
-                    ),
-                )
-            )
-            y0 = int(
-                rng.integers(
-                    top,
-                    max(
-                        top + 1,
-                        bottom - ellipse_height + 1,
-                    ),
-                )
-            )
-
-            bounds = (
-                x0,
-                y0,
-                min(right, x0 + ellipse_width),
-                min(bottom, y0 + ellipse_height),
-            )
-
-            draw.ellipse(
-                bounds,
-                fill=int(
-                    rng.integers(
-                        85,
-                        145,
-                    )
-                ),
-                outline=int(
-                    rng.integers(
-                        190,
-                        256,
-                    )
-                ),
-                width=max(
-                    2,
-                    int(
-                        min(
-                            ellipse_width,
-                            ellipse_height,
-                        )
-                        * 0.035
-                    ),
-                ),
-            )
-
-        mask = mask.filter(
-            ImageFilter.GaussianBlur(
-                radius={
-                    1: 5,
-                    2: 8,
-                    3: 11,
-                }[rank]
-            )
-        )
-
-    elif degradation_type == "dirt_dust":
-        area = (
-            content_width
-            * content_height
-        )
-
-        particle_count = max(
-            12,
-            int(
-                area
-                * {
-                    1: 0.00018,
-                    2: 0.00034,
-                    3: 0.00055,
-                }[rank]
-            ),
-        )
-
-        for _ in range(particle_count):
-            radius = int(
-                rng.integers(
-                    1,
-                    {
-                        1: 4,
-                        2: 6,
-                        3: 8,
-                    }[rank],
-                )
-            )
-            x = int(
-                rng.integers(
-                    left,
-                    right,
-                )
-            )
-            y = int(
-                rng.integers(
-                    top,
-                    bottom,
-                )
-            )
-            draw.ellipse(
-                (
-                    x - radius,
-                    y - radius,
-                    x + radius,
-                    y + radius,
-                ),
-                fill=int(
-                    rng.integers(
-                        90,
-                        256,
-                    )
-                ),
-            )
-
-        low_frequency = Image.new(
-            "L",
-            size,
-            0,
-        )
-        low_draw = ImageDraw.Draw(
-            low_frequency
-        )
-
-        for _ in range(rank + 1):
-            x0 = int(
-                rng.integers(
-                    left,
-                    right,
-                )
-            )
-            y0 = int(
-                rng.integers(
-                    top,
-                    bottom,
-                )
-            )
-            radius = int(
-                rng.uniform(
-                    0.08,
-                    0.20,
-                )
-                * min(
-                    content_width,
-                    content_height,
-                )
-            )
-            low_draw.ellipse(
-                (
-                    x0 - radius,
-                    y0 - radius,
-                    x0 + radius,
-                    y0 + radius,
-                ),
-                fill=int(
-                    rng.integers(
-                        40,
-                        100,
-                    )
-                ),
-            )
-
-        low_frequency = low_frequency.filter(
-            ImageFilter.GaussianBlur(
-                radius=30
-            )
-        )
-
-        mask = Image.fromarray(
-            np.maximum(
-                np.asarray(mask),
-                np.asarray(low_frequency),
-            ).astype(np.uint8),
-            mode="L",
-        )
-
-    else:
-        raise ValueError(
-            f"Unsupported degradation type: "
-            f"{degradation_type}"
-        )
-
-    mask_array = (
-        np.asarray(
-            mask,
-            dtype=np.float32,
-        )
-        * _content_gate(
+    """Create an independent grayscale operator-influence mask."""
+    rng = np.random.default_rng(seed)
+    if spatial_support_type == "full_content":
+        array = _content_gate(size, content_box)
+    elif spatial_support_type == "soft_ring_stain":
+        array = _ring_stain(size, content_box, rng, float(parameters["coverage_fraction"]))
+    elif spatial_support_type == "speckles_and_streaks":
+        array = _speckles(size, content_box, rng, parameters)
+    elif spatial_support_type in {"soft_local_blobs", "soft_broad_patch"}:
+        array = _soft_blobs(
             size,
             content_box,
+            rng,
+            count=int(parameters.get("blob_count", 2 if spatial_support_type == "soft_broad_patch" else 1)),
+            coverage_fraction=float(parameters["coverage_fraction"]),
+            broad=spatial_support_type == "soft_broad_patch",
         )
-    )
-
-    return Image.fromarray(
-        np.clip(
-            np.rint(mask_array),
-            0,
-            255,
-        ).astype(np.uint8),
-        mode="L",
-    )
+    else:
+        raise ValueError(f"Unsupported spatial support type: {spatial_support_type}")
+    return Image.fromarray(array.astype(np.uint8), mode="L")
 
 
-def _blend_with_mask(
-    clean_array: np.ndarray,
-    transformed_array: np.ndarray,
-    effect_mask_array: np.ndarray,
-    opacity: float = 1.0,
-) -> np.ndarray:
-    alpha = (
-        effect_mask_array.astype(
-            np.float32
-        )
-        / 255.0
-    )
-    alpha = np.clip(
-        alpha * float(opacity),
-        0.0,
-        1.0,
-    )[..., None]
-
-    blended = (
-        clean_array.astype(np.float32)
-        * (1.0 - alpha)
-        + transformed_array.astype(
-            np.float32
-        )
-        * alpha
-    )
-
-    return np.clip(
-        np.rint(blended),
-        0,
-        255,
-    ).astype(np.uint8)
+def _blend(base: np.ndarray, transformed: np.ndarray, mask: np.ndarray, strength: float) -> np.ndarray:
+    alpha = np.clip(mask.astype(np.float32) / 255.0 * float(strength), 0.0, 1.0)[..., None]
+    return np.rint(base.astype(np.float32) * (1.0 - alpha) + transformed.astype(np.float32) * alpha).clip(0, 255).astype(np.uint8)
 
 
-def _apply_operator(
-    image_array: np.ndarray,
-    effect_mask_array: np.ndarray,
-    degradation_type: str,
-    severity: str,
-    rng: np.random.Generator,
-) -> tuple[np.ndarray, dict[str, Any]]:
-    parameters = _severity_parameters(
-        degradation_type,
-        severity,
-    )
+def _motion_blur(array: np.ndarray, length: int, angle_degrees: float) -> np.ndarray:
+    offsets = np.linspace(-(length // 2), length // 2, length)
+    angle = math.radians(angle_degrees)
+    dx = [int(round(value * math.cos(angle))) for value in offsets]
+    dy = [int(round(value * math.sin(angle))) for value in offsets]
+    pad = max(max(abs(value) for value in dx), max(abs(value) for value in dy), 1)
+    padded = np.pad(array, ((pad, pad), (pad, pad), (0, 0)), mode="edge")
+    height, width = array.shape[:2]
+    shifted = [
+        padded[pad - one_dy:pad - one_dy + height, pad - one_dx:pad - one_dx + width]
+        for one_dx, one_dy in zip(dx, dy)
+    ]
+    return np.rint(np.mean(np.stack(shifted, axis=0), axis=0)).astype(np.uint8)
 
-    clean_image = Image.fromarray(
-        image_array,
-        mode="RGB",
-    )
 
-    if degradation_type == "blur":
+def _shift_channel(channel: np.ndarray, dx: int, dy: int) -> np.ndarray:
+    pad = max(abs(dx), abs(dy), 1)
+    padded = np.pad(channel, ((pad, pad), (pad, pad)), mode="edge")
+    height, width = channel.shape
+    return padded[pad - dy:pad - dy + height, pad - dx:pad - dx + width]
+
+
+def apply_degradation_operator(
+    image: Image.Image,
+    effect_mask: Image.Image,
+    family_id: str,
+    parameters: Mapping[str, Any],
+    seed: int,
+) -> Image.Image:
+    """Apply one operator only where its independent influence mask is non-zero."""
+    base = np.asarray(image.convert("RGB"), dtype=np.uint8)
+    mask = np.asarray(effect_mask.convert("L"), dtype=np.uint8)
+    strength = float(parameters.get("strength", 1.0))
+    rng = np.random.default_rng(seed)
+
+    if family_id in {"gaussian_blur", "local_defocus"}:
         transformed = np.asarray(
-            clean_image.filter(
-                ImageFilter.GaussianBlur(
-                    radius=float(
-                        parameters[
-                            "blur_radius"
-                        ]
-                    )
-                )
-            )
-        )
-
-        result = _blend_with_mask(
-            image_array,
-            transformed,
-            effect_mask_array,
-            opacity=float(
-                parameters[
-                    "effect_opacity"
-                ]
-            ),
-        )
-
-    elif degradation_type == "water_stain":
-        stain_colour = np.array(
-            parameters[
-                "stain_colour_rgb"
-            ],
-            dtype=np.float32,
-        )
-
-        transformed = np.broadcast_to(
-            stain_colour,
-            image_array.shape,
-        ).astype(np.uint8)
-
-        base_result = _blend_with_mask(
-            image_array,
-            transformed,
-            effect_mask_array,
-            opacity=float(
-                parameters[
-                    "stain_opacity"
-                ]
-            ),
-        )
-
-        mask_float = (
-            effect_mask_array.astype(
-                np.float32
-            )
-            / 255.0
-        )
-        ring = np.abs(
-            mask_float
-            - np.asarray(
-                Image.fromarray(
-                    effect_mask_array,
-                    mode="L",
-                ).filter(
-                    ImageFilter.GaussianBlur(
-                        radius=8
-                    )
-                ),
-                dtype=np.float32,
-            )
-            / 255.0
-        )
-
-        ring_alpha = np.clip(
-            ring
-            * float(
-                parameters[
-                    "ring_strength"
-                ]
-            )
-            * 3.0,
-            0.0,
-            1.0,
-        )[..., None]
-        
-        effect_support = (
-            effect_mask_array
-            > 0
-        )[..., None]
-        
-        ring_alpha = np.where(
-            effect_support,
-            ring_alpha,
-            0.0,
-        )
-
-        darker = (
-            base_result.astype(
-                np.float32
-            )
-            * 0.72
-        )
-
-        result = np.clip(
-            np.rint(
-                base_result.astype(
-                    np.float32
-                )
-                * (1.0 - ring_alpha)
-                + darker
-                * ring_alpha
-            ),
-            0,
-            255,
-        ).astype(np.uint8)
-
-    elif degradation_type == "fading":
-        transformed_image = (
-            ImageEnhance.Color(
-                clean_image
-            ).enhance(
-                float(
-                    parameters[
-                        "saturation_factor"
-                    ]
-                )
-            )
-        )
-
-        transformed_image = (
-            ImageEnhance.Contrast(
-                transformed_image
-            ).enhance(
-                float(
-                    parameters[
-                        "contrast_factor"
-                    ]
-                )
-            )
-        )
-
-        transformed_image = (
-            ImageEnhance.Brightness(
-                transformed_image
-            ).enhance(
-                float(
-                    parameters[
-                        "brightness_factor"
-                    ]
-                )
-            )
-        )
-
-        result = _blend_with_mask(
-            image_array,
-            np.asarray(
-                transformed_image
-            ),
-            effect_mask_array,
-        )
-
-    elif degradation_type == "discolouration":
-        scales = np.array(
-            [
-                parameters[
-                    "channel_scale_r"
-                ],
-                parameters[
-                    "channel_scale_g"
-                ],
-                parameters[
-                    "channel_scale_b"
-                ],
-            ],
-            dtype=np.float32,
-        )
-
-        transformed = np.clip(
-            image_array.astype(
-                np.float32
-            )
-            * scales,
-            0,
-            255,
-        ).astype(np.uint8)
-
-        result = _blend_with_mask(
-            image_array,
-            transformed,
-            effect_mask_array,
-        )
-
-    elif degradation_type == "dirt_dust":
-        particle_opacity = float(
-            parameters[
-                "particle_opacity"
-            ]
-        )
-        grime_strength = float(
-            parameters[
-                "grime_strength"
-            ]
-        )
-
-        dirt_colour = np.array(
-            [55, 45, 34],
-            dtype=np.float32,
-        )
-
-        transformed = (
-            image_array.astype(
-                np.float32
-            )
-            * (1.0 - grime_strength)
-            + dirt_colour
-            * grime_strength
-        )
-
-        transformed = np.clip(
-            np.rint(transformed),
-            0,
-            255,
-        ).astype(np.uint8)
-
-        result = _blend_with_mask(
-            image_array,
-            transformed,
-            effect_mask_array,
-            opacity=particle_opacity,
-        )
-
-        parameters[
-            "particle_count_estimate"
-        ] = int(
-            (
-                effect_mask_array > 96
-            ).sum()
-        )
-
-    elif degradation_type == "partial_transparency":
-        substrate = np.array(
-            parameters[
-                "substrate_colour_rgb"
-            ],
+            image.convert("RGB").filter(ImageFilter.GaussianBlur(float(parameters["radius"]))),
             dtype=np.uint8,
         )
-
-        transformed = np.broadcast_to(
-            substrate,
-            image_array.shape,
+    elif family_id == "motion_blur":
+        transformed = _motion_blur(base, int(parameters["kernel_length"]), float(parameters["angle_degrees"]))
+    elif family_id == "water_stain":
+        tint = np.asarray(parameters["tint_rgb"], dtype=np.float32)
+        transformed = np.rint(base.astype(np.float32) * 0.50 + tint * 0.50).clip(0, 255).astype(np.uint8)
+    elif family_id == "pigment_bleeding":
+        blurred = np.asarray(
+            image.convert("RGB").filter(ImageFilter.GaussianBlur(float(parameters["radius"]))),
+            dtype=np.uint8,
         )
-
-        result = _blend_with_mask(
-            image_array,
-            transformed,
-            effect_mask_array,
-            opacity=float(
-                parameters[
-                    "transparency_alpha"
-                ]
+        shift = int(parameters["channel_shift"])
+        transformed = np.stack(
+            (
+                _shift_channel(blurred[..., 0], shift, 0),
+                blurred[..., 1],
+                _shift_channel(blurred[..., 2], -shift, max(1, shift // 2)),
             ),
+            axis=-1,
         )
-
+    elif family_id == "fading":
+        pil = ImageEnhance.Color(image.convert("RGB")).enhance(float(parameters["saturation_factor"]))
+        pil = ImageEnhance.Contrast(pil).enhance(float(parameters["contrast_factor"]))
+        pil = ImageEnhance.Brightness(pil).enhance(float(parameters["brightness_factor"]))
+        transformed = np.asarray(pil, dtype=np.uint8)
+    elif family_id == "discolouration":
+        tint = np.asarray(parameters["tint_rgb"], dtype=np.float32)
+        transformed = np.rint(base.astype(np.float32) * 0.68 + tint * 0.32).clip(0, 255).astype(np.uint8)
+    elif family_id == "local_darkening":
+        transformed = np.rint(base.astype(np.float32) * float(parameters["darkness_factor"])).clip(0, 255).astype(np.uint8)
+    elif family_id == "dirt_dust":
+        colour = np.asarray([72, 58, 42], dtype=np.float32)
+        noise = rng.normal(0.0, 7.0, size=base.shape[:2])[..., None]
+        transformed = np.rint(base.astype(np.float32) * 0.42 + colour * 0.58 + noise).clip(0, 255).astype(np.uint8)
+    elif family_id == "partial_transparency":
+        substrate = np.asarray(parameters["substrate_rgb"], dtype=np.float32)
+        loss = float(parameters["opacity_loss"])
+        transformed = np.rint(base.astype(np.float32) * (1.0 - loss) + substrate * loss).clip(0, 255).astype(np.uint8)
     else:
-        raise ValueError(
-            f"Unsupported degradation type: "
-            f"{degradation_type}"
-        )
-
-    parameters[
-        "operator_seed"
-    ] = int(
-        rng.integers(
-            0,
-            2**32 - 1,
-        )
-    )
-
-    return result, parameters
+        raise ValueError(f"Unsupported degradation operator: {family_id}")
+    return Image.fromarray(_blend(base, transformed, mask, strength), mode="RGB")
 
 
-def _mask_metadata(
-    effect_mask_array: np.ndarray,
-    content_box: tuple[int, int, int, int],
-) -> dict[str, Any]:
-    support = effect_mask_array > 0
-    active = effect_mask_array >= 13
-    ys, xs = np.where(active)
-
-    left, top, right, bottom = content_box
-    content_area = (
-        (right - left)
-        * (bottom - top)
-    )
-    full_area = (
-        effect_mask_array.shape[0]
-        * effect_mask_array.shape[1]
-    )
-
-    if len(xs) == 0:
-        bbox = (
-            np.nan,
-            np.nan,
-            np.nan,
-            np.nan,
-        )
-        centroid_x = np.nan
-        centroid_y = np.nan
+def _impact_metrics(clean: np.ndarray, degraded: np.ndarray, support: np.ndarray) -> dict[str, float | int]:
+    difference = degraded.astype(np.float32) - clean.astype(np.float32)
+    absolute = np.abs(difference)
+    changed = np.any(absolute > 0, axis=2)
+    support_bool = support > 0
+    if support_bool.any():
+        supported_abs = absolute[support_bool]
+        colour_distance = np.linalg.norm(difference[support_bool], axis=1)
+        mean_absolute = float(supported_abs.mean())
+        mean_colour_distance = float(colour_distance.mean())
     else:
-        bbox = (
-            int(xs.min()),
-            int(ys.min()),
-            int(xs.max()) + 1,
-            int(ys.max()) + 1,
-        )
-        centroid_x = float(
-            xs.mean()
-        )
-        centroid_y = float(
-            ys.mean()
-        )
-
+        mean_absolute = 0.0
+        mean_colour_distance = 0.0
+    clean_float = clean.astype(np.float32) / 255.0
+    degraded_float = degraded.astype(np.float32) / 255.0
+    clean_luma = clean_float @ np.asarray([0.2126, 0.7152, 0.0722], dtype=np.float32)
+    degraded_luma = degraded_float @ np.asarray([0.2126, 0.7152, 0.0722], dtype=np.float32)
+    clean_sat = clean_float.max(axis=2) - clean_float.min(axis=2)
+    degraded_sat = degraded_float.max(axis=2) - degraded_float.min(axis=2)
+    region = support_bool if support_bool.any() else np.ones(support.shape, dtype=bool)
+    clean_gradient = _gradient_energy(clean_luma, region)
+    degraded_gradient = _gradient_energy(degraded_luma, region)
+    clean_laplacian = _laplacian_variance(clean_luma, region)
+    degraded_laplacian = _laplacian_variance(degraded_luma, region)
     return {
-        "effect_support_pixels": int(
-            support.sum()
-        ),
-        "effect_active_pixels": int(
-            active.sum()
-        ),
-        "effect_percentage_content": float(
-            100.0
-            * active.sum()
-            / content_area
-        ),
-        "effect_percentage_full": float(
-            100.0
-            * active.sum()
-            / full_area
-        ),
-        "effect_mean_intensity": float(
-            effect_mask_array[
-                active
-            ].mean()
-            if active.any()
-            else 0.0
-        ),
-        "effect_max_intensity": int(
-            effect_mask_array.max()
-        ),
-        "effect_bbox_x_min": bbox[0],
-        "effect_bbox_y_min": bbox[1],
-        "effect_bbox_x_max": bbox[2],
-        "effect_bbox_y_max": bbox[3],
-        "effect_centroid_x": centroid_x,
-        "effect_centroid_y": centroid_y,
+        "changed_pixels": int(changed.sum()),
+        "outside_support_changed_pixels": int((changed & ~support_bool).sum()),
+        "mean_absolute_rgb_difference": mean_absolute,
+        "mean_rgb_colour_distance": mean_colour_distance,
+        "mean_luminance_shift": float((degraded_luma[region] - clean_luma[region]).mean()),
+        "mean_saturation_shift": float((degraded_sat[region] - clean_sat[region]).mean()),
+        "gradient_energy_ratio": float(degraded_gradient / max(clean_gradient, 1e-12)),
+        "laplacian_variance_ratio": float(degraded_laplacian / max(clean_laplacian, 1e-12)),
     }
 
 
-def _difference_metadata(
-    clean_array: np.ndarray,
-    degraded_array: np.ndarray,
-    effect_mask_array: np.ndarray,
-) -> dict[str, Any]:
-    absolute_difference = np.abs(
-        clean_array.astype(
-            np.int16
-        )
-        - degraded_array.astype(
-            np.int16
-        )
-    )
+def _gradient_energy(values: np.ndarray, region: np.ndarray) -> float:
+    gx = np.zeros_like(values)
+    gy = np.zeros_like(values)
+    gx[:, 1:] = np.abs(np.diff(values, axis=1))
+    gy[1:, :] = np.abs(np.diff(values, axis=0))
+    return float((gx[region] + gy[region]).mean()) if region.any() else 0.0
 
-    changed = np.any(
-        absolute_difference > 0,
-        axis=2,
-    )
-    support = effect_mask_array > 0
 
-    inside_values = (
-        absolute_difference[
-            support
-        ]
-        if support.any()
-        else np.empty(
-            (0, 3),
-            dtype=np.int16,
+def _laplacian_variance(values: np.ndarray, region: np.ndarray) -> float:
+    laplacian = np.zeros_like(values)
+    laplacian[1:-1, 1:-1] = (
+        -4 * values[1:-1, 1:-1]
+        + values[:-2, 1:-1] + values[2:, 1:-1]
+        + values[1:-1, :-2] + values[1:-1, 2:]
+    )
+    return float(laplacian[region].var()) if region.any() else 0.0
+
+
+def generate_degradation_case(
+    clean_image: Image.Image,
+    geometry: Mapping[str, Any],
+    design_row: Mapping[str, Any],
+    config: Mapping[str, Any],
+) -> GeneratedDegradation:
+    """Generate one single or ordered combined case entirely in memory."""
+    clean = clean_image.convert("RGB")
+    if clean.size != (int(geometry["width"]), int(geometry["height"])):
+        raise ValueError("Clean image dimensions do not match Notebook 02 geometry")
+    content_box = _content_box(geometry)
+    components = tuple(json.loads(str(design_row["component_degradations_json"])))
+    families = family_configuration(config)
+    global_seed = int(config["generator"]["global_seed"])
+    case_seed = stable_case_seed(
+        config["generator"]["seed_scheme_version"], global_seed,
+        design_row["case_id"],
+    )
+    effect_mask_seed = stable_case_seed(case_seed, "effect_mask")
+    current = clean
+    component_masks: list[np.ndarray] = []
+    operator_seeds: dict[str, int] = {}
+    operator_parameters: dict[str, Mapping[str, Any]] = {}
+    for index, component in enumerate(components):
+        family = families[component]
+        parameters = dict(family["parameters"][str(design_row["severity"])])
+        mask_seed = stable_case_seed(effect_mask_seed, index, component)
+        operator_seed = stable_case_seed(case_seed, "operator", index, component)
+        mask = generate_effect_mask(
+            clean.size, content_box, component, parameters, mask_seed,
+            str(family["spatial_support_type"]),
         )
-    )
-
-    return {
-        "changed_pixels": int(
-            changed.sum()
-        ),
-        "changed_percentage_full": float(
-            100.0
-            * changed.mean()
-        ),
-        "outside_effect_changed_pixels": int(
-            (
-                changed
-                & ~support
-            ).sum()
-        ),
-        "inside_effect_changed_pixels": int(
-            (
-                changed
-                & support
-            ).sum()
-        ),
-        "mean_absolute_difference_effect": float(
-            inside_values.mean()
-            if inside_values.size
-            else 0.0
-        ),
-        "maximum_absolute_difference": int(
-            absolute_difference.max()
-        ),
+        current = apply_degradation_operator(current, mask, component, parameters, operator_seed)
+        component_masks.append(np.asarray(mask, dtype=np.uint8))
+        operator_seeds[component] = operator_seed
+        operator_parameters[component] = parameters
+    combined_mask = np.maximum.reduce(component_masks)
+    clean_array = np.asarray(clean, dtype=np.uint8)
+    degraded_array = np.asarray(current, dtype=np.uint8)
+    support_threshold = int(config["generator"]["support_threshold"])
+    active_threshold = int(config["generator"]["active_threshold"])
+    support = combined_mask >= support_threshold
+    active = combined_mask >= active_threshold
+    content_area = int(geometry["content_area_pixels"])
+    impact = _impact_metrics(clean_array, degraded_array, combined_mask)
+    metadata = {
+        "spatial_support_type": "combined_union" if len(components) > 1 else str(families[components[0]]["spatial_support_type"]),
+        "support_threshold": support_threshold,
+        "active_threshold": active_threshold,
+        "affected_support_pixels": int(support.sum()),
+        "affected_active_pixels": int(active.sum()),
+        "affected_content_fraction": float(support.sum() / content_area),
+        "changed_content_fraction": float(int(impact["changed_pixels"]) / content_area),
+        "seed_scheme_version": str(config["generator"]["seed_scheme_version"]),
+        "global_seed": global_seed,
+        "case_seed": case_seed,
+        "effect_mask_seed": effect_mask_seed,
+        "operator_seeds_json": _json(operator_seeds),
+        "operator_parameters_json": _json(operator_parameters),
+        **impact,
     }
+    return GeneratedDegradation(
+        effect_mask=Image.fromarray(combined_mask, mode="L"),
+        degraded=current.convert("RGB"),
+        metadata=metadata,
+    )
 
 
-def create_synthetic_degradation_dataset(
-    processed_metadata: pd.DataFrame,
-    output_effect_mask_dir: str | Path,
-    output_degraded_dir: str | Path,
+def _clear_png_files(directory: Path) -> tuple[str, ...]:
+    removed: list[str] = []
+    if directory.exists():
+        for path in sorted(directory.rglob("*.png")):
+            path.unlink()
+            removed.append(path.as_posix())
+        for path in sorted(directory.rglob("*"), reverse=True):
+            if path.is_dir() and not any(path.iterdir()):
+                path.rmdir()
+    directory.mkdir(parents=True, exist_ok=True)
+    return tuple(removed)
+
+
+def generate_synthetic_degradation_dataset(
+    preprocessed: pd.DataFrame,
+    config: Mapping[str, Any],
     project_root: str | Path | None = None,
-    degradation_types: Iterable[str] = DEFAULT_DEGRADATION_TYPES,
-    severity_levels: Iterable[str] = DEFAULT_SEVERITY_LEVELS,
-    combined_degradations: (
-        Mapping[str, Sequence[str]]
-        | Iterable[str]
-        | None
-    ) = DEFAULT_COMBINED_DEGRADATIONS,
-    combined_severity: str = "moderate",
-    target_size: int = 768,
-    global_seed: int = 20260707,
-    overwrite: bool = True,
-    compute_checksums: bool = True,
-) -> pd.DataFrame:
-    """Generate deterministic single and combined synthetic degradations."""
-    required_columns = {
-        "painting_id",
-    }
+    *,
+    output_root: str | Path | None = None,
+    design: pd.DataFrame | None = None,
+    persist: bool = True,
+    progress_callback: Callable[[int, int, str], None] | None = None,
+) -> SyntheticDegradationGenerationResult:
+    """Generate the configured design; smoke designs may remain non-persistent."""
+    root = find_project_root(project_root)
+    errors = validate_synthetic_degradation_handoff(preprocessed, config, root, verify_files=True)
+    if errors:
+        raise ValueError("Invalid Notebook 02 handoff: " + "; ".join(errors))
+    cohort = select_synthetic_degradation_cohort(preprocessed, config).set_index("painting_id")
+    selected_design = build_degradation_design(config) if design is None else design.copy()
+    notebook_stem = str(config["output"]["notebook_stem"])
+    canonical_root = root / "outputs" / notebook_stem
+    resolved_output_root = canonical_root if output_root is None else Path(output_root).resolve()
+    if persist:
+        require_notebook_output_path(resolved_output_root, notebook_stem, root)
+    mask_root = resolved_output_root / str(config["output"]["effect_mask_directory"])
+    degraded_root = resolved_output_root / str(config["output"]["degraded_directory"])
+    removed: tuple[str, ...] = ()
+    if persist and config["generator"]["stale_file_action"] == "remove":
+        removed = _clear_png_files(mask_root) + _clear_png_files(degraded_root)
 
-    missing_columns = sorted(
-        required_columns
-        - set(
-            processed_metadata.columns
+    records: list[dict[str, Any]] = []
+    total = len(selected_design)
+    interval = int(config["generator"]["progress_interval_cases"])
+    for completed, design_row in enumerate(selected_design.to_dict("records"), start=1):
+        painting_id = str(design_row["painting_id"])
+        geometry = cohort.loc[painting_id].to_dict()
+        clean_path = resolve_repo_path(str(geometry["processed_path"]), root)
+        with Image.open(clean_path) as handle:
+            generated = generate_degradation_case(handle.convert("RGB"), geometry, design_row, config)
+        relative_name = str(config["output"]["image_path_template"]).format(
+            painting_id=painting_id,
+            degradation_id=design_row["degradation_id"],
         )
-    )
-
-    if missing_columns:
-        raise ValueError(
-            "Processed metadata is missing "
-            f"required columns: {missing_columns}"
-        )
-
-    degradation_values = (
-        _normalise_degradation_types(
-            degradation_types
-        )
-    )
-    severity_values = (
-        _normalise_severity_levels(
-            severity_levels
-        )
-    )
-    combined_values = (
-        _normalise_combined_degradations(
-            combined_degradations
-        )
-    )
-
-    if combined_severity not in SEVERITY_RANK:
-        raise ValueError(
-            "combined_severity must be mild, "
-            "moderate, or severe."
-        )
-
-    if target_size <= 0:
-        raise ValueError(
-            "target_size must be positive."
-        )
-
-    metadata = (
-        processed_metadata.copy()
-    )
-    metadata["painting_id"] = (
-        metadata[
-            "painting_id"
-        ].astype(str)
-    )
-
-    if (
-        metadata[
-            "painting_id"
-        ].duplicated().any()
-    ):
-        raise ValueError(
-            "Processed metadata contains "
-            "duplicate painting IDs."
-        )
-
-    project_root_path = (
-        Path(project_root)
-        if project_root is not None
-        else None
-    )
-
-    mask_directory = Path(
-        output_effect_mask_dir
-    )
-    degraded_directory = Path(
-        output_degraded_dir
-    )
-
-    mask_directory.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-    degraded_directory.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    records: list[
-        dict[str, Any]
-    ] = []
-
-    sorted_metadata = (
-        metadata
-        .sort_values(
-            "painting_id",
-            kind="stable",
-        )
-        .reset_index(drop=True)
-    )
-
-    for painting_index, row in (
-        sorted_metadata.iterrows()
-    ):
-        painting_id = str(
-            row["painting_id"]
-        )
-        clean_path = (
-            _resolve_existing_path(
-                _extract_clean_path_value(
-                    row
-                ),
-                project_root_path,
-            )
-        )
-
-        if not clean_path.exists():
-            raise FileNotFoundError(
-                f"Clean image not found: "
-                f"{clean_path}"
-            )
-
-        with Image.open(
-            clean_path
-        ) as opened_clean:
-            clean_image = (
-                opened_clean
-                .convert("RGB")
-            )
-            clean_image.load()
-
-        width, height = (
-            clean_image.size
-        )
-
-        if (
-            width != target_size
-            or height != target_size
-        ):
-            raise ValueError(
-                f"Expected {target_size}x"
-                f"{target_size} image for "
-                f"{painting_id}, received "
-                f"{width}x{height}."
-            )
-
-        content_box = (
-            _content_box_from_row(
-                row,
-                target_size,
-            )
-        )
-        clean_array = np.asarray(
-            clean_image
-        )
-        clean_sha256 = (
-            compute_file_sha256(
-                clean_path
-            )
-            if compute_checksums
-            else None
-        )
-
-        case_definitions: list[
-            dict[str, Any]
-        ] = []
-
-        for degradation_type in (
-            degradation_values
-        ):
-            for severity in (
-                severity_values
-            ):
-                case_definitions.append(
-                    {
-                        "degradation_type": (
-                            degradation_type
-                        ),
-                        "severity": severity,
-                        "is_combined": False,
-                        "components": (
-                            degradation_type,
-                        ),
-                    }
-                )
-
-        for combined_name, components in (
-            combined_values.items()
-        ):
-            case_definitions.append(
-                {
-                    "degradation_type": (
-                        combined_name
-                    ),
-                    "severity": (
-                        combined_severity
-                    ),
-                    "is_combined": True,
-                    "components": (
-                        components
-                    ),
-                }
-            )
-
-        for case_definition in (
-            case_definitions
-        ):
-            degradation_type = str(
-                case_definition[
-                    "degradation_type"
-                ]
-            )
-            severity = str(
-                case_definition[
-                    "severity"
-                ]
-            )
-            is_combined = bool(
-                case_definition[
-                    "is_combined"
-                ]
-            )
-            components = tuple(
-                case_definition[
-                    "components"
-                ]
-            )
-
-            case_id = (
-                f"{painting_id}"
-                f"__{degradation_type}"
-                f"__{severity}"
-            )
-
-            case_seed = _stable_seed(
-                global_seed,
-                case_id,
-            )
-            effect_mask_seed = (
-                _stable_seed(
-                    case_seed,
-                    "effect_mask",
-                )
-            )
-
-            mask_rng = (
-                np.random.default_rng(
-                    effect_mask_seed
-                )
-            )
-
-            mask_type = (
-                components[0]
-            )
-            effect_mask = (
-                _generate_effect_mask(
-                    size=(
-                        width,
-                        height,
-                    ),
-                    content_box=(
-                        content_box
-                    ),
-                    degradation_type=(
-                        mask_type
-                    ),
-                    severity=severity,
-                    rng=mask_rng,
-                )
-            )
-            effect_mask_array = (
-                np.asarray(
-                    effect_mask,
-                    dtype=np.uint8,
-                )
-            )
-
-            degraded_array = (
-                clean_array.copy()
-            )
-            component_parameter_records = []
-            component_seed_records = []
-
-            for component_index, component in (
-                enumerate(components)
-            ):
-                operator_seed = (
-                    _stable_seed(
-                        case_seed,
-                        "operator",
-                        component_index,
-                        component,
-                    )
-                )
-                component_rng = (
-                    np.random.default_rng(
-                        operator_seed
-                    )
-                )
-
-                degraded_array, parameters = (
-                    _apply_operator(
-                        image_array=(
-                            degraded_array
-                        ),
-                        effect_mask_array=(
-                            effect_mask_array
-                        ),
-                        degradation_type=(
-                            component
-                        ),
-                        severity=severity,
-                        rng=component_rng,
-                    )
-                )
-
-                parameters[
-                    "degradation_type"
-                ] = component
-                parameters[
-                    "seed"
-                ] = int(
-                    operator_seed
-                )
-
-                component_parameter_records.append(
-                    parameters
-                )
-                component_seed_records.append(
-                    int(
-                        operator_seed
-                    )
-                )
-
-            effect_mask_filename = (
-                f"{case_id}"
-                f"{EFFECT_MASK_FILENAME_SUFFIX}"
-            )
-            degraded_filename = (
-                f"{case_id}"
-                f"{DEGRADED_FILENAME_SUFFIX}"
-            )
-
-            effect_mask_path = (
-                mask_directory
-                / effect_mask_filename
-            )
-            degraded_path = (
-                degraded_directory
-                / degraded_filename
-            )
-
-            generation_action = (
-                "generated"
-            )
-
-            if (
-                not overwrite
-                and effect_mask_path.exists()
-                and degraded_path.exists()
-            ):
-                generation_action = (
-                    "reused_existing"
-                )
-
-                with Image.open(
-                    effect_mask_path
-                ) as saved_mask:
-                    effect_mask_array = (
-                        np.asarray(
-                            saved_mask.convert(
-                                "L"
-                            ),
-                            dtype=np.uint8,
-                        )
-                    )
-
-                with Image.open(
-                    degraded_path
-                ) as saved_degraded:
-                    degraded_array = (
-                        np.asarray(
-                            saved_degraded.convert(
-                                "RGB"
-                            ),
-                            dtype=np.uint8,
-                        )
-                    )
-            else:
-                Image.fromarray(
-                    effect_mask_array,
-                    mode="L",
-                ).save(
-                    effect_mask_path,
-                    format="PNG",
-                )
-
-                Image.fromarray(
-                    degraded_array,
-                    mode="RGB",
-                ).save(
-                    degraded_path,
-                    format="PNG",
-                )
-
-            mask_metadata = (
-                _mask_metadata(
-                    effect_mask_array,
-                    content_box,
-                )
-            )
-            difference_metadata = (
-                _difference_metadata(
-                    clean_array,
-                    degraded_array,
-                    effect_mask_array,
-                )
-            )
-
-            record: dict[str, Any] = {
-                "case_id": case_id,
-                "painting_id": (
-                    painting_id
-                ),
-                "painting_index": int(
-                    painting_index
-                ),
-                "degradation_type": (
-                    degradation_type
-                ),
-                "severity": severity,
-                "severity_rank": int(
-                    SEVERITY_RANK[
-                        severity
-                    ]
-                ),
-                "is_combined": (
-                    is_combined
-                ),
-                "component_degradations": (
-                    "|".join(
-                        components
-                    )
-                ),
-                "component_count": int(
-                    len(components)
-                ),
-                "global_seed": int(
-                    global_seed
-                ),
-                "case_seed": int(
-                    case_seed
-                ),
-                "effect_mask_seed": int(
-                    effect_mask_seed
-                ),
-                "operator_seeds_json": (
-                    json.dumps(
-                        component_seed_records
-                    )
-                ),
-                "operator_parameters_json": (
-                    json.dumps(
-                        component_parameter_records,
-                        sort_keys=True,
-                    )
-                ),
-                "width": int(width),
-                "height": int(height),
-                "content_x_min": int(
-                    content_box[0]
-                ),
-                "content_y_min": int(
-                    content_box[1]
-                ),
-                "content_x_max": int(
-                    content_box[2]
-                ),
-                "content_y_max": int(
-                    content_box[3]
-                ),
-                "content_area_pixels": int(
-                    (
-                        content_box[2]
-                        - content_box[0]
-                    )
-                    * (
-                        content_box[3]
-                        - content_box[1]
-                    )
-                ),
-                **mask_metadata,
-                **difference_metadata,
-                "clean_path": (
-                    _safe_relative_string(
-                        clean_path,
-                        project_root_path,
-                    )
-                ),
-                "effect_mask_filename": (
-                    effect_mask_filename
-                ),
-                "effect_mask_path": (
-                    _safe_relative_string(
-                        effect_mask_path,
-                        project_root_path,
-                    )
-                ),
-                "degraded_filename": (
-                    degraded_filename
-                ),
-                "degraded_path": (
-                    _safe_relative_string(
-                        degraded_path,
-                        project_root_path,
-                    )
-                ),
-                "clean_sha256": (
-                    clean_sha256
-                ),
-                "effect_mask_sha256": (
-                    compute_file_sha256(
-                        effect_mask_path
-                    )
-                    if compute_checksums
-                    else None
-                ),
-                "degraded_sha256": (
-                    compute_file_sha256(
-                        degraded_path
-                    )
-                    if compute_checksums
-                    else None
-                ),
-                "effect_mask_file_size_bytes": (
-                    effect_mask_path.stat().st_size
-                ),
-                "degraded_file_size_bytes": (
-                    degraded_path.stat().st_size
-                ),
-                "generator_name": (
-                    GENERATOR_NAME
-                ),
-                "generator_version": (
-                    GENERATOR_VERSION
-                ),
-                "generated_at_utc": (
-                    datetime.now(
-                        timezone.utc
-                    ).isoformat()
-                ),
-                "generation_action": (
-                    generation_action
-                ),
-                "status": "ok",
-                "issue": "",
+        mask_path = mask_root / relative_name
+        degraded_path = degraded_root / relative_name
+        if persist:
+            mask_path.parent.mkdir(parents=True, exist_ok=True)
+            degraded_path.parent.mkdir(parents=True, exist_ok=True)
+            save_kwargs = {
+                "format": "PNG",
+                "compress_level": int(config["generator"]["png_compress_level"]),
+                "optimize": bool(config["generator"]["png_optimize"]),
             }
+            generated.effect_mask.save(mask_path, **save_kwargs)
+            generated.degraded.save(degraded_path, **save_kwargs)
+            clean_sha = sha256_file(clean_path)
+            mask_sha = sha256_file(mask_path)
+            degraded_sha = sha256_file(degraded_path)
+            mask_size, degraded_size = mask_path.stat().st_size, degraded_path.stat().st_size
+            mask_relative = to_repo_relative(mask_path, root)
+            degraded_relative = to_repo_relative(degraded_path, root)
+        else:
+            clean_sha = sha256_file(clean_path)
+            mask_sha = hashlib.sha256(np.asarray(generated.effect_mask).tobytes()).hexdigest()
+            degraded_sha = hashlib.sha256(np.asarray(generated.degraded).tobytes()).hexdigest()
+            mask_size = degraded_size = 0
+            mask_relative = ""
+            degraded_relative = ""
+        record = {
+            "dataset_id": str(config["dataset"]["dataset_id"]),
+            "dataset_version": str(config["dataset"]["dataset_version"]),
+            "dataset_scope": str(config["dataset"]["dataset_scope"]),
+            "experiment_id": str(config["dataset"]["experiment_id"]),
+            **design_row,
+            "processed_image_id": str(geometry["processed_image_id"]),
+            "clean_image_path": to_repo_relative(clean_path, root),
+            "effect_mask_path": mask_relative,
+            "degraded_image_path": degraded_relative,
+            "content_x_min": int(geometry["content_x_min"]),
+            "content_y_min": int(geometry["content_y_min"]),
+            "content_x_max": int(geometry["content_x_max"]),
+            "content_y_max": int(geometry["content_y_max"]),
+            "content_width": int(geometry["content_width"]),
+            "content_height": int(geometry["content_height"]),
+            "content_area_pixels": int(geometry["content_area_pixels"]),
+            "width": int(geometry["width"]),
+            "height": int(geometry["height"]),
+            **generated.metadata,
+            "clean_image_sha256": clean_sha,
+            "effect_mask_sha256": mask_sha,
+            "degraded_image_sha256": degraded_sha,
+            "effect_mask_size_bytes": int(mask_size),
+            "degraded_image_size_bytes": int(degraded_size),
+            "effect_mask_mode": "L",
+            "degraded_mode": "RGB",
+            "format": "PNG",
+            "generator_name": GENERATOR_NAME,
+            "generator_version": GENERATOR_VERSION,
+            "config_schema_version": SYNTHETIC_DEGRADATION_CONFIG_SCHEMA_VERSION,
+            "config_version": str(config["config_version"]),
+            "source_manifest_path": str(config["inputs"]["preprocessing_run_manifest_path"]),
+            "generation_status": "passed",
+            "status": "passed",
+            "issue": "",
+        }
+        records.append(record)
+        if progress_callback and (completed % interval == 0 or completed == total):
+            progress_callback(completed, total, str(design_row["case_id"]))
+    cases = pd.DataFrame.from_records(records)
+    if persist:
+        cases = cases.loc[:, SYNTHETIC_DEGRADATION_CASES_COLUMNS]
+        schema_result = validate_dataframe(cases, SYNTHETIC_DEGRADATION_CASES_SCHEMA, allow_extra_columns=False)
+        if not schema_result.passed or schema_result.unexpected_columns:
+            raise RuntimeError(f"Generated cases violate schema: {schema_result.to_dict()}")
+    return SyntheticDegradationGenerationResult(cases=cases, removed_stale_paths=removed)
 
-            for metadata_column in (
-                "source",
-                "title",
-                "artist",
-                "style_group",
-                "category",
-                "genre",
-            ):
-                if (
-                    metadata_column
-                    in row.index
-                ):
-                    record[
-                        metadata_column
-                    ] = row[
-                        metadata_column
-                    ]
 
-            records.append(
-                record
-            )
-
-    result = pd.DataFrame(
-        records
-    )
-
-    expected_rows = (
-        len(metadata)
-        * (
-            len(degradation_values)
-            * len(severity_values)
-            + len(combined_values)
-        )
-    )
-
-    if len(result) != expected_rows:
-        raise RuntimeError(
-            f"Expected {expected_rows} "
-            f"synthetic-degradation cases, "
-            f"generated {len(result)}."
-        )
-
-    return (
-        result
-        .sort_values(
-            [
-                "painting_id",
-                "is_combined",
-                "degradation_type",
-                "severity_rank",
-            ],
-            kind="stable",
-        )
-        .reset_index(drop=True)
-    )
-
-
-def validate_synthetic_degradation_dataset(
-    degradation_metadata: pd.DataFrame,
+def validate_saved_synthetic_degradation_dataset(
+    cases: pd.DataFrame,
+    config: Mapping[str, Any],
     project_root: str | Path | None = None,
-    verify_checksums: bool = True,
-) -> pd.DataFrame:
-    """Validate saved synthetic-degradation masks and images."""
-    required_columns = {
-        "case_id",
-        "painting_id",
-        "degradation_type",
-        "severity",
-        "clean_path",
-        "effect_mask_path",
-        "degraded_path",
-        "width",
-        "height",
-        "effect_active_pixels",
-        "outside_effect_changed_pixels",
-    }
-
-    missing_columns = sorted(
-        required_columns
-        - set(
-            degradation_metadata.columns
-        )
+) -> SyntheticDegradationValidationResult:
+    """Independently reload every canonical case and reconcile saved metadata."""
+    root = find_project_root(project_root)
+    case_schema = validate_dataframe(cases, SYNTHETIC_DEGRADATION_CASES_SCHEMA, allow_extra_columns=False)
+    if not case_schema.passed or case_schema.unexpected_columns:
+        raise ValueError(f"Cases violate schema: {case_schema.to_dict()}")
+    audit_records: list[dict[str, Any]] = []
+    expected_paths: set[Path] = set()
+    metric_columns = (
+        "mean_absolute_rgb_difference", "mean_rgb_colour_distance",
+        "mean_luminance_shift", "mean_saturation_shift",
+        "gradient_energy_ratio", "laplacian_variance_ratio",
     )
-
-    if missing_columns:
-        raise ValueError(
-            "Synthetic-degradation metadata is "
-            f"missing columns: {missing_columns}"
-        )
-
-    project_root_path = (
-        Path(project_root)
-        if project_root is not None
-        else None
-    )
-
-    records: list[
-        dict[str, Any]
-    ] = []
-
-    for _, row in (
-        degradation_metadata.iterrows()
-    ):
-        issues: list[str] = []
-        case_id = str(
-            row["case_id"]
-        )
-
-        clean_path = (
-            _resolve_existing_path(
-                row["clean_path"],
-                project_root_path,
-            )
-        )
-        effect_mask_path = (
-            _resolve_existing_path(
-                row[
-                    "effect_mask_path"
-                ],
-                project_root_path,
-            )
-        )
-        degraded_path = (
-            _resolve_existing_path(
-                row["degraded_path"],
-                project_root_path,
-            )
-        )
-
-        clean_exists = (
-            clean_path.exists()
-        )
-        effect_mask_exists = (
-            effect_mask_path.exists()
-        )
-        degraded_exists = (
-            degraded_path.exists()
-        )
-
-        readable = False
-        dimensions_valid = False
-        effect_mask_mode_valid = False
+    for row in cases.to_dict("records"):
+        clean_path = resolve_repo_path(str(row["clean_image_path"]), root, must_exist=False)
+        mask_path = resolve_repo_path(str(row["effect_mask_path"]), root, must_exist=False)
+        degraded_path = resolve_repo_path(str(row["degraded_image_path"]), root, must_exist=False)
+        expected_paths.update((mask_path.resolve(), degraded_path.resolve()))
+        clean_exists, mask_exists, degraded_exists = clean_path.is_file(), mask_path.is_file(), degraded_path.is_file()
+        reload_passed = False
+        dimensions_match = False
+        mask_mode_valid = False
         degraded_mode_valid = False
-        effect_mask_format_valid = False
-        degraded_format_valid = False
-        effect_mask_range_valid = False
-        effect_nonempty = False
-        degradation_nonempty = False
-        outside_effect_preserved = False
-        metadata_counts_match = False
-        checksum_valid = True
-
-        observed_effect_active_pixels = (
-            np.nan
+        format_valid = False
+        content_only = False
+        support_match = False
+        active_match = False
+        changed_match = False
+        changed_within = False
+        outside_changed = -1
+        if clean_exists and mask_exists and degraded_exists:
+            try:
+                with Image.open(clean_path) as clean_handle, Image.open(mask_path) as mask_handle, Image.open(degraded_path) as degraded_handle:
+                    clean_format, mask_format, degraded_format = clean_handle.format, mask_handle.format, degraded_handle.format
+                    clean = np.asarray(clean_handle.convert("RGB"), dtype=np.uint8)
+                    mask = np.asarray(mask_handle.convert("L"), dtype=np.uint8)
+                    degraded = np.asarray(degraded_handle.convert("RGB"), dtype=np.uint8)
+                    mask_mode_valid = mask_handle.mode == "L"
+                    degraded_mode_valid = degraded_handle.mode == "RGB"
+                reload_passed = True
+                dimensions_match = clean.shape[:2] == mask.shape == degraded.shape[:2]
+                format_valid = clean_format == mask_format == degraded_format == "PNG"
+                x0, y0, x1, y1 = _content_box(row)
+                gate = np.zeros(mask.shape, dtype=bool)
+                gate[y0:y1, x0:x1] = True
+                support = mask >= int(row["support_threshold"])
+                active = mask >= int(row["active_threshold"])
+                changed = np.any(clean != degraded, axis=2)
+                content_only = not bool((support & ~gate).any())
+                support_match = int(support.sum()) == int(row["affected_support_pixels"])
+                active_match = int(active.sum()) == int(row["affected_active_pixels"])
+                changed_match = int(changed.sum()) == int(row["changed_pixels"])
+                outside_changed = int((changed & ~support).sum())
+                changed_within = outside_changed == 0
+            except (OSError, ValueError):
+                reload_passed = False
+        parameters_recorded = _valid_nonempty_json_mapping(row["operator_parameters_json"])
+        seeds_recorded = (
+            int(row["case_seed"]) >= 0
+            and int(row["effect_mask_seed"]) >= 0
+            and _valid_nonempty_json_mapping(row["operator_seeds_json"])
         )
-        observed_changed_pixels = np.nan
-        observed_outside_changed_pixels = (
-            np.nan
-        )
-
-        try:
-            if (
-                clean_exists
-                and effect_mask_exists
-                and degraded_exists
-            ):
-                with Image.open(
-                    clean_path
-                ) as clean_image:
-                    clean_array = (
-                        np.asarray(
-                            clean_image.convert(
-                                "RGB"
-                            )
-                        )
-                    )
-
-                with Image.open(
-                    effect_mask_path
-                ) as mask_image:
-                    mask_format = (
-                        mask_image.format
-                    )
-                    mask_mode = (
-                        mask_image.mode
-                    )
-                    mask_array = (
-                        np.asarray(
-                            mask_image.convert(
-                                "L"
-                            ),
-                            dtype=np.uint8,
-                        )
-                    )
-
-                with Image.open(
-                    degraded_path
-                ) as degraded_image:
-                    degraded_format = (
-                        degraded_image.format
-                    )
-                    degraded_mode = (
-                        degraded_image.mode
-                    )
-                    degraded_array = (
-                        np.asarray(
-                            degraded_image.convert(
-                                "RGB"
-                            ),
-                            dtype=np.uint8,
-                        )
-                    )
-
-                readable = True
-
-                expected_shape = (
-                    int(row["height"]),
-                    int(row["width"]),
-                )
-
-                dimensions_valid = bool(
-                    clean_array.shape[:2]
-                    == expected_shape
-                    and mask_array.shape
-                    == expected_shape
-                    and degraded_array.shape[:2]
-                    == expected_shape
-                )
-                effect_mask_mode_valid = (
-                    mask_mode == "L"
-                )
-                degraded_mode_valid = (
-                    degraded_mode == "RGB"
-                )
-                effect_mask_format_valid = (
-                    mask_format == "PNG"
-                )
-                degraded_format_valid = (
-                    degraded_format == "PNG"
-                )
-                effect_mask_range_valid = bool(
-                    mask_array.min() >= 0
-                    and mask_array.max() <= 255
-                )
-
-                support = mask_array > 0
-                active = mask_array >= 13
-                changed = np.any(
-                    clean_array
-                    != degraded_array,
-                    axis=2,
-                )
-
-                observed_effect_active_pixels = int(
-                    active.sum()
-                )
-                observed_changed_pixels = int(
-                    changed.sum()
-                )
-                observed_outside_changed_pixels = int(
-                    (
-                        changed
-                        & ~support
-                    ).sum()
-                )
-
-                effect_nonempty = bool(
-                    active.any()
-                )
-                degradation_nonempty = bool(
-                    changed.any()
-                )
-                outside_effect_preserved = (
-                    observed_outside_changed_pixels
-                    == 0
-                )
-                metadata_counts_match = bool(
-                    observed_effect_active_pixels
-                    == int(
-                        row[
-                            "effect_active_pixels"
-                        ]
-                    )
-                    and observed_outside_changed_pixels
-                    == int(
-                        row[
-                            "outside_effect_changed_pixels"
-                        ]
-                    )
-                )
-
-                if verify_checksums:
-                    checksum_fields = (
-                        (
-                            clean_path,
-                            "clean_sha256",
-                        ),
-                        (
-                            effect_mask_path,
-                            "effect_mask_sha256",
-                        ),
-                        (
-                            degraded_path,
-                            "degraded_sha256",
-                        ),
-                    )
-
-                    for (
-                        checksum_path,
-                        checksum_column,
-                    ) in checksum_fields:
-                        expected_checksum = (
-                            row.get(
-                                checksum_column,
-                                None,
-                            )
-                        )
-
-                        if (
-                            expected_checksum
-                            is None
-                            or pd.isna(
-                                expected_checksum
-                            )
-                            or str(
-                                expected_checksum
-                            ).strip() == ""
-                        ):
-                            checksum_valid = False
-                            issues.append(
-                                f"{checksum_column}"
-                                "_missing"
-                            )
-                            continue
-
-                        observed_checksum = (
-                            compute_file_sha256(
-                                checksum_path
-                            )
-                        )
-
-                        if (
-                            observed_checksum
-                            != str(
-                                expected_checksum
-                            )
-                        ):
-                            checksum_valid = False
-                            issues.append(
-                                f"{checksum_column}"
-                                "_mismatch"
-                            )
-
-        except Exception as exc:
-            issues.append(
-                f"{type(exc).__name__}: "
-                f"{exc}"
-            )
-
+        clean_sha_matches = clean_exists and sha256_file(clean_path) == str(row["clean_image_sha256"])
+        mask_sha_matches = mask_exists and sha256_file(mask_path) == str(row["effect_mask_sha256"])
+        degraded_sha_matches = degraded_exists and sha256_file(degraded_path) == str(row["degraded_image_sha256"])
+        impact_finite = all(np.isfinite(float(row[column])) for column in metric_columns)
         checks = {
-            "dimensions_valid": (
-                dimensions_valid
-            ),
-            "effect_mask_mode_valid": (
-                effect_mask_mode_valid
-            ),
-            "degraded_mode_valid": (
-                degraded_mode_valid
-            ),
-            "effect_mask_format_valid": (
-                effect_mask_format_valid
-            ),
-            "degraded_format_valid": (
-                degraded_format_valid
-            ),
-            "effect_mask_range_valid": (
-                effect_mask_range_valid
-            ),
-            "effect_nonempty": (
-                effect_nonempty
-            ),
-            "degradation_nonempty": (
-                degradation_nonempty
-            ),
-            "outside_effect_preserved": (
-                outside_effect_preserved
-            ),
-            "metadata_counts_match": (
-                metadata_counts_match
-            ),
-            "checksum_valid": (
-                checksum_valid
-            ),
+            "clean_file_exists": clean_exists,
+            "effect_mask_file_exists": mask_exists,
+            "degraded_file_exists": degraded_exists,
+            "reload_passed": reload_passed,
+            "dimensions_match": dimensions_match,
+            "effect_mask_mode_valid": mask_mode_valid,
+            "degraded_mode_valid": degraded_mode_valid,
+            "format_valid": format_valid,
+            "content_only_valid": content_only,
+            "parameters_recorded": parameters_recorded,
+            "seeds_recorded": seeds_recorded,
+            "affected_support_pixels_match": support_match,
+            "affected_active_pixels_match": active_match,
+            "changed_pixels_match": changed_match,
+            "changed_pixels_within_support": changed_within,
+            "outside_support_changed_pixels": outside_changed,
+            "clean_sha256_matches": clean_sha_matches,
+            "effect_mask_sha256_matches": mask_sha_matches,
+            "degraded_image_sha256_matches": degraded_sha_matches,
+            "clean_reference_unchanged": clean_sha_matches,
+            "impact_metrics_finite": impact_finite,
         }
-
-        for check_name, passed in (
-            checks.items()
-        ):
-            if readable and not passed:
-                issues.append(
-                    check_name
-                )
-
-        validation_passed = bool(
-            clean_exists
-            and effect_mask_exists
-            and degraded_exists
-            and readable
-            and all(
-                checks.values()
-            )
-        )
-
-        records.append(
+        contract_valid = all(
+            bool(value) for key, value in checks.items()
+            if key != "outside_support_changed_pixels"
+        ) and outside_changed == 0
+        failed = [key for key, value in checks.items() if (key == "outside_support_changed_pixels" and value != 0) or (key != "outside_support_changed_pixels" and not value)]
+        audit_records.append(
             {
-                "case_id": case_id,
-                "painting_id": (
-                    row["painting_id"]
-                ),
-                "degradation_type": (
-                    row[
-                        "degradation_type"
-                    ]
-                ),
-                "severity": (
-                    row["severity"]
-                ),
-                "clean_exists": (
-                    clean_exists
-                ),
-                "effect_mask_exists": (
-                    effect_mask_exists
-                ),
-                "degraded_exists": (
-                    degraded_exists
-                ),
-                "readable": readable,
+                "dataset_id": row["dataset_id"],
+                "dataset_version": row["dataset_version"],
+                "dataset_scope": row["dataset_scope"],
+                "experiment_id": row["experiment_id"],
+                "case_id": row["case_id"],
+                "degradation_id": row["degradation_id"],
+                "painting_id": row["painting_id"],
+                "degradation_family": row["degradation_family"],
+                "severity": row["severity"],
+                "is_combined": row["is_combined"],
                 **checks,
-                "observed_effect_active_pixels": (
-                    observed_effect_active_pixels
-                ),
-                "observed_changed_pixels": (
-                    observed_changed_pixels
-                ),
-                "observed_outside_effect_changed_pixels": (
-                    observed_outside_changed_pixels
-                ),
-                "validation_passed": (
-                    validation_passed
-                ),
-                "issue": "|".join(
-                    sorted(
-                        set(issues)
-                    )
-                ),
+                "output_contract_valid": contract_valid,
+                "validation_status": "passed" if contract_valid else "failed",
+                "issue": "; ".join(failed),
             }
         )
-
-    return pd.DataFrame(
-        records
+    audit = pd.DataFrame.from_records(audit_records).loc[:, SYNTHETIC_DEGRADATION_GENERATION_AUDIT_COLUMNS]
+    audit_schema = validate_dataframe(
+        audit,
+        SYNTHETIC_DEGRADATION_GENERATION_AUDIT_SCHEMA,
+        allow_extra_columns=False,
     )
+    if not audit_schema.passed or audit_schema.unexpected_columns:
+        failed_rows = audit.loc[audit["validation_status"].ne("passed"), ["case_id", "issue"]]
+        if failed_rows.empty:
+            raise RuntimeError(f"Audit violates schema: {audit_schema.to_dict()}")
+    notebook_root = root / "outputs" / str(config["output"]["notebook_stem"])
+    actual_paths = {
+        path.resolve()
+        for directory in (
+            notebook_root / str(config["output"]["effect_mask_directory"]),
+            notebook_root / str(config["output"]["degraded_directory"]),
+        )
+        if directory.exists()
+        for path in directory.rglob("*.png")
+    }
+    orphan_paths = tuple(sorted(to_repo_relative(path, root) for path in actual_paths - expected_paths))
+    return SyntheticDegradationValidationResult(audit=audit, orphan_paths=orphan_paths)
 
 
-def audit_synthetic_degradation_inventory(
-    degradation_metadata: pd.DataFrame,
-    effect_mask_dir: str | Path,
-    degraded_dir: str | Path,
-    expected_case_ids: Iterable[str] | None = None,
+def _valid_nonempty_json_mapping(value: Any) -> bool:
+    try:
+        payload = json.loads(str(value))
+    except (TypeError, ValueError, json.JSONDecodeError):
+        return False
+    return isinstance(payload, Mapping) and bool(payload)
+
+
+def create_degradation_examples_figure(
+    cases: pd.DataFrame,
+    config: Mapping[str, Any],
     project_root: str | Path | None = None,
-) -> dict[str, pd.DataFrame]:
-    """Audit duplicate, missing, unexpected, stale, and orphan cases."""
-    metadata = (
-        degradation_metadata.copy()
-    )
-    metadata["case_id"] = (
-        metadata[
-            "case_id"
-        ].astype(str)
-    )
+    *,
+    output_path: str | Path,
+) -> Path:
+    """Render one compact clean/single/combined figure with support insets."""
+    import matplotlib.pyplot as plt
 
-    project_root_path = (
-        Path(project_root)
-        if project_root is not None
-        else None
+    root = find_project_root(project_root)
+    painting_id = str(config["examples"]["painting_id"])
+    severity = str(config["examples"]["single_severity"])
+    selected = cases.loc[
+        cases["painting_id"].astype(str).eq(painting_id)
+        & (cases["is_combined"].astype(bool) | cases["severity"].astype(str).eq(severity))
+    ].copy()
+    family_order = {name: index for index, name in enumerate((*SUPPORTED_SINGLE_FAMILIES, *SUPPORTED_COMBINED_FAMILIES))}
+    selected["_order"] = selected["degradation_family"].map(family_order)
+    selected = selected.sort_values("_order")
+    if len(selected) != 13:
+        raise ValueError("Example figure requires the complete 13-case p039 selection")
+    clean_path = resolve_repo_path(str(selected.iloc[0]["clean_image_path"]), root)
+    with Image.open(clean_path) as handle:
+        clean = np.asarray(handle.convert("RGB"))
+    figure, axes = plt.subplots(3, 5, figsize=(16, 10), constrained_layout=True)
+    flat = axes.ravel()
+    flat[0].imshow(clean)
+    flat[0].set_title("Clean reference")
+    flat[0].axis("off")
+    for axis, row in zip(flat[1:], selected.to_dict("records")):
+        with Image.open(resolve_repo_path(str(row["degraded_image_path"]), root)) as handle:
+            degraded = np.asarray(handle.convert("RGB"))
+        with Image.open(resolve_repo_path(str(row["effect_mask_path"]), root)) as handle:
+            mask = np.asarray(handle.convert("L"))
+        axis.imshow(degraded)
+        if np.any(mask >= int(row["active_threshold"])):
+            axis.contour(mask >= int(row["active_threshold"]), levels=[0.5], colors=["cyan"], linewidths=0.45)
+        axis.set_title(str(row["degradation_family"]).replace("_", " "), fontsize=9)
+        axis.axis("off")
+        inset = axis.inset_axes([0.72, 0.02, 0.26, 0.26])
+        inset.imshow(mask, cmap="gray", vmin=0, vmax=255)
+        inset.axis("off")
+    for axis in flat[len(selected) + 1:]:
+        axis.axis("off")
+    figure.suptitle(
+        "Procedural non-binary degradation examples (cyan: active support; inset: influence mask)",
+        fontsize=13,
     )
-
-    duplicate_case_rows = (
-        metadata[
-            metadata[
-                "case_id"
-            ].duplicated(
-                keep=False
-            )
-        ].copy()
-    )
-    duplicate_mask_path_rows = (
-        metadata[
-            metadata[
-                "effect_mask_path"
-            ].astype(str).duplicated(
-                keep=False
-            )
-        ].copy()
-    )
-    duplicate_degraded_path_rows = (
-        metadata[
-            metadata[
-                "degraded_path"
-            ].astype(str).duplicated(
-                keep=False
-            )
-        ].copy()
-    )
-
-    metadata_case_ids = set(
-        metadata[
-            "case_id"
-        ].tolist()
-    )
-    expected_case_id_set = (
-        {
-            str(value)
-            for value in expected_case_ids
-        }
-        if expected_case_ids
-        is not None
-        else metadata_case_ids
-    )
-
-    missing_case_rows = pd.DataFrame(
-        {
-            "case_id": sorted(
-                expected_case_id_set
-                - metadata_case_ids
-            )
-        }
-    )
-    unexpected_case_rows = pd.DataFrame(
-        {
-            "case_id": sorted(
-                metadata_case_ids
-                - expected_case_id_set
-            )
-        }
-    )
-
-    missing_mask_records = []
-    missing_degraded_records = []
-    expected_mask_filenames = set()
-    expected_degraded_filenames = set()
-
-    for _, row in (
-        metadata.iterrows()
-    ):
-        mask_path = (
-            _resolve_existing_path(
-                row[
-                    "effect_mask_path"
-                ],
-                project_root_path,
-            )
-        )
-        degraded_path = (
-            _resolve_existing_path(
-                row[
-                    "degraded_path"
-                ],
-                project_root_path,
-            )
-        )
-
-        expected_mask_filenames.add(
-            str(
-                row[
-                    "effect_mask_filename"
-                ]
-            )
-        )
-        expected_degraded_filenames.add(
-            str(
-                row[
-                    "degraded_filename"
-                ]
-            )
-        )
-
-        if not mask_path.exists():
-            missing_mask_records.append(
-                {
-                    "case_id": (
-                        row["case_id"]
-                    ),
-                    "effect_mask_path": (
-                        str(mask_path)
-                    ),
-                }
-            )
-
-        if not degraded_path.exists():
-            missing_degraded_records.append(
-                {
-                    "case_id": (
-                        row["case_id"]
-                    ),
-                    "degraded_path": (
-                        str(
-                            degraded_path
-                        )
-                    ),
-                }
-            )
-
-    effect_mask_directory = Path(
-        effect_mask_dir
-    )
-    degraded_directory = Path(
-        degraded_dir
-    )
-
-    actual_mask_filenames = {
-        path.name
-        for path in (
-            effect_mask_directory.glob(
-                f"*{EFFECT_MASK_FILENAME_SUFFIX}"
-            )
-        )
-        if path.is_file()
-    }
-    actual_degraded_filenames = {
-        path.name
-        for path in (
-            degraded_directory.glob(
-                f"*{DEGRADED_FILENAME_SUFFIX}"
-            )
-        )
-        if path.is_file()
-    }
-
-    orphan_mask_rows = pd.DataFrame(
-        {
-            "effect_mask_filename": (
-                sorted(
-                    actual_mask_filenames
-                    - expected_mask_filenames
-                )
-            )
-        }
-    )
-    orphan_degraded_rows = pd.DataFrame(
-        {
-            "degraded_filename": (
-                sorted(
-                    actual_degraded_filenames
-                    - expected_degraded_filenames
-                )
-            )
-        }
-    )
-    missing_mask_file_rows = (
-        pd.DataFrame(
-            missing_mask_records
-        )
-    )
-    missing_degraded_file_rows = (
-        pd.DataFrame(
-            missing_degraded_records
-        )
-    )
-
-    summary = pd.DataFrame(
-        [
-            {
-                "check": (
-                    "duplicate_case_ids"
-                ),
-                "issue_count": int(
-                    duplicate_case_rows[
-                        "case_id"
-                    ].nunique()
-                    if not duplicate_case_rows.empty
-                    else 0
-                ),
-            },
-            {
-                "check": (
-                    "duplicate_effect_mask_paths"
-                ),
-                "issue_count": int(
-                    duplicate_mask_path_rows[
-                        "effect_mask_path"
-                    ].nunique()
-                    if not duplicate_mask_path_rows.empty
-                    else 0
-                ),
-            },
-            {
-                "check": (
-                    "duplicate_degraded_paths"
-                ),
-                "issue_count": int(
-                    duplicate_degraded_path_rows[
-                        "degraded_path"
-                    ].nunique()
-                    if not duplicate_degraded_path_rows.empty
-                    else 0
-                ),
-            },
-            {
-                "check": (
-                    "missing_expected_cases"
-                ),
-                "issue_count": len(
-                    missing_case_rows
-                ),
-            },
-            {
-                "check": (
-                    "unexpected_cases"
-                ),
-                "issue_count": len(
-                    unexpected_case_rows
-                ),
-            },
-            {
-                "check": (
-                    "missing_effect_mask_files"
-                ),
-                "issue_count": len(
-                    missing_mask_file_rows
-                ),
-            },
-            {
-                "check": (
-                    "missing_degraded_files"
-                ),
-                "issue_count": len(
-                    missing_degraded_file_rows
-                ),
-            },
-            {
-                "check": (
-                    "orphan_effect_mask_files"
-                ),
-                "issue_count": len(
-                    orphan_mask_rows
-                ),
-            },
-            {
-                "check": (
-                    "orphan_degraded_files"
-                ),
-                "issue_count": len(
-                    orphan_degraded_rows
-                ),
-            },
-        ]
-    )
-
-    summary["passed"] = (
-        summary[
-            "issue_count"
-        ] == 0
-    )
-
-    return {
-        "summary": summary,
-        "duplicate_case_rows": (
-            duplicate_case_rows
-        ),
-        "duplicate_effect_mask_path_rows": (
-            duplicate_mask_path_rows
-        ),
-        "duplicate_degraded_path_rows": (
-            duplicate_degraded_path_rows
-        ),
-        "missing_case_rows": (
-            missing_case_rows
-        ),
-        "unexpected_case_rows": (
-            unexpected_case_rows
-        ),
-        "missing_effect_mask_file_rows": (
-            missing_mask_file_rows
-        ),
-        "missing_degraded_file_rows": (
-            missing_degraded_file_rows
-        ),
-        "orphan_effect_mask_rows": (
-            orphan_mask_rows
-        ),
-        "orphan_degraded_rows": (
-            orphan_degraded_rows
-        ),
-    }
+    target = Path(output_path)
+    require_notebook_output_path(target, str(config["output"]["notebook_stem"]), root)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    figure.savefig(target, dpi=int(config["examples"]["figure_dpi"]), bbox_inches="tight")
+    plt.close(figure)
+    return target

@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.4.0"
+SCHEMAS_MODULE_VERSION = "1.5.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -298,6 +298,47 @@ MASK_ROBUSTNESS_GENERATION_AUDIT_COLUMNS = (
     "inside_mask_not_fill_pixel_count", "clean_sha256_matches",
     "mask_pixel_sha256_matches", "mask_sha256_matches",
     "damaged_sha256_matches", "output_contract_valid", "group_gate_passed",
+    "validation_status", "issue",
+)
+
+SYNTHETIC_DEGRADATION_CASES_COLUMNS = (
+    "dataset_id", "dataset_version", "dataset_scope", "experiment_id",
+    "case_id", "degradation_id", "painting_id", "category",
+    "processed_image_id", "degradation_family", "severity",
+    "severity_rank", "is_combined", "component_degradations_json",
+    "component_count", "operator_sequence_json", "clean_image_path",
+    "effect_mask_path", "degraded_image_path", "spatial_support_type",
+    "support_threshold", "active_threshold", "content_x_min",
+    "content_y_min", "content_x_max", "content_y_max", "content_width",
+    "content_height", "content_area_pixels", "width", "height",
+    "affected_support_pixels", "affected_active_pixels",
+    "affected_content_fraction", "changed_pixels",
+    "changed_content_fraction", "outside_support_changed_pixels",
+    "mean_absolute_rgb_difference", "mean_rgb_colour_distance",
+    "mean_luminance_shift", "mean_saturation_shift",
+    "gradient_energy_ratio", "laplacian_variance_ratio",
+    "seed_scheme_version", "global_seed", "case_seed",
+    "effect_mask_seed", "operator_seeds_json", "operator_parameters_json",
+    "clean_image_sha256", "effect_mask_sha256", "degraded_image_sha256",
+    "effect_mask_size_bytes", "degraded_image_size_bytes",
+    "effect_mask_mode", "degraded_mode", "format", "generator_name",
+    "generator_version", "config_schema_version", "config_version",
+    "source_manifest_path", "generation_status", "status", "issue",
+)
+
+SYNTHETIC_DEGRADATION_GENERATION_AUDIT_COLUMNS = (
+    "dataset_id", "dataset_version", "dataset_scope", "experiment_id",
+    "case_id", "degradation_id", "painting_id", "degradation_family",
+    "severity", "is_combined", "clean_file_exists",
+    "effect_mask_file_exists", "degraded_file_exists", "reload_passed",
+    "dimensions_match", "effect_mask_mode_valid", "degraded_mode_valid",
+    "format_valid", "content_only_valid", "parameters_recorded",
+    "seeds_recorded", "affected_support_pixels_match",
+    "affected_active_pixels_match", "changed_pixels_match",
+    "changed_pixels_within_support", "outside_support_changed_pixels",
+    "clean_sha256_matches", "effect_mask_sha256_matches",
+    "degraded_image_sha256_matches", "clean_reference_unchanged",
+    "impact_metrics_finite", "output_contract_valid",
     "validation_status", "issue",
 )
 
@@ -724,6 +765,61 @@ MASK_ROBUSTNESS_GENERATION_AUDIT_SCHEMA = DataFrameSchema(
     },
 )
 
+SYNTHETIC_DEGRADATION_CASES_SCHEMA = DataFrameSchema(
+    name="synthetic_degradation_cases",
+    version="synthetic_degradation_cases.v1",
+    required_columns=SYNTHETIC_DEGRADATION_CASES_COLUMNS,
+    primary_key=("case_id",),
+    non_nullable=tuple(
+        column for column in SYNTHETIC_DEGRADATION_CASES_COLUMNS
+        if column != "issue"
+    ),
+    allowed_values={
+        "severity": frozenset({"mild", "moderate", "severe"}),
+        "effect_mask_mode": frozenset({"L"}),
+        "degraded_mode": frozenset({"RGB"}),
+        "format": frozenset({"PNG"}),
+        "generation_status": frozenset({"passed"}),
+        "status": frozenset({"passed"}),
+    },
+)
+
+SYNTHETIC_DEGRADATION_GENERATION_AUDIT_SCHEMA = DataFrameSchema(
+    name="synthetic_degradation_generation_audit",
+    version="synthetic_degradation_generation_audit.v1",
+    required_columns=SYNTHETIC_DEGRADATION_GENERATION_AUDIT_COLUMNS,
+    primary_key=("case_id",),
+    non_nullable=tuple(
+        column for column in SYNTHETIC_DEGRADATION_GENERATION_AUDIT_COLUMNS
+        if column != "issue"
+    ),
+    allowed_values={
+        "clean_file_exists": frozenset({True}),
+        "effect_mask_file_exists": frozenset({True}),
+        "degraded_file_exists": frozenset({True}),
+        "reload_passed": frozenset({True}),
+        "dimensions_match": frozenset({True}),
+        "effect_mask_mode_valid": frozenset({True}),
+        "degraded_mode_valid": frozenset({True}),
+        "format_valid": frozenset({True}),
+        "content_only_valid": frozenset({True}),
+        "parameters_recorded": frozenset({True}),
+        "seeds_recorded": frozenset({True}),
+        "affected_support_pixels_match": frozenset({True}),
+        "affected_active_pixels_match": frozenset({True}),
+        "changed_pixels_match": frozenset({True}),
+        "changed_pixels_within_support": frozenset({True}),
+        "outside_support_changed_pixels": frozenset({0}),
+        "clean_sha256_matches": frozenset({True}),
+        "effect_mask_sha256_matches": frozenset({True}),
+        "degraded_image_sha256_matches": frozenset({True}),
+        "clean_reference_unchanged": frozenset({True}),
+        "impact_metrics_finite": frozenset({True}),
+        "output_contract_valid": frozenset({True}),
+        "validation_status": frozenset({"passed"}),
+    },
+)
+
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
     VALIDATION_CHECKS_SCHEMA.name: VALIDATION_CHECKS_SCHEMA,
@@ -740,6 +836,8 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     DAMAGE_SIZE_GENERATION_AUDIT_SCHEMA.name: DAMAGE_SIZE_GENERATION_AUDIT_SCHEMA,
     MASK_ROBUSTNESS_CASES_SCHEMA.name: MASK_ROBUSTNESS_CASES_SCHEMA,
     MASK_ROBUSTNESS_GENERATION_AUDIT_SCHEMA.name: MASK_ROBUSTNESS_GENERATION_AUDIT_SCHEMA,
+    SYNTHETIC_DEGRADATION_CASES_SCHEMA.name: SYNTHETIC_DEGRADATION_CASES_SCHEMA,
+    SYNTHETIC_DEGRADATION_GENERATION_AUDIT_SCHEMA.name: SYNTHETIC_DEGRADATION_GENERATION_AUDIT_SCHEMA,
 }
 
 

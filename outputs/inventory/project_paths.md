@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-19T21:22:21.611876Z`
-- Registered artifacts: 34
+- Updated: `2026-08-19T23:27:22.837780Z`
+- Registered artifacts: 41
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -34,9 +34,16 @@
 | preprocessing.clean_images | 02_image_preprocessing | `outputs/02_image_preprocessing/images/clean` | primary_downstream | passed |
 | preprocessing.figure_preview | 02_image_preprocessing | `outputs/02_image_preprocessing/figures/preprocessing_preview.png` | qa_reporting | passed |
 | preprocessing.geometry | 02_image_preprocessing | `outputs/02_image_preprocessing/data/preprocessed_images.csv` | primary_downstream | passed |
+| synthetic_degradation.cases | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/data/cases.csv` | primary_case_manifest | passed |
+| synthetic_degradation.effect_masks | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/images/effect_masks` | effect_support_collection | passed |
+| synthetic_degradation.figure_examples | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/figures/degradation_examples.png` | representative_visual_evidence | passed |
+| synthetic_degradation.generation_audit | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/metrics/generation_audit.csv` | generation_audit | passed |
+| synthetic_degradation.images | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/images/degraded` | degraded_image_collection | passed |
+| synthetic_degradation.protocol | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/reports/degradation_protocol.md` | degradation_protocol | passed |
 | validation.01_dataset_verification | 01_dataset_verification | `outputs/01_dataset_verification/validation/checks.csv` | validation | passed |
 | validation.02_image_preprocessing | 02_image_preprocessing | `outputs/02_image_preprocessing/validation/checks.csv` | validation | passed |
 | validation.03_canonical_mask_generation | 03_canonical_mask_generation | `outputs/03_canonical_mask_generation/validation/checks.csv` | validation | passed |
 | validation.04_canonical_damaged_image_generation | 04_canonical_damaged_image_generation | `outputs/04_canonical_damaged_image_generation/validation/checks.csv` | validation | passed |
 | validation.05_damage_size_sensitivity_dataset_generation | 05_damage_size_sensitivity_dataset_generation | `outputs/05_damage_size_sensitivity_dataset_generation/validation/checks.csv` | validation | passed |
 | validation.06_mask_robustness_dataset_generation | 06_mask_robustness_dataset_generation | `outputs/06_mask_robustness_dataset_generation/validation/checks.csv` | validation_evidence | passed |
+| validation.07_synthetic_degradation_dataset_generation | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/validation/checks.csv` | validation_evidence | passed |

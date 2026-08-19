@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-19T21:22:21.611876Z",
+  "updated_at_utc": "2026-08-19T23:27:22.837780Z",
   "artifacts": [
     {
       "artifact_key": "damage.audit",
@@ -395,6 +395,90 @@
       "checksum": "b6f29c2c71450403042b1bb6c522ea6e50942a940428918b89dac466e0b7152f"
     },
     {
+      "artifact_key": "synthetic_degradation.cases",
+      "producer_notebook": "07_synthetic_degradation_dataset_generation",
+      "relative_path": "outputs/07_synthetic_degradation_dataset_generation/data/cases.csv",
+      "artifact_type": "dataset_table",
+      "artifact_role": "primary_case_manifest",
+      "schema_version": "synthetic_degradation_cases.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "synthetic_degradation",
+      "validation_status": "passed",
+      "row_count": 165,
+      "file_count": 1,
+      "checksum": "317cc266a8607277ad25a7a5bb43bee8b7622f7354ce0a39f605d815bca0f91b"
+    },
+    {
+      "artifact_key": "synthetic_degradation.effect_masks",
+      "producer_notebook": "07_synthetic_degradation_dataset_generation",
+      "relative_path": "outputs/07_synthetic_degradation_dataset_generation/images/effect_masks",
+      "artifact_type": "image_collection",
+      "artifact_role": "effect_support_collection",
+      "schema_version": "synthetic_effect_mask_collection.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "synthetic_degradation",
+      "validation_status": "passed",
+      "row_count": 165,
+      "file_count": 165,
+      "checksum": "5a29c2ec583de09c42096218464c788153aa8c91061b0d7788c08694940684b4"
+    },
+    {
+      "artifact_key": "synthetic_degradation.figure_examples",
+      "producer_notebook": "07_synthetic_degradation_dataset_generation",
+      "relative_path": "outputs/07_synthetic_degradation_dataset_generation/figures/degradation_examples.png",
+      "artifact_type": "figure",
+      "artifact_role": "representative_visual_evidence",
+      "schema_version": "figure.synthetic_degradation_examples.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "synthetic_degradation",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "61e9ce6bfc1fc0a0ee00de51fb1a2bb939ff3abadc970ec5d5435193a52ad784"
+    },
+    {
+      "artifact_key": "synthetic_degradation.generation_audit",
+      "producer_notebook": "07_synthetic_degradation_dataset_generation",
+      "relative_path": "outputs/07_synthetic_degradation_dataset_generation/metrics/generation_audit.csv",
+      "artifact_type": "audit_table",
+      "artifact_role": "generation_audit",
+      "schema_version": "synthetic_degradation_generation_audit.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "synthetic_degradation",
+      "validation_status": "passed",
+      "row_count": 165,
+      "file_count": 1,
+      "checksum": "500c7e1aef273574d7db1b458303bcdeaf7b4fc2e85b471a7cc9b6d68fffd573"
+    },
+    {
+      "artifact_key": "synthetic_degradation.images",
+      "producer_notebook": "07_synthetic_degradation_dataset_generation",
+      "relative_path": "outputs/07_synthetic_degradation_dataset_generation/images/degraded",
+      "artifact_type": "image_collection",
+      "artifact_role": "degraded_image_collection",
+      "schema_version": "synthetic_degraded_image_collection.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "synthetic_degradation",
+      "validation_status": "passed",
+      "row_count": 165,
+      "file_count": 165,
+      "checksum": "d46ab5627d1545921ea7960b565cdc3de5839356b16b004209f57a1be068ca7c"
+    },
+    {
+      "artifact_key": "synthetic_degradation.protocol",
+      "producer_notebook": "07_synthetic_degradation_dataset_generation",
+      "relative_path": "outputs/07_synthetic_degradation_dataset_generation/reports/degradation_protocol.md",
+      "artifact_type": "methodology_report",
+      "artifact_role": "degradation_protocol",
+      "schema_version": "synthetic_degradation_protocol.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "synthetic_degradation",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "291dc6b4e108be77897251459205483699febfbc7c240640082e196713c7eb37"
+    },
+    {
       "artifact_key": "validation.01_dataset_verification",
       "producer_notebook": "01_dataset_verification",
       "relative_path": "outputs/01_dataset_verification/validation/checks.csv",
@@ -477,6 +561,20 @@
       "row_count": 102,
       "file_count": 1,
       "checksum": "7f97f9ad633f8ad624904482d36693190aa75aa42c0ebb19a3011bf038aa5646"
+    },
+    {
+      "artifact_key": "validation.07_synthetic_degradation_dataset_generation",
+      "producer_notebook": "07_synthetic_degradation_dataset_generation",
+      "relative_path": "outputs/07_synthetic_degradation_dataset_generation/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "synthetic_degradation",
+      "validation_status": "passed",
+      "row_count": 66,
+      "file_count": 1,
+      "checksum": "2213e6d246bdfcfb6916469c6f78f9fab05e01891b5d5c847a9dea809deb1e2b"
     }
   ]
 }

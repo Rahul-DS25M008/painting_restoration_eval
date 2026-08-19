@@ -1,0 +1,200 @@
+config_schema_version: "synthetic_degradation_config.v1"
+config_version: "2.0.0"
+
+dataset:
+  dataset_id: "painting_restoration_eval"
+  dataset_version: "1.0.0"
+  dataset_scope: "controlled_50"
+  execution_profile: "controlled_50"
+  geometry_schema_version: "preprocessed_images.v1"
+  output_schema_version: "synthetic_degradation_cases.v1"
+  audit_schema_version: "synthetic_degradation_generation_audit.v1"
+  experiment_id: "synthetic_degradation"
+
+inputs:
+  geometry_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+  clean_images_path: "outputs/02_image_preprocessing/images/clean"
+  preprocessing_artifacts_path: "outputs/02_image_preprocessing/manifests/artifacts.csv"
+  preprocessing_run_manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+  required_preprocessing_artifact_keys:
+    - "preprocessed_images"
+    - "clean_images"
+  required_registry_keys:
+    - "preprocessing.geometry"
+    - "preprocessing.clean_images"
+  required_upstream_run_status: "completed"
+
+output:
+  notebook_stem: "07_synthetic_degradation_dataset_generation"
+  cases_path: "data/cases.csv"
+  effect_mask_directory: "images/effect_masks"
+  degraded_directory: "images/degraded"
+  image_path_template: "{painting_id}/{degradation_id}.png"
+  audit_path: "metrics/generation_audit.csv"
+  examples_figure_path: "figures/degradation_examples.png"
+  protocol_path: "reports/degradation_protocol.md"
+
+cohort:
+  selection_policy: "pinned_one_per_controlled_visual_category"
+  paintings:
+    - painting_id: "p001"
+      category: "portrait_figure"
+    - painting_id: "p018"
+      category: "landscape_natural"
+    - painting_id: "p026"
+      category: "architecture_structured"
+    - painting_id: "p039"
+      category: "abstraction_surrealism"
+    - painting_id: "p043"
+      category: "high_texture_brushwork"
+
+severity_levels:
+  - severity: "mild"
+    severity_rank: 1
+  - severity: "moderate"
+    severity_rank: 2
+  - severity: "severe"
+    severity_rank: 3
+
+families:
+  - family_id: "gaussian_blur"
+    operator: "gaussian_blur"
+    spatial_support_type: "full_content"
+    parameters:
+      mild: {radius: 1.5, strength: 0.55}
+      moderate: {radius: 3.0, strength: 0.75}
+      severe: {radius: 5.5, strength: 1.0}
+  - family_id: "motion_blur"
+    operator: "motion_blur"
+    spatial_support_type: "full_content"
+    parameters:
+      mild: {kernel_length: 5, angle_degrees: 18.0, strength: 0.55}
+      moderate: {kernel_length: 11, angle_degrees: 32.0, strength: 0.75}
+      severe: {kernel_length: 19, angle_degrees: 47.0, strength: 0.95}
+  - family_id: "local_defocus"
+    operator: "local_defocus"
+    spatial_support_type: "soft_local_blobs"
+    parameters:
+      mild: {radius: 2.0, strength: 0.60, blob_count: 1, coverage_fraction: 0.14}
+      moderate: {radius: 4.0, strength: 0.80, blob_count: 2, coverage_fraction: 0.24}
+      severe: {radius: 7.0, strength: 1.0, blob_count: 3, coverage_fraction: 0.36}
+  - family_id: "water_stain"
+    operator: "water_stain"
+    spatial_support_type: "soft_ring_stain"
+    parameters:
+      mild: {strength: 0.28, coverage_fraction: 0.10, tint_rgb: [145, 105, 63]}
+      moderate: {strength: 0.48, coverage_fraction: 0.18, tint_rgb: [135, 92, 52]}
+      severe: {strength: 0.68, coverage_fraction: 0.28, tint_rgb: [122, 78, 42]}
+  - family_id: "pigment_bleeding"
+    operator: "pigment_bleeding"
+    spatial_support_type: "soft_local_blobs"
+    parameters:
+      mild: {radius: 1.8, channel_shift: 1, strength: 0.40, blob_count: 1, coverage_fraction: 0.12}
+      moderate: {radius: 3.5, channel_shift: 2, strength: 0.62, blob_count: 2, coverage_fraction: 0.22}
+      severe: {radius: 5.5, channel_shift: 4, strength: 0.82, blob_count: 3, coverage_fraction: 0.34}
+  - family_id: "fading"
+    operator: "fading"
+    spatial_support_type: "soft_broad_patch"
+    parameters:
+      mild: {strength: 0.22, saturation_factor: 0.82, contrast_factor: 0.94, brightness_factor: 1.03, coverage_fraction: 0.58}
+      moderate: {strength: 0.42, saturation_factor: 0.62, contrast_factor: 0.86, brightness_factor: 1.07, coverage_fraction: 0.72}
+      severe: {strength: 0.68, saturation_factor: 0.40, contrast_factor: 0.76, brightness_factor: 1.12, coverage_fraction: 0.86}
+  - family_id: "discolouration"
+    operator: "discolouration"
+    spatial_support_type: "soft_broad_patch"
+    parameters:
+      mild: {strength: 0.22, tint_rgb: [210, 176, 112], coverage_fraction: 0.52}
+      moderate: {strength: 0.38, tint_rgb: [202, 159, 88], coverage_fraction: 0.68}
+      severe: {strength: 0.58, tint_rgb: [190, 139, 67], coverage_fraction: 0.82}
+  - family_id: "local_darkening"
+    operator: "local_darkening"
+    spatial_support_type: "soft_local_blobs"
+    parameters:
+      mild: {strength: 0.20, darkness_factor: 0.78, blob_count: 1, coverage_fraction: 0.12}
+      moderate: {strength: 0.38, darkness_factor: 0.58, blob_count: 2, coverage_fraction: 0.22}
+      severe: {strength: 0.58, darkness_factor: 0.38, blob_count: 3, coverage_fraction: 0.34}
+  - family_id: "dirt_dust"
+    operator: "dirt_dust"
+    spatial_support_type: "speckles_and_streaks"
+    parameters:
+      mild: {strength: 0.35, speck_count: 80, streak_count: 3, radius_max: 2}
+      moderate: {strength: 0.52, speck_count: 180, streak_count: 7, radius_max: 3}
+      severe: {strength: 0.70, speck_count: 320, streak_count: 12, radius_max: 4}
+  - family_id: "partial_transparency"
+    operator: "partial_transparency"
+    spatial_support_type: "soft_local_blobs"
+    parameters:
+      mild: {strength: 0.22, opacity_loss: 0.18, blob_count: 1, coverage_fraction: 0.14, substrate_rgb: [232, 226, 214]}
+      moderate: {strength: 0.42, opacity_loss: 0.34, blob_count: 2, coverage_fraction: 0.24, substrate_rgb: [232, 226, 214]}
+      severe: {strength: 0.66, opacity_loss: 0.54, blob_count: 3, coverage_fraction: 0.36, substrate_rgb: [232, 226, 214]}
+
+combined_degradations:
+  - family_id: "fading_discolouration"
+    severity: "moderate"
+    components: ["fading", "discolouration"]
+  - family_id: "water_stain_dirt"
+    severity: "moderate"
+    components: ["water_stain", "dirt_dust"]
+  - family_id: "gaussian_blur_fading"
+    severity: "moderate"
+    components: ["gaussian_blur", "fading"]
+
+generator:
+  name: "synthetic_degradation_generator"
+  version: "2.0.0"
+  seed_scheme_version: "synthetic_degradation_seed.v2"
+  global_seed: 20260707
+  target_width: 768
+  target_height: 768
+  effect_mask_mode: "L"
+  degraded_mode: "RGB"
+  output_format: "PNG"
+  output_extension: ".png"
+  png_compress_level: 6
+  png_optimize: false
+  strip_output_metadata: true
+  support_threshold: 1
+  active_threshold: 13
+  change_threshold_rgb: 0
+  progress_interval_cases: 10
+  overwrite_existing: true
+  stale_file_action: "remove"
+
+expected:
+  painting_count: 5
+  category_count: 5
+  single_family_count: 10
+  severity_count: 3
+  single_case_count: 150
+  combined_family_count: 3
+  combined_case_count: 15
+  case_count: 165
+  audit_row_count: 165
+  effect_mask_file_count: 165
+  degraded_file_count: 165
+  artifact_record_count: 7
+  total_output_file_count: 337
+
+smoke:
+  painting_id: "p039"
+  single_severity: "moderate"
+  include_all_single_families: true
+  include_all_combined_families: true
+  expected_case_count: 13
+  repeat_count: 2
+  persist_outputs: false
+
+examples:
+  painting_id: "p039"
+  single_severity: "moderate"
+  include_all_single_families: true
+  include_all_combined_families: true
+  overlay_support_contour: true
+  show_support_inset: true
+  figure_dpi: 160
+
+interpretation:
+  branch_type: "non_binary_procedural_degradation"
+  effect_mask_semantics: "uint8 operator influence weight; zero means no influence and 255 means maximum configured spatial influence"
+  prohibited_description: "missing-region damage"
+  physical_claim: "Procedural effects are controlled evaluation proxies and are not exact simulations of conservation damage."
