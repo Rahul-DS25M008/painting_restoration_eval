@@ -1,0 +1,333 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_3d910e4c145e44d18ba19233125634d6",
+  "notebook_id": "06",
+  "notebook_name": "Mask Robustness Dataset Generation",
+  "origin": "Existing Notebook 06",
+  "run_status": "completed",
+  "started_at_utc": "2026-08-19T20:46:47.970444Z",
+  "completed_at_utc": "2026-08-19T21:22:21.896608Z",
+  "git_commit": "0b57f464b9d081d174e47ebb46f8c57c1bbe0606",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260819T204532Z_c8c2bba8",
+  "dataset_versions": {
+    "dataset_id": "painting_restoration_eval",
+    "dataset_version": "1.0.0",
+    "dataset_scope": "controlled_50",
+    "execution_profile": "controlled_50",
+    "experiment_id": "mask_robustness",
+    "content_fingerprint": "9c1717b89d6adc4182736c7c879c2d941ebfbf4999870abc14249bb1869c0d47",
+    "fingerprint_version": "dataset_fingerprint.v1",
+    "preprocessing_run_id": "run_5e54b2de32934e1c9303e7250b932404",
+    "mask_run_id": "run_16536d2f39c54081b0dd58a00b5e9f01",
+    "matched_policy_run_id": "run_519fd38cca4c45d69dc8f43e90cae621",
+    "preprocessed_images_sha256": "b6f29c2c71450403042b1bb6c522ea6e50942a940428918b89dac466e0b7152f",
+    "clean_images_sha256": "287a4a24bcbc1ff6c2aca29e0900cf592ac67ceed920bd997a8dcf531bad347a",
+    "canonical_masks_sha256": "b517853358812f8f378a7d6bbaba8ffa0582ff5083a9eb6afc4f9ba9701461b3",
+    "matched_policy_cases_sha256": "be2bc3db98728588642a2ce8eb8f731165e1a112f54b92972f13b4df7bf40501",
+    "mask_robustness_cases_schema": "mask_robustness_cases.v1",
+    "mask_robustness_generation_audit_schema": "mask_robustness_generation_audit.v1",
+    "mask_robustness_config_schema": "mask_robustness_config.v1",
+    "mask_collection_schema": "mask_robustness_masks.v1",
+    "damaged_collection_schema": "mask_robustness_damaged_images.v1",
+    "generator_name": "mask_robustness_generator",
+    "generator_version": "3.0.0",
+    "seed_scheme_version": "mask_robustness_seed.v1",
+    "area_scaling_method": "isotropic_nearest_neighbor_about_generated_centroid",
+    "area_addition_strategy": "nearest_unmasked_content_by_euclidean_distance",
+    "fill_strategy": "constant_rgb",
+    "fill_color_rgb": [
+      255,
+      255,
+      255
+    ],
+    "cohort_painting_ids": [
+      "p001",
+      "p018",
+      "p026",
+      "p039",
+      "p043"
+    ],
+    "mask_families": [
+      "scratch_thin",
+      "loss_small",
+      "loss_large"
+    ],
+    "target_percentages": [
+      2.0,
+      4.5,
+      12.5
+    ],
+    "variants_per_group": 5
+  },
+  "configuration_paths": [
+    "config/experiments/mask_robustness.yaml",
+    "config/masks/canonical_binary.yaml"
+  ],
+  "configuration_checksums": {
+    "config/experiments/mask_robustness.yaml": "921db621e36288cefea346b4269e6afdecb946871d11e13349f3e26afce41137",
+    "config/masks/canonical_binary.yaml": "167269a57e45df5295ceba09825ade4b739f566785f4eb579204b4f2d390ef3b"
+  },
+  "helper_versions": {
+    "restoration_eval": "0.1.0",
+    "paths": "1.0.0",
+    "schemas": "1.4.0",
+    "manifests": "1.0.0",
+    "validation": "1.0.0",
+    "mask_robustness": "3.0.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "matplotlib": "3.11.0",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3",
+    "scipy": "1.17.1"
+  },
+  "hardware": {
+    "execution_device": "CPU",
+    "gpu_required": false
+  },
+  "inputs": [
+    {
+      "input_key": "robustness_config",
+      "producer": "project configuration",
+      "relative_path": "config/experiments/mask_robustness.yaml",
+      "format": "yaml",
+      "schema_version": "mask_robustness_config.v1",
+      "expected_cardinality": 1
+    },
+    {
+      "input_key": "project_inventory",
+      "producer": "build_project_inventory.py",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "format": "csv",
+      "schema_version": "project_file_inventory.v1",
+      "expected_cardinality": 10856
+    },
+    {
+      "input_key": "preprocessed_images",
+      "producer": "02_image_preprocessing",
+      "relative_path": "outputs/02_image_preprocessing/data/preprocessed_images.csv",
+      "format": "csv",
+      "schema_version": "preprocessed_images.v1",
+      "expected_cardinality": 50
+    },
+    {
+      "input_key": "canonical_masks",
+      "producer": "03_canonical_mask_generation",
+      "relative_path": "outputs/03_canonical_mask_generation/data/masks.csv",
+      "format": "csv",
+      "schema_version": "canonical_masks.v1",
+      "expected_cardinality": 250
+    },
+    {
+      "input_key": "canonical_mask_config",
+      "producer": "project configuration",
+      "relative_path": "config/masks/canonical_binary.yaml",
+      "format": "yaml",
+      "schema_version": "canonical_mask_config.v1",
+      "expected_cardinality": 1
+    },
+    {
+      "input_key": "matched_policy_cases",
+      "producer": "05_damage_size_sensitivity_dataset_generation",
+      "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv",
+      "format": "csv",
+      "schema_version": "damage_size_cases.v1",
+      "expected_cardinality": 35
+    }
+  ],
+  "outputs": [
+    {
+      "artifact_key": "mask_robustness_cases",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/data/cases.csv",
+      "artifact_type": "dataset_table",
+      "artifact_role": "primary_case_manifest",
+      "schema_version": "mask_robustness_cases.v1"
+    },
+    {
+      "artifact_key": "mask_robustness_masks",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/images/masks",
+      "artifact_type": "image_collection",
+      "artifact_role": "mask_collection",
+      "schema_version": "mask_robustness_masks.v1"
+    },
+    {
+      "artifact_key": "mask_robustness_damaged_images",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/images/damaged",
+      "artifact_type": "image_collection",
+      "artifact_role": "damaged_image_collection",
+      "schema_version": "mask_robustness_damaged_images.v1"
+    },
+    {
+      "artifact_key": "mask_robustness_generation_audit",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/metrics/generation_audit.csv",
+      "artifact_type": "audit_table",
+      "artifact_role": "generation_audit",
+      "schema_version": "mask_robustness_generation_audit.v1"
+    },
+    {
+      "artifact_key": "mask_robustness_examples",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/figures/robustness_examples.png",
+      "artifact_type": "figure",
+      "artifact_role": "representative_visual_evidence",
+      "schema_version": "mask_robustness_examples.v1"
+    },
+    {
+      "artifact_key": "validation_checks",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1"
+    },
+    {
+      "artifact_key": "artifact_manifest",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/manifests/artifacts.csv",
+      "artifact_type": "manifest",
+      "artifact_role": "artifact_registry",
+      "schema_version": "artifact_manifest.v1"
+    },
+    {
+      "artifact_key": "run_manifest",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/manifests/run_manifest.json",
+      "artifact_type": "manifest",
+      "artifact_role": "run_provenance",
+      "schema_version": "run_manifest.v1"
+    }
+  ],
+  "expected_counts": {
+    "painting_rows": 5,
+    "visual_categories": 5,
+    "mask_families": 3,
+    "robustness_groups": 15,
+    "robustness_cases": 75,
+    "mask_files": 75,
+    "damaged_image_files": 75,
+    "generation_audit_rows": 75,
+    "validation_rows": 102,
+    "artifact_records": 6,
+    "canonical_figures": 1
+  },
+  "observed_counts": {
+    "painting_rows": 5,
+    "visual_categories": 5,
+    "mask_families": 3,
+    "robustness_groups": 15,
+    "robustness_cases": 75,
+    "mask_files": 75,
+    "damaged_image_files": 75,
+    "generation_audit_rows": 75,
+    "validation_rows": 102,
+    "artifact_records": 6,
+    "canonical_figures": 1,
+    "failed_cases": 0,
+    "failed_groups": 0,
+    "maximum_area_error_pp": 0.0001232999999998,
+    "maximum_pairwise_iou": 0.5749417551126068,
+    "minimum_group_centroid_span": 0.10155176333758743,
+    "total_target_pixels": 2096870,
+    "total_realized_pixels": 2096870,
+    "generation_runtime_seconds": 131.5763932999689,
+    "saved_validation_seconds": 33.25924569997005,
+    "figure_render_seconds": 7.6768499000463635,
+    "completion_requirements": 21,
+    "registered_project_artifacts": 6,
+    "total_project_registry_artifacts": 34
+  },
+  "validation_summary": {
+    "consolidated": {
+      "check_count": 102,
+      "passed_count": 102,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "canonical_persistence": {
+      "check_count": 7,
+      "passed_count": 7,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "manifest_handoff": {
+      "check_count": 4,
+      "passed_count": 4,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "completion_gate": {
+      "status": "passed",
+      "passed": true,
+      "requirement_count": 21,
+      "failed_requirement_ids": []
+    },
+    "registry_update": {
+      "check_count": 3,
+      "passed_count": 3,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    }
+  },
+  "known_limitations": [
+    "The controlled subset contains works from only three institutions, with 60 percent sourced from The Metropolitan Museum of Art.",
+    "Restricting acquisition to public-domain or open-access material favors institutions and works with suitable digitization and rights metadata.",
+    "The five balanced visual categories are a purposive evaluation design and are not a population-representative sample of painting history.",
+    "Optional date, style, and medium metadata is concentrated in portrait and high-texture records and is absent from three categories.",
+    "Historical and geographic representation cannot be quantified reliably from the current fields and requires explicit enrichment before population-level claims.",
+    "Dataset verification establishes technical and metadata suitability; it does not certify historical representativeness or conservation suitability.",
+    "Images without embedded ICC profiles are processed under the configured sRGB assumption without pixel conversion.",
+    "Median-RGB padding is technical model-canvas content and must be excluded from region-sensitive evaluation through the recorded content bounding box.",
+    "Preprocessing verifies deterministic technical geometry; it does not certify historical, aesthetic, or conservation validity.",
+    "Recorded preprocessing runtimes are specific to the current CPU, storage, Python environment, and system load.",
+    "Canonical masks are controlled synthetic missing-region evaluation instruments; they are not annotations of historically verified damage.",
+    "The binary protocol intentionally excludes blur, fading, discolouration, dirt, dust, stains, partial transparency, and other non-binary degradation.",
+    "Technical preprocessing padding is never eligible for damage; all generated regions are restricted to the authoritative Notebook 02 content boundary.",
+    "Configured family morphology supports controlled comparisons and must not be interpreted as an empirical prior for the distribution of real painting damage.",
+    "Recorded mask-generation runtimes are specific to the current CPU, storage, Python environment, and system load.",
+    "The damage-size cohort contains five explicitly pinned paintings, one per controlled visual category; it is a matched sensitivity design rather than a population-representative artwork sample.",
+    "The experiment scales only the canonical loss_large mask family. Results cannot be interpreted as damage-family robustness.",
+    "Constant white fill is a controlled synthetic corruption baseline and is not a claim about the appearance of historical paint loss or a conservation treatment recommendation.",
+    "Morphology preservation is evaluated through operational geometric diagnostics and does not establish conservation realism.",
+    "Rounded target-pixel counts can produce tiny differences between requested and realized percentages; these errors are explicitly recorded and remain below tolerance.",
+    "This generation notebook does not calculate restoration-performance curves, ranking changes, or infer damage-size thresholds. Those analyses belong to Notebook 22.",
+    "Recorded generation runtimes are specific to the current CPU, storage, Python environment, and system load.",
+    "The robustness cohort contains five explicitly pinned paintings, one per controlled visual category; it is a matched experimental design rather than a population-representative sample.",
+    "The experiment evaluates three binary mask families at fixed target percentages. It does not represent every form or scale of historical paint damage.",
+    "Mask variants are controlled computational realizations rather than observations of actual conservation losses.",
+    "Constant white fill is a controlled corruption baseline and is not a claim about the appearance of historical paint loss or a treatment recommendation.",
+    "Morphology and distinctness gates are operational geometric diagnostics and do not establish conservation realism.",
+    "This generation notebook does not compute metric variance, confidence intervals, or ranking stability. Those analyses belong to Notebook 23.",
+    "Recorded runtimes are specific to the current CPU, storage, Python environment, and system load."
+  ],
+  "refactor_status": "refactored",
+  "validation_status": "passed",
+  "depends_on": [
+    "02_image_preprocessing.preprocessed_images",
+    "02_image_preprocessing.clean_images",
+    "03_canonical_mask_generation.canonical_masks",
+    "03_canonical_mask_generation.mask_images",
+    "05_damage_size_sensitivity_dataset_generation.damage_size_cases",
+    "current inventory",
+    "project paths registry"
+  ],
+  "applicable_dataset_scopes": [
+    "controlled_50"
+  ],
+  "applicable_experiment_scopes": [
+    "mask_robustness"
+  ],
+  "expensive_execution": false,
+  "completion_gate_passed": true
+}

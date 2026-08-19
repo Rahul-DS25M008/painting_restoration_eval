@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-19T18:34:01.747893Z",
+  "updated_at_utc": "2026-08-19T21:22:21.611876Z",
   "artifacts": [
     {
       "artifact_key": "damage.audit",
@@ -183,6 +183,76 @@
       "row_count": "",
       "file_count": 1,
       "checksum": "a477a1dfd3df7d109889356bc32df0c97c64d350264419977157af5a26072e2a"
+    },
+    {
+      "artifact_key": "mask_robustness.cases",
+      "producer_notebook": "06_mask_robustness_dataset_generation",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/data/cases.csv",
+      "artifact_type": "dataset_table",
+      "artifact_role": "primary_case_manifest",
+      "schema_version": "mask_robustness_cases.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "mask_robustness",
+      "validation_status": "passed",
+      "row_count": 75,
+      "file_count": 1,
+      "checksum": "300f5740822428e94dea47263f76af798d255c203eba38c960aee3be31e3de7f"
+    },
+    {
+      "artifact_key": "mask_robustness.damaged_images",
+      "producer_notebook": "06_mask_robustness_dataset_generation",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/images/damaged",
+      "artifact_type": "image_collection",
+      "artifact_role": "damaged_image_collection",
+      "schema_version": "mask_robustness_damaged_images.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "mask_robustness",
+      "validation_status": "passed",
+      "row_count": 75,
+      "file_count": 75,
+      "checksum": "58ca98e2cf04bed20cc85f9a43921f4b1380947c2f9a865b566585e63bc338dd"
+    },
+    {
+      "artifact_key": "mask_robustness.figure_examples",
+      "producer_notebook": "06_mask_robustness_dataset_generation",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/figures/robustness_examples.png",
+      "artifact_type": "figure",
+      "artifact_role": "representative_visual_evidence",
+      "schema_version": "mask_robustness_examples.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "mask_robustness",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "781ad154746f7ca976b08bc2fed46d3c41322d746e356701811777bf76868c18"
+    },
+    {
+      "artifact_key": "mask_robustness.generation_audit",
+      "producer_notebook": "06_mask_robustness_dataset_generation",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/metrics/generation_audit.csv",
+      "artifact_type": "audit_table",
+      "artifact_role": "generation_audit",
+      "schema_version": "mask_robustness_generation_audit.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "mask_robustness",
+      "validation_status": "passed",
+      "row_count": 75,
+      "file_count": 1,
+      "checksum": "73c300cad5ff23e3ec16d83291ab34ca53dc09c409a452f22be6debc0eb67524"
+    },
+    {
+      "artifact_key": "mask_robustness.masks",
+      "producer_notebook": "06_mask_robustness_dataset_generation",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/images/masks",
+      "artifact_type": "image_collection",
+      "artifact_role": "mask_collection",
+      "schema_version": "mask_robustness_masks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "mask_robustness",
+      "validation_status": "passed",
+      "row_count": 75,
+      "file_count": 75,
+      "checksum": "e2242917842a02adf6b7feb1d25840d03aa356ee94d8d89a40f01c11b518b02b"
     },
     {
       "artifact_key": "masks.audit",
@@ -393,6 +463,20 @@
       "row_count": 96,
       "file_count": 1,
       "checksum": "bf5b198bb87a2bc510462c2953ed1180a519f6ffb63b67794d0c76dd764d5bf5"
+    },
+    {
+      "artifact_key": "validation.06_mask_robustness_dataset_generation",
+      "producer_notebook": "06_mask_robustness_dataset_generation",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "mask_robustness",
+      "validation_status": "passed",
+      "row_count": 102,
+      "file_count": 1,
+      "checksum": "7f97f9ad633f8ad624904482d36693190aa75aa42c0ebb19a3011bf038aa5646"
     }
   ]
 }

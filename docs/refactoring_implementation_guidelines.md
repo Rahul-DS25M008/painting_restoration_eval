@@ -755,10 +755,16 @@ Before code generation, define every batch and approve its inputs, outputs, side
 - render compact visual inspection;
 - keep temporary outputs under `work/`.
 
-### Batch 4 — Full execution
+### Batch 4 - Full execution
 
 - run approved dataset and experiment scopes;
 - support resume/checkpoint behavior for expensive stages;
+- report progress after every 10 completed cases and after the final case for
+  long case-generation stages;
+- include completed/total counts, percentage, elapsed time, throughput, and the
+  latest stable case or group identifier in each progress message;
+- keep the progress interval configurable through the notebook-owned
+  experiment configuration, with `10` as the default;
 - record failures and retries;
 - never silently skip cases.
 
@@ -857,6 +863,10 @@ Resume rules:
 - checkpoints live under the notebook's `work/` folder;
 - canonical outputs are consolidated only after the approved scope completes.
 
+Progress reporting is required even when resume support is unnecessary. It is
+observational only: reporting must not alter seeds, case ordering, generated
+artifacts, validation outcomes, or reproducibility.
+
 ## 26. Reproducibility environment
 
 Python 3.11 is the provisional default.
@@ -934,4 +944,3 @@ Recommended cleanup order:
 8. Let each notebook create its own output subfolders during execution.
 
 Broad pre-creation of all 35 output trees is discouraged because it creates empty and misleading folders.
-

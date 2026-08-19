@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.3.0"
+SCHEMAS_MODULE_VERSION = "1.4.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -239,6 +239,66 @@ DAMAGE_SIZE_GENERATION_AUDIT_COLUMNS = (
     "base_mask_sha256_matches", "mask_sha256_matches",
     "damaged_sha256_matches", "output_contract_valid",
     "morphology_preservation_status", "validation_status", "issue",
+)
+
+MASK_ROBUSTNESS_CASES_COLUMNS = (
+    "dataset_id", "dataset_version", "dataset_scope", "experiment_id",
+    "case_id", "robustness_group_id", "variant_id", "variant_index",
+    "painting_id", "category", "processed_image_id", "mask_id",
+    "mask_type", "family_index", "target_token", "damaged_image_id",
+    "clean_image_path", "mask_path", "damaged_image_path",
+    "target_damage_fraction", "target_damage_pixels",
+    "realized_damage_fraction", "realized_damage_pixels",
+    "absolute_percentage_point_error", "raw_mask_pixels", "scale_factor",
+    "pre_correction_pixels", "correction_added_pixels",
+    "correction_removed_pixels", "content_x_min", "content_y_min",
+    "content_x_max", "content_y_max", "content_width", "content_height",
+    "content_area_pixels", "centroid_x_pixels", "centroid_y_pixels",
+    "centroid_x_normalized_content", "centroid_y_normalized_content",
+    "centroid_quadrant", "bbox_x_min", "bbox_y_min", "bbox_x_max",
+    "bbox_y_max", "bbox_width", "bbox_height", "bbox_fill_ratio",
+    "bbox_aspect_ratio", "connected_component_count",
+    "largest_component_fraction", "component_area_cv",
+    "mask_perimeter_pixels", "mask_compactness", "touches_content_boundary",
+    "minimum_distance_to_content_boundary_pixels", "seed_scheme_version",
+    "global_seed", "painting_seed", "group_seed", "variant_seed",
+    "generation_seed", "generation_attempt", "fill_strategy",
+    "fill_color_r", "fill_color_g", "fill_color_b", "clean_image_sha256",
+    "mask_pixel_sha256", "mask_sha256", "damaged_image_sha256", "width",
+    "height", "mask_mode", "damaged_mode", "format", "mask_size_bytes",
+    "damaged_size_bytes", "generator_name", "generator_version",
+    "config_schema_version", "config_version", "source_manifest_path",
+    "generation_status", "status", "issue",
+)
+
+MASK_ROBUSTNESS_GENERATION_AUDIT_COLUMNS = (
+    "dataset_id", "dataset_version", "dataset_scope", "experiment_id",
+    "case_id", "robustness_group_id", "variant_id", "painting_id",
+    "mask_type", "target_damage_fraction", "target_damage_pixels",
+    "realized_damage_fraction", "realized_damage_pixels",
+    "absolute_percentage_point_error", "area_within_tolerance",
+    "centroid_x_normalized_content", "centroid_y_normalized_content",
+    "centroid_quadrant", "bbox_width", "bbox_height", "bbox_fill_ratio",
+    "bbox_aspect_ratio", "connected_component_count",
+    "largest_component_fraction", "component_area_cv",
+    "mask_perimeter_pixels", "mask_compactness", "touches_content_boundary",
+    "minimum_distance_to_content_boundary_pixels", "group_variant_count",
+    "group_unique_pixel_sha256_count", "group_unique_mask_count_passed",
+    "nearest_variant_id", "maximum_pairwise_iou", "minimum_pairwise_iou",
+    "minimum_pairwise_centroid_distance_fraction",
+    "group_centroid_span_fraction_of_content_diagonal",
+    "group_morphology_signature_count",
+    "group_component_arrangement_signature_count",
+    "pairwise_iou_passed", "location_variation_passed",
+    "morphology_variation_passed", "component_arrangement_variation_passed",
+    "family_morphology_passed", "clean_file_exists", "mask_file_exists",
+    "damaged_file_exists", "reload_passed", "dimensions_match",
+    "mask_unique_values", "binary_values_valid", "content_only_valid",
+    "metadata_mask_pixels_match", "outside_mask_changed_pixel_count",
+    "inside_mask_not_fill_pixel_count", "clean_sha256_matches",
+    "mask_pixel_sha256_matches", "mask_sha256_matches",
+    "damaged_sha256_matches", "output_contract_valid", "group_gate_passed",
+    "validation_status", "issue",
 )
 
 @dataclass(frozen=True)
@@ -610,6 +670,60 @@ DAMAGE_SIZE_GENERATION_AUDIT_SCHEMA = DataFrameSchema(
     },
 )
 
+MASK_ROBUSTNESS_CASES_SCHEMA = DataFrameSchema(
+    name="mask_robustness_cases",
+    version="mask_robustness_cases.v1",
+    required_columns=MASK_ROBUSTNESS_CASES_COLUMNS,
+    primary_key=("case_id",),
+    non_nullable=tuple(
+        column for column in MASK_ROBUSTNESS_CASES_COLUMNS if column != "issue"
+    ),
+    allowed_values={
+        "mask_type": frozenset({"scratch_thin", "loss_small", "loss_large"}),
+        "fill_strategy": frozenset({"constant_rgb"}),
+        "mask_mode": frozenset({"L"}),
+        "damaged_mode": frozenset({"RGB"}),
+        "format": frozenset({"PNG"}),
+        "generation_status": frozenset({"passed"}),
+        "status": frozenset({"passed"}),
+    },
+)
+
+MASK_ROBUSTNESS_GENERATION_AUDIT_SCHEMA = DataFrameSchema(
+    name="mask_robustness_generation_audit",
+    version="mask_robustness_generation_audit.v1",
+    required_columns=MASK_ROBUSTNESS_GENERATION_AUDIT_COLUMNS,
+    primary_key=("case_id",),
+    non_nullable=tuple(
+        column for column in MASK_ROBUSTNESS_GENERATION_AUDIT_COLUMNS
+        if column != "issue"
+    ),
+    allowed_values={
+        "area_within_tolerance": frozenset({True}),
+        "group_unique_mask_count_passed": frozenset({True}),
+        "pairwise_iou_passed": frozenset({True}),
+        "location_variation_passed": frozenset({True}),
+        "morphology_variation_passed": frozenset({True}),
+        "component_arrangement_variation_passed": frozenset({True}),
+        "family_morphology_passed": frozenset({True}),
+        "clean_file_exists": frozenset({True}),
+        "mask_file_exists": frozenset({True}),
+        "damaged_file_exists": frozenset({True}),
+        "reload_passed": frozenset({True}),
+        "dimensions_match": frozenset({True}),
+        "binary_values_valid": frozenset({True}),
+        "content_only_valid": frozenset({True}),
+        "metadata_mask_pixels_match": frozenset({True}),
+        "clean_sha256_matches": frozenset({True}),
+        "mask_pixel_sha256_matches": frozenset({True}),
+        "mask_sha256_matches": frozenset({True}),
+        "damaged_sha256_matches": frozenset({True}),
+        "output_contract_valid": frozenset({True}),
+        "group_gate_passed": frozenset({True}),
+        "validation_status": frozenset({"passed"}),
+    },
+)
+
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
     VALIDATION_CHECKS_SCHEMA.name: VALIDATION_CHECKS_SCHEMA,
@@ -624,6 +738,8 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     CANONICAL_DAMAGE_AUDIT_SCHEMA.name: CANONICAL_DAMAGE_AUDIT_SCHEMA,
     DAMAGE_SIZE_CASES_SCHEMA.name: DAMAGE_SIZE_CASES_SCHEMA,
     DAMAGE_SIZE_GENERATION_AUDIT_SCHEMA.name: DAMAGE_SIZE_GENERATION_AUDIT_SCHEMA,
+    MASK_ROBUSTNESS_CASES_SCHEMA.name: MASK_ROBUSTNESS_CASES_SCHEMA,
+    MASK_ROBUSTNESS_GENERATION_AUDIT_SCHEMA.name: MASK_ROBUSTNESS_GENERATION_AUDIT_SCHEMA,
 }
 
 

@@ -1,0 +1,169 @@
+config_schema_version: "mask_robustness_config.v1"
+config_version: "1.0.0"
+
+dataset:
+  dataset_id: "painting_restoration_eval"
+  dataset_version: "1.0.0"
+  dataset_scope: "controlled_50"
+  execution_profile: "controlled_50"
+  geometry_schema_version: "preprocessed_images.v1"
+  canonical_mask_schema_version: "canonical_masks.v1"
+  matched_policy_schema_version: "damage_size_cases.v1"
+  output_schema_version: "mask_robustness_cases.v1"
+  audit_schema_version: "mask_robustness_generation_audit.v1"
+  experiment_id: "mask_robustness"
+
+inputs:
+  geometry_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+  clean_images_path: "outputs/02_image_preprocessing/images/clean"
+  preprocessing_artifacts_path: "outputs/02_image_preprocessing/manifests/artifacts.csv"
+  preprocessing_run_manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+  masks_path: "outputs/03_canonical_mask_generation/data/masks.csv"
+  canonical_mask_config_path: "config/masks/canonical_binary.yaml"
+  masks_artifacts_path: "outputs/03_canonical_mask_generation/manifests/artifacts.csv"
+  masks_run_manifest_path: "outputs/03_canonical_mask_generation/manifests/run_manifest.json"
+  matched_policy_cases_path: "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv"
+  matched_policy_artifacts_path: "outputs/05_damage_size_sensitivity_dataset_generation/manifests/artifacts.csv"
+  matched_policy_run_manifest_path: "outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json"
+  required_preprocessing_artifact_keys:
+    - "preprocessed_images"
+    - "clean_images"
+  required_mask_artifact_keys:
+    - "canonical_masks"
+    - "mask_images"
+  required_matched_policy_artifact_keys:
+    - "damage_size_cases"
+  required_registry_keys:
+    - "preprocessing.geometry"
+    - "preprocessing.clean_images"
+    - "masks.canonical"
+    - "damage_size.cases"
+  required_upstream_run_status: "completed"
+
+output:
+  notebook_stem: "06_mask_robustness_dataset_generation"
+  cases_path: "data/cases.csv"
+  mask_directory: "images/masks"
+  damaged_directory: "images/damaged"
+  image_path_template: "{robustness_group_id}/{variant_id}.png"
+  audit_path: "metrics/generation_audit.csv"
+  examples_figure_path: "figures/robustness_examples.png"
+
+cohort:
+  selection_policy: "inherit_pinned_one_per_controlled_visual_category_from_notebook_05"
+  paintings:
+    - painting_id: "p001"
+      category: "portrait_figure"
+    - painting_id: "p018"
+      category: "landscape_natural"
+    - painting_id: "p026"
+      category: "architecture_structured"
+    - painting_id: "p039"
+      category: "abstraction_surrealism"
+    - painting_id: "p043"
+      category: "high_texture_brushwork"
+
+families:
+  - mask_type: "scratch_thin"
+    family_index: 1
+    target_percentage_content: 2.0
+    target_token: "target_02pct"
+  - mask_type: "loss_small"
+    family_index: 2
+    target_percentage_content: 4.5
+    target_token: "target_04p5pct"
+  - mask_type: "loss_large"
+    family_index: 3
+    target_percentage_content: 12.5
+    target_token: "target_12p5pct"
+
+generator:
+  name: "mask_robustness_generator"
+  version: "3.0.0"
+  seed_scheme_version: "mask_robustness_seed.v1"
+  global_seed: 20260606
+  variants_per_group: 5
+  maximum_generation_attempts_per_variant: 30
+  target_pixel_rounding: "round_half_up"
+  area_scaling_method: "isotropic_nearest_neighbor_about_generated_centroid"
+  boundary_correction_policy: "deterministic_radial_boundary_correction"
+  area_addition_strategy: "nearest_unmasked_content_by_euclidean_distance"
+  maximum_scale_iterations: 32
+  progress_interval_cases: 10
+  maximum_absolute_percentage_point_error: 0.01
+  fill_strategy: "constant_rgb"
+  fill_color_rgb:
+    - 255
+    - 255
+    - 255
+  target_width: 768
+  target_height: 768
+  mask_background_value: 0
+  mask_damaged_value: 255
+  mask_mode: "L"
+  damaged_mode: "RGB"
+  output_format: "PNG"
+  output_extension: ".png"
+  png_compress_level: 6
+  png_optimize: false
+  strip_output_metadata: true
+  overwrite_existing: true
+  stale_file_action: "remove"
+
+distinctness:
+  require_unique_pixel_sha256_within_group: true
+  maximum_pairwise_iou_exclusive: 0.99
+  minimum_centroid_span_fraction_of_content_diagonal: 0.02
+  minimum_morphology_signature_count: 2
+  minimum_component_arrangement_signature_count: 2
+  centroid_reference: "content_normalized_xy"
+  morphology_signature_fields:
+    - "bbox_aspect_ratio"
+    - "bbox_fill_ratio"
+    - "mask_compactness"
+  component_arrangement_signature_fields:
+    - "connected_component_count"
+    - "bbox_x_min"
+    - "bbox_y_min"
+    - "largest_component_fraction"
+  component_connectivity: 8
+  perimeter_connectivity: 4
+  require_content_only: true
+  require_family_morphology_passed: true
+
+expected:
+  painting_count: 5
+  category_count: 5
+  family_count: 3
+  robustness_group_count: 15
+  variants_per_group: 5
+  case_count: 75
+  audit_row_count: 75
+  mask_file_count: 75
+  damaged_file_count: 75
+  artifact_record_count: 6
+  total_output_file_count: 156
+
+smoke:
+  painting_id: "p039"
+  mask_type: "loss_small"
+  variant_count: 5
+  repeat_count: 2
+  persist_outputs: false
+  selection_reason: "median_content_area_within_pinned_cohort_and_moderate_damage_family"
+
+examples:
+  painting_id: "p039"
+  mask_types:
+    - "scratch_thin"
+    - "loss_small"
+    - "loss_large"
+  variant_ids:
+    - "variant_01"
+    - "variant_02"
+    - "variant_03"
+    - "variant_04"
+    - "variant_05"
+  figure_dpi: 160
+  overlay_mask_contour: true
+  annotate_realized_percentage: true

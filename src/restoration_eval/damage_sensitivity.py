@@ -15,6 +15,7 @@ import numpy as np
 import pandas as pd
 import yaml
 from PIL import Image
+from scipy.ndimage import distance_transform_edt
 
 from .damage import DEFAULT_FILL_COLOR, apply_mask_damage
 from .manifests import sha256_file
@@ -673,12 +674,23 @@ def scale_mask_to_target_area(
     *,
     previous_mask: np.ndarray | None = None,
     case_seed: int = 0,
+    addition_strategy: str = "incremental_scale",
 ) -> dict[str, Any]:
     """Scale about the base centroid and correct to an exact, nested pixel target.
 
     The compatibility-facing return value remains a dictionary and the ``mask``
     entry remains a zero/one uint8 array for the legacy Notebook 06 helper.
     """
+    supported_addition_strategies = {
+        "incremental_scale",
+        "nearest_unmasked_content_by_euclidean_distance",
+    }
+    if addition_strategy not in supported_addition_strategies:
+        raise ValueError(
+            "Unsupported addition_strategy: "
+            f"{addition_strategy!r}; expected one of "
+            f"{sorted(supported_addition_strategies)}"
+        )
     base = _binary_array(base_mask)
     content = _content_array(base.shape, content_bbox)
     if np.any(base & ~content):
@@ -734,19 +746,34 @@ def scale_mask_to_target_area(
         removed = count
     elif pre_correction_pixels < target:
         count = target - pre_correction_pixels
-        expansion_scale = best_scale
-        expansion = corrected.copy()
-        for _ in range(512):
-            expansion_scale *= 1.01
-            expansion = _scaled_candidate(base, expansion_scale, content_bbox) | previous
-            if int((expansion & ~corrected).sum()) >= count:
-                break
-        pool = expansion & ~corrected
-        if int(pool.sum()) < count:
+        if addition_strategy == "incremental_scale":
+            expansion_scale = best_scale
+            expansion = corrected.copy()
+            for _ in range(512):
+                expansion_scale *= 1.01
+                expansion = _scaled_candidate(base, expansion_scale, content_bbox) | previous
+                if int((expansion & ~corrected).sum()) >= count:
+                    break
+            pool = expansion & ~corrected
+            if int(pool.sum()) < count:
+                pool = content & ~corrected
+            ranked = _rank_pixels_by_radius(
+                pool, centroid, farthest_first=False, seed=case_seed
+            )
+        else:
             pool = content & ~corrected
-        ranked = _rank_pixels_by_radius(
-            pool, centroid, farthest_first=False, seed=case_seed
-        )
+            ys, xs = np.nonzero(pool)
+            if not len(xs):
+                ranked = np.empty(0, dtype=np.int64)
+            else:
+                distance_to_mask = distance_transform_edt(~corrected)
+                distances = distance_to_mask[ys, xs]
+                rng = np.random.default_rng(int(case_seed))
+                tie_breaker = rng.random(len(xs))
+                order = np.lexsort((tie_breaker, distances))
+                ranked = np.ravel_multi_index(
+                    (ys[order], xs[order]), corrected.shape
+                )
         if len(ranked) < count:
             raise RuntimeError("Content region leaves too few pixels for correction")
         flat = corrected.ravel()
@@ -766,6 +793,7 @@ def scale_mask_to_target_area(
         "absolute_pixel_error": 0,
         "correction_added_pixels": int(added),
         "correction_removed_pixels": int(removed),
+        "addition_strategy": addition_strategy,
         "previous_pixels_removed": previous_removed,
         "pixels_added_from_previous": int((corrected & ~previous).sum()),
         "nested_with_previous": True,
