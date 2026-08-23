@@ -10,7 +10,7 @@ import numpy as np
 from scipy.ndimage import binary_dilation, binary_erosion
 
 
-REGIONS_MODULE_VERSION = "1.0.0"
+REGIONS_MODULE_VERSION = "1.1.0"
 REGION_SCHEMA_VERSION = "region.v1"
 VALID_REGION_STATUSES = frozenset({"valid", "empty", "invalid"})
 BOUNDARY_MODES = frozenset({"inner", "outer", "both"})
@@ -269,9 +269,35 @@ def masked_region(mask: np.ndarray) -> Region:
     )
 
 
-def mask_bbox_region(mask: np.ndarray, *, margin: int = 0) -> Region:
+def mask_bbox_region(
+    mask: np.ndarray,
+    *,
+    margin: int = 0,
+    support_bbox: Sequence[int | float] | None = None,
+) -> Region:
     mask_bool = normalize_mask(mask)
     bbox = mask_bbox(mask_bool, margin=margin)
+    clipped_to_support = support_bbox is not None
+    if bbox is not None and support_bbox is not None:
+        height, width = mask_bool.shape
+        support = clip_bbox(
+            support_bbox,
+            width=width,
+            height=height,
+        )
+        if support is None:
+            bbox = None
+        else:
+            bbox = clip_bbox(
+                (
+                    max(bbox[0], support[0]),
+                    max(bbox[1], support[1]),
+                    min(bbox[2], support[2]),
+                    min(bbox[3], support[3]),
+                ),
+                width=width,
+                height=height,
+            )
     rectangle_mask = bbox_to_mask(mask_bool.shape, bbox)
     return _region_from_mask(
         region_id="mask_bbox_crop",
@@ -279,7 +305,10 @@ def mask_bbox_region(mask: np.ndarray, *, margin: int = 0) -> Region:
         spatial_support="rectangle",
         mask=rectangle_mask,
         rectangle_bbox=bbox,
-        parameters={"margin_pixels": int(margin)},
+        parameters={
+            "margin_pixels": int(margin),
+            "clipped_to_support": clipped_to_support,
+        },
     )
 
 
@@ -335,45 +364,103 @@ def outside_boundary_region(
     mask: np.ndarray,
     *,
     width_pixels: int = 3,
+    inner_offset_pixels: int = 0,
+    outer_width_pixels: int | None = None,
     content_bbox: Sequence[int | float] | None = None,
 ) -> Region:
+    """Build an outside-mask ring, optionally separated from the seam band.
+
+    ``inner_offset_pixels=3`` and ``outer_width_pixels=8`` describe the
+    spillover annulus from three to eight pixels outside the mask. The legacy
+    ``width_pixels`` argument remains the outer width when an explicit outer
+    width is not supplied.
+    """
     mask_bool = normalize_mask(mask)
+    if inner_offset_pixels < 0:
+        raise ValueError("inner_offset_pixels must be non-negative")
+    outer_width = (
+        int(width_pixels)
+        if outer_width_pixels is None
+        else int(outer_width_pixels)
+    )
+    if outer_width < 1:
+        raise ValueError("outer_width_pixels must be at least 1")
+    if inner_offset_pixels >= outer_width:
+        raise ValueError(
+            "inner_offset_pixels must be smaller than outer_width_pixels"
+        )
     support = (
         content_region(mask_bool.shape, content_bbox).mask
         if content_bbox is not None
         else None
     )
-    region = boundary_region(
+    outer_dilation = binary_dilation(
         mask_bool,
-        width_pixels=width_pixels,
-        mode="outer",
-        support_mask=support,
+        structure=disk_footprint(outer_width),
     )
-    return Region(
-        region_id="outside_boundary_ring",
-        region_type=region.region_type,
-        spatial_support=region.spatial_support,
-        x_min=region.x_min,
-        y_min=region.y_min,
-        x_max=region.x_max,
-        y_max=region.y_max,
-        pixel_count=region.pixel_count,
-        width=region.width,
-        height=region.height,
-        parameters=region.parameters,
-        validity_status=region.validity_status,
-        mask=region.mask,
+    inner_dilation = (
+        mask_bool
+        if inner_offset_pixels == 0
+        else binary_dilation(
+            mask_bool,
+            structure=disk_footprint(inner_offset_pixels),
+        )
     )
-
-
-def effect_support_region(effect_mask: np.ndarray) -> Region:
-    support = normalize_mask(effect_mask)
+    ring = outer_dilation & ~inner_dilation
+    if support is not None:
+        ring &= support
     return _region_from_mask(
-        region_id="effect_support",
+        region_id="outside_boundary_ring",
+        region_type="outside_boundary",
+        spatial_support="irregular_pixels",
+        mask=ring,
+        parameters={
+            "inner_offset_pixels": int(inner_offset_pixels),
+            "outer_width_pixels": outer_width,
+            "clipped_to_support": support is not None,
+        },
+    )
+
+
+def effect_support_region(
+    effect_mask: np.ndarray,
+    *,
+    support_threshold: float = 1,
+) -> Region:
+    """Build the degradation-support region using an inclusive threshold."""
+    values = np.asarray(effect_mask)
+    if values.ndim == 3 and values.shape[2] == 1:
+        values = values[:, :, 0]
+    if values.ndim != 2:
+        raise ValueError(
+            f"Expected a two-dimensional effect mask, received {values.shape}"
+        )
+    if not np.issubdtype(values.dtype, np.number) and values.dtype != bool:
+        raise TypeError(
+            f"Effect mask must be numeric or boolean, received {values.dtype}"
+        )
+    support = values.astype(float) >= float(support_threshold)
+    return _region_from_mask(
+        region_id="degradation_support",
         region_type="degradation_effect",
         spatial_support="irregular_pixels",
         mask=support,
+        parameters={
+            "support_threshold": float(support_threshold),
+            "threshold_operator": ">=",
+        },
     )
+
+
+def _window_starts(length: int, window: int, stride: int) -> list[int]:
+    """Return row-major window starts while always covering the final edge."""
+    if window > length:
+        return []
+    starts = list(range(0, length - window + 1, stride))
+    final_start = length - window
+    if not starts or starts[-1] != final_start:
+        starts.append(final_start)
+    return starts
 
 
 def patch_regions(
@@ -407,8 +494,8 @@ def patch_regions(
         raise ValueError("support_mask shape does not match requested shape")
 
     regions: list[Region] = []
-    for y_min in range(0, max(height - patch_height + 1, 0), stride_y):
-        for x_min in range(0, max(width - patch_width + 1, 0), stride_x):
+    for y_min in _window_starts(height, patch_height, stride_y):
+        for x_min in _window_starts(width, patch_width, stride_x):
             x_max = x_min + patch_width
             y_max = y_min + patch_height
             window = np.zeros(shape, dtype=bool)
@@ -444,6 +531,7 @@ def build_standard_regions(
     mask_bbox_margin: int = 0,
     boundary_width_pixels: int = 3,
     include_outside_boundary: bool = False,
+    outside_boundary_width_pixels: int = 8,
 ) -> dict[str, Region]:
     """Build the standard restoration-evaluation region set."""
     mask_bool = normalize_mask(mask)
@@ -452,7 +540,11 @@ def build_standard_regions(
         "full_image": full_image_region(mask_bool.shape),
         "content_region": content,
         "masked_region": masked_region(mask_bool),
-        "mask_bbox_crop": mask_bbox_region(mask_bool, margin=mask_bbox_margin),
+        "mask_bbox_crop": mask_bbox_region(
+            mask_bool,
+            margin=mask_bbox_margin,
+            support_bbox=content_bbox,
+        ),
         "inner_boundary_band": boundary_region(
             mask_bool,
             width_pixels=boundary_width_pixels,
@@ -480,6 +572,8 @@ def build_standard_regions(
         regions["outside_boundary_ring"] = outside_boundary_region(
             mask_bool,
             width_pixels=boundary_width_pixels,
+            inner_offset_pixels=boundary_width_pixels,
+            outer_width_pixels=outside_boundary_width_pixels,
             content_bbox=content_bbox,
         )
     return regions

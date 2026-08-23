@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.5.0"
+SCHEMAS_MODULE_VERSION = "1.6.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -340,6 +340,27 @@ SYNTHETIC_DEGRADATION_GENERATION_AUDIT_COLUMNS = (
     "degraded_image_sha256_matches", "clean_reference_unchanged",
     "impact_metrics_finite", "output_contract_valid",
     "validation_status", "issue",
+)
+
+CASE_REGISTRY_COLUMNS = (
+    "case_id", "dataset_id", "dataset_scope", "experiment_id",
+    "painting_id", "input_image_path", "clean_image_path",
+    "mask_or_effect_id", "mask_or_effect_path",
+    "damage_or_degradation_type", "target_damage_fraction",
+    "realized_damage_fraction", "source_manifest_path", "status",
+)
+
+MODEL_ELIGIBILITY_COLUMNS = (
+    "case_id", "model_id", "eligible", "eligibility_reason",
+    "input_semantics", "mask_semantics", "restoration_objective",
+)
+
+REGION_POLICY_COLUMNS = (
+    "policy_id", "policy_version", "metric_family", "region_id",
+    "region_type", "spatial_support", "compatible",
+    "compatibility_reason", "primary_role", "case_semantics",
+    "parameters_json", "threshold_policy", "minimum_size_policy",
+    "ablation_policy_ids_json", "status",
 )
 
 @dataclass(frozen=True)
@@ -820,6 +841,39 @@ SYNTHETIC_DEGRADATION_GENERATION_AUDIT_SCHEMA = DataFrameSchema(
     },
 )
 
+CASE_REGISTRY_SCHEMA = DataFrameSchema(
+    name="case_registry",
+    version="case_registry.v1",
+    required_columns=CASE_REGISTRY_COLUMNS,
+    primary_key=("case_id",),
+    non_nullable=tuple(
+        column for column in CASE_REGISTRY_COLUMNS
+        if column not in {"target_damage_fraction", "realized_damage_fraction"}
+    ),
+    allowed_values={"status": frozenset({"passed"})},
+)
+
+MODEL_ELIGIBILITY_SCHEMA = DataFrameSchema(
+    name="model_eligibility",
+    version="model_eligibility.v1",
+    required_columns=MODEL_ELIGIBILITY_COLUMNS,
+    primary_key=("case_id", "model_id"),
+    non_nullable=MODEL_ELIGIBILITY_COLUMNS,
+    allowed_values={"eligible": frozenset({True, False})},
+)
+
+REGION_POLICY_SCHEMA = DataFrameSchema(
+    name="region_policy",
+    version="region_policy.v1",
+    required_columns=REGION_POLICY_COLUMNS,
+    primary_key=("metric_family", "region_id"),
+    non_nullable=REGION_POLICY_COLUMNS,
+    allowed_values={
+        "compatible": frozenset({True, False}),
+        "status": frozenset({"approved"}),
+    },
+)
+
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
     VALIDATION_CHECKS_SCHEMA.name: VALIDATION_CHECKS_SCHEMA,
@@ -838,6 +892,9 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     MASK_ROBUSTNESS_GENERATION_AUDIT_SCHEMA.name: MASK_ROBUSTNESS_GENERATION_AUDIT_SCHEMA,
     SYNTHETIC_DEGRADATION_CASES_SCHEMA.name: SYNTHETIC_DEGRADATION_CASES_SCHEMA,
     SYNTHETIC_DEGRADATION_GENERATION_AUDIT_SCHEMA.name: SYNTHETIC_DEGRADATION_GENERATION_AUDIT_SCHEMA,
+    CASE_REGISTRY_SCHEMA.name: CASE_REGISTRY_SCHEMA,
+    MODEL_ELIGIBILITY_SCHEMA.name: MODEL_ELIGIBILITY_SCHEMA,
+    REGION_POLICY_SCHEMA.name: REGION_POLICY_SCHEMA,
 }
 
 

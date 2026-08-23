@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-19T23:27:22.837780Z`
-- Registered artifacts: 41
+- Updated: `2026-08-23T21:41:34.937326Z`
+- Registered artifacts: 48
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -19,6 +19,12 @@
 | dataset.audit | 01_dataset_verification | `outputs/01_dataset_verification/metrics/dataset_audit.csv` | audit_reporting | passed |
 | dataset.figure_distribution | 01_dataset_verification | `outputs/01_dataset_verification/figures/dataset_distribution.png` | reporting | passed |
 | dataset.figure_preview | 01_dataset_verification | `outputs/01_dataset_verification/figures/dataset_preview.png` | qa_reporting | passed |
+| experiment_contracts.case_registry | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv` | primary_cross_experiment_registry | passed |
+| experiment_contracts.figure_region_definitions | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/figures/region_definitions.png` | methodology_visualization | passed |
+| experiment_contracts.model_eligibility | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv` | authoritative_model_routing | passed |
+| experiment_contracts.region_policy | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv` | authoritative_metric_region_policy | passed |
+| experiment_contracts.report | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/reports/evaluation_contract.md` | evaluation_contract | passed |
+| experiment_contracts.schema_registry | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json` | machine_readable_schema_handoff | passed |
 | mask_robustness.cases | 06_mask_robustness_dataset_generation | `outputs/06_mask_robustness_dataset_generation/data/cases.csv` | primary_case_manifest | passed |
 | mask_robustness.damaged_images | 06_mask_robustness_dataset_generation | `outputs/06_mask_robustness_dataset_generation/images/damaged` | damaged_image_collection | passed |
 | mask_robustness.figure_examples | 06_mask_robustness_dataset_generation | `outputs/06_mask_robustness_dataset_generation/figures/robustness_examples.png` | representative_visual_evidence | passed |
@@ -47,3 +53,4 @@
 | validation.05_damage_size_sensitivity_dataset_generation | 05_damage_size_sensitivity_dataset_generation | `outputs/05_damage_size_sensitivity_dataset_generation/validation/checks.csv` | validation | passed |
 | validation.06_mask_robustness_dataset_generation | 06_mask_robustness_dataset_generation | `outputs/06_mask_robustness_dataset_generation/validation/checks.csv` | validation_evidence | passed |
 | validation.07_synthetic_degradation_dataset_generation | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/validation/checks.csv` | validation_evidence | passed |
+| validation.08_experiment_contracts_and_region_policy | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/validation/checks.csv` | validation_evidence | passed |

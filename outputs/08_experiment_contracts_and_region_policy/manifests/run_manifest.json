@@ -1,0 +1,432 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_a3734bc2121f401b87de4894717366ab",
+  "notebook_id": "08",
+  "notebook_name": "Experiment Contracts and Region Policy",
+  "origin": "New Notebook; incorporates the methodological responsibility of Previous Notebook 26",
+  "run_status": "completed",
+  "started_at_utc": "2026-08-23T20:28:36.937996Z",
+  "completed_at_utc": "2026-08-23T21:41:54.470397Z",
+  "git_commit": "2af42ac0ecf72fb716398a7a2cea6f299b8caf95",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260823T202539Z_8395ec5d",
+  "dataset_versions": {
+    "dataset_id": "painting_restoration_eval",
+    "dataset_version": "1.0.0",
+    "dataset_scope": "controlled_50",
+    "experiment_id": "cross_experiment_evaluation",
+    "evaluation_config_schema": "evaluation_contract_config.v1",
+    "evaluation_config_version": "1.0.0",
+    "case_registry_schema": "case_registry.v1",
+    "model_eligibility_schema": "model_eligibility.v1",
+    "region_policy_schema": "region_policy.v1",
+    "schema_registry_version": "schema_registry.v1",
+    "eligibility_policy_version": "model_eligibility_policy.v1",
+    "region_policy_version": "evaluation_region_policy.v1",
+    "upstream_run_ids": {
+      "01_dataset_verification": "run_424a69cf0c2c4a228d0919dc2d66258a",
+      "02_image_preprocessing": "run_5e54b2de32934e1c9303e7250b932404",
+      "03_canonical_mask_generation": "run_16536d2f39c54081b0dd58a00b5e9f01",
+      "04_canonical_damaged_image_generation": "run_bf312c29726843a4b3c5319e05bf49f0",
+      "05_damage_size_sensitivity_dataset_generation": "run_519fd38cca4c45d69dc8f43e90cae621",
+      "06_mask_robustness_dataset_generation": "run_3d910e4c145e44d18ba19233125634d6",
+      "07_synthetic_degradation_dataset_generation": "run_306a79f17cfb48edb73fa90d174317f0"
+    },
+    "upstream_content_fingerprints": [
+      "9c1717b89d6adc4182736c7c879c2d941ebfbf4999870abc14249bb1869c0d47"
+    ],
+    "source_manifest_checksums": {
+      "canonical_missing_region": "f9e95b91dd72440c36f07c56853b971022a64def824579daeb8c6e484875e6bc",
+      "damage_size_sensitivity": "a5bad621639729fc4ba7b3dd4ff7551be2f9f4696d341ec146bda1afea792f8d",
+      "mask_robustness": "9678fc918324a51023bd705ab6cb7c398ccf6771f1910083cce6f00a2dd02ed9",
+      "synthetic_degradation": "9eb03a79f9faeb0cfe159950642a5fda2f2c0c79b6c230c5a097186458f99d1e"
+    },
+    "experiment_contract_helper_sha256": "5d893cb02ab39202f0ba12c6b3b5342cf9202fc06cdfe4c26c98d7f3aef9a3b6",
+    "region_helper_sha256": "8b0c9d413ecba9e5056b3b8f6cd89147d4cfd044291290e31ebc78b882a16e9d"
+  },
+  "configuration_paths": [
+    "config/experiments/evaluation_contract.yaml"
+  ],
+  "configuration_checksums": {
+    "config/experiments/evaluation_contract.yaml": "ae977512636b0ea5eb16b4a3dff95c062f402c086430328a341c9d0bda6a3254"
+  },
+  "helper_versions": {
+    "restoration_eval": "0.1.0",
+    "paths": "1.0.0",
+    "schemas": "1.6.0",
+    "regions": "1.1.0",
+    "manifests": "1.0.0",
+    "validation": "1.0.0",
+    "experiment_contracts": "1.0.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "matplotlib": "3.11.0",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3"
+  },
+  "hardware": {
+    "execution_device": "CPU",
+    "gpu_required": false
+  },
+  "inputs": [
+    {
+      "input_key": "evaluation_contract_config",
+      "producer": "project configuration",
+      "relative_path": "config/experiments/evaluation_contract.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "evaluation_contract_config.v1",
+      "expected_cardinality": 1,
+      "applicability": "all_cases"
+    },
+    {
+      "input_key": "project_inventory",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "project_file_inventory.v1",
+      "expected_cardinality": 11129,
+      "applicability": "repository"
+    },
+    {
+      "input_key": "inventory_run",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "inventory_run.v1",
+      "expected_cardinality": 1,
+      "applicability": "repository"
+    },
+    {
+      "input_key": "project_paths_registry",
+      "producer": "validated notebook handoffs",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "project_paths.v1",
+      "expected_cardinality": 1,
+      "applicability": "repository"
+    },
+    {
+      "input_key": "preprocessed_geometry",
+      "producer": "02_image_preprocessing",
+      "relative_path": "outputs/02_image_preprocessing/data/preprocessed_images.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "preprocessed_images.v1",
+      "expected_cardinality": 50,
+      "applicability": "all_cases"
+    },
+    {
+      "input_key": "canonical_masks",
+      "producer": "03_canonical_mask_generation",
+      "relative_path": "outputs/03_canonical_mask_generation/data/masks.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "canonical_masks.v1",
+      "expected_cardinality": 250,
+      "applicability": "canonical_missing_region"
+    },
+    {
+      "input_key": "canonical_missing_region_cases",
+      "producer": "04_canonical_damaged_image_generation",
+      "relative_path": "outputs/04_canonical_damaged_image_generation/data/cases.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "canonical_damage_cases.v1",
+      "expected_cardinality": 250,
+      "applicability": "canonical_missing_region"
+    },
+    {
+      "input_key": "canonical_missing_region_run_manifest",
+      "producer": "04_canonical_damaged_image_generation",
+      "relative_path": "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "applicability": "canonical_missing_region"
+    },
+    {
+      "input_key": "damage_size_sensitivity_cases",
+      "producer": "05_damage_size_sensitivity_dataset_generation",
+      "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "damage_size_cases.v1",
+      "expected_cardinality": 35,
+      "applicability": "damage_size_sensitivity"
+    },
+    {
+      "input_key": "damage_size_sensitivity_run_manifest",
+      "producer": "05_damage_size_sensitivity_dataset_generation",
+      "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "applicability": "damage_size_sensitivity"
+    },
+    {
+      "input_key": "mask_robustness_cases",
+      "producer": "06_mask_robustness_dataset_generation",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/data/cases.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "mask_robustness_cases.v1",
+      "expected_cardinality": 75,
+      "applicability": "mask_robustness"
+    },
+    {
+      "input_key": "mask_robustness_run_manifest",
+      "producer": "06_mask_robustness_dataset_generation",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/manifests/run_manifest.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "applicability": "mask_robustness"
+    },
+    {
+      "input_key": "synthetic_degradation_cases",
+      "producer": "07_synthetic_degradation_dataset_generation",
+      "relative_path": "outputs/07_synthetic_degradation_dataset_generation/data/cases.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "synthetic_degradation_cases.v1",
+      "expected_cardinality": 165,
+      "applicability": "synthetic_degradation"
+    },
+    {
+      "input_key": "synthetic_degradation_run_manifest",
+      "producer": "07_synthetic_degradation_dataset_generation",
+      "relative_path": "outputs/07_synthetic_degradation_dataset_generation/manifests/run_manifest.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "applicability": "synthetic_degradation"
+    }
+  ],
+  "outputs": [
+    {
+      "output_key": "case_registry",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
+      "format": "csv",
+      "schema_version": "case_registry.v1",
+      "expected_cardinality": 525,
+      "artifact_role": "primary_cross_experiment_registry"
+    },
+    {
+      "output_key": "model_eligibility",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
+      "format": "csv",
+      "schema_version": "model_eligibility.v1",
+      "expected_cardinality": 2100,
+      "artifact_role": "authoritative_model_routing"
+    },
+    {
+      "output_key": "region_policy",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv",
+      "format": "csv",
+      "schema_version": "region_policy.v1",
+      "expected_cardinality": 143,
+      "artifact_role": "authoritative_metric_region_policy"
+    },
+    {
+      "output_key": "schema_registry",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json",
+      "format": "json",
+      "schema_version": "schema_registry.v1",
+      "expected_cardinality": 1,
+      "artifact_role": "machine_readable_schema_handoff"
+    },
+    {
+      "output_key": "region_definitions",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/figures/region_definitions.png",
+      "format": "png",
+      "schema_version": "figure.region_definitions.v1",
+      "expected_cardinality": 1,
+      "artifact_role": "methodology_visualization"
+    },
+    {
+      "output_key": "evaluation_contract",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/reports/evaluation_contract.md",
+      "format": "markdown",
+      "schema_version": "evaluation_contract.v1",
+      "expected_cardinality": 1,
+      "artifact_role": "methodology_report"
+    },
+    {
+      "output_key": "validation_checks",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/validation/checks.csv",
+      "format": "csv",
+      "schema_version": "validation_checks.v1",
+      "expected_cardinality": 1,
+      "artifact_role": "validation_evidence"
+    },
+    {
+      "output_key": "artifact_manifest",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv",
+      "format": "csv",
+      "schema_version": "artifact_manifest.v1",
+      "expected_cardinality": 7,
+      "artifact_role": "handoff"
+    },
+    {
+      "output_key": "run_manifest",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "artifact_role": "reproducibility"
+    }
+  ],
+  "expected_counts": {
+    "source_experiments": 4,
+    "cases": 525,
+    "binary_cases": 360,
+    "synthetic_degradation_cases": 165,
+    "zero_controls": 50,
+    "models": 4,
+    "model_eligibility_decisions": 2100,
+    "eligible_decisions": 1640,
+    "ineligible_decisions": 460,
+    "regions": 11,
+    "metric_families": 13,
+    "region_policy_rows": 143,
+    "compatible_policy_rows": 86,
+    "prohibited_policy_rows": 57,
+    "schema_records": 5,
+    "validation_rows": 101,
+    "artifact_records": 7,
+    "canonical_figures": 1,
+    "methodology_reports": 1,
+    "total_output_files": 9
+  },
+  "observed_counts": {
+    "source_experiments": 4,
+    "cases": 525,
+    "binary_cases": 360,
+    "synthetic_degradation_cases": 165,
+    "zero_controls": 50,
+    "models": 4,
+    "model_eligibility_decisions": 2100,
+    "eligible_decisions": 1640,
+    "ineligible_decisions": 460,
+    "regions": 11,
+    "metric_families": 13,
+    "region_policy_rows": 143,
+    "compatible_policy_rows": 86,
+    "prohibited_policy_rows": 57,
+    "schema_records": 5,
+    "validation_rows": 101,
+    "artifact_records": 7,
+    "canonical_figures": 1,
+    "methodology_reports": 1,
+    "total_output_files": 9,
+    "registered_project_artifacts": 7
+  },
+  "validation_summary": {
+    "consolidated": {
+      "check_count": 101,
+      "passed_count": 101,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "canonical_persistence": {
+      "check_count": 8,
+      "passed_count": 8,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "manifest_handoff": {
+      "check_count": 4,
+      "passed_count": 4,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "completion_gate": {
+      "status": "passed",
+      "passed": true,
+      "requirement_count": 20,
+      "failed_requirement_ids": []
+    },
+    "registry_update": {
+      "check_count": 3,
+      "passed_count": 3,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "final_completion_gate": {
+      "check_count": 4,
+      "passed_count": 4,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    }
+  },
+  "known_limitations": [
+    "The cross-experiment case registry intentionally contains only stable core fields; generation-specific details remain in their source experiment tables.",
+    "Methodological model eligibility is separate from runtime availability, installed weights, hardware availability, execution success, and result quality.",
+    "Supplementary inpainting-style diagnostics for selected synthetic degradations do not represent physical conservation treatments.",
+    "Region margins, thresholds, boundary widths, and patch parameters are declared analysis choices rather than physical painting properties.",
+    "Algorithmic region masks are not expert conservation annotations or material-damage ground truth.",
+    "Sparse masked-pixel SSIM is prohibited because SSIM requires image-like rectangular support.",
+    "Metric-region compatibility prevents invalid routing but does not establish that any metric measures historical correctness or conservation readiness.",
+    "The controlled-50 dataset and balanced five-painting subsets are not population-representative samples of artists, periods, materials, or conservation states.",
+    "No universal trust score is defined; disagreements between evidence families must remain visible.",
+    "Visual plausibility is not equivalent to historical correctness, conservation approval, or restoration trustworthiness; human review remains necessary."
+  ],
+  "refactor_status": "complete",
+  "validation_status": "passed",
+  "depends_on": [
+    "01_dataset_verification.artifacts",
+    "02_image_preprocessing.artifacts",
+    "03_canonical_mask_generation.artifacts",
+    "04_canonical_damaged_image_generation.artifacts",
+    "05_damage_size_sensitivity_dataset_generation.artifacts",
+    "06_mask_robustness_dataset_generation.artifacts",
+    "07_synthetic_degradation_dataset_generation.artifacts",
+    "01_dataset_verification.run_manifest",
+    "02_image_preprocessing.run_manifest",
+    "03_canonical_mask_generation.run_manifest",
+    "04_canonical_damaged_image_generation.run_manifest",
+    "05_damage_size_sensitivity_dataset_generation.run_manifest",
+    "06_mask_robustness_dataset_generation.run_manifest",
+    "07_synthetic_degradation_dataset_generation.run_manifest",
+    "evaluation_contract_config",
+    "current inventory",
+    "project paths registry"
+  ],
+  "applicable_dataset_scopes": [
+    "controlled_50"
+  ],
+  "applicable_experiment_scopes": [
+    "canonical_missing_region",
+    "damage_size_sensitivity",
+    "mask_robustness",
+    "synthetic_degradation",
+    "cross_experiment_evaluation"
+  ],
+  "expensive_execution": false,
+  "completion_gate_passed": true
+}

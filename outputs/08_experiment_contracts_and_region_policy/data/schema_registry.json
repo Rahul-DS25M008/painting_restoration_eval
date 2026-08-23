@@ -1,0 +1,206 @@
+{
+  "schema_registry_version": "schema_registry.v1",
+  "producer_module": "restoration_eval.experiment_contracts",
+  "producer_module_version": "1.0.0",
+  "schemas": [
+    {
+      "name": "case_registry",
+      "version": "case_registry.v1",
+      "required_columns": [
+        "case_id",
+        "dataset_id",
+        "dataset_scope",
+        "experiment_id",
+        "painting_id",
+        "input_image_path",
+        "clean_image_path",
+        "mask_or_effect_id",
+        "mask_or_effect_path",
+        "damage_or_degradation_type",
+        "target_damage_fraction",
+        "realized_damage_fraction",
+        "source_manifest_path",
+        "status"
+      ],
+      "primary_key": [
+        "case_id"
+      ],
+      "non_nullable": [
+        "case_id",
+        "dataset_id",
+        "dataset_scope",
+        "experiment_id",
+        "painting_id",
+        "input_image_path",
+        "clean_image_path",
+        "mask_or_effect_id",
+        "mask_or_effect_path",
+        "damage_or_degradation_type",
+        "source_manifest_path",
+        "status"
+      ],
+      "optional_columns": [],
+      "allowed_values": {
+        "status": [
+          "passed"
+        ]
+      }
+    },
+    {
+      "name": "model_eligibility",
+      "version": "model_eligibility.v1",
+      "required_columns": [
+        "case_id",
+        "model_id",
+        "eligible",
+        "eligibility_reason",
+        "input_semantics",
+        "mask_semantics",
+        "restoration_objective"
+      ],
+      "primary_key": [
+        "case_id",
+        "model_id"
+      ],
+      "non_nullable": [
+        "case_id",
+        "model_id",
+        "eligible",
+        "eligibility_reason",
+        "input_semantics",
+        "mask_semantics",
+        "restoration_objective"
+      ],
+      "optional_columns": [],
+      "allowed_values": {
+        "eligible": [
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "name": "region_policy",
+      "version": "region_policy.v1",
+      "required_columns": [
+        "policy_id",
+        "policy_version",
+        "metric_family",
+        "region_id",
+        "region_type",
+        "spatial_support",
+        "compatible",
+        "compatibility_reason",
+        "primary_role",
+        "case_semantics",
+        "parameters_json",
+        "threshold_policy",
+        "minimum_size_policy",
+        "ablation_policy_ids_json",
+        "status"
+      ],
+      "primary_key": [
+        "metric_family",
+        "region_id"
+      ],
+      "non_nullable": [
+        "policy_id",
+        "policy_version",
+        "metric_family",
+        "region_id",
+        "region_type",
+        "spatial_support",
+        "compatible",
+        "compatibility_reason",
+        "primary_role",
+        "case_semantics",
+        "parameters_json",
+        "threshold_policy",
+        "minimum_size_policy",
+        "ablation_policy_ids_json",
+        "status"
+      ],
+      "optional_columns": [],
+      "allowed_values": {
+        "compatible": [
+          false,
+          true
+        ],
+        "status": [
+          "approved"
+        ]
+      }
+    },
+    {
+      "name": "artifact_manifest",
+      "version": "artifact_manifest.v1",
+      "required_columns": [
+        "artifact_id",
+        "artifact_key",
+        "producer_notebook",
+        "artifact_type",
+        "artifact_role",
+        "relative_path",
+        "format",
+        "dataset_scope",
+        "experiment_id",
+        "schema_version",
+        "row_count",
+        "file_count",
+        "size_bytes",
+        "checksum",
+        "validation_status"
+      ],
+      "primary_key": [
+        "artifact_id"
+      ],
+      "non_nullable": [
+        "artifact_id",
+        "artifact_key",
+        "producer_notebook",
+        "artifact_type",
+        "artifact_role",
+        "relative_path",
+        "format",
+        "schema_version",
+        "validation_status"
+      ],
+      "optional_columns": [],
+      "allowed_values": {}
+    },
+    {
+      "name": "validation_checks",
+      "version": "validation_checks.v1",
+      "required_columns": [
+        "validation_stage",
+        "check_id",
+        "check_description",
+        "severity",
+        "expected",
+        "observed",
+        "passed",
+        "details"
+      ],
+      "primary_key": [
+        "validation_stage",
+        "check_id"
+      ],
+      "non_nullable": [
+        "validation_stage",
+        "check_id",
+        "check_description",
+        "severity",
+        "passed"
+      ],
+      "optional_columns": [],
+      "allowed_values": {
+        "severity": [
+          "blocking",
+          "error",
+          "info",
+          "warning"
+        ]
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-19T23:27:22.837780Z",
+  "updated_at_utc": "2026-08-23T21:41:34.937326Z",
   "artifacts": [
     {
       "artifact_key": "damage.audit",
@@ -183,6 +183,90 @@
       "row_count": "",
       "file_count": 1,
       "checksum": "a477a1dfd3df7d109889356bc32df0c97c64d350264419977157af5a26072e2a"
+    },
+    {
+      "artifact_key": "experiment_contracts.case_registry",
+      "producer_notebook": "08_experiment_contracts_and_region_policy",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
+      "artifact_type": "dataset_table",
+      "artifact_role": "primary_cross_experiment_registry",
+      "schema_version": "case_registry.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_evaluation",
+      "validation_status": "passed",
+      "row_count": 525,
+      "file_count": 1,
+      "checksum": "cd560b6599e85c63bd7e81e80de6292fe7fd5f6f17c32b0ac9faadee51da5d75"
+    },
+    {
+      "artifact_key": "experiment_contracts.figure_region_definitions",
+      "producer_notebook": "08_experiment_contracts_and_region_policy",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/figures/region_definitions.png",
+      "artifact_type": "figure",
+      "artifact_role": "methodology_visualization",
+      "schema_version": "figure.region_definitions.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_evaluation",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "bb5e1565ca89ed3cb47c7b60140d96e6c2c8f31c59d5e4e7c4aba2eed1444da1"
+    },
+    {
+      "artifact_key": "experiment_contracts.model_eligibility",
+      "producer_notebook": "08_experiment_contracts_and_region_policy",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
+      "artifact_type": "routing_table",
+      "artifact_role": "authoritative_model_routing",
+      "schema_version": "model_eligibility.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_evaluation",
+      "validation_status": "passed",
+      "row_count": 2100,
+      "file_count": 1,
+      "checksum": "46f16b05337bb5d29b6c5d4bb23cbdc72817d66b7c69956688401cdf1ef88b76"
+    },
+    {
+      "artifact_key": "experiment_contracts.region_policy",
+      "producer_notebook": "08_experiment_contracts_and_region_policy",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv",
+      "artifact_type": "policy_table",
+      "artifact_role": "authoritative_metric_region_policy",
+      "schema_version": "region_policy.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_evaluation",
+      "validation_status": "passed",
+      "row_count": 143,
+      "file_count": 1,
+      "checksum": "17f30040897fb72900abb6f2aa1b5559f80b38d0b52b0ccc0857be70b7286710"
+    },
+    {
+      "artifact_key": "experiment_contracts.report",
+      "producer_notebook": "08_experiment_contracts_and_region_policy",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/reports/evaluation_contract.md",
+      "artifact_type": "methodology_report",
+      "artifact_role": "evaluation_contract",
+      "schema_version": "evaluation_contract.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_evaluation",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "fc9fb7960f622c796890ff3f19398e1ba67d77c7f1c1218199d23b15f525a614"
+    },
+    {
+      "artifact_key": "experiment_contracts.schema_registry",
+      "producer_notebook": "08_experiment_contracts_and_region_policy",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json",
+      "artifact_type": "schema_registry",
+      "artifact_role": "machine_readable_schema_handoff",
+      "schema_version": "schema_registry.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_evaluation",
+      "validation_status": "passed",
+      "row_count": 5,
+      "file_count": 1,
+      "checksum": "0a75cb8fb1d7762d1ded04944a895dda65d417d771624cb286359c4d1942018a"
     },
     {
       "artifact_key": "mask_robustness.cases",
@@ -575,6 +659,20 @@
       "row_count": 66,
       "file_count": 1,
       "checksum": "2213e6d246bdfcfb6916469c6f78f9fab05e01891b5d5c847a9dea809deb1e2b"
+    },
+    {
+      "artifact_key": "validation.08_experiment_contracts_and_region_policy",
+      "producer_notebook": "08_experiment_contracts_and_region_policy",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_evaluation",
+      "validation_status": "passed",
+      "row_count": 101,
+      "file_count": 1,
+      "checksum": "5b8afd44b419003c79768a7fa0bfd73c4e81fcb42892adffac24f84a89611095"
     }
   ]
 }

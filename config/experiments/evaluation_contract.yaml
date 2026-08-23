@@ -1,0 +1,167 @@
+config_schema_version: "evaluation_contract_config.v1"
+config_version: "1.0.0"
+
+dataset:
+  dataset_id: "painting_restoration_eval"
+  dataset_version: "1.0.0"
+  dataset_scope: "controlled_50"
+  experiment_id: "cross_experiment_evaluation"
+
+output:
+  notebook_stem: "08_experiment_contracts_and_region_policy"
+  case_registry_path: "data/case_registry.csv"
+  model_eligibility_path: "data/model_eligibility.csv"
+  region_policy_path: "data/region_policy.csv"
+  schema_registry_path: "data/schema_registry.json"
+  region_figure_path: "figures/region_definitions.png"
+  evaluation_contract_path: "reports/evaluation_contract.md"
+
+inputs:
+  inventory_path: "outputs/inventory/project_file_inventory.csv"
+  inventory_run_path: "outputs/inventory/inventory_run.json"
+  project_paths_path: "outputs/inventory/project_paths.json"
+  geometry_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+  canonical_masks_path: "outputs/03_canonical_mask_generation/data/masks.csv"
+  sources:
+    - experiment_id: "canonical_missing_region"
+      source_kind: "binary_missing_region"
+      cases_path: "outputs/04_canonical_damaged_image_generation/data/cases.csv"
+      run_manifest_path: "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json"
+      expected_rows: 250
+    - experiment_id: "damage_size_sensitivity"
+      source_kind: "binary_missing_region"
+      cases_path: "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv"
+      run_manifest_path: "outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json"
+      expected_rows: 35
+    - experiment_id: "mask_robustness"
+      source_kind: "binary_missing_region"
+      cases_path: "outputs/06_mask_robustness_dataset_generation/data/cases.csv"
+      run_manifest_path: "outputs/06_mask_robustness_dataset_generation/manifests/run_manifest.json"
+      expected_rows: 75
+    - experiment_id: "synthetic_degradation"
+      source_kind: "synthetic_degradation"
+      cases_path: "outputs/07_synthetic_degradation_dataset_generation/data/cases.csv"
+      run_manifest_path: "outputs/07_synthetic_degradation_dataset_generation/manifests/run_manifest.json"
+      expected_rows: 165
+
+expected_counts:
+  case_registry_rows: 525
+  model_count: 4
+  model_eligibility_rows: 2100
+  eligible_cases_per_model: 410
+  region_count: 11
+  metric_family_count: 13
+  region_policy_rows: 143
+
+models:
+  - model_id: "opencv_telea"
+    methodological_role: "classical_deterministic_baseline"
+  - model_id: "lama"
+    methodological_role: "pretrained_inpainting_baseline"
+  - model_id: "stable_diffusion_inpainting"
+    methodological_role: "generative_inpainting_candidate"
+  - model_id: "sdxl_inpainting"
+    methodological_role: "feasibility_or_fourth_model_candidate"
+
+eligibility:
+  policy_version: "model_eligibility_policy.v1"
+  binary_missing_region:
+    eligible: true
+    input_semantics: "rgb_image_with_synthetic_missing_content"
+    mask_semantics: "binary_missing_region_mask; foreground >= 128"
+    restoration_objective: "reconstruct deliberately removed painting content"
+    zero_control_objective: "identity/no-op control; preserve the input exactly"
+  synthetic_degradation:
+    input_semantics: "rgb_image_with_controlled_synthetic_degradation"
+    mask_semantics: "grayscale_effect_intensity; restoration target >= source active_threshold"
+    restoration_objective: "supplementary masked-removal diagnostic; not a physical conservation treatment"
+    eligible_families:
+      - "water_stain"
+      - "dirt_dust"
+      - "partial_transparency"
+      - "water_stain_dirt"
+    ineligible_reason_groups:
+      blur_or_defocus:
+        families: ["gaussian_blur", "motion_blur", "local_defocus", "gaussian_blur_fading"]
+        reason: "Blur or defocus is not missing content and requires a degradation-specific correction objective."
+      colour_or_tonal_change:
+        families: ["fading", "discolouration", "local_darkening", "fading_discolouration"]
+        reason: "Tonal or colour change is not a missing-region inpainting problem."
+      pigment_transport:
+        families: ["pigment_bleeding"]
+        reason: "Pigment bleeding is a colour/structure transport effect, not removable missing content."
+
+regions:
+  policy_version: "evaluation_region_policy.v1"
+  mask_bbox_margin_pixels: 8
+  boundary_width_pixels: 3
+  outside_ring_inner_offset_pixels: 3
+  outside_ring_outer_width_pixels: 8
+  binary_mask_threshold: 128
+  effect_support_threshold_source_column: "support_threshold"
+  effect_active_threshold_source_column: "active_threshold"
+  patch_size: [224, 224]
+  patch_stride: [112, 112]
+  patch_minimum_content_fraction: 0.5
+  definitions:
+    - {region_id: "full_image", region_type: "full_image", spatial_support: "rectangle"}
+    - {region_id: "content_region", region_type: "content", spatial_support: "rectangle"}
+    - {region_id: "masked_region", region_type: "mask", spatial_support: "irregular_pixels"}
+    - {region_id: "mask_bbox_crop", region_type: "mask_bbox", spatial_support: "rectangle"}
+    - {region_id: "inner_boundary_band", region_type: "boundary", spatial_support: "irregular_pixels"}
+    - {region_id: "outer_boundary_band", region_type: "boundary", spatial_support: "irregular_pixels"}
+    - {region_id: "boundary_ring", region_type: "boundary", spatial_support: "irregular_pixels"}
+    - {region_id: "outside_mask_content", region_type: "outside_mask", spatial_support: "irregular_pixels"}
+    - {region_id: "outside_boundary_ring", region_type: "outside_boundary", spatial_support: "irregular_pixels"}
+    - {region_id: "degradation_support", region_type: "degradation_effect", spatial_support: "irregular_pixels"}
+    - {region_id: "patch_window", region_type: "patch", spatial_support: "rectangle"}
+
+metric_families:
+  - metric_family: "classical_pixel"
+    compatible_regions: ["full_image", "content_region", "masked_region", "mask_bbox_crop", "inner_boundary_band", "outer_boundary_band", "boundary_ring", "outside_mask_content", "outside_boundary_ring", "degradation_support", "patch_window"]
+    primary_regions: ["content_region", "masked_region", "mask_bbox_crop", "boundary_ring", "outside_mask_content"]
+  - metric_family: "ssim"
+    compatible_regions: ["full_image", "content_region", "mask_bbox_crop", "patch_window"]
+    primary_regions: ["content_region", "mask_bbox_crop"]
+  - metric_family: "lpips"
+    compatible_regions: ["full_image", "content_region", "mask_bbox_crop", "patch_window"]
+    primary_regions: ["content_region", "mask_bbox_crop"]
+  - metric_family: "clip"
+    compatible_regions: ["full_image", "content_region", "mask_bbox_crop", "patch_window"]
+    primary_regions: ["content_region", "mask_bbox_crop"]
+  - metric_family: "dinov2"
+    compatible_regions: ["full_image", "content_region", "mask_bbox_crop", "patch_window"]
+    primary_regions: ["content_region", "mask_bbox_crop"]
+  - metric_family: "spatial_diagnostics"
+    compatible_regions: ["full_image", "content_region", "masked_region", "mask_bbox_crop", "inner_boundary_band", "outer_boundary_band", "boundary_ring", "outside_mask_content", "outside_boundary_ring", "degradation_support", "patch_window"]
+    primary_regions: ["content_region", "masked_region", "boundary_ring", "outside_mask_content"]
+  - metric_family: "texture_descriptor"
+    compatible_regions: ["full_image", "content_region", "mask_bbox_crop", "patch_window"]
+    primary_regions: ["content_region", "mask_bbox_crop", "patch_window"]
+  - metric_family: "texture_map"
+    compatible_regions: ["content_region", "masked_region", "mask_bbox_crop", "inner_boundary_band", "outer_boundary_band", "boundary_ring", "outside_mask_content", "outside_boundary_ring", "degradation_support", "patch_window"]
+    primary_regions: ["masked_region", "boundary_ring", "outside_mask_content"]
+  - metric_family: "colour"
+    compatible_regions: ["full_image", "content_region", "masked_region", "mask_bbox_crop", "inner_boundary_band", "outer_boundary_band", "boundary_ring", "outside_mask_content", "outside_boundary_ring", "degradation_support", "patch_window"]
+    primary_regions: ["content_region", "masked_region", "mask_bbox_crop", "boundary_ring", "outside_mask_content"]
+  - metric_family: "seam"
+    compatible_regions: ["inner_boundary_band", "outer_boundary_band", "boundary_ring", "outside_boundary_ring"]
+    primary_regions: ["boundary_ring", "outside_boundary_ring"]
+  - metric_family: "uncertainty_pixelwise"
+    compatible_regions: ["full_image", "content_region", "masked_region", "mask_bbox_crop", "inner_boundary_band", "outer_boundary_band", "boundary_ring", "outside_mask_content", "outside_boundary_ring", "degradation_support", "patch_window"]
+    primary_regions: ["masked_region", "mask_bbox_crop", "boundary_ring", "outside_mask_content"]
+  - metric_family: "uncertainty_perceptual"
+    compatible_regions: ["full_image", "content_region", "mask_bbox_crop", "patch_window"]
+    primary_regions: ["content_region", "mask_bbox_crop"]
+  - metric_family: "semantic_patch"
+    compatible_regions: ["full_image", "content_region", "mask_bbox_crop", "patch_window"]
+    primary_regions: ["content_region", "mask_bbox_crop", "patch_window"]
+
+ablation_policies:
+  full_image_only: ["full_image"]
+  content_region_only: ["content_region"]
+  masked_pixels_where_valid: ["masked_region", "degradation_support"]
+  mask_bbox_only: ["mask_bbox_crop"]
+  boundary_regions: ["inner_boundary_band", "outer_boundary_band", "boundary_ring", "outside_boundary_ring"]
+  outside_mask_only: ["outside_mask_content", "outside_boundary_ring"]
+  complete_approved_policy: ["full_image", "content_region", "masked_region", "mask_bbox_crop", "inner_boundary_band", "outer_boundary_band", "boundary_ring", "outside_mask_content", "outside_boundary_ring", "degradation_support", "patch_window"]

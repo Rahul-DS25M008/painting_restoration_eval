@@ -26,9 +26,11 @@ from restoration_eval.paths import (
 from restoration_eval.regions import (
     boundary_region,
     build_standard_regions,
+    effect_support_region,
     full_image_region,
     mask_bbox_region,
     metric_region_is_valid,
+    outside_boundary_region,
     outside_mask_content_region,
     patch_regions,
 )
@@ -182,6 +184,26 @@ class RegionTests(unittest.TestCase):
             )
         )
 
+    def test_mask_bbox_crop_is_clipped_to_content_support(self) -> None:
+        edge_mask = np.zeros((10, 12), dtype=bool)
+        edge_mask[3:6, 1:3] = True
+        regions = build_standard_regions(
+            edge_mask,
+            content_bbox=(1, 1, 11, 9),
+            mask_bbox_margin=3,
+            boundary_width_pixels=1,
+        )
+        self.assertEqual(
+            regions["mask_bbox_crop"].bbox,
+            (1, 1, 6, 9),
+        )
+        self.assertFalse(
+            np.any(
+                regions["mask_bbox_crop"].mask
+                & ~regions["content_region"].mask
+            )
+        )
+
     def test_sparse_ssim_is_rejected(self) -> None:
         sparse = boundary_region(self.mask, width_pixels=1, mode="both")
         valid, _ = metric_region_is_valid("damaged_ssim", sparse)
@@ -207,6 +229,36 @@ class RegionTests(unittest.TestCase):
                 "patch_y0004_x0004",
             ],
         )
+
+    def test_effect_support_uses_inclusive_threshold(self) -> None:
+        effect = np.array([[0, 1, 12, 13]], dtype=np.uint8)
+        support = effect_support_region(effect, support_threshold=1)
+        active = effect_support_region(effect, support_threshold=13)
+        self.assertEqual(support.region_id, "degradation_support")
+        self.assertEqual(support.pixel_count, 3)
+        self.assertEqual(active.pixel_count, 1)
+
+    def test_outside_spillover_ring_is_distinct_from_outer_band(self) -> None:
+        outer_band = boundary_region(
+            self.mask,
+            width_pixels=1,
+            mode="outer",
+        )
+        spillover = outside_boundary_region(
+            self.mask,
+            inner_offset_pixels=1,
+            outer_width_pixels=3,
+        )
+        self.assertFalse(np.any(spillover.mask & self.mask))
+        self.assertFalse(np.any(spillover.mask & outer_band.mask))
+
+    def test_patch_regions_cover_trailing_edges(self) -> None:
+        regions = patch_regions((10, 10), patch_size=4, stride=4)
+        self.assertIn("patch_y0006_x0006", [region.region_id for region in regions])
+        coverage = np.zeros((10, 10), dtype=bool)
+        for region in regions:
+            coverage |= region.mask
+        self.assertTrue(coverage.all())
 
 
 class ManifestTests(unittest.TestCase):
