@@ -1,15 +1,15 @@
 {
   "run_schema_version": "inventory_run.v1",
   "inventory_schema_version": "project_file_inventory.v1",
-  "inventory_run_id": "inventory_20260823T214550Z_299ce6d8",
+  "inventory_run_id": "inventory_20260823T233442Z_133fee3a",
   "status": "completed",
-  "generated_at_utc": "2026-08-23T21:45:50.761044Z",
-  "completed_at_utc": "2026-08-23T21:45:54.650327Z",
-  "duration_seconds": 3.906,
+  "generated_at_utc": "2026-08-23T23:34:42.272843Z",
+  "completed_at_utc": "2026-08-23T23:34:48.382289Z",
+  "duration_seconds": 6.128,
   "repository_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
   "inventory_relative_path": "outputs/inventory/project_file_inventory.csv",
-  "inventory_sha256": "b7a2a6109dcd8b7823b994090264a4a6ee68152eb14ec013b5b50641fc352f63",
-  "inventory_size_bytes": 5617658,
+  "inventory_sha256": "0c08adab8117c1967a66b67673bc231d6784a09564f186ee4d7dbb5b72e0cf26",
+  "inventory_size_bytes": 5616632,
   "hash_configuration": {
     "mode": "partial",
     "algorithm": "sha256_first_n_bytes",
@@ -18,9 +18,9 @@
   "incremental_reuse": {
     "enabled": true,
     "cache_status": "verified",
-    "source_run_id": "inventory_20260823T202539Z_8395ec5d",
-    "reused_file_count": 11124,
-    "inspected_file_count": 14
+    "source_run_id": "inventory_20260823T221607Z_81ea1ca9",
+    "reused_file_count": 10713,
+    "inspected_file_count": 420
   },
   "scan_configuration": {
     "skipped_directory_names": [
@@ -42,64 +42,64 @@
     ]
   },
   "environment": {
-    "python_version": "3.12.6",
+    "python_version": "3.12.4",
     "python_implementation": "CPython",
     "platform": "Windows-11-10.0.26200-SP0"
   },
   "summary": {
-    "file_count": 11138,
-    "total_size_bytes": 5857191581,
+    "file_count": 11133,
+    "total_size_bytes": 5867284012,
     "read_error_file_count": 0,
     "read_error_count": 0,
     "counts_by_format": {
-      "csv": 304,
+      "csv": 306,
       "docx": 1,
       "html": 6,
       "jpeg": 50,
       "json": 41,
-      "markdown": 21,
+      "markdown": 20,
       "no_extension": 2,
       "notebook": 39,
       "npz": 1,
-      "png": 10625,
-      "python": 36,
+      "png": 10617,
+      "python": 37,
       "text": 2,
-      "yaml": 10
+      "yaml": 11
     },
     "counts_by_file_kind": {
       "clean_image": 100,
-      "damaged_image": 1920,
+      "damaged_image": 1915,
       "figure_image": 23,
       "html": 6,
       "image": 50,
       "json": 41,
-      "manifest_table": 39,
-      "markdown": 21,
-      "mask_image": 2995,
-      "metric_table": 81,
+      "manifest_table": 40,
+      "markdown": 20,
+      "mask_image": 2994,
+      "metric_table": 82,
       "notebook": 39,
       "other": 4,
-      "python": 36,
-      "restored_image": 5587,
+      "python": 37,
+      "restored_image": 5585,
       "summary_table": 11,
-      "table": 59,
+      "table": 58,
       "text": 2,
-      "validation_table": 114,
-      "yaml": 10
+      "validation_table": 115,
+      "yaml": 11
     },
     "counts_by_extension": {
-      ".csv": 304,
+      ".csv": 306,
       ".docx": 1,
       ".html": 6,
       ".ipynb": 39,
       ".jpg": 50,
       ".json": 41,
-      ".md": 21,
+      ".md": 20,
       ".npz": 1,
-      ".png": 10625,
-      ".py": 36,
+      ".png": 10617,
+      ".py": 37,
       ".txt": 2,
-      ".yaml": 10,
+      ".yaml": 11,
       "[none]": 2
     }
   }

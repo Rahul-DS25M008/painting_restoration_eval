@@ -106,14 +106,33 @@ The workflow for every notebook is:
 3. Determine whether helpers require no change, targeted changes, or complete replacement.
 4. Define every planned cell batch before generating notebook code.
 5. Define and approve the exact input/output contract before Batch 1 is generated.
-6. Create the correctly numbered and named notebook with Batch 1 only.
-7. Provide later batches as complete cells in chat for manual insertion, execution, and testing.
+6. The user creates the correctly numbered, named, and otherwise blank notebook.
+7. Provide Batch 1 and every later batch as complete, separately labelled
+   Markdown and code cells in chat for manual insertion, execution, and testing
+   by the user.
 8. Inspect the executed final notebook and generated artifacts.
 9. Validate the notebook against the approved truth sources and input/output contract.
 10. Provide targeted replacement cells or helper changes when issues are isolated.
 11. Rerun the required cells and repeat validation.
 12. Update the project paths registry only after the notebook passes its completion gate.
 13. Refresh the project inventory again so the next notebook receives the validated state.
+
+### 6.1 Manual notebook editing policy
+
+- The assistant must not create, replace, patch, or otherwise edit an `.ipynb`
+  file directly.
+- The assistant must not insert Batch 1 or any later cells into a notebook file.
+- Every proposed notebook cell, including a replacement for an erroneous cell,
+  is delivered in chat as a complete cell for the user to copy and paste.
+- Markdown cells and code cells are labelled separately and preserve the linear
+  structure already established by the successfully refactored notebooks.
+- The user alone executes notebook cells and saves the notebook.
+- The assistant may read and inspect the user-saved notebook, its rendered
+  outputs, and its generated files, but inspection does not authorize notebook
+  modification or cell execution.
+- Helper modules, configuration files, tests, documentation, inventory files,
+  and project-path registries may still be edited when explicitly within the
+  approved preparation or completion workflow.
 
 The inventory refresh is a controlled write operation. During explicitly read-only phases, the existing inventory may be inspected but must not be regenerated.
 

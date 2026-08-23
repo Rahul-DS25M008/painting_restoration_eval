@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.6.0"
+SCHEMAS_MODULE_VERSION = "1.7.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -353,6 +353,26 @@ CASE_REGISTRY_COLUMNS = (
 MODEL_ELIGIBILITY_COLUMNS = (
     "case_id", "model_id", "eligible", "eligibility_reason",
     "input_semantics", "mask_semantics", "restoration_objective",
+)
+
+RESTORATIONS_COLUMNS = (
+    "restoration_id", "case_id", "model_id", "candidate_id",
+    "candidate_index", "seed", "prompt_policy_id", "model_version",
+    "opencv_version",
+    "configuration_id", "algorithm", "inpaint_radius",
+    "mask_threshold", "execution_action", "restored_path",
+    "input_sha256", "mask_sha256", "restored_sha256",
+    "runtime_seconds", "device", "precision", "execution_backend",
+    "cpu_environment", "retry_count", "generator_name",
+    "generator_version", "started_at_utc", "completed_at_utc",
+    "status", "issue",
+)
+
+RESTORATION_RUNTIME_SUMMARY_COLUMNS = (
+    "summary_scope", "experiment_id", "case_count", "completed_count",
+    "failed_count", "total_runtime_seconds", "mean_runtime_seconds",
+    "median_runtime_seconds", "p95_runtime_seconds",
+    "max_runtime_seconds", "throughput_cases_per_second", "status",
 )
 
 REGION_POLICY_COLUMNS = (
@@ -862,6 +882,39 @@ MODEL_ELIGIBILITY_SCHEMA = DataFrameSchema(
     allowed_values={"eligible": frozenset({True, False})},
 )
 
+RESTORATIONS_SCHEMA = DataFrameSchema(
+    name="restorations",
+    version="restorations.v1",
+    required_columns=RESTORATIONS_COLUMNS,
+    primary_key=("restoration_id",),
+    non_nullable=tuple(
+        column for column in RESTORATIONS_COLUMNS
+        if column not in {"seed", "prompt_policy_id", "restored_sha256", "issue"}
+    ),
+    allowed_values={
+        "candidate_index": frozenset({0}),
+        "device": frozenset({"cpu"}),
+        "precision": frozenset({"uint8"}),
+        "retry_count": frozenset({0}),
+        "execution_action": frozenset(
+            {"telea_inpaint", "identity_noop", "reused_validated", "failed"}
+        ),
+        "status": frozenset({"completed", "failed"}),
+    },
+)
+
+RESTORATION_RUNTIME_SUMMARY_SCHEMA = DataFrameSchema(
+    name="restoration_runtime_summary",
+    version="restoration_runtime_summary.v1",
+    required_columns=RESTORATION_RUNTIME_SUMMARY_COLUMNS,
+    primary_key=("summary_scope", "experiment_id"),
+    non_nullable=RESTORATION_RUNTIME_SUMMARY_COLUMNS,
+    allowed_values={
+        "summary_scope": frozenset({"overall", "experiment"}),
+        "status": frozenset({"completed", "has_failures"}),
+    },
+)
+
 REGION_POLICY_SCHEMA = DataFrameSchema(
     name="region_policy",
     version="region_policy.v1",
@@ -894,6 +947,8 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     SYNTHETIC_DEGRADATION_GENERATION_AUDIT_SCHEMA.name: SYNTHETIC_DEGRADATION_GENERATION_AUDIT_SCHEMA,
     CASE_REGISTRY_SCHEMA.name: CASE_REGISTRY_SCHEMA,
     MODEL_ELIGIBILITY_SCHEMA.name: MODEL_ELIGIBILITY_SCHEMA,
+    RESTORATIONS_SCHEMA.name: RESTORATIONS_SCHEMA,
+    RESTORATION_RUNTIME_SUMMARY_SCHEMA.name: RESTORATION_RUNTIME_SUMMARY_SCHEMA,
     REGION_POLICY_SCHEMA.name: REGION_POLICY_SCHEMA,
 }
 

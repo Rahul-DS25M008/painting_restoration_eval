@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-23T21:41:34.937326Z`
-- Registered artifacts: 48
+- Updated: `2026-08-23T23:31:38.282151Z`
+- Registered artifacts: 53
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -36,6 +36,10 @@
 | masks.figure_examples | 03_canonical_mask_generation | `outputs/03_canonical_mask_generation/figures/mask_examples.png` | qa_reporting | passed |
 | masks.figure_morphology | 03_canonical_mask_generation | `outputs/03_canonical_mask_generation/figures/mask_morphology.png` | thesis_reporting | passed |
 | masks.protocol | 03_canonical_mask_generation | `outputs/03_canonical_mask_generation/reports/mask_protocol.md` | methodology_reporting | passed |
+| opencv_telea.restoration_examples | 09_opencv_telea_restoration | `outputs/09_opencv_telea_restoration/figures/restoration_examples.png` | representative_visual_evidence | passed |
+| opencv_telea.restorations | 09_opencv_telea_restoration | `outputs/09_opencv_telea_restoration/data/restorations.csv` | primary_restoration_records | passed |
+| opencv_telea.restored_images | 09_opencv_telea_restoration | `outputs/09_opencv_telea_restoration/images/restored` | primary_restored_images | passed |
+| opencv_telea.runtime_summary | 09_opencv_telea_restoration | `outputs/09_opencv_telea_restoration/metrics/runtime_summary.csv` | runtime_evidence | passed |
 | preprocessing.audit | 02_image_preprocessing | `outputs/02_image_preprocessing/metrics/preprocessing_audit.csv` | audit_reporting | passed |
 | preprocessing.clean_images | 02_image_preprocessing | `outputs/02_image_preprocessing/images/clean` | primary_downstream | passed |
 | preprocessing.figure_preview | 02_image_preprocessing | `outputs/02_image_preprocessing/figures/preprocessing_preview.png` | qa_reporting | passed |
@@ -54,3 +58,4 @@
 | validation.06_mask_robustness_dataset_generation | 06_mask_robustness_dataset_generation | `outputs/06_mask_robustness_dataset_generation/validation/checks.csv` | validation_evidence | passed |
 | validation.07_synthetic_degradation_dataset_generation | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/validation/checks.csv` | validation_evidence | passed |
 | validation.08_experiment_contracts_and_region_policy | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/validation/checks.csv` | validation_evidence | passed |
+| validation.09_opencv_telea_restoration | 09_opencv_telea_restoration | `outputs/09_opencv_telea_restoration/validation/checks.csv` | validation_evidence | passed |
