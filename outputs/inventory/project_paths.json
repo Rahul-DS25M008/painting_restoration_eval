@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-23T23:31:38.282151Z",
+  "updated_at_utc": "2026-08-24T08:58:33.233517Z",
   "artifacts": [
     {
       "artifact_key": "damage.audit",
@@ -267,6 +267,62 @@
       "row_count": 5,
       "file_count": 1,
       "checksum": "0a75cb8fb1d7762d1ded04944a895dda65d417d771624cb286359c4d1942018a"
+    },
+    {
+      "artifact_key": "lama.restoration_examples",
+      "producer_notebook": "10_lama_restoration",
+      "relative_path": "outputs/10_lama_restoration/figures/restoration_examples.png",
+      "artifact_type": "figure",
+      "artifact_role": "representative_visual_evidence",
+      "schema_version": "figure.restoration_examples.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_lama",
+      "validation_status": "passed",
+      "row_count": 8,
+      "file_count": 1,
+      "checksum": "11c5c4a7d95f1df1cc591bae3b3302d075483d01d24bd0e52b557378d3a04c9b"
+    },
+    {
+      "artifact_key": "lama.restorations",
+      "producer_notebook": "10_lama_restoration",
+      "relative_path": "outputs/10_lama_restoration/data/restorations.csv",
+      "artifact_type": "table",
+      "artifact_role": "primary_restoration_records",
+      "schema_version": "restorations.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_lama",
+      "validation_status": "passed",
+      "row_count": 410,
+      "file_count": 1,
+      "checksum": "9b19585d50aa6ee63761e76b695e50edb4644bc8aeaa2a018fcd413b34de8fb9"
+    },
+    {
+      "artifact_key": "lama.restored_images",
+      "producer_notebook": "10_lama_restoration",
+      "relative_path": "outputs/10_lama_restoration/images/restored",
+      "artifact_type": "image_directory",
+      "artifact_role": "primary_restored_images",
+      "schema_version": "restored_images.lama.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_lama",
+      "validation_status": "passed",
+      "row_count": 410,
+      "file_count": 410,
+      "checksum": "5b49e40c4ab3fb93ea547ace6adf24da09283d1d2d11892d2a8392ec14673205"
+    },
+    {
+      "artifact_key": "lama.runtime_summary",
+      "producer_notebook": "10_lama_restoration",
+      "relative_path": "outputs/10_lama_restoration/metrics/runtime_summary.csv",
+      "artifact_type": "table",
+      "artifact_role": "runtime_evidence",
+      "schema_version": "restoration_runtime_summary.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_lama",
+      "validation_status": "passed",
+      "row_count": 5,
+      "file_count": 1,
+      "checksum": "277b37cbd1c1043c9202f97a2393e3ff4d266cbf1e41a8aa727a8a4e61b4d0e4"
     },
     {
       "artifact_key": "mask_robustness.cases",
@@ -743,6 +799,20 @@
       "row_count": 72,
       "file_count": 1,
       "checksum": "72383a5b124ea2f58ffc73a62ebf273a8f06a66aa8d366b515081ce92feb98ea"
+    },
+    {
+      "artifact_key": "validation.10_lama_restoration",
+      "producer_notebook": "10_lama_restoration",
+      "relative_path": "outputs/10_lama_restoration/validation/checks.csv",
+      "artifact_type": "table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_lama",
+      "validation_status": "passed",
+      "row_count": 80,
+      "file_count": 1,
+      "checksum": "a1338e3d2edcde53d244777e773a35a254a5f7ad670668521ade1eb76de6942a"
     }
   ]
 }

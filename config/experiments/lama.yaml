@@ -1,0 +1,145 @@
+config_schema_version: "lama_config.v1"
+config_version: "1.0.0"
+
+dataset:
+  dataset_id: "painting_restoration_eval"
+  dataset_version: "1.0.0"
+  dataset_scope: "controlled_50"
+  experiment_id: "cross_experiment_lama"
+
+inputs:
+  inventory_path: "outputs/inventory/project_file_inventory.csv"
+  inventory_run_path: "outputs/inventory/inventory_run.json"
+  project_paths_path: "outputs/inventory/project_paths.json"
+  case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+  model_eligibility_path: "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv"
+  schema_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json"
+  upstream_run_manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+  upstream_artifacts_path: "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv"
+  evaluation_contract_config_path: "config/experiments/evaluation_contract.yaml"
+  synthetic_degradation_config_path: "config/experiments/synthetic_degradation.yaml"
+  required_registry_keys:
+    - "experiment_contracts.case_registry"
+    - "experiment_contracts.model_eligibility"
+    - "experiment_contracts.schema_registry"
+  required_upstream_run_status: "completed"
+
+output:
+  notebook_stem: "10_lama_restoration"
+  restorations_path: "data/restorations.csv"
+  restored_directory: "images/restored"
+  restored_path_template: "{experiment_id}/{case_id}.png"
+  runtime_summary_path: "metrics/runtime_summary.csv"
+  examples_figure_path: "figures/restoration_examples.png"
+  run_manifest_path: "manifests/run_manifest.json"
+  artifacts_path: "manifests/artifacts.csv"
+  validation_path: "validation/checks.csv"
+  checkpoint_path: "work/restoration_checkpoint.csv"
+  batch_runs_checkpoint_path: "work/batch_runs_checkpoint.csv"
+  smoke_directory: "work/smoke"
+  batch_work_directory: "work/batches"
+  retained_failure_logs_directory: "logs"
+
+model:
+  model_id: "lama"
+  methodological_role: "learned_deterministic_inpainting_baseline"
+  configuration_id: "lama_iopaint_masked_composite_v1"
+  implementation: "IOPaint CLI"
+  implementation_source: "Sanster/IOPaint"
+  executable: "iopaint"
+  iopaint_model_name: "lama"
+  model_revision: "iopaint_lama_default"
+  model_artifact_path: ""
+  requested_device: "cuda"
+  allow_cpu_fallback: false
+  precision: "float32"
+  execution_backend: "iopaint"
+  deterministic: true
+  maximum_retries: 1
+  zero_control_policy: "identity_noop"
+  compositing_policy: "masked_composite_preserve_outside.v1"
+  mask_threshold_policy:
+    binary_missing_region:
+      threshold: 128
+      comparison: "greater_than_or_equal"
+    synthetic_degradation:
+      threshold: 13
+      comparison: "greater_than_or_equal"
+      source_config_key: "generator.active_threshold"
+
+execution:
+  progress_interval_cases: 10
+  progress_poll_seconds: 0.25
+  command_timeout_seconds: 3600
+  compute_checksums: true
+  resume_enabled: true
+  overwrite_existing: false
+  stale_file_action: "remove"
+  target_width: 768
+  target_height: 768
+  output_mode: "RGB"
+  output_format: "PNG"
+  png_compress_level: 6
+  staging_link_mode: "hardlink_with_copy_fallback"
+  batch_grouping: "experiment_id"
+  retain_success_logs: false
+  retain_failure_logs: true
+
+expected:
+  case_registry_rows: 525
+  model_eligibility_rows: 2100
+  eligible_case_count: 410
+  eligible_case_count_by_experiment:
+    canonical_missing_region: 250
+    damage_size_sensitivity: 35
+    mask_robustness: 75
+    synthetic_degradation: 50
+  model_inference_case_count: 360
+  zero_control_case_count: 50
+  unique_clean_image_count: 50
+  restored_file_count: 410
+  restorations_row_count: 410
+  runtime_summary_row_count: 5
+  representative_case_count: 8
+  artifact_record_count: 5
+  total_output_file_count_without_failure_logs: 416
+
+smoke:
+  deterministic_case_id: "canonical__p039__loss_large"
+  zero_control_case_id: "canonical__p001__zero_control"
+  deterministic_repeat_count: 2
+  repeatability_tolerance:
+    maximum_absolute_difference: 1
+    maximum_mean_absolute_difference: 0.005
+    maximum_different_pixel_fraction: 0.01
+    require_sha256_equality: false
+
+representative_case_ids:
+  - "canonical__p039__loss_large"
+  - "canonical__p001__zero_control"
+  - "damage_size__p001__loss_large__size_02pct"
+  - "mask_robustness__p001__loss_large__target_12p5pct__variant_01"
+  - "synthetic_degradation__p001__dirt_dust__mild"
+  - "synthetic_degradation__p001__partial_transparency__moderate"
+  - "synthetic_degradation__p001__water_stain__severe"
+  - "synthetic_degradation__p001__water_stain_dirt__moderate"
+
+schema_versions:
+  case_registry: "case_registry.v1"
+  model_eligibility: "model_eligibility.v1"
+  restorations: "restorations.v1"
+  runtime_summary: "restoration_runtime_summary.v1"
+  restored_images: "restored_images.lama.v1"
+  examples_figure: "figure.restoration_examples.v1"
+  run_manifest: "run_manifest.v1"
+  artifact_manifest: "artifact_manifest.v1"
+  validation_checks: "validation_checks.v1"
+
+known_limitations:
+  - "LaMa produces plausible learned inpainting, not historically verified reconstruction."
+  - "IOPaint batch execution exposes group wall-clock runtime; per-case inference runtimes are transparently allocated estimates."
+  - "The fixed model and mask policies are not tuned per painting or per damage case."
+  - "Eligible synthetic-degradation cases are supplementary masked-removal diagnostics and remain separate from missing-content claims."
+  - "Exact model-weight provenance depends on the locally resolved IOPaint cache artifact and is recorded when discoverable."
+  - "CUDA inference is evaluated for tightly bounded numerical repeatability rather than byte-identical output; the configured smoke tolerance permits at most one 8-bit channel level of deviation while outside-mask invariance remains exact."
+  - "Runtime measurements describe the recorded hardware and software environment and are not universal benchmarks."

@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.7.0"
+SCHEMAS_MODULE_VERSION = "1.8.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -889,15 +889,27 @@ RESTORATIONS_SCHEMA = DataFrameSchema(
     primary_key=("restoration_id",),
     non_nullable=tuple(
         column for column in RESTORATIONS_COLUMNS
-        if column not in {"seed", "prompt_policy_id", "restored_sha256", "issue"}
+        if column not in {
+            "seed",
+            "prompt_policy_id",
+            "opencv_version",
+            "inpaint_radius",
+            "restored_sha256",
+            "issue",
+        }
     ),
     allowed_values={
         "candidate_index": frozenset({0}),
-        "device": frozenset({"cpu"}),
-        "precision": frozenset({"uint8"}),
-        "retry_count": frozenset({0}),
+        "device": frozenset({"cpu", "cuda"}),
+        "precision": frozenset({"uint8", "float16", "float32"}),
         "execution_action": frozenset(
-            {"telea_inpaint", "identity_noop", "reused_validated", "failed"}
+            {
+                "telea_inpaint",
+                "lama_inpaint",
+                "identity_noop",
+                "reused_validated",
+                "failed",
+            }
         ),
         "status": frozenset({"completed", "failed"}),
     },

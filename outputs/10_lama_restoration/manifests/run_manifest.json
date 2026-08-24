@@ -1,0 +1,523 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_0ff80adbf7e147b8a076a2a706c4756e",
+  "notebook_id": "10",
+  "notebook_name": "LaMa Restoration",
+  "origin": "Existing Notebook 14; rebuilt against normalized Notebook 08 contracts",
+  "run_status": "completed",
+  "started_at_utc": "2026-08-24T08:00:21.567507Z",
+  "completed_at_utc": "2026-08-24T08:58:48.423161Z",
+  "git_commit": "54a172f923e131d075e47afe705c8103e3c690cc",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260824T075050Z_b71b7d25",
+  "dataset_versions": {
+    "dataset_id": "painting_restoration_eval",
+    "dataset_version": "1.0.0",
+    "dataset_scope": "controlled_50",
+    "experiment_id": "cross_experiment_lama",
+    "configuration_schema": "lama_config.v1",
+    "configuration_version": "1.0.0",
+    "configuration_id": "lama_iopaint_masked_composite_v1",
+    "methodological_role": "learned_deterministic_inpainting_baseline",
+    "implementation": "IOPaint CLI",
+    "implementation_source": "Sanster/IOPaint",
+    "iopaint_version": "1.6.0",
+    "iopaint_model_name": "lama",
+    "model_revision": "iopaint_lama_default",
+    "requested_device": "cuda",
+    "effective_device": "cuda",
+    "precision": "float32",
+    "deterministic_non_sampling": true,
+    "compositing_policy": "masked_composite_preserve_outside.v1",
+    "mask_threshold_policy": {
+      "binary_missing_region": {
+        "threshold": 128,
+        "comparison": "greater_than_or_equal"
+      },
+      "synthetic_degradation": {
+        "threshold": 13,
+        "comparison": "greater_than_or_equal",
+        "source_config_key": "generator.active_threshold"
+      }
+    },
+    "repeatability_tolerance": {
+      "maximum_absolute_difference": 1,
+      "maximum_mean_absolute_difference": 0.005,
+      "maximum_different_pixel_fraction": 0.01,
+      "require_sha256_equality": false
+    },
+    "restorations_schema": "restorations.v1",
+    "runtime_summary_schema": "restoration_runtime_summary.v1",
+    "upstream_notebook": "08_experiment_contracts_and_region_policy",
+    "upstream_run_id": "run_a3734bc2121f401b87de4894717366ab",
+    "upstream_manifest_checksum": "d1b62caa720194e666894afd276d0c6a8c973343b4a378bd787467273bbceb8a",
+    "inventory_checksum": "222083dfd0753f7ed62467f2f4f2cfabf065cdfd6ecfe289582dc1b72406ad0c",
+    "restoration_helper_sha256": "8fe75f4b3fe5f8ba94a5a8c13f2f5b4502b59081f665e01b0b163142330a17f8",
+    "schemas_helper_sha256": "65ef2ccb66615a9b999c553be0dcfcf779539d5f2508aad1022ccd4cf9c34e79",
+    "model_artifact_sha256": ""
+  },
+  "configuration_paths": [
+    "config/experiments/lama.yaml",
+    "config/experiments/evaluation_contract.yaml",
+    "config/experiments/synthetic_degradation.yaml"
+  ],
+  "configuration_checksums": {
+    "config/experiments/lama.yaml": "fb51f5cd05cb5bcdd903c944171c36bba0ac822ff795e8ab840fccb767c0400b",
+    "config/experiments/evaluation_contract.yaml": "ae977512636b0ea5eb16b4a3dff95c062f402c086430328a341c9d0bda6a3254",
+    "config/experiments/synthetic_degradation.yaml": "eaf2d11f3192e7271e11136f023022181bd4b5cfc4e0091316dc1c21a7255bf2"
+  },
+  "helper_versions": {
+    "restoration_eval": "0.1.0",
+    "paths": "1.0.0",
+    "schemas": "1.8.0",
+    "manifests": "1.0.0",
+    "validation": "1.0.0",
+    "restoration_lama": "3.0.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "IOPaint": "1.6.0",
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "matplotlib": "3.11.0",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3",
+    "torch": "2.5.1+cu121"
+  },
+  "hardware": {
+    "execution_device": "cuda",
+    "gpu_required": true,
+    "cuda_available": true,
+    "cuda_device_count": 1,
+    "cuda_device_name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "cuda_runtime_version": "12.1",
+    "torch_version": "2.5.1+cu121",
+    "execution_backend": "iopaint",
+    "cpu_environment": "Windows-11-10.0.26200-SP0 | AMD64 | Intel64 Family 6 Model 165 Stepping 2, GenuineIntel | NVIDIA GeForce RTX 3060 Laptop GPU"
+  },
+  "inputs": [
+    {
+      "input_key": "project_inventory",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "project_file_inventory.v1",
+      "required_columns_or_keys": "inventory_schema_version, inventory_run_id, relative_path, file_kind, size_bytes, hash_value",
+      "expected_cardinality": 10720,
+      "applicability": "repository"
+    },
+    {
+      "input_key": "inventory_run",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "inventory_run.v1",
+      "required_columns_or_keys": "inventory_run_id, status, inventory_sha256, summary",
+      "expected_cardinality": 1,
+      "applicability": "repository"
+    },
+    {
+      "input_key": "project_paths_registry",
+      "producer": "validated notebook handoffs",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "project_paths.v1",
+      "required_columns_or_keys": "registry_schema_version, artifacts",
+      "expected_cardinality": 53,
+      "applicability": "repository"
+    },
+    {
+      "input_key": "lama_config",
+      "producer": "project configuration",
+      "relative_path": "config/experiments/lama.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "lama_config.v1",
+      "required_columns_or_keys": "dataset, inputs, output, model, execution, expected",
+      "expected_cardinality": 1,
+      "applicability": "lama"
+    },
+    {
+      "input_key": "case_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "case_registry.v1",
+      "required_columns_or_keys": "case_id, dataset_id, dataset_scope, experiment_id, painting_id, input_image_path, clean_image_path, mask_or_effect_id, mask_or_effect_path, damage_or_degradation_type, target_damage_fraction, realized_damage_fraction, source_manifest_path, status",
+      "expected_cardinality": 525,
+      "applicability": "all_cases"
+    },
+    {
+      "input_key": "model_eligibility",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "model_eligibility.v1",
+      "required_columns_or_keys": "case_id, model_id, eligible, eligibility_reason, input_semantics, mask_semantics, restoration_objective",
+      "expected_cardinality": 2100,
+      "applicability": "all_case_model_pairs"
+    },
+    {
+      "input_key": "schema_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "schema_registry.v1",
+      "required_columns_or_keys": "schema_registry_version, schemas",
+      "expected_cardinality": 5,
+      "applicability": "downstream_contracts"
+    },
+    {
+      "input_key": "upstream_run_manifest",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "required_columns_or_keys": "run_id, run_status, validation_summary, completion_gate_passed",
+      "expected_cardinality": 1,
+      "applicability": "notebook_08_handoff"
+    },
+    {
+      "input_key": "upstream_artifacts",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "artifact_manifest.v1",
+      "required_columns_or_keys": "artifact_id, artifact_key, producer_notebook, artifact_type, artifact_role, relative_path, format, dataset_scope, experiment_id, schema_version, row_count, file_count, size_bytes, checksum, validation_status",
+      "expected_cardinality": 7,
+      "applicability": "notebook_08_handoff"
+    },
+    {
+      "input_key": "evaluation_contract_config",
+      "producer": "project configuration",
+      "relative_path": "config/experiments/evaluation_contract.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "evaluation_contract_config.v1",
+      "required_columns_or_keys": "dataset, output, models, schemas",
+      "expected_cardinality": 1,
+      "applicability": "eligibility_policy"
+    },
+    {
+      "input_key": "synthetic_degradation_config",
+      "producer": "project configuration",
+      "relative_path": "config/experiments/synthetic_degradation.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "synthetic_degradation_config.v1",
+      "required_columns_or_keys": "dataset, inputs, generator, degradations",
+      "expected_cardinality": 1,
+      "applicability": "synthetic_mask_threshold"
+    }
+  ],
+  "outputs": [
+    {
+      "output_key": "lama.restorations",
+      "relative_path": "outputs/10_lama_restoration/data/restorations.csv",
+      "artifact_role": "primary",
+      "format": "csv",
+      "schema_version": "restorations.v1",
+      "expected_cardinality": 410,
+      "downstream_consumers": "Notebooks 13-17 and later comparisons/reports"
+    },
+    {
+      "output_key": "lama.restored_images",
+      "relative_path": "outputs/10_lama_restoration/images/restored",
+      "artifact_role": "primary",
+      "format": "png_directory",
+      "schema_version": "restored_images.lama.v1",
+      "expected_cardinality": 410,
+      "downstream_consumers": "Notebooks 13-17 and later comparisons/reports"
+    },
+    {
+      "output_key": "lama.runtime_summary",
+      "relative_path": "outputs/10_lama_restoration/metrics/runtime_summary.csv",
+      "artifact_role": "downstream",
+      "format": "csv",
+      "schema_version": "restoration_runtime_summary.v1",
+      "expected_cardinality": 5,
+      "downstream_consumers": "comparison and reporting notebooks"
+    },
+    {
+      "output_key": "lama.restoration_examples",
+      "relative_path": "outputs/10_lama_restoration/figures/restoration_examples.png",
+      "artifact_role": "reporting",
+      "format": "png",
+      "schema_version": "figure.restoration_examples.v1",
+      "expected_cardinality": 1,
+      "downstream_consumers": "thesis and visual QA"
+    },
+    {
+      "output_key": "lama.run_manifest",
+      "relative_path": "outputs/10_lama_restoration/manifests/run_manifest.json",
+      "artifact_role": "universal_manifest",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "downstream_consumers": "all downstream stages"
+    },
+    {
+      "output_key": "lama.artifact_manifest",
+      "relative_path": "outputs/10_lama_restoration/manifests/artifacts.csv",
+      "artifact_role": "universal_manifest",
+      "format": "csv",
+      "schema_version": "artifact_manifest.v1",
+      "expected_cardinality": 5,
+      "downstream_consumers": "project paths registry"
+    },
+    {
+      "output_key": "validation.10_lama_restoration",
+      "relative_path": "outputs/10_lama_restoration/validation/checks.csv",
+      "artifact_role": "qa",
+      "format": "csv",
+      "schema_version": "validation_checks.v1",
+      "expected_cardinality": "consolidated validation rows",
+      "downstream_consumers": "completion gate and audit"
+    }
+  ],
+  "expected_counts": {
+    "case_registry_rows": 525,
+    "model_eligibility_rows": 2100,
+    "eligible_case_count": 410,
+    "eligible_case_count_by_experiment": {
+      "canonical_missing_region": 250,
+      "damage_size_sensitivity": 35,
+      "mask_robustness": 75,
+      "synthetic_degradation": 50
+    },
+    "model_inference_case_count": 360,
+    "zero_control_case_count": 50,
+    "unique_clean_image_count": 50,
+    "restored_file_count": 410,
+    "restorations_row_count": 410,
+    "runtime_summary_row_count": 5,
+    "representative_case_count": 8,
+    "artifact_record_count": 5,
+    "total_output_file_count_without_failure_logs": 416,
+    "consolidated_validation_rows": 80,
+    "blocking_validation_failures": 0,
+    "warning_validation_failures": 1,
+    "canonical_output_files": 416,
+    "temporary_work_files_before_completion": 1107,
+    "iopaint_batch_runs": 4
+  },
+  "observed_counts": {
+    "case_registry_rows": 525,
+    "model_eligibility_rows": 2100,
+    "eligible_case_count": 410,
+    "model_inference_case_count": 360,
+    "zero_control_case_count": 50,
+    "restored_file_count": 410,
+    "restorations_row_count": 410,
+    "runtime_summary_row_count": 5,
+    "representative_case_count": 8,
+    "artifact_record_count": 5,
+    "consolidated_validation_rows": 80,
+    "blocking_validation_failures": 0,
+    "warning_validation_failures": 1,
+    "canonical_output_files": 416,
+    "temporary_work_files_before_completion": 1107,
+    "iopaint_batch_runs": 4,
+    "temporary_work_files_after_completion": 0,
+    "registered_project_artifacts": 5,
+    "preserved_iopaint_batch_records": 4
+  },
+  "validation_summary": {
+    "consolidated": {
+      "check_count": 80,
+      "passed_count": 79,
+      "failed_count": 1,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": [
+        "batch_1_preflight:model_artifact_checksum"
+      ]
+    },
+    "canonical_persistence": {
+      "check_count": 7,
+      "passed_count": 7,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "manifest_handoff": {
+      "check_count": 5,
+      "passed_count": 5,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "completion_gate": {
+      "status": "passed",
+      "passed": true,
+      "requirement_count": 16,
+      "failed_requirement_ids": []
+    },
+    "registry_update": {
+      "check_count": 4,
+      "passed_count": 4,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "work_cleanup": {
+      "status": "passed",
+      "passed": true,
+      "files_before": 1107,
+      "files_after": 0
+    },
+    "nonblocking_warning_status": {
+      "status": "accepted",
+      "passed": true,
+      "warning_failures": 1
+    },
+    "final_completion_gate": {
+      "check_count": 8,
+      "passed_count": 8,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    }
+  },
+  "known_limitations": [
+    "LaMa produces plausible learned inpainting, not historically verified reconstruction.",
+    "IOPaint batch execution exposes group wall-clock runtime; per-case inference runtimes are transparently allocated estimates.",
+    "The fixed model and mask policies are not tuned per painting or per damage case.",
+    "Eligible synthetic-degradation cases are supplementary masked-removal diagnostics and remain separate from missing-content claims.",
+    "Exact model-weight provenance depends on the locally resolved IOPaint cache artifact and is recorded when discoverable.",
+    "CUDA inference is evaluated for tightly bounded numerical repeatability rather than byte-identical output; the configured smoke tolerance permits at most one 8-bit channel level of deviation while outside-mask invariance remains exact.",
+    "Runtime measurements describe the recorded hardware and software environment and are not universal benchmarks."
+  ],
+  "refactor_status": "complete",
+  "validation_status": "passed_with_warning",
+  "depends_on": [
+    "experiment_contracts.case_registry",
+    "experiment_contracts.model_eligibility",
+    "experiment_contracts.schema_registry",
+    "08_experiment_contracts_and_region_policy.run_manifest",
+    "lama_config",
+    "current_inventory",
+    "project_paths_registry"
+  ],
+  "applicable_dataset_scopes": [
+    "controlled_50"
+  ],
+  "applicable_experiment_scopes": [
+    "canonical_missing_region",
+    "damage_size_sensitivity",
+    "mask_robustness",
+    "synthetic_degradation",
+    "cross_experiment_lama"
+  ],
+  "expensive_execution": true,
+  "completion_gate_passed": true,
+  "execution_batch_evidence": [
+    {
+      "batch_id": "canonical_missing_region__attempt_01",
+      "experiment_id": "canonical_missing_region",
+      "case_count": 200,
+      "generated_count": 200,
+      "attempt": 1,
+      "return_code": 0,
+      "timed_out": false,
+      "runtime_seconds": 304.8473129000049,
+      "started_at_utc": "2026-08-24T08:13:28.837206Z",
+      "completed_at_utc": "2026-08-24T08:18:33.658575Z",
+      "command_text": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\.venv\\Scripts\\python.exe -m iopaint run --model lama --device cuda --image D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\10_lama_restoration\\work\\batches\\canonical_missing_region__attempt_01\\input --mask D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\10_lama_restoration\\work\\batches\\canonical_missing_region__attempt_01\\mask --output D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\10_lama_restoration\\work\\batches\\canonical_missing_region__attempt_01\\output",
+      "command_log_path": "outputs/10_lama_restoration/work/batches/canonical_missing_region__attempt_01/logs/command.txt",
+      "command_log_sha256": "95b4d1fd83a8c923834a94d5372f31486a65a29816ba637b3e5e57d4273cd596",
+      "stdout_log_path": "outputs/10_lama_restoration/work/batches/canonical_missing_region__attempt_01/logs/stdout.log",
+      "stdout_log_sha256": "879fabf0fc1b5d62021cde46ea8e73132588cc6b84f38dcdc9f29127f95d2462",
+      "stderr_log_path": "outputs/10_lama_restoration/work/batches/canonical_missing_region__attempt_01/logs/stderr.log",
+      "stderr_log_sha256": "9d4e7f7a53f342d18d0ccda306edbd87e402c3e3e465bed6f8537f793e8c772d",
+      "issue": "",
+      "log_retention_status": "validated_success_logs_removed_after_completion"
+    },
+    {
+      "batch_id": "damage_size_sensitivity__attempt_01",
+      "experiment_id": "damage_size_sensitivity",
+      "case_count": 35,
+      "generated_count": 35,
+      "attempt": 1,
+      "return_code": 0,
+      "timed_out": false,
+      "runtime_seconds": 78.48218860011548,
+      "started_at_utc": "2026-08-24T08:19:57.854546Z",
+      "completed_at_utc": "2026-08-24T08:21:16.330824Z",
+      "command_text": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\.venv\\Scripts\\python.exe -m iopaint run --model lama --device cuda --image D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\10_lama_restoration\\work\\batches\\damage_size_sensitivity__attempt_01\\input --mask D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\10_lama_restoration\\work\\batches\\damage_size_sensitivity__attempt_01\\mask --output D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\10_lama_restoration\\work\\batches\\damage_size_sensitivity__attempt_01\\output",
+      "command_log_path": "outputs/10_lama_restoration/work/batches/damage_size_sensitivity__attempt_01/logs/command.txt",
+      "command_log_sha256": "d7c39c743428c14b4ea9d7efc69fadbab5045b1511a78780dc3fbc1075565b5f",
+      "stdout_log_path": "outputs/10_lama_restoration/work/batches/damage_size_sensitivity__attempt_01/logs/stdout.log",
+      "stdout_log_sha256": "6cd066c3745da543393a202b567e91440f30047ea00c14e62389dbf76173ef1c",
+      "stderr_log_path": "outputs/10_lama_restoration/work/batches/damage_size_sensitivity__attempt_01/logs/stderr.log",
+      "stderr_log_sha256": "75d0cd38bd66a0560913060f6cf5cdd4ba880ad47295af634cfb6f589a7a6671",
+      "issue": "",
+      "log_retention_status": "validated_success_logs_removed_after_completion"
+    },
+    {
+      "batch_id": "mask_robustness__attempt_01",
+      "experiment_id": "mask_robustness",
+      "case_count": 75,
+      "generated_count": 75,
+      "attempt": 1,
+      "return_code": 0,
+      "timed_out": false,
+      "runtime_seconds": 132.44511630013585,
+      "started_at_utc": "2026-08-24T08:21:33.335840Z",
+      "completed_at_utc": "2026-08-24T08:23:45.771366Z",
+      "command_text": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\.venv\\Scripts\\python.exe -m iopaint run --model lama --device cuda --image D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\10_lama_restoration\\work\\batches\\mask_robustness__attempt_01\\input --mask D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\10_lama_restoration\\work\\batches\\mask_robustness__attempt_01\\mask --output D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\10_lama_restoration\\work\\batches\\mask_robustness__attempt_01\\output",
+      "command_log_path": "outputs/10_lama_restoration/work/batches/mask_robustness__attempt_01/logs/command.txt",
+      "command_log_sha256": "04d7e7fed642c0f8ec591b947954f5a694b505a393574895d4989587e9233f9c",
+      "stdout_log_path": "outputs/10_lama_restoration/work/batches/mask_robustness__attempt_01/logs/stdout.log",
+      "stdout_log_sha256": "316eabd68b6cfa2f441dbf7c28f7202ee8f967f4614d20c5d39bb8566f57762e",
+      "stderr_log_path": "outputs/10_lama_restoration/work/batches/mask_robustness__attempt_01/logs/stderr.log",
+      "stderr_log_sha256": "b339888b04a01333d0ffc8261bab0c3061805fbc13a3c53757b04a739ec72ee4",
+      "issue": "",
+      "log_retention_status": "validated_success_logs_removed_after_completion"
+    },
+    {
+      "batch_id": "synthetic_degradation__attempt_01",
+      "experiment_id": "synthetic_degradation",
+      "case_count": 50,
+      "generated_count": 50,
+      "attempt": 1,
+      "return_code": 0,
+      "timed_out": false,
+      "runtime_seconds": 100.20689809997566,
+      "started_at_utc": "2026-08-24T08:24:19.968070Z",
+      "completed_at_utc": "2026-08-24T08:26:00.168457Z",
+      "command_text": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\.venv\\Scripts\\python.exe -m iopaint run --model lama --device cuda --image D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\10_lama_restoration\\work\\batches\\synthetic_degradation__attempt_01\\input --mask D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\10_lama_restoration\\work\\batches\\synthetic_degradation__attempt_01\\mask --output D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\10_lama_restoration\\work\\batches\\synthetic_degradation__attempt_01\\output",
+      "command_log_path": "outputs/10_lama_restoration/work/batches/synthetic_degradation__attempt_01/logs/command.txt",
+      "command_log_sha256": "b5e8ce11a84dd10e9cf4d6782c58af619b9dd5efcbe7f3edb7ebd7be58a70325",
+      "stdout_log_path": "outputs/10_lama_restoration/work/batches/synthetic_degradation__attempt_01/logs/stdout.log",
+      "stdout_log_sha256": "db0b463cf6604147601e5d0597ccf65b062347a86cc6a486fd2e5820a61aa591",
+      "stderr_log_path": "outputs/10_lama_restoration/work/batches/synthetic_degradation__attempt_01/logs/stderr.log",
+      "stderr_log_sha256": "f908175be58bbca13e9b5a74a4e14904f1c47864413a66e99df219cffbec622b",
+      "issue": "",
+      "log_retention_status": "validated_success_logs_removed_after_completion"
+    }
+  ],
+  "nonblocking_warnings": [
+    {
+      "warning_id": "model_artifact_sha256_unavailable",
+      "status": "accepted",
+      "reason": "The locally resolved IOPaint model cache artifact could not be mapped to a stable single-file checksum. Implementation, IOPaint version, model revision, configuration, and runtime environment remain recorded."
+    }
+  ]
+}

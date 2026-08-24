@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-23T23:31:38.282151Z`
-- Registered artifacts: 53
+- Updated: `2026-08-24T08:58:33.233517Z`
+- Registered artifacts: 58
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -25,6 +25,10 @@
 | experiment_contracts.region_policy | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv` | authoritative_metric_region_policy | passed |
 | experiment_contracts.report | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/reports/evaluation_contract.md` | evaluation_contract | passed |
 | experiment_contracts.schema_registry | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json` | machine_readable_schema_handoff | passed |
+| lama.restoration_examples | 10_lama_restoration | `outputs/10_lama_restoration/figures/restoration_examples.png` | representative_visual_evidence | passed |
+| lama.restorations | 10_lama_restoration | `outputs/10_lama_restoration/data/restorations.csv` | primary_restoration_records | passed |
+| lama.restored_images | 10_lama_restoration | `outputs/10_lama_restoration/images/restored` | primary_restored_images | passed |
+| lama.runtime_summary | 10_lama_restoration | `outputs/10_lama_restoration/metrics/runtime_summary.csv` | runtime_evidence | passed |
 | mask_robustness.cases | 06_mask_robustness_dataset_generation | `outputs/06_mask_robustness_dataset_generation/data/cases.csv` | primary_case_manifest | passed |
 | mask_robustness.damaged_images | 06_mask_robustness_dataset_generation | `outputs/06_mask_robustness_dataset_generation/images/damaged` | damaged_image_collection | passed |
 | mask_robustness.figure_examples | 06_mask_robustness_dataset_generation | `outputs/06_mask_robustness_dataset_generation/figures/robustness_examples.png` | representative_visual_evidence | passed |
@@ -59,3 +63,4 @@
 | validation.07_synthetic_degradation_dataset_generation | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/validation/checks.csv` | validation_evidence | passed |
 | validation.08_experiment_contracts_and_region_policy | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/validation/checks.csv` | validation_evidence | passed |
 | validation.09_opencv_telea_restoration | 09_opencv_telea_restoration | `outputs/09_opencv_telea_restoration/validation/checks.csv` | validation_evidence | passed |
+| validation.10_lama_restoration | 10_lama_restoration | `outputs/10_lama_restoration/validation/checks.csv` | validation_evidence | passed |
