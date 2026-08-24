@@ -133,6 +133,14 @@ The workflow for every notebook is:
 - Helper modules, configuration files, tests, documentation, inventory files,
   and project-path registries may still be edited when explicitly within the
   approved preparation or completion workflow.
+  
+### 6.2 Notebooks that generate important reports 
+
+- The assistant must also design the report structure during the batch of cells planning for the user to approve.
+- This is applicable for notebooks that generate end-to-end reports that either explain the restorations or serve as standalone documents describing the thesis and results.
+- All the html reports that are planned in the notebook roadmap must adhere to this.
+- The report must be clear, concise, not too verbose while retaining a healthy mix of numbers, explanations, figures/plots, restorations/images and must be high-level overviews of the experiments without going into a rabbit 
+  hole of details with 100 numbers that don't make sense.
 
 The inventory refresh is a controlled write operation. During explicitly read-only phases, the existing inventory may be inspected but must not be regenerated.
 
