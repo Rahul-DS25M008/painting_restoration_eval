@@ -34,7 +34,7 @@ from .schemas import (
 MODEL_NAME = "lama"
 IOPAINT_MODEL_NAME = "lama"
 RESTORATION_GENERATOR_NAME = "restoration_eval.restoration_lama"
-RESTORATION_GENERATOR_VERSION = "3.0.0"
+RESTORATION_GENERATOR_VERSION = "3.1.0"
 LAMA_CONFIG_SCHEMA_VERSION = "lama_config.v1"
 RESTORATIONS_SCHEMA_VERSION = RESTORATIONS_SCHEMA.version
 RUNTIME_SUMMARY_SCHEMA_VERSION = RESTORATION_RUNTIME_SUMMARY_SCHEMA.version
@@ -123,6 +123,8 @@ def load_lama_config(path: str | Path) -> dict[str, Any]:
             "executable",
             "iopaint_model_name",
             "model_revision",
+            "model_artifact_url",
+            "model_artifact_expected_md5",
             "requested_device",
             "allow_cpu_fallback",
             "precision",
@@ -361,6 +363,70 @@ def _package_version(*names: str) -> str:
     return ""
 
 
+def discover_lama_model_artifact(
+    config: Mapping[str, Any],
+    *,
+    project_root: str | Path | None = None,
+) -> dict[str, str]:
+    """Resolve and hash the configured or IOPaint-cached LaMa checkpoint.
+
+    An explicit ``model_artifact_path`` remains authoritative. When it is
+    blank, use IOPaint's own cache resolver and model constants so discovery
+    stays portable across operating systems, users, and cache roots.
+    """
+    configured_value = str(
+        config.get("model", {}).get("model_artifact_path", "")
+    ).strip()
+    artifact_path: Path | None = None
+    model = config.get("model", {})
+    artifact_url = os.environ.get(
+        "LAMA_MODEL_URL", str(model.get("model_artifact_url", ""))
+    ).strip()
+    expected_md5 = os.environ.get(
+        "LAMA_MODEL_MD5",
+        str(model.get("model_artifact_expected_md5", "")),
+    ).strip()
+    discovery_method = "not_discovered"
+
+    if configured_value:
+        artifact_path = Path(configured_value).expanduser()
+        if not artifact_path.is_absolute() and project_root is not None:
+            artifact_path = Path(project_root).resolve() / artifact_path
+        artifact_path = artifact_path.resolve()
+        discovery_method = (
+            "configured_path"
+            if artifact_path.is_file()
+            else "configured_path_missing"
+        )
+    else:
+        try:
+            from iopaint.helper import get_cache_path_by_url
+
+            candidate = Path(
+                get_cache_path_by_url(artifact_url)
+            ).expanduser().resolve()
+            if candidate.is_file():
+                artifact_path = candidate
+                discovery_method = "iopaint_cache_api"
+        except (ImportError, OSError, TypeError, ValueError):
+            # Runtime validation reports the missing checksum as a warning.
+            # Discovery must not make an otherwise usable IOPaint setup fail.
+            pass
+
+    artifact_exists = artifact_path is not None and artifact_path.is_file()
+    return {
+        "model_artifact_path": (
+            str(artifact_path) if artifact_path is not None else ""
+        ),
+        "model_artifact_sha256": (
+            calculate_file_sha256(artifact_path) if artifact_exists else ""
+        ),
+        "model_artifact_discovery_method": discovery_method,
+        "model_artifact_url": artifact_url,
+        "model_artifact_expected_md5": expected_md5,
+    }
+
+
 def get_lama_runtime_environment(
     config: Mapping[str, Any],
     *,
@@ -418,12 +484,9 @@ def get_lama_runtime_environment(
             fallback_used = True
         else:
             effective = "unavailable"
-    artifact_path_value = str(model.get("model_artifact_path", "")).strip()
-    artifact_path = Path(artifact_path_value).expanduser() if artifact_path_value else None
-    artifact_hash = (
-        calculate_file_sha256(artifact_path)
-        if artifact_path is not None and artifact_path.is_file()
-        else ""
+    artifact = discover_lama_model_artifact(
+        config,
+        project_root=project_root,
     )
     module_available = util.find_spec("iopaint") is not None
     command_prefix = (
@@ -440,8 +503,15 @@ def get_lama_runtime_environment(
         "iopaint_version": _package_version("iopaint", "IOPaint"),
         "iopaint_model_name": str(model["iopaint_model_name"]),
         "model_revision": str(model["model_revision"]),
-        "model_artifact_path": str(artifact_path or ""),
-        "model_artifact_sha256": artifact_hash,
+        "model_artifact_path": artifact["model_artifact_path"],
+        "model_artifact_sha256": artifact["model_artifact_sha256"],
+        "model_artifact_discovery_method": artifact[
+            "model_artifact_discovery_method"
+        ],
+        "model_artifact_url": artifact["model_artifact_url"],
+        "model_artifact_expected_md5": artifact[
+            "model_artifact_expected_md5"
+        ],
         "requested_device": requested,
         "effective_device": effective,
         "cpu_fallback_used": fallback_used,
@@ -1456,6 +1526,7 @@ __all__ = [
     "build_iopaint_command",
     "build_iopaint_subprocess_environment",
     "calculate_file_sha256",
+    "discover_lama_model_artifact",
     "get_lama_runtime_environment",
     "load_lama_config",
     "masked_composite",

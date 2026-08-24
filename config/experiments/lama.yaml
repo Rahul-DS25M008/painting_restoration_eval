@@ -1,5 +1,5 @@
 config_schema_version: "lama_config.v1"
-config_version: "1.0.0"
+config_version: "1.1.0"
 
 dataset:
   dataset_id: "painting_restoration_eval"
@@ -50,6 +50,8 @@ model:
   iopaint_model_name: "lama"
   model_revision: "iopaint_lama_default"
   model_artifact_path: ""
+  model_artifact_url: "https://github.com/Sanster/models/releases/download/add_big_lama/big-lama.pt"
+  model_artifact_expected_md5: "e3aa4aaa15225a33ec84f9f4bc47e500"
   requested_device: "cuda"
   allow_cpu_fallback: false
   precision: "float32"

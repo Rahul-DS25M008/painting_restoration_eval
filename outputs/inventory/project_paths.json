@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-24T08:58:33.233517Z",
+  "updated_at_utc": "2026-08-24T22:05:10.854550Z",
   "artifacts": [
     {
       "artifact_key": "damage.audit",
@@ -294,7 +294,7 @@
       "validation_status": "passed",
       "row_count": 410,
       "file_count": 1,
-      "checksum": "9b19585d50aa6ee63761e76b695e50edb4644bc8aeaa2a018fcd413b34de8fb9"
+      "checksum": "327ea28eedfb5ba7056b032ae76a5ee08252a365562576dd59775e17e23b5cfc"
     },
     {
       "artifact_key": "lama.restored_images",
@@ -322,7 +322,7 @@
       "validation_status": "passed",
       "row_count": 5,
       "file_count": 1,
-      "checksum": "277b37cbd1c1043c9202f97a2393e3ff4d266cbf1e41a8aa727a8a4e61b4d0e4"
+      "checksum": "dcbf17cca2e1ffceb18637dba75c884f789e1aa2dbe4d51ef83023a516c69197"
     },
     {
       "artifact_key": "mask_robustness.cases",
@@ -591,6 +591,118 @@
       "checksum": "b6f29c2c71450403042b1bb6c522ea6e50942a940428918b89dac466e0b7152f"
     },
     {
+      "artifact_key": "stable_diffusion.candidate_examples",
+      "producer_notebook": "11_stable_diffusion_restoration",
+      "relative_path": "outputs/11_stable_diffusion_restoration/figures/candidate_examples.png",
+      "artifact_type": "figure",
+      "artifact_role": "candidate_and_seed_visual_evidence",
+      "schema_version": "figure.stable_diffusion_candidates.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_stable_diffusion",
+      "validation_status": "passed",
+      "row_count": 6,
+      "file_count": 1,
+      "checksum": "9dff32e58c093e3d58c4650350a59eaca0842ae2891df7631bffa8bcd6f3cc2f"
+    },
+    {
+      "artifact_key": "stable_diffusion.candidates",
+      "producer_notebook": "11_stable_diffusion_restoration",
+      "relative_path": "outputs/11_stable_diffusion_restoration/data/candidates.csv",
+      "artifact_type": "table",
+      "artifact_role": "primary_candidate_records",
+      "schema_version": "stable_diffusion_candidates.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_stable_diffusion",
+      "validation_status": "passed",
+      "row_count": 1010,
+      "file_count": 1,
+      "checksum": "74f7d766e436f1d087239c211a350d7d9992b4dab49a3d66bba085ef21c32996"
+    },
+    {
+      "artifact_key": "stable_diffusion.prompt_ablation_design",
+      "producer_notebook": "11_stable_diffusion_restoration",
+      "relative_path": "outputs/11_stable_diffusion_restoration/metrics/prompt_ablation_design.csv",
+      "artifact_type": "table",
+      "artifact_role": "controlled_experimental_design",
+      "schema_version": "prompt_ablation_design.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_stable_diffusion",
+      "validation_status": "passed",
+      "row_count": 160,
+      "file_count": 1,
+      "checksum": "f71a7913d7c56492ec5ae8f5cf786bae83d5e319a8f518ab41b46238ca04e52e"
+    },
+    {
+      "artifact_key": "stable_diffusion.prompt_comparison_examples",
+      "producer_notebook": "11_stable_diffusion_restoration",
+      "relative_path": "outputs/11_stable_diffusion_restoration/figures/prompt_comparison_examples.png",
+      "artifact_type": "figure",
+      "artifact_role": "prompt_ablation_visual_evidence",
+      "schema_version": "figure.prompt_comparison.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_stable_diffusion",
+      "validation_status": "passed",
+      "row_count": 4,
+      "file_count": 1,
+      "checksum": "65890c73a3913f5e210c7a7ca80e8a132ca3fda3e28ae89333675ab17e445fc6"
+    },
+    {
+      "artifact_key": "stable_diffusion.prompt_policy",
+      "producer_notebook": "11_stable_diffusion_restoration",
+      "relative_path": "outputs/11_stable_diffusion_restoration/data/prompt_policy.csv",
+      "artifact_type": "table",
+      "artifact_role": "prompt_policy",
+      "schema_version": "prompt_policy.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_stable_diffusion",
+      "validation_status": "passed",
+      "row_count": 5,
+      "file_count": 1,
+      "checksum": "57073643a47f12b78dca2c564b9206b2dce254de0d64d634d21b2315adb69581"
+    },
+    {
+      "artifact_key": "stable_diffusion.prompt_policy_report",
+      "producer_notebook": "11_stable_diffusion_restoration",
+      "relative_path": "outputs/11_stable_diffusion_restoration/reports/prompt_policy.md",
+      "artifact_type": "report",
+      "artifact_role": "prompt_method_documentation",
+      "schema_version": "report.prompt_policy.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_stable_diffusion",
+      "validation_status": "passed",
+      "row_count": 1,
+      "file_count": 1,
+      "checksum": "676b5bd812a1748727ef0746b17b9668217f4600227a6ca95cacadb523b4213d"
+    },
+    {
+      "artifact_key": "stable_diffusion.restored_images",
+      "producer_notebook": "11_stable_diffusion_restoration",
+      "relative_path": "outputs/11_stable_diffusion_restoration/images/restored",
+      "artifact_type": "image_directory",
+      "artifact_role": "candidate_images",
+      "schema_version": "restored_images.stable_diffusion.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_stable_diffusion",
+      "validation_status": "passed",
+      "row_count": 1010,
+      "file_count": 1010,
+      "checksum": "b5436c2c4239688d7e09a6fbe9f63519d7abb162a6d1d0e6d884b0007396ea86"
+    },
+    {
+      "artifact_key": "stable_diffusion.runtime_summary",
+      "producer_notebook": "11_stable_diffusion_restoration",
+      "relative_path": "outputs/11_stable_diffusion_restoration/metrics/runtime_summary.csv",
+      "artifact_type": "table",
+      "artifact_role": "runtime_evidence",
+      "schema_version": "restoration_runtime_summary.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_stable_diffusion",
+      "validation_status": "passed",
+      "row_count": 13,
+      "file_count": 1,
+      "checksum": "36d4c104e1a4510d1f8b96bd40d721ede141aa45643eaa19e2b1e33a3ceb4728"
+    },
+    {
       "artifact_key": "synthetic_degradation.cases",
       "producer_notebook": "07_synthetic_degradation_dataset_generation",
       "relative_path": "outputs/07_synthetic_degradation_dataset_generation/data/cases.csv",
@@ -812,7 +924,21 @@
       "validation_status": "passed",
       "row_count": 80,
       "file_count": 1,
-      "checksum": "a1338e3d2edcde53d244777e773a35a254a5f7ad670668521ade1eb76de6942a"
+      "checksum": "b02928fe7c3e566a1f19310614ec365304e9ca201c9a8336a5c394e6bfeadf7e"
+    },
+    {
+      "artifact_key": "validation.11_stable_diffusion_restoration",
+      "producer_notebook": "11_stable_diffusion_restoration",
+      "relative_path": "outputs/11_stable_diffusion_restoration/validation/checks.csv",
+      "artifact_type": "table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_stable_diffusion",
+      "validation_status": "passed",
+      "row_count": 128,
+      "file_count": 1,
+      "checksum": "077e770d9a7c89c64739af7fe2fee6b829d73e7cd268d3af4caa6d99f848474c"
     }
   ]
 }

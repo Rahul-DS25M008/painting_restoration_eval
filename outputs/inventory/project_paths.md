@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-24T08:58:33.233517Z`
-- Registered artifacts: 58
+- Updated: `2026-08-24T22:05:10.854550Z`
+- Registered artifacts: 67
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -48,6 +48,14 @@
 | preprocessing.clean_images | 02_image_preprocessing | `outputs/02_image_preprocessing/images/clean` | primary_downstream | passed |
 | preprocessing.figure_preview | 02_image_preprocessing | `outputs/02_image_preprocessing/figures/preprocessing_preview.png` | qa_reporting | passed |
 | preprocessing.geometry | 02_image_preprocessing | `outputs/02_image_preprocessing/data/preprocessed_images.csv` | primary_downstream | passed |
+| stable_diffusion.candidate_examples | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/figures/candidate_examples.png` | candidate_and_seed_visual_evidence | passed |
+| stable_diffusion.candidates | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/data/candidates.csv` | primary_candidate_records | passed |
+| stable_diffusion.prompt_ablation_design | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/metrics/prompt_ablation_design.csv` | controlled_experimental_design | passed |
+| stable_diffusion.prompt_comparison_examples | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/figures/prompt_comparison_examples.png` | prompt_ablation_visual_evidence | passed |
+| stable_diffusion.prompt_policy | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/data/prompt_policy.csv` | prompt_policy | passed |
+| stable_diffusion.prompt_policy_report | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/reports/prompt_policy.md` | prompt_method_documentation | passed |
+| stable_diffusion.restored_images | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/images/restored` | candidate_images | passed |
+| stable_diffusion.runtime_summary | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/metrics/runtime_summary.csv` | runtime_evidence | passed |
 | synthetic_degradation.cases | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/data/cases.csv` | primary_case_manifest | passed |
 | synthetic_degradation.effect_masks | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/images/effect_masks` | effect_support_collection | passed |
 | synthetic_degradation.figure_examples | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/figures/degradation_examples.png` | representative_visual_evidence | passed |
@@ -64,3 +72,4 @@
 | validation.08_experiment_contracts_and_region_policy | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/validation/checks.csv` | validation_evidence | passed |
 | validation.09_opencv_telea_restoration | 09_opencv_telea_restoration | `outputs/09_opencv_telea_restoration/validation/checks.csv` | validation_evidence | passed |
 | validation.10_lama_restoration | 10_lama_restoration | `outputs/10_lama_restoration/validation/checks.csv` | validation_evidence | passed |
+| validation.11_stable_diffusion_restoration | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/validation/checks.csv` | validation_evidence | passed |

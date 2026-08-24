@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 import copy
+import sys
 import tempfile
+import types
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import numpy as np
 import pandas as pd
@@ -14,6 +17,8 @@ from restoration_eval.restoration_lama import (
     binarize_restoration_mask,
     build_eligible_case_worklist,
     build_iopaint_subprocess_environment,
+    calculate_file_sha256,
+    discover_lama_model_artifact,
     load_lama_config,
     masked_composite,
     prepare_lama_work_items,
@@ -41,10 +46,20 @@ class LamaRestorationTests(unittest.TestCase):
     def test_configuration_freezes_approved_methodological_policies(self) -> None:
         model = self.config["model"]
         execution = self.config["execution"]
+        self.assertEqual(self.config["config_version"], "1.1.0")
         self.assertEqual(model["model_id"], "lama")
         self.assertEqual(model["requested_device"], "cuda")
         self.assertFalse(model["allow_cpu_fallback"])
         self.assertEqual(model["maximum_retries"], 1)
+        self.assertEqual(
+            model["model_artifact_url"],
+            "https://github.com/Sanster/models/releases/download/"
+            "add_big_lama/big-lama.pt",
+        )
+        self.assertEqual(
+            model["model_artifact_expected_md5"],
+            "e3aa4aaa15225a33ec84f9f4bc47e500",
+        )
         self.assertEqual(model["zero_control_policy"], "identity_noop")
         self.assertEqual(
             model["compositing_policy"],
@@ -69,7 +84,78 @@ class LamaRestorationTests(unittest.TestCase):
                 "require_sha256_equality": False,
             },
         )
-        self.assertEqual(RESTORATION_GENERATOR_VERSION, "3.0.0")
+        self.assertEqual(RESTORATION_GENERATOR_VERSION, "3.1.0")
+
+    def test_configured_model_artifact_is_resolved_and_hashed(self) -> None:
+        config = copy.deepcopy(self.config)
+        config["model"]["model_artifact_path"] = "models/big-lama.pt"
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            artifact_path = root / "models" / "big-lama.pt"
+            artifact_path.parent.mkdir(parents=True)
+            artifact_path.write_bytes(b"test-lama-checkpoint")
+
+            artifact = discover_lama_model_artifact(
+                config,
+                project_root=root,
+            )
+
+            self.assertEqual(
+                artifact["model_artifact_path"],
+                str(artifact_path.resolve()),
+            )
+            self.assertEqual(
+                artifact["model_artifact_sha256"],
+                calculate_file_sha256(artifact_path),
+            )
+            self.assertEqual(
+                artifact["model_artifact_discovery_method"],
+                "configured_path",
+            )
+
+    def test_blank_model_artifact_uses_iopaint_cache_api(self) -> None:
+        config = copy.deepcopy(self.config)
+        config["model"]["model_artifact_path"] = ""
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            artifact_path = Path(temporary_directory) / "big-lama.pt"
+            artifact_path.write_bytes(b"cached-lama-checkpoint")
+
+            iopaint_package = types.ModuleType("iopaint")
+            iopaint_package.__path__ = []
+            helper_module = types.ModuleType("iopaint.helper")
+            helper_module.get_cache_path_by_url = lambda _url: artifact_path
+            config["model"]["model_artifact_url"] = (
+                "https://example.test/big-lama.pt"
+            )
+            config["model"]["model_artifact_expected_md5"] = "test-md5"
+
+            module_overrides = {
+                "iopaint": iopaint_package,
+                "iopaint.helper": helper_module,
+            }
+            with mock.patch.dict(sys.modules, module_overrides):
+                artifact = discover_lama_model_artifact(config)
+
+            self.assertEqual(
+                artifact["model_artifact_path"],
+                str(artifact_path.resolve()),
+            )
+            self.assertEqual(
+                artifact["model_artifact_sha256"],
+                calculate_file_sha256(artifact_path),
+            )
+            self.assertEqual(
+                artifact["model_artifact_discovery_method"],
+                "iopaint_cache_api",
+            )
+            self.assertEqual(
+                artifact["model_artifact_url"],
+                "https://example.test/big-lama.pt",
+            )
+            self.assertEqual(
+                artifact["model_artifact_expected_md5"],
+                "test-md5",
+            )
 
     def test_iopaint_subprocess_environment_is_utf8_and_noninteractive(self) -> None:
         environment = build_iopaint_subprocess_environment(

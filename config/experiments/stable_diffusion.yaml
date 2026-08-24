@@ -1,0 +1,170 @@
+config_schema_version: "stable_diffusion_config.v1"
+config_version: "1.1.0"
+
+dataset:
+  dataset_id: "painting_restoration_eval"
+  dataset_version: "1.0.0"
+  dataset_scope: "controlled_50"
+  experiment_id: "cross_experiment_stable_diffusion"
+
+inputs:
+  inventory_path: "outputs/inventory/project_file_inventory.csv"
+  inventory_run_path: "outputs/inventory/inventory_run.json"
+  project_paths_path: "outputs/inventory/project_paths.json"
+  artworks_path: "outputs/01_dataset_verification/data/artworks.csv"
+  case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+  model_eligibility_path: "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv"
+  schema_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json"
+  upstream_run_manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+  upstream_artifacts_path: "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv"
+  evaluation_contract_config_path: "config/experiments/evaluation_contract.yaml"
+  synthetic_degradation_config_path: "config/experiments/synthetic_degradation.yaml"
+  required_registry_keys:
+    - "dataset.artworks"
+    - "experiment_contracts.case_registry"
+    - "experiment_contracts.model_eligibility"
+    - "experiment_contracts.schema_registry"
+  required_upstream_run_status: "completed"
+
+output:
+  notebook_stem: "11_stable_diffusion_restoration"
+  candidates_path: "data/candidates.csv"
+  prompt_policy_path: "data/prompt_policy.csv"
+  restored_directory: "images/restored"
+  restored_path_template: "{experiment_id}/{case_id}/{candidate_id}.png"
+  runtime_summary_path: "metrics/runtime_summary.csv"
+  prompt_ablation_design_path: "metrics/prompt_ablation_design.csv"
+  candidate_examples_figure_path: "figures/candidate_examples.png"
+  prompt_comparison_figure_path: "figures/prompt_comparison_examples.png"
+  prompt_policy_report_path: "reports/prompt_policy.md"
+  run_manifest_path: "manifests/run_manifest.json"
+  artifacts_path: "manifests/artifacts.csv"
+  validation_path: "validation/checks.csv"
+  checkpoint_path: "work/candidate_checkpoint.csv"
+  smoke_directory: "work/smoke"
+  retained_failure_logs_directory: "logs"
+
+model:
+  model_id: "stable_diffusion_inpainting"
+  methodological_role: "prompt_conditioned_stochastic_inpainting_baseline"
+  configuration_id: "sd15_inpaint_fixed_policy_v1"
+  implementation: "Diffusers StableDiffusionInpaintPipeline"
+  implementation_source: "stable-diffusion-v1-5/stable-diffusion-inpainting"
+  lineage_model_id: "runwayml/stable-diffusion-inpainting"
+  hf_model_id: "stable-diffusion-v1-5/stable-diffusion-inpainting"
+  model_revision: "8a4288a76071f7280aedbdb3253bdb9e9d5d84bb"
+  scheduler: "DDIMScheduler"
+  requested_device: "cuda"
+  allow_cpu_fallback: false
+  precision: "float16"
+  inference_width: 512
+  inference_height: 512
+  output_width: 768
+  output_height: 768
+  num_inference_steps: 30
+  guidance_scale: 7.5
+  strength: 1.0
+  attention_slicing: true
+  safety_checker_policy: "disabled_research_dataset"
+  maximum_retries: 1
+  retry_seed_policy: "preserve_exact_seed"
+  zero_control_policy: "identity_noop"
+  compositing_policy: "masked_composite_preserve_outside.v1"
+  mask_threshold_policy:
+    binary_missing_region:
+      threshold: 128
+      comparison: "greater_than_or_equal"
+    synthetic_degradation:
+      threshold: 13
+      comparison: "greater_than_or_equal"
+      source_config_key: "generator.active_threshold"
+
+prompt_policy:
+  policy_id: "sd15_prompt_policy.v2"
+  primary_variant_id: "p00_generic"
+  generic_prompt: "a complete aged fine-art painting with seamless visual continuity, coherent composition, and a consistent colour palette, brushwork, canvas texture, lighting, and level of detail"
+  negative_prompt: "modern objects, text, watermark, signature, frame, border, added people, changed faces, extra objects, oversharpened, cartoon, digital art, photorealistic replacement, unrealistic texture, harsh seams"
+  contextual_variant_ids:
+    - "p01_category"
+    - "p02_artist"
+    - "p03_artist_category"
+    - "p04_full_context"
+
+candidate_design:
+  primary_seed: 2026
+  uncertainty_seeds: [2026, 2027, 2028, 2029]
+  prompt_ablation_case_count: 120
+  prompt_ablation_required_metadata: ["title", "artist", "category"]
+  prompt_ablation_excluded_values: ["", "unknown", "nan"]
+  uncertainty_paintings_per_category: 2
+  uncertainty_mask_types:
+    - "loss_large"
+    - "loss_small"
+    - "mixed_damage"
+    - "scratch_thin"
+  selection_policy: "deterministic_hash_stratified_non_metric.v1"
+
+execution:
+  progress_interval_candidates: 10
+  checkpoint_interval_candidates: 5
+  compute_checksums: true
+  resume_enabled: true
+  overwrite_existing: false
+  stale_file_action: "remove"
+  output_mode: "RGB"
+  output_format: "PNG"
+  png_compress_level: 6
+  retain_failure_logs: true
+  clear_cuda_cache_between_candidates: false
+
+expected:
+  artwork_count: 50
+  case_registry_rows: 525
+  model_eligibility_rows: 2100
+  eligible_case_count: 410
+  eligible_nonzero_case_count: 360
+  zero_control_case_count: 50
+  prompt_ablation_case_count: 120
+  prompt_context_candidate_count: 480
+  uncertainty_case_count: 40
+  uncertainty_extension_candidate_count: 120
+  primary_candidate_count: 410
+  candidate_count: 1010
+  model_inference_candidate_count: 960
+  restored_file_count: 1010
+  prompt_policy_row_count: 5
+  prompt_ablation_design_row_count: 160
+  artifact_record_count: 9
+  total_output_file_count_without_failure_logs: 1020
+
+smoke:
+  deterministic_case_id: "canonical__p039__loss_large"
+  contextual_case_id: "canonical__p001__loss_large"
+  zero_control_case_id: "canonical__p001__zero_control"
+  primary_seed: 2026
+  alternate_seed: 2027
+
+schema_versions:
+  artworks: "artworks.v1"
+  case_registry: "case_registry.v1"
+  model_eligibility: "model_eligibility.v1"
+  candidates: "stable_diffusion_candidates.v1"
+  prompt_policy: "prompt_policy.v1"
+  prompt_ablation_design: "prompt_ablation_design.v1"
+  runtime_summary: "restoration_runtime_summary.v1"
+  restored_images: "restored_images.stable_diffusion.v1"
+  candidate_examples_figure: "figure.stable_diffusion_candidates.v1"
+  prompt_comparison_figure: "figure.prompt_comparison.v1"
+  prompt_policy_report: "report.prompt_policy.v1"
+  run_manifest: "run_manifest.v1"
+  artifact_manifest: "artifact_manifest.v1"
+  validation_checks: "validation_checks.v1"
+
+known_limitations:
+  - "Stable Diffusion produces plausible prompt-conditioned inpainting, not historically verified reconstruction."
+  - "The generic primary prompt and fixed inference settings are intentionally not tuned per painting or damage case."
+  - "Contextual prompts form a controlled ablation and are not used to select primary candidates."
+  - "Repeated seeds characterize stochastic sensitivity for a fixed predeclared subset and are not metric-selected."
+  - "Eligible synthetic-degradation cases are supplementary masked-removal diagnostics and remain separate from missing-content claims."
+  - "CUDA inference may not be byte-identical across hardware or software stacks; the complete environment is recorded."
+  - "The safety checker is disabled for this fixed research dataset and that policy is explicitly recorded."

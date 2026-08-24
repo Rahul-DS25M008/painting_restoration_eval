@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.8.0"
+SCHEMAS_MODULE_VERSION = "1.9.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -373,6 +373,40 @@ RESTORATION_RUNTIME_SUMMARY_COLUMNS = (
     "failed_count", "total_runtime_seconds", "mean_runtime_seconds",
     "median_runtime_seconds", "p95_runtime_seconds",
     "max_runtime_seconds", "throughput_cases_per_second", "status",
+)
+
+STABLE_DIFFUSION_CANDIDATE_COLUMNS = (
+    "candidate_id", "candidate_index", "case_id", "painting_id",
+    "category", "experiment_id", "damage_or_degradation_type",
+    "mask_or_effect_id", "input_image_path", "clean_image_path",
+    "mask_or_effect_path", "input_sha256", "mask_sha256", "model_id",
+    "hf_model_id", "model_revision", "configuration_id",
+    "prompt_policy_id", "prompt_variant_id", "prompt", "negative_prompt",
+    "prompt_metadata_fields_used", "seed", "execution_role",
+    "is_primary_candidate", "is_prompt_ablation_candidate",
+    "is_uncertainty_candidate", "candidate_selection_policy",
+    "num_inference_steps", "guidance_scale", "strength", "scheduler",
+    "precision", "device", "inference_width", "inference_height",
+    "output_width", "output_height", "mask_threshold",
+    "compositing_policy", "safety_checker_policy", "execution_action",
+    "restored_path", "restored_sha256", "runtime_seconds",
+    "gpu_memory_before_bytes", "gpu_memory_after_bytes",
+    "gpu_peak_memory_bytes", "retry_count", "attempt_count",
+    "configuration_fingerprint", "started_at_utc", "completed_at_utc",
+    "generator_name", "generator_version", "status", "issue",
+)
+
+PROMPT_POLICY_COLUMNS = (
+    "prompt_policy_id", "prompt_variant_id", "variant_order",
+    "variant_family", "is_primary", "requires_metadata",
+    "metadata_fields", "prompt_template", "negative_prompt", "status",
+)
+
+PROMPT_ABLATION_DESIGN_COLUMNS = (
+    "design_row_id", "case_id", "painting_id", "category",
+    "experiment_id", "damage_or_degradation_type", "design_component",
+    "selection_policy", "selection_rank", "prompt_variant_count",
+    "seed_count", "included", "status",
 )
 
 REGION_POLICY_COLUMNS = (
@@ -922,8 +956,59 @@ RESTORATION_RUNTIME_SUMMARY_SCHEMA = DataFrameSchema(
     primary_key=("summary_scope", "experiment_id"),
     non_nullable=RESTORATION_RUNTIME_SUMMARY_COLUMNS,
     allowed_values={
-        "summary_scope": frozenset({"overall", "experiment"}),
+        "summary_scope": frozenset(
+            {"overall", "experiment", "execution_role", "prompt_variant"}
+        ),
         "status": frozenset({"completed", "has_failures"}),
+    },
+)
+
+STABLE_DIFFUSION_CANDIDATES_SCHEMA = DataFrameSchema(
+    name="stable_diffusion_candidates",
+    version="stable_diffusion_candidates.v1",
+    required_columns=STABLE_DIFFUSION_CANDIDATE_COLUMNS,
+    primary_key=("candidate_id",),
+    non_nullable=tuple(
+        column for column in STABLE_DIFFUSION_CANDIDATE_COLUMNS
+        if column not in {
+            "restored_sha256", "runtime_seconds", "gpu_memory_before_bytes",
+            "gpu_memory_after_bytes", "gpu_peak_memory_bytes",
+            "started_at_utc", "completed_at_utc", "issue",
+        }
+    ),
+    allowed_values={
+        "execution_role": frozenset(
+            {"primary", "prompt_context", "uncertainty_extension"}
+        ),
+        "execution_action": frozenset(
+            {"stable_diffusion_inpaint", "identity_noop", "reused_validated", "pending", "failed"}
+        ),
+        "status": frozenset({"planned", "completed", "failed"}),
+    },
+)
+
+PROMPT_POLICY_SCHEMA = DataFrameSchema(
+    name="prompt_policy",
+    version="prompt_policy.v1",
+    required_columns=PROMPT_POLICY_COLUMNS,
+    primary_key=("prompt_policy_id", "prompt_variant_id"),
+    non_nullable=PROMPT_POLICY_COLUMNS,
+    allowed_values={
+        "variant_family": frozenset({"generic", "contextual"}),
+        "status": frozenset({"approved"}),
+    },
+)
+
+PROMPT_ABLATION_DESIGN_SCHEMA = DataFrameSchema(
+    name="prompt_ablation_design",
+    version="prompt_ablation_design.v1",
+    required_columns=PROMPT_ABLATION_DESIGN_COLUMNS,
+    primary_key=("design_row_id",),
+    non_nullable=PROMPT_ABLATION_DESIGN_COLUMNS,
+    allowed_values={
+        "design_component": frozenset({"prompt_ablation", "uncertainty"}),
+        "included": frozenset({True}),
+        "status": frozenset({"approved"}),
     },
 )
 
@@ -961,6 +1046,9 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     MODEL_ELIGIBILITY_SCHEMA.name: MODEL_ELIGIBILITY_SCHEMA,
     RESTORATIONS_SCHEMA.name: RESTORATIONS_SCHEMA,
     RESTORATION_RUNTIME_SUMMARY_SCHEMA.name: RESTORATION_RUNTIME_SUMMARY_SCHEMA,
+    STABLE_DIFFUSION_CANDIDATES_SCHEMA.name: STABLE_DIFFUSION_CANDIDATES_SCHEMA,
+    PROMPT_POLICY_SCHEMA.name: PROMPT_POLICY_SCHEMA,
+    PROMPT_ABLATION_DESIGN_SCHEMA.name: PROMPT_ABLATION_DESIGN_SCHEMA,
     REGION_POLICY_SCHEMA.name: REGION_POLICY_SCHEMA,
 }
 

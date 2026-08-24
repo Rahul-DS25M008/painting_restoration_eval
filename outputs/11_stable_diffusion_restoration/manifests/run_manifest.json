@@ -1,0 +1,552 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_502fa690825f4badaff3c6477fd40026",
+  "notebook_id": "11",
+  "notebook_name": "Stable Diffusion Restoration",
+  "origin": "Existing Notebook 21; rebuilt against normalized Notebook 08 contracts with controlled prompt and repeated-seed designs",
+  "run_status": "completed",
+  "started_at_utc": "2026-08-24T11:19:49.870283Z",
+  "completed_at_utc": "2026-08-24T20:47:00.213674Z",
+  "git_commit": "609f1ac8bc39cbfd4e3e44560293d75bca496269",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260824T110404Z_e3c3dcbe",
+  "dataset_versions": {
+    "dataset_id": "painting_restoration_eval",
+    "dataset_version": "1.0.0",
+    "dataset_scope": "controlled_50",
+    "experiment_id": "cross_experiment_stable_diffusion",
+    "configuration_schema": "stable_diffusion_config.v1",
+    "configuration_version": "1.1.0",
+    "configuration_id": "sd15_inpaint_fixed_policy_v1",
+    "methodological_role": "prompt_conditioned_stochastic_inpainting_baseline",
+    "implementation": "Diffusers StableDiffusionInpaintPipeline",
+    "implementation_source": "stable-diffusion-v1-5/stable-diffusion-inpainting",
+    "hf_model_id": "stable-diffusion-v1-5/stable-diffusion-inpainting",
+    "lineage_model_id": "runwayml/stable-diffusion-inpainting",
+    "model_revision": "8a4288a76071f7280aedbdb3253bdb9e9d5d84bb",
+    "requested_device": "cuda",
+    "effective_device": "cuda",
+    "precision": "float16",
+    "scheduler": "DDIMScheduler",
+    "num_inference_steps": 30,
+    "guidance_scale": 7.5,
+    "strength": 1.0,
+    "attention_slicing": true,
+    "safety_checker_policy": "disabled_research_dataset",
+    "compositing_policy": "masked_composite_preserve_outside.v1",
+    "mask_threshold_policy": {
+      "binary_missing_region": {
+        "threshold": 128,
+        "comparison": "greater_than_or_equal"
+      },
+      "synthetic_degradation": {
+        "threshold": 13,
+        "comparison": "greater_than_or_equal",
+        "source_config_key": "generator.active_threshold"
+      }
+    },
+    "prompt_policy_id": "sd15_prompt_policy.v2",
+    "candidate_selection_policy": "deterministic_hash_stratified_non_metric.v1",
+    "visual_selection_policy": {
+      "policy_id": "sd15_visual_selection_hash_stratified.v1",
+      "primary_rule": "one non-zero primary candidate per experiment, minimum SHA-256 rank",
+      "uncertainty_rule": "two distinct-category uncertainty cases, minimum SHA-256 rank",
+      "prompt_rule": "one prompt-ablation case per experiment, minimum SHA-256 rank",
+      "metric_columns_used": []
+    },
+    "primary_seed": 2026,
+    "uncertainty_seeds": [
+      2026,
+      2027,
+      2028,
+      2029
+    ],
+    "candidates_schema": "stable_diffusion_candidates.v1",
+    "runtime_summary_schema": "restoration_runtime_summary.v1",
+    "prompt_policy_schema": "prompt_policy.v1",
+    "prompt_design_schema": "prompt_ablation_design.v1",
+    "upstream_notebook": "08_experiment_contracts_and_region_policy",
+    "upstream_run_id": "run_a3734bc2121f401b87de4894717366ab",
+    "upstream_manifest_checksum": "d1b62caa720194e666894afd276d0c6a8c973343b4a378bd787467273bbceb8a",
+    "inventory_checksum": "763c3d923c45614677d9035437db16d60206eeab9bb70393cc45c16ac4a66b6d",
+    "restoration_helper_sha256": "0a5a077531f9b78672b30bf22d6a5837cf3a279ec26a191a4383c8d181998ced",
+    "schemas_helper_sha256": "c6a0a2103cce128888d60d1d017539c59e5ced0e762acf5e8afd10bdb7185b07"
+  },
+  "configuration_paths": [
+    "config/experiments/stable_diffusion.yaml",
+    "config/experiments/evaluation_contract.yaml",
+    "config/experiments/synthetic_degradation.yaml"
+  ],
+  "configuration_checksums": {
+    "config/experiments/stable_diffusion.yaml": "394c66a4269b0584539141c409e278939762d065fbc122f2600b340cb8e58dbe",
+    "config/experiments/evaluation_contract.yaml": "ae977512636b0ea5eb16b4a3dff95c062f402c086430328a341c9d0bda6a3254",
+    "config/experiments/synthetic_degradation.yaml": "eaf2d11f3192e7271e11136f023022181bd4b5cfc4e0091316dc1c21a7255bf2"
+  },
+  "helper_versions": {
+    "restoration_eval": "0.1.0",
+    "paths": "1.0.0",
+    "schemas": "1.9.0",
+    "manifests": "1.0.0",
+    "validation": "1.0.0",
+    "restoration_stable_diffusion": "5.1.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "accelerate": "1.14.0",
+    "diffusers": "0.27.2",
+    "matplotlib": "3.11.0",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3",
+    "safetensors": "0.8.0",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.48.3"
+  },
+  "hardware": {
+    "execution_device": "cuda",
+    "gpu_required": true,
+    "cuda_available": true,
+    "cuda_device_name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "cuda_runtime_version": "12.1",
+    "torch_version": "2.5.1+cu121",
+    "execution_backend": "diffusers_stable_diffusion_inpaint",
+    "maximum_gpu_peak_bytes": 2809580032
+  },
+  "inputs": [
+    {
+      "input_key": "project_inventory",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "project_file_inventory.v1",
+      "required_columns_or_keys": "inventory_schema_version, inventory_run_id, relative_path, file_kind, size_bytes, hash_value",
+      "expected_cardinality": 10110,
+      "applicability": "repository"
+    },
+    {
+      "input_key": "inventory_run",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "inventory_run.v1",
+      "required_columns_or_keys": "inventory_run_id, status, inventory_sha256, summary",
+      "expected_cardinality": 1,
+      "applicability": "repository"
+    },
+    {
+      "input_key": "project_paths_registry",
+      "producer": "validated notebook handoffs",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "project_paths.v1",
+      "required_columns_or_keys": "registry_schema_version, artifacts",
+      "expected_cardinality": 58,
+      "applicability": "repository"
+    },
+    {
+      "input_key": "stable_diffusion_config",
+      "producer": "project configuration",
+      "relative_path": "config/experiments/stable_diffusion.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "stable_diffusion_config.v1",
+      "required_columns_or_keys": "dataset, inputs, output, model, prompt_policy, candidate_design, execution, expected",
+      "expected_cardinality": 1,
+      "applicability": "stable_diffusion"
+    },
+    {
+      "input_key": "artworks",
+      "producer": "Notebook 01",
+      "relative_path": "outputs/01_dataset_verification/data/artworks.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "artworks.v1",
+      "required_columns_or_keys": "painting_id, title, artist, date_or_period, style_or_period, category",
+      "expected_cardinality": 50,
+      "applicability": "prompt_metadata"
+    },
+    {
+      "input_key": "case_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "case_registry.v1",
+      "required_columns_or_keys": "case_id, dataset_id, dataset_scope, experiment_id, painting_id, input_image_path, clean_image_path, mask_or_effect_id, mask_or_effect_path, damage_or_degradation_type, target_damage_fraction, realized_damage_fraction, source_manifest_path, status",
+      "expected_cardinality": 525,
+      "applicability": "all_cases"
+    },
+    {
+      "input_key": "model_eligibility",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "model_eligibility.v1",
+      "required_columns_or_keys": "case_id, model_id, eligible, eligibility_reason, input_semantics, mask_semantics, restoration_objective",
+      "expected_cardinality": 2100,
+      "applicability": "all_case_model_pairs"
+    },
+    {
+      "input_key": "schema_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "schema_registry.v1",
+      "required_columns_or_keys": "schema_registry_version, producer_module, schemas",
+      "expected_cardinality": 5,
+      "applicability": "upstream_contracts"
+    },
+    {
+      "input_key": "upstream_run_manifest",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "required_columns_or_keys": "run_id, run_status, validation_summary, completion_gate_passed",
+      "expected_cardinality": 1,
+      "applicability": "notebook_08_handoff"
+    },
+    {
+      "input_key": "upstream_artifacts",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "artifact_manifest.v1",
+      "required_columns_or_keys": "artifact_id, artifact_key, producer_notebook, artifact_type, artifact_role, relative_path, format, dataset_scope, experiment_id, schema_version, row_count, file_count, size_bytes, checksum, validation_status",
+      "expected_cardinality": 7,
+      "applicability": "notebook_08_handoff"
+    },
+    {
+      "input_key": "evaluation_contract_config",
+      "producer": "project configuration",
+      "relative_path": "config/experiments/evaluation_contract.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "evaluation_contract_config.v1",
+      "required_columns_or_keys": "dataset, output, models, schemas",
+      "expected_cardinality": 1,
+      "applicability": "eligibility_policy"
+    },
+    {
+      "input_key": "synthetic_degradation_config",
+      "producer": "project configuration",
+      "relative_path": "config/experiments/synthetic_degradation.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "synthetic_degradation_config.v1",
+      "required_columns_or_keys": "dataset, inputs, generator, degradations",
+      "expected_cardinality": 1,
+      "applicability": "synthetic_mask_threshold"
+    },
+    {
+      "input_key": "stable_diffusion_helper",
+      "producer": "restoration_eval",
+      "relative_path": "src/restoration_eval/restoration_stable_diffusion.py",
+      "required": true,
+      "format": "python",
+      "schema_version": "5.1.0",
+      "required_columns_or_keys": "configuration, design, execution, resume, validation",
+      "expected_cardinality": 1,
+      "applicability": "stable_diffusion"
+    },
+    {
+      "input_key": "schemas_helper",
+      "producer": "restoration_eval",
+      "relative_path": "src/restoration_eval/schemas.py",
+      "required": true,
+      "format": "python",
+      "schema_version": "1.9.0",
+      "required_columns_or_keys": "stable_diffusion_candidates, prompt_policy, prompt_ablation_design",
+      "expected_cardinality": 1,
+      "applicability": "normalized_contracts"
+    }
+  ],
+  "outputs": [
+    {
+      "output_key": "stable_diffusion.candidates",
+      "relative_path": "outputs/11_stable_diffusion_restoration/data/candidates.csv",
+      "artifact_role": "primary",
+      "format": "csv",
+      "schema_version": "stable_diffusion_candidates.v1",
+      "expected_cardinality": 1010,
+      "downstream_consumers": "Notebooks 13-21 and later reporting"
+    },
+    {
+      "output_key": "stable_diffusion.prompt_policy",
+      "relative_path": "outputs/11_stable_diffusion_restoration/data/prompt_policy.csv",
+      "artifact_role": "method_contract",
+      "format": "csv",
+      "schema_version": "prompt_policy.v1",
+      "expected_cardinality": 5,
+      "downstream_consumers": "Prompt and XAI analyses"
+    },
+    {
+      "output_key": "stable_diffusion.restored_images",
+      "relative_path": "outputs/11_stable_diffusion_restoration/images/restored",
+      "artifact_role": "primary",
+      "format": "png_directory",
+      "schema_version": "restored_images.stable_diffusion.v1",
+      "expected_cardinality": 1010,
+      "downstream_consumers": "Notebooks 13-21"
+    },
+    {
+      "output_key": "stable_diffusion.runtime_summary",
+      "relative_path": "outputs/11_stable_diffusion_restoration/metrics/runtime_summary.csv",
+      "artifact_role": "metrics",
+      "format": "csv",
+      "schema_version": "restoration_runtime_summary.v1",
+      "expected_cardinality": "derived normalized scopes",
+      "downstream_consumers": "Runtime and computational reporting"
+    },
+    {
+      "output_key": "stable_diffusion.prompt_ablation_design",
+      "relative_path": "outputs/11_stable_diffusion_restoration/metrics/prompt_ablation_design.csv",
+      "artifact_role": "method_contract",
+      "format": "csv",
+      "schema_version": "prompt_ablation_design.v1",
+      "expected_cardinality": 160,
+      "downstream_consumers": "Prompt and uncertainty analyses"
+    },
+    {
+      "output_key": "stable_diffusion.candidate_examples",
+      "relative_path": "outputs/11_stable_diffusion_restoration/figures/candidate_examples.png",
+      "artifact_role": "reporting",
+      "format": "png",
+      "schema_version": "figure.stable_diffusion_candidates.v1",
+      "expected_cardinality": 1,
+      "downstream_consumers": "Thesis reporting"
+    },
+    {
+      "output_key": "stable_diffusion.prompt_comparison_examples",
+      "relative_path": "outputs/11_stable_diffusion_restoration/figures/prompt_comparison_examples.png",
+      "artifact_role": "reporting",
+      "format": "png",
+      "schema_version": "figure.prompt_comparison.v1",
+      "expected_cardinality": 1,
+      "downstream_consumers": "Prompt-ablation reporting"
+    },
+    {
+      "output_key": "stable_diffusion.prompt_policy_report",
+      "relative_path": "outputs/11_stable_diffusion_restoration/reports/prompt_policy.md",
+      "artifact_role": "reporting",
+      "format": "markdown",
+      "schema_version": "report.prompt_policy.v1",
+      "expected_cardinality": 1,
+      "downstream_consumers": "Thesis methods and limitations"
+    },
+    {
+      "output_key": "stable_diffusion.run_manifest",
+      "relative_path": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json",
+      "artifact_role": "provenance",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "downstream_consumers": "All downstream notebooks"
+    },
+    {
+      "output_key": "stable_diffusion.artifact_manifest",
+      "relative_path": "outputs/11_stable_diffusion_restoration/manifests/artifacts.csv",
+      "artifact_role": "provenance",
+      "format": "csv",
+      "schema_version": "artifact_manifest.v1",
+      "expected_cardinality": 9,
+      "downstream_consumers": "Inventory and project-path registry"
+    },
+    {
+      "output_key": "validation.11_stable_diffusion_restoration",
+      "relative_path": "outputs/11_stable_diffusion_restoration/validation/checks.csv",
+      "artifact_role": "validation",
+      "format": "csv",
+      "schema_version": "validation_checks.v1",
+      "expected_cardinality": "one normalized validation table",
+      "downstream_consumers": "Completion gate and audit"
+    }
+  ],
+  "expected_counts": {
+    "artwork_count": 50,
+    "case_registry_rows": 525,
+    "model_eligibility_rows": 2100,
+    "eligible_case_count": 410,
+    "eligible_nonzero_case_count": 360,
+    "zero_control_case_count": 50,
+    "prompt_ablation_case_count": 120,
+    "prompt_context_candidate_count": 480,
+    "uncertainty_case_count": 40,
+    "uncertainty_extension_candidate_count": 120,
+    "primary_candidate_count": 410,
+    "candidate_count": 1010,
+    "model_inference_candidate_count": 960,
+    "restored_file_count": 1010,
+    "prompt_policy_row_count": 5,
+    "prompt_ablation_design_row_count": 160,
+    "artifact_record_count": 9,
+    "total_output_file_count_without_failure_logs": 1020,
+    "runtime_summary_row_count": 13,
+    "consolidated_validation_rows": 128,
+    "blocking_validation_failures": 0,
+    "warning_validation_failures": 0,
+    "canonical_output_files": 1020,
+    "temporary_work_files_before_completion": 7,
+    "selected_visual_candidate_count": 32
+  },
+  "observed_counts": {
+    "artwork_count": 50,
+    "case_registry_rows": 525,
+    "model_eligibility_rows": 2100,
+    "eligible_case_count": 410,
+    "primary_candidate_count": 410,
+    "prompt_context_candidate_count": 480,
+    "uncertainty_extension_candidate_count": 120,
+    "candidate_count": 1010,
+    "model_inference_candidate_count": 960,
+    "zero_control_case_count": 50,
+    "restored_file_count": 1010,
+    "prompt_policy_row_count": 5,
+    "runtime_summary_row_count": 13,
+    "prompt_ablation_design_row_count": 160,
+    "artifact_record_count": 9,
+    "consolidated_validation_rows": 128,
+    "blocking_validation_failures": 0,
+    "warning_validation_failures": 0,
+    "canonical_output_files": 1020,
+    "temporary_work_files_before_completion": 7,
+    "selected_visual_candidate_count": 32,
+    "temporary_work_files_after_completion": 0,
+    "registered_project_artifacts": 9
+  },
+  "validation_summary": {
+    "consolidated": {
+      "check_count": 128,
+      "passed_count": 128,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "canonical_persistence": {
+      "check_count": 9,
+      "passed_count": 9,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "manifest_handoff": {
+      "check_count": 5,
+      "passed_count": 5,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "completion_gate": {
+      "status": "passed",
+      "passed": true,
+      "requirement_count": 18,
+      "failed_requirement_ids": []
+    },
+    "project_registry_update": {
+      "check_count": 4,
+      "passed_count": 4,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "work_cleanup": {
+      "status": "passed",
+      "passed": true,
+      "files_before": 7,
+      "files_after": 0
+    },
+    "final_completion_gate": {
+      "check_count": 7,
+      "passed_count": 7,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    }
+  },
+  "known_limitations": [
+    "Stable Diffusion produces plausible prompt-conditioned inpainting, not historically verified reconstruction.",
+    "The generic primary prompt and fixed inference settings are intentionally not tuned per painting or damage case.",
+    "Contextual prompts form a controlled ablation and are not used to select primary candidates.",
+    "Repeated seeds characterize stochastic sensitivity for a fixed predeclared subset and are not metric-selected.",
+    "Eligible synthetic-degradation cases are supplementary masked-removal diagnostics and remain separate from missing-content claims.",
+    "CUDA inference may not be byte-identical across hardware or software stacks; the complete environment is recorded.",
+    "The safety checker is disabled for this fixed research dataset and that policy is explicitly recorded."
+  ],
+  "refactor_status": "complete",
+  "validation_status": "passed",
+  "depends_on": [
+    "experiment_contracts.case_registry",
+    "experiment_contracts.model_eligibility",
+    "experiment_contracts.schema_registry",
+    "08_experiment_contracts_and_region_policy.run_manifest",
+    "stable_diffusion_config",
+    "current_inventory",
+    "project_paths_registry"
+  ],
+  "applicable_dataset_scopes": [
+    "controlled_50"
+  ],
+  "applicable_experiment_scopes": [
+    "canonical_missing_region",
+    "damage_size_sensitivity",
+    "mask_robustness",
+    "synthetic_degradation",
+    "cross_experiment_stable_diffusion"
+  ],
+  "expensive_execution": true,
+  "completion_gate_passed": true,
+  "temporary_work_evidence": [
+    {
+      "relative_path": "work/candidate_checkpoint.csv",
+      "size_bytes": 1812214,
+      "sha256": "719c43be85b6f7541eaec974432970c17b7f5da09a41a866be08e1c2d1428a99"
+    },
+    {
+      "relative_path": "work/smoke/alternate_seed.png",
+      "size_bytes": 713730,
+      "sha256": "95268e6c28b100b1f7fcfc08e1b51c418874a484c89d282a6d13c5b6e23760ab"
+    },
+    {
+      "relative_path": "work/smoke/context_full.png",
+      "size_bytes": 710839,
+      "sha256": "d38016dc4b1c9cd9f207266a593a56f5a435ee1dceb92f83f848f1558afca4d7"
+    },
+    {
+      "relative_path": "work/smoke/context_generic.png",
+      "size_bytes": 709971,
+      "sha256": "6a39be1c0a61b9a3f07b81f35de0d8c9aa2de6b6610b6caac17de7bda643fa52"
+    },
+    {
+      "relative_path": "work/smoke/deterministic_repeat_a.png",
+      "size_bytes": 714008,
+      "sha256": "17227aff67b5a8004fb0d4c7bdd6ba944b3f51119e5c111ce588d7f86ad2b631"
+    },
+    {
+      "relative_path": "work/smoke/deterministic_repeat_b.png",
+      "size_bytes": 714008,
+      "sha256": "17227aff67b5a8004fb0d4c7bdd6ba944b3f51119e5c111ce588d7f86ad2b631"
+    },
+    {
+      "relative_path": "work/smoke/zero_control.png",
+      "size_bytes": 723881,
+      "sha256": "b5852f0337c8342a1a70268f9e9f682534177581d238713f67bf28e0033482a2"
+    }
+  ]
+}
