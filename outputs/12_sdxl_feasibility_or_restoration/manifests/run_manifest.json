@@ -1,0 +1,425 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_84b81c35c60141dcbe1e2c8cdc0252ca",
+  "notebook_id": "12",
+  "notebook_name": "SDXL Feasibility or Restoration",
+  "origin": "Existing Previous Version of Notebook 25, Pre-refactor; rebuilt as a guarded feasibility audit against normalized Notebook 08 contracts",
+  "run_status": "completed",
+  "started_at_utc": "2026-08-25T15:42:48.269227Z",
+  "completed_at_utc": "2026-08-25T21:59:47.562917Z",
+  "git_commit": "c6872736295af2dab76d77bf9881c3ebc3cb2455",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260825T131551Z_5c017d3e",
+  "dataset_versions": {
+    "dataset_id": "painting_restoration_eval",
+    "dataset_version": "1.0.0",
+    "dataset_scope": "controlled_50",
+    "experiment_id": "cross_experiment_sdxl_feasibility"
+  },
+  "configuration_paths": [
+    "config/experiments/sdxl.yaml",
+    "config/experiments/evaluation_contract.yaml",
+    "config/experiments/stable_diffusion.yaml"
+  ],
+  "configuration_checksums": {
+    "config/experiments/sdxl.yaml": "a7d026726d217e635111bd983657e21bd8a91ef06ee90ef20366408c8a9bf19b",
+    "config/experiments/evaluation_contract.yaml": "ae977512636b0ea5eb16b4a3dff95c062f402c086430328a341c9d0bda6a3254",
+    "config/experiments/stable_diffusion.yaml": "394c66a4269b0584539141c409e278939762d065fbc122f2600b340cb8e58dbe"
+  },
+  "helper_versions": {
+    "restoration_eval": "0.1.0",
+    "paths": "1.0.0",
+    "schemas": "1.10.0",
+    "manifests": "1.0.0",
+    "validation": "1.0.0",
+    "restoration_sdxl": "2.0.0",
+    "restoration_sdxl_worker": "1.0.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "accelerate": "1.14.0",
+    "diffusers": "0.27.2",
+    "pandas": "2.3.3",
+    "safetensors": "0.8.0",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.48.3"
+  },
+  "hardware": {
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "gpu_total_memory_bytes": 6441926656,
+    "gpu_total_memory_gib": 6.0,
+    "gpu_peak_memory_bytes": 5632166912,
+    "gpu_peak_memory_fraction": 0.8743
+  },
+  "inputs": [
+    {
+      "input_key": "project_inventory",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "project_file_inventory.v1",
+      "required_columns_or_keys": "inventory_schema_version, inventory_run_id, relative_path, file_kind, size_bytes, hash_value",
+      "expected_cardinality": 11131,
+      "applicability": "repository"
+    },
+    {
+      "input_key": "inventory_run",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "inventory_run.v1",
+      "required_columns_or_keys": "inventory_run_id, status, inventory_sha256, summary",
+      "expected_cardinality": 1,
+      "applicability": "repository"
+    },
+    {
+      "input_key": "project_paths_registry",
+      "producer": "validated notebook handoffs",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "project_paths.v1",
+      "required_columns_or_keys": "registry_schema_version, artifacts",
+      "expected_cardinality": 67,
+      "applicability": "repository"
+    },
+    {
+      "input_key": "sdxl_config",
+      "producer": "project configuration",
+      "relative_path": "config/experiments/sdxl.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "sdxl_config.v1",
+      "required_columns_or_keys": "dataset, inputs, output, model, prompt_policy, memory_strategy, execution, selection, scope, availability, schema_versions",
+      "expected_cardinality": 1,
+      "applicability": "sdxl_feasibility"
+    },
+    {
+      "input_key": "artworks",
+      "producer": "Notebook 01",
+      "relative_path": "outputs/01_dataset_verification/data/artworks.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "artworks.v1",
+      "required_columns_or_keys": "painting_id, title, artist, category",
+      "expected_cardinality": 50,
+      "applicability": "controlled_50"
+    },
+    {
+      "input_key": "case_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "case_registry.v1",
+      "required_columns_or_keys": "case_id, dataset_id, dataset_scope, experiment_id, painting_id, input_image_path, clean_image_path, mask_or_effect_id, mask_or_effect_path, damage_or_degradation_type, target_damage_fraction, realized_damage_fraction, source_manifest_path, status",
+      "expected_cardinality": 525,
+      "applicability": "all_experiment_cases"
+    },
+    {
+      "input_key": "model_eligibility",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "model_eligibility.v1",
+      "required_columns_or_keys": "case_id, model_id, eligible, eligibility_reason, input_semantics, mask_semantics, restoration_objective",
+      "expected_cardinality": 2100,
+      "applicability": "all_case_model_pairs"
+    },
+    {
+      "input_key": "schema_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "schema_registry.v1",
+      "required_columns_or_keys": "schema_registry_version, producer_module, schemas",
+      "expected_cardinality": 5,
+      "applicability": "normalized_contracts"
+    },
+    {
+      "input_key": "upstream_run_manifest",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "required_columns_or_keys": "run_id, run_status, validation_summary, completion_gate_passed",
+      "expected_cardinality": 1,
+      "applicability": "notebook_08_handoff"
+    },
+    {
+      "input_key": "upstream_artifacts",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "artifact_manifest.v1",
+      "required_columns_or_keys": "artifact_id, artifact_key, producer_notebook, artifact_type, artifact_role, relative_path, format, dataset_scope, experiment_id, schema_version, row_count, file_count, size_bytes, checksum, validation_status",
+      "expected_cardinality": 7,
+      "applicability": "notebook_08_handoff"
+    },
+    {
+      "input_key": "evaluation_contract_config",
+      "producer": "project configuration",
+      "relative_path": "config/experiments/evaluation_contract.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "evaluation_contract_config.v1",
+      "required_columns_or_keys": "dataset, inputs, output, region_policy, eligibility_policy, expected",
+      "expected_cardinality": 1,
+      "applicability": "evaluation_contract"
+    },
+    {
+      "input_key": "stable_diffusion_config",
+      "producer": "project configuration",
+      "relative_path": "config/experiments/stable_diffusion.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "stable_diffusion_config.v1",
+      "required_columns_or_keys": "model, prompt_policy, candidate_design",
+      "expected_cardinality": 1,
+      "applicability": "comparable_prompt_context"
+    },
+    {
+      "input_key": "sdxl_helper",
+      "producer": "project helper",
+      "relative_path": "src/restoration_eval/restoration_sdxl.py",
+      "required": true,
+      "format": "python",
+      "schema_version": "2.0.0",
+      "required_columns_or_keys": "configuration loading, worklist construction, guarded execution, availability derivation, reporting",
+      "expected_cardinality": 1,
+      "applicability": "sdxl_feasibility"
+    },
+    {
+      "input_key": "sdxl_worker",
+      "producer": "project helper",
+      "relative_path": "src/restoration_eval/restoration_sdxl_worker.py",
+      "required": true,
+      "format": "python",
+      "schema_version": "1.0.0",
+      "required_columns_or_keys": "isolated model loading, inference, compositing, technical validation",
+      "expected_cardinality": 1,
+      "applicability": "isolated_sdxl_attempt"
+    },
+    {
+      "input_key": "schemas_helper",
+      "producer": "project helper",
+      "relative_path": "src/restoration_eval/schemas.py",
+      "required": true,
+      "format": "python",
+      "schema_version": "1.10.0",
+      "required_columns_or_keys": "sdxl_feasibility_attempts.v1",
+      "expected_cardinality": 1,
+      "applicability": "normalized_schema"
+    }
+  ],
+  "outputs": [
+    {
+      "output_key": "sdxl.feasibility_attempts",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/data/feasibility_attempts.csv",
+      "format": "csv",
+      "schema_version": "sdxl_feasibility_attempts.v1",
+      "artifact_role": "primary",
+      "expected_cardinality": 1,
+      "downstream_consumers": "Notebooks 13-35 conditional availability handling"
+    },
+    {
+      "output_key": "sdxl.feasibility_report",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/reports/feasibility_report.md",
+      "format": "markdown",
+      "schema_version": "report.sdxl_feasibility.v1",
+      "artifact_role": "reporting",
+      "expected_cardinality": 1,
+      "downstream_consumers": "thesis review and downstream availability decisions"
+    },
+    {
+      "output_key": "run_manifest",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "artifact_role": "reproducibility",
+      "expected_cardinality": 1,
+      "downstream_consumers": "Notebooks 13-35"
+    },
+    {
+      "output_key": "artifact_manifest",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/artifacts.csv",
+      "format": "csv",
+      "schema_version": "artifact_manifest.v1",
+      "artifact_role": "handoff",
+      "expected_cardinality": 3,
+      "downstream_consumers": "Notebooks 13-35"
+    },
+    {
+      "output_key": "validation_checks",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/validation/checks.csv",
+      "format": "csv",
+      "schema_version": "validation_checks.v1",
+      "artifact_role": "validation",
+      "expected_cardinality": "one consolidated table",
+      "downstream_consumers": "completion gate and project-path registry"
+    },
+    {
+      "output_key": "attempt_work_directory",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/work/attempts",
+      "format": "directory",
+      "schema_version": "sdxl_worker_job.v1",
+      "artifact_role": "temporary",
+      "expected_cardinality": "at most one owned job, result, and probe image",
+      "downstream_consumers": "current notebook only; removed after final validation"
+    }
+  ],
+  "expected_counts": {
+    "feasibility_attempt_rows": 1,
+    "completed_probe_rows": 1,
+    "artifact_records": 3,
+    "canonical_output_files": 5,
+    "consolidated_validation_rows": 90,
+    "persistence_checks": 8,
+    "manifest_handoff_checks": 7,
+    "full_execution_rows": 0,
+    "unified_metric_rows": 0
+  },
+  "observed_counts": {
+    "feasibility_attempt_rows": 1,
+    "completed_probe_rows": 1,
+    "artifact_records": 3,
+    "canonical_output_files": 5,
+    "consolidated_validation_rows": 90,
+    "persistence_checks": 8,
+    "manifest_handoff_checks": 7,
+    "full_execution_rows": 0,
+    "unified_metric_rows": 0,
+    "precompletion_checks": 14,
+    "registry_handoff_checks": 4,
+    "removed_worker_files": 3,
+    "final_completion_checks": 7
+  },
+  "validation_summary": {
+    "consolidated_notebook_checks": {
+      "check_count": 90,
+      "passed_count": 90,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "persistence_reload_checks": {
+      "check_count": 8,
+      "passed_count": 8,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "manifest_handoff_checks": {
+      "check_count": 7,
+      "passed_count": 7,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "precompletion_checks": {
+      "check_count": 14,
+      "passed_count": 14,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "registry_handoff_checks": {
+      "check_count": 4,
+      "passed_count": 4,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "final_completion_checks": {
+      "check_count": 7,
+      "passed_count": 7,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    }
+  },
+  "known_limitations": [
+    "The feasibility branch evaluates whether the pinned SDXL inpainting implementation is practical on the available hardware; it is not a model-quality benchmark.",
+    "A timeout or CUDA out-of-memory failure is hardware/runtime evidence and must not be interpreted as poor restoration quality.",
+    "One predeclared case cannot characterize SDXL output quality, robustness, or stochastic uncertainty.",
+    "The 25-minute guardrail includes model loading and inference and intentionally prevents automatic retries or slower fallback strategies.",
+    "Full candidates, restored-image manifests, and metric placeholder rows are prohibited in feasibility-only mode."
+  ],
+  "validation_status": "passed",
+  "availability_state": "feasibility_only",
+  "model_id": "sdxl_inpainting",
+  "selected_case_id": "canonical__p039__loss_large",
+  "full_execution_authorized": false,
+  "include_in_unified_metrics": false,
+  "completion_gate_passed": true,
+  "work_cleanup_completed": true,
+  "artifact_manifest_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/artifacts.csv",
+  "artifact_record_count": 3,
+  "canonical_output_file_count": 5,
+  "execution_summary": {
+    "probe_status": "completed",
+    "failure_type": "none",
+    "runtime_seconds": 694.081,
+    "model_load_seconds": 2.801,
+    "inference_seconds": 625.626,
+    "timeout_seconds": 1500,
+    "gpu_peak_memory_bytes": 5632166912,
+    "outside_mask_changed_pixels": 0,
+    "projected_primary_hours": 79.048,
+    "projected_comparable_hours": 194.728
+  },
+  "downstream_contract": {
+    "notebooks_13_to_35": "exclude_sdxl_metrics",
+    "placeholder_rows_allowed": false,
+    "required_future_state": "full_evaluation_complete or explicitly supported partial_evaluation"
+  },
+  "manifest_handoff_passed": true,
+  "provisional_manifest_updated_at_utc": "2026-08-25T21:39:48.006339Z",
+  "refactor_status": "completed",
+  "registry_handoff_passed": true,
+  "roadmap_completion_passed": true,
+  "registry_summary": {
+    "registry_schema_version": "project_paths.v1",
+    "json_path": "outputs/inventory/project_paths.json",
+    "markdown_path": "outputs/inventory/project_paths.md",
+    "records_before": 67,
+    "records_after": 70,
+    "registered_artifact_keys": [
+      "sdxl.feasibility_attempts",
+      "sdxl.feasibility_report",
+      "validation.12_sdxl_feasibility_or_restoration"
+    ],
+    "json_sha256": "af9be7b8fda90497013bdb8a8aeca590695c2d952856324e3a66a4c02329599e",
+    "markdown_sha256": "58c9e27952fe3b8df34f8ff9b44ac601d95efba7b9a8a655176e8215e19eef7e"
+  },
+  "cleanup_summary": {
+    "cleanup_scope": "explicit_worker_owned_files",
+    "removed_file_count": 3,
+    "removed_paths": [
+      "outputs/12_sdxl_feasibility_or_restoration/work/attempts/sdxl_probe__a80c364f5333.job.json",
+      "outputs/12_sdxl_feasibility_or_restoration/work/attempts/sdxl_probe__a80c364f5333.result.json",
+      "outputs/12_sdxl_feasibility_or_restoration/work/attempts/sdxl_probe__a80c364f5333.png"
+    ],
+    "remaining_work_files": 0,
+    "work_root_removed": true
+  }
+}

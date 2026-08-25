@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-24T22:05:10.854550Z`
-- Registered artifacts: 67
+- Updated: `2026-08-25T21:59:38.886074Z`
+- Registered artifacts: 70
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -48,6 +48,8 @@
 | preprocessing.clean_images | 02_image_preprocessing | `outputs/02_image_preprocessing/images/clean` | primary_downstream | passed |
 | preprocessing.figure_preview | 02_image_preprocessing | `outputs/02_image_preprocessing/figures/preprocessing_preview.png` | qa_reporting | passed |
 | preprocessing.geometry | 02_image_preprocessing | `outputs/02_image_preprocessing/data/preprocessed_images.csv` | primary_downstream | passed |
+| sdxl.feasibility_attempts | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/data/feasibility_attempts.csv` | feasibility_evidence | passed |
+| sdxl.feasibility_report | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/reports/feasibility_report.md` | feasibility_reporting | passed |
 | stable_diffusion.candidate_examples | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/figures/candidate_examples.png` | candidate_and_seed_visual_evidence | passed |
 | stable_diffusion.candidates | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/data/candidates.csv` | primary_candidate_records | passed |
 | stable_diffusion.prompt_ablation_design | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/metrics/prompt_ablation_design.csv` | controlled_experimental_design | passed |
@@ -73,3 +75,4 @@
 | validation.09_opencv_telea_restoration | 09_opencv_telea_restoration | `outputs/09_opencv_telea_restoration/validation/checks.csv` | validation_evidence | passed |
 | validation.10_lama_restoration | 10_lama_restoration | `outputs/10_lama_restoration/validation/checks.csv` | validation_evidence | passed |
 | validation.11_stable_diffusion_restoration | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/validation/checks.csv` | validation_evidence | passed |
+| validation.12_sdxl_feasibility_or_restoration | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/validation/checks.csv` | validation_evidence | passed |

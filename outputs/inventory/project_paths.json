@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-24T22:05:10.854550Z",
+  "updated_at_utc": "2026-08-25T21:59:38.886074Z",
   "artifacts": [
     {
       "artifact_key": "damage.audit",
@@ -591,6 +591,34 @@
       "checksum": "b6f29c2c71450403042b1bb6c522ea6e50942a940428918b89dac466e0b7152f"
     },
     {
+      "artifact_key": "sdxl.feasibility_attempts",
+      "producer_notebook": "12_sdxl_feasibility_or_restoration",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/data/feasibility_attempts.csv",
+      "artifact_type": "table",
+      "artifact_role": "feasibility_evidence",
+      "schema_version": "sdxl_feasibility_attempts.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_sdxl_feasibility",
+      "validation_status": "passed",
+      "row_count": "1",
+      "file_count": 1,
+      "checksum": "a2d188a930f9e863188069c16d2d47909cfd736073e32b188c467dc55110853a"
+    },
+    {
+      "artifact_key": "sdxl.feasibility_report",
+      "producer_notebook": "12_sdxl_feasibility_or_restoration",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/reports/feasibility_report.md",
+      "artifact_type": "report",
+      "artifact_role": "feasibility_reporting",
+      "schema_version": "report.sdxl_feasibility.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_sdxl_feasibility",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "fed1f23d3419580c8d39f9015dd6366de877cbb5387bf74534316faffeb955d2"
+    },
+    {
       "artifact_key": "stable_diffusion.candidate_examples",
       "producer_notebook": "11_stable_diffusion_restoration",
       "relative_path": "outputs/11_stable_diffusion_restoration/figures/candidate_examples.png",
@@ -939,6 +967,20 @@
       "row_count": 128,
       "file_count": 1,
       "checksum": "077e770d9a7c89c64739af7fe2fee6b829d73e7cd268d3af4caa6d99f848474c"
+    },
+    {
+      "artifact_key": "validation.12_sdxl_feasibility_or_restoration",
+      "producer_notebook": "12_sdxl_feasibility_or_restoration",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/validation/checks.csv",
+      "artifact_type": "table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_sdxl_feasibility",
+      "validation_status": "passed",
+      "row_count": "90",
+      "file_count": 1,
+      "checksum": "4a2de8a96ce50a0e6cf9ef456ae229f7e4cdf2f4087fe689e356ee8bba3dd1dc"
     }
   ]
 }

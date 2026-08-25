@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.9.0"
+SCHEMAS_MODULE_VERSION = "1.10.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -394,6 +394,29 @@ STABLE_DIFFUSION_CANDIDATE_COLUMNS = (
     "gpu_peak_memory_bytes", "retry_count", "attempt_count",
     "configuration_fingerprint", "started_at_utc", "completed_at_utc",
     "generator_name", "generator_version", "status", "issue",
+)
+
+SDXL_FEASIBILITY_ATTEMPT_COLUMNS = (
+    "attempt_id", "attempt_index", "evidence_origin", "case_id",
+    "painting_id", "experiment_id", "damage_or_degradation_type",
+    "input_image_path", "mask_or_effect_path", "input_sha256",
+    "mask_sha256", "model_id", "hf_model_id", "model_revision",
+    "configuration_id", "configuration_fingerprint", "prompt_policy_id",
+    "prompt", "negative_prompt", "seed", "requested_device",
+    "actual_device", "gpu_name", "gpu_total_memory_bytes", "precision",
+    "inference_width", "inference_height", "output_width", "output_height",
+    "num_inference_steps", "guidance_scale", "strength", "scheduler",
+    "memory_strategy_id", "model_cpu_offload", "sequential_cpu_offload",
+    "attention_backend", "attention_slicing", "vae_slicing", "vae_tiling",
+    "local_files_only", "timeout_seconds", "model_load_succeeded",
+    "inference_started", "inference_completed", "timed_out",
+    "output_generated", "output_geometry_valid",
+    "outside_mask_changed_pixels", "technical_validation_passed",
+    "model_load_seconds", "inference_seconds", "runtime_seconds",
+    "gpu_peak_memory_bytes", "projected_primary_hours",
+    "projected_comparable_hours", "availability_state", "status",
+    "failure_type", "worker_return_code", "error_type", "error_message",
+    "issue",
 )
 
 PROMPT_POLICY_COLUMNS = (
@@ -987,6 +1010,46 @@ STABLE_DIFFUSION_CANDIDATES_SCHEMA = DataFrameSchema(
     },
 )
 
+SDXL_FEASIBILITY_ATTEMPTS_SCHEMA = DataFrameSchema(
+    name="sdxl_feasibility_attempts",
+    version="sdxl_feasibility_attempts.v1",
+    required_columns=SDXL_FEASIBILITY_ATTEMPT_COLUMNS,
+    primary_key=("attempt_id",),
+    non_nullable=tuple(
+        column for column in SDXL_FEASIBILITY_ATTEMPT_COLUMNS
+        if column not in {
+            "actual_device", "gpu_name", "gpu_total_memory_bytes",
+            "outside_mask_changed_pixels", "model_load_seconds",
+            "inference_seconds", "runtime_seconds", "gpu_peak_memory_bytes",
+            "projected_primary_hours", "projected_comparable_hours",
+            "worker_return_code", "error_type", "error_message", "issue",
+        }
+    ),
+    allowed_values={
+        "evidence_origin": frozenset({"current_execution"}),
+        "requested_device": frozenset({"cuda"}),
+        "actual_device": frozenset({"", "cuda"}),
+        "precision": frozenset({"float16"}),
+        "availability_state": frozenset(
+            {
+                "full_evaluation_complete", "partial_evaluation",
+                "feasibility_only", "unavailable", "failed",
+            }
+        ),
+        "status": frozenset(
+            {"planned", "completed", "timed_out", "failed", "skipped"}
+        ),
+        "failure_type": frozenset(
+            {
+                "none", "runtime_guardrail", "cuda_out_of_memory",
+                "model_unavailable", "model_load_failure",
+                "inference_failure", "input_validation_failure",
+                "worker_failure", "skipped_after_guardrail",
+            }
+        ),
+    },
+)
+
 PROMPT_POLICY_SCHEMA = DataFrameSchema(
     name="prompt_policy",
     version="prompt_policy.v1",
@@ -1047,6 +1110,7 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     RESTORATIONS_SCHEMA.name: RESTORATIONS_SCHEMA,
     RESTORATION_RUNTIME_SUMMARY_SCHEMA.name: RESTORATION_RUNTIME_SUMMARY_SCHEMA,
     STABLE_DIFFUSION_CANDIDATES_SCHEMA.name: STABLE_DIFFUSION_CANDIDATES_SCHEMA,
+    SDXL_FEASIBILITY_ATTEMPTS_SCHEMA.name: SDXL_FEASIBILITY_ATTEMPTS_SCHEMA,
     PROMPT_POLICY_SCHEMA.name: PROMPT_POLICY_SCHEMA,
     PROMPT_ABLATION_DESIGN_SCHEMA.name: PROMPT_ABLATION_DESIGN_SCHEMA,
     REGION_POLICY_SCHEMA.name: REGION_POLICY_SCHEMA,
