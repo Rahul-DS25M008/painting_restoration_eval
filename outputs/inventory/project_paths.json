@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-25T21:59:38.886074Z",
+  "updated_at_utc": "2026-08-26T19:44:19.749751Z",
   "artifacts": [
     {
       "artifact_key": "damage.audit",
@@ -642,9 +642,9 @@
       "dataset_scope": "controlled_50",
       "experiment_scope": "cross_experiment_stable_diffusion",
       "validation_status": "passed",
-      "row_count": 1010,
+      "row_count": 1330,
       "file_count": 1,
-      "checksum": "74f7d766e436f1d087239c211a350d7d9992b4dab49a3d66bba085ef21c32996"
+      "checksum": "d3df38e2c68d64d30694a6a114d115478c220dfb6ab7f265d15342aa6ccebdef"
     },
     {
       "artifact_key": "stable_diffusion.prompt_ablation_design",
@@ -656,23 +656,23 @@
       "dataset_scope": "controlled_50",
       "experiment_scope": "cross_experiment_stable_diffusion",
       "validation_status": "passed",
-      "row_count": 160,
+      "row_count": 210,
       "file_count": 1,
-      "checksum": "f71a7913d7c56492ec5ae8f5cf786bae83d5e319a8f518ab41b46238ca04e52e"
+      "checksum": "11ead25435526aa3edb81ce270fc53f13289e0687d57cb8cf82e323ad04ab682"
     },
     {
       "artifact_key": "stable_diffusion.prompt_comparison_examples",
       "producer_notebook": "11_stable_diffusion_restoration",
       "relative_path": "outputs/11_stable_diffusion_restoration/figures/prompt_comparison_examples.png",
       "artifact_type": "figure",
-      "artifact_role": "prompt_ablation_visual_evidence",
+      "artifact_role": "contextual_and_paired_prompt_visual_evidence",
       "schema_version": "figure.prompt_comparison.v1",
       "dataset_scope": "controlled_50",
       "experiment_scope": "cross_experiment_stable_diffusion",
       "validation_status": "passed",
-      "row_count": 4,
+      "row_count": 6,
       "file_count": 1,
-      "checksum": "65890c73a3913f5e210c7a7ca80e8a132ca3fda3e28ae89333675ab17e445fc6"
+      "checksum": "7d0bc16c8ddceac330f78ad50b06704f1a87baa3f1095137baaf8261506dab6e"
     },
     {
       "artifact_key": "stable_diffusion.prompt_policy",
@@ -684,9 +684,9 @@
       "dataset_scope": "controlled_50",
       "experiment_scope": "cross_experiment_stable_diffusion",
       "validation_status": "passed",
-      "row_count": 5,
+      "row_count": 6,
       "file_count": 1,
-      "checksum": "57073643a47f12b78dca2c564b9206b2dce254de0d64d634d21b2315adb69581"
+      "checksum": "1be055d2244f1c6af94d4c8474fc6cbd81b6f47810e1a482c27afd24a471fa64"
     },
     {
       "artifact_key": "stable_diffusion.prompt_policy_report",
@@ -700,7 +700,7 @@
       "validation_status": "passed",
       "row_count": 1,
       "file_count": 1,
-      "checksum": "676b5bd812a1748727ef0746b17b9668217f4600227a6ca95cacadb523b4213d"
+      "checksum": "5316a98809dc69704758da28804dc030c6a084f6a5d43dac2350085c6a0d36bc"
     },
     {
       "artifact_key": "stable_diffusion.restored_images",
@@ -712,9 +712,9 @@
       "dataset_scope": "controlled_50",
       "experiment_scope": "cross_experiment_stable_diffusion",
       "validation_status": "passed",
-      "row_count": 1010,
-      "file_count": 1010,
-      "checksum": "b5436c2c4239688d7e09a6fbe9f63519d7abb162a6d1d0e6d884b0007396ea86"
+      "row_count": 1330,
+      "file_count": 1330,
+      "checksum": "3fff39be0a15aebf138300708f8dabcd649109136dd9989b54d4ff177a05b2cd"
     },
     {
       "artifact_key": "stable_diffusion.runtime_summary",
@@ -726,9 +726,9 @@
       "dataset_scope": "controlled_50",
       "experiment_scope": "cross_experiment_stable_diffusion",
       "validation_status": "passed",
-      "row_count": 13,
+      "row_count": 14,
       "file_count": 1,
-      "checksum": "36d4c104e1a4510d1f8b96bd40d721ede141aa45643eaa19e2b1e33a3ceb4728"
+      "checksum": "8459e169454ab33e5850df648284475070faac0a8817c56b34a445439fe61841"
     },
     {
       "artifact_key": "synthetic_degradation.cases",
@@ -964,9 +964,9 @@
       "dataset_scope": "controlled_50",
       "experiment_scope": "cross_experiment_stable_diffusion",
       "validation_status": "passed",
-      "row_count": 128,
+      "row_count": 176,
       "file_count": 1,
-      "checksum": "077e770d9a7c89c64739af7fe2fee6b829d73e7cd268d3af4caa6d99f848474c"
+      "checksum": "9b1e0bd4a2ce59db648c7052ea4cef42fc9786f07ba40f587ff80753999458c9"
     },
     {
       "artifact_key": "validation.12_sdxl_feasibility_or_restoration",

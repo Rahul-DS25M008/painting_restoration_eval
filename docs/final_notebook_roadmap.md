@@ -644,6 +644,7 @@ Notebooks 13–17 and all later comparison/reporting stages.
 **Origin:** Existing Notebook 21; incorporates candidate generation required by uncertainty analysis  
 **Output root:** `outputs/11_stable_diffusion_restoration/`  
 **Depends on:** Notebook 08
+**Supplemental contract:** `docs/notebook_11_scratch_prompt_ablation_contract.md`
 
 ### Purpose
 
@@ -659,6 +660,10 @@ Generate Stable Diffusion restoration candidates under fixed reproducible polici
 - Run the generic restoration prompt on the approved primary scope.
 - Run style/context-specific prompt variants only as a controlled prompt-ablation experiment.
 - Compare generic and style-specific prompts without selecting candidates using evaluation metrics.
+- Run a paired scratch-aware prompt ablation on all 50 canonical paintings using the four frozen uncertainty seeds.
+- Preserve both prompt arms for every painting-seed pair and reuse existing generic candidates rather than duplicate inference.
+- Treat paintings as the independent units and seeds as repeated observations in downstream inference.
+- Document thin-mask downsampling and exact-compositing residual lines as a Stable Diffusion limitation that prompting may mitigate but cannot be assumed to solve.
 - Generate repeated-seed candidates for all approved uncertainty-eligible non-zero cases, subject to configured feasibility.
 - Retain candidate-level outputs and stable candidate IDs.
 - Record runtime, GPU memory, retries, failures, and environment.
@@ -692,6 +697,10 @@ validation/checks.csv
 - Prompts/settings recorded.
 - Outputs reload and match expected geometry.
 - Failures and omissions are explicit.
+- Exactly 50 canonical scratch cases, four declared seeds, and two matched prompt arms.
+- Exactly 400 formal scratch outcomes with both prompts present for every painting-seed pair.
+- Exactly 1,330 total candidates, including 120 added generic seed controls and 200 scratch-aware candidates.
+- Both the frozen base configuration and supplementary scratch-prompt configuration are checksummed.
 
 ### Downstream consumers
 

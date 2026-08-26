@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -10,6 +11,7 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 
+from restoration_eval import restoration_stable_diffusion as stable_diffusion_module
 from restoration_eval.restoration_stable_diffusion import (
     RESTORATION_GENERATOR_VERSION,
     binarize_mask,
@@ -182,6 +184,43 @@ class StableDiffusionRestorationTests(unittest.TestCase):
             self.assertEqual(record["retry_count"], 1)
             self.assertEqual(record["status"], "completed")
 
+    def test_atomic_checkpoint_retries_transient_permission_error(self) -> None:
+        frame = pd.DataFrame(
+            [
+                {"candidate_id": "candidate_001", "status": "completed"},
+                {"candidate_id": "candidate_002", "status": "completed"},
+            ]
+        )
+
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            checkpoint = Path(temporary_directory) / "candidate_checkpoint.csv"
+            original_replace = Path.replace
+            replace_attempts = {"count": 0}
+
+            def transiently_locked_replace(source: Path, target: Path) -> Path:
+                replace_attempts["count"] += 1
+                if replace_attempts["count"] <= 2:
+                    raise PermissionError("simulated transient Windows file lock")
+                return original_replace(source, target)
+
+            with (
+                patch.object(
+                    Path,
+                    "replace",
+                    autospec=True,
+                    side_effect=transiently_locked_replace,
+                ),
+                patch.object(stable_diffusion_module.time, "sleep") as sleep_mock,
+            ):
+                stable_diffusion_module._atomic_checkpoint(frame, checkpoint)
+
+            reloaded = pd.read_csv(checkpoint)
+            self.assertTrue(reloaded.equals(frame))
+            self.assertEqual(replace_attempts["count"], 3)
+            self.assertEqual(
+                [item.args[0] for item in sleep_mock.call_args_list], [0.125, 0.25]
+            )
+            self.assertFalse(checkpoint.with_suffix(".csv.tmp").exists())
 
 if __name__ == "__main__":
     unittest.main()

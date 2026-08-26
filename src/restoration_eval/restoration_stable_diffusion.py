@@ -612,7 +612,22 @@ def _atomic_checkpoint(frame: pd.DataFrame, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
     frame.to_csv(temporary, index=False)
-    temporary.replace(path)
+    maximum_replace_attempts = 10
+    retry_delay_seconds = 0.125
+
+    for attempt in range(1, maximum_replace_attempts + 1):
+        try:
+            temporary.replace(path)
+            return
+        except PermissionError:
+            if attempt == maximum_replace_attempts:
+                raise
+
+            time.sleep(retry_delay_seconds)
+            retry_delay_seconds = min(
+                retry_delay_seconds * 2,
+                2.0,
+            )
 
 
 def _resume_record_valid(

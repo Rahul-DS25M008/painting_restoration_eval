@@ -1,0 +1,59 @@
+config_schema_version: "stable_diffusion_scratch_prompt_ablation_config.v1"
+config_version: "1.0.0"
+base_config_path: "config/experiments/stable_diffusion.yaml"
+
+effective_prompt_policy:
+  policy_id: "sd15_prompt_policy.v3"
+  prompt_variant_id: "p05_scratch_aware"
+  variant_family: "damage_aware"
+  metadata_fields:
+    - "damage_or_degradation_type"
+  positive_prompt: "a complete undamaged aged fine-art painting with seamless visual continuity, uninterrupted brushwork and canvas texture, with the original surrounding colours, lighting, edges, forms, and structures naturally continued across the repaired area"
+  negative_prompt_extension: "visible scratches, residual scratch marks, thin artificial lines, grey repair lines, dark repair lines, white gaps, seams, outlines, discontinuities, mismatched texture, blurry repair"
+
+candidate_design:
+  experiment_id: "canonical_missing_region"
+  canonical_damage_type: "scratch_thin"
+  case_id_suffix: "__scratch_thin"
+  painting_count: 50
+  prompt_variant_ids:
+    - "p00_generic"
+    - "p05_scratch_aware"
+  seeds:
+    - 2026
+    - 2027
+    - 2028
+    - 2029
+  selection_policy: "all_canonical_paintings_paired_non_metric.v1"
+  design_component: "scratch_prompt_ablation"
+  generic_extension_role: "scratch_seed_control_extension"
+  damage_prompt_role: "scratch_damage_prompt"
+  prohibit_metric_selection: true
+
+expected:
+  scratch_case_count: 50
+  paintings_per_scratch_case: 1
+  prompt_arm_count: 2
+  seed_count: 4
+  paired_outcome_count: 400
+  existing_generic_outcome_count: 80
+  generic_extension_candidate_count: 120
+  damage_prompt_candidate_count: 200
+  additional_candidate_count: 320
+  effective_candidate_count: 1330
+  effective_model_inference_candidate_count: 1280
+  effective_restored_file_count: 1330
+  effective_prompt_policy_row_count: 6
+  effective_prompt_ablation_design_row_count: 210
+  effective_artifact_record_count: 9
+  effective_total_output_file_count_without_failure_logs: 1340
+
+smoke:
+  paired_case_id: "canonical__p039__scratch_thin"
+  seed: 2026
+
+known_limitations:
+  - "The scratch-aware prompt is a controlled semantic-conditioning treatment and does not change the model, mask, seed, scheduler, inference resolution, compositing policy, or any other generation setting."
+  - "Thin scratch masks can lose or fragment spatial support during 512-pixel and latent-grid downsampling; prompting cannot be assumed to resolve that geometric limitation."
+  - "Literal scratch terminology is concentrated in the negative prompt because text encoders may not reliably interpret negation in positive prompts."
+  - "The 200 painting-seed pairs are repeated observations nested within 50 paintings; downstream inference must not treat all seed-level pairs as independent paintings."

@@ -1,7 +1,7 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-25T21:59:38.886074Z`
+- Updated: `2026-08-26T19:44:19.749751Z`
 - Registered artifacts: 70
 
 | Artifact key | Producer | Relative path | Role | Validation |
@@ -53,7 +53,7 @@
 | stable_diffusion.candidate_examples | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/figures/candidate_examples.png` | candidate_and_seed_visual_evidence | passed |
 | stable_diffusion.candidates | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/data/candidates.csv` | primary_candidate_records | passed |
 | stable_diffusion.prompt_ablation_design | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/metrics/prompt_ablation_design.csv` | controlled_experimental_design | passed |
-| stable_diffusion.prompt_comparison_examples | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/figures/prompt_comparison_examples.png` | prompt_ablation_visual_evidence | passed |
+| stable_diffusion.prompt_comparison_examples | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/figures/prompt_comparison_examples.png` | contextual_and_paired_prompt_visual_evidence | passed |
 | stable_diffusion.prompt_policy | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/data/prompt_policy.csv` | prompt_policy | passed |
 | stable_diffusion.prompt_policy_report | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/reports/prompt_policy.md` | prompt_method_documentation | passed |
 | stable_diffusion.restored_images | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/images/restored` | candidate_images | passed |
