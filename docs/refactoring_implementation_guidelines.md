@@ -141,6 +141,7 @@ The workflow for every notebook is:
 - All the html reports that are planned in the notebook roadmap must adhere to this.
 - The report must be clear, concise, not too verbose while retaining a healthy mix of numbers, explanations, figures/plots, restorations/images and must be high-level overviews of the experiments without going into a rabbit 
   hole of details with 100 numbers that don't make sense.
+- Render the report structure skeleton beforehand with creative examples, usecases and madeup numbers to show how the final report would look like. Once I approve, we can go ahead with the actual batch cell generation.
 
 The inventory refresh is a controlled write operation. During explicitly read-only phases, the existing inventory may be inspected but must not be regenerated.
 
