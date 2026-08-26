@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-26T19:44:19.749751Z",
+  "updated_at_utc": "2026-08-26T22:42:13.360182Z",
   "artifacts": [
     {
       "artifact_key": "damage.audit",
@@ -591,32 +591,60 @@
       "checksum": "b6f29c2c71450403042b1bb6c522ea6e50942a940428918b89dac466e0b7152f"
     },
     {
-      "artifact_key": "sdxl.feasibility_attempts",
+      "artifact_key": "sdxl.candidates",
       "producer_notebook": "12_sdxl_feasibility_or_restoration",
-      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/data/feasibility_attempts.csv",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv",
       "artifact_type": "table",
-      "artifact_role": "feasibility_evidence",
-      "schema_version": "sdxl_feasibility_attempts.v1",
+      "artifact_role": "partial_evaluation_candidates",
+      "schema_version": "sdxl_partial_candidates.v1",
       "dataset_scope": "controlled_50",
-      "experiment_scope": "cross_experiment_sdxl_feasibility",
+      "experiment_scope": "cross_experiment_sdxl_partial_evaluation",
       "validation_status": "passed",
-      "row_count": "1",
+      "row_count": 10,
       "file_count": 1,
-      "checksum": "a2d188a930f9e863188069c16d2d47909cfd736073e32b188c467dc55110853a"
+      "checksum": "987f13a42a1fbd59eefae630e6e74614d36a410cadb94e97440754f9a0d363ee"
     },
     {
-      "artifact_key": "sdxl.feasibility_report",
+      "artifact_key": "sdxl.partial_evaluation_report",
       "producer_notebook": "12_sdxl_feasibility_or_restoration",
-      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/reports/feasibility_report.md",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/reports/partial_evaluation_report.md",
       "artifact_type": "report",
-      "artifact_role": "feasibility_reporting",
-      "schema_version": "report.sdxl_feasibility.v1",
+      "artifact_role": "partial_scope_and_limitations",
+      "schema_version": "report.sdxl_partial_evaluation.v1",
       "dataset_scope": "controlled_50",
-      "experiment_scope": "cross_experiment_sdxl_feasibility",
+      "experiment_scope": "cross_experiment_sdxl_partial_evaluation",
       "validation_status": "passed",
-      "row_count": "",
+      "row_count": 1,
       "file_count": 1,
-      "checksum": "fed1f23d3419580c8d39f9015dd6366de877cbb5387bf74534316faffeb955d2"
+      "checksum": "155b1181fe38a41622528bf2a52c44eedd6657da1e3f37c0c10174ec385c5023"
+    },
+    {
+      "artifact_key": "sdxl.restored_images",
+      "producer_notebook": "12_sdxl_feasibility_or_restoration",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/images/restored",
+      "artifact_type": "image_directory",
+      "artifact_role": "technically_valid_partial_restorations",
+      "schema_version": "restored_images.sdxl_partial.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_sdxl_partial_evaluation",
+      "validation_status": "passed",
+      "row_count": 10,
+      "file_count": 10,
+      "checksum": "d64ad227f49f93d8801f82742c3b5864cb2a3adf9b56bb8a43b958e12d8ddfdc"
+    },
+    {
+      "artifact_key": "sdxl.runtime_summary",
+      "producer_notebook": "12_sdxl_feasibility_or_restoration",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/metrics/runtime_summary.csv",
+      "artifact_type": "table",
+      "artifact_role": "bounded_runtime_evidence",
+      "schema_version": "restoration_runtime_summary.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_sdxl_partial_evaluation",
+      "validation_status": "passed",
+      "row_count": 3,
+      "file_count": 1,
+      "checksum": "7dcba00801acc11c809dc89f7e20615bc02467fe56f101db55320fc4f385a4c4"
     },
     {
       "artifact_key": "stable_diffusion.candidate_examples",
@@ -976,11 +1004,11 @@
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
       "dataset_scope": "controlled_50",
-      "experiment_scope": "cross_experiment_sdxl_feasibility",
+      "experiment_scope": "cross_experiment_sdxl_partial_evaluation",
       "validation_status": "passed",
-      "row_count": "90",
+      "row_count": 236,
       "file_count": 1,
-      "checksum": "4a2de8a96ce50a0e6cf9ef456ae229f7e4cdf2f4087fe689e356ee8bba3dd1dc"
+      "checksum": "e66e86c844aa9721811bb3c00abc183d27340faa2d76046110a507ab10c46dd7"
     }
   ]
 }

@@ -418,7 +418,29 @@ SDXL_FEASIBILITY_ATTEMPT_COLUMNS = (
     "failure_type", "worker_return_code", "error_type", "error_message",
     "issue",
 )
-
+SDXL_PARTIAL_CANDIDATE_COLUMNS = (
+    "candidate_id", "candidate_index", "selection_rank", "execution_order",
+    "case_id", "painting_id", "category", "experiment_id",
+    "damage_or_degradation_type", "mask_or_effect_id", "input_image_path",
+    "clean_image_path", "mask_or_effect_path", "input_sha256", "mask_sha256",
+    "model_id", "hf_model_id", "model_revision", "configuration_id",
+    "prompt_policy_id", "prompt_variant_id", "prompt", "negative_prompt",
+    "prompt_metadata_fields_used", "seed", "execution_role",
+    "candidate_selection_policy", "num_inference_steps", "guidance_scale",
+    "strength", "scheduler", "precision", "device", "inference_width",
+    "inference_height", "output_width", "output_height", "mask_policy_id",
+    "mask_threshold", "compositing_policy", "safety_checker_policy",
+    "execution_action", "restored_path", "restored_sha256", "runtime_seconds",
+    "model_load_seconds", "inference_seconds", "gpu_total_memory_bytes",
+    "gpu_memory_before_bytes", "gpu_memory_after_bytes", "gpu_peak_memory_bytes",
+    "global_budget_seconds", "per_case_timeout_seconds",
+    "budget_seconds_before_attempt", "budget_seconds_after_attempt",
+    "output_geometry_valid", "outside_mask_changed_pixels",
+    "technical_validation_passed", "retry_count", "attempt_count",
+    "configuration_fingerprint", "started_at_utc", "completed_at_utc",
+    "generator_name", "generator_version", "availability_state", "status",
+    "failure_type", "worker_return_code", "error_type", "error_message", "issue",
+)
 PROMPT_POLICY_COLUMNS = (
     "prompt_policy_id", "prompt_variant_id", "variant_order",
     "variant_family", "is_primary", "requires_metadata",
@@ -1049,7 +1071,45 @@ SDXL_FEASIBILITY_ATTEMPTS_SCHEMA = DataFrameSchema(
         ),
     },
 )
-
+SDXL_PARTIAL_CANDIDATES_SCHEMA = DataFrameSchema(
+    name="sdxl_partial_candidates",
+    version="sdxl_partial_candidates.v1",
+    required_columns=SDXL_PARTIAL_CANDIDATE_COLUMNS,
+    primary_key=("candidate_id",),
+    non_nullable=tuple(
+        column for column in SDXL_PARTIAL_CANDIDATE_COLUMNS
+        if column not in {
+            "input_sha256", "mask_sha256", "device", "restored_sha256",
+            "runtime_seconds", "model_load_seconds", "inference_seconds",
+            "gpu_total_memory_bytes", "gpu_memory_before_bytes",
+            "gpu_memory_after_bytes", "gpu_peak_memory_bytes",
+            "budget_seconds_before_attempt", "budget_seconds_after_attempt",
+            "outside_mask_changed_pixels", "started_at_utc", "completed_at_utc",
+            "worker_return_code", "error_type", "error_message", "issue",
+        }
+    ),
+    allowed_values={
+        "execution_role": frozenset({"primary"}),
+        "execution_action": frozenset(
+            {"pending", "sdxl_inpaint", "reused_validated", "failed", "skipped"}
+        ),
+        "precision": frozenset({"float16"}),
+        "availability_state": frozenset(
+            {"partial_evaluation", "feasibility_only", "unavailable", "failed", "pending"}
+        ),
+        "status": frozenset(
+            {"planned", "completed", "timed_out", "failed", "skipped"}
+        ),
+        "failure_type": frozenset(
+            {
+                "none", "runtime_guardrail", "global_budget_exhausted",
+                "cuda_out_of_memory", "model_unavailable", "model_load_failure",
+                "inference_failure", "input_validation_failure", "worker_failure",
+                "skipped_after_guardrail", "not_started_global_budget",
+            }
+        ),
+    },
+)
 PROMPT_POLICY_SCHEMA = DataFrameSchema(
     name="prompt_policy",
     version="prompt_policy.v1",
@@ -1111,6 +1171,7 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     RESTORATION_RUNTIME_SUMMARY_SCHEMA.name: RESTORATION_RUNTIME_SUMMARY_SCHEMA,
     STABLE_DIFFUSION_CANDIDATES_SCHEMA.name: STABLE_DIFFUSION_CANDIDATES_SCHEMA,
     SDXL_FEASIBILITY_ATTEMPTS_SCHEMA.name: SDXL_FEASIBILITY_ATTEMPTS_SCHEMA,
+    SDXL_PARTIAL_CANDIDATES_SCHEMA.name: SDXL_PARTIAL_CANDIDATES_SCHEMA,
     PROMPT_POLICY_SCHEMA.name: PROMPT_POLICY_SCHEMA,
     PROMPT_ABLATION_DESIGN_SCHEMA.name: PROMPT_ABLATION_DESIGN_SCHEMA,
     REGION_POLICY_SCHEMA.name: REGION_POLICY_SCHEMA,

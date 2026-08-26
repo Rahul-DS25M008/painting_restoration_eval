@@ -1,11 +1,11 @@
-config_schema_version: "sdxl_config.v1"
-config_version: "1.0.0"
+config_schema_version: "sdxl_config.v2"
+config_version: "2.0.0"
 
 dataset:
   dataset_id: "painting_restoration_eval"
   dataset_version: "1.0.0"
   dataset_scope: "controlled_50"
-  experiment_id: "cross_experiment_sdxl_feasibility"
+  experiment_id: "cross_experiment_sdxl_partial_evaluation"
 
 inputs:
   inventory_path: "outputs/inventory/project_file_inventory.csv"
@@ -19,28 +19,45 @@ inputs:
   upstream_artifacts_path: "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv"
   evaluation_contract_config_path: "config/experiments/evaluation_contract.yaml"
   stable_diffusion_config_path: "config/experiments/stable_diffusion.yaml"
+  synthetic_degradation_config_path: "config/experiments/synthetic_degradation.yaml"
+  telea_restorations_path: "outputs/09_opencv_telea_restoration/data/restorations.csv"
+  telea_run_manifest_path: "outputs/09_opencv_telea_restoration/manifests/run_manifest.json"
+  lama_restorations_path: "outputs/10_lama_restoration/data/restorations.csv"
+  lama_run_manifest_path: "outputs/10_lama_restoration/manifests/run_manifest.json"
+  stable_diffusion_candidates_path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+  stable_diffusion_run_manifest_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
   required_registry_keys:
     - "dataset.artworks"
     - "experiment_contracts.case_registry"
     - "experiment_contracts.model_eligibility"
     - "experiment_contracts.schema_registry"
+    - "opencv_telea.restorations"
+    - "lama.restorations"
+    - "stable_diffusion.candidates"
   required_upstream_run_status: "completed"
 
 output:
   notebook_stem: "12_sdxl_feasibility_or_restoration"
-  feasibility_attempts_path: "data/feasibility_attempts.csv"
-  feasibility_report_path: "reports/feasibility_report.md"
+  candidates_path: "data/candidates.csv"
+  restored_directory: "images/restored"
+  runtime_summary_path: "metrics/runtime_summary.csv"
+  partial_evaluation_report_path: "reports/partial_evaluation_report.md"
   run_manifest_path: "manifests/run_manifest.json"
   artifacts_path: "manifests/artifacts.csv"
   validation_path: "validation/checks.csv"
-  attempt_work_directory: "work/attempts"
-  artifact_record_count: 3
-  total_canonical_file_count: 5
+  work_directory: "work/partial_execution"
+  checkpoint_path: "work/partial_execution/candidate_checkpoint.csv"
+  progress_path: "work/partial_execution/progress.json"
+  worker_job_path: "work/partial_execution/batch_job.json"
+  worker_result_path: "work/partial_execution/batch_result.json"
+  artifact_record_count: 5
+  fixed_canonical_file_count: 6
+  maximum_canonical_file_count: 16
 
 model:
   model_id: "sdxl_inpainting"
-  methodological_role: "prompt_conditioned_sdxl_feasibility_probe"
-  configuration_id: "sdxl_quality_preserving_feasibility_v1"
+  methodological_role: "prompt_conditioned_sdxl_partial_evaluation"
+  configuration_id: "sdxl_quality_preserving_partial_evaluation_v1"
   implementation: "Diffusers StableDiffusionXLInpaintPipeline"
   hf_model_id: "diffusers/stable-diffusion-xl-1.0-inpainting-0.1"
   model_revision: "115134f363124c53c7d878647567d04daf26e41e"
@@ -56,18 +73,29 @@ model:
   guidance_scale: 7.5
   strength: 1.0
   seed: 2026
-  mask_threshold: 128
   compositing_policy: "masked_composite_preserve_outside.v1"
   safety_checker_policy: "disabled_research_dataset"
   local_files_only: true
 
+mask_policy:
+  policy_id: "sdxl_case_semantic_threshold.v1"
+  canonical_missing_region:
+    threshold: 128
+    comparison: "greater_than_or_equal"
+    source: "binary_missing_region_contract"
+  synthetic_degradation:
+    threshold: 13
+    comparison: "greater_than_or_equal"
+    source: "synthetic_degradation.generator.active_threshold"
+
 prompt_policy:
-  policy_id: "sdxl_feasibility_prompt_policy.v1"
+  policy_id: "sdxl_partial_evaluation_prompt_policy.v1"
+  prompt_variant_id: "p00_generic"
   prompt: "a complete aged fine-art painting with seamless visual continuity, coherent composition, and a consistent colour palette, brushwork, canvas texture, lighting, and level of detail"
   negative_prompt: "modern objects, text, watermark, signature, frame, border, added people, changed faces, extra objects, oversharpened, cartoon, digital art, photorealistic replacement, unrealistic texture, harsh seams"
 
 memory_strategy:
-  strategy_id: "sdxl_model_cpu_offload_sdpa_vae_slicing_tiling.v1"
+  strategy_id: "sdxl_persistent_model_cpu_offload_sdpa_vae_slicing_tiling.v1"
   model_cpu_offload: true
   sequential_cpu_offload: false
   attention_backend: "pytorch_sdpa"
@@ -77,56 +105,95 @@ memory_strategy:
   xformers: false
   torch_compile: false
   allow_tf32: false
+  persistent_pipeline: true
   rationale:
+    - "One isolated batch worker loads the pinned pipeline once and executes the bounded ten-case scope."
     - "Model CPU offload is required for the available 6 GB GPU and is faster than sequential CPU offload."
-    - "PyTorch scaled-dot-product attention is used without attention slicing, which can introduce severe slowdowns when SDPA is available."
-    - "VAE slicing and tiling reduce decoder memory without reducing inference resolution or denoising steps."
-    - "Compilation is disabled because one feasibility attempt cannot amortize its startup cost."
+    - "PyTorch scaled-dot-product attention is used without attention slicing."
+    - "VAE slicing and tiling reduce decoder memory without reducing resolution or denoising steps."
 
 execution:
-  mode: "feasibility_only"
-  maximum_current_attempts: 1
-  per_attempt_timeout_seconds: 1500
+  mode: "partial_evaluation"
+  global_budget_seconds: 7200
+  per_case_timeout_seconds: 900
+  minimum_seconds_to_start_case: 660
   stop_after_timeout: true
   stop_after_cuda_oom: true
   stop_after_model_failure: true
   retry_failed_attempts: false
-  progress_interval_attempts: 1
-  preserve_worker_files: false
-  worker_result_poll_seconds: 1
+  progress_interval_cases: 1
+  progress_poll_seconds: 1
+  checkpoint_interval_cases: 1
+  preserve_completed_outputs: true
   worker_module: "restoration_eval.restoration_sdxl_worker"
-  timeout_policy_id: "isolated_worker_hard_timeout.v1"
+  timeout_policy_id: "persistent_worker_heartbeat_and_global_budget.v1"
+  checkpoint_policy_id: "atomic_candidate_checkpoint_after_each_case.v1"
 
 selection:
-  policy_id: "predeclared_representative_non_metric.v1"
-  deterministic_case_id: "canonical__p039__loss_large"
-  require_nonzero_damage: true
+  policy_id: "predeclared_cross_method_partial_scope_non_metric.v1"
   prohibit_metric_selection: true
+  independent_unit: "painting"
+  repeated_unit: "case_nested_within_painting"
+  scheduled_case_count: 10
+  painting_count: 5
+  canonical_case_count: 4
+  synthetic_case_count: 6
+  cases:
+    - selection_rank: 1
+      execution_order: 7
+      case_id: "canonical__p001__loss_large"
+    - selection_rank: 2
+      execution_order: 1
+      case_id: "canonical__p039__loss_large"
+    - selection_rank: 3
+      execution_order: 2
+      case_id: "canonical__p018__mixed_damage"
+    - selection_rank: 4
+      execution_order: 8
+      case_id: "canonical__p043__mixed_damage"
+    - selection_rank: 5
+      execution_order: 5
+      case_id: "synthetic_degradation__p001__water_stain__severe"
+    - selection_rank: 6
+      execution_order: 9
+      case_id: "synthetic_degradation__p039__water_stain__severe"
+    - selection_rank: 7
+      execution_order: 6
+      case_id: "synthetic_degradation__p018__dirt_dust__severe"
+    - selection_rank: 8
+      execution_order: 10
+      case_id: "synthetic_degradation__p026__dirt_dust__severe"
+    - selection_rank: 9
+      execution_order: 3
+      case_id: "synthetic_degradation__p043__partial_transparency__severe"
+    - selection_rank: 10
+      execution_order: 4
+      case_id: "synthetic_degradation__p026__water_stain_dirt__moderate"
 
 scope:
   eligible_primary_case_count: 410
   comparable_candidate_count: 1010
-  current_attempt_count: 1
+  scheduled_candidate_count: 10
   full_execution_authorized: false
+  partial_execution_authorized: true
 
 legacy_evidence:
-  source_notebook: "notebooks/25_sdxl_feasibility_audit_cleaned.ipynb"
-  source_git_commit: "7a99ceb4"
+  source_notebook: "notebooks/12_sdxl_feasibility_or_restoration.ipynb"
+  source_git_commit: "96792053"
   contextual_only: true
   observations:
+    - label: "validated_768px_30_step_probe"
+      case_id: "canonical__p039__loss_large"
+      runtime_seconds: 694.081
+      inference_seconds: 625.626
+      outcome: "completed_with_exact_outside_mask_preservation"
     - label: "legacy_512px_6_step_probe"
-      inference_width: 512
-      inference_height: 512
-      num_inference_steps: 6
       runtime_seconds: 267.4
       outcome: "completed_but_region_completion_was_insufficient"
     - label: "legacy_512px_12_step_probe"
-      inference_width: 512
-      inference_height: 512
-      num_inference_steps: 12
       runtime_seconds: 594.0
       outcome: "completed_but_hallucination_and_global_alteration_were_observed"
-  interpretation: "Legacy observations provide hardware/runtime context only and are not SDXL quality rankings."
+  interpretation: "Legacy and prior-feasibility observations provide runtime context only and are not SDXL quality rankings."
 
 availability:
   allowed_states:
@@ -135,9 +202,8 @@ availability:
     - "feasibility_only"
     - "unavailable"
     - "failed"
-  timeout_state: "feasibility_only"
-  cuda_oom_state: "feasibility_only"
-  completed_probe_state: "feasibility_only"
+  one_or_more_valid_outputs_state: "partial_evaluation"
+  zero_valid_outputs_after_runtime_or_oom_state: "feasibility_only"
   missing_model_state: "unavailable"
   infrastructure_failure_state: "failed"
 
@@ -145,15 +211,18 @@ schema_versions:
   artworks: "artworks.v1"
   case_registry: "case_registry.v1"
   model_eligibility: "model_eligibility.v1"
-  feasibility_attempts: "sdxl_feasibility_attempts.v1"
-  feasibility_report: "report.sdxl_feasibility.v1"
+  candidates: "sdxl_partial_candidates.v1"
+  runtime_summary: "restoration_runtime_summary.v1"
+  partial_evaluation_report: "report.sdxl_partial_evaluation.v1"
+  restored_images: "restored_images.sdxl_partial.v1"
   run_manifest: "run_manifest.v1"
   artifact_manifest: "artifact_manifest.v1"
   validation_checks: "validation_checks.v1"
 
 known_limitations:
-  - "The feasibility branch evaluates whether the pinned SDXL inpainting implementation is practical on the available hardware; it is not a model-quality benchmark."
+  - "The ten cases are a predeclared purposive partial scope and do not represent a full SDXL evaluation."
+  - "The ten case observations are nested within five paintings; downstream inference must treat painting as the independent unit."
   - "A timeout or CUDA out-of-memory failure is hardware/runtime evidence and must not be interpreted as poor restoration quality."
-  - "One predeclared case cannot characterize SDXL output quality, robustness, or stochastic uncertainty."
-  - "The 25-minute guardrail includes model loading and inference and intentionally prevents automatic retries or slower fallback strategies."
-  - "Full candidates, restored-image manifests, and metric placeholder rows are prohibited in feasibility-only mode."
+  - "Only technically validated completed candidates may enter downstream metric computation."
+  - "The global two-hour budget can leave later scheduled cases explicitly unexecuted."
+  - "SDXL outputs are plausible prompt-conditioned inpaintings, not historically verified reconstructions or conservation recommendations."

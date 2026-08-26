@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-26T19:44:19.749751Z`
-- Registered artifacts: 70
+- Updated: `2026-08-26T22:42:13.360182Z`
+- Registered artifacts: 72
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -48,8 +48,10 @@
 | preprocessing.clean_images | 02_image_preprocessing | `outputs/02_image_preprocessing/images/clean` | primary_downstream | passed |
 | preprocessing.figure_preview | 02_image_preprocessing | `outputs/02_image_preprocessing/figures/preprocessing_preview.png` | qa_reporting | passed |
 | preprocessing.geometry | 02_image_preprocessing | `outputs/02_image_preprocessing/data/preprocessed_images.csv` | primary_downstream | passed |
-| sdxl.feasibility_attempts | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/data/feasibility_attempts.csv` | feasibility_evidence | passed |
-| sdxl.feasibility_report | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/reports/feasibility_report.md` | feasibility_reporting | passed |
+| sdxl.candidates | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv` | partial_evaluation_candidates | passed |
+| sdxl.partial_evaluation_report | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/reports/partial_evaluation_report.md` | partial_scope_and_limitations | passed |
+| sdxl.restored_images | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/images/restored` | technically_valid_partial_restorations | passed |
+| sdxl.runtime_summary | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/metrics/runtime_summary.csv` | bounded_runtime_evidence | passed |
 | stable_diffusion.candidate_examples | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/figures/candidate_examples.png` | candidate_and_seed_visual_evidence | passed |
 | stable_diffusion.candidates | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/data/candidates.csv` | primary_candidate_records | passed |
 | stable_diffusion.prompt_ablation_design | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/metrics/prompt_ablation_design.csv` | controlled_experimental_design | passed |

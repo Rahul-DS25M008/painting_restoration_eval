@@ -740,6 +740,36 @@ Produce either a rigorous feasibility result or a fully compatible fourth-model 
   - do not create placeholder metric rows;
   - document projected compute requirements.
 
+
+### Approved bounded partial-evaluation mode
+
+The refactored Notebook 12 uses `partial_evaluation` mode under the
+versioned `sdxl_config.v2` contract. It does not imply full SDXL coverage.
+
+- Predeclare exactly ten comparable cases nested within five paintings.
+- Include four canonical cases and six synthetic-degradation cases.
+- Use one primary generic prompt, seed 2026, 768 x 768 inference, and 30 steps.
+- Load the pinned SDXL pipeline once in an isolated persistent batch worker.
+- Enforce a 7,200-second global budget and 900-second per-case watchdog.
+- Start no new case when fewer than 660 seconds remain.
+- Never retry automatically, fall back to CPU, reduce resolution, or reduce steps.
+- Execute in diversity-first order while retaining the original selection rank.
+- Threshold canonical missing-region masks at 128 and synthetic effect masks at 13.
+- Composite generated pixels only inside the thresholded mask.
+- Save every completed image immediately and checkpoint all ten candidate states
+  after every resolved case.
+- Represent timeout, CUDA out-of-memory, model unavailability, worker failure,
+  and global-budget omissions explicitly; never convert them into quality scores.
+- Permit downstream metrics only for rows with `status=completed`,
+  `technical_validation_passed=true`, valid 768 x 768 RGB geometry, and zero
+  changed pixels outside the binary mask.
+- Treat painting as the independent unit (n=5); the two cases per painting are
+  nested observations, not ten independent paintings.
+
+The exact case registry, execution order, mask policy, output contract, and
+interpretation limits are frozen in
+`docs/notebook_12_partial_evaluation_contract.md`.
+
 ### Canonical outputs
 
 Full mode:
