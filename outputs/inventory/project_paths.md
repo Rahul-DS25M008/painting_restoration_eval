@@ -1,11 +1,14 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-26T22:42:13.360182Z`
-- Registered artifacts: 72
+- Updated: `2026-08-27T10:06:06.211743Z`
+- Registered artifacts: 76
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
+| classical_metrics.distributions | 13_classical_metrics | `outputs/13_classical_metrics/figures/classical_metric_distributions.png` | reporting_visualization | passed |
+| classical_metrics.improvement_by_region | 13_classical_metrics | `outputs/13_classical_metrics/figures/classical_improvement_by_region.png` | reporting_visualization | passed |
+| classical_metrics.metrics | 13_classical_metrics | `outputs/13_classical_metrics/metrics/classical_metrics.csv` | primary_downstream_evidence | passed |
 | damage.audit | 04_canonical_damaged_image_generation | `outputs/04_canonical_damaged_image_generation/metrics/damage_audit.csv` | audit_reporting | passed |
 | damage.canonical_cases | 04_canonical_damaged_image_generation | `outputs/04_canonical_damaged_image_generation/data/cases.csv` | primary_downstream | passed |
 | damage.canonical_images | 04_canonical_damaged_image_generation | `outputs/04_canonical_damaged_image_generation/images/damaged` | primary_downstream | passed |
@@ -78,3 +81,4 @@
 | validation.10_lama_restoration | 10_lama_restoration | `outputs/10_lama_restoration/validation/checks.csv` | validation_evidence | passed |
 | validation.11_stable_diffusion_restoration | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/validation/checks.csv` | validation_evidence | passed |
 | validation.12_sdxl_feasibility_or_restoration | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/validation/checks.csv` | validation_evidence | passed |
+| validation.13_classical_metrics | 13_classical_metrics | `outputs/13_classical_metrics/validation/checks.csv` | validation_evidence | passed |

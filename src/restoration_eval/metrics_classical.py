@@ -1,1030 +1,447 @@
-"""
-Classical full-reference image-restoration metrics.
-
-This module evaluates damaged and restored painting images against the clean
-reference image across a standardized set of spatial regions.
-
-Mask convention
----------------
-- 0: preserved/original region
-- non-zero: damaged/restored region
-
-Region policy
--------------
-Every case:
-- full_image
-- content_region
-
-Non-zero-mask cases:
-- masked_region
-- mask_bbox_crop
-- boundary_region
-- outside_mask_region
-
-SSIM is computed only for contiguous rectangular image regions. It is therefore
-reported for full_image, content_region, and mask_bbox_crop, but not for sparse
-or irregular pixel selections such as masked_region, boundary_region, and
-outside_mask_region.
-"""
+"""Standardized long-form classical full-reference restoration metrics."""
 
 from __future__ import annotations
 
-import platform
+import hashlib
+import math
 import time
-from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Callable, Mapping, Sequence
 
 import numpy as np
 import pandas as pd
-import skimage
+import yaml
 from PIL import Image
-from skimage.metrics import structural_similarity as ssim
-from skimage.morphology import binary_dilation, binary_erosion, disk
+from skimage.metrics import structural_similarity
 
+from .regions import (
+    Region,
+    build_standard_regions,
+    crop_array,
+    effect_support_region,
+    metric_region_is_valid,
+    select_pixels,
+)
+from .schemas import (
+    CLASSICAL_METRICS_COLUMNS,
+    CLASSICAL_METRICS_SCHEMA,
+    validate_dataframe,
+)
 
 METRIC_MODULE_NAME = "restoration_eval.metrics_classical"
-METRIC_VERSION = "2.1.0"
-
-BASE_REGIONS = ("full_image", "content_region")
-MASKED_CASE_REGIONS = (
-    "masked_region",
-    "mask_bbox_crop",
-    "boundary_region",
-    "outside_mask_region",
-)
-ALL_EVALUATION_REGIONS = BASE_REGIONS + MASKED_CASE_REGIONS
-
-CLASSICAL_METRIC_COLUMNS = [
-    "damaged_mse",
-    "restored_mse",
-    "mse_improvement",
-    "damaged_mae",
-    "restored_mae",
-    "mae_improvement",
-    "damaged_psnr",
-    "restored_psnr",
-    "psnr_improvement",
-    "damaged_ssim",
-    "restored_ssim",
-    "ssim_improvement",
-]
-
-CANDIDATE_METADATA_COLUMNS = [
-    "restoration_case_id",
-    "candidate_id",
-    "source_case_key",
-    "source_case_id",
-    "source_case_id_original",
-    "prompt_policy_id",
-    "prompt_variant_id",
-    "prompt_template_name",
-    "prompt_ablation_subset",
-    "candidate_index",
-    "candidate_seed",
-    "effective_candidate_seed",
-    "inference_mode",
-    "execution_device",
-    "cuda_device_name",
-    "restoration_generator_version",
-    "restored_path",
-    "damaged_path",
-    "mask_path",
-    "clean_path",
-]
+METRIC_MODULE_VERSION = "3.0.0"
+METRIC_VERSION = "classical_full_reference.v1"
+SUPPORTED_METRICS = ("mse", "mae", "psnr", "ssim")
+ProgressCallback = Callable[[str], None]
+CheckpointCallback = Callable[[pd.DataFrame], None]
 
 
-def load_rgb_array(path: Path | str) -> np.ndarray:
-    """Load an image as an RGB float32 array in the range [0, 255]."""
-    path = Path(path)
+def load_classical_metrics_config(path: str | Path) -> dict:
+    """Load and validate the shared evaluation-metric configuration."""
 
-    if not path.exists():
-        raise FileNotFoundError(f"Image file not found: {path}")
+    config_path = Path(path)
+    with config_path.open("r", encoding="utf-8") as handle:
+        payload = yaml.safe_load(handle)
+    if not isinstance(payload, dict):
+        raise ValueError("Metric configuration must be a mapping")
+    if payload.get("config_schema_version") != "evaluation_metrics_config.v1":
+        raise ValueError("Unsupported evaluation metric configuration schema")
+    classical = payload.get("classical_metrics")
+    if not isinstance(classical, dict):
+        raise ValueError("Configuration is missing classical_metrics")
+    required = {"metric_version", "data_range", "metrics", "regions", "execution"}
+    missing = sorted(required - set(classical))
+    if missing:
+        raise ValueError(f"classical_metrics is missing keys: {missing}")
+    if classical["metric_version"] != METRIC_VERSION:
+        raise ValueError("Configured metric_version disagrees with the helper")
+    regions = classical["regions"]
+    if int(regions["outside_ring_inner_offset_pixels"]) != int(
+        regions["boundary_width_pixels"]
+    ):
+        raise ValueError(
+            "The canonical region helper requires outside-ring inner offset "
+            "to equal boundary_width_pixels"
+        )
+    metric_names = tuple(item.get("metric_name") for item in classical["metrics"])
+    if metric_names != SUPPORTED_METRICS:
+        raise ValueError(f"Metric order must be {SUPPORTED_METRICS}, found {metric_names}")
+    if int(classical["execution"]["progress_interval_cases"]) <= 0:
+        raise ValueError("progress_interval_cases must be positive")
+    if int(classical["execution"]["checkpoint_interval_cases"]) <= 0:
+        raise ValueError("checkpoint_interval_cases must be positive")
+    return payload
+
+
+def _classical(config: Mapping) -> Mapping:
+    return config["classical_metrics"]
+
+
+def _resolve(project_root: str | Path, value: str | Path) -> Path:
+    path = Path(value)
+    return path if path.is_absolute() else Path(project_root) / path
+
+
+def load_rgb_array(path: str | Path) -> np.ndarray:
+    """Load an image as RGB float64 in the native 0-255 range."""
 
     with Image.open(path) as image:
-        return np.asarray(image.convert("RGB"), dtype=np.float32)
+        return np.asarray(image.convert("RGB"), dtype=np.float64)
 
 
-def load_mask_bool(path: Path | str) -> np.ndarray:
-    """Load a mask as a boolean array."""
-    path = Path(path)
-
-    if not path.exists():
-        raise FileNotFoundError(f"Mask file not found: {path}")
+def load_mask_array(path: str | Path) -> np.ndarray:
+    """Load a mask/effect image as an unsigned 8-bit intensity array."""
 
     with Image.open(path) as image:
-        mask_arr = np.asarray(image.convert("L"))
-
-    return mask_arr > 0
+        return np.asarray(image.convert("L"), dtype=np.uint8)
 
 
-def compute_mse(reference_arr: np.ndarray, candidate_arr: np.ndarray) -> float:
-    """Compute mean squared error."""
-    return float(np.mean((reference_arr - candidate_arr) ** 2))
+def _require_same_image_shape(*arrays: np.ndarray) -> None:
+    shapes = {tuple(array.shape) for array in arrays}
+    if len(shapes) != 1:
+        raise ValueError(f"Image geometry mismatch: {sorted(shapes)}")
+    shape = arrays[0].shape
+    if len(shape) != 3 or shape[2] != 3:
+        raise ValueError(f"Expected RGB image arrays, received {shape}")
 
 
-def compute_mae(reference_arr: np.ndarray, candidate_arr: np.ndarray) -> float:
-    """Compute mean absolute error."""
-    return float(np.mean(np.abs(reference_arr - candidate_arr)))
+def build_case_regions(
+    case: Mapping,
+    raw_mask: np.ndarray,
+    config: Mapping,
+) -> dict[str, Region]:
+    """Build the configured non-patch region set using the canonical helper."""
 
-
-def compute_psnr_from_mse(
-    mse_value: float,
-    data_range: float = 255.0,
-) -> float:
-    """Compute PSNR from MSE, returning infinity for an exact match."""
-    if np.isnan(mse_value):
-        return float("nan")
-
-    if mse_value == 0:
-        return float("inf")
-
-    return float(20.0 * np.log10(data_range / np.sqrt(mse_value)))
-
-
-def compute_ssim_safe(
-    reference_arr: np.ndarray,
-    candidate_arr: np.ndarray,
-    data_range: float = 255.0,
-) -> float:
-    """Compute RGB SSIM safely for a contiguous rectangular image region."""
-    if reference_arr.shape != candidate_arr.shape:
-        raise ValueError(
-            f"SSIM shape mismatch. Reference: {reference_arr.shape}, "
-            f"candidate: {candidate_arr.shape}"
-        )
-
-    if reference_arr.ndim != 3 or reference_arr.shape[2] != 3:
-        raise ValueError(
-            f"Expected RGB arrays with shape HxWx3, got {reference_arr.shape}"
-        )
-
-    min_dim = min(reference_arr.shape[:2])
-
-    if min_dim < 7:
-        return float("nan")
-
-    reference_uint8 = np.clip(reference_arr, 0, 255).astype(np.uint8)
-    candidate_uint8 = np.clip(candidate_arr, 0, 255).astype(np.uint8)
-
-    return float(
-        ssim(
-            reference_uint8,
-            candidate_uint8,
-            channel_axis=2,
-            data_range=data_range,
-        )
+    settings = _classical(config)["regions"]
+    threshold = int(case["mask_threshold"])
+    active_mask = np.asarray(raw_mask) >= threshold
+    content_bbox = tuple(
+        int(case[column])
+        for column in ("content_x_min", "content_y_min", "content_x_max", "content_y_max")
     )
-
-
-def compute_image_region_metrics(
-    clean_arr: np.ndarray,
-    candidate_arr: np.ndarray,
-    compute_ssim_value: bool = True,
-) -> dict[str, float]:
-    """Compute metrics for a contiguous rectangular image region."""
-    if clean_arr.shape != candidate_arr.shape:
-        raise ValueError(
-            f"Image shape mismatch. Clean: {clean_arr.shape}, "
-            f"candidate: {candidate_arr.shape}"
-        )
-
-    mse_value = compute_mse(clean_arr, candidate_arr)
-    mae_value = compute_mae(clean_arr, candidate_arr)
-    psnr_value = compute_psnr_from_mse(mse_value)
-    ssim_value = (
-        compute_ssim_safe(clean_arr, candidate_arr)
-        if compute_ssim_value
-        else float("nan")
+    regions = build_standard_regions(
+        active_mask,
+        content_bbox=content_bbox,
+        mask_bbox_margin=int(settings["mask_bbox_margin_pixels"]),
+        boundary_width_pixels=int(settings["boundary_width_pixels"]),
+        include_outside_boundary=True,
+        outside_boundary_width_pixels=int(settings["outside_ring_outer_width_pixels"]),
     )
-
-    return {
-        "mse": mse_value,
-        "mae": mae_value,
-        "psnr": psnr_value,
-        "ssim": ssim_value,
-    }
-
-
-def compute_selected_pixel_metrics(
-    clean_arr: np.ndarray,
-    candidate_arr: np.ndarray,
-    selection_bool: np.ndarray,
-) -> dict[str, float]:
-    """Compute MSE, MAE, and PSNR over an arbitrary boolean pixel selection.
-
-    SSIM is intentionally omitted because sparse or irregular pixel selections
-    do not preserve the local spatial structure required by SSIM.
-    """
-    if clean_arr.shape != candidate_arr.shape:
-        raise ValueError(
-            f"Image shape mismatch. Clean: {clean_arr.shape}, "
-            f"candidate: {candidate_arr.shape}"
+    if str(case["experiment_id"]) == "synthetic_degradation":
+        regions["degradation_support"] = effect_support_region(
+            raw_mask,
+            support_threshold=float(settings["effect_support_threshold"]),
         )
-
-    if selection_bool.shape != clean_arr.shape[:2]:
-        raise ValueError(
-            f"Selection shape mismatch. Selection: {selection_bool.shape}, "
-            f"image: {clean_arr.shape[:2]}"
-        )
-
-    if not np.any(selection_bool):
-        return {
-            "mse": float("nan"),
-            "mae": float("nan"),
-            "psnr": float("nan"),
-            "ssim": float("nan"),
-        }
-
-    clean_pixels = clean_arr[selection_bool]
-    candidate_pixels = candidate_arr[selection_bool]
-
-    mse_value = compute_mse(clean_pixels, candidate_pixels)
-    mae_value = compute_mae(clean_pixels, candidate_pixels)
-
-    return {
-        "mse": mse_value,
-        "mae": mae_value,
-        "psnr": compute_psnr_from_mse(mse_value),
-        "ssim": float("nan"),
-    }
-
-
-def compute_masked_pixel_metrics(
-    clean_arr: np.ndarray,
-    candidate_arr: np.ndarray,
-    mask_bool: np.ndarray,
-) -> dict[str, float]:
-    """Backward-compatible alias for masked-pixel metric computation."""
-    return compute_selected_pixel_metrics(clean_arr, candidate_arr, mask_bool)
-
-
-def get_content_bounds(
-    row: pd.Series,
-    image_shape: tuple[int, int],
-) -> dict[str, int]:
-    """Return validated content-region coordinates."""
-    required_columns = [
-        "content_x_min",
-        "content_y_min",
-        "content_x_max",
-        "content_y_max",
-    ]
-    missing_columns = [col for col in required_columns if col not in row.index]
-
-    if missing_columns:
-        raise ValueError(f"Missing content-region columns: {missing_columns}")
-
-    height, width = image_shape
-
-    x_min = max(0, min(int(row["content_x_min"]), width))
-    x_max = max(0, min(int(row["content_x_max"]), width))
-    y_min = max(0, min(int(row["content_y_min"]), height))
-    y_max = max(0, min(int(row["content_y_max"]), height))
-
-    if x_max <= x_min or y_max <= y_min:
-        raise ValueError(
-            "Invalid content region: "
-            f"x_min={x_min}, y_min={y_min}, x_max={x_max}, y_max={y_max}"
-        )
-
-    return {
-        "region_x_min": x_min,
-        "region_y_min": y_min,
-        "region_x_max": x_max,
-        "region_y_max": y_max,
-    }
-
-
-def get_content_crop(
-    row: pd.Series,
-    clean_arr: np.ndarray,
-    damaged_arr: np.ndarray,
-    restored_arr: np.ndarray,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, int]]:
-    """Extract the recorded painting-content region."""
-    region_info = get_content_bounds(row, clean_arr.shape[:2])
-
-    x_min = region_info["region_x_min"]
-    y_min = region_info["region_y_min"]
-    x_max = region_info["region_x_max"]
-    y_max = region_info["region_y_max"]
-
-    return (
-        clean_arr[y_min:y_max, x_min:x_max],
-        damaged_arr[y_min:y_max, x_min:x_max],
-        restored_arr[y_min:y_max, x_min:x_max],
-        region_info,
-    )
-
-
-def get_content_mask(
-    row: pd.Series,
-    image_shape: tuple[int, int],
-) -> np.ndarray:
-    """Build a boolean mask for the recorded content region."""
-    region_info = get_content_bounds(row, image_shape)
-    content_mask = np.zeros(image_shape, dtype=bool)
-
-    content_mask[
-        region_info["region_y_min"]:region_info["region_y_max"],
-        region_info["region_x_min"]:region_info["region_x_max"],
-    ] = True
-
-    return content_mask
-
-
-def get_mask_bbox(
-    mask_bool: np.ndarray,
-    margin: int = 8,
-) -> dict[str, int] | None:
-    """Return a mask bounding box with margin using slice-style coordinates."""
-    if margin < 0:
-        raise ValueError("mask_bbox_margin must be non-negative.")
-
-    ys, xs = np.where(mask_bool)
-
-    if len(xs) == 0 or len(ys) == 0:
-        return None
-
-    height, width = mask_bool.shape
-
-    x_min = max(0, int(xs.min()) - margin)
-    x_max = min(width, int(xs.max()) + margin + 1)
-    y_min = max(0, int(ys.min()) - margin)
-    y_max = min(height, int(ys.max()) + margin + 1)
-
-    if x_max <= x_min or y_max <= y_min:
-        return None
-
-    return {
-        "region_x_min": x_min,
-        "region_y_min": y_min,
-        "region_x_max": x_max,
-        "region_y_max": y_max,
-    }
-
-
-def build_boundary_mask(
-    mask_bool: np.ndarray,
-    width: int = 3,
-    content_mask: np.ndarray | None = None,
-) -> np.ndarray:
-    """Build an inside-and-outside morphological boundary band.
-
-    The band is defined as dilated(mask) XOR eroded(mask). When a content mask is
-    provided, boundary pixels are restricted to the painting-content region.
-    """
-    if width < 1:
-        raise ValueError("boundary_width must be at least 1.")
-
-    footprint = disk(width)
-    dilated = binary_dilation(mask_bool, footprint=footprint)
-    eroded = binary_erosion(mask_bool, footprint=footprint)
-    boundary = np.logical_xor(dilated, eroded)
-
-    if content_mask is not None:
-        if content_mask.shape != mask_bool.shape:
-            raise ValueError(
-                f"Content-mask shape mismatch: {content_mask.shape} "
-                f"vs {mask_bool.shape}"
-            )
-        boundary &= content_mask
-
-    return boundary
-
-
-def _empty_metrics() -> dict[str, float]:
-    return {
-        "mse": float("nan"),
-        "mae": float("nan"),
-        "psnr": float("nan"),
-        "ssim": float("nan"),
-    }
-
-
-def _safe_difference(left: float, right: float) -> float:
-    """Return left-right while preserving meaningful infinities and NaNs."""
-    if np.isnan(left) or np.isnan(right):
-        return float("nan")
-
-    if np.isinf(left) and np.isinf(right):
-        return 0.0
-
-    return float(left - right)
-
-
-def _row_value(row: pd.Series, key: str, default: Any = "") -> Any:
-    value = row.get(key, default)
-    return default if pd.isna(value) else value
-
-
-def _candidate_metadata_record(row: pd.Series) -> dict[str, Any]:
-    """Preserve Stable Diffusion candidate metadata in every metric row."""
-    return {
-        column: _row_value(row, column)
-        for column in CANDIDATE_METADATA_COLUMNS
-    }
-
-
-def _build_metric_record(
-    row: pd.Series,
-    evaluation_region: str,
-    region_pixel_count: int,
-    damaged_metrics: dict[str, float],
-    restored_metrics: dict[str, float],
-    region_info: dict[str, int | None],
-    metric_timestamp_utc: str,
-    status: str = "ok",
-    issue: str = "",
-) -> dict[str, Any]:
-    """Build one standardized metric output row."""
-    damaged_mse = damaged_metrics["mse"]
-    restored_mse = restored_metrics["mse"]
-    damaged_mae = damaged_metrics["mae"]
-    restored_mae = restored_metrics["mae"]
-    damaged_psnr = damaged_metrics["psnr"]
-    restored_psnr = restored_metrics["psnr"]
-    damaged_ssim = damaged_metrics["ssim"]
-    restored_ssim = restored_metrics["ssim"]
-
-    return {
-        "dataset_name": _row_value(row, "dataset_name", "canonical"),
-        "case_id": _row_value(row, "case_id"),
-        "painting_id": _row_value(row, "painting_id"),
-        "category": _row_value(row, "category"),
-        "title": _row_value(row, "title"),
-        "mask_id": _row_value(row, "mask_id"),
-        "mask_type": _row_value(row, "mask_type"),
-        "model_name": _row_value(row, "model_name"),
-        **_candidate_metadata_record(row),
-        "evaluation_region": evaluation_region,
-        "region_pixel_count": int(region_pixel_count),
-        "region_x_min": region_info.get("region_x_min"),
-        "region_y_min": region_info.get("region_y_min"),
-        "region_x_max": region_info.get("region_x_max"),
-        "region_y_max": region_info.get("region_y_max"),
-        "damaged_area_pixels": row.get("damaged_area_pixels", np.nan),
-        "damaged_area_percentage_content": row.get(
-            "damaged_area_percentage_content", np.nan
-        ),
-        "damaged_area_percentage_full": row.get(
-            "damaged_area_percentage_full", np.nan
-        ),
-        "damaged_mse": damaged_mse,
-        "restored_mse": restored_mse,
-        "mse_improvement": _safe_difference(damaged_mse, restored_mse),
-        "damaged_mae": damaged_mae,
-        "restored_mae": restored_mae,
-        "mae_improvement": _safe_difference(damaged_mae, restored_mae),
-        "damaged_psnr": damaged_psnr,
-        "restored_psnr": restored_psnr,
-        "psnr_improvement": _safe_difference(restored_psnr, damaged_psnr),
-        "damaged_ssim": damaged_ssim,
-        "restored_ssim": restored_ssim,
-        "ssim_improvement": _safe_difference(restored_ssim, damaged_ssim),
-        "metric_module": METRIC_MODULE_NAME,
-        "metric_version": METRIC_VERSION,
-        "metric_timestamp_utc": metric_timestamp_utc,
-        "python_version": platform.python_version(),
-        "numpy_version": np.__version__,
-        "pandas_version": pd.__version__,
-        "skimage_version": skimage.__version__,
-        "status": status,
-        "issue": issue,
-    }
-
-
-def expected_metric_rows_from_metadata(
-    restoration_metadata: pd.DataFrame,
-) -> int:
-    """Return the deterministic expected row count for the region policy.
-
-    Each case receives two base-region rows. Cases with a non-zero mask receive
-    four additional rows.
-    """
-    required_columns = ["mask_path"]
-    missing_columns = [
-        col for col in required_columns
-        if col not in restoration_metadata.columns
-    ]
-    if missing_columns:
-        raise ValueError(
-            f"Restoration metadata missing required columns: {missing_columns}"
-        )
-
-    nonzero_mask_cases = 0
-
-    for mask_path in restoration_metadata["mask_path"]:
-        if np.any(load_mask_bool(mask_path)):
-            nonzero_mask_cases += 1
-
-    return (
-        len(restoration_metadata) * len(BASE_REGIONS)
-        + nonzero_mask_cases * len(MASKED_CASE_REGIONS)
-    )
-
-
-def expected_region_counts_from_metadata(
-    restoration_metadata: pd.DataFrame,
-) -> dict[str, int]:
-    """Return expected output counts for every evaluation region."""
-    nonzero_mask_cases = sum(
-        bool(np.any(load_mask_bool(mask_path)))
-        for mask_path in restoration_metadata["mask_path"]
-    )
-
-    counts = {
-        "full_image": len(restoration_metadata),
-        "content_region": len(restoration_metadata),
-    }
-
-    for region in MASKED_CASE_REGIONS:
-        counts[region] = nonzero_mask_cases
-
-    return counts
-
-
-def compute_classical_metrics_for_restorations(
-    restoration_metadata: pd.DataFrame,
-    target_size: int | tuple[int, int] | None = 768,
-    mask_bbox_margin: int = 8,
-    boundary_width: int = 3,
-    progress_every: int | None = 25,
-) -> pd.DataFrame:
-    """Compute classical metrics for restoration outputs.
-
-    Input metadata must combine restoration paths with preprocessing content
-    coordinates. Output contains one row per dataset, case, model, and
-    evaluation region.
-    """
-    required_columns = [
-        "case_id",
-        "painting_id",
-        "model_name",
-        "clean_path",
-        "damaged_path",
-        "restored_path",
-        "mask_path",
-        "content_x_min",
-        "content_y_min",
-        "content_x_max",
-        "content_y_max",
-    ]
-    missing_columns = [
-        col for col in required_columns
-        if col not in restoration_metadata.columns
-    ]
-
-    if missing_columns:
-        raise ValueError(
-            f"Restoration metadata missing required columns: {missing_columns}"
-        )
-
-    if restoration_metadata.empty:
-        raise ValueError("Restoration metadata is empty.")
-
-    sort_columns = [
-        col
-        for col in ["dataset_name", "painting_id", "mask_type", "case_id"]
-        if col in restoration_metadata.columns
-    ]
-    sorted_metadata = restoration_metadata.sort_values(sort_columns).reset_index(
-        drop=True
-    )
-
-    if target_size is None:
-        expected_shape = None
-    elif isinstance(target_size, int):
-        expected_shape = (target_size, target_size)
-    else:
-        expected_shape = tuple(target_size)
-
-    metric_records: list[dict[str, Any]] = []
-    total_cases = len(sorted_metadata)
-    start_time = time.perf_counter()
-    metric_timestamp_utc = datetime.now(timezone.utc).isoformat()
-
-    print("Starting classical metric computation")
-    print(f"  Cases: {total_cases}")
-    print(f"  Target shape: {expected_shape or 'not enforced'}")
-    print(f"  Mask bbox margin: {mask_bbox_margin}")
-    print(f"  Boundary width: {boundary_width}")
-
-    for index, (_, row) in enumerate(sorted_metadata.iterrows(), start=1):
-        if progress_every and (
-            index == 1
-            or index % progress_every == 0
-            or index == total_cases
-        ):
-            elapsed = time.perf_counter() - start_time
-            print(
-                f"Computing case {index}/{total_cases} "
-                f"({row['case_id']}) | elapsed {elapsed:.2f}s"
-            )
-
-        try:
-            clean_arr = load_rgb_array(row["clean_path"])
-            damaged_arr = load_rgb_array(row["damaged_path"])
-            restored_arr = load_rgb_array(row["restored_path"])
-            mask_bool = load_mask_bool(row["mask_path"])
-
-            if clean_arr.shape != damaged_arr.shape or clean_arr.shape != restored_arr.shape:
-                raise ValueError(
-                    f"Image shape mismatch for case {row['case_id']}: "
-                    f"clean={clean_arr.shape}, damaged={damaged_arr.shape}, "
-                    f"restored={restored_arr.shape}"
-                )
-
-            if mask_bool.shape != clean_arr.shape[:2]:
-                raise ValueError(
-                    f"Mask shape mismatch for case {row['case_id']}: "
-                    f"mask={mask_bool.shape}, image={clean_arr.shape[:2]}"
-                )
-
-            if expected_shape is not None and clean_arr.shape[:2] != expected_shape:
-                raise ValueError(
-                    f"Unexpected image size for case {row['case_id']}: "
-                    f"{clean_arr.shape[:2]}, expected {expected_shape}"
-                )
-
-            full_region_info = {
-                "region_x_min": 0,
-                "region_y_min": 0,
-                "region_x_max": clean_arr.shape[1],
-                "region_y_max": clean_arr.shape[0],
-            }
-            metric_records.append(
-                _build_metric_record(
-                    row=row,
-                    evaluation_region="full_image",
-                    region_pixel_count=int(np.prod(clean_arr.shape[:2])),
-                    damaged_metrics=compute_image_region_metrics(
-                        clean_arr, damaged_arr, compute_ssim_value=True
-                    ),
-                    restored_metrics=compute_image_region_metrics(
-                        clean_arr, restored_arr, compute_ssim_value=True
-                    ),
-                    region_info=full_region_info,
-                    metric_timestamp_utc=metric_timestamp_utc,
-                )
-            )
-
-            (
-                clean_content,
-                damaged_content,
-                restored_content,
-                content_region_info,
-            ) = get_content_crop(row, clean_arr, damaged_arr, restored_arr)
-
-            metric_records.append(
-                _build_metric_record(
-                    row=row,
-                    evaluation_region="content_region",
-                    region_pixel_count=int(np.prod(clean_content.shape[:2])),
-                    damaged_metrics=compute_image_region_metrics(
-                        clean_content, damaged_content, compute_ssim_value=True
-                    ),
-                    restored_metrics=compute_image_region_metrics(
-                        clean_content, restored_content, compute_ssim_value=True
-                    ),
-                    region_info=content_region_info,
-                    metric_timestamp_utc=metric_timestamp_utc,
-                )
-            )
-
-            if not np.any(mask_bool):
+    ordered: dict[str, Region] = {}
+    for region_id in settings["region_order"]:
+        if region_id in regions:
+            ordered[region_id] = regions[region_id]
+    return ordered
+
+
+def build_metric_plan(
+    regions: Mapping[str, Region],
+    config: Mapping,
+) -> list[tuple[str, str, Region, str]]:
+    """Return valid (family, metric, region, improvement direction) tuples."""
+
+    classical = _classical(config)
+    allowed_by_family = classical["regions"]["compatible_regions"]
+    plan: list[tuple[str, str, Region, str]] = []
+    for definition in classical["metrics"]:
+        metric_name = str(definition["metric_name"])
+        metric_family = str(definition["metric_family"])
+        direction = str(definition["improvement_direction"])
+        for region_id in allowed_by_family[metric_family]:
+            region = regions.get(region_id)
+            if region is None:
                 continue
+            valid, _ = metric_region_is_valid(metric_name, region)
+            if valid:
+                plan.append((metric_family, metric_name, region, direction))
+    return plan
 
-            content_mask = get_content_mask(row, clean_arr.shape[:2])
 
-            region_selections = {
-                "masked_region": mask_bool,
-                "boundary_region": build_boundary_mask(
-                    mask_bool,
-                    width=boundary_width,
-                    content_mask=content_mask,
-                ),
-                "outside_mask_region": content_mask & ~mask_bool,
-            }
+def _region_values(array: np.ndarray, region: Region) -> np.ndarray:
+    if region.spatial_support == "rectangle":
+        return crop_array(array, region)
+    return select_pixels(array, region)
 
-            for evaluation_region, selection_bool in region_selections.items():
-                metric_records.append(
-                    _build_metric_record(
-                        row=row,
-                        evaluation_region=evaluation_region,
-                        region_pixel_count=int(selection_bool.sum()),
-                        damaged_metrics=compute_selected_pixel_metrics(
-                            clean_arr, damaged_arr, selection_bool
-                        ),
-                        restored_metrics=compute_selected_pixel_metrics(
-                            clean_arr, restored_arr, selection_bool
-                        ),
-                        region_info={
-                            "region_x_min": None,
-                            "region_y_min": None,
-                            "region_x_max": None,
-                            "region_y_max": None,
-                        },
-                        metric_timestamp_utc=metric_timestamp_utc,
-                    )
-                )
 
-            bbox = get_mask_bbox(mask_bool, margin=mask_bbox_margin)
+def compute_metric_value(
+    reference: np.ndarray,
+    candidate: np.ndarray,
+    metric_name: str,
+    region: Region,
+    *,
+    data_range: float = 255.0,
+) -> float:
+    """Compute one valid full-reference metric on one canonical region."""
 
-            if bbox is None:
-                metric_records.append(
-                    _build_metric_record(
-                        row=row,
-                        evaluation_region="mask_bbox_crop",
-                        region_pixel_count=0,
-                        damaged_metrics=_empty_metrics(),
-                        restored_metrics=_empty_metrics(),
-                        region_info={
-                            "region_x_min": None,
-                            "region_y_min": None,
-                            "region_x_max": None,
-                            "region_y_max": None,
-                        },
-                        metric_timestamp_utc=metric_timestamp_utc,
-                        status="warning",
-                        issue="Non-zero mask produced no valid bounding box.",
-                    )
-                )
-            else:
-                x_min = bbox["region_x_min"]
-                y_min = bbox["region_y_min"]
-                x_max = bbox["region_x_max"]
-                y_max = bbox["region_y_max"]
+    valid, reason = metric_region_is_valid(metric_name, region)
+    if not valid:
+        raise ValueError(f"Invalid metric-region pair {metric_name}/{region.region_id}: {reason}")
+    reference_values = _region_values(reference, region)
+    candidate_values = _region_values(candidate, region)
+    if reference_values.shape != candidate_values.shape:
+        raise ValueError("Reference and candidate region shapes differ")
+    metric = str(metric_name).lower()
+    if metric == "ssim":
+        return float(structural_similarity(
+            reference_values, candidate_values,
+            channel_axis=-1, data_range=float(data_range),
+        ))
+    difference = reference_values.astype(np.float64) - candidate_values.astype(np.float64)
+    if metric == "mse":
+        return float(np.mean(np.square(difference), dtype=np.float64))
+    if metric == "mae":
+        return float(np.mean(np.abs(difference), dtype=np.float64))
+    if metric == "psnr":
+        mse = float(np.mean(np.square(difference), dtype=np.float64))
+        return math.inf if mse == 0.0 else float(10.0 * math.log10(data_range ** 2 / mse))
+    raise ValueError(f"Unsupported metric: {metric_name}")
 
-                clean_bbox = clean_arr[y_min:y_max, x_min:x_max]
-                damaged_bbox = damaged_arr[y_min:y_max, x_min:x_max]
-                restored_bbox = restored_arr[y_min:y_max, x_min:x_max]
 
-                metric_records.append(
-                    _build_metric_record(
-                        row=row,
-                        evaluation_region="mask_bbox_crop",
-                        region_pixel_count=int(np.prod(clean_bbox.shape[:2])),
-                        damaged_metrics=compute_image_region_metrics(
-                            clean_bbox, damaged_bbox, compute_ssim_value=True
-                        ),
-                        restored_metrics=compute_image_region_metrics(
-                            clean_bbox, restored_bbox, compute_ssim_value=True
-                        ),
-                        region_info=bbox,
-                        metric_timestamp_utc=metric_timestamp_utc,
-                    )
-                )
+def compute_improvement(
+    damaged_value: float,
+    restored_value: float,
+    direction: str,
+) -> float:
+    """Compute direction-aware improvement while preserving explicit infinities."""
 
+    damaged = float(damaged_value)
+    restored = float(restored_value)
+    if math.isnan(damaged) or math.isnan(restored):
+        return math.nan
+    if math.isinf(damaged) and math.isinf(restored) and damaged == restored:
+        return 0.0
+    if direction == "damaged_minus_restored":
+        return damaged - restored
+    if direction == "restored_minus_damaged":
+        return restored - damaged
+    raise ValueError(f"Unsupported improvement direction: {direction}")
+
+
+def metric_row_id(
+    case_id: str,
+    candidate_id: str,
+    metric_family: str,
+    metric_name: str,
+    region_id: str,
+    metric_version: str = METRIC_VERSION,
+) -> str:
+    """Return a deterministic compact identifier for one metric evidence row."""
+
+    payload = "|".join((case_id, candidate_id, metric_family, metric_name,
+                        region_id, metric_version))
+    return f"cm__{hashlib.sha256(payload.encode('utf-8')).hexdigest()[:20]}"
+
+
+def _safe_metric(
+    clean: np.ndarray,
+    candidate: np.ndarray,
+    metric_name: str,
+    region: Region,
+    data_range: float,
+) -> tuple[float, str]:
+    try:
+        return compute_metric_value(clean, candidate, metric_name, region,
+                                    data_range=data_range), ""
+    except Exception as exc:  # retained as explicit evidence rows
+        return math.nan, f"{type(exc).__name__}: {exc}"
+
+
+def compute_case_classical_metrics(
+    case_candidates: pd.DataFrame,
+    *,
+    project_root: str | Path,
+    config: Mapping,
+) -> pd.DataFrame:
+    """Compute all configured metric rows for every candidate of one case."""
+
+    if case_candidates.empty:
+        return pd.DataFrame(columns=CLASSICAL_METRICS_COLUMNS)
+    if case_candidates["case_id"].nunique() != 1:
+        raise ValueError("compute_case_classical_metrics accepts exactly one case_id")
+    case = case_candidates.iloc[0]
+    root = Path(project_root)
+    clean = load_rgb_array(_resolve(root, case["clean_image_path"]))
+    damaged = load_rgb_array(_resolve(root, case["input_image_path"]))
+    raw_mask = load_mask_array(_resolve(root, case["mask_or_effect_path"]))
+    _require_same_image_shape(clean, damaged)
+    if raw_mask.shape != clean.shape[:2]:
+        raise ValueError(f"Mask/image geometry mismatch: {raw_mask.shape} vs {clean.shape[:2]}")
+    regions = build_case_regions(case, raw_mask, config)
+    plan = build_metric_plan(regions, config)
+    data_range = float(_classical(config)["data_range"])
+    metric_version = str(_classical(config)["metric_version"])
+    region_policy_version = str(_classical(config)["regions"]["policy_version"])
+    damaged_cache = {
+        (metric, region.region_id): _safe_metric(
+            clean, damaged, metric, region, data_range
+        )
+        for _, metric, region, _ in plan
+    }
+
+    records: list[dict[str, object]] = []
+    for candidate in case_candidates.itertuples(index=False):
+        try:
+            restored = load_rgb_array(_resolve(root, candidate.restored_path))
+            _require_same_image_shape(clean, restored)
+            load_issue = ""
         except Exception as exc:
-            error_record = {
-                "dataset_name": _row_value(row, "dataset_name", "canonical"),
-                "case_id": _row_value(row, "case_id"),
-                "painting_id": _row_value(row, "painting_id"),
-                "category": _row_value(row, "category"),
-                "title": _row_value(row, "title"),
-                "mask_id": _row_value(row, "mask_id"),
-                "mask_type": _row_value(row, "mask_type"),
-                "model_name": _row_value(row, "model_name"),
-                **_candidate_metadata_record(row),
-                "evaluation_region": "error",
-                "region_pixel_count": 0,
-                "region_x_min": None,
-                "region_y_min": None,
-                "region_x_max": None,
-                "region_y_max": None,
-                "damaged_area_pixels": row.get("damaged_area_pixels", np.nan),
-                "damaged_area_percentage_content": row.get(
-                    "damaged_area_percentage_content", np.nan
+            restored = None
+            load_issue = f"{type(exc).__name__}: {exc}"
+        for family, metric, region, direction in plan:
+            damaged_value, damaged_issue = damaged_cache[(metric, region.region_id)]
+            if restored is None:
+                restored_value, restored_issue = math.nan, load_issue
+            else:
+                restored_value, restored_issue = _safe_metric(
+                    clean, restored, metric, region, data_range
+                )
+            issues = "; ".join(item for item in (damaged_issue, restored_issue) if item)
+            improvement = compute_improvement(damaged_value, restored_value, direction)
+            records.append({
+                "metric_row_id": metric_row_id(
+                    str(candidate.case_id), str(candidate.candidate_id), family,
+                    metric, region.region_id, metric_version,
                 ),
-                "damaged_area_percentage_full": row.get(
-                    "damaged_area_percentage_full", np.nan
-                ),
-                **{col: np.nan for col in CLASSICAL_METRIC_COLUMNS},
-                "metric_module": METRIC_MODULE_NAME,
-                "metric_version": METRIC_VERSION,
-                "metric_timestamp_utc": metric_timestamp_utc,
-                "python_version": platform.python_version(),
-                "numpy_version": np.__version__,
-                "pandas_version": pd.__version__,
-                "skimage_version": skimage.__version__,
-                "status": "error",
-                "issue": f"{type(exc).__name__}: {exc}",
+                "case_id": str(candidate.case_id),
+                "candidate_id": str(candidate.candidate_id),
+                "model_id": str(candidate.model_id),
+                "metric_family": family,
+                "metric_name": metric,
+                "region_id": region.region_id,
+                "region_pixel_count": int(region.pixel_count),
+                "damaged_value": damaged_value,
+                "restored_value": restored_value,
+                "improvement_value": improvement,
+                "improvement_direction": direction,
+                "metric_version": metric_version,
+                "region_policy_version": region_policy_version,
+                "status": "error" if issues else "ok",
+                "issue": issues,
+            })
+    return pd.DataFrame(records, columns=CLASSICAL_METRICS_COLUMNS)
+
+
+def expected_metric_row_count(
+    worklist: pd.DataFrame,
+    *,
+    project_root: str | Path,
+    config: Mapping,
+) -> int:
+    """Calculate the exact valid metric-region cardinality without restorations."""
+
+    total = 0
+    root = Path(project_root)
+    for _, group in worklist.groupby("case_id", sort=False):
+        case = group.iloc[0]
+        raw_mask = load_mask_array(_resolve(root, case["mask_or_effect_path"]))
+        regions = build_case_regions(case, raw_mask, config)
+        total += len(group) * len(build_metric_plan(regions, config))
+    return int(total)
+
+
+def run_classical_metrics(
+    worklist: pd.DataFrame,
+    *,
+    project_root: str | Path,
+    config: Mapping,
+    prior_metrics: pd.DataFrame | None = None,
+    progress_callback: ProgressCallback | None = None,
+    checkpoint_callback: CheckpointCallback | None = None,
+) -> pd.DataFrame:
+    """Compute every case with deterministic progress and optional checkpoints."""
+
+    groups = list(worklist.groupby("case_id", sort=False))
+    total_cases = len(groups)
+    interval = int(_classical(config)["execution"]["progress_interval_cases"])
+    checkpoint_interval = int(_classical(config)["execution"]["checkpoint_interval_cases"])
+    frames: list[pd.DataFrame] = []
+    prior = (prior_metrics.copy() if prior_metrics is not None
+             else pd.DataFrame(columns=CLASSICAL_METRICS_COLUMNS))
+    started = time.perf_counter()
+    reused_cases = 0
+    completed_candidates = 0
+
+    for number, (case_id, group) in enumerate(groups, start=1):
+        existing = prior.loc[prior.get("case_id", pd.Series(dtype=str)).astype(str).eq(str(case_id))]
+        use_existing = False
+        if not existing.empty and existing["status"].astype(str).eq("ok").all():
+            root = Path(project_root)
+            raw_mask = load_mask_array(_resolve(root, group.iloc[0]["mask_or_effect_path"]))
+            plan = build_metric_plan(build_case_regions(group.iloc[0], raw_mask, config), config)
+            expected = {
+                (str(candidate), metric, region.region_id)
+                for candidate in group["candidate_id"]
+                for _, metric, region, _ in plan
             }
-            metric_records.append(error_record)
-
-            print(
-                f"  Error in case {index}/{total_cases} "
-                f"({row.get('case_id', '')}): {type(exc).__name__}: {exc}"
+            observed = set(existing[["candidate_id", "metric_name", "region_id"]]
+                           .astype(str).itertuples(index=False, name=None))
+            use_existing = expected == observed
+        if use_existing:
+            result = existing.loc[:, CLASSICAL_METRICS_COLUMNS].copy()
+            reused_cases += 1
+        else:
+            result = compute_case_classical_metrics(
+                group, project_root=project_root, config=config
             )
-
-    metrics_df = pd.DataFrame(metric_records)
-    elapsed_total = time.perf_counter() - start_time
-
-    print("Classical metric computation complete")
-    print(f"  Runtime: {elapsed_total:.2f} seconds")
-    print(f"  Output rows: {len(metrics_df)}")
-
-    if "evaluation_region" in metrics_df.columns:
-        print("  Region counts:")
-        print(metrics_df["evaluation_region"].value_counts().to_string())
-
-    if "status" in metrics_df.columns:
-        print("  Status counts:")
-        print(metrics_df["status"].value_counts(dropna=False).to_string())
-
-    return metrics_df
+        frames.append(result)
+        completed_candidates += len(group)
+        should_report = number % interval == 0 or number == total_cases
+        should_checkpoint = number % checkpoint_interval == 0 or number == total_cases
+        if should_checkpoint and checkpoint_callback is not None:
+            checkpoint_callback(pd.concat(frames, ignore_index=True))
+        if should_report and progress_callback is not None:
+            elapsed = time.perf_counter() - started
+            progress_callback(
+                f"Classical metrics: {number}/{total_cases} cases "
+                f"({100.0 * number / max(total_cases, 1):.1f}%), "
+                f"{completed_candidates}/{len(worklist)} candidates, "
+                f"elapsed={elapsed:.1f}s, throughput={number / max(elapsed, 1e-9):.3f} "
+                f"cases/s, latest={case_id}, reused_cases={reused_cases}"
+            )
+    return pd.concat(frames, ignore_index=True).loc[:, CLASSICAL_METRICS_COLUMNS]
 
 
 def validate_classical_metrics(
-    metrics_df: pd.DataFrame,
+    metrics: pd.DataFrame,
+    worklist: pd.DataFrame,
+    *,
     expected_rows: int | None = None,
-    expected_region_counts: dict[str, int] | None = None,
-    key_columns: Iterable[str] = (
-        "dataset_name",
-        "case_id",
-        "model_name",
-        "evaluation_region",
-    ),
-) -> pd.DataFrame:
-    """Validate metric output structure, row counts, status, and uniqueness."""
-    required_columns = [
-        "dataset_name",
-        "case_id",
-        "painting_id",
-        "model_name",
-        "evaluation_region",
-        "region_pixel_count",
-        "damaged_mse",
-        "restored_mse",
-        "damaged_mae",
-        "restored_mae",
-        "damaged_psnr",
-        "restored_psnr",
-        "metric_module",
-        "metric_version",
-        "status",
-        "issue",
-    ]
+) -> dict[str, object]:
+    """Validate schema, coverage, cardinality, missingness, and SSIM policy."""
 
-    validation_rows: list[dict[str, Any]] = []
-    missing_columns = [
-        col for col in required_columns
-        if col not in metrics_df.columns
-    ]
-
-    validation_rows.append(
-        {
-            "check": "required_columns",
-            "passed": not missing_columns,
-            "detail": (
-                "All required columns present."
-                if not missing_columns
-                else f"Missing columns: {missing_columns}"
-            ),
-        }
-    )
-
-    if expected_rows is not None:
-        validation_rows.append(
-            {
-                "check": "row_count",
-                "passed": len(metrics_df) == expected_rows,
-                "detail": f"Expected {expected_rows}, found {len(metrics_df)}.",
-            }
+    schema = validate_dataframe(metrics, CLASSICAL_METRICS_SCHEMA,
+                                allow_extra_columns=False)
+    candidates = set(worklist["candidate_id"].astype(str))
+    observed_candidates = set(metrics["candidate_id"].astype(str)) if "candidate_id" in metrics else set()
+    ok_rows = metrics["status"].astype(str).eq("ok") if "status" in metrics else pd.Series(False, index=metrics.index)
+    numeric_columns = ["damaged_value", "restored_value", "improvement_value"]
+    unexpected_missing = int(metrics.loc[ok_rows, numeric_columns].isna().sum().sum())
+    invalid_ssim = int((
+        metrics["metric_name"].astype(str).eq("ssim")
+        & ~metrics["region_id"].astype(str).isin(
+            {"full_image", "content_region", "mask_bbox_crop"}
         )
-
-    if "status" in metrics_df.columns:
-        error_rows = int((metrics_df["status"] == "error").sum())
-        warning_rows = int((metrics_df["status"] == "warning").sum())
-        validation_rows.append(
-            {
-                "check": "no_error_rows",
-                "passed": error_rows == 0,
-                "detail": (
-                    f"Error rows: {error_rows}; warning rows: {warning_rows}."
-                ),
-            }
-        )
-
-    available_key_columns = [
-        col for col in key_columns
-        if col in metrics_df.columns
-    ]
-    if len(available_key_columns) == len(tuple(key_columns)):
-        duplicate_rows = int(
-            metrics_df.duplicated(available_key_columns, keep=False).sum()
-        )
-        validation_rows.append(
-            {
-                "check": "unique_metric_keys",
-                "passed": duplicate_rows == 0,
-                "detail": (
-                    f"Rows participating in duplicate metric keys: "
-                    f"{duplicate_rows}."
-                ),
-            }
-        )
-
-    if expected_region_counts is not None and "evaluation_region" in metrics_df.columns:
-        actual_region_counts = (
-            metrics_df["evaluation_region"].value_counts().to_dict()
-        )
-        mismatches = {
-            region: {
-                "expected": expected_count,
-                "actual": int(actual_region_counts.get(region, 0)),
-            }
-            for region, expected_count in expected_region_counts.items()
-            if int(actual_region_counts.get(region, 0)) != int(expected_count)
-        }
-        validation_rows.append(
-            {
-                "check": "region_counts",
-                "passed": not mismatches,
-                "detail": (
-                    "All evaluation-region counts match expectations."
-                    if not mismatches
-                    else f"Mismatches: {mismatches}"
-                ),
-            }
-        )
-
-    if "region_pixel_count" in metrics_df.columns:
-        invalid_counts = int(
-            (
-                (metrics_df["status"] == "ok")
-                & (metrics_df["region_pixel_count"] <= 0)
-            ).sum()
-        )
-        validation_rows.append(
-            {
-                "check": "positive_region_pixel_counts",
-                "passed": invalid_counts == 0,
-                "detail": (
-                    f"Successful rows with non-positive region size: "
-                    f"{invalid_counts}."
-                ),
-            }
-        )
-
-    return pd.DataFrame(validation_rows)
-
-
-def summarize_classical_metrics(
-    metrics_df: pd.DataFrame,
-    group_columns: list[str],
-) -> pd.DataFrame:
-    """Summarize classical metrics by one or more grouping columns."""
-    if not group_columns:
-        raise ValueError("At least one group column is required.")
-
-    missing_group_columns = [
-        col for col in group_columns
-        if col not in metrics_df.columns
-    ]
-    if missing_group_columns:
-        raise ValueError(
-            f"Metrics dataframe missing group columns: {missing_group_columns}"
-        )
-
-    summary_df = metrics_df.copy()
-
-    if "status" in summary_df.columns:
-        summary_df = summary_df[summary_df["status"] != "error"].copy()
-
-    numeric_columns = [
-        *CLASSICAL_METRIC_COLUMNS,
-        "region_pixel_count",
-    ]
-
-    for col in numeric_columns:
-        if col in summary_df.columns:
-            summary_df[col] = summary_df[col].replace(
-                [np.inf, -np.inf], np.nan
-            )
-
-    return (
-        summary_df
-        .groupby(group_columns, dropna=False)
-        .agg(
-            rows=("case_id", "count"),
-            cases=("case_id", "nunique"),
-            mean_damaged_mse=("damaged_mse", "mean"),
-            mean_restored_mse=("restored_mse", "mean"),
-            mean_mse_improvement=("mse_improvement", "mean"),
-            mean_damaged_mae=("damaged_mae", "mean"),
-            mean_restored_mae=("restored_mae", "mean"),
-            mean_mae_improvement=("mae_improvement", "mean"),
-            mean_damaged_psnr=("damaged_psnr", "mean"),
-            mean_restored_psnr=("restored_psnr", "mean"),
-            mean_psnr_improvement=("psnr_improvement", "mean"),
-            mean_damaged_ssim=("damaged_ssim", "mean"),
-            mean_restored_ssim=("restored_ssim", "mean"),
-            mean_ssim_improvement=("ssim_improvement", "mean"),
-            mean_region_pixel_count=("region_pixel_count", "mean"),
-        )
-        .reset_index()
-        .round(4)
-    )
+    ).sum())
+    row_count_valid = expected_rows is None or len(metrics) == int(expected_rows)
+    passed = (schema.passed and row_count_valid and not (candidates - observed_candidates)
+              and not (observed_candidates - candidates) and unexpected_missing == 0
+              and invalid_ssim == 0)
+    return {
+        "schema": schema.to_dict(),
+        "row_count": int(len(metrics)),
+        "expected_row_count": expected_rows,
+        "row_count_valid": row_count_valid,
+        "missing_candidate_count": len(candidates - observed_candidates),
+        "unexpected_candidate_count": len(observed_candidates - candidates),
+        "error_row_count": int(metrics["status"].astype(str).eq("error").sum()),
+        "unexpected_missing_value_count": unexpected_missing,
+        "invalid_ssim_region_rows": invalid_ssim,
+        "positive_infinity_count": int(np.isposinf(metrics[numeric_columns].to_numpy()).sum()),
+        "negative_infinity_count": int(np.isneginf(metrics[numeric_columns].to_numpy()).sum()),
+        "passed": bool(passed),
+    }

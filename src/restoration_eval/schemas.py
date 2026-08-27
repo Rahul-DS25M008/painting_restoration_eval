@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.10.0"
+SCHEMAS_MODULE_VERSION = "1.11.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -460,6 +460,13 @@ REGION_POLICY_COLUMNS = (
     "compatibility_reason", "primary_role", "case_semantics",
     "parameters_json", "threshold_policy", "minimum_size_policy",
     "ablation_policy_ids_json", "status",
+)
+CLASSICAL_METRICS_COLUMNS = (
+    "metric_row_id", "case_id", "candidate_id", "model_id",
+    "metric_family", "metric_name", "region_id", "region_pixel_count",
+    "damaged_value", "restored_value", "improvement_value",
+    "improvement_direction", "metric_version", "region_policy_version",
+    "status", "issue",
 )
 
 @dataclass(frozen=True)
@@ -1146,6 +1153,26 @@ REGION_POLICY_SCHEMA = DataFrameSchema(
         "status": frozenset({"approved"}),
     },
 )
+CLASSICAL_METRICS_SCHEMA = DataFrameSchema(
+    name="classical_metrics",
+    version="classical_metrics.v1",
+    required_columns=CLASSICAL_METRICS_COLUMNS,
+    primary_key=("metric_row_id",),
+    non_nullable=tuple(
+        column for column in CLASSICAL_METRICS_COLUMNS
+        if column not in {
+            "damaged_value", "restored_value", "improvement_value", "issue"
+        }
+    ),
+    allowed_values={
+        "metric_family": frozenset({"classical_pixel", "ssim"}),
+        "metric_name": frozenset({"mse", "mae", "psnr", "ssim"}),
+        "improvement_direction": frozenset(
+            {"damaged_minus_restored", "restored_minus_damaged"}
+        ),
+        "status": frozenset({"ok", "error"}),
+    },
+)
 
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
@@ -1175,6 +1202,7 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     PROMPT_POLICY_SCHEMA.name: PROMPT_POLICY_SCHEMA,
     PROMPT_ABLATION_DESIGN_SCHEMA.name: PROMPT_ABLATION_DESIGN_SCHEMA,
     REGION_POLICY_SCHEMA.name: REGION_POLICY_SCHEMA,
+    CLASSICAL_METRICS_SCHEMA.name: CLASSICAL_METRICS_SCHEMA,
 }
 
 

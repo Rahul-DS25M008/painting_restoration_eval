@@ -808,7 +808,7 @@ Notebooks 13–35, conditional on validated availability state.
 **Notebook:** `13_classical_metrics.ipynb`  
 **Origin:** Consolidates Existing Notebooks 09, 15, and 22  
 **Output root:** `outputs/13_classical_metrics/`  
-**Depends on:** Notebooks 08–12
+**Depends on:** Notebook 02 geometry handoff and Notebooks 08–12
 
 ### Purpose
 
@@ -821,6 +821,8 @@ Compute one standardized classical full-reference evidence table for all availab
 - Compute direction-aware restoration improvements.
 - Apply only mathematically valid regions.
 - Support full image, content region, exact mask, mask crop, boundary bands/rings, and outside-mask regions as valid per metric.
+- Use Notebook 02 content geometry through the normalized preprocessing handoff; do not infer content bounds from image padding.
+- Exclude `patch_window` here; sliding-window evidence is deferred to later local and semantic analyses.
 - Reject sparse masked-pixel SSIM.
 - Retain zero-control evidence.
 - Record metric definitions, direction, region, version, limitations, and missing-value policy.

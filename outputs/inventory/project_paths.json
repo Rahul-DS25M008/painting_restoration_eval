@@ -1,7 +1,49 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-26T22:42:13.360182Z",
+  "updated_at_utc": "2026-08-27T10:06:06.211743Z",
   "artifacts": [
+    {
+      "artifact_key": "classical_metrics.distributions",
+      "producer_notebook": "13_classical_metrics",
+      "relative_path": "outputs/13_classical_metrics/figures/classical_metric_distributions.png",
+      "artifact_type": "figure",
+      "artifact_role": "reporting_visualization",
+      "schema_version": "figure.classical_metric_distributions.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_classical_metrics",
+      "validation_status": "passed",
+      "row_count": 1,
+      "file_count": 1,
+      "checksum": "2fc23f22dab5c8d393aa6aa715b12cb44e04ab9c068815861899a994fa367046"
+    },
+    {
+      "artifact_key": "classical_metrics.improvement_by_region",
+      "producer_notebook": "13_classical_metrics",
+      "relative_path": "outputs/13_classical_metrics/figures/classical_improvement_by_region.png",
+      "artifact_type": "figure",
+      "artifact_role": "reporting_visualization",
+      "schema_version": "figure.classical_improvement_by_region.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_classical_metrics",
+      "validation_status": "passed",
+      "row_count": 1,
+      "file_count": 1,
+      "checksum": "c0476471341b35114f66a247206a1b7be4fc2ad2635f6265f4f064a9edbe57eb"
+    },
+    {
+      "artifact_key": "classical_metrics.metrics",
+      "producer_notebook": "13_classical_metrics",
+      "relative_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+      "artifact_type": "table",
+      "artifact_role": "primary_downstream_evidence",
+      "schema_version": "classical_metrics.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_classical_metrics",
+      "validation_status": "passed",
+      "row_count": 63018,
+      "file_count": 1,
+      "checksum": "bbb98fc5ea65cb5c2bb93a7b51cca66e6bcbd1a77952859e65460899fa7f12c1"
+    },
     {
       "artifact_key": "damage.audit",
       "producer_notebook": "04_canonical_damaged_image_generation",
@@ -1009,6 +1051,20 @@
       "row_count": 236,
       "file_count": 1,
       "checksum": "e66e86c844aa9721811bb3c00abc183d27340faa2d76046110a507ab10c46dd7"
+    },
+    {
+      "artifact_key": "validation.13_classical_metrics",
+      "producer_notebook": "13_classical_metrics",
+      "relative_path": "outputs/13_classical_metrics/validation/checks.csv",
+      "artifact_type": "table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_classical_metrics",
+      "validation_status": "passed",
+      "row_count": 251,
+      "file_count": 1,
+      "checksum": "62a4af1caf47b7f13de61ab484a2fe52a2e02dbb87fb72176fca45ad76096183"
     }
   ]
 }

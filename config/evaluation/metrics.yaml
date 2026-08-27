@@ -1,0 +1,159 @@
+config_schema_version: "evaluation_metrics_config.v1"
+config_version: "1.0.0"
+
+classical_metrics:
+  notebook_id: "13"
+  notebook_stem: "13_classical_metrics"
+  origin: "Consolidates Existing Notebooks 09, 15, and 22"
+  metric_version: "classical_full_reference.v1"
+  output_schema_version: "classical_metrics.v1"
+  data_range: 255.0
+
+  inputs:
+    inventory_path: "outputs/inventory/project_file_inventory.csv"
+    inventory_run_path: "outputs/inventory/inventory_run.json"
+    project_paths_path: "outputs/inventory/project_paths.json"
+    geometry_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+    geometry_run_manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+    contracts_run_manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+    contracts_artifacts_path: "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv"
+    evaluation_contract_config_path: "config/experiments/evaluation_contract.yaml"
+    case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+    model_eligibility_path: "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv"
+    region_policy_path: "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv"
+    schema_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json"
+    upstream_sources:
+      - source_table_id: "notebook_09_opencv_telea"
+        model_id: "opencv_telea"
+        path: "outputs/09_opencv_telea_restoration/data/restorations.csv"
+        run_manifest_path: "outputs/09_opencv_telea_restoration/manifests/run_manifest.json"
+        schema_version: "restorations.v1"
+      - source_table_id: "notebook_10_lama"
+        model_id: "lama"
+        path: "outputs/10_lama_restoration/data/restorations.csv"
+        run_manifest_path: "outputs/10_lama_restoration/manifests/run_manifest.json"
+        schema_version: "restorations.v1"
+      - source_table_id: "notebook_11_stable_diffusion"
+        model_id: "stable_diffusion_inpainting"
+        path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+        run_manifest_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+        schema_version: "stable_diffusion_candidates.v1"
+      - source_table_id: "notebook_12_sdxl"
+        model_id: "sdxl_inpainting"
+        path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
+        run_manifest_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+        schema_version: "sdxl_partial_candidates.v1"
+
+  output:
+    root: "outputs/13_classical_metrics"
+    metrics_path: "metrics/classical_metrics.csv"
+    distributions_figure_path: "figures/classical_metric_distributions.png"
+    improvement_figure_path: "figures/classical_improvement_by_region.png"
+    run_manifest_path: "manifests/run_manifest.json"
+    artifacts_path: "manifests/artifacts.csv"
+    validation_path: "validation/checks.csv"
+    checkpoint_path: "work/classical_metrics_checkpoint.csv"
+
+  metrics:
+    - metric_name: "mse"
+      metric_family: "classical_pixel"
+      definition: "Mean squared RGB-channel error over the selected region."
+      improvement_direction: "damaged_minus_restored"
+      limitation: "Pixel-aligned error; insensitive to perceptual equivalence."
+    - metric_name: "mae"
+      metric_family: "classical_pixel"
+      definition: "Mean absolute RGB-channel error over the selected region."
+      improvement_direction: "damaged_minus_restored"
+      limitation: "Pixel-aligned error; does not model visual salience."
+    - metric_name: "psnr"
+      metric_family: "classical_pixel"
+      definition: "10 log10(data_range squared divided by MSE), data range 255."
+      improvement_direction: "restored_minus_damaged"
+      limitation: "Infinite for exact equality and not perceptually calibrated."
+    - metric_name: "ssim"
+      metric_family: "ssim"
+      definition: "scikit-image RGB structural similarity with channel_axis=-1 and data_range=255."
+      improvement_direction: "restored_minus_damaged"
+      limitation: "Valid only on contiguous rectangular regions at least 7 by 7 pixels."
+
+  regions:
+    policy_version: "evaluation_region_policy.v1"
+    mask_bbox_margin_pixels: 8
+    boundary_width_pixels: 3
+    outside_ring_inner_offset_pixels: 3
+    outside_ring_outer_width_pixels: 8
+    effect_support_threshold: 1
+    active_mask_threshold_source: "candidate.mask_threshold"
+    threshold_comparison: "greater_than_or_equal"
+    region_order:
+      - "full_image"
+      - "content_region"
+      - "masked_region"
+      - "mask_bbox_crop"
+      - "inner_boundary_band"
+      - "outer_boundary_band"
+      - "boundary_ring"
+      - "outside_mask_content"
+      - "outside_boundary_ring"
+      - "degradation_support"
+    compatible_regions:
+      classical_pixel:
+        - "full_image"
+        - "content_region"
+        - "masked_region"
+        - "mask_bbox_crop"
+        - "inner_boundary_band"
+        - "outer_boundary_band"
+        - "boundary_ring"
+        - "outside_mask_content"
+        - "outside_boundary_ring"
+        - "degradation_support"
+      ssim:
+        - "full_image"
+        - "content_region"
+        - "mask_bbox_crop"
+    excluded_regions:
+      patch_window: "Deferred to later local and semantic sliding-window analyses."
+    sparse_masked_pixel_ssim: "prohibited"
+
+  execution:
+    progress_interval_cases: 10
+    checkpoint_interval_cases: 10
+    case_grouping: "reuse_clean_damaged_mask_and_damaged_baselines"
+    resume_policy: "reuse_only_complete_error_free_case_metric_keys"
+    checkpoint_policy: "notebook_owned_temporary_work_file"
+
+  missing_value_policy:
+    unavailable_model_cases: "omit; never create placeholder metric rows"
+    invalid_metric_region_pairs: "omit by declared mathematical policy"
+    computation_failure: "retain expected row with NaN values, status=error, and issue"
+    completed_candidate_missing_file: "blocking preflight failure"
+
+  infinity_policy:
+    exact_match_psnr: "preserve_positive_infinity"
+    equal_infinite_improvement: 0.0
+    csv_representation: "pandas inf token; verified after reload"
+
+  expected_counts:
+    case_registry_rows: 525
+    eligible_case_model_pairs: 1640
+    evaluated_unique_cases: 410
+    evaluated_candidates: 2160
+    zero_control_cases: 50
+    zero_control_candidates: 150
+    active_threshold_13_candidates: 356
+    active_threshold_128_candidates: 1804
+    classical_metric_rows_each: 18896
+    ssim_rows: 6330
+    total_metric_rows: 63018
+    candidates_by_model:
+      opencv_telea: 410
+      lama: 410
+      stable_diffusion_inpainting: 1330
+      sdxl_inpainting: 10
+
+  known_limitations:
+    - "SDXL evidence is a predeclared technically validated ten-case partial scope, not full 410-case coverage."
+    - "Stable Diffusion contributes repeated prompt and seed candidates; Notebook 13 reports candidate-level evidence without metric-based selection."
+    - "Synthetic degradation restoration remains a supplementary inpainting diagnostic for the eligible degradation families."
+    - "Classical metrics cannot establish conservation plausibility or semantic correctness alone."
