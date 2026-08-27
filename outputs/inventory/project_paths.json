@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-27T10:06:06.211743Z",
+  "updated_at_utc": "2026-08-27T12:23:34.510829Z",
   "artifacts": [
     {
       "artifact_key": "classical_metrics.distributions",
@@ -365,6 +365,34 @@
       "row_count": 5,
       "file_count": 1,
       "checksum": "dcbf17cca2e1ffceb18637dba75c884f789e1aa2dbe4d51ef83023a516c69197"
+    },
+    {
+      "artifact_key": "lpips_metrics.distributions",
+      "producer_notebook": "14_lpips_metrics",
+      "relative_path": "outputs/14_lpips_metrics/figures/lpips_distributions.png",
+      "artifact_type": "figure",
+      "artifact_role": "reporting_visualization",
+      "schema_version": "figure.lpips_distributions.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_lpips",
+      "validation_status": "passed",
+      "row_count": 1,
+      "file_count": 1,
+      "checksum": "ca7f6160d76cebcfc2e9e182bb444e753efc651eec4f11c85611034da7dac35a"
+    },
+    {
+      "artifact_key": "lpips_metrics.metrics",
+      "producer_notebook": "14_lpips_metrics",
+      "relative_path": "outputs/14_lpips_metrics/metrics/lpips_metrics.csv",
+      "artifact_type": "table",
+      "artifact_role": "primary_downstream_evidence",
+      "schema_version": "lpips_metrics.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_lpips",
+      "validation_status": "passed",
+      "row_count": 4170,
+      "file_count": 1,
+      "checksum": "5d4ea684da1e370f8667c42876b279a6842ba66359c0806ce4929250f5637dbf"
     },
     {
       "artifact_key": "mask_robustness.cases",
@@ -1065,6 +1093,20 @@
       "row_count": 251,
       "file_count": 1,
       "checksum": "62a4af1caf47b7f13de61ab484a2fe52a2e02dbb87fb72176fca45ad76096183"
+    },
+    {
+      "artifact_key": "validation.14_lpips_metrics",
+      "producer_notebook": "14_lpips_metrics",
+      "relative_path": "outputs/14_lpips_metrics/validation/checks.csv",
+      "artifact_type": "table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_lpips",
+      "validation_status": "passed",
+      "row_count": 253,
+      "file_count": 1,
+      "checksum": "49e0291bb9137fd1f4b1d188f3376f7c4e68fe0dbd766a23f29889f55e27ba58"
     }
   ]
 }

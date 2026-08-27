@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-27T10:06:06.211743Z`
-- Registered artifacts: 76
+- Updated: `2026-08-27T12:23:34.510829Z`
+- Registered artifacts: 79
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -32,6 +32,8 @@
 | lama.restorations | 10_lama_restoration | `outputs/10_lama_restoration/data/restorations.csv` | primary_restoration_records | passed |
 | lama.restored_images | 10_lama_restoration | `outputs/10_lama_restoration/images/restored` | primary_restored_images | passed |
 | lama.runtime_summary | 10_lama_restoration | `outputs/10_lama_restoration/metrics/runtime_summary.csv` | runtime_evidence | passed |
+| lpips_metrics.distributions | 14_lpips_metrics | `outputs/14_lpips_metrics/figures/lpips_distributions.png` | reporting_visualization | passed |
+| lpips_metrics.metrics | 14_lpips_metrics | `outputs/14_lpips_metrics/metrics/lpips_metrics.csv` | primary_downstream_evidence | passed |
 | mask_robustness.cases | 06_mask_robustness_dataset_generation | `outputs/06_mask_robustness_dataset_generation/data/cases.csv` | primary_case_manifest | passed |
 | mask_robustness.damaged_images | 06_mask_robustness_dataset_generation | `outputs/06_mask_robustness_dataset_generation/images/damaged` | damaged_image_collection | passed |
 | mask_robustness.figure_examples | 06_mask_robustness_dataset_generation | `outputs/06_mask_robustness_dataset_generation/figures/robustness_examples.png` | representative_visual_evidence | passed |
@@ -82,3 +84,4 @@
 | validation.11_stable_diffusion_restoration | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/validation/checks.csv` | validation_evidence | passed |
 | validation.12_sdxl_feasibility_or_restoration | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/validation/checks.csv` | validation_evidence | passed |
 | validation.13_classical_metrics | 13_classical_metrics | `outputs/13_classical_metrics/validation/checks.csv` | validation_evidence | passed |
+| validation.14_lpips_metrics | 14_lpips_metrics | `outputs/14_lpips_metrics/validation/checks.csv` | validation_evidence | passed |

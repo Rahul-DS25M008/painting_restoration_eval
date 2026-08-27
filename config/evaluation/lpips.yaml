@@ -1,0 +1,132 @@
+config_schema_version: "lpips_metrics_config.v1"
+config_version: "1.0.0"
+
+lpips_metrics:
+  notebook_id: "14"
+  notebook_stem: "14_lpips_metrics"
+  origin: "Consolidates Existing Notebooks 11, 17, and 24"
+  metric_version: "lpips_alex_full_reference.v1"
+  output_schema_version: "lpips_metrics.v1"
+
+  inputs:
+    inventory_path: "outputs/inventory/project_file_inventory.csv"
+    inventory_run_path: "outputs/inventory/inventory_run.json"
+    project_paths_path: "outputs/inventory/project_paths.json"
+    geometry_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+    geometry_run_manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+    contracts_run_manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+    contracts_artifacts_path: "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv"
+    evaluation_contract_config_path: "config/experiments/evaluation_contract.yaml"
+    case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+    model_eligibility_path: "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv"
+    region_policy_path: "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv"
+    schema_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json"
+    upstream_sources:
+      - source_table_id: "notebook_09_opencv_telea"
+        model_id: "opencv_telea"
+        path: "outputs/09_opencv_telea_restoration/data/restorations.csv"
+        run_manifest_path: "outputs/09_opencv_telea_restoration/manifests/run_manifest.json"
+        schema_version: "restorations.v1"
+      - source_table_id: "notebook_10_lama"
+        model_id: "lama"
+        path: "outputs/10_lama_restoration/data/restorations.csv"
+        run_manifest_path: "outputs/10_lama_restoration/manifests/run_manifest.json"
+        schema_version: "restorations.v1"
+      - source_table_id: "notebook_11_stable_diffusion"
+        model_id: "stable_diffusion_inpainting"
+        path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+        run_manifest_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+        schema_version: "stable_diffusion_candidates.v1"
+      - source_table_id: "notebook_12_sdxl"
+        model_id: "sdxl_inpainting"
+        path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
+        run_manifest_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+        schema_version: "sdxl_partial_candidates.v1"
+
+  output:
+    root: "outputs/14_lpips_metrics"
+    metrics_path: "metrics/lpips_metrics.csv"
+    distributions_figure_path: "figures/lpips_distributions.png"
+    run_manifest_path: "manifests/run_manifest.json"
+    artifacts_path: "manifests/artifacts.csv"
+    validation_path: "validation/checks.csv"
+    checkpoint_path: "work/lpips_metrics_checkpoint.csv"
+
+  model:
+    network: "alex"
+    lpips_version: "0.1"
+    preferred_device: "cuda"
+    allow_cpu_fallback: true
+    deterministic_algorithms: true
+
+  transform:
+    maximum_side_pixels: 256
+    minimum_side_pixels: 64
+    interpolation: "bicubic"
+    padding_mode: "neutral_constant"
+    neutral_padding_value: 127
+    resize_policy: "longest_side_256_preserve_aspect_min_side_64_neutral_pad"
+
+  regions:
+    policy_version: "evaluation_region_policy.v1"
+    active_regions:
+      - "content_region"
+      - "mask_bbox_crop"
+    primary_local_region: "mask_bbox_crop"
+    mask_bbox_margin_pixels: 8
+    active_mask_threshold_source: "candidate.mask_threshold"
+    threshold_comparison: "greater_than_or_equal"
+    excluded_regions:
+      full_image: "Compatible diagnostic but excluded because unchanged pixels and canvas padding dilute restoration effects."
+      sparse_regions: "Prohibited because LPIPS requires contiguous image-like spatial input."
+      patch_window: "Deferred to later sliding-window and local analyses."
+
+  execution:
+    batch_size: 16
+    progress_interval_cases: 10
+    checkpoint_interval_cases: 10
+    case_grouping: "reuse_clean_damaged_region_tensors_and_damaged_baselines"
+    baseline_cache_policy: "one_damaged_reference_score_per_case_region"
+    resume_policy: "reuse_only_complete_error_free_case_region_candidate_keys"
+    checkpoint_policy: "unique_temporary_file_with_retry_and_recovery_fallback"
+
+  missing_value_policy:
+    unavailable_model_cases: "omit; never create placeholder metric rows"
+    zero_control_mask_bbox: "omit because the empty mask has no bounding box"
+    computation_failure: "retain expected row with NaN restored/improvement values, status=error, and issue"
+    completed_candidate_missing_file: "blocking preflight failure"
+
+  finite_value_policy:
+    non_finite_ok_rows: "blocking failure"
+    materially_negative_distance_threshold: -0.000001
+    materially_negative_distance: "blocking failure; never clip measured values"
+    improvement_tolerance: 0.000001
+    zero_control_tolerance: 0.000001
+
+  expected_counts:
+    case_registry_rows: 525
+    evaluated_unique_cases: 410
+    evaluated_candidates: 2160
+    zero_control_cases: 50
+    zero_control_candidates: 150
+    damaged_baseline_pairs: 770
+    content_region_rows: 2160
+    mask_bbox_crop_rows: 2010
+    total_metric_rows: 4170
+    candidates_by_model:
+      opencv_telea: 410
+      lama: 410
+      stable_diffusion_inpainting: 1330
+      sdxl_inpainting: 10
+    metric_rows_by_model:
+      opencv_telea: 770
+      lama: 770
+      stable_diffusion_inpainting: 2610
+      sdxl_inpainting: 20
+
+  known_limitations:
+    - "LPIPS is a learned perceptual similarity proxy and is not conservation-specific."
+    - "SDXL evidence is a predeclared technically validated ten-case partial scope, not full 410-case coverage."
+    - "Stable Diffusion contributes repeated prompt and seed candidates; Notebook 14 reports candidate-level evidence without metric-based selection."
+    - "Aspect-preserving resizing standardizes maximum resolution; minimal neutral padding may still influence very elongated crops."
+    - "Candidate-level forward runtimes are batch-time allocations and must not be summed to reconstruct wall-clock runtime."

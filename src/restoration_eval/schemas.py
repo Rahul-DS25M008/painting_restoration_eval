@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.11.0"
+SCHEMAS_MODULE_VERSION = "1.12.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -467,6 +467,15 @@ CLASSICAL_METRICS_COLUMNS = (
     "damaged_value", "restored_value", "improvement_value",
     "improvement_direction", "metric_version", "region_policy_version",
     "status", "issue",
+)
+LPIPS_METRICS_COLUMNS = (
+    "metric_row_id", "case_id", "candidate_id", "model_id",
+    "metric_family", "metric_name", "region_id", "region_pixel_count",
+    "region_width", "region_height", "input_width", "input_height",
+    "resize_policy", "damaged_value", "restored_value", "improvement_value",
+    "improvement_direction", "network", "metric_version",
+    "region_policy_version", "schema_version", "device",
+    "lpips_package_version", "metric_runtime_seconds", "status", "issue",
 )
 
 @dataclass(frozen=True)
@@ -1173,6 +1182,23 @@ CLASSICAL_METRICS_SCHEMA = DataFrameSchema(
         "status": frozenset({"ok", "error"}),
     },
 )
+LPIPS_METRICS_SCHEMA = DataFrameSchema(
+    name="lpips_metrics",
+    version="lpips_metrics.v1",
+    required_columns=LPIPS_METRICS_COLUMNS,
+    primary_key=("metric_row_id",),
+    non_nullable=tuple(
+        column for column in LPIPS_METRICS_COLUMNS
+        if column not in {"damaged_value", "restored_value", "improvement_value", "issue"}
+    ),
+    allowed_values={
+        "metric_family": frozenset({"perceptual"}),
+        "metric_name": frozenset({"lpips"}),
+        "region_id": frozenset({"content_region", "mask_bbox_crop"}),
+        "improvement_direction": frozenset({"damaged_minus_restored"}),
+        "status": frozenset({"ok", "error"}),
+    },
+)
 
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
@@ -1203,6 +1229,7 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     PROMPT_ABLATION_DESIGN_SCHEMA.name: PROMPT_ABLATION_DESIGN_SCHEMA,
     REGION_POLICY_SCHEMA.name: REGION_POLICY_SCHEMA,
     CLASSICAL_METRICS_SCHEMA.name: CLASSICAL_METRICS_SCHEMA,
+    LPIPS_METRICS_SCHEMA.name: LPIPS_METRICS_SCHEMA,
 }
 
 

@@ -849,7 +849,7 @@ validation/checks.csv
 **Notebook:** `14_lpips_metrics.ipynb`  
 **Origin:** Consolidates Existing Notebooks 11, 17, and 24  
 **Output root:** `outputs/14_lpips_metrics/`  
-**Depends on:** Notebooks 08–12
+**Depends on:** Notebook 02 geometry handoff and Notebooks 08–12
 
 ### Responsibilities
 
