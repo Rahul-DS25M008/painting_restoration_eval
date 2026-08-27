@@ -1,0 +1,188 @@
+config_schema_version: "feature_similarity_config.v1"
+config_version: "1.0.0"
+
+feature_similarity:
+  notebook_id: "15"
+  notebook_stem: "15_feature_similarity"
+  origin: "Consolidates Existing Notebooks 12, 18, and 25"
+  metric_version: "feature_cosine_similarity.v1"
+  output_schema_version: "feature_metrics.v1"
+  embedding_schema_version: "feature_embedding_manifest.v1"
+
+  inputs:
+    inventory_path: "outputs/inventory/project_file_inventory.csv"
+    inventory_run_path: "outputs/inventory/inventory_run.json"
+    project_paths_path: "outputs/inventory/project_paths.json"
+    geometry_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+    geometry_run_manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+    contracts_run_manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+    contracts_artifacts_path: "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv"
+    evaluation_contract_config_path: "config/experiments/evaluation_contract.yaml"
+    case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+    model_eligibility_path: "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv"
+    region_policy_path: "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv"
+    schema_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json"
+    stable_diffusion_prompt_policy_path: "outputs/11_stable_diffusion_restoration/data/prompt_policy.csv"
+    upstream_sources:
+      - source_table_id: "notebook_09_opencv_telea"
+        model_id: "opencv_telea"
+        path: "outputs/09_opencv_telea_restoration/data/restorations.csv"
+        run_manifest_path: "outputs/09_opencv_telea_restoration/manifests/run_manifest.json"
+        schema_version: "restorations.v1"
+      - source_table_id: "notebook_10_lama"
+        model_id: "lama"
+        path: "outputs/10_lama_restoration/data/restorations.csv"
+        run_manifest_path: "outputs/10_lama_restoration/manifests/run_manifest.json"
+        schema_version: "restorations.v1"
+      - source_table_id: "notebook_11_stable_diffusion"
+        model_id: "stable_diffusion_inpainting"
+        path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+        run_manifest_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+        schema_version: "stable_diffusion_candidates.v1"
+      - source_table_id: "notebook_12_sdxl"
+        model_id: "sdxl_inpainting"
+        path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
+        run_manifest_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+        schema_version: "sdxl_partial_candidates.v1"
+
+  output:
+    root: "outputs/15_feature_similarity"
+    metrics_path: "metrics/feature_metrics.csv"
+    embeddings_path: "data/embeddings.npz"
+    embedding_manifest_path: "manifests/embeddings.csv"
+    distributions_figure_path: "figures/feature_similarity_distributions.png"
+    run_manifest_path: "manifests/run_manifest.json"
+    artifacts_path: "manifests/artifacts.csv"
+    validation_path: "validation/checks.csv"
+    checkpoint_manifest_path: "work/embedding_checkpoint.csv"
+    checkpoint_matrix_directory: "work/embedding_matrices"
+
+  models:
+    clip_vit_b32:
+      feature_model_id: "clip_vit_b32"
+      metric_name: "clip_cosine_similarity"
+      model_name: "openai/clip-vit-base-patch32"
+      model_revision: "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268"
+      model_checksum_sha256: "a63082132ba4f97a80bea76823f544493bffa8082296d62d71581a4feff1576f"
+      embedding_dimension: 512
+      array_name: "clip_embeddings"
+      preprocessing_id: "clip_processor_native_224.v1"
+      input_size: 224
+      package_name: "transformers"
+      diagnostic_scope: "general vision-language representation; not conservation-specific"
+    dinov2_vits14:
+      feature_model_id: "dinov2_vits14"
+      metric_name: "dinov2_cosine_similarity"
+      model_name: "dinov2_vits14"
+      model_revision: "facebookresearch_dinov2_main_published_checkpoint"
+      model_checksum_sha256: "b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9"
+      embedding_dimension: 384
+      array_name: "dinov2_embeddings"
+      preprocessing_id: "dinov2_official_eval_224.v1"
+      input_size: 224
+      resize_shorter_side: 256
+      interpolation: "bicubic"
+      normalization_mean: [0.485, 0.456, 0.406]
+      normalization_std: [0.229, 0.224, 0.225]
+      package_name: "torch"
+      diagnostic_scope: "self-supervised visual representation; not conservation-specific"
+
+  regions:
+    policy_version: "evaluation_region_policy.v1"
+    active_regions:
+      - "content_region"
+      - "mask_bbox_crop"
+    primary_local_region: "mask_bbox_crop"
+    mask_bbox_margin_pixels: 8
+    active_mask_threshold_source: "candidate.mask_threshold"
+    threshold_comparison: "greater_than_or_equal"
+    excluded_regions:
+      full_image: "Excluded because unchanged pixels and canvas padding dilute local restoration effects."
+      sparse_regions: "Prohibited because feature encoders require ordered image-like inputs."
+      boundary_regions: "Reserved for spatial and local-consistency notebooks."
+      patch_window: "Reserved for downstream semantic-localization analysis."
+
+  execution:
+    preferred_device: "cuda"
+    allow_cpu_fallback: true
+    deterministic_algorithms: true
+    initial_batch_size: 32
+    oom_batch_size_backoff: [16, 8, 4, 1]
+    progress_interval_embeddings: 100
+    checkpoint_interval_embeddings: 250
+    embedding_dtype: "float32"
+    normalize_embeddings: true
+    clean_embedding_deduplication: "painting_content_and_case_mask_bbox"
+    damaged_embedding_deduplication: "case_region"
+    restored_embedding_deduplication: "candidate_region"
+    resume_policy: "reuse_only_matching_ok_embedding_ids_and_model_contract"
+    checkpoint_policy: "fixed_shape_npy_memmap_plus_atomic_manifest_with_recovery"
+
+  missing_value_policy:
+    unavailable_model_cases: "omit; never create placeholder metric rows"
+    zero_control_mask_bbox: "omit because the empty mask has no bounding box"
+    embedding_failure: "retain manifest row with status=error and NaN matrix row; block completion"
+    completed_candidate_missing_file: "blocking preflight failure"
+
+  finite_value_policy:
+    cosine_minimum: -1.000001
+    cosine_maximum: 1.000001
+    improvement_tolerance: 0.000001
+    zero_control_tolerance: 0.000001
+    normalized_embedding_norm_tolerance: 0.0001
+
+  expected_counts:
+    case_registry_rows: 525
+    evaluated_unique_cases: 410
+    evaluated_candidates: 2160
+    zero_control_cases: 50
+    zero_control_candidates: 150
+    candidate_region_evaluations: 4170
+    content_region_evaluations: 2160
+    mask_bbox_region_evaluations: 2010
+    metric_rows_per_feature_model: 4170
+    total_metric_rows: 8340
+    embeddings_per_feature_model: 5350
+    total_embedding_rows: 10700
+    metric_embedding_references: 25020
+    scratch_prompt_paired_comparisons: 800
+    embeddings_by_role_across_models:
+      clean: 820
+      damaged: 1540
+      restored: 8340
+    embeddings_per_model_by_role:
+      clean: 410
+      damaged: 770
+      restored: 4170
+    candidates_by_model:
+      opencv_telea: 410
+      lama: 410
+      stable_diffusion_inpainting: 1330
+      sdxl_inpainting: 10
+    metric_rows_by_restoration_model:
+      opencv_telea: 1540
+      lama: 1540
+      stable_diffusion_inpainting: 5220
+      sdxl_inpainting: 40
+
+  analysis:
+    scratch_damage_type: "scratch_thin"
+    generic_prompt_variant_id: "p00_generic"
+    scratch_aware_prompt_variant_id: "p05_scratch_aware"
+    scratch_seed_count: 4
+    scratch_painting_count: 50
+    scratch_pair_regions: ["content_region", "mask_bbox_crop"]
+    scratch_pair_feature_models: ["clip_vit_b32", "dinov2_vits14"]
+    figure_panels:
+      - "CLIP improvement distributions by restoration model and region"
+      - "DINOv2 improvement distributions by restoration model and region"
+      - "CLIP versus DINOv2 improvement agreement"
+      - "Scratch-aware versus generic Stable Diffusion prompt deltas"
+
+  known_limitations:
+    - "CLIP and DINOv2 are diagnostic general-purpose representation models, not conservation-specific quality measures."
+    - "Cosine similarity can retain semantic or global structure while missing local colour, texture, seam, or historical-plausibility defects."
+    - "Native model preprocessing resizes and center-crops rectangular evaluation regions and may suppress peripheral crop evidence."
+    - "SDXL evidence is a predeclared technically validated ten-case partial scope, not full 410-case coverage."
+    - "Stable Diffusion contributes repeated prompts and seeds; candidate-level evidence is retained without metric-based selection."
+    - "The scratch-aware prompt comparison is an ablation finding, not proof of conservation-quality restoration."

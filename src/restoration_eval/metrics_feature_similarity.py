@@ -1,52 +1,103 @@
-"""
-CLIP and DINOv2 feature-similarity metrics for restoration evaluation.
+"""Deduplicated CLIP and DINOv2 evidence for restoration evaluation.
 
-The module compares damaged and restored images against the clean reference
-using image-like spatial regions only:
-
-- full_image;
-- content_region;
-- mask_bbox_crop for non-zero masks.
-
-Sparse masked pixels are intentionally excluded because CLIP and DINOv2 operate
-on ordered image patches, not unordered pixel selections.
+Notebook 15 evaluates only the canonical contiguous ``content_region`` and
+``mask_bbox_crop`` inputs, retains normalized dense embeddings, and constructs
+candidate-level cosine-similarity evidence from reusable clean, damaged, and
+restored vectors. These general-purpose encoders are diagnostic rather than
+conservation-specific quality judges.
 """
 
 from __future__ import annotations
 
+import hashlib
 import importlib
 import importlib.metadata
-import platform
+import math
+import os
 import time
+import uuid
+from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Callable, Mapping, Sequence
 
 import numpy as np
 import pandas as pd
 from PIL import Image
 
-
-FEATURE_SIMILARITY_MODULE_NAME = "restoration_eval.metrics_feature_similarity"
-FEATURE_SIMILARITY_METRIC_SCHEMA_VERSION = "2.1.0"
-FEATURE_SIMILARITY_EMBEDDING_SCHEMA_VERSION = "1.0.0"
-
-DEFAULT_CLIP_MODEL_NAME = "openai/clip-vit-base-patch32"
-DEFAULT_CLIP_MODEL_REVISION = "default"
-DEFAULT_DINOV2_MODEL_NAME = "dinov2_vits14"
-DEFAULT_DINOV2_MODEL_REVISION = "torchhub-default"
-DEFAULT_FEATURE_INPUT_SIZE = 224
-DEFAULT_MASK_BBOX_MARGIN = 8
-DEFAULT_MASK_BINARY_THRESHOLD = 127
-
-FEATURE_SIMILARITY_EVALUATION_REGIONS = (
-    "full_image",
-    "content_region",
-    "mask_bbox_crop",
+from .regions import Region, content_region, mask_bbox_region, metric_region_is_valid
+from .schemas import (
+    FEATURE_EMBEDDING_MANIFEST_COLUMNS,
+    FEATURE_EMBEDDING_MANIFEST_SCHEMA,
+    FEATURE_METRICS_COLUMNS,
+    FEATURE_METRICS_SCHEMA,
+    validate_dataframe,
 )
 
 
+FEATURE_SIMILARITY_MODULE_VERSION = "3.0.0"
+FEATURE_METRIC_VERSION = "feature_cosine_similarity.v1"
+FEATURE_METRICS_SCHEMA_VERSION = "feature_metrics.v1"
+FEATURE_EMBEDDING_SCHEMA_VERSION = "feature_embedding_manifest.v1"
+FEATURE_ACTIVE_REGIONS = ("content_region", "mask_bbox_crop")
+FEATURE_MODEL_IDS = ("clip_vit_b32", "dinov2_vits14")
+IMAGE_ROLES = ("clean", "damaged", "restored")
+DEFAULT_CLIP_MODEL_NAME = "openai/clip-vit-base-patch32"
+DEFAULT_CLIP_MODEL_REVISION = "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268"
+DEFAULT_DINOV2_MODEL_NAME = "dinov2_vits14"
+DEFAULT_DINOV2_MODEL_REVISION = "facebookresearch_dinov2_main_published_checkpoint"
+
+FEATURE_EXECUTION_PLAN_COLUMNS = (
+    "case_id", "candidate_id", "model_id", "painting_id", "region_id",
+    "region_pixel_count", "region_width", "region_height", "crop_x_min",
+    "crop_y_min", "crop_x_max", "crop_y_max", "clean_image_path",
+    "input_image_path", "restored_path", "clean_sha256", "input_sha256",
+    "restored_sha256", "is_zero_control",
+)
+FEATURE_EMBEDDING_PLAN_INTERNAL_COLUMNS = (
+    *FEATURE_EMBEDDING_MANIFEST_COLUMNS,
+    "crop_x_min", "crop_y_min", "crop_x_max", "crop_y_max",
+)
+SCRATCH_PROMPT_PAIR_COLUMNS = (
+    "case_id", "painting_id", "seed", "region_id", "feature_model_id",
+    "generic_candidate_id", "scratch_aware_candidate_id",
+    "generic_improvement_value", "scratch_aware_improvement_value",
+    "scratch_aware_minus_generic",
+)
+
+ProgressCallback = Callable[[str], None]
+CheckpointCallback = Callable[[pd.DataFrame, np.ndarray], None]
+EncodeBatch = Callable[[Sequence[Image.Image]], np.ndarray]
+
+
+@dataclass(frozen=True)
+class FeatureModelSpec:
+    """Resolved, auditable contract for one feature encoder."""
+
+    feature_model_id: str
+    metric_name: str
+    model_name: str
+    model_revision: str
+    model_checksum: str
+    embedding_dimension: int
+    array_name: str
+    preprocessing_id: str
+    input_size: int
+    package_name: str
+
+
+@dataclass(frozen=True)
+class FeatureEmbeddingRunResult:
+    """One model's dense matrix, canonical manifest rows, and run summary."""
+
+    manifest: pd.DataFrame
+    matrix: np.ndarray
+    summary: Mapping[str, Any]
+
+
 def get_package_version(package_name: str) -> str:
-    """Return an installed package version, or ``not-installed``."""
+    """Return an installed distribution version without importing it."""
+
     try:
         return importlib.metadata.version(package_name)
     except importlib.metadata.PackageNotFoundError:
@@ -54,1755 +105,934 @@ def get_package_version(package_name: str) -> str:
 
 
 def validate_feature_similarity_runtime_dependencies() -> pd.DataFrame:
-    """Check optional packages needed for feature-similarity computation."""
-    dependency_rows = []
+    """Return explicit availability evidence for Notebook 15 dependencies."""
 
-    for module_name, package_name, required in (
-        ("torch", "torch", True),
-        ("torchvision", "torchvision", True),
-        ("transformers", "transformers", True),
-        ("jmespath", "jmespath", True),
-        ("safetensors", "safetensors", True),
-        ("PIL", "Pillow", True),
+    records = []
+    for module_name, package_name in (
+        ("torch", "torch"), ("torchvision", "torchvision"),
+        ("transformers", "transformers"), ("yaml", "PyYAML"),
+        ("PIL", "Pillow"),
     ):
-        module_spec = importlib.util.find_spec(module_name)
-        installed = module_spec is not None
-        dependency_rows.append(
-            {
-                "component": package_name,
-                "module": module_name,
-                "version": get_package_version(package_name),
-                "required": required,
-                "installed": installed,
-                "passed": installed or not required,
-            }
+        installed = importlib.util.find_spec(module_name) is not None
+        records.append({
+            "component": package_name, "module": module_name,
+            "version": get_package_version(package_name), "required": True,
+            "installed": installed, "passed": installed,
+        })
+    return pd.DataFrame(records)
+
+
+def load_feature_similarity_config(path: str | Path) -> dict[str, Any]:
+    """Load and strictly validate the versioned Notebook 15 YAML contract."""
+
+    yaml = importlib.import_module("yaml")
+    with Path(path).open("r", encoding="utf-8") as handle:
+        config = yaml.safe_load(handle)
+    if not isinstance(config, dict):
+        raise ValueError("Feature-similarity configuration must be a mapping")
+    if config.get("config_schema_version") != "feature_similarity_config.v1":
+        raise ValueError("Unexpected feature-similarity configuration schema")
+    settings = config.get("feature_similarity")
+    if not isinstance(settings, dict):
+        raise ValueError("Configuration is missing feature_similarity settings")
+    if settings.get("metric_version") != FEATURE_METRIC_VERSION:
+        raise ValueError("Configuration metric version does not match the helper")
+    if settings.get("output_schema_version") != FEATURE_METRICS_SCHEMA_VERSION:
+        raise ValueError("Configuration feature-metric schema does not match")
+    if settings.get("embedding_schema_version") != FEATURE_EMBEDDING_SCHEMA_VERSION:
+        raise ValueError("Configuration embedding schema does not match")
+    active = tuple(settings.get("regions", {}).get("active_regions", ()))
+    if active != FEATURE_ACTIVE_REGIONS:
+        raise ValueError(f"Active feature regions must be exactly {FEATURE_ACTIVE_REGIONS}")
+    if tuple(settings.get("models", {}).keys()) != FEATURE_MODEL_IDS:
+        raise ValueError(f"Feature models must be exactly {FEATURE_MODEL_IDS}")
+    specs = feature_model_specs(config)
+    if len({spec.array_name for spec in specs.values()}) != len(specs):
+        raise ValueError("Feature-model NPZ array names must be unique")
+    if len({spec.metric_name for spec in specs.values()}) != len(specs):
+        raise ValueError("Feature-model metric names must be unique")
+    return config
+
+
+def _settings(config: Mapping[str, Any]) -> Mapping[str, Any]:
+    settings = config.get("feature_similarity", config)
+    if not isinstance(settings, Mapping):
+        raise TypeError("feature_similarity settings must be a mapping")
+    return settings
+
+
+def feature_model_specs(config: Mapping[str, Any]) -> dict[str, FeatureModelSpec]:
+    """Resolve compact model specs from configuration."""
+
+    result: dict[str, FeatureModelSpec] = {}
+    for feature_model_id, raw in _settings(config)["models"].items():
+        spec = FeatureModelSpec(
+            feature_model_id=str(raw["feature_model_id"]),
+            metric_name=str(raw["metric_name"]), model_name=str(raw["model_name"]),
+            model_revision=str(raw["model_revision"]),
+            model_checksum=str(raw["model_checksum_sha256"]),
+            embedding_dimension=int(raw["embedding_dimension"]),
+            array_name=str(raw["array_name"]),
+            preprocessing_id=str(raw["preprocessing_id"]),
+            input_size=int(raw["input_size"]), package_name=str(raw["package_name"]),
         )
+        if spec.feature_model_id != feature_model_id:
+            raise ValueError(f"Feature-model key/id mismatch: {feature_model_id}")
+        if spec.embedding_dimension <= 0 or spec.input_size <= 0:
+            raise ValueError(f"Invalid dimensions for {feature_model_id}")
+        if len(spec.model_checksum) != 64:
+            raise ValueError(f"Invalid model checksum for {feature_model_id}")
+        result[feature_model_id] = spec
+    return result
 
-    return pd.DataFrame(dependency_rows)
 
+def resolve_feature_device(config: Mapping[str, Any]) -> str:
+    """Resolve CUDA preference with the approved explicit CPU fallback."""
 
-def get_device(prefer_cuda: bool = True):
-    """Return a torch device, preferring CUDA when requested and available."""
     torch = importlib.import_module("torch")
+    execution = _settings(config)["execution"]
+    preferred = str(execution["preferred_device"]).lower()
+    if preferred == "cuda" and torch.cuda.is_available():
+        return "cuda"
+    if preferred == "cuda" and not bool(execution["allow_cpu_fallback"]):
+        raise RuntimeError("CUDA was requested but is unavailable and fallback is disabled")
+    return "cpu"
 
-    if prefer_cuda and torch.cuda.is_available():
-        return torch.device("cuda")
 
-    return torch.device("cpu")
+def configure_feature_determinism(config: Mapping[str, Any]) -> None:
+    """Configure deterministic inference without forcing unsupported kernels."""
+
+    torch = importlib.import_module("torch")
+    enabled = bool(_settings(config)["execution"]["deterministic_algorithms"])
+    if hasattr(torch, "use_deterministic_algorithms"):
+        torch.use_deterministic_algorithms(enabled, warn_only=True)
+    if hasattr(torch.backends, "cudnn"):
+        torch.backends.cudnn.benchmark = False
+
+
+def get_device(prefer_cuda: bool = True) -> Any:
+    """Compatibility wrapper returning a torch device."""
+
+    torch = importlib.import_module("torch")
+    return torch.device("cuda" if prefer_cuda and torch.cuda.is_available() else "cpu")
 
 
 def load_clip_model_and_processor(
-    model_name: str = DEFAULT_CLIP_MODEL_NAME,
-    device: Any | None = None,
-    revision: str | None = None,
-):
-    """Load CLIP lazily through Hugging Face Transformers."""
-    transformers = importlib.import_module("transformers")
-    clip_model_cls = getattr(transformers, "CLIPModel")
-    clip_processor_cls = getattr(transformers, "CLIPProcessor")
+    model_name: str = DEFAULT_CLIP_MODEL_NAME, device: Any | None = None,
+    revision: str | None = DEFAULT_CLIP_MODEL_REVISION, *,
+    local_files_only: bool = True,
+) -> tuple[Any, Any]:
+    """Load pinned CLIP model and native processor lazily."""
 
+    transformers = importlib.import_module("transformers")
     if device is None:
         device = get_device()
-
-    from_pretrained_kwargs: dict[str, Any] = {}
-    if revision and revision != DEFAULT_CLIP_MODEL_REVISION:
-        from_pretrained_kwargs["revision"] = revision
-
-    processor = clip_processor_cls.from_pretrained(
-        model_name,
-        **from_pretrained_kwargs,
-    )
-    model = clip_model_cls.from_pretrained(
-        model_name,
-        use_safetensors=True,
-        **from_pretrained_kwargs,
+    kwargs = {"revision": revision, "local_files_only": bool(local_files_only)}
+    processor = transformers.CLIPProcessor.from_pretrained(model_name, **kwargs)
+    model = transformers.CLIPModel.from_pretrained(
+        model_name, use_safetensors=False, **kwargs
     ).to(device)
     model.eval()
-
     return model, processor
 
 
-def load_dinov2_model(
-    model_name: str = DEFAULT_DINOV2_MODEL_NAME,
-    device: Any | None = None,
-    repo_or_dir: str = "facebookresearch/dinov2",
-    trust_repo: bool = True,
-):
-    """Load a DINOv2 model lazily from torch.hub."""
+def _cached_dinov2_repository() -> Path | None:
     torch = importlib.import_module("torch")
+    candidate = Path(torch.hub.get_dir()) / "facebookresearch_dinov2_main"
+    return candidate if candidate.is_dir() else None
 
+
+def load_dinov2_model(
+    model_name: str = DEFAULT_DINOV2_MODEL_NAME, device: Any | None = None,
+    repo_or_dir: str = "facebookresearch/dinov2", trust_repo: bool = True, *,
+    local_only: bool = True,
+) -> Any:
+    """Load DINOv2 lazily, preferring the existing torch-hub snapshot."""
+
+    torch = importlib.import_module("torch")
     if device is None:
         device = get_device()
-
-    model = torch.hub.load(
-        repo_or_dir,
-        model_name,
-        verbose=False,
-        trust_repo=trust_repo,
-    ).to(device)
+    local_repo = Path(repo_or_dir)
+    if not local_repo.is_dir() and local_only:
+        cached = _cached_dinov2_repository()
+        if cached is None:
+            raise FileNotFoundError("Cached facebookresearch/dinov2 repository not found")
+        local_repo = cached
+    if local_repo.is_dir():
+        model = torch.hub.load(
+            str(local_repo), model_name, source="local", verbose=False,
+            trust_repo=trust_repo,
+        )
+    else:
+        model = torch.hub.load(repo_or_dir, model_name, verbose=False, trust_repo=trust_repo)
+    model = model.to(device)
     model.eval()
-
     return model
 
 
-def load_rgb_image(path: Path | str) -> Image.Image:
-    """Load an image file as RGB."""
-    path = Path(path)
+def load_configured_feature_models(
+    config: Mapping[str, Any], *, device: str, local_only: bool = True,
+) -> dict[str, dict[str, Any]]:
+    """Load both approved encoders and exact preprocessing objects."""
 
-    if not path.exists():
-        raise FileNotFoundError(f"Image file not found: {path}")
-
-    with Image.open(path) as image:
-        return image.convert("RGB")
-
-
-def load_mask_bool(
-    path: Path | str,
-    threshold: int = DEFAULT_MASK_BINARY_THRESHOLD,
-) -> np.ndarray:
-    """Load a mask as a boolean array where True marks damage."""
-    path = Path(path)
-
-    if not path.exists():
-        raise FileNotFoundError(f"Mask file not found: {path}")
-
-    with Image.open(path) as image:
-        mask_arr = np.asarray(image.convert("L"))
-
-    return mask_arr > threshold
-
-
-def clip_box(
-    box: tuple[int, int, int, int],
-    image_size: tuple[int, int],
-) -> tuple[int, int, int, int] | None:
-    """Clip a PIL-style crop box to image bounds."""
-    left, upper, right, lower = box
-    width, height = image_size
-
-    left = max(0, min(int(left), width))
-    right = max(0, min(int(right), width))
-    upper = max(0, min(int(upper), height))
-    lower = max(0, min(int(lower), height))
-
-    if right <= left or lower <= upper:
-        return None
-
-    return left, upper, right, lower
-
-
-def get_content_box_from_row(
-    row: pd.Series,
-    image_size: tuple[int, int],
-) -> tuple[int, int, int, int]:
-    """Get the recorded content-region box in PIL crop coordinates."""
-    required_columns = (
-        "content_x_min",
-        "content_y_min",
-        "content_x_max",
-        "content_y_max",
+    specs = feature_model_specs(config)
+    clip_spec = specs["clip_vit_b32"]
+    clip_model, clip_processor = load_clip_model_and_processor(
+        clip_spec.model_name, device, clip_spec.model_revision,
+        local_files_only=local_only,
     )
-    missing_columns = [
-        column
-        for column in required_columns
-        if column not in row.index
-    ]
-
-    if missing_columns:
-        raise ValueError(f"Missing content-region columns: {missing_columns}")
-
-    raw_values = [
-        row[column]
-        for column in required_columns
-    ]
-
-    if any(_is_null_like(value) for value in raw_values):
-        raise ValueError(
-            "Invalid content box contains null values: "
-            f"{dict(zip(required_columns, raw_values))}"
-        )
-
-    try:
-        numeric_values = [
-            float(value)
-            for value in raw_values
-        ]
-    except (TypeError, ValueError) as exc:
-        raise ValueError(
-            "Invalid content box contains non-numeric values: "
-            f"{dict(zip(required_columns, raw_values))}"
-        ) from exc
-
-    if not np.isfinite(numeric_values).all():
-        raise ValueError(
-            "Invalid content box contains non-finite values: "
-            f"{dict(zip(required_columns, raw_values))}"
-        )
-
-    content_box = clip_box(
-        tuple(
-            int(round(value))
-            for value in numeric_values
-        ),
-        image_size=image_size,
-    )
-
-    if content_box is None:
-        raise ValueError(
-            "Invalid content box: "
-            f"{[row[column] for column in required_columns]}"
-        )
-
-    return content_box
-
-
-def get_mask_bbox(
-    mask_bool: np.ndarray,
-    margin: int = DEFAULT_MASK_BBOX_MARGIN,
-) -> tuple[int, int, int, int] | None:
-    """Return a padded mask bounding box in PIL crop coordinates."""
-    if margin < 0:
-        raise ValueError("mask_bbox_margin must be non-negative.")
-
-    y_coords, x_coords = np.where(mask_bool)
-
-    if len(x_coords) == 0:
-        return None
-
-    height, width = mask_bool.shape
-
-    return clip_box(
-        (
-            int(x_coords.min()) - int(margin),
-            int(y_coords.min()) - int(margin),
-            int(x_coords.max()) + int(margin) + 1,
-            int(y_coords.max()) + int(margin) + 1,
-        ),
-        image_size=(width, height),
-    )
-
-
-def make_square_crop_box(
-    box: tuple[int, int, int, int],
-    image_size: tuple[int, int],
-) -> tuple[int, int, int, int]:
-    """Expand a crop box to a square while staying inside the image."""
-    left, upper, right, lower = box
-    width, height = image_size
-
-    crop_width = right - left
-    crop_height = lower - upper
-    side = min(max(crop_width, crop_height), width, height)
-
-    center_x = (left + right) // 2
-    center_y = (upper + lower) // 2
-
-    square_left = center_x - side // 2
-    square_upper = center_y - side // 2
-    square_right = square_left + side
-    square_lower = square_upper + side
-
-    if square_left < 0:
-        square_right -= square_left
-        square_left = 0
-
-    if square_upper < 0:
-        square_lower -= square_upper
-        square_upper = 0
-
-    if square_right > width:
-        shift = square_right - width
-        square_left -= shift
-        square_right = width
-
-    if square_lower > height:
-        shift = square_lower - height
-        square_upper -= shift
-        square_lower = height
-
-    clipped_box = clip_box(
-        (square_left, square_upper, square_right, square_lower),
-        image_size=image_size,
-    )
-
-    if clipped_box is None:
-        raise ValueError(f"Invalid square crop box derived from {box}.")
-
-    return clipped_box
-
-
-def resize_for_feature_model(
-    image: Image.Image,
-    size: int = DEFAULT_FEATURE_INPUT_SIZE,
-) -> Image.Image:
-    """Resize an image region to a square feature-model input size."""
-    return image.convert("RGB").resize(
-        (int(size), int(size)),
-        Image.Resampling.LANCZOS,
-    )
-
-
-def crop_image_region(
-    image: Image.Image,
-    box: tuple[int, int, int, int],
-    resize_to: int = DEFAULT_FEATURE_INPUT_SIZE,
-) -> Image.Image:
-    """Crop an image region and resize it for feature extraction."""
-    return resize_for_feature_model(
-        image.crop(box),
-        size=resize_to,
-    )
-
-
-def _is_null_like(value: Any) -> bool:
-    try:
-        return bool(pd.isna(value))
-    except TypeError:
-        return False
-
-
-def _row_value(row: pd.Series, key: str, default: Any = "") -> Any:
-    value = row.get(key, default)
-    return default if _is_null_like(value) else value
-
-
-def _to_bool(value: Any) -> bool:
-    if _is_null_like(value):
-        return False
-
-    if isinstance(value, bool):
-        return value
-
-    if isinstance(value, (int, np.integer)):
-        return bool(value)
-
-    if isinstance(value, str):
-        return value.strip().lower() in {"1", "true", "yes", "y"}
-
-    return bool(value)
-
-
-def _to_int(value: Any, default: int = 0) -> int:
-    if _is_null_like(value):
-        return default
-
-    try:
-        return int(value)
-    except (TypeError, ValueError):
-        return default
-
-
-def infer_zero_control_flag(row: pd.Series) -> bool:
-    """Infer zero-control/empty-mask status from available metadata."""
-    explicit_flag = _to_bool(_row_value(row, "is_zero_control", False))
-    mask_type = str(
-        _row_value(row, "metric_mask_type", _row_value(row, "mask_type", ""))
-    ).strip().lower()
-    mask_id = str(
-        _row_value(row, "metric_mask_id", _row_value(row, "mask_id", ""))
-    ).strip().lower()
-    mask_area_pixels = _to_int(_row_value(row, "mask_area_pixels", 0), default=0)
-
-    return (
-        explicit_flag
-        or mask_type == "zero_control"
-        or mask_id.endswith("zero_control")
-        or mask_area_pixels <= 0
-    )
-
-
-def _safe_difference(left: float, right: float) -> float:
-    if np.isnan(left) or np.isnan(right):
-        return float("nan")
-
-    return float(left - right)
-
-
-def _box_to_region_info(
-    box: tuple[int, int, int, int],
-) -> dict[str, int]:
-    left, upper, right, lower = box
+    dino_spec = specs["dinov2_vits14"]
+    dino_model = load_dinov2_model(dino_spec.model_name, device, local_only=local_only)
     return {
-        "region_x_min": int(left),
-        "region_y_min": int(upper),
-        "region_x_max": int(right),
-        "region_y_max": int(lower),
+        "clip_vit_b32": {
+            "spec": clip_spec, "model": clip_model, "processor": clip_processor,
+        },
+        "dinov2_vits14": {
+            "spec": dino_spec, "model": dino_model,
+            "transform": build_dinov2_transform(config),
+        },
     }
 
 
-def extract_feature_tensor(features: Any, source_name: str = "model"):
-    """Extract a tensor from common model output formats."""
-    torch = importlib.import_module("torch")
+def build_dinov2_transform(config: Mapping[str, Any]) -> Any:
+    """Build the documented official DINOv2 evaluation preprocessing."""
 
-    if isinstance(features, torch.Tensor):
-        return features.detach()
-
-    if isinstance(features, dict):
-        for key in (
-            "image_embeds",
-            "pooler_output",
-            "x_norm_clstoken",
-            "last_hidden_state",
-        ):
-            if key in features and isinstance(features[key], torch.Tensor):
-                value = features[key]
-                if key == "last_hidden_state" and value.ndim == 3:
-                    value = value[:, 0]
-                return value.detach()
-
-        first_key = next(iter(features.keys()))
-        first_value = features[first_key]
-
-        if isinstance(first_value, torch.Tensor):
-            return first_value.detach()
-
-        raise TypeError(
-            f"Unsupported dictionary output from {source_name}. "
-            f"First key {first_key!r} has type {type(first_value)}."
-        )
-
-    if hasattr(features, "image_embeds") and features.image_embeds is not None:
-        return features.image_embeds.detach()
-
-    if hasattr(features, "pooler_output") and features.pooler_output is not None:
-        return features.pooler_output.detach()
-
-    if hasattr(features, "last_hidden_state") and features.last_hidden_state is not None:
-        return features.last_hidden_state[:, 0].detach()
-
-    if hasattr(features, "hidden_states") and features.hidden_states is not None:
-        return features.hidden_states[-1][:, 0].detach()
-
-    raise TypeError(
-        f"Unsupported output type from {source_name}: {type(features)}"
-    )
-
-
-def cosine_similarity_from_features(features_a: Any, features_b: Any) -> float:
-    """Compute cosine similarity between two feature tensors."""
-    torch = importlib.import_module("torch")
-    functional = importlib.import_module("torch.nn.functional")
-
-    features_a = features_a.float()
-    features_b = features_b.float()
-
-    if features_a.ndim == 1:
-        features_a = features_a.unsqueeze(0)
-
-    if features_b.ndim == 1:
-        features_b = features_b.unsqueeze(0)
-
-    features_a = functional.normalize(features_a, dim=-1)
-    features_b = functional.normalize(features_b, dim=-1)
-
-    similarity = torch.sum(features_a * features_b, dim=-1)
-
-    return float(similarity.item())
-
-
-def compute_clip_embedding(
-    image: Image.Image,
-    clip_model: Any,
-    clip_processor: Any,
-    device: Any,
-) -> Any:
-    """Compute a CLIP image embedding."""
-    torch = importlib.import_module("torch")
-
-    inputs = clip_processor(
-        images=image.convert("RGB"),
-        return_tensors="pt",
-    )
-    inputs = {
-        key: value.to(device)
-        for key, value in inputs.items()
-    }
-
-    with torch.no_grad():
-        try:
-            image_features = clip_model.get_image_features(**inputs)
-        except AttributeError:
-            image_features = clip_model(**inputs)
-
-    return extract_feature_tensor(image_features, source_name="CLIP")
-
-
-def compute_dinov2_embedding(
-    image: Image.Image,
-    dinov2_model: Any,
-    device: Any,
-    image_size: int = DEFAULT_FEATURE_INPUT_SIZE,
-) -> Any:
-    """Compute a DINOv2 image embedding."""
-    torch = importlib.import_module("torch")
     transforms = importlib.import_module("torchvision.transforms")
+    raw = _settings(config)["models"]["dinov2_vits14"]
+    return transforms.Compose([
+        transforms.Resize(
+            int(raw["resize_shorter_side"]),
+            interpolation=transforms.InterpolationMode.BICUBIC,
+        ),
+        transforms.CenterCrop(int(raw["input_size"])), transforms.ToTensor(),
+        transforms.Normalize(
+            mean=tuple(float(value) for value in raw["normalization_mean"]),
+            std=tuple(float(value) for value in raw["normalization_std"]),
+        ),
+    ])
 
-    transform = transforms.Compose(
-        [
-            transforms.Resize((int(image_size), int(image_size))),
-            transforms.ToTensor(),
-            transforms.Normalize(
-                mean=(0.485, 0.456, 0.406),
-                std=(0.229, 0.224, 0.225),
-            ),
-        ]
+
+def _normalized_numpy(features: Any, expected_dimension: int) -> np.ndarray:
+    if hasattr(features, "pooler_output"):
+        features = features.pooler_output
+    elif hasattr(features, "last_hidden_state"):
+        features = features.last_hidden_state[:, 0]
+    if isinstance(features, Mapping):
+        for key in ("x_norm_clstoken", "pooler_output", "last_hidden_state"):
+            if key in features:
+                features = features[key]
+                if key == "last_hidden_state":
+                    features = features[:, 0]
+                break
+    values = (
+        features.detach().float().cpu().numpy()
+        if hasattr(features, "detach") else np.asarray(features, dtype=np.float32)
     )
-    tensor = transform(image.convert("RGB")).unsqueeze(0).to(device)
+    values = np.asarray(values, dtype=np.float32)
+    if values.ndim == 1:
+        values = values[None, :]
+    if values.ndim != 2 or values.shape[1] != int(expected_dimension):
+        raise ValueError(
+            f"Unexpected embedding shape {values.shape}; expected (*, {expected_dimension})"
+        )
+    norms = np.linalg.norm(values, axis=1, keepdims=True)
+    if np.any(~np.isfinite(norms)) or np.any(norms <= 0):
+        raise ValueError("Feature encoder produced zero or non-finite embeddings")
+    return (values / norms).astype(np.float32, copy=False)
 
-    with torch.no_grad():
-        features = dinov2_model(tensor)
 
-    return extract_feature_tensor(features, source_name="DINOv2")
+def encode_feature_batch(
+    images: Sequence[Image.Image], bundle: Mapping[str, Any], *, device: str,
+) -> np.ndarray:
+    """Encode and L2-normalize one batch using an approved model bundle."""
+
+    torch = importlib.import_module("torch")
+    spec: FeatureModelSpec = bundle["spec"]
+    if spec.feature_model_id == "clip_vit_b32":
+        inputs = bundle["processor"](images=list(images), return_tensors="pt", padding=True)
+        inputs = {key: value.to(device) for key, value in inputs.items()}
+        with torch.inference_mode():
+            features = bundle["model"].get_image_features(**inputs)
+    elif spec.feature_model_id == "dinov2_vits14":
+        batch = torch.stack([bundle["transform"](image) for image in images]).to(device)
+        with torch.inference_mode():
+            features = bundle["model"](batch)
+    else:
+        raise ValueError(f"Unsupported feature model: {spec.feature_model_id}")
+    return _normalized_numpy(features, spec.embedding_dimension)
 
 
-def embedding_tensor_to_numpy(embedding: Any, dtype: str = "float32") -> np.ndarray:
-    """Convert a model embedding tensor to a flat CPU numpy vector."""
+def load_rgb_array(path: str | Path) -> np.ndarray:
+    """Load one image as an HxWx3 uint8 RGB array."""
+
+    path = Path(path)
+    if not path.is_file():
+        raise FileNotFoundError(path)
+    with Image.open(path) as image:
+        return np.asarray(image.convert("RGB"), dtype=np.uint8)
+
+
+def load_mask_array(path: str | Path) -> np.ndarray:
+    """Load one mask/effect-support image as an HxW uint8 array."""
+
+    path = Path(path)
+    if not path.is_file():
+        raise FileNotFoundError(path)
+    with Image.open(path) as image:
+        return np.asarray(image.convert("L"), dtype=np.uint8)
+
+
+def _resolve(project_root: str | Path, value: str | Path) -> Path:
+    path = Path(value)
+    return path if path.is_absolute() else Path(project_root) / path
+
+
+def file_sha256(path: str | Path, chunk_size: int = 1024 * 1024) -> str:
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as handle:
+        while chunk := handle.read(chunk_size):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def build_case_feature_regions(
+    case: Mapping[str, Any], raw_mask: np.ndarray, config: Mapping[str, Any],
+) -> dict[str, Region]:
+    """Build only the two approved rectangular regions via ``regions.py``."""
+
+    active_mask = np.asarray(raw_mask) >= int(case["mask_threshold"])
+    content_bbox = tuple(int(case[column]) for column in (
+        "content_x_min", "content_y_min", "content_x_max", "content_y_max"
+    ))
+    region_settings = _settings(config)["regions"]
+    candidates = {
+        "content_region": content_region(active_mask.shape, content_bbox),
+        "mask_bbox_crop": mask_bbox_region(
+            active_mask, margin=int(region_settings["mask_bbox_margin_pixels"]),
+            support_bbox=content_bbox,
+        ),
+    }
+    result: dict[str, Region] = {}
+    for region_id in region_settings["active_regions"]:
+        region = candidates[region_id]
+        valid, reason = metric_region_is_valid("clip", region)
+        if valid:
+            result[region_id] = region
+        elif region_id == "content_region":
+            raise ValueError(f"Invalid mandatory content region: {reason}")
+    return result
+
+
+def build_feature_execution_plan(
+    worklist: pd.DataFrame, *, project_root: str | Path,
+    config: Mapping[str, Any],
+) -> pd.DataFrame:
+    """Build exact candidate-region keys without loading restoration pixels."""
+
+    required = {
+        "case_id", "candidate_id", "model_id", "painting_id", "mask_threshold",
+        "mask_or_effect_path", "content_x_min", "content_y_min", "content_x_max",
+        "content_y_max", "clean_image_path", "input_image_path", "restored_path",
+        "restored_sha256", "is_zero_control",
+    }
+    missing = sorted(required - set(worklist.columns))
+    if missing:
+        raise ValueError(f"Evaluation worklist is missing columns: {missing}")
+    records: list[dict[str, Any]] = []
+    root = Path(project_root)
+    for case_id, group in worklist.groupby("case_id", sort=False):
+        if group["mask_threshold"].astype(int).nunique() != 1:
+            raise ValueError(f"Case {case_id} has inconsistent mask thresholds")
+        case = group.iloc[0]
+        mask = load_mask_array(_resolve(root, case["mask_or_effect_path"]))
+        regions = build_case_feature_regions(case, mask, config)
+        for candidate in group.itertuples(index=False):
+            for region in regions.values():
+                if region.bbox is None:
+                    raise ValueError(f"Rectangular region {region.region_id} has no bbox")
+                x0, y0, x1, y1 = region.bbox
+                records.append({
+                    "case_id": str(candidate.case_id), "candidate_id": str(candidate.candidate_id),
+                    "model_id": str(candidate.model_id), "painting_id": str(candidate.painting_id),
+                    "region_id": region.region_id, "region_pixel_count": int(region.pixel_count),
+                    "region_width": int(region.width), "region_height": int(region.height),
+                    "crop_x_min": int(x0), "crop_y_min": int(y0),
+                    "crop_x_max": int(x1), "crop_y_max": int(y1),
+                    "clean_image_path": str(candidate.clean_image_path),
+                    "input_image_path": str(candidate.input_image_path),
+                    "restored_path": str(candidate.restored_path),
+                    "clean_sha256": str(getattr(candidate, "clean_sha256", "")),
+                    "input_sha256": str(getattr(candidate, "input_sha256", "")),
+                    "restored_sha256": str(candidate.restored_sha256),
+                    "is_zero_control": bool(candidate.is_zero_control),
+                })
+    return pd.DataFrame(records, columns=FEATURE_EXECUTION_PLAN_COLUMNS)
+
+
+def embedding_id_for(
+    feature_model_id: str, image_role: str, *, painting_id: str,
+    case_id: str, candidate_id: str, region_id: str,
+) -> str:
+    """Return a deterministic ID following the approved role deduplication."""
+
+    if image_role == "clean" and region_id == "content_region":
+        identity = f"painting:{painting_id}"
+    elif image_role in {"clean", "damaged"}:
+        identity = f"case:{case_id}"
+    elif image_role == "restored":
+        identity = f"candidate:{candidate_id}"
+    else:
+        raise ValueError(f"Unsupported image role: {image_role}")
+    payload = "|".join((feature_model_id, image_role, identity, region_id))
+    return f"fe__{hashlib.sha256(payload.encode('utf-8')).hexdigest()[:20]}"
+
+
+def build_feature_embedding_plan(
+    execution_plan: pd.DataFrame, *, config: Mapping[str, Any],
+) -> pd.DataFrame:
+    """Build the exact deduplicated embedding manifest/extraction plan."""
+
+    missing = sorted(set(FEATURE_EXECUTION_PLAN_COLUMNS) - set(execution_plan.columns))
+    if missing:
+        raise ValueError(f"Feature execution plan is missing columns: {missing}")
+    records: list[dict[str, Any]] = []
+    for spec in feature_model_specs(config).values():
+        seen: set[str] = set()
+        array_index = 0
+        for row in execution_plan.itertuples(index=False):
+            role_values = {
+                "clean": (row.clean_image_path, row.clean_sha256),
+                "damaged": (row.input_image_path, row.input_sha256),
+                "restored": (row.restored_path, row.restored_sha256),
+            }
+            for role in IMAGE_ROLES:
+                embedding_id = embedding_id_for(
+                    spec.feature_model_id, role, painting_id=str(row.painting_id),
+                    case_id=str(row.case_id), candidate_id=str(row.candidate_id),
+                    region_id=str(row.region_id),
+                )
+                if embedding_id in seen:
+                    continue
+                seen.add(embedding_id)
+                source_path, source_sha256 = role_values[role]
+                records.append({
+                    "embedding_id": embedding_id, "feature_model_id": spec.feature_model_id,
+                    "image_role": role, "painting_id": str(row.painting_id),
+                    "case_id": ("" if role == "clean" and row.region_id == "content_region"
+                                else str(row.case_id)),
+                    "representative_candidate_id": (str(row.candidate_id)
+                                                       if role == "restored" else ""),
+                    "region_id": str(row.region_id),
+                    "source_path": str(source_path).replace("\\", "/"),
+                    "source_sha256": str(source_sha256), "array_name": spec.array_name,
+                    "array_index": array_index, "embedding_dimension": spec.embedding_dimension,
+                    "dtype": "float32", "preprocessing_id": spec.preprocessing_id,
+                    "input_width": spec.input_size, "input_height": spec.input_size,
+                    "model_name": spec.model_name, "model_revision": spec.model_revision,
+                    "model_checksum": spec.model_checksum,
+                    "schema_version": FEATURE_EMBEDDING_SCHEMA_VERSION,
+                    "status": "", "issue": "", "crop_x_min": int(row.crop_x_min),
+                    "crop_y_min": int(row.crop_y_min), "crop_x_max": int(row.crop_x_max),
+                    "crop_y_max": int(row.crop_y_max),
+                })
+                array_index += 1
+    return pd.DataFrame(records, columns=FEATURE_EMBEDDING_PLAN_INTERNAL_COLUMNS)
+
+
+def populate_missing_source_checksums(
+    embedding_plan: pd.DataFrame, *, project_root: str | Path,
+) -> pd.DataFrame:
+    """Fill missing source SHA-256 values once per unique path."""
+
+    result = embedding_plan.copy()
+    cache: dict[str, str] = {}
+    for index, row in result.iterrows():
+        value = str(row["source_sha256"]).strip().lower()
+        if len(value) == 64 and all(char in "0123456789abcdef" for char in value):
+            continue
+        source = str(row["source_path"])
+        if source not in cache:
+            cache[source] = file_sha256(_resolve(project_root, source))
+        result.at[index, "source_sha256"] = cache[source]
+    return result
+
+
+def _load_cropped_pil(row: Any, project_root: str | Path) -> Image.Image:
+    array = load_rgb_array(_resolve(project_root, row.source_path))
+    x0, y0, x1, y1 = (int(row.crop_x_min), int(row.crop_y_min),
+                      int(row.crop_x_max), int(row.crop_y_max))
+    if not (0 <= x0 < x1 <= array.shape[1] and 0 <= y0 < y1 <= array.shape[0]):
+        raise ValueError(f"Invalid crop {(x0, y0, x1, y1)} for {row.source_path}")
+    return Image.fromarray(array[y0:y1, x0:x1], mode="RGB")
+
+
+def _is_cuda_oom(exc: BaseException) -> bool:
+    text = str(exc).lower()
+    return isinstance(exc, RuntimeError) and (
+        "out of memory" in text or "cuda error: memory" in text
+    )
+
+
+def _clear_cuda_cache() -> None:
     try:
         torch = importlib.import_module("torch")
-    except ModuleNotFoundError:
-        torch = None
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+    except Exception:
+        pass
 
-    if torch is not None and isinstance(embedding, torch.Tensor):
-        vector = embedding.detach().float().cpu().numpy()
+
+def extract_feature_model_embeddings(
+    model_plan: pd.DataFrame, *, spec: FeatureModelSpec,
+    encode_batch: EncodeBatch, project_root: str | Path,
+    config: Mapping[str, Any], matrix_path: str | Path | None = None,
+    prior_manifest: pd.DataFrame | None = None,
+    progress_callback: ProgressCallback | None = None,
+    checkpoint_callback: CheckpointCallback | None = None,
+) -> FeatureEmbeddingRunResult:
+    """Extract one normalized dense matrix with OOM backoff and safe resume."""
+
+    plan = model_plan.loc[
+        model_plan["feature_model_id"].astype(str).eq(spec.feature_model_id)
+    ].copy().sort_values("array_index", kind="stable").reset_index(drop=True)
+    if plan.empty:
+        raise ValueError(f"No embedding rows planned for {spec.feature_model_id}")
+    if not np.array_equal(plan["array_index"].to_numpy(int), np.arange(len(plan))):
+        raise ValueError("Embedding array indices must be contiguous from zero")
+    shape = (len(plan), spec.embedding_dimension)
+    if matrix_path is None:
+        matrix: np.ndarray = np.full(shape, np.nan, dtype=np.float32)
     else:
-        vector = np.asarray(embedding, dtype=np.float32)
+        target = Path(matrix_path)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        if target.exists():
+            matrix = np.lib.format.open_memmap(target, mode="r+")
+            if tuple(matrix.shape) != shape or matrix.dtype != np.float32:
+                raise ValueError(f"Checkpoint matrix contract mismatch: {target}")
+        else:
+            matrix = np.lib.format.open_memmap(target, mode="w+", dtype=np.float32, shape=shape)
+            matrix[:] = np.nan
+            matrix.flush()
 
-    vector = np.asarray(vector).reshape(-1)
-
-    if dtype:
-        vector = vector.astype(dtype, copy=False)
-
-    return vector
-
-
-def normalize_embedding_arrays(
-    embedding_arrays: dict[str, np.ndarray],
-    dtype: str = "float32",
-) -> dict[str, np.ndarray]:
-    """Return consistently typed embedding arrays for stable NPZ output."""
-    return {
-        str(key): embedding_tensor_to_numpy(value, dtype=dtype)
-        for key, value in embedding_arrays.items()
-    }
-
-
-def save_feature_embedding_bundle(
-    embedding_arrays: dict[str, np.ndarray],
-    output_path: Path | str,
-    dtype: str = "float32",
-    compressed: bool = True,
-) -> Path:
-    """Save retained feature embeddings as a compressed NPZ bundle."""
-    output_path = Path(output_path)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    normalized_arrays = normalize_embedding_arrays(
-        embedding_arrays,
-        dtype=dtype,
-    )
-
-    if compressed:
-        np.savez_compressed(output_path, **normalized_arrays)
-    else:
-        np.savez(output_path, **normalized_arrays)
-
-    return output_path
-
-
-def compute_feature_similarities_and_embeddings_for_region(
-    clean_region: Image.Image,
-    damaged_region: Image.Image,
-    restored_region: Image.Image,
-    clip_model: Any,
-    clip_processor: Any,
-    dinov2_model: Any,
-    device: Any,
-    feature_input_size: int = DEFAULT_FEATURE_INPUT_SIZE,
-    embedding_dtype: str = "float32",
-) -> tuple[dict[str, float], dict[str, np.ndarray]]:
-    """Compute similarities and retain CLIP/DINOv2 embeddings for one region."""
-    clean_region = resize_for_feature_model(clean_region, size=feature_input_size)
-    damaged_region = resize_for_feature_model(damaged_region, size=feature_input_size)
-    restored_region = resize_for_feature_model(restored_region, size=feature_input_size)
-
-    clean_clip = compute_clip_embedding(
-        clean_region,
-        clip_model=clip_model,
-        clip_processor=clip_processor,
-        device=device,
-    )
-    damaged_clip = compute_clip_embedding(
-        damaged_region,
-        clip_model=clip_model,
-        clip_processor=clip_processor,
-        device=device,
-    )
-    restored_clip = compute_clip_embedding(
-        restored_region,
-        clip_model=clip_model,
-        clip_processor=clip_processor,
-        device=device,
-    )
-
-    clip_damaged_similarity = cosine_similarity_from_features(clean_clip, damaged_clip)
-    clip_restored_similarity = cosine_similarity_from_features(clean_clip, restored_clip)
-
-    clean_dinov2 = compute_dinov2_embedding(
-        clean_region,
-        dinov2_model=dinov2_model,
-        device=device,
-        image_size=feature_input_size,
-    )
-    damaged_dinov2 = compute_dinov2_embedding(
-        damaged_region,
-        dinov2_model=dinov2_model,
-        device=device,
-        image_size=feature_input_size,
-    )
-    restored_dinov2 = compute_dinov2_embedding(
-        restored_region,
-        dinov2_model=dinov2_model,
-        device=device,
-        image_size=feature_input_size,
-    )
-
-    dinov2_damaged_similarity = cosine_similarity_from_features(
-        clean_dinov2,
-        damaged_dinov2,
-    )
-    dinov2_restored_similarity = cosine_similarity_from_features(
-        clean_dinov2,
-        restored_dinov2,
-    )
-
-    similarities = {
-        "clip_damaged_similarity": clip_damaged_similarity,
-        "clip_restored_similarity": clip_restored_similarity,
-        "clip_similarity_improvement": _safe_difference(
-            clip_restored_similarity,
-            clip_damaged_similarity,
-        ),
-        "dinov2_damaged_similarity": dinov2_damaged_similarity,
-        "dinov2_restored_similarity": dinov2_restored_similarity,
-        "dinov2_similarity_improvement": _safe_difference(
-            dinov2_restored_similarity,
-            dinov2_damaged_similarity,
-        ),
-        "mean_similarity_improvement": float(
-            np.nanmean(
-                [
-                    _safe_difference(
-                        clip_restored_similarity,
-                        clip_damaged_similarity,
-                    ),
-                    _safe_difference(
-                        dinov2_restored_similarity,
-                        dinov2_damaged_similarity,
-                    ),
-                ]
-            )
-        ),
-    }
-
-    embeddings = {
-        "clip__clean": embedding_tensor_to_numpy(clean_clip, dtype=embedding_dtype),
-        "clip__damaged": embedding_tensor_to_numpy(damaged_clip, dtype=embedding_dtype),
-        "clip__restored": embedding_tensor_to_numpy(restored_clip, dtype=embedding_dtype),
-        "dinov2__clean": embedding_tensor_to_numpy(clean_dinov2, dtype=embedding_dtype),
-        "dinov2__damaged": embedding_tensor_to_numpy(damaged_dinov2, dtype=embedding_dtype),
-        "dinov2__restored": embedding_tensor_to_numpy(restored_dinov2, dtype=embedding_dtype),
-    }
-
-    return similarities, embeddings
-
-
-def compute_feature_similarities_for_region(
-    clean_region: Image.Image,
-    damaged_region: Image.Image,
-    restored_region: Image.Image,
-    clip_model: Any,
-    clip_processor: Any,
-    dinov2_model: Any,
-    device: Any,
-    feature_input_size: int = DEFAULT_FEATURE_INPUT_SIZE,
-) -> dict[str, float]:
-    """Compute CLIP and DINOv2 similarities for one spatial region."""
-    similarities, _ = compute_feature_similarities_and_embeddings_for_region(
-        clean_region=clean_region,
-        damaged_region=damaged_region,
-        restored_region=restored_region,
-        clip_model=clip_model,
-        clip_processor=clip_processor,
-        dinov2_model=dinov2_model,
-        device=device,
-        feature_input_size=feature_input_size,
-    )
-    return similarities
-
-
-def _build_feature_record(
-    row: pd.Series,
-    evaluation_region: str,
-    region_box: tuple[int, int, int, int],
-    similarities: dict[str, float],
-    clip_model_name: str,
-    clip_model_revision: str,
-    dinov2_model_name: str,
-    dinov2_model_revision: str,
-    feature_input_size: int,
-    mask_bbox_margin: int,
-    mask_binary_threshold: int,
-    device_name: str,
-    torch_version: str,
-    torchvision_version: str,
-    transformers_version: str,
-    metric_runtime_seconds: float,
-    case_runtime_seconds: float,
-    status: str = "ok",
-    issue: str = "",
-) -> dict[str, Any]:
-    """Build one standardized feature-similarity output record."""
-    restoration_case_id = _row_value(
-        row,
-        "restoration_case_id",
-        _row_value(row, "case_id"),
-    )
-    metric_case_id = _row_value(row, "metric_case_id", restoration_case_id)
-    dataset_name = _row_value(row, "dataset_name", "canonical")
-    mask_type = _row_value(
-        row,
-        "metric_mask_type",
-        _row_value(row, "mask_type"),
-    )
-    mask_id = _row_value(row, "metric_mask_id", _row_value(row, "mask_id"))
-    source_case_id = _row_value(
-        row,
-        "source_case_id",
-        _row_value(row, "case_id"),
-    )
-    source_case_id_original = _row_value(
-        row,
-        "source_case_id_original",
-        source_case_id,
-    )
-    is_zero_control = infer_zero_control_flag(row)
-    mask_area_pixels = _to_int(_row_value(row, "mask_area_pixels", 0), default=0)
-    region_id = f"{metric_case_id}__{evaluation_region}"
-    left, upper, right, lower = region_box
-
-    return {
-        "feature_row_id": f"{region_id}__feature_similarity",
-        "feature_case_id": metric_case_id,
-        "metric_case_id": metric_case_id,
-        "restoration_case_id": restoration_case_id,
-        "source_case_id": source_case_id,
-        "source_case_id_original": source_case_id_original,
-        "case_id": _row_value(row, "case_id", source_case_id),
-        "dataset_name": dataset_name,
-        "metric_applicability": _row_value(row, "metric_applicability", "primary"),
-        "painting_id": _row_value(row, "painting_id"),
-        "category": _row_value(row, "category"),
-        "title": _row_value(row, "title"),
-        "artist": _row_value(row, "artist"),
-        "style": _row_value(row, "style", _row_value(row, "style_or_period")),
-        "model_name": _row_value(row, "model_name"),
-        "mask_id": mask_id,
-        "mask_type": mask_type,
-        "metric_mask_id": mask_id,
-        "metric_mask_type": mask_type,
-        "evaluation_region": evaluation_region,
-        "region_pixel_count": int((right - left) * (lower - upper)),
-        **_box_to_region_info(region_box),
-        "mask_area_pixels": mask_area_pixels,
-        "is_zero_control": is_zero_control,
-        "mask_threshold_rule": f"> {mask_binary_threshold}",
-        "mask_bbox_margin": int(mask_bbox_margin),
-        "feature_input_size": int(feature_input_size),
-        "clip_model_name": clip_model_name,
-        "clip_model_revision": clip_model_revision,
-        "dinov2_model_name": dinov2_model_name,
-        "dinov2_model_revision": dinov2_model_revision,
-        "clean_embedding_id": f"{region_id}__clean",
-        "damaged_embedding_id": f"{region_id}__damaged",
-        "restored_embedding_id": f"{region_id}__restored",
-        "embedding_group_id": f"{dataset_name}__{_row_value(row, 'painting_id')}__{evaluation_region}",
-        **similarities,
-        "metric_runtime_seconds": float(metric_runtime_seconds),
-        "case_runtime_seconds": float(case_runtime_seconds),
-        "feature_similarity_schema_version": FEATURE_SIMILARITY_METRIC_SCHEMA_VERSION,
-        "feature_similarity_implementation_name": FEATURE_SIMILARITY_MODULE_NAME,
-        "device": device_name,
-        "python_version": platform.python_version(),
-        "numpy_version": np.__version__,
-        "pandas_version": pd.__version__,
-        "pillow_version": Image.__version__,
-        "torch_version": torch_version,
-        "torchvision_version": torchvision_version,
-        "transformers_version": transformers_version,
-        "status": status,
-        "issue": issue,
-    }
-
-
-def _make_embedding_npz_key(
-    feature_row_id: str,
-    model_family: str,
-    image_role: str,
-) -> str:
-    """Create an NPZ-safe key for one retained embedding vector."""
-    raw_key = f"{feature_row_id}__{model_family}__{image_role}"
-    return "".join(
-        character if character.isalnum() or character in {"_", "-", "."} else "_"
-        for character in raw_key
-    )
-
-
-def _embedding_id_for_role(record: dict[str, Any], image_role: str) -> str:
-    if image_role == "clean":
-        return str(record.get("clean_embedding_id", ""))
-    if image_role == "damaged":
-        return str(record.get("damaged_embedding_id", ""))
-    if image_role == "restored":
-        return str(record.get("restored_embedding_id", ""))
-    raise ValueError(f"Unsupported embedding image role: {image_role}")
-
-
-def _append_embedding_records(
-    embedding_manifest_records: list[dict[str, Any]],
-    embedding_arrays: dict[str, np.ndarray],
-    record: dict[str, Any],
-    region_embeddings: dict[str, np.ndarray],
-    embedding_dtype: str,
-) -> None:
-    """Append embedding vectors and metadata for one successful feature row."""
-    for model_family in ("clip", "dinov2"):
-        for image_role in ("clean", "damaged", "restored"):
-            source_key = f"{model_family}__{image_role}"
-            if source_key not in region_embeddings:
+    status = np.full(len(plan), "", dtype=object)
+    issues = np.full(len(plan), "", dtype=object)
+    reused = 0
+    if prior_manifest is not None and not prior_manifest.empty:
+        prior = prior_manifest.loc[
+            prior_manifest["feature_model_id"].astype(str).eq(spec.feature_model_id)
+        ].set_index("embedding_id", drop=False)
+        for number, row in enumerate(plan.itertuples(index=False)):
+            if row.embedding_id not in prior.index:
                 continue
+            previous = prior.loc[row.embedding_id]
+            if isinstance(previous, pd.DataFrame):
+                raise ValueError(f"Duplicate prior embedding ID: {row.embedding_id}")
+            matches = all((
+                str(previous["model_revision"]) == spec.model_revision,
+                str(previous["model_checksum"]) == spec.model_checksum,
+                str(previous["preprocessing_id"]) == spec.preprocessing_id,
+                int(previous["array_index"]) == int(row.array_index),
+                str(previous["status"]) == "ok",
+            ))
+            vector = np.asarray(matrix[int(row.array_index)], dtype=np.float32)
+            if matches and np.isfinite(vector).all():
+                status[number] = "ok"
+                reused += 1
 
-            npz_key = _make_embedding_npz_key(
-                str(record["feature_row_id"]),
-                model_family=model_family,
-                image_role=image_role,
+    execution = _settings(config)["execution"]
+    sizes = [int(execution["initial_batch_size"])] + [
+        int(value) for value in execution["oom_batch_size_backoff"]
+    ]
+    batch_sizes: list[int] = []
+    for value in sizes:
+        if value > 0 and value not in batch_sizes:
+            batch_sizes.append(value)
+    progress_interval = int(execution["progress_interval_embeddings"])
+    checkpoint_interval = int(execution["checkpoint_interval_embeddings"])
+    current_size_index = 0
+    failures = 0
+    processed_since_checkpoint = 0
+    started = time.perf_counter()
+    pending = [number for number in range(len(plan)) if status[number] != "ok"]
+    cursor = 0
+    while cursor < len(pending):
+        batch_size = batch_sizes[current_size_index]
+        indices = pending[cursor:cursor + batch_size]
+        rows = [plan.iloc[number] for number in indices]
+        try:
+            images = [_load_cropped_pil(row, project_root) for row in rows]
+            vectors = _normalized_numpy(encode_batch(images), spec.embedding_dimension)
+            if vectors.shape != (len(rows), spec.embedding_dimension):
+                raise ValueError(f"Encoder returned unexpected shape {vectors.shape}")
+            for number, vector in zip(indices, vectors):
+                matrix[int(plan.iloc[number]["array_index"])] = vector
+                status[number] = "ok"
+                issues[number] = ""
+            cursor += len(indices)
+            processed_since_checkpoint += len(indices)
+        except Exception as exc:
+            if _is_cuda_oom(exc) and current_size_index + 1 < len(batch_sizes):
+                current_size_index += 1
+                _clear_cuda_cache()
+                continue
+            issue = f"{type(exc).__name__}: {exc}"
+            for number in indices:
+                status[number] = "error"
+                issues[number] = issue
+                matrix[int(plan.iloc[number]["array_index"])] = np.nan
+                failures += 1
+            cursor += len(indices)
+            processed_since_checkpoint += len(indices)
+
+        observed = reused + cursor
+        manifest = plan.loc[:, FEATURE_EMBEDDING_MANIFEST_COLUMNS].copy()
+        manifest["status"] = status
+        manifest["issue"] = issues
+        if hasattr(matrix, "flush"):
+            matrix.flush()
+        if checkpoint_callback is not None and (
+            processed_since_checkpoint >= checkpoint_interval or cursor == len(pending)
+        ):
+            checkpoint_callback(manifest, matrix)
+            processed_since_checkpoint = 0
+        if progress_callback is not None and (
+            observed % progress_interval < len(indices) or cursor == len(pending)
+        ):
+            elapsed = time.perf_counter() - started
+            throughput = cursor / max(elapsed, 1e-9)
+            progress_callback(
+                f"{spec.feature_model_id}: {observed}/{len(plan)} embeddings "
+                f"({100.0 * observed / len(plan):.1f}%), elapsed={elapsed:.1f}s, "
+                f"throughput={throughput:.2f} new embeddings/s, batch_size={batch_size}, "
+                f"reused={reused}, failures={failures}, latest={rows[-1]['embedding_id']}"
             )
-            vector = embedding_tensor_to_numpy(
-                region_embeddings[source_key],
-                dtype=embedding_dtype,
-            )
-            embedding_arrays[npz_key] = vector
-            embedding_manifest_records.append(
-                {
-                    "embedding_manifest_schema_version": FEATURE_SIMILARITY_EMBEDDING_SCHEMA_VERSION,
-                    "feature_row_id": record["feature_row_id"],
-                    "feature_case_id": record["feature_case_id"],
-                    "metric_case_id": record["metric_case_id"],
-                    "restoration_case_id": record["restoration_case_id"],
-                    "source_case_id": record["source_case_id"],
-                    "source_case_id_original": record["source_case_id_original"],
-                    "case_id": record["case_id"],
-                    "dataset_name": record["dataset_name"],
-                    "painting_id": record["painting_id"],
-                    "model_name": record["model_name"],
-                    "mask_id": record["mask_id"],
-                    "mask_type": record["mask_type"],
-                    "metric_mask_id": record["metric_mask_id"],
-                    "metric_mask_type": record["metric_mask_type"],
-                    "evaluation_region": record["evaluation_region"],
-                    "image_role": image_role,
-                    "model_family": model_family,
-                    "embedding_id": _embedding_id_for_role(record, image_role),
-                    "embedding_group_id": record["embedding_group_id"],
-                    "npz_key": npz_key,
-                    "vector_dim": int(vector.size),
-                    "dtype": str(vector.dtype),
-                    "feature_input_size": record["feature_input_size"],
-                    "clip_model_name": record["clip_model_name"],
-                    "clip_model_revision": record["clip_model_revision"],
-                    "dinov2_model_name": record["dinov2_model_name"],
-                    "dinov2_model_revision": record["dinov2_model_revision"],
-                    "device": record["device"],
-                    "status": record["status"],
-                }
-            )
+
+    final_manifest = plan.loc[:, FEATURE_EMBEDDING_MANIFEST_COLUMNS].copy()
+    final_manifest["status"] = status
+    final_manifest["issue"] = issues
+    return FeatureEmbeddingRunResult(final_manifest, matrix, {
+        "feature_model_id": spec.feature_model_id, "embedding_count": len(plan),
+        "completed_count": int(np.count_nonzero(status == "ok")),
+        "error_count": int(np.count_nonzero(status == "error")),
+        "reused_count": reused, "new_count": len(pending),
+        "final_batch_size": batch_sizes[current_size_index],
+        "runtime_seconds": time.perf_counter() - started,
+    })
 
 
-def expected_feature_similarity_rows_from_metadata(
-    restoration_metadata: pd.DataFrame,
-    mask_binary_threshold: int = DEFAULT_MASK_BINARY_THRESHOLD,
-) -> int:
-    """Return expected feature-similarity row count for the region policy."""
-    if "mask_path" not in restoration_metadata.columns:
-        raise ValueError("Restoration metadata missing required column: mask_path")
-
-    nonzero_mask_cases = 0
-
-    for mask_path in restoration_metadata["mask_path"]:
-        if np.any(load_mask_bool(mask_path, threshold=mask_binary_threshold)):
-            nonzero_mask_cases += 1
-
-    return (
-        len(restoration_metadata) * 2
-        + nonzero_mask_cases
-    )
+def metric_row_id(
+    case_id: str, candidate_id: str, feature_model_id: str, region_id: str,
+    metric_version: str = FEATURE_METRIC_VERSION,
+) -> str:
+    payload = "|".join((case_id, candidate_id, feature_model_id, region_id, metric_version))
+    return f"fm__{hashlib.sha256(payload.encode('utf-8')).hexdigest()[:20]}"
 
 
-def expected_feature_similarity_region_counts_from_metadata(
-    restoration_metadata: pd.DataFrame,
-    mask_binary_threshold: int = DEFAULT_MASK_BINARY_THRESHOLD,
-) -> dict[str, int]:
-    """Return expected row counts by feature-similarity region."""
-    nonzero_mask_cases = sum(
-        bool(np.any(load_mask_bool(mask_path, threshold=mask_binary_threshold)))
-        for mask_path in restoration_metadata["mask_path"]
-    )
-
+def _embedding_lookup(manifest: pd.DataFrame) -> dict[str, tuple[str, int, str]]:
+    if manifest["embedding_id"].astype(str).duplicated().any():
+        raise ValueError("Embedding manifest contains duplicate embedding IDs")
     return {
-        "full_image": len(restoration_metadata),
-        "content_region": len(restoration_metadata),
-        "mask_bbox_crop": nonzero_mask_cases,
+        str(row.embedding_id): (str(row.array_name), int(row.array_index), str(row.status))
+        for row in manifest.itertuples(index=False)
     }
 
 
-def compute_feature_similarity_for_restorations(
-    restoration_metadata: pd.DataFrame,
-    clip_model: Any,
-    clip_processor: Any,
-    dinov2_model: Any,
-    device: Any,
-    clip_model_name: str = DEFAULT_CLIP_MODEL_NAME,
-    clip_model_revision: str = DEFAULT_CLIP_MODEL_REVISION,
-    dinov2_model_name: str = DEFAULT_DINOV2_MODEL_NAME,
-    dinov2_model_revision: str = DEFAULT_DINOV2_MODEL_REVISION,
-    target_size: int | tuple[int, int] | None = 768,
-    mask_bbox_margin: int = DEFAULT_MASK_BBOX_MARGIN,
-    feature_input_size: int = DEFAULT_FEATURE_INPUT_SIZE,
-    mask_binary_threshold: int = DEFAULT_MASK_BINARY_THRESHOLD,
-    progress_every: int | None = 25,
-    return_embeddings: bool = False,
-    embedding_dtype: str = "float32",
-) -> pd.DataFrame | tuple[pd.DataFrame, pd.DataFrame, dict[str, np.ndarray]]:
-    """Compute CLIP and DINOv2 feature similarities for restoration outputs.
-
-    By default this returns the historical metrics dataframe. When
-    ``return_embeddings`` is true, it returns ``(metrics_df,
-    embedding_manifest_df, embedding_arrays)`` so notebooks can retain model
-    vectors in an NPZ bundle without storing high-dimensional values in CSV.
-    """
-    required_columns = [
-        "case_id",
-        "painting_id",
-        "model_name",
-        "clean_path",
-        "damaged_path",
-        "restored_path",
-        "mask_path",
-        "content_x_min",
-        "content_y_min",
-        "content_x_max",
-        "content_y_max",
-    ]
-    missing_columns = [
-        column
-        for column in required_columns
-        if column not in restoration_metadata.columns
-    ]
-
-    if missing_columns:
-        raise ValueError(
-            f"Restoration metadata missing required columns: {missing_columns}"
-        )
-
-    if restoration_metadata.empty:
-        raise ValueError("Restoration metadata is empty.")
-
-    if target_size is None:
-        expected_size = None
-    elif isinstance(target_size, int):
-        expected_size = (target_size, target_size)
-    else:
-        expected_size = tuple(target_size)
-
-    sort_columns = [
-        column
-        for column in ("dataset_name", "painting_id", "mask_type", "case_id")
-        if column in restoration_metadata.columns
-    ]
-    sorted_metadata = (
-        restoration_metadata
-        .sort_values(sort_columns, kind="stable")
-        .reset_index(drop=True)
-    )
-
-    records: list[dict[str, Any]] = []
-    embedding_manifest_records: list[dict[str, Any]] = []
-    embedding_arrays: dict[str, np.ndarray] = {}
-    total_cases = len(sorted_metadata)
-    computation_start_time = time.perf_counter()
-    device_name = str(device)
-    torch_version = get_package_version("torch")
-    torchvision_version = get_package_version("torchvision")
-    transformers_version = get_package_version("transformers")
-
-    print("Starting feature-similarity metric computation")
-    print(f"  Cases: {total_cases}")
-    print(f"  Target size: {expected_size or 'not enforced'}")
-    print(f"  Feature input size: {feature_input_size}")
-    print(f"  CLIP model: {clip_model_name} ({clip_model_revision})")
-    print(f"  DINOv2 model: {dinov2_model_name} ({dinov2_model_revision})")
-    print(f"  Device: {device_name}")
-
-    for case_index, (_, row) in enumerate(sorted_metadata.iterrows(), start=1):
-        case_start_time = time.perf_counter()
-
-        if progress_every and (
-            case_index == 1
-            or case_index % progress_every == 0
-            or case_index == total_cases
-        ):
-            elapsed = time.perf_counter() - computation_start_time
-            print(
-                f"Computing feature case {case_index}/{total_cases} "
-                f"({row['case_id']}) | elapsed {elapsed:.2f}s"
-            )
-
-        try:
-            clean_image = load_rgb_image(row["clean_path"])
-            damaged_image = load_rgb_image(row["damaged_path"])
-            restored_image = load_rgb_image(row["restored_path"])
-            mask_bool = load_mask_bool(
-                row["mask_path"],
-                threshold=mask_binary_threshold,
-            )
-
-            if clean_image.size != damaged_image.size or clean_image.size != restored_image.size:
-                raise ValueError(
-                    f"Image size mismatch for case {row['case_id']}: "
-                    f"clean={clean_image.size}, damaged={damaged_image.size}, "
-                    f"restored={restored_image.size}"
-                )
-
-            if mask_bool.shape != (clean_image.size[1], clean_image.size[0]):
-                raise ValueError(
-                    f"Mask shape mismatch for case {row['case_id']}: "
-                    f"mask={mask_bool.shape}, image={clean_image.size}"
-                )
-
-            if expected_size is not None and clean_image.size != expected_size:
-                raise ValueError(
-                    f"Unexpected image size for case {row['case_id']}: "
-                    f"{clean_image.size}, expected {expected_size}"
-                )
-
-            region_boxes = {
-                "full_image": (
-                    0,
-                    0,
-                    clean_image.size[0],
-                    clean_image.size[1],
-                ),
-                "content_region": get_content_box_from_row(
-                    row,
-                    image_size=clean_image.size,
-                ),
-            }
-
-            mask_box = get_mask_bbox(mask_bool, margin=mask_bbox_margin)
-            if mask_box is not None:
-                region_boxes["mask_bbox_crop"] = make_square_crop_box(
-                    mask_box,
-                    image_size=clean_image.size,
-                )
-
-            row_records: list[dict[str, Any]] = []
-
-            for evaluation_region, region_box in region_boxes.items():
-                metric_start_time = time.perf_counter()
-                clean_region = crop_image_region(
-                    clean_image,
-                    region_box,
-                    resize_to=feature_input_size,
-                )
-                damaged_region = crop_image_region(
-                    damaged_image,
-                    region_box,
-                    resize_to=feature_input_size,
-                )
-                restored_region = crop_image_region(
-                    restored_image,
-                    region_box,
-                    resize_to=feature_input_size,
-                )
-                if return_embeddings:
-                    similarities, region_embeddings = (
-                        compute_feature_similarities_and_embeddings_for_region(
-                            clean_region=clean_region,
-                            damaged_region=damaged_region,
-                            restored_region=restored_region,
-                            clip_model=clip_model,
-                            clip_processor=clip_processor,
-                            dinov2_model=dinov2_model,
-                            device=device,
-                            feature_input_size=feature_input_size,
-                            embedding_dtype=embedding_dtype,
-                        )
-                    )
-                else:
-                    similarities = compute_feature_similarities_for_region(
-                        clean_region=clean_region,
-                        damaged_region=damaged_region,
-                        restored_region=restored_region,
-                        clip_model=clip_model,
-                        clip_processor=clip_processor,
-                        dinov2_model=dinov2_model,
-                        device=device,
-                        feature_input_size=feature_input_size,
-                    )
-                    region_embeddings = {}
-
-                metric_runtime_seconds = time.perf_counter() - metric_start_time
-                feature_record = _build_feature_record(
-                    row=row,
-                    evaluation_region=evaluation_region,
-                    region_box=region_box,
-                    similarities=similarities,
-                    clip_model_name=clip_model_name,
-                    clip_model_revision=clip_model_revision,
-                    dinov2_model_name=dinov2_model_name,
-                    dinov2_model_revision=dinov2_model_revision,
-                    feature_input_size=feature_input_size,
-                    mask_bbox_margin=mask_bbox_margin,
-                    mask_binary_threshold=mask_binary_threshold,
-                    device_name=device_name,
-                    torch_version=torch_version,
-                    torchvision_version=torchvision_version,
-                    transformers_version=transformers_version,
-                    metric_runtime_seconds=metric_runtime_seconds,
-                    case_runtime_seconds=0.0,
-                )
-                row_records.append(feature_record)
-
-                if return_embeddings:
-                    _append_embedding_records(
-                        embedding_manifest_records=embedding_manifest_records,
-                        embedding_arrays=embedding_arrays,
-                        record=feature_record,
-                        region_embeddings=region_embeddings,
-                        embedding_dtype=embedding_dtype,
-                    )
-            case_runtime_seconds = time.perf_counter() - case_start_time
-            for record in row_records:
-                record["case_runtime_seconds"] = float(case_runtime_seconds)
-            records.extend(row_records)
-
-        except Exception as exc:
-            case_runtime_seconds = time.perf_counter() - case_start_time
-            restoration_case_id = row.get(
-                "restoration_case_id",
-                row.get("case_id", ""),
-            )
-            metric_case_id = row.get("metric_case_id", restoration_case_id)
-            mask_id = row.get("metric_mask_id", row.get("mask_id", ""))
-            mask_type = row.get("metric_mask_type", row.get("mask_type", ""))
-            mask_area_pixels = _to_int(row.get("mask_area_pixels", 0), default=0)
-            is_zero_control = infer_zero_control_flag(row)
-            records.append(
-                {
-                    "feature_row_id": f"{metric_case_id}__error__feature_similarity",
-                    "feature_case_id": metric_case_id,
-                    "metric_case_id": metric_case_id,
-                    "restoration_case_id": restoration_case_id,
-                    "source_case_id": row.get("source_case_id", row.get("case_id", "")),
-                    "source_case_id_original": row.get(
-                        "source_case_id_original",
-                        row.get("source_case_id", row.get("case_id", "")),
-                    ),
-                    "case_id": row.get("case_id", ""),
-                    "dataset_name": row.get("dataset_name", "canonical"),
-                    "metric_applicability": row.get("metric_applicability", "primary"),
-                    "painting_id": row.get("painting_id", ""),
-                    "category": row.get("category", ""),
-                    "title": row.get("title", ""),
-                    "artist": row.get("artist", ""),
-                    "style": row.get("style", row.get("style_or_period", "")),
-                    "model_name": row.get("model_name", ""),
-                    "mask_id": mask_id,
-                    "mask_type": mask_type,
-                    "metric_mask_id": mask_id,
-                    "metric_mask_type": mask_type,
-                    "evaluation_region": "error",
-                    "region_pixel_count": 0,
-                    "region_x_min": None,
-                    "region_y_min": None,
-                    "region_x_max": None,
-                    "region_y_max": None,
-                    "mask_area_pixels": mask_area_pixels,
-                    "is_zero_control": is_zero_control,
-                    "mask_threshold_rule": f"> {mask_binary_threshold}",
-                    "mask_bbox_margin": int(mask_bbox_margin),
-                    "feature_input_size": int(feature_input_size),
-                    "clip_model_name": clip_model_name,
-                    "clip_model_revision": clip_model_revision,
-                    "dinov2_model_name": dinov2_model_name,
-                    "dinov2_model_revision": dinov2_model_revision,
-                    "clean_embedding_id": "",
-                    "damaged_embedding_id": "",
-                    "restored_embedding_id": "",
-                    "embedding_group_id": "",
-                    "clip_damaged_similarity": np.nan,
-                    "clip_restored_similarity": np.nan,
-                    "clip_similarity_improvement": np.nan,
-                    "dinov2_damaged_similarity": np.nan,
-                    "dinov2_restored_similarity": np.nan,
-                    "dinov2_similarity_improvement": np.nan,
-                    "mean_similarity_improvement": np.nan,
-                    "metric_runtime_seconds": 0.0,
-                    "case_runtime_seconds": float(case_runtime_seconds),
-                    "feature_similarity_schema_version": FEATURE_SIMILARITY_METRIC_SCHEMA_VERSION,
-                    "feature_similarity_implementation_name": FEATURE_SIMILARITY_MODULE_NAME,
-                    "device": device_name,
-                    "python_version": platform.python_version(),
-                    "numpy_version": np.__version__,
-                    "pandas_version": pd.__version__,
-                    "pillow_version": Image.__version__,
-                    "torch_version": torch_version,
-                    "torchvision_version": torchvision_version,
-                    "transformers_version": transformers_version,
-                    "status": "error",
-                    "issue": f"{type(exc).__name__}: {exc}",
-                }
-            )
-            print(
-                f"  Error in feature case {case_index}/{total_cases} "
-                f"({row.get('case_id', '')}): {type(exc).__name__}: {exc}"
-            )
-
-    metrics_df = pd.DataFrame(records)
-    elapsed_total = time.perf_counter() - computation_start_time
-
-    print("Feature-similarity metric computation complete")
-    print(f"  Runtime: {elapsed_total:.2f} seconds")
-    print(f"  Output rows: {len(metrics_df)}")
-
-    if "evaluation_region" in metrics_df.columns:
-        print("  Region counts:")
-        print(metrics_df["evaluation_region"].value_counts().to_string())
-
-    if "status" in metrics_df.columns:
-        print("  Status counts:")
-        print(metrics_df["status"].value_counts(dropna=False).to_string())
-
-    if return_embeddings:
-        embedding_manifest_df = pd.DataFrame(embedding_manifest_records)
-        print(f"  Retained embeddings: {len(embedding_manifest_df)}")
-        return metrics_df, embedding_manifest_df, embedding_arrays
-
-    return metrics_df
-
-
-def compute_feature_similarity_for_restorations_with_embeddings(
-    restoration_metadata: pd.DataFrame,
-    clip_model: Any,
-    clip_processor: Any,
-    dinov2_model: Any,
-    device: Any,
-    clip_model_name: str = DEFAULT_CLIP_MODEL_NAME,
-    clip_model_revision: str = DEFAULT_CLIP_MODEL_REVISION,
-    dinov2_model_name: str = DEFAULT_DINOV2_MODEL_NAME,
-    dinov2_model_revision: str = DEFAULT_DINOV2_MODEL_REVISION,
-    target_size: int | tuple[int, int] | None = 768,
-    mask_bbox_margin: int = DEFAULT_MASK_BBOX_MARGIN,
-    feature_input_size: int = DEFAULT_FEATURE_INPUT_SIZE,
-    mask_binary_threshold: int = DEFAULT_MASK_BINARY_THRESHOLD,
-    progress_every: int | None = 25,
-    embedding_dtype: str = "float32",
-) -> tuple[pd.DataFrame, pd.DataFrame, dict[str, np.ndarray]]:
-    """Compute feature similarities and return retained embedding artifacts."""
-    metrics_df, embedding_manifest_df, embedding_arrays = (
-        compute_feature_similarity_for_restorations(
-            restoration_metadata=restoration_metadata,
-            clip_model=clip_model,
-            clip_processor=clip_processor,
-            dinov2_model=dinov2_model,
-            device=device,
-            clip_model_name=clip_model_name,
-            clip_model_revision=clip_model_revision,
-            dinov2_model_name=dinov2_model_name,
-            dinov2_model_revision=dinov2_model_revision,
-            target_size=target_size,
-            mask_bbox_margin=mask_bbox_margin,
-            feature_input_size=feature_input_size,
-            mask_binary_threshold=mask_binary_threshold,
-            progress_every=progress_every,
-            return_embeddings=True,
-            embedding_dtype=embedding_dtype,
-        )
-    )
-    return metrics_df, embedding_manifest_df, embedding_arrays
-
-
-def validate_feature_similarity_metrics(
-    feature_df: pd.DataFrame,
-    expected_rows: int | None = None,
-    expected_region_counts: dict[str, int] | None = None,
-    key_columns: Iterable[str] = (
-        "dataset_name",
-        "feature_case_id",
-        "model_name",
-        "evaluation_region",
-    ),
+def construct_feature_metrics(
+    execution_plan: pd.DataFrame, embedding_manifest: pd.DataFrame,
+    arrays: Mapping[str, np.ndarray], *, config: Mapping[str, Any],
+    device: str, package_versions: Mapping[str, str] | None = None,
 ) -> pd.DataFrame:
-    """Validate feature-similarity output structure, counts, and policy."""
-    required_columns = [
-        "feature_row_id",
-        "feature_case_id",
-        "restoration_case_id",
-        "dataset_name",
-        "painting_id",
-        "model_name",
-        "evaluation_region",
-        "region_pixel_count",
-        "clip_damaged_similarity",
-        "clip_restored_similarity",
-        "clip_similarity_improvement",
-        "dinov2_damaged_similarity",
-        "dinov2_restored_similarity",
-        "dinov2_similarity_improvement",
-        "mean_similarity_improvement",
-        "feature_similarity_schema_version",
-        "feature_similarity_implementation_name",
-        "status",
-        "issue",
-    ]
-    missing_columns = [
-        column
-        for column in required_columns
-        if column not in feature_df.columns
-    ]
+    """Construct normalized long-form cosine metrics from retained vectors."""
 
-    validation_rows: list[dict[str, Any]] = [
-        {
-            "check": "required_columns",
-            "passed": not missing_columns,
-            "detail": (
-                "All required columns present."
-                if not missing_columns
-                else f"Missing columns: {missing_columns}"
-            ),
-        }
-    ]
-
-    if expected_rows is not None:
-        validation_rows.append(
-            {
-                "check": "row_count",
-                "passed": len(feature_df) == expected_rows,
-                "detail": f"Expected {expected_rows}, found {len(feature_df)}.",
-            }
-        )
-
-    if "status" in feature_df.columns:
-        error_rows = int((feature_df["status"] == "error").sum())
-        validation_rows.append(
-            {
-                "check": "no_error_rows",
-                "passed": error_rows == 0,
-                "detail": f"Error rows: {error_rows}.",
-            }
-        )
-
-    available_key_columns = [
-        column
-        for column in key_columns
-        if column in feature_df.columns
-    ]
-    if len(available_key_columns) == len(tuple(key_columns)):
-        duplicate_rows = int(
-            feature_df.duplicated(available_key_columns, keep=False).sum()
-        )
-        validation_rows.append(
-            {
-                "check": "unique_feature_keys",
-                "passed": duplicate_rows == 0,
-                "detail": f"Rows participating in duplicate keys: {duplicate_rows}.",
-            }
-        )
-
-    if expected_region_counts is not None and "evaluation_region" in feature_df.columns:
-        actual_region_counts = feature_df["evaluation_region"].value_counts().to_dict()
-        mismatches = {
-            region: {
-                "expected": expected_count,
-                "actual": int(actual_region_counts.get(region, 0)),
-            }
-            for region, expected_count in expected_region_counts.items()
-            if int(actual_region_counts.get(region, 0)) != int(expected_count)
-        }
-        validation_rows.append(
-            {
-                "check": "region_counts",
-                "passed": not mismatches,
-                "detail": (
-                    "All evaluation-region counts match expectations."
-                    if not mismatches
-                    else f"Mismatches: {mismatches}"
+    lookup = _embedding_lookup(embedding_manifest)
+    versions = dict(package_versions or {})
+    records: list[dict[str, Any]] = []
+    for row in execution_plan.itertuples(index=False):
+        for spec in feature_model_specs(config).values():
+            ids = {role: embedding_id_for(
+                spec.feature_model_id, role, painting_id=str(row.painting_id),
+                case_id=str(row.case_id), candidate_id=str(row.candidate_id),
+                region_id=str(row.region_id),
+            ) for role in IMAGE_ROLES}
+            damaged_value = restored_value = improvement = math.nan
+            issue = ""
+            try:
+                vectors: dict[str, np.ndarray] = {}
+                for role, embedding_id in ids.items():
+                    array_name, array_index, embedding_status = lookup[embedding_id]
+                    if embedding_status != "ok":
+                        raise ValueError(f"{role} embedding status is {embedding_status}")
+                    vectors[role] = np.asarray(arrays[array_name][array_index], dtype=np.float32)
+                damaged_value = float(np.dot(vectors["clean"], vectors["damaged"]))
+                restored_value = float(np.dot(vectors["clean"], vectors["restored"]))
+                improvement = restored_value - damaged_value
+                status = "ok"
+            except Exception as exc:
+                status = "error"
+                issue = f"{type(exc).__name__}: {exc}"
+            records.append({
+                "metric_row_id": metric_row_id(
+                    str(row.case_id), str(row.candidate_id), spec.feature_model_id,
+                    str(row.region_id),
                 ),
-            }
-        )
-
-    if "evaluation_region" in feature_df.columns:
-        invalid_regions = sorted(
-            set(feature_df["evaluation_region"].dropna().astype(str))
-            - set(FEATURE_SIMILARITY_EVALUATION_REGIONS)
-        )
-        invalid_regions = [
-            region
-            for region in invalid_regions
-            if region != "error"
-        ]
-        validation_rows.append(
-            {
-                "check": "region_policy",
-                "passed": not invalid_regions,
-                "detail": (
-                    "All feature rows use image-like evaluation regions."
-                    if not invalid_regions
-                    else f"Invalid feature regions: {invalid_regions}"
+                "case_id": str(row.case_id), "candidate_id": str(row.candidate_id),
+                "model_id": str(row.model_id), "metric_family": "feature_similarity",
+                "metric_name": spec.metric_name, "feature_model_id": spec.feature_model_id,
+                "region_id": str(row.region_id), "region_pixel_count": int(row.region_pixel_count),
+                "region_width": int(row.region_width), "region_height": int(row.region_height),
+                "damaged_embedding_id": ids["damaged"],
+                "restored_embedding_id": ids["restored"], "clean_embedding_id": ids["clean"],
+                "damaged_value": damaged_value, "restored_value": restored_value,
+                "improvement_value": improvement,
+                "improvement_direction": "restored_minus_damaged",
+                "metric_version": FEATURE_METRIC_VERSION,
+                "region_policy_version": str(_settings(config)["regions"]["policy_version"]),
+                "preprocessing_id": spec.preprocessing_id, "input_size": spec.input_size,
+                "model_name": spec.model_name, "model_revision": spec.model_revision,
+                "model_checksum": spec.model_checksum,
+                "schema_version": FEATURE_METRICS_SCHEMA_VERSION, "device": str(device),
+                "package_version": versions.get(
+                    spec.package_name, get_package_version(spec.package_name)
                 ),
-            }
-        )
-
-    if "region_pixel_count" in feature_df.columns and "status" in feature_df.columns:
-        invalid_counts = int(
-            (
-                feature_df["status"].eq("ok")
-                & feature_df["region_pixel_count"].le(0)
-            ).sum()
-        )
-        validation_rows.append(
-            {
-                "check": "positive_region_pixel_counts",
-                "passed": invalid_counts == 0,
-                "detail": (
-                    f"Successful rows with non-positive region size: "
-                    f"{invalid_counts}."
-                ),
-            }
-        )
-
-    similarity_columns = [
-        "clip_damaged_similarity",
-        "clip_restored_similarity",
-        "dinov2_damaged_similarity",
-        "dinov2_restored_similarity",
-    ]
-    available_similarity_columns = [
-        column
-        for column in similarity_columns
-        if column in feature_df.columns
-    ]
-    if available_similarity_columns and "status" in feature_df.columns:
-        ok_similarity_df = feature_df.loc[
-            feature_df["status"].eq("ok"),
-            available_similarity_columns,
-        ]
-        outside_range = int(
-            (
-                ok_similarity_df.lt(-1.0001)
-                | ok_similarity_df.gt(1.0001)
-                | ~np.isfinite(ok_similarity_df)
-            ).sum().sum()
-        )
-        validation_rows.append(
-            {
-                "check": "similarity_value_ranges",
-                "passed": outside_range == 0,
-                "detail": (
-                    "All successful cosine similarities are finite and within [-1, 1]."
-                    if outside_range == 0
-                    else f"Out-of-range similarity values: {outside_range}."
-                ),
-            }
-        )
-
-    for model_prefix in ("clip", "dinov2"):
-        damaged_column = f"{model_prefix}_damaged_similarity"
-        restored_column = f"{model_prefix}_restored_similarity"
-        improvement_column = f"{model_prefix}_similarity_improvement"
-        if {
-            damaged_column,
-            restored_column,
-            improvement_column,
-            "status",
-        }.issubset(feature_df.columns):
-            ok_df = feature_df.loc[feature_df["status"].eq("ok")].copy()
-            if ok_df.empty:
-                mismatch_count = 0
-            else:
-                expected_values = (
-                    ok_df[restored_column].astype(float)
-                    - ok_df[damaged_column].astype(float)
-                )
-                mismatch_count = int(
-                    (
-                        ~np.isclose(
-                        ok_df[improvement_column].astype(float),
-                        expected_values,
-                        atol=1e-7,
-                        equal_nan=True,
-                    )
-                    ).sum()
-                )
-            validation_rows.append(
-                {
-                    "check": f"{model_prefix}_improvement_direction",
-                    "passed": mismatch_count == 0,
-                    "detail": (
-                        f"{improvement_column} equals restored - damaged."
-                        if mismatch_count == 0
-                        else f"Improvement mismatch rows: {mismatch_count}."
-                    ),
-                }
-            )
-
-    return pd.DataFrame(validation_rows)
+                "status": status, "issue": issue,
+            })
+    return pd.DataFrame(records, columns=FEATURE_METRICS_COLUMNS)
 
 
 def validate_feature_embedding_manifest(
-    embedding_manifest_df: pd.DataFrame,
-    embedding_arrays: dict[str, np.ndarray] | None = None,
-    expected_feature_rows: int | None = None,
-    expected_vectors_per_feature_row: int = 6,
-) -> pd.DataFrame:
-    """Validate retained embedding manifest structure and optional NPZ keys."""
-    required_columns = [
-        "embedding_manifest_schema_version",
-        "feature_row_id",
-        "feature_case_id",
-        "metric_case_id",
-        "evaluation_region",
-        "image_role",
-        "model_family",
-        "embedding_id",
-        "embedding_group_id",
-        "npz_key",
-        "vector_dim",
-        "dtype",
-        "status",
-    ]
-    missing_columns = [
-        column
-        for column in required_columns
-        if column not in embedding_manifest_df.columns
-    ]
+    manifest: pd.DataFrame, arrays: Mapping[str, np.ndarray], *,
+    config: Mapping[str, Any], expected_plan: pd.DataFrame | None = None,
+) -> dict[str, Any]:
+    """Validate schema, coverage, matrices, dtype, indices, checksums, and norms."""
 
-    validation_rows: list[dict[str, Any]] = [
-        {
-            "check": "required_columns",
-            "passed": not missing_columns,
-            "detail": (
-                "All required embedding manifest columns present."
-                if not missing_columns
-                else f"Missing columns: {missing_columns}"
-            ),
-        }
-    ]
-
-    if expected_feature_rows is not None:
-        expected_embedding_rows = (
-            int(expected_feature_rows)
-            * int(expected_vectors_per_feature_row)
-        )
-        validation_rows.append(
-            {
-                "check": "embedding_row_count",
-                "passed": len(embedding_manifest_df) == expected_embedding_rows,
-                "detail": (
-                    f"Expected {expected_embedding_rows}, "
-                    f"found {len(embedding_manifest_df)}."
-                ),
-            }
-        )
-
-    if "npz_key" in embedding_manifest_df.columns:
-        duplicate_npz_keys = int(
-            embedding_manifest_df["npz_key"].duplicated(keep=False).sum()
-        )
-        validation_rows.append(
-            {
-                "check": "unique_npz_keys",
-                "passed": duplicate_npz_keys == 0,
-                "detail": f"Rows participating in duplicate npz_key values: {duplicate_npz_keys}.",
-            }
-        )
-
-    if {"model_family", "image_role"}.issubset(embedding_manifest_df.columns):
-        invalid_model_families = sorted(
-            set(embedding_manifest_df["model_family"].dropna().astype(str))
-            - {"clip", "dinov2"}
-        )
-        invalid_image_roles = sorted(
-            set(embedding_manifest_df["image_role"].dropna().astype(str))
-            - {"clean", "damaged", "restored"}
-        )
-        validation_rows.append(
-            {
-                "check": "known_embedding_axes",
-                "passed": not invalid_model_families and not invalid_image_roles,
-                "detail": (
-                    "All embedding rows use expected model/image-role axes."
-                    if not invalid_model_families and not invalid_image_roles
-                    else (
-                        f"Invalid model families: {invalid_model_families}; "
-                        f"invalid image roles: {invalid_image_roles}."
-                    )
-                ),
-            }
-        )
-
-    if "vector_dim" in embedding_manifest_df.columns:
-        vector_dims = pd.to_numeric(
-            embedding_manifest_df["vector_dim"],
-            errors="coerce",
-        )
-        invalid_dims = int((vector_dims.isna() | vector_dims.le(0)).sum())
-        validation_rows.append(
-            {
-                "check": "positive_vector_dims",
-                "passed": invalid_dims == 0,
-                "detail": f"Embedding rows with invalid vector_dim: {invalid_dims}.",
-            }
-        )
-
-    if embedding_arrays is not None and "npz_key" in embedding_manifest_df.columns:
-        expected_keys = set(embedding_manifest_df["npz_key"].dropna().astype(str))
-        actual_keys = set(str(key) for key in embedding_arrays.keys())
-        missing_keys = sorted(expected_keys - actual_keys)
-        extra_keys = sorted(actual_keys - expected_keys)
-        validation_rows.append(
-            {
-                "check": "manifest_npz_key_match",
-                "passed": not missing_keys and not extra_keys,
-                "detail": (
-                    "Embedding manifest keys match retained arrays."
-                    if not missing_keys and not extra_keys
-                    else (
-                        f"Missing keys: {missing_keys[:10]}; "
-                        f"extra keys: {extra_keys[:10]}."
-                    )
-                ),
-            }
-        )
-
-        if not missing_keys:
-            dimension_mismatches = 0
-            if "vector_dim" in embedding_manifest_df.columns:
-                for _, row in embedding_manifest_df.iterrows():
-                    npz_key = str(row["npz_key"])
-                    expected_dim = _to_int(row["vector_dim"], default=-1)
-                    actual_dim = int(np.asarray(embedding_arrays[npz_key]).reshape(-1).size)
-                    if expected_dim != actual_dim:
-                        dimension_mismatches += 1
-
-            validation_rows.append(
-                {
-                    "check": "manifest_vector_dims_match_arrays",
-                    "passed": dimension_mismatches == 0,
-                    "detail": f"Embedding dimension mismatches: {dimension_mismatches}.",
-                }
-            )
-
-    return pd.DataFrame(validation_rows)
-
-
-def summarize_feature_similarity_metrics(
-    feature_df: pd.DataFrame,
-    group_columns: list[str],
-) -> pd.DataFrame:
-    """Summarize feature-similarity metrics for notebook display and reports."""
-    if not group_columns:
-        raise ValueError("At least one group column is required.")
-
-    missing_group_columns = [
-        column
-        for column in group_columns
-        if column not in feature_df.columns
-    ]
-    if missing_group_columns:
-        raise ValueError(
-            f"Feature dataframe missing group columns: {missing_group_columns}"
-        )
-
-    summary_df = feature_df.copy()
-    if "status" in summary_df.columns:
-        summary_df = summary_df[summary_df["status"] != "error"].copy()
-
-    return (
-        summary_df
-        .groupby(group_columns, dropna=False, sort=False)
-        .agg(
-            rows=("feature_row_id", "count"),
-            cases=("feature_case_id", "nunique"),
-            median_clip_damaged_similarity=("clip_damaged_similarity", "median"),
-            median_clip_restored_similarity=("clip_restored_similarity", "median"),
-            median_clip_similarity_improvement=("clip_similarity_improvement", "median"),
-            mean_clip_damaged_similarity=("clip_damaged_similarity", "mean"),
-            mean_clip_restored_similarity=("clip_restored_similarity", "mean"),
-            mean_clip_similarity_improvement=("clip_similarity_improvement", "mean"),
-            clip_improvement_rate=("clip_similarity_improvement", lambda values: (values > 0).mean()),
-            median_dinov2_damaged_similarity=("dinov2_damaged_similarity", "median"),
-            median_dinov2_restored_similarity=("dinov2_restored_similarity", "median"),
-            median_dinov2_similarity_improvement=("dinov2_similarity_improvement", "median"),
-            mean_dinov2_damaged_similarity=("dinov2_damaged_similarity", "mean"),
-            mean_dinov2_restored_similarity=("dinov2_restored_similarity", "mean"),
-            mean_dinov2_similarity_improvement=("dinov2_similarity_improvement", "mean"),
-            dinov2_improvement_rate=("dinov2_similarity_improvement", lambda values: (values > 0).mean()),
-            mean_similarity_improvement=("mean_similarity_improvement", "mean"),
-            median_region_pixel_count=("region_pixel_count", "median"),
-        )
-        .reset_index()
-        .round(6)
+    schema = validate_dataframe(
+        manifest, FEATURE_EMBEDDING_MANIFEST_SCHEMA, allow_extra_columns=False
     )
-
-
-def rank_feature_similarity_cases(
-    feature_df: pd.DataFrame,
-    evaluation_region: str = "mask_bbox_crop",
-    metric: str = "dinov2_similarity_improvement",
-    top_n: int = 10,
-) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Return strongest and weakest cases by feature-similarity improvement."""
-    if metric not in feature_df.columns:
-        raise ValueError(f"Metric column not found: {metric}")
-
-    region_df = (
-        feature_df.loc[
-            feature_df["evaluation_region"].eq(evaluation_region)
-            & feature_df["status"].eq("ok")
+    expected_ids = (set(expected_plan["embedding_id"].astype(str))
+                    if expected_plan is not None
+                    else set(manifest["embedding_id"].astype(str)))
+    observed_ids = set(manifest["embedding_id"].astype(str))
+    matrix_failures = index_failures = norm_failures = checksum_failures = 0
+    tolerance = float(
+        _settings(config)["finite_value_policy"]["normalized_embedding_norm_tolerance"]
+    )
+    for spec in feature_model_specs(config).values():
+        rows = manifest.loc[
+            manifest["feature_model_id"].astype(str).eq(spec.feature_model_id)
         ]
-        .copy()
+        array = arrays.get(spec.array_name)
+        if array is None or tuple(array.shape) != (len(rows), spec.embedding_dimension):
+            matrix_failures += 1
+            continue
+        if np.asarray(array).dtype != np.float32 or not np.isfinite(array).all():
+            matrix_failures += 1
+        indices = rows["array_index"].to_numpy(dtype=int)
+        if not np.array_equal(np.sort(indices), np.arange(len(rows), dtype=int)):
+            index_failures += 1
+        norms = np.linalg.norm(np.asarray(array, dtype=np.float32), axis=1)
+        norm_failures += int((np.abs(norms - 1.0) > tolerance).sum())
+        checksum_failures += int((~rows["source_sha256"].astype(str)
+                                  .str.fullmatch(r"[0-9a-f]{64}")).sum())
+    error_rows = int(manifest["status"].astype(str).eq("error").sum())
+    passed = bool(
+        schema.passed and expected_ids == observed_ids and matrix_failures == 0
+        and index_failures == 0 and norm_failures == 0
+        and checksum_failures == 0 and error_rows == 0
     )
+    return {
+        "schema": schema.to_dict(), "row_count": len(manifest),
+        "expected_row_count": len(expected_ids),
+        "missing_embedding_id_count": len(expected_ids - observed_ids),
+        "unexpected_embedding_id_count": len(observed_ids - expected_ids),
+        "matrix_failure_count": matrix_failures,
+        "array_index_failure_count": index_failures,
+        "embedding_norm_failure_count": norm_failures,
+        "source_checksum_failure_count": checksum_failures,
+        "error_row_count": error_rows, "passed": passed,
+    }
 
-    strongest_df = (
-        region_df
-        .sort_values(
-            [metric, "feature_case_id"],
-            ascending=[False, True],
-            kind="stable",
+
+def validate_feature_metrics(
+    metrics: pd.DataFrame, execution_plan: pd.DataFrame,
+    embedding_manifest: pd.DataFrame, *, config: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Validate schema, exact keys, references, bounds, arithmetic, and controls."""
+
+    schema = validate_dataframe(metrics, FEATURE_METRICS_SCHEMA, allow_extra_columns=False)
+    expected_keys = {
+        (str(row.candidate_id), str(row.region_id), feature_model_id)
+        for row in execution_plan.itertuples(index=False)
+        for feature_model_id in FEATURE_MODEL_IDS
+    }
+    observed_keys = set(metrics[["candidate_id", "region_id", "feature_model_id"]]
+                        .astype(str).itertuples(index=False, name=None))
+    ok = metrics["status"].astype(str).eq("ok")
+    values = metrics.loc[ok, ["damaged_value", "restored_value", "improvement_value"]]
+    finite_failures = int((~np.isfinite(values.to_numpy(dtype=float))).sum())
+    policy = _settings(config)["finite_value_policy"]
+    cosine = metrics.loc[ok, ["damaged_value", "restored_value"]].to_numpy(float)
+    bound_failures = int(((cosine < float(policy["cosine_minimum"]))
+                          | (cosine > float(policy["cosine_maximum"]))).sum())
+    expected_improvement = (metrics.loc[ok, "restored_value"].astype(float)
+                            - metrics.loc[ok, "damaged_value"].astype(float))
+    arithmetic_failures = int((np.abs(
+        expected_improvement - metrics.loc[ok, "improvement_value"].astype(float)
+    ) > float(policy["improvement_tolerance"])).sum())
+    available = set(embedding_manifest.loc[
+        embedding_manifest["status"].astype(str).eq("ok"), "embedding_id"
+    ].astype(str))
+    reference_failures = sum(int((~metrics[column].astype(str).isin(available)).sum())
+                             for column in ("clean_embedding_id",
+                                            "damaged_embedding_id",
+                                            "restored_embedding_id"))
+    zero_ids = set(execution_plan.loc[
+        execution_plan["is_zero_control"].astype(bool), "candidate_id"
+    ].astype(str))
+    zero = metrics.loc[ok & metrics["candidate_id"].astype(str).isin(zero_ids)]
+    tolerance = float(policy["zero_control_tolerance"])
+    zero_failures = int(((np.abs(zero["damaged_value"].astype(float) - 1.0) > tolerance)
+                         | (np.abs(zero["restored_value"].astype(float) - 1.0) > tolerance)
+                         | (np.abs(zero["improvement_value"].astype(float)) > tolerance)).sum())
+    error_rows = int((~ok).sum())
+    passed = bool(
+        schema.passed and expected_keys == observed_keys and len(metrics) == len(expected_keys)
+        and finite_failures == 0 and bound_failures == 0 and arithmetic_failures == 0
+        and reference_failures == 0 and zero_failures == 0 and error_rows == 0
+    )
+    return {
+        "schema": schema.to_dict(), "row_count": len(metrics),
+        "expected_row_count": len(expected_keys),
+        "missing_key_count": len(expected_keys - observed_keys),
+        "unexpected_key_count": len(observed_keys - expected_keys),
+        "non_finite_ok_value_count": finite_failures,
+        "cosine_bound_failure_count": bound_failures,
+        "improvement_arithmetic_failure_count": arithmetic_failures,
+        "embedding_reference_failure_count": reference_failures,
+        "zero_control_failure_count": zero_failures,
+        "error_row_count": error_rows, "passed": passed,
+    }
+
+
+def build_scratch_prompt_pairs(
+    metrics: pd.DataFrame, worklist: pd.DataFrame, *, config: Mapping[str, Any],
+) -> pd.DataFrame:
+    """Build in-memory generic-vs-scratch-aware paired ablation evidence."""
+
+    analysis = _settings(config)["analysis"]
+    metadata = worklist[[
+        "candidate_id", "case_id", "painting_id", "seed", "prompt_variant_id",
+        "damage_or_degradation_type", "model_id",
+    ]].copy()
+    joined = metrics.merge(metadata, on=["candidate_id", "case_id", "model_id"],
+                           how="inner", validate="many_to_one")
+    selected = joined.loc[
+        joined["model_id"].astype(str).eq("stable_diffusion_inpainting")
+        & joined["damage_or_degradation_type"].astype(str).eq(
+            str(analysis["scratch_damage_type"])
         )
-        .head(top_n)
-        .reset_index(drop=True)
+        & joined["prompt_variant_id"].astype(str).isin({
+            str(analysis["generic_prompt_variant_id"]),
+            str(analysis["scratch_aware_prompt_variant_id"]),
+        })
+    ].copy()
+    keys = ["case_id", "painting_id", "seed", "region_id", "feature_model_id"]
+    generic = selected.loc[
+        selected["prompt_variant_id"].astype(str).eq(
+            str(analysis["generic_prompt_variant_id"])
+        ), keys + ["candidate_id", "improvement_value"]
+    ].rename(columns={"candidate_id": "generic_candidate_id",
+                      "improvement_value": "generic_improvement_value"})
+    aware = selected.loc[
+        selected["prompt_variant_id"].astype(str).eq(
+            str(analysis["scratch_aware_prompt_variant_id"])
+        ), keys + ["candidate_id", "improvement_value"]
+    ].rename(columns={"candidate_id": "scratch_aware_candidate_id",
+                      "improvement_value": "scratch_aware_improvement_value"})
+    pairs = generic.merge(aware, on=keys, how="inner", validate="one_to_one")
+    pairs["scratch_aware_minus_generic"] = (
+        pairs["scratch_aware_improvement_value"].astype(float)
+        - pairs["generic_improvement_value"].astype(float)
     )
+    return pairs.loc[:, SCRATCH_PROMPT_PAIR_COLUMNS].sort_values(keys, kind="stable").reset_index(drop=True)
 
-    weakest_df = (
-        region_df
-        .sort_values(
-            [metric, "feature_case_id"],
-            ascending=[True, True],
-            kind="stable",
+
+def save_feature_embedding_bundle(arrays: Mapping[str, np.ndarray], output_path: str | Path) -> Path:
+    """Persist exactly the two dense float32 matrices in compressed NPZ."""
+
+    if set(arrays) != {"clip_embeddings", "dinov2_embeddings"}:
+        raise ValueError("Embedding bundle must contain exactly CLIP and DINOv2 arrays")
+    target = Path(output_path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with target.open("wb") as handle:
+        np.savez_compressed(
+            handle, clip_embeddings=np.asarray(arrays["clip_embeddings"], dtype=np.float32),
+            dinov2_embeddings=np.asarray(arrays["dinov2_embeddings"], dtype=np.float32),
         )
-        .head(top_n)
-        .reset_index(drop=True)
+    return target
+
+
+def load_feature_embedding_bundle(path: str | Path) -> dict[str, np.ndarray]:
+    """Reload the canonical NPZ into detached arrays."""
+
+    with np.load(Path(path), allow_pickle=False) as bundle:
+        expected = {"clip_embeddings", "dinov2_embeddings"}
+        if set(bundle.files) != expected:
+            raise ValueError(f"Unexpected NPZ arrays: {sorted(bundle.files)}")
+        return {name: np.asarray(bundle[name], dtype=np.float32) for name in sorted(expected)}
+
+
+def _atomic_csv_with_recovery(
+    frame: pd.DataFrame, path: str | Path, *, retries: int = 5,
+    retry_delay_seconds: float = 0.25,
+) -> dict[str, Any]:
+    target = Path(path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    temporary = target.parent / f".{target.name}.{uuid.uuid4().hex}.tmp"
+    frame.to_csv(temporary, index=False)
+    last_error = ""
+    for attempt in range(1, retries + 1):
+        try:
+            os.replace(temporary, target)
+            return {"status": "canonical", "path": target, "attempts": attempt}
+        except PermissionError as exc:
+            last_error = f"{type(exc).__name__}: {exc}"
+            if attempt < retries:
+                time.sleep(retry_delay_seconds)
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+    recovery = target.with_name(f"{target.stem}.recovery-{stamp}{target.suffix}")
+    os.replace(temporary, recovery)
+    return {"status": "recovery", "path": recovery, "attempts": retries,
+            "issue": last_error}
+
+
+def write_embedding_checkpoint_manifest(
+    manifest: pd.DataFrame, path: str | Path,
+) -> dict[str, Any]:
+    """Write resumable manifest state with Windows-lock recovery."""
+
+    return _atomic_csv_with_recovery(
+        manifest.loc[:, FEATURE_EMBEDDING_MANIFEST_COLUMNS], path
     )
 
-    return strongest_df, weakest_df
+
+def find_latest_embedding_checkpoint(path: str | Path) -> Path | None:
+    target = Path(path)
+    candidates = [target] if target.is_file() else []
+    candidates.extend(item for item in target.parent.glob(
+        f"{target.stem}.recovery-*{target.suffix}") if item.is_file())
+    return max(candidates, key=lambda item: item.stat().st_mtime_ns) if candidates else None
+
+
+def load_latest_embedding_checkpoint(
+    path: str | Path,
+) -> tuple[pd.DataFrame, Path | None]:
+    """Load newest canonical/recovery manifest checkpoint."""
+
+    latest = find_latest_embedding_checkpoint(path)
+    if latest is None:
+        return pd.DataFrame(columns=FEATURE_EMBEDDING_MANIFEST_COLUMNS), None
+    frame = pd.read_csv(latest, keep_default_na=False)
+    missing = sorted(set(FEATURE_EMBEDDING_MANIFEST_COLUMNS) - set(frame.columns))
+    if missing:
+        raise ValueError(f"Checkpoint {latest} is missing columns: {missing}")
+    return frame.loc[:, FEATURE_EMBEDDING_MANIFEST_COLUMNS], latest

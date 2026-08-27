@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.12.0"
+SCHEMAS_MODULE_VERSION = "1.13.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -476,6 +476,25 @@ LPIPS_METRICS_COLUMNS = (
     "improvement_direction", "network", "metric_version",
     "region_policy_version", "schema_version", "device",
     "lpips_package_version", "metric_runtime_seconds", "status", "issue",
+)
+FEATURE_METRICS_COLUMNS = (
+    "metric_row_id", "case_id", "candidate_id", "model_id",
+    "metric_family", "metric_name", "feature_model_id", "region_id",
+    "region_pixel_count", "region_width", "region_height",
+    "damaged_embedding_id", "restored_embedding_id", "clean_embedding_id",
+    "damaged_value", "restored_value", "improvement_value",
+    "improvement_direction", "metric_version", "region_policy_version",
+    "preprocessing_id", "input_size", "model_name", "model_revision",
+    "model_checksum", "schema_version", "device", "package_version",
+    "status", "issue",
+)
+FEATURE_EMBEDDING_MANIFEST_COLUMNS = (
+    "embedding_id", "feature_model_id", "image_role", "painting_id",
+    "case_id", "representative_candidate_id", "region_id", "source_path",
+    "source_sha256", "array_name", "array_index", "embedding_dimension",
+    "dtype", "preprocessing_id", "input_width", "input_height",
+    "model_name", "model_revision", "model_checksum", "schema_version",
+    "status", "issue",
 )
 
 @dataclass(frozen=True)
@@ -1199,6 +1218,46 @@ LPIPS_METRICS_SCHEMA = DataFrameSchema(
         "status": frozenset({"ok", "error"}),
     },
 )
+FEATURE_METRICS_SCHEMA = DataFrameSchema(
+    name="feature_metrics",
+    version="feature_metrics.v1",
+    required_columns=FEATURE_METRICS_COLUMNS,
+    primary_key=("metric_row_id",),
+    non_nullable=tuple(
+        column for column in FEATURE_METRICS_COLUMNS
+        if column not in {
+            "damaged_value", "restored_value", "improvement_value", "issue"
+        }
+    ),
+    allowed_values={
+        "metric_family": frozenset({"feature_similarity"}),
+        "metric_name": frozenset({
+            "clip_cosine_similarity", "dinov2_cosine_similarity"
+        }),
+        "feature_model_id": frozenset({"clip_vit_b32", "dinov2_vits14"}),
+        "region_id": frozenset({"content_region", "mask_bbox_crop"}),
+        "improvement_direction": frozenset({"restored_minus_damaged"}),
+        "status": frozenset({"ok", "error"}),
+    },
+)
+FEATURE_EMBEDDING_MANIFEST_SCHEMA = DataFrameSchema(
+    name="feature_embedding_manifest",
+    version="feature_embedding_manifest.v1",
+    required_columns=FEATURE_EMBEDDING_MANIFEST_COLUMNS,
+    primary_key=("embedding_id",),
+    non_nullable=tuple(
+        column for column in FEATURE_EMBEDDING_MANIFEST_COLUMNS
+        if column not in {"case_id", "representative_candidate_id", "issue"}
+    ),
+    allowed_values={
+        "feature_model_id": frozenset({"clip_vit_b32", "dinov2_vits14"}),
+        "image_role": frozenset({"clean", "damaged", "restored"}),
+        "region_id": frozenset({"content_region", "mask_bbox_crop"}),
+        "array_name": frozenset({"clip_embeddings", "dinov2_embeddings"}),
+        "dtype": frozenset({"float32"}),
+        "status": frozenset({"ok", "error"}),
+    },
+)
 
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
@@ -1230,6 +1289,8 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     REGION_POLICY_SCHEMA.name: REGION_POLICY_SCHEMA,
     CLASSICAL_METRICS_SCHEMA.name: CLASSICAL_METRICS_SCHEMA,
     LPIPS_METRICS_SCHEMA.name: LPIPS_METRICS_SCHEMA,
+    FEATURE_METRICS_SCHEMA.name: FEATURE_METRICS_SCHEMA,
+    FEATURE_EMBEDDING_MANIFEST_SCHEMA.name: FEATURE_EMBEDDING_MANIFEST_SCHEMA,
 }
 
 
