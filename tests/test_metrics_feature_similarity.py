@@ -13,6 +13,7 @@ from restoration_eval.metrics_feature_similarity import (
     FEATURE_ACTIVE_REGIONS,
     build_feature_embedding_plan,
     build_feature_execution_plan,
+    build_scratch_prompt_pairs,
     construct_feature_metrics,
     extract_feature_model_embeddings,
     feature_model_specs,
@@ -20,6 +21,7 @@ from restoration_eval.metrics_feature_similarity import (
     load_feature_similarity_config,
     load_latest_embedding_checkpoint,
     populate_missing_source_checksums,
+    resolve_local_hf_snapshot,
     save_feature_embedding_bundle,
     validate_feature_embedding_manifest,
     validate_feature_metrics,
@@ -101,6 +103,22 @@ class FeatureSimilarityTests(unittest.TestCase):
         )
         self.assertEqual(FEATURE_ACTIVE_REGIONS, ("content_region", "mask_bbox_crop"))
 
+    def test_exact_local_hf_snapshot_resolution(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            cache_root = Path(temporary)
+            snapshot = (
+                cache_root / "hub"
+                / "models--openai--clip-vit-base-patch32"
+                / "snapshots" / "revision123"
+            )
+            snapshot.mkdir(parents=True)
+            resolved = resolve_local_hf_snapshot(
+                "openai/clip-vit-base-patch32",
+                "revision123",
+                cache_root=cache_root,
+            )
+            self.assertEqual(resolved, snapshot)
+
     def test_deduplicated_plans_and_fake_end_to_end_metrics(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -174,6 +192,41 @@ class FeatureSimilarityTests(unittest.TestCase):
             self.assertEqual(source, result["path"])
             self.assertEqual(tuple(reloaded.columns),
                              FEATURE_EMBEDDING_MANIFEST_SCHEMA.required_columns)
+
+    def test_scratch_pairs_use_stable_case_suffix_not_normalized_damage_family(self) -> None:
+        worklist = pd.DataFrame([
+            {
+                "candidate_id": "generic", "case_id": "canonical__p001__scratch_thin",
+                "painting_id": "p001", "seed": 2026,
+                "prompt_variant_id": "p00_generic",
+                "damage_or_degradation_type": "binary_missing_region",
+                "model_id": "stable_diffusion_inpainting",
+            },
+            {
+                "candidate_id": "aware", "case_id": "canonical__p001__scratch_thin",
+                "painting_id": "p001", "seed": 2026,
+                "prompt_variant_id": "p05_scratch_aware",
+                "damage_or_degradation_type": "binary_missing_region",
+                "model_id": "stable_diffusion_inpainting",
+            },
+        ])
+        records = []
+        for candidate_id, value in (("generic", 0.1), ("aware", 0.2)):
+            for region_id in ("content_region", "mask_bbox_crop"):
+                for feature_model_id in ("clip_vit_b32", "dinov2_vits14"):
+                    records.append({
+                        "candidate_id": candidate_id,
+                        "case_id": "canonical__p001__scratch_thin",
+                        "model_id": "stable_diffusion_inpainting",
+                        "region_id": region_id,
+                        "feature_model_id": feature_model_id,
+                        "improvement_value": value,
+                    })
+        pairs = build_scratch_prompt_pairs(
+            pd.DataFrame(records), worklist, config=self.config
+        )
+        self.assertEqual(len(pairs), 4)
+        self.assertTrue(np.allclose(pairs["scratch_aware_minus_generic"], 0.1))
 
     def test_real_contract_has_exact_candidate_region_and_embedding_counts(self) -> None:
         settings = self.config["feature_similarity"]

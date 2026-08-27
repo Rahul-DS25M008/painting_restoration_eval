@@ -1,0 +1,599 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_2b08762834b1423b8a61ef159c2679dc",
+  "notebook_id": "15",
+  "notebook_name": "15_feature_similarity",
+  "origin": "Consolidates Existing Notebooks 12, 18, and 25",
+  "run_status": "completed",
+  "started_at_utc": "2026-08-27T21:50:33.049201Z",
+  "completed_at_utc": "2026-08-27T22:23:25.639174Z",
+  "git_commit": "438d54463ff6784ef1ff652a3a119598dc1f009b",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260827T211559Z_6d76f81c",
+  "dataset_versions": {
+    "preprocessed_images": "preprocessed_images.v1",
+    "case_registry": "case_registry.v1",
+    "model_eligibility": "model_eligibility.v1",
+    "region_policy": "region_policy.v1",
+    "restorations": "restorations.v1",
+    "stable_diffusion_candidates": "stable_diffusion_candidates.v1",
+    "sdxl_partial_candidates": "sdxl_partial_candidates.v1",
+    "evaluation_worklist": "evaluation_worklist.v1",
+    "feature_metrics": "feature_metrics.v1",
+    "feature_embedding_manifest": "feature_embedding_manifest.v1",
+    "feature_embedding_bundle": "feature_embedding_bundle.v1"
+  },
+  "configuration_paths": [
+    "config/evaluation/feature_similarity.yaml",
+    "config/experiments/evaluation_contract.yaml"
+  ],
+  "configuration_checksums": {
+    "config/evaluation/feature_similarity.yaml": "a6e192759a77d78babb8282a4ceebed9c52292a44891499d43db8aae09a1c1a5",
+    "config/experiments/evaluation_contract.yaml": "ae977512636b0ea5eb16b4a3dff95c062f402c086430328a341c9d0bda6a3254"
+  },
+  "helper_versions": {
+    "restoration_eval": "0.1.0",
+    "evaluation_inputs": "1.0.1",
+    "manifests": "1.0.0",
+    "metrics_feature_similarity": "3.0.1",
+    "paths": "1.0.0",
+    "regions": "1.1.0",
+    "schemas": "1.13.0",
+    "validation": "1.0.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "matplotlib": "3.11.0",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3",
+    "torch": "2.5.1+cu121",
+    "torchvision": "0.20.1+cu121",
+    "transformers": "4.48.3"
+  },
+  "hardware": {
+    "feature_device": "cuda",
+    "cuda_available": true,
+    "cuda_device_name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "feature_models": {
+      "clip_vit_b32": {
+        "model_name": "openai/clip-vit-base-patch32",
+        "model_revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+        "embedding_dimension": 512
+      },
+      "dinov2_vits14": {
+        "model_name": "dinov2_vits14",
+        "model_revision": "facebookresearch_dinov2_main_published_checkpoint",
+        "embedding_dimension": 384
+      }
+    },
+    "model_load_seconds": 14.670464699855074,
+    "full_extraction_seconds": 669.6342819000129,
+    "metric_construction_seconds": 28.222604900132865,
+    "gpu_peak_memory_bytes": 863747584
+  },
+  "inputs": [
+    {
+      "input_key": "project_inventory",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "format": "csv",
+      "schema_version": "project_file_inventory.v1",
+      "expected_cardinality": 11263,
+      "role": "repository discovery",
+      "required": true
+    },
+    {
+      "input_key": "inventory_run",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "format": "json",
+      "schema_version": "inventory_run.v1",
+      "expected_cardinality": 1,
+      "role": "inventory provenance",
+      "required": true
+    },
+    {
+      "input_key": "project_paths_registry",
+      "producer": "validated notebook handoffs",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "format": "json",
+      "schema_version": "project_paths.v1",
+      "expected_cardinality": 79,
+      "role": "artifact discovery",
+      "required": true
+    },
+    {
+      "input_key": "preprocessing_geometry",
+      "producer": "Notebook 02",
+      "relative_path": "outputs/02_image_preprocessing/data/preprocessed_images.csv",
+      "format": "csv",
+      "schema_version": "preprocessed_images.v1",
+      "expected_cardinality": 50,
+      "role": "content geometry and clean checksums",
+      "required": true
+    },
+    {
+      "input_key": "case_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
+      "format": "csv",
+      "schema_version": "case_registry.v1",
+      "expected_cardinality": 525,
+      "role": "normalized evaluation cases",
+      "required": true
+    },
+    {
+      "input_key": "model_eligibility",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
+      "format": "csv",
+      "schema_version": "model_eligibility.v1",
+      "expected_cardinality": 2100,
+      "role": "model/case routing",
+      "required": true
+    },
+    {
+      "input_key": "region_policy",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv",
+      "format": "csv",
+      "schema_version": "region_policy.v1",
+      "expected_cardinality": 143,
+      "role": "metric-region compatibility",
+      "required": true
+    },
+    {
+      "input_key": "schema_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json",
+      "format": "json",
+      "schema_version": "schema_registry.v1",
+      "expected_cardinality": 1,
+      "role": "upstream schema discovery",
+      "required": true
+    },
+    {
+      "input_key": "contracts_artifacts",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv",
+      "format": "csv",
+      "schema_version": "artifact_manifest.v1",
+      "expected_cardinality": 7,
+      "role": "upstream artifact evidence",
+      "required": true
+    },
+    {
+      "input_key": "stable_diffusion_prompt_policy",
+      "producer": "Notebook 11",
+      "relative_path": "outputs/11_stable_diffusion_restoration/data/prompt_policy.csv",
+      "format": "csv",
+      "schema_version": "prompt_policy.v1",
+      "expected_cardinality": 6,
+      "role": "prompt-ablation definitions",
+      "required": true
+    },
+    {
+      "input_key": "feature_similarity_config",
+      "producer": "Repository configuration",
+      "relative_path": "config/evaluation/feature_similarity.yaml",
+      "format": "yaml",
+      "schema_version": "feature_similarity_config.v1",
+      "expected_cardinality": 1,
+      "role": "feature models and execution policy",
+      "required": true
+    },
+    {
+      "input_key": "evaluation_contract_config",
+      "producer": "Repository configuration",
+      "relative_path": "config/experiments/evaluation_contract.yaml",
+      "format": "yaml",
+      "schema_version": "evaluation_contract_config.v1",
+      "expected_cardinality": 1,
+      "role": "region and eligibility policy",
+      "required": true
+    },
+    {
+      "input_key": "notebook_02_run_manifest",
+      "producer": "notebook_02",
+      "relative_path": "outputs/02_image_preprocessing/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_08_run_manifest",
+      "producer": "notebook_08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_09_opencv_telea_run_manifest",
+      "producer": "notebook_09_opencv_telea",
+      "relative_path": "outputs/09_opencv_telea_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_10_lama_run_manifest",
+      "producer": "notebook_10_lama",
+      "relative_path": "outputs/10_lama_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_11_stable_diffusion_run_manifest",
+      "producer": "notebook_11_stable_diffusion",
+      "relative_path": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_12_sdxl_run_manifest",
+      "producer": "notebook_12_sdxl",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_09_opencv_telea_table",
+      "producer": "notebook_09_opencv_telea",
+      "relative_path": "outputs/09_opencv_telea_restoration/data/restorations.csv",
+      "format": "csv",
+      "schema_version": "restorations.v1",
+      "expected_cardinality": 410,
+      "role": "opencv_telea restoration candidates",
+      "required": true
+    },
+    {
+      "input_key": "notebook_10_lama_table",
+      "producer": "notebook_10_lama",
+      "relative_path": "outputs/10_lama_restoration/data/restorations.csv",
+      "format": "csv",
+      "schema_version": "restorations.v1",
+      "expected_cardinality": 410,
+      "role": "lama restoration candidates",
+      "required": true
+    },
+    {
+      "input_key": "notebook_11_stable_diffusion_table",
+      "producer": "notebook_11_stable_diffusion",
+      "relative_path": "outputs/11_stable_diffusion_restoration/data/candidates.csv",
+      "format": "csv",
+      "schema_version": "stable_diffusion_candidates.v1",
+      "expected_cardinality": 1330,
+      "role": "stable_diffusion_inpainting restoration candidates",
+      "required": true
+    },
+    {
+      "input_key": "notebook_12_sdxl_table",
+      "producer": "notebook_12_sdxl",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv",
+      "format": "csv",
+      "schema_version": "sdxl_partial_candidates.v1",
+      "expected_cardinality": 10,
+      "role": "sdxl_inpainting restoration candidates",
+      "required": true
+    }
+  ],
+  "outputs": [
+    {
+      "artifact_key": "feature_similarity.metrics",
+      "relative_path": "outputs/15_feature_similarity/metrics/feature_metrics.csv",
+      "artifact_type": "table",
+      "artifact_role": "primary_downstream_evidence",
+      "schema_version": "feature_metrics.v1",
+      "expected_row_count": 8340
+    },
+    {
+      "artifact_key": "feature_similarity.embeddings",
+      "relative_path": "outputs/15_feature_similarity/data/embeddings.npz",
+      "artifact_type": "array_bundle",
+      "artifact_role": "reusable_embedding_evidence",
+      "schema_version": "feature_embedding_bundle.v1",
+      "expected_row_count": 10700
+    },
+    {
+      "artifact_key": "feature_similarity.embedding_manifest",
+      "relative_path": "outputs/15_feature_similarity/manifests/embeddings.csv",
+      "artifact_type": "table",
+      "artifact_role": "reusable_embedding_index",
+      "schema_version": "feature_embedding_manifest.v1",
+      "expected_row_count": 10700
+    },
+    {
+      "artifact_key": "feature_similarity.distributions",
+      "relative_path": "outputs/15_feature_similarity/figures/feature_similarity_distributions.png",
+      "artifact_type": "figure",
+      "artifact_role": "reporting_visualization",
+      "schema_version": "figure.feature_similarity_distributions.v1",
+      "expected_row_count": 1
+    },
+    {
+      "artifact_key": "validation.15_feature_similarity",
+      "relative_path": "outputs/15_feature_similarity/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "expected_row_count": 240
+    },
+    {
+      "artifact_key": "feature_similarity.artifacts",
+      "relative_path": "outputs/15_feature_similarity/manifests/artifacts.csv",
+      "artifact_type": "manifest",
+      "artifact_role": "artifact_discovery",
+      "schema_version": "artifact_manifest.v1",
+      "expected_row_count": 5
+    },
+    {
+      "artifact_key": "feature_similarity.run_manifest",
+      "relative_path": "outputs/15_feature_similarity/manifests/run_manifest.json",
+      "artifact_type": "manifest",
+      "artifact_role": "run_provenance",
+      "schema_version": "run_manifest.v1",
+      "expected_row_count": 1
+    }
+  ],
+  "expected_counts": {
+    "case_registry_rows": 525,
+    "evaluated_unique_cases": 410,
+    "evaluated_candidates": 2160,
+    "zero_control_cases": 50,
+    "zero_control_candidates": 150,
+    "candidate_region_evaluations": 4170,
+    "content_region_evaluations": 2160,
+    "mask_bbox_region_evaluations": 2010,
+    "metric_rows_per_feature_model": 4170,
+    "total_metric_rows": 8340,
+    "embeddings_per_feature_model": 5350,
+    "total_embedding_rows": 10700,
+    "metric_embedding_references": 25020,
+    "scratch_prompt_paired_comparisons": 800,
+    "embeddings_by_role_across_models": {
+      "clean": 820,
+      "damaged": 1540,
+      "restored": 8340
+    },
+    "embeddings_per_model_by_role": {
+      "clean": 410,
+      "damaged": 770,
+      "restored": 4170
+    },
+    "candidates_by_model": {
+      "opencv_telea": 410,
+      "lama": 410,
+      "stable_diffusion_inpainting": 1330,
+      "sdxl_inpainting": 10
+    },
+    "metric_rows_by_restoration_model": {
+      "opencv_telea": 1540,
+      "lama": 1540,
+      "stable_diffusion_inpainting": 5220,
+      "sdxl_inpainting": 40
+    },
+    "canonical_file_count": 7,
+    "artifact_record_count": 5,
+    "validation_row_count": 240,
+    "temporary_work_file_count": 0,
+    "blocking_validation_failures": 0,
+    "nonblocking_warning_failures": 1
+  },
+  "observed_counts": {
+    "evaluated_unique_cases": 410,
+    "evaluated_candidates": 2160,
+    "candidate_region_evaluations": 4170,
+    "total_metric_rows": 8340,
+    "total_embedding_rows": 10700,
+    "embeddings_by_role_across_models": {
+      "restored": 8340,
+      "damaged": 1540,
+      "clean": 820
+    },
+    "scratch_prompt_paired_comparisons": 800,
+    "positive_improvement_rows": 6107,
+    "negative_improvement_rows": 1933,
+    "canonical_file_count": 7,
+    "artifact_record_count": 5,
+    "validation_row_count": 240,
+    "temporary_work_file_count": 0,
+    "blocking_validation_failures": 0,
+    "nonblocking_warning_failures": 1
+  },
+  "validation_summary": {
+    "check_count": 240,
+    "passed_count": 239,
+    "failed_count": 1,
+    "blocking_failure_count": 0,
+    "overall_passed": true,
+    "failed_check_ids": [
+      "batch_5_scientific_validation:cuda_bitwise_repeatability"
+    ],
+    "warning_failure_count": 1,
+    "stages": [
+      {
+        "validation_stage": "batch_1_preflight",
+        "check_count": 91,
+        "passed_count": 91,
+        "failed_count": 0,
+        "blocking_failure_count": 0,
+        "warning_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_2_input_loading",
+        "check_count": 36,
+        "passed_count": 36,
+        "failed_count": 0,
+        "blocking_failure_count": 0,
+        "warning_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_3_smoke_test",
+        "check_count": 15,
+        "passed_count": 15,
+        "failed_count": 0,
+        "blocking_failure_count": 0,
+        "warning_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_4_full_execution",
+        "check_count": 17,
+        "passed_count": 17,
+        "failed_count": 0,
+        "blocking_failure_count": 0,
+        "warning_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_5_scientific_validation",
+        "check_count": 28,
+        "passed_count": 27,
+        "failed_count": 1,
+        "blocking_failure_count": 0,
+        "warning_failure_count": 1
+      },
+      {
+        "validation_stage": "batch_6_analysis_visualization",
+        "check_count": 16,
+        "passed_count": 16,
+        "failed_count": 0,
+        "blocking_failure_count": 0,
+        "warning_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_7_canonical_persistence",
+        "check_count": 25,
+        "passed_count": 25,
+        "failed_count": 0,
+        "blocking_failure_count": 0,
+        "warning_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_8_completion_gate",
+        "check_count": 12,
+        "passed_count": 12,
+        "failed_count": 0,
+        "blocking_failure_count": 0,
+        "warning_failure_count": 0
+      }
+    ]
+  },
+  "known_limitations": [
+    "CLIP and DINOv2 are diagnostic general-purpose representation models, not conservation-specific quality measures.",
+    "Cosine similarity can retain semantic or global structure while missing local colour, texture, seam, or historical-plausibility defects.",
+    "Native model preprocessing resizes and center-crops rectangular evaluation regions and may suppress peripheral crop evidence.",
+    "SDXL evidence is a predeclared technically validated ten-case partial scope, not full 410-case coverage.",
+    "Stable Diffusion contributes repeated prompts and seeds; candidate-level evidence is retained without metric-based selection.",
+    "The scratch-aware prompt comparison is an ablation finding, not proof of conservation-quality restoration.",
+    "CUDA CuBLAS feature extraction used best-effort deterministic execution; exact bitwise rerun identity is not asserted.",
+    "The scratch-aware prompt produced no consistent feature-similarity benefit and remains a descriptive ablation rather than a candidate-selection rule."
+  ],
+  "refactor_status": "refactored",
+  "validation_status": "passed",
+  "completion_gate_passed": true,
+  "scientific_validation_passed": true,
+  "depends_on": [
+    "02_image_preprocessing",
+    "08_experiment_contracts_and_region_policy",
+    "09_opencv_telea_restoration",
+    "10_lama_restoration",
+    "11_stable_diffusion_restoration",
+    "12_sdxl_feasibility_or_restoration"
+  ],
+  "applicable_dataset_scopes": [
+    "controlled_50"
+  ],
+  "applicable_experiment_scopes": [
+    "canonical",
+    "damage_size",
+    "synthetic_degradation",
+    "scratch_prompt_ablation",
+    "sdxl_partial_feasibility"
+  ],
+  "scratch_prompt_ablation_summary": [
+    {
+      "feature_model_id": "clip_vit_b32",
+      "region_id": "content_region",
+      "paired_comparisons": 200,
+      "mean_generic_improvement": 0.076251682,
+      "median_generic_improvement": 0.0672071874,
+      "mean_scratch_aware_improvement": 0.0757676646,
+      "median_scratch_aware_improvement": 0.0675518811,
+      "mean_paired_delta": -0.0004840174,
+      "median_paired_delta": -6.6936e-05,
+      "scratch_aware_wins": 90,
+      "ties": 1,
+      "generic_wins": 109,
+      "scratch_aware_win_rate": 0.45
+    },
+    {
+      "feature_model_id": "clip_vit_b32",
+      "region_id": "mask_bbox_crop",
+      "paired_comparisons": 200,
+      "mean_generic_improvement": 0.0762320048,
+      "median_generic_improvement": 0.0669021308,
+      "mean_scratch_aware_improvement": 0.0756453413,
+      "median_scratch_aware_improvement": 0.0666036904,
+      "mean_paired_delta": -0.0005866635,
+      "median_paired_delta": -6.6936e-05,
+      "scratch_aware_wins": 87,
+      "ties": 1,
+      "generic_wins": 112,
+      "scratch_aware_win_rate": 0.435
+    },
+    {
+      "feature_model_id": "dinov2_vits14",
+      "region_id": "content_region",
+      "paired_comparisons": 200,
+      "mean_generic_improvement": 0.0325489864,
+      "median_generic_improvement": 0.0237095356,
+      "mean_scratch_aware_improvement": 0.0312904111,
+      "median_scratch_aware_improvement": 0.0249606073,
+      "mean_paired_delta": -0.0012585753,
+      "median_paired_delta": -0.0002768338,
+      "scratch_aware_wins": 91,
+      "ties": 1,
+      "generic_wins": 108,
+      "scratch_aware_win_rate": 0.455
+    },
+    {
+      "feature_model_id": "dinov2_vits14",
+      "region_id": "mask_bbox_crop",
+      "paired_comparisons": 200,
+      "mean_generic_improvement": 0.0335072145,
+      "median_generic_improvement": 0.0233328342,
+      "mean_scratch_aware_improvement": 0.0328060624,
+      "median_scratch_aware_improvement": 0.0249606073,
+      "mean_paired_delta": -0.0007011521,
+      "median_paired_delta": -9.14633e-05,
+      "scratch_aware_wins": 97,
+      "ties": 1,
+      "generic_wins": 102,
+      "scratch_aware_win_rate": 0.485
+    }
+  ],
+  "encoder_agreement_summary": {
+    "pearson": 0.7718330648177008,
+    "spearman": 0.6847318551004579
+  }
+}

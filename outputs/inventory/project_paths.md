@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-27T12:23:34.510829Z`
-- Registered artifacts: 79
+- Updated: `2026-08-27T22:23:25.954058Z`
+- Registered artifacts: 84
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -28,6 +28,10 @@
 | experiment_contracts.region_policy | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv` | authoritative_metric_region_policy | passed |
 | experiment_contracts.report | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/reports/evaluation_contract.md` | evaluation_contract | passed |
 | experiment_contracts.schema_registry | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json` | machine_readable_schema_handoff | passed |
+| feature_similarity.distributions | 15_feature_similarity | `outputs/15_feature_similarity/figures/feature_similarity_distributions.png` | reporting_visualization | passed |
+| feature_similarity.embedding_manifest | 15_feature_similarity | `outputs/15_feature_similarity/manifests/embeddings.csv` | reusable_embedding_index | passed |
+| feature_similarity.embeddings | 15_feature_similarity | `outputs/15_feature_similarity/data/embeddings.npz` | reusable_embedding_evidence | passed |
+| feature_similarity.metrics | 15_feature_similarity | `outputs/15_feature_similarity/metrics/feature_metrics.csv` | primary_downstream_evidence | passed |
 | lama.restoration_examples | 10_lama_restoration | `outputs/10_lama_restoration/figures/restoration_examples.png` | representative_visual_evidence | passed |
 | lama.restorations | 10_lama_restoration | `outputs/10_lama_restoration/data/restorations.csv` | primary_restoration_records | passed |
 | lama.restored_images | 10_lama_restoration | `outputs/10_lama_restoration/images/restored` | primary_restored_images | passed |
@@ -85,3 +89,4 @@
 | validation.12_sdxl_feasibility_or_restoration | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/validation/checks.csv` | validation_evidence | passed |
 | validation.13_classical_metrics | 13_classical_metrics | `outputs/13_classical_metrics/validation/checks.csv` | validation_evidence | passed |
 | validation.14_lpips_metrics | 14_lpips_metrics | `outputs/14_lpips_metrics/validation/checks.csv` | validation_evidence | passed |
+| validation.15_feature_similarity | 15_feature_similarity | `outputs/15_feature_similarity/validation/checks.csv` | validation_evidence | passed |

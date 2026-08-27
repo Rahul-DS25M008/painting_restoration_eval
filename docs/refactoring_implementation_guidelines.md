@@ -133,15 +133,178 @@ The workflow for every notebook is:
 - Helper modules, configuration files, tests, documentation, inventory files,
   and project-path registries may still be edited when explicitly within the
   approved preparation or completion workflow.
-  
-### 6.2 Notebooks that generate important reports 
 
-- The assistant must also design the report structure during the batch of cells planning for the user to approve.
-- This is applicable for notebooks that generate end-to-end reports that either explain the restorations or serve as standalone documents describing the thesis and results.
-- All the html reports that are planned in the notebook roadmap must adhere to this.
-- The report must be clear, concise, not too verbose while retaining a healthy mix of numbers, explanations, figures/plots, restorations/images and must be high-level overviews of the experiments without going into a rabbit 
-  hole of details with 100 numbers that don't make sense.
-- Render the report structure skeleton beforehand with creative examples, usecases and madeup numbers to show how the final report would look like. Once I approve, we can go ahead with the actual batch cell generation.
+### 6.2 Notebooks that generate important reports
+
+For any notebook that generates an important end-to-end or standalone report,
+the assistant must design and present the proposed report structure during batch
+planning, before generating any notebook cells that implement the report.
+
+This requirement applies to all HTML reports planned in the notebook roadmap and
+to any additional report intended to communicate a substantial experiment,
+analysis, comparison, or thesis-level result as a standalone document.
+
+#### Report purpose and scientific narrative
+
+- The report structure must be tailored to the scientific purpose of the
+  producing notebook. These guidelines do not impose fixed report sections:
+  restoration-model performance, comparative analysis, uncertainty, colour,
+  seam, robustness, semantic evidence, human evaluation, failure analysis, and
+  final synthesis require different scientific narratives.
+- Before designing the structure, explicitly identify the intended audience,
+  purpose, principal scientific questions, and evidence available to the report.
+  Organize the report around answering those questions rather than reproducing
+  notebook-cell order or listing every generated metric.
+- The report must function as a standalone high-level account. A reader should
+  understand the principal findings, supporting evidence, important limitations,
+  and overall interpretation without opening the notebook or manually inspecting
+  canonical CSV files.
+- Reports should lead with important findings and interpretations rather than
+  implementation detail. Include methodology only where it is necessary to
+  interpret the evidence. Detailed configuration, dependency, environment,
+  checksum, and provenance information normally belongs in canonical manifests
+  or a compact technical/provenance section.
+- The report should end with a concise synthesis of what the evidence supports,
+  what remains uncertain, and how the analysis contributes to the wider thesis
+  or evaluation pipeline. Its wording and structure must suit the notebook rather
+  than follow a fixed conclusion template.
+
+#### Evidence selection and interpretation
+
+- Reports must remain clear and reasonably concise. Use a balanced combination of
+  quantitative results, plain-language interpretation, tables, plots, source or
+  restoration images where relevant, diagnostic visualizations, and concise
+  methodological context. Do not create exhaustive metric dumps or large
+  collections of numbers without a clear interpretive purpose.
+- Select main-narrative quantitative results because they answer a scientific
+  question or represent a distinct evidence family, not merely because a metric
+  exists. Where several metrics capture substantially similar behaviour, use a
+  small representative set in the report and retain detailed results in canonical
+  machine-readable outputs.
+- Every major quantitative result must have enough interpretation for a reader to
+  understand its experimental meaning. Clearly distinguish descriptive
+  observations, statistical evidence, and conclusions supported by that evidence.
+- Quantitative claims in prose, KPI cards, captions, tables, and figures must be
+  programmatically derived from validated canonical evidence from the current
+  run. Important claims must be traceable to their source artifact, fields,
+  filters, statistical unit, and denominator. Experimental values must not be
+  manually copied into report templates.
+- When a conclusion concerns visual or spatial behaviour, show appropriate visual
+  evidence alongside numerical evidence where practical. Examples include
+  clean/damaged/restored comparisons, masks, crops, heatmaps, boundary views,
+  uncertainty maps, semantic maps, and other notebook-appropriate diagnostics.
+- Present strengths and weaknesses where supported by the evidence. Relevant
+  failure cases, difficult cases, counterexamples, and limitations must not be
+  hidden merely to produce a cleaner narrative.
+- Select representative examples using explicit, reproducible, and auditable
+  rules. Do not cherry-pick visually attractive successes or unusually poor
+  failures. Suitable strategies include representative or median cases,
+  predeclared examples, extremes under a stated metric, metric-disagreement cases,
+  distinct experiment groups, or other deterministic notebook-appropriate rules.
+- Preserve and explain scientifically relevant disagreement between metrics or
+  evidence families instead of forcing agreement through a single ranking or
+  score. A combined score is allowed only when its construction, scaling,
+  weighting, interpretation, and limitations have already been methodologically
+  justified and validated.
+- Respect the statistical unit and dependency structure of the experiment.
+  Candidate observations, repeated seeds, prompt variants, multiple cases from
+  one painting, partial model coverage, and other repeated or nested observations
+  must not be presented as independent evidence when they are not.
+- State partial or unavailable experimental coverage explicitly. Do not imply
+  full-dataset comparability when a model, metric, experiment, or analysis covers
+  only a subset.
+- State important limitations close enough to affected conclusions for correct
+  interpretation. A short consolidated limitations section may also be included.
+
+#### Canonical evidence and permitted report processing
+
+- Conclusions must derive only from validated canonical evidence produced by the
+  current or upstream notebooks. Displayed examples may illustrate a conclusion
+  but must not independently determine it. The report layer must not become a
+  second informal analysis pipeline.
+- Report generation may perform presentation-only transformations such as
+  selecting an approved population, sorting, formatting, calculating explicitly
+  defined display percentages from canonical counts, preparing plotting layouts,
+  generating thumbnails, and assembling image panels.
+- Report generation must not introduce new metrics, undocumented exclusions,
+  post-hoc statistical tests, alternative aggregation rules, rankings, composite
+  scores, or scientific conclusions that were not validated by the producing or
+  an upstream analysis notebook.
+
+#### Report assets, readability, and portability
+
+- Report planning must define how figures and images are supplied. Large images
+  must be linked rather than embedded as base64 payloads.
+- Report-specific composites, thumbnails, or presentation figures may be stored
+  under the producing notebook's output root when they are declared canonical
+  report assets. Direct links to upstream artifacts must use stable
+  repository-relative paths and be recorded as report dependencies. Do not
+  silently duplicate large upstream image collections.
+- Figures and tables must use readable labels, units, metric directionality,
+  legends, captions, and colour scales. Important visual evidence needs concise
+  alternative text or an equivalent descriptive caption.
+- Use colour palettes that remain interpretable under common colour-vision
+  deficiencies. Heatmaps must state their scale, normalization, spatial meaning,
+  and whether values are comparable across panels.
+- Detailed provenance must remain available without dominating the report. A
+  compact technical appendix or provenance summary may include the run ID, Git
+  commit, model/configuration versions, evaluated population, validation status,
+  and canonical artifact references.
+
+#### Report structure approval before implementation
+
+- During batch planning, the assistant must present a notebook-specific report
+  skeleton for user review before generating report-implementation cells.
+- The skeleton must show the intended narrative flow rather than only generic
+  headings. For every proposed section it should state:
+  - the scientific question or communication purpose;
+  - the principal canonical evidence to be presented;
+  - the planned tables, plots, figures, images, diagnostic panels, or other visual
+    elements;
+  - the approximate level of numerical detail;
+  - the interpretation logic and important limitations.
+- When results are not yet known, the skeleton must not assume the direction of
+  the eventual conclusion. It should state the question that the evidence will
+  resolve rather than pre-write the finding.
+- Include realistic illustrative examples showing how important sections could
+  appear. Creative made-up values, mock tables, placeholder figures, and
+  hypothetical interpretations may demonstrate presentation and narrative style,
+  but must be explicitly labelled illustrative. They must never enter the
+  implemented report or be treated as experimental evidence.
+- The mock-up should demonstrate intended information density and visual
+  hierarchy, including separation of headline findings, supporting evidence,
+  visual examples, detailed analysis, limitations, and technical provenance.
+- Identify sections that appear redundant, excessively detailed, unsupported by
+  available evidence, or better represented by a canonical table or figure.
+- The user may add, remove, reorder, merge, or redefine sections during approval.
+- Structure approval is design approval only. It does not authorize notebook
+  modification or execution and does not override the manual notebook editing
+  policy in Section 6.1.
+- Only after approval may the assistant generate report-implementation cells.
+- If implementation later reveals that an approved section lacks validated
+  evidence, or that a materially different structure is scientifically preferable,
+  surface the issue and obtain approval rather than silently changing the report.
+
+#### Rendered-report validation
+
+Before notebook completion, validate at minimum:
+
+- expected report paths and report counts;
+- non-empty HTML content and expected high-level components;
+- successful local resolution of owned and upstream-linked assets;
+- absence of unintended base64 image payloads;
+- valid internal links where applicable;
+- recorded input dependencies and source run identifiers;
+- artifact-manifest registration for the report and its owned assets;
+- consistency between displayed counts, denominators, coverage statements, and
+  canonical evidence;
+- clear separation between scientific validation failures and HTML/rendering
+  failures.
+
+The illustrative LaMa model-performance mock-up in
+[`report_structure_mock_lama.md`](report_structure_mock_lama.md) is a design
+reference for narrative quality and information density. It is not a mandatory
+section template for model reports or for other report categories.
 
 The inventory refresh is a controlled write operation. During explicitly read-only phases, the existing inventory may be inspected but must not be regenerated.
 

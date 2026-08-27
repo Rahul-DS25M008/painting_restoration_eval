@@ -166,7 +166,9 @@ feature_similarity:
       sdxl_inpainting: 40
 
   analysis:
-    scratch_damage_type: "scratch_thin"
+    scratch_case_selector: "case_id_suffix"
+    scratch_case_id_suffix: "__scratch_thin"
+    scratch_damage_label: "scratch_thin"
     generic_prompt_variant_id: "p00_generic"
     scratch_aware_prompt_variant_id: "p05_scratch_aware"
     scratch_seed_count: 4

@@ -35,7 +35,7 @@ from .schemas import (
 )
 
 
-FEATURE_SIMILARITY_MODULE_VERSION = "3.0.0"
+FEATURE_SIMILARITY_MODULE_VERSION = "3.0.1"
 FEATURE_METRIC_VERSION = "feature_cosine_similarity.v1"
 FEATURE_METRICS_SCHEMA_VERSION = "feature_metrics.v1"
 FEATURE_EMBEDDING_SCHEMA_VERSION = "feature_embedding_manifest.v1"
@@ -217,6 +217,35 @@ def get_device(prefer_cuda: bool = True) -> Any:
     return torch.device("cuda" if prefer_cuda and torch.cuda.is_available() else "cpu")
 
 
+def resolve_local_hf_snapshot(
+    model_name: str,
+    revision: str,
+    *,
+    cache_root: str | Path | None = None,
+) -> Path | None:
+    """Resolve one exact Hugging Face snapshot without network discovery.
+
+    Passing the snapshot directory itself to Transformers avoids a 4.48.x
+    Windows cache edge case where the processor resolves correctly but the
+    cached PyTorch checkpoint is returned as ``None``.
+    """
+
+    if cache_root is None:
+        huggingface_home = Path(
+            os.environ.get(
+                "HF_HOME",
+                Path.home() / ".cache" / "huggingface",
+            )
+        )
+        hub_root = huggingface_home / "hub"
+    else:
+        root = Path(cache_root)
+        hub_root = root if root.name == "hub" else root / "hub"
+    storage_name = "models--" + str(model_name).replace("/", "--")
+    snapshot = hub_root / storage_name / "snapshots" / str(revision)
+    return snapshot if snapshot.is_dir() else None
+
+
 def load_clip_model_and_processor(
     model_name: str = DEFAULT_CLIP_MODEL_NAME, device: Any | None = None,
     revision: str | None = DEFAULT_CLIP_MODEL_REVISION, *,
@@ -227,10 +256,18 @@ def load_clip_model_and_processor(
     transformers = importlib.import_module("transformers")
     if device is None:
         device = get_device()
-    kwargs = {"revision": revision, "local_files_only": bool(local_files_only)}
-    processor = transformers.CLIPProcessor.from_pretrained(model_name, **kwargs)
+    source: str | Path = model_name
+    kwargs: dict[str, Any] = {"local_files_only": bool(local_files_only)}
+    if revision:
+        kwargs["revision"] = revision
+    if local_files_only and revision:
+        snapshot = resolve_local_hf_snapshot(model_name, revision)
+        if snapshot is not None:
+            source = snapshot
+            kwargs.pop("revision", None)
+    processor = transformers.CLIPProcessor.from_pretrained(str(source), **kwargs)
     model = transformers.CLIPModel.from_pretrained(
-        model_name, use_safetensors=False, **kwargs
+        str(source), use_safetensors=False, **kwargs
     ).to(device)
     model.eval()
     return model, processor
@@ -927,8 +964,8 @@ def build_scratch_prompt_pairs(
                            how="inner", validate="many_to_one")
     selected = joined.loc[
         joined["model_id"].astype(str).eq("stable_diffusion_inpainting")
-        & joined["damage_or_degradation_type"].astype(str).eq(
-            str(analysis["scratch_damage_type"])
+        & joined["case_id"].astype(str).str.endswith(
+            str(analysis["scratch_case_id_suffix"])
         )
         & joined["prompt_variant_id"].astype(str).isin({
             str(analysis["generic_prompt_variant_id"]),

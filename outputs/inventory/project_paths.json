@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-27T12:23:34.510829Z",
+  "updated_at_utc": "2026-08-27T22:23:25.954058Z",
   "artifacts": [
     {
       "artifact_key": "classical_metrics.distributions",
@@ -309,6 +309,62 @@
       "row_count": 5,
       "file_count": 1,
       "checksum": "0a75cb8fb1d7762d1ded04944a895dda65d417d771624cb286359c4d1942018a"
+    },
+    {
+      "artifact_key": "feature_similarity.distributions",
+      "producer_notebook": "15_feature_similarity",
+      "relative_path": "outputs/15_feature_similarity/figures/feature_similarity_distributions.png",
+      "artifact_type": "figure",
+      "artifact_role": "reporting_visualization",
+      "schema_version": "figure.feature_similarity_distributions.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_feature_similarity",
+      "validation_status": "passed",
+      "row_count": 1,
+      "file_count": 1,
+      "checksum": "571f8ebdd5fb1dea580979ff2d70b82bdf217cd1da816e9440ba07c92d22ec29"
+    },
+    {
+      "artifact_key": "feature_similarity.embedding_manifest",
+      "producer_notebook": "15_feature_similarity",
+      "relative_path": "outputs/15_feature_similarity/manifests/embeddings.csv",
+      "artifact_type": "table",
+      "artifact_role": "reusable_embedding_index",
+      "schema_version": "feature_embedding_manifest.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_feature_similarity",
+      "validation_status": "passed",
+      "row_count": 10700,
+      "file_count": 1,
+      "checksum": "4b76bdf1de277bff1dd29b4cd288c4aca0f756c213d9218ac70bd5420777b139"
+    },
+    {
+      "artifact_key": "feature_similarity.embeddings",
+      "producer_notebook": "15_feature_similarity",
+      "relative_path": "outputs/15_feature_similarity/data/embeddings.npz",
+      "artifact_type": "array_bundle",
+      "artifact_role": "reusable_embedding_evidence",
+      "schema_version": "feature_embedding_bundle.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_feature_similarity",
+      "validation_status": "passed",
+      "row_count": 10700,
+      "file_count": 1,
+      "checksum": "ca1d16d40ce5408e66568c425f1d372cdae3e3ff92ec97a55234f282c3add7e6"
+    },
+    {
+      "artifact_key": "feature_similarity.metrics",
+      "producer_notebook": "15_feature_similarity",
+      "relative_path": "outputs/15_feature_similarity/metrics/feature_metrics.csv",
+      "artifact_type": "table",
+      "artifact_role": "primary_downstream_evidence",
+      "schema_version": "feature_metrics.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_feature_similarity",
+      "validation_status": "passed",
+      "row_count": 8340,
+      "file_count": 1,
+      "checksum": "5a680cd39605cb94c76f134f00927046baae52a09a1ea5db887e063a493d003f"
     },
     {
       "artifact_key": "lama.restoration_examples",
@@ -1107,6 +1163,20 @@
       "row_count": 253,
       "file_count": 1,
       "checksum": "49e0291bb9137fd1f4b1d188f3376f7c4e68fe0dbd766a23f29889f55e27ba58"
+    },
+    {
+      "artifact_key": "validation.15_feature_similarity",
+      "producer_notebook": "15_feature_similarity",
+      "relative_path": "outputs/15_feature_similarity/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_feature_similarity",
+      "validation_status": "passed",
+      "row_count": 240,
+      "file_count": 1,
+      "checksum": "457e162abc18bfff5bc05b5dbc0a319121c0c5b6aff4d83fd0f356f30bff7da9"
     }
   ]
 }
