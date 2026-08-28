@@ -915,7 +915,7 @@ validation/checks.csv
 **Notebook:** `16_difference_maps_and_spatial_diagnostics.ipynb`  
 **Origin:** Consolidates Existing Notebooks 10, 16, and 23  
 **Output root:** `outputs/16_difference_maps_and_spatial_diagnostics/`  
-**Depends on:** Notebooks 08–13
+**Depends on:** Notebooks 02 and 08–13
 
 ### Responsibilities
 
@@ -938,7 +938,7 @@ validation/checks.csv
 
 ```text
 metrics/spatial_diagnostics.csv
-images/maps/<model_id>/<case_id>/<map_type>.png
+images/maps/<model_id>/<map_id>/<map_type>.png
 figures/selected_spatial_panels/
 manifests/map_images.csv
 manifests/run_manifest.json

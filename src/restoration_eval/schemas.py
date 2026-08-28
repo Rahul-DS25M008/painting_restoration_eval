@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.13.0"
+SCHEMAS_MODULE_VERSION = "1.14.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -495,6 +495,31 @@ FEATURE_EMBEDDING_MANIFEST_COLUMNS = (
     "dtype", "preprocessing_id", "input_width", "input_height",
     "model_name", "model_revision", "model_checksum", "schema_version",
     "status", "issue",
+)
+SPATIAL_DIAGNOSTICS_COLUMNS = (
+    "spatial_diagnostic_id", "case_id", "candidate_id", "model_id",
+    "painting_id", "dataset_id", "dataset_scope", "experiment_id",
+    "damage_or_degradation_type", "candidate_index", "seed",
+    "prompt_policy_id", "prompt_variant_id", "execution_role",
+    "is_zero_control", "region_id", "region_type", "spatial_support",
+    "region_pixel_count", "damaged_error_mean", "damaged_error_median",
+    "damaged_error_p95", "restored_error_mean", "restored_error_median",
+    "restored_error_p95", "signed_improvement_mean",
+    "signed_improvement_median", "signed_improvement_p05",
+    "signed_improvement_p95", "improved_pixel_fraction",
+    "worsened_pixel_fraction", "unchanged_pixel_fraction",
+    "restoration_change_mean", "restoration_change_p95",
+    "restoration_change_max", "restoration_changed_pixel_fraction",
+    "evidence_role", "is_final_trustworthiness_flag",
+    "diagnostic_version", "region_policy_version", "status", "issue",
+)
+SPATIAL_MAP_IMAGE_MANIFEST_COLUMNS = (
+    "map_image_id", "asset_kind", "map_id", "candidate_id", "case_id",
+    "model_id", "painting_id", "map_type", "selection_role",
+    "relative_path", "sha256", "size_bytes", "width", "height",
+    "image_mode", "format", "cmap", "vmin", "vmax", "center",
+    "scale_scope", "quantization_policy", "no_data_policy",
+    "renderer_version", "status", "issue",
 )
 
 @dataclass(frozen=True)
@@ -1258,6 +1283,64 @@ FEATURE_EMBEDDING_MANIFEST_SCHEMA = DataFrameSchema(
         "status": frozenset({"ok", "error"}),
     },
 )
+SPATIAL_DIAGNOSTICS_SCHEMA = DataFrameSchema(
+    name="spatial_diagnostics",
+    version="spatial_diagnostics.v1",
+    required_columns=SPATIAL_DIAGNOSTICS_COLUMNS,
+    primary_key=("spatial_diagnostic_id",),
+    non_nullable=tuple(
+        column for column in SPATIAL_DIAGNOSTICS_COLUMNS
+        if column not in {
+            "seed", "prompt_policy_id", "prompt_variant_id", "issue",
+            "damaged_error_mean", "damaged_error_median",
+            "damaged_error_p95", "restored_error_mean",
+            "restored_error_median", "restored_error_p95",
+            "signed_improvement_mean", "signed_improvement_median",
+            "signed_improvement_p05", "signed_improvement_p95",
+            "improved_pixel_fraction", "worsened_pixel_fraction",
+            "unchanged_pixel_fraction", "restoration_change_mean",
+            "restoration_change_p95", "restoration_change_max",
+            "restoration_changed_pixel_fraction",
+        }
+    ),
+    allowed_values={
+        "region_id": frozenset({
+            "full_image", "content_region", "masked_region",
+            "mask_bbox_crop", "inner_boundary_band",
+            "outer_boundary_band", "boundary_ring",
+            "outside_mask_content", "outside_boundary_ring",
+            "degradation_support",
+        }),
+        "evidence_role": frozenset({"diagnostic_only"}),
+        "is_final_trustworthiness_flag": frozenset({False}),
+        "status": frozenset({"ok", "error"}),
+    },
+)
+SPATIAL_MAP_IMAGE_MANIFEST_SCHEMA = DataFrameSchema(
+    name="spatial_map_images",
+    version="spatial_map_images.v1",
+    required_columns=SPATIAL_MAP_IMAGE_MANIFEST_COLUMNS,
+    primary_key=("map_image_id",),
+    non_nullable=tuple(
+        column for column in SPATIAL_MAP_IMAGE_MANIFEST_COLUMNS
+        if column not in {
+            "candidate_id", "case_id", "model_id", "painting_id",
+            "selection_role", "cmap", "vmin", "vmax", "center", "issue",
+        }
+    ),
+    allowed_values={
+        "asset_kind": frozenset({"candidate_map", "selected_panel"}),
+        "map_type": frozenset({
+            "damaged_absolute_error", "restored_absolute_error",
+            "signed_improvement", "masked_signed_improvement",
+            "spatial_overlay", "candidate_spatial_panel",
+            "cross_model_spatial_panel",
+        }),
+        "format": frozenset({"PNG"}),
+        "renderer_version": frozenset({"spatial_map_renderer.v1"}),
+        "status": frozenset({"passed", "error"}),
+    },
+)
 
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
@@ -1291,6 +1374,8 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     LPIPS_METRICS_SCHEMA.name: LPIPS_METRICS_SCHEMA,
     FEATURE_METRICS_SCHEMA.name: FEATURE_METRICS_SCHEMA,
     FEATURE_EMBEDDING_MANIFEST_SCHEMA.name: FEATURE_EMBEDDING_MANIFEST_SCHEMA,
+    SPATIAL_DIAGNOSTICS_SCHEMA.name: SPATIAL_DIAGNOSTICS_SCHEMA,
+    SPATIAL_MAP_IMAGE_MANIFEST_SCHEMA.name: SPATIAL_MAP_IMAGE_MANIFEST_SCHEMA,
 }
 
 

@@ -33,6 +33,13 @@ except ImportError:  # Optional; failures are recorded per Parquet file.
 INVENTORY_SCHEMA_VERSION = "project_file_inventory.v1"
 RUN_SCHEMA_VERSION = "inventory_run.v1"
 DEFAULT_HASH_BYTES = 1024 * 1024
+CSV_FIELD_SIZE_LIMIT = 16 * 1024 * 1024
+
+# Validation and audit tables can legitimately contain serialized sets or
+# dictionaries larger than Python's conservative default CSV field limit.
+# Raising the parser limit keeps inventory metadata inspection read-only while
+# allowing those normalized tables to be counted and described correctly.
+csv.field_size_limit(CSV_FIELD_SIZE_LIMIT)
 
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".tif", ".tiff", ".bmp"}
 TABULAR_EXTENSIONS = {".csv", ".tsv", ".parquet"}

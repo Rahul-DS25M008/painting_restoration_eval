@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-27T22:23:25.954058Z",
+  "updated_at_utc": "2026-08-28T23:47:07.282991Z",
   "artifacts": [
     {
       "artifact_key": "classical_metrics.distributions",
@@ -773,6 +773,62 @@
       "checksum": "7dcba00801acc11c809dc89f7e20615bc02467fe56f101db55320fc4f385a4c4"
     },
     {
+      "artifact_key": "spatial_diagnostics.candidate_maps",
+      "producer_notebook": "16_difference_maps_and_spatial_diagnostics",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/images/maps",
+      "artifact_type": "image_collection",
+      "artifact_role": "reusable_spatial_map_evidence",
+      "schema_version": "spatial_map_renderer.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_model_spatial_diagnostics",
+      "validation_status": "passed",
+      "row_count": 10050,
+      "file_count": 10050,
+      "checksum": "71fbf50f5b688b9cfd93e3dead3e8f4e272482dfbca2740e855d232ca0e63c7d"
+    },
+    {
+      "artifact_key": "spatial_diagnostics.map_manifest",
+      "producer_notebook": "16_difference_maps_and_spatial_diagnostics",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/map_images.csv",
+      "artifact_type": "table",
+      "artifact_role": "normalized_spatial_image_index",
+      "schema_version": "spatial_map_images.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_model_spatial_diagnostics",
+      "validation_status": "passed",
+      "row_count": 10062,
+      "file_count": 1,
+      "checksum": "ba59e4ff46ea5c91639168a1522b50e64f851d504e1678754753083f8a035576"
+    },
+    {
+      "artifact_key": "spatial_diagnostics.metrics",
+      "producer_notebook": "16_difference_maps_and_spatial_diagnostics",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv",
+      "artifact_type": "table",
+      "artifact_role": "primary_downstream_evidence",
+      "schema_version": "spatial_diagnostics.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_model_spatial_diagnostics",
+      "validation_status": "passed",
+      "row_count": 18896,
+      "file_count": 1,
+      "checksum": "186102d774fc0503ecf7a071d4b9fdd5820fe5129caa4339fb26ef9231c5238d"
+    },
+    {
+      "artifact_key": "spatial_diagnostics.selected_panels",
+      "producer_notebook": "16_difference_maps_and_spatial_diagnostics",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/figures/selected_spatial_panels",
+      "artifact_type": "figure_collection",
+      "artifact_role": "human_review_figures",
+      "schema_version": "spatial_map_renderer.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_model_spatial_diagnostics",
+      "validation_status": "passed",
+      "row_count": 12,
+      "file_count": 12,
+      "checksum": "38c102c25f76bd7402ddd2583596024c5db7608d11f8c3d115dbcd6773032a75"
+    },
+    {
       "artifact_key": "stable_diffusion.candidate_examples",
       "producer_notebook": "11_stable_diffusion_restoration",
       "relative_path": "outputs/11_stable_diffusion_restoration/figures/candidate_examples.png",
@@ -1177,6 +1233,20 @@
       "row_count": 240,
       "file_count": 1,
       "checksum": "457e162abc18bfff5bc05b5dbc0a319121c0c5b6aff4d83fd0f356f30bff7da9"
+    },
+    {
+      "artifact_key": "validation.16_difference_maps_and_spatial_diagnostics",
+      "producer_notebook": "16_difference_maps_and_spatial_diagnostics",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_model_spatial_diagnostics",
+      "validation_status": "passed",
+      "row_count": 134,
+      "file_count": 1,
+      "checksum": "2204cca3ac9bd040eafe08df3fe6340d1ab4b7baea4b9388f083f4e547cc5e37"
     }
   ]
 }

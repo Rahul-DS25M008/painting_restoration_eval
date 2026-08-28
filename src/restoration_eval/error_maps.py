@@ -1,1651 +1,1062 @@
-"""
-Spatial error-map utilities for painting restoration evaluation.
+"""Canonical spatial diagnostics and display-map utilities.
 
-The helpers in this module support Notebook 23's Stable Diffusion
-difference-map stage. They compute candidate-level absolute-error maps,
-signed-improvement maps, mask/boundary overlays, compact summary statistics,
-and short-name PNG assets backed by manifest metadata.
-
-Filename policy
----------------
-Generated map filenames are deterministic short IDs such as
-``dm_000001_der.png``. Case IDs, prompt text, painting titles, and candidate
-IDs belong in CSV/JSON metadata, not in filenames.
+The module is model-agnostic and uses :mod:`restoration_eval.regions` as the
+only source of spatial-region geometry. Floating-point arrays and CSV summary
+statistics remain the scientific evidence. Indexed PNG files are documented,
+standardized display assets for later XAI, report, and case-study notebooks.
 """
 
 from __future__ import annotations
 
+import hashlib
+import os
+import time
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Mapping, Sequence
+from typing import Any, Callable, Mapping, Sequence
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from matplotlib.axes import Axes
+import yaml
+from matplotlib import colormaps
 from matplotlib.colors import Normalize, TwoSlopeNorm
-from matplotlib.patches import Patch, Rectangle
-from PIL import Image
-from scipy.ndimage import binary_dilation, binary_erosion
+from PIL import Image, ImageDraw
+
+from .regions import Region, build_standard_regions, effect_support_region
+from .schemas import (
+    SPATIAL_DIAGNOSTICS_COLUMNS,
+    SPATIAL_DIAGNOSTICS_SCHEMA,
+    SPATIAL_MAP_IMAGE_MANIFEST_COLUMNS,
+    SPATIAL_MAP_IMAGE_MANIFEST_SCHEMA,
+    validate_dataframe,
+)
 
 
 ERROR_MAP_MODULE_NAME = "restoration_eval.error_maps"
-ERROR_MAP_VERSION = "3.0.0"
+ERROR_MAP_VERSION = "4.0.1"
+SPATIAL_DIAGNOSTIC_VERSION = "spatial_diagnostics.v1"
+SPATIAL_MAP_MANIFEST_VERSION = "spatial_map_images.v1"
+SPATIAL_MAP_RENDERER_VERSION = "spatial_map_renderer.v1"
 
-DEFAULT_ERROR_CMAP = "magma"
-DEFAULT_SIGNED_CMAP = "coolwarm"
-
-DEFAULT_MASK_OVERLAY_RGB = (255, 255, 255)
-DEFAULT_BOUNDARY_OVERLAY_RGB = (255, 215, 0)
-DEFAULT_CONTENT_BOX_RGB = (0, 255, 255)
-DEFAULT_MASK_BOX_RGB = (255, 0, 255)
-
-DEFAULT_MAP_ASSET_TYPES = (
-    "damaged_error",
-    "restored_error",
+NUMERIC_MAP_TYPES = (
+    "damaged_absolute_error",
+    "restored_absolute_error",
     "signed_improvement",
     "masked_signed_improvement",
-    "boundary_signed_improvement",
-    "mask_overlay",
-    "boundary_overlay",
 )
-
-MAP_ASSET_SPECS = {
-    "damaged_error": {
-        "subdir": "damaged_error",
-        "suffix": "der",
-        "path_column": "damaged_error_map_path",
-        "filename_column": "damaged_error_map_filename",
-    },
-    "restored_error": {
-        "subdir": "restored_error",
-        "suffix": "rer",
-        "path_column": "restored_error_map_path",
-        "filename_column": "restored_error_map_filename",
-    },
-    "signed_improvement": {
-        "subdir": "signed_improvement",
-        "suffix": "sig",
-        "path_column": "signed_improvement_map_path",
-        "filename_column": "signed_improvement_map_filename",
-    },
-    "masked_signed_improvement": {
-        "subdir": "masked_signed_improvement",
-        "suffix": "msi",
-        "path_column": "masked_signed_improvement_map_path",
-        "filename_column": "masked_signed_improvement_map_filename",
-    },
-    "boundary_signed_improvement": {
-        "subdir": "boundary_signed_improvement",
-        "suffix": "bsi",
-        "path_column": "boundary_signed_improvement_map_path",
-        "filename_column": "boundary_signed_improvement_map_filename",
-    },
-    "mask_overlay": {
-        "subdir": "mask_overlay",
-        "suffix": "msk",
-        "path_column": "mask_overlay_path",
-        "filename_column": "mask_overlay_filename",
-    },
-    "boundary_overlay": {
-        "subdir": "boundary_overlay",
-        "suffix": "bnd",
-        "path_column": "boundary_overlay_path",
-        "filename_column": "boundary_overlay_filename",
-    },
-}
-
-METADATA_COLUMNS_TO_COPY = (
-    "map_id",
-    "candidate_id",
-    "restoration_case_id",
-    "case_id",
-    "source_case_key",
-    "source_case_id",
-    "painting_id",
-    "category",
-    "title",
-    "mask_id",
-    "mask_type",
-    "prompt_policy_id",
-    "prompt_variant_id",
-    "prompt_template_name",
-    "prompt_ablation_subset",
-    "candidate_index",
-    "candidate_seed",
-    "effective_candidate_seed",
-    "inference_mode",
-    "execution_device",
-    "clean_path",
-    "damaged_path",
-    "restored_path",
-    "mask_path",
+CANDIDATE_MAP_TYPES = NUMERIC_MAP_TYPES + ("spatial_overlay",)
+SPATIAL_REGION_ORDER = (
+    "full_image",
+    "content_region",
+    "masked_region",
+    "mask_bbox_crop",
+    "inner_boundary_band",
+    "outer_boundary_band",
+    "boundary_ring",
+    "outside_mask_content",
+    "outside_boundary_ring",
+    "degradation_support",
 )
 
 
-def resolve_path(path_value: str | Path, project_root: str | Path | None = None) -> Path:
-    """Resolve an absolute or project-relative path."""
-    path = Path(path_value)
+@dataclass(frozen=True)
+class SpatialCandidateResult:
+    """Computed arrays, regions, and normalized summary rows for one candidate."""
 
-    if path.is_absolute():
-        return path
-
-    if project_root is None:
-        return path
-
-    return Path(project_root) / path
+    maps: Mapping[str, np.ndarray]
+    regions: Mapping[str, Region]
+    diagnostics: pd.DataFrame
 
 
-def load_rgb_array(path: str | Path, project_root: str | Path | None = None) -> np.ndarray:
-    """Load an RGB image as float32 in range [0, 255]."""
-    resolved_path = resolve_path(path, project_root=project_root)
+@dataclass(frozen=True)
+class SpatialRunResult:
+    """Checkpoint-aware full execution result."""
 
-    if not resolved_path.exists():
-        raise FileNotFoundError(f"Image file not found: {resolved_path}")
+    diagnostics: pd.DataFrame
+    map_images: pd.DataFrame
+    completed_candidates: int
+    reused_candidates: int
 
-    with Image.open(resolved_path) as image:
+
+def load_spatial_diagnostics_config(path: str | Path) -> dict[str, Any]:
+    """Load and minimally validate the Notebook 16 configuration."""
+
+    config_path = Path(path)
+    if not config_path.is_file():
+        raise FileNotFoundError(f"Spatial diagnostics config not found: {config_path}")
+    payload = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict) or "spatial_diagnostics" not in payload:
+        raise ValueError("Config must contain a spatial_diagnostics mapping")
+    config = payload["spatial_diagnostics"]
+    for key in (
+        "notebook_id", "notebook_stem", "diagnostic_version",
+        "map_manifest_version", "map_renderer_version", "inputs", "output",
+        "regions", "visualization", "execution", "evidence_policy",
+        "expected_counts", "known_limitations",
+    ):
+        if key not in config:
+            raise ValueError(f"Spatial diagnostics config is missing {key!r}")
+    if tuple(config["regions"]["region_order"]) != SPATIAL_REGION_ORDER:
+        raise ValueError("Configured spatial region order does not match the v1 contract")
+    degradation_experiments = config["regions"].get(
+        "degradation_support_experiment_ids"
+    )
+    if degradation_experiments != ["synthetic_degradation"]:
+        raise ValueError(
+            "Degradation support must be restricted to synthetic_degradation"
+        )
+    if tuple(config["visualization"]["map_types"]) != CANDIDATE_MAP_TYPES:
+        raise ValueError("Configured candidate map types do not match the v1 contract")
+    if config["diagnostic_version"] != SPATIAL_DIAGNOSTIC_VERSION:
+        raise ValueError("Unsupported spatial diagnostic version")
+    if config["map_manifest_version"] != SPATIAL_MAP_MANIFEST_VERSION:
+        raise ValueError("Unsupported spatial map manifest version")
+    if config["map_renderer_version"] != SPATIAL_MAP_RENDERER_VERSION:
+        raise ValueError("Unsupported spatial map renderer version")
+    return config
+
+
+def resolve_path(path_value: str | Path, project_root: str | Path) -> Path:
+    """Resolve one project-relative or absolute path."""
+
+    path = Path(str(path_value).strip())
+    return path if path.is_absolute() else Path(project_root) / path
+
+
+def project_relative_path(path: str | Path, project_root: str | Path) -> str:
+    """Return a POSIX repository-relative path."""
+
+    resolved = Path(path).resolve()
+    root = Path(project_root).resolve()
+    return resolved.relative_to(root).as_posix()
+
+
+def sha256_path(path: str | Path) -> str:
+    """Hash one file using SHA-256."""
+
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def make_map_id(candidate_id: str) -> str:
+    """Build a short deterministic path-safe identifier for one candidate."""
+
+    value = str(candidate_id).strip()
+    if not value:
+        raise ValueError("candidate_id must be non-empty")
+    return "spm_" + hashlib.sha256(value.encode("utf-8")).hexdigest()[:16]
+
+
+def make_spatial_diagnostic_id(candidate_id: str, region_id: str) -> str:
+    """Build a deterministic primary key for one candidate-region row."""
+
+    payload = f"{candidate_id}|{region_id}|{SPATIAL_DIAGNOSTIC_VERSION}"
+    return "spd_" + hashlib.sha256(payload.encode("utf-8")).hexdigest()[:20]
+
+
+def make_map_image_id(map_id: str, map_type: str) -> str:
+    """Build a stable image-manifest primary key."""
+
+    payload = f"{map_id}|{map_type}|{SPATIAL_MAP_RENDERER_VERSION}"
+    return "smi_" + hashlib.sha256(payload.encode("utf-8")).hexdigest()[:20]
+
+
+def _row_value(row: Mapping[str, Any] | pd.Series, key: str, default: Any = "") -> Any:
+    return row.get(key, default)
+
+
+def load_rgb_array(path: str | Path, project_root: str | Path) -> np.ndarray:
+    """Load an RGB image as float32 values in [0, 255]."""
+
+    resolved = resolve_path(path, project_root)
+    if not resolved.is_file():
+        raise FileNotFoundError(f"RGB image not found: {resolved}")
+    with Image.open(resolved) as image:
         return np.asarray(image.convert("RGB"), dtype=np.float32)
 
 
-def load_mask_bool(
-    path: str | Path,
-    threshold: int = 0,
-    project_root: str | Path | None = None,
-) -> np.ndarray:
-    """Load a mask as a boolean array where True means damaged/missing."""
-    resolved_path = resolve_path(path, project_root=project_root)
+def load_mask_array(path: str | Path, project_root: str | Path) -> np.ndarray:
+    """Load the original grayscale mask/effect values without threshold loss."""
 
-    if not resolved_path.exists():
-        raise FileNotFoundError(f"Mask file not found: {resolved_path}")
-
-    with Image.open(resolved_path) as image:
-        mask_arr = np.asarray(image.convert("L"))
-
-    return mask_arr > int(threshold)
+    resolved = resolve_path(path, project_root)
+    if not resolved.is_file():
+        raise FileNotFoundError(f"Mask/effect image not found: {resolved}")
+    with Image.open(resolved) as image:
+        return np.asarray(image.convert("L"), dtype=np.uint8)
 
 
-def load_image_for_display(
-    path: str | Path,
-    mode: str = "RGB",
-    project_root: str | Path | None = None,
-) -> Image.Image:
-    """Load an image for display or panel generation."""
-    resolved_path = resolve_path(path, project_root=project_root)
+def load_candidate_arrays(
+    row: Mapping[str, Any] | pd.Series,
+    *,
+    project_root: str | Path,
+) -> dict[str, np.ndarray]:
+    """Load and validate clean, damaged, restored, and mask arrays."""
 
-    if not resolved_path.exists():
-        raise FileNotFoundError(f"Image file not found: {resolved_path}")
-
-    with Image.open(resolved_path) as image:
-        return image.convert(mode)
-
-
-def _require_rgb_pair(reference_arr: np.ndarray, candidate_arr: np.ndarray) -> None:
-    if reference_arr.shape != candidate_arr.shape:
+    arrays = {
+        "clean": load_rgb_array(_row_value(row, "clean_image_path"), project_root),
+        "damaged": load_rgb_array(_row_value(row, "input_image_path"), project_root),
+        "restored": load_rgb_array(_row_value(row, "restored_path"), project_root),
+        "mask_values": load_mask_array(
+            _row_value(row, "mask_or_effect_path"), project_root
+        ),
+    }
+    shape = arrays["clean"].shape
+    if len(shape) != 3 or shape[2] != 3:
+        raise ValueError(f"Clean image is not RGB: {shape}")
+    for role in ("damaged", "restored"):
+        if arrays[role].shape != shape:
+            raise ValueError(
+                f"{role} shape {arrays[role].shape} does not match clean {shape}"
+            )
+    if arrays["mask_values"].shape != shape[:2]:
         raise ValueError(
-            f"Image shapes do not match: reference={reference_arr.shape}, "
-            f"candidate={candidate_arr.shape}"
+            "Mask/effect shape does not match image shape: "
+            f"{arrays['mask_values'].shape} vs {shape[:2]}"
         )
-
-    if reference_arr.ndim != 3 or reference_arr.shape[2] != 3:
-        raise ValueError(
-            "Expected RGB arrays with shape (height, width, 3), "
-            f"received {reference_arr.shape}."
-        )
-
-
-def compute_absolute_error_map(
-    clean_arr: np.ndarray,
-    candidate_arr: np.ndarray,
-) -> np.ndarray:
-    """Compute per-pixel mean absolute RGB error in range [0, 255]."""
-    _require_rgb_pair(clean_arr, candidate_arr)
-
-    return np.mean(
-        np.abs(clean_arr.astype(np.float32) - candidate_arr.astype(np.float32)),
-        axis=2,
-        dtype=np.float32,
-    )
-
-
-def compute_signed_improvement_map(
-    damaged_error_map: np.ndarray,
-    restored_error_map: np.ndarray,
-) -> np.ndarray:
-    """Compute signed restoration improvement.
-
-    Positive values mean the restored image is closer to the clean reference
-    than the damaged image. Negative values mean it is farther away.
-    """
-    if damaged_error_map.shape != restored_error_map.shape:
-        raise ValueError(
-            f"Error-map shapes do not match: damaged={damaged_error_map.shape}, "
-            f"restored={restored_error_map.shape}"
-        )
-
-    return damaged_error_map.astype(np.float32) - restored_error_map.astype(np.float32)
-
-
-def apply_mask_to_map(
-    map_arr: np.ndarray,
-    mask_bool: np.ndarray,
-    outside_value: float = np.nan,
-) -> np.ndarray:
-    """Return a copy of a 2D map with pixels outside the mask suppressed."""
-    if map_arr.shape != mask_bool.shape:
-        raise ValueError(
-            f"Map and mask shapes do not match: map={map_arr.shape}, "
-            f"mask={mask_bool.shape}"
-        )
-
-    masked_map = np.full(map_arr.shape, outside_value, dtype=np.float32)
-    masked_map[mask_bool] = map_arr[mask_bool]
-
-    return masked_map
-
-
-def clip_bbox(
-    bbox: Sequence[int | float] | None,
-    width: int,
-    height: int,
-) -> tuple[int, int, int, int] | None:
-    """Clip an ``(x_min, y_min, x_max, y_max)`` box to image bounds."""
-    if bbox is None:
-        return None
-
-    if len(bbox) != 4:
-        raise ValueError(f"Bounding box must contain four values, received {bbox}.")
-
-    x_min, y_min, x_max, y_max = [int(round(float(value))) for value in bbox]
-
-    x_min = max(0, min(x_min, width))
-    x_max = max(0, min(x_max, width))
-    y_min = max(0, min(y_min, height))
-    y_max = max(0, min(y_max, height))
-
-    if x_max <= x_min or y_max <= y_min:
-        return None
-
-    return x_min, y_min, x_max, y_max
-
-
-def bbox_from_binary_mask(
-    mask_bool: np.ndarray,
-    margin: int = 0,
-) -> tuple[int, int, int, int] | None:
-    """Return the tight mask box using exclusive maximum coordinates."""
-    if mask_bool.ndim != 2:
-        raise ValueError(f"Expected a two-dimensional mask, received {mask_bool.shape}.")
-
-    y_coords, x_coords = np.where(mask_bool)
-
-    if len(x_coords) == 0:
-        return None
-
-    height, width = mask_bool.shape
-    bbox = (
-        int(x_coords.min()) - int(margin),
-        int(y_coords.min()) - int(margin),
-        int(x_coords.max()) + 1 + int(margin),
-        int(y_coords.max()) + 1 + int(margin),
-    )
-
-    return clip_bbox(bbox=bbox, width=width, height=height)
-
-
-def disk_footprint(radius: int) -> np.ndarray:
-    """Create a boolean disk footprint for binary morphology."""
-    if radius < 1:
-        raise ValueError("radius must be at least 1.")
-
-    y_grid, x_grid = np.ogrid[-radius : radius + 1, -radius : radius + 1]
-    return (x_grid * x_grid + y_grid * y_grid) <= radius * radius
-
-
-def build_boundary_ring(
-    mask_bool: np.ndarray,
-    width_pixels: int = 3,
-    mode: str = "both",
-) -> np.ndarray:
-    """Build an inner, outer, or combined boundary ring around a binary mask."""
-    if mask_bool.ndim != 2:
-        raise ValueError(f"Expected a two-dimensional mask, received {mask_bool.shape}.")
-
-    if width_pixels < 1:
-        raise ValueError("width_pixels must be at least 1.")
-
-    normalized_mode = str(mode).strip().lower()
-
-    if normalized_mode not in {"inner", "outer", "both"}:
-        raise ValueError("mode must be one of {'inner', 'outer', 'both'}.")
-
-    footprint = disk_footprint(int(width_pixels))
-    eroded = binary_erosion(mask_bool, structure=footprint)
-    dilated = binary_dilation(mask_bool, structure=footprint)
-
-    inner_ring = mask_bool & ~eroded
-    outer_ring = dilated & ~mask_bool
-
-    if normalized_mode == "inner":
-        return inner_ring
-    if normalized_mode == "outer":
-        return outer_ring
-
-    return inner_ring | outer_ring
-
-
-def _normalize_rgb_triplet(rgb: Sequence[int | float]) -> np.ndarray:
-    if len(rgb) != 3:
-        raise ValueError("RGB values must contain exactly three elements.")
-
-    normalized = np.asarray(rgb, dtype=np.float32)
-
-    if np.any(normalized < 0) or np.any(normalized > 255):
-        raise ValueError("RGB values must be within [0, 255].")
-
-    return normalized
-
-
-def create_spatial_overlay(
-    image_arr: np.ndarray,
-    mask_bool: np.ndarray,
-    boundary_bool: np.ndarray | None = None,
-    mask_alpha: float = 0.22,
-    boundary_alpha: float = 0.85,
-    mask_rgb: Sequence[int | float] = DEFAULT_MASK_OVERLAY_RGB,
-    boundary_rgb: Sequence[int | float] = DEFAULT_BOUNDARY_OVERLAY_RGB,
-) -> np.ndarray:
-    """Create an RGB overlay containing mask fill and optional boundary highlight."""
-    if image_arr.ndim != 3 or image_arr.shape[2] != 3:
-        raise ValueError(f"Expected RGB image array, received {image_arr.shape}.")
-
-    if image_arr.shape[:2] != mask_bool.shape:
-        raise ValueError(
-            f"Image and mask shapes do not match: image={image_arr.shape[:2]}, "
-            f"mask={mask_bool.shape}."
-        )
-
-    if not 0.0 <= mask_alpha <= 1.0:
-        raise ValueError("mask_alpha must be in range [0, 1].")
-
-    if not 0.0 <= boundary_alpha <= 1.0:
-        raise ValueError("boundary_alpha must be in range [0, 1].")
-
-    if boundary_bool is not None and boundary_bool.shape != mask_bool.shape:
-        raise ValueError(
-            f"Boundary and mask shapes do not match: "
-            f"boundary={boundary_bool.shape}, mask={mask_bool.shape}."
-        )
-
-    overlay = image_arr.astype(np.float32).copy()
-    mask_colour = _normalize_rgb_triplet(mask_rgb)
-    overlay[mask_bool] = (1.0 - mask_alpha) * overlay[mask_bool] + mask_alpha * mask_colour
-
-    if boundary_bool is not None:
-        boundary_colour = _normalize_rgb_triplet(boundary_rgb)
-        overlay[boundary_bool] = (
-            (1.0 - boundary_alpha) * overlay[boundary_bool]
-            + boundary_alpha * boundary_colour
-        )
-
-    return np.clip(overlay, 0, 255).astype(np.uint8)
-
-
-def draw_bbox(
-    axis: Axes,
-    bbox: Sequence[int | float] | None,
-    edgecolor: Any,
-    linestyle: str = "-",
-    linewidth: float = 1.8,
-    label: str | None = None,
-) -> None:
-    """Draw a clipped bounding box on a Matplotlib axis."""
-    if bbox is None:
-        return
-
-    x_min, y_min, x_max, y_max = bbox
-    rectangle = Rectangle(
-        (x_min, y_min),
-        x_max - x_min,
-        y_max - y_min,
-        fill=False,
-        edgecolor=edgecolor,
-        linestyle=linestyle,
-        linewidth=linewidth,
-        label=label,
-    )
-    axis.add_patch(rectangle)
-
-
-def _coerce_optional_bbox_from_row(
-    case_row: pd.Series | Mapping[str, Any],
-    candidate_column_sets: Sequence[Sequence[str]],
-    width: int,
-    height: int,
-) -> tuple[int, int, int, int] | None:
-    for columns in candidate_column_sets:
-        if not all(column in case_row for column in columns):
-            continue
-
-        values = [case_row.get(column) for column in columns]
-
-        if any(pd.isna(value) for value in values):
-            continue
-
-        return clip_bbox(bbox=values, width=width, height=height)
-
-    return None
+    return arrays
 
 
 def compute_case_maps(
-    clean_path: str | Path,
-    damaged_path: str | Path,
-    restored_path: str | Path,
-    mask_path: str | Path,
-    boundary_width_pixels: int = 3,
-    boundary_mode: str = "both",
-    mask_threshold: int = 0,
-    project_root: str | Path | None = None,
+    clean: np.ndarray,
+    damaged: np.ndarray,
+    restored: np.ndarray,
 ) -> dict[str, np.ndarray]:
-    """Compute all reusable arrays for one restoration candidate."""
-    clean_arr = load_rgb_array(clean_path, project_root=project_root)
-    damaged_arr = load_rgb_array(damaged_path, project_root=project_root)
-    restored_arr = load_rgb_array(restored_path, project_root=project_root)
-    mask_bool = load_mask_bool(
-        mask_path,
-        threshold=mask_threshold,
-        project_root=project_root,
+    """Compute canonical full-resolution floating-point spatial maps."""
+
+    clean_arr = np.asarray(clean, dtype=np.float32)
+    damaged_arr = np.asarray(damaged, dtype=np.float32)
+    restored_arr = np.asarray(restored, dtype=np.float32)
+    if clean_arr.ndim != 3 or clean_arr.shape[2] != 3:
+        raise ValueError("clean must be an H x W x 3 RGB array")
+    if damaged_arr.shape != clean_arr.shape or restored_arr.shape != clean_arr.shape:
+        raise ValueError("clean, damaged, and restored arrays must have identical shape")
+    damaged_error = np.mean(np.abs(clean_arr - damaged_arr), axis=2, dtype=np.float32)
+    restored_error = np.mean(np.abs(clean_arr - restored_arr), axis=2, dtype=np.float32)
+    signed = damaged_error - restored_error
+    restoration_change = np.mean(
+        np.abs(restored_arr - damaged_arr), axis=2, dtype=np.float32
     )
-
-    _require_rgb_pair(clean_arr, damaged_arr)
-    _require_rgb_pair(clean_arr, restored_arr)
-
-    if mask_bool.shape != clean_arr.shape[:2]:
-        raise ValueError(
-            f"Mask shape mismatch: mask={mask_bool.shape}, image={clean_arr.shape[:2]}"
-        )
-
-    damaged_error_map = compute_absolute_error_map(clean_arr, damaged_arr)
-    restored_error_map = compute_absolute_error_map(clean_arr, restored_arr)
-    signed_improvement_map = compute_signed_improvement_map(
-        damaged_error_map=damaged_error_map,
-        restored_error_map=restored_error_map,
-    )
-    boundary_bool = build_boundary_ring(
-        mask_bool=mask_bool,
-        width_pixels=boundary_width_pixels,
-        mode=boundary_mode,
-    )
-
     return {
-        "clean_arr": clean_arr,
-        "damaged_arr": damaged_arr,
-        "restored_arr": restored_arr,
-        "mask_bool": mask_bool,
-        "boundary_bool": boundary_bool,
-        "damaged_error_map": damaged_error_map,
-        "restored_error_map": restored_error_map,
-        "signed_improvement_map": signed_improvement_map,
-        "masked_signed_improvement_map": apply_mask_to_map(
-            signed_improvement_map,
-            mask_bool,
-            outside_value=np.nan,
-        ),
-        "boundary_signed_improvement_map": apply_mask_to_map(
-            signed_improvement_map,
-            boundary_bool,
-            outside_value=np.nan,
-        ),
+        "damaged_absolute_error": damaged_error.astype(np.float32, copy=False),
+        "restored_absolute_error": restored_error.astype(np.float32, copy=False),
+        "signed_improvement": signed.astype(np.float32, copy=False),
+        "restoration_change": restoration_change.astype(np.float32, copy=False),
     }
 
 
-def compute_map_region_summary(
-    map_arr: np.ndarray,
-    region_bool: np.ndarray,
-    prefix: str,
-) -> dict[str, Any]:
-    """Summarize a numeric map over a boolean region."""
-    if map_arr.shape != region_bool.shape:
-        raise ValueError(
-            f"Map and region shapes do not match: map={map_arr.shape}, "
-            f"region={region_bool.shape}."
+def build_candidate_regions(
+    row: Mapping[str, Any] | pd.Series,
+    mask_values: np.ndarray,
+    *,
+    config: Mapping[str, Any],
+) -> dict[str, Region]:
+    """Build the complete Notebook 16 region set through the canonical helper."""
+
+    threshold = int(float(_row_value(row, "mask_threshold")))
+    active_mask = np.asarray(mask_values) >= threshold
+    content_bbox = tuple(
+        int(float(_row_value(row, column)))
+        for column in (
+            "content_x_min", "content_y_min", "content_x_max", "content_y_max"
         )
-
-    values = map_arr[region_bool]
-    values = values[np.isfinite(values)]
-    pixel_count = int(values.size)
-
-    if pixel_count == 0:
-        return {
-            f"{prefix}_pixel_count": 0,
-            f"{prefix}_mean": float("nan"),
-            f"{prefix}_std": float("nan"),
-            f"{prefix}_min": float("nan"),
-            f"{prefix}_max": float("nan"),
-            f"{prefix}_positive_pixels": 0,
-            f"{prefix}_negative_pixels": 0,
-            f"{prefix}_zero_pixels": 0,
-            f"{prefix}_positive_percentage": float("nan"),
-            f"{prefix}_negative_percentage": float("nan"),
-            f"{prefix}_zero_percentage": float("nan"),
-        }
-
-    positive_pixels = int((values > 0).sum())
-    negative_pixels = int((values < 0).sum())
-    zero_pixels = int((values == 0).sum())
-
-    return {
-        f"{prefix}_pixel_count": pixel_count,
-        f"{prefix}_mean": float(values.mean()),
-        f"{prefix}_std": float(values.std(ddof=0)),
-        f"{prefix}_min": float(values.min()),
-        f"{prefix}_max": float(values.max()),
-        f"{prefix}_positive_pixels": positive_pixels,
-        f"{prefix}_negative_pixels": negative_pixels,
-        f"{prefix}_zero_pixels": zero_pixels,
-        f"{prefix}_positive_percentage": positive_pixels / pixel_count * 100.0,
-        f"{prefix}_negative_percentage": negative_pixels / pixel_count * 100.0,
-        f"{prefix}_zero_percentage": zero_pixels / pixel_count * 100.0,
+    )
+    policy = config["regions"]
+    regions = build_standard_regions(
+        active_mask,
+        content_bbox=content_bbox,
+        mask_bbox_margin=int(policy["mask_bbox_margin_pixels"]),
+        boundary_width_pixels=int(policy["boundary_width_pixels"]),
+        include_outside_boundary=True,
+        outside_boundary_width_pixels=int(policy["outside_ring_outer_width_pixels"]),
+    )
+    experiment_id = str(_row_value(row, "experiment_id"))
+    if experiment_id in set(policy["degradation_support_experiment_ids"]):
+        regions["degradation_support"] = effect_support_region(
+            mask_values,
+            support_threshold=float(policy["effect_support_threshold"]),
+        )
+    ordered = {
+        region_id: regions[region_id]
+        for region_id in SPATIAL_REGION_ORDER
+        if region_id in regions
     }
+    expected_order = tuple(
+        region_id
+        for region_id in SPATIAL_REGION_ORDER
+        if region_id != "degradation_support"
+        or experiment_id in set(policy["degradation_support_experiment_ids"])
+    )
+    if tuple(ordered) != expected_order:
+        raise ValueError(
+            f"Canonical region order mismatch: {tuple(ordered)} vs {expected_order}"
+        )
+    return ordered
 
 
-def compute_error_map_summary(
-    clean_path: str | Path,
-    damaged_path: str | Path,
-    restored_path: str | Path,
-    mask_path: str | Path,
-    content_bbox: Sequence[int | float] | None = None,
-    boundary_width_pixels: int = 3,
-    boundary_mode: str = "both",
-    mask_threshold: int = 0,
-    project_root: str | Path | None = None,
+def _percentile(values: np.ndarray, percentile: float) -> float:
+    return float(np.percentile(values, percentile))
+
+
+def _diagnostic_record(
+    row: Mapping[str, Any] | pd.Series,
+    region: Region,
+    maps: Mapping[str, np.ndarray],
+    *,
+    config: Mapping[str, Any],
 ) -> dict[str, Any]:
-    """Compute summary statistics for one candidate's difference maps."""
-    maps = compute_case_maps(
-        clean_path=clean_path,
-        damaged_path=damaged_path,
-        restored_path=restored_path,
-        mask_path=mask_path,
-        boundary_width_pixels=boundary_width_pixels,
-        boundary_mode=boundary_mode,
-        mask_threshold=mask_threshold,
-        project_root=project_root,
+    pixels = region.mask
+    damaged = np.asarray(maps["damaged_absolute_error"])[pixels]
+    restored = np.asarray(maps["restored_absolute_error"])[pixels]
+    signed = np.asarray(maps["signed_improvement"])[pixels]
+    changed = np.asarray(maps["restoration_change"])[pixels]
+    tolerance = float(config["evidence_policy"]["improved_pixel_tolerance"])
+    change_tolerance = float(
+        config["evidence_policy"]["changed_pixel_channel_tolerance"]
     )
-
-    clean_arr = maps["clean_arr"]
-    mask_bool = maps["mask_bool"]
-    boundary_bool = maps["boundary_bool"]
-    damaged_error_map = maps["damaged_error_map"]
-    restored_error_map = maps["restored_error_map"]
-    signed_improvement_map = maps["signed_improvement_map"]
-
-    height, width = mask_bool.shape
-    full_region = np.ones(mask_bool.shape, dtype=bool)
-    outside_mask_region = ~mask_bool
-    clipped_content_bbox = clip_bbox(
-        bbox=content_bbox,
-        width=width,
-        height=height,
-    )
-
-    content_region = np.zeros(mask_bool.shape, dtype=bool)
-
-    if clipped_content_bbox is None:
-        content_region[:] = True
-    else:
-        x_min, y_min, x_max, y_max = clipped_content_bbox
-        content_region[y_min:y_max, x_min:x_max] = True
-
-    summary: dict[str, Any] = {
-        "error_map_module": ERROR_MAP_MODULE_NAME,
-        "error_map_version": ERROR_MAP_VERSION,
-        "image_height": int(height),
-        "image_width": int(width),
-        "full_pixel_count": int(full_region.sum()),
-        "content_pixel_count": int(content_region.sum()),
-        "masked_pixel_count": int(mask_bool.sum()),
-        "outside_mask_pixel_count": int(outside_mask_region.sum()),
-        "boundary_pixel_count": int(boundary_bool.sum()),
-        "damaged_error_mean_full": float(damaged_error_map.mean()),
-        "damaged_error_std_full": float(damaged_error_map.std(ddof=0)),
-        "damaged_error_max_full": float(damaged_error_map.max()),
-        "restored_error_mean_full": float(restored_error_map.mean()),
-        "restored_error_std_full": float(restored_error_map.std(ddof=0)),
-        "restored_error_max_full": float(restored_error_map.max()),
-        "improvement_mean_full": float(signed_improvement_map.mean()),
-        "improvement_std_full": float(signed_improvement_map.std(ddof=0)),
-        "improvement_min_full": float(signed_improvement_map.min()),
-        "improvement_max_full": float(signed_improvement_map.max()),
-        "boundary_width_pixels": int(boundary_width_pixels),
-        "boundary_mode": str(boundary_mode),
-        "mask_threshold": int(mask_threshold),
+    return {
+        "spatial_diagnostic_id": make_spatial_diagnostic_id(
+            str(_row_value(row, "candidate_id")), region.region_id
+        ),
+        "case_id": str(_row_value(row, "case_id")),
+        "candidate_id": str(_row_value(row, "candidate_id")),
+        "model_id": str(_row_value(row, "model_id")),
+        "painting_id": str(_row_value(row, "painting_id")),
+        "dataset_id": str(_row_value(row, "dataset_id")),
+        "dataset_scope": str(_row_value(row, "dataset_scope")),
+        "experiment_id": str(_row_value(row, "experiment_id")),
+        "damage_or_degradation_type": str(
+            _row_value(row, "damage_or_degradation_type")
+        ),
+        "candidate_index": int(float(_row_value(row, "candidate_index", 0))),
+        "seed": _row_value(row, "seed", np.nan),
+        "prompt_policy_id": str(_row_value(row, "prompt_policy_id", "")),
+        "prompt_variant_id": str(_row_value(row, "prompt_variant_id", "")),
+        "execution_role": str(_row_value(row, "execution_role", "primary")),
+        "is_zero_control": bool(_row_value(row, "is_zero_control", False)),
+        "region_id": region.region_id,
+        "region_type": region.region_type,
+        "spatial_support": region.spatial_support,
+        "region_pixel_count": int(region.pixel_count),
+        "damaged_error_mean": float(damaged.mean(dtype=np.float64)),
+        "damaged_error_median": float(np.median(damaged)),
+        "damaged_error_p95": _percentile(damaged, 95.0),
+        "restored_error_mean": float(restored.mean(dtype=np.float64)),
+        "restored_error_median": float(np.median(restored)),
+        "restored_error_p95": _percentile(restored, 95.0),
+        "signed_improvement_mean": float(signed.mean(dtype=np.float64)),
+        "signed_improvement_median": float(np.median(signed)),
+        "signed_improvement_p05": _percentile(signed, 5.0),
+        "signed_improvement_p95": _percentile(signed, 95.0),
+        "improved_pixel_fraction": float(np.mean(signed > tolerance)),
+        "worsened_pixel_fraction": float(np.mean(signed < -tolerance)),
+        "unchanged_pixel_fraction": float(np.mean(np.abs(signed) <= tolerance)),
+        "restoration_change_mean": float(changed.mean(dtype=np.float64)),
+        "restoration_change_p95": _percentile(changed, 95.0),
+        "restoration_change_max": float(changed.max()),
+        "restoration_changed_pixel_fraction": float(
+            np.mean(changed > change_tolerance)
+        ),
+        "evidence_role": "diagnostic_only",
+        "is_final_trustworthiness_flag": False,
+        "diagnostic_version": SPATIAL_DIAGNOSTIC_VERSION,
+        "region_policy_version": str(config["regions"]["policy_version"]),
+        "status": "ok",
+        "issue": "",
     }
 
-    for prefix, region in (
-        ("improvement_masked", mask_bool),
-        ("improvement_outside_mask", outside_mask_region),
-        ("improvement_boundary", boundary_bool),
-        ("improvement_content", content_region),
-    ):
-        summary.update(compute_map_region_summary(signed_improvement_map, region, prefix))
 
-    for prefix, error_map, region in (
-        ("damaged_error_masked", damaged_error_map, mask_bool),
-        ("restored_error_masked", restored_error_map, mask_bool),
-        ("damaged_error_boundary", damaged_error_map, boundary_bool),
-        ("restored_error_boundary", restored_error_map, boundary_bool),
-        ("damaged_error_outside_mask", damaged_error_map, outside_mask_region),
-        ("restored_error_outside_mask", restored_error_map, outside_mask_region),
-    ):
-        values = error_map[region]
-        values = values[np.isfinite(values)]
-        summary[f"{prefix}_mean"] = float(values.mean()) if values.size > 0 else float("nan")
-        summary[f"{prefix}_std"] = float(values.std(ddof=0)) if values.size > 0 else float("nan")
+def compute_candidate_spatial_diagnostics(
+    row: Mapping[str, Any] | pd.Series,
+    *,
+    project_root: str | Path,
+    config: Mapping[str, Any],
+) -> SpatialCandidateResult:
+    """Compute all valid-region spatial evidence for one candidate."""
 
-    summary.update(
-        {
-            "damaged_error_mean_masked": summary["damaged_error_masked_mean"],
-            "restored_error_mean_masked": summary["restored_error_masked_mean"],
-            "improvement_mean_masked": summary["improvement_masked_mean"],
-            "negative_improvement_pixels_masked": summary[
-                "improvement_masked_negative_pixels"
-            ],
-            "positive_improvement_pixels_masked": summary[
-                "improvement_masked_positive_pixels"
-            ],
-            "zero_improvement_pixels_masked": summary["improvement_masked_zero_pixels"],
-            "negative_improvement_percentage_masked": summary[
-                "improvement_masked_negative_percentage"
-            ],
-            "positive_improvement_percentage_masked": summary[
-                "improvement_masked_positive_percentage"
-            ],
-        }
-    )
-
-    # Keep clean_arr referenced so linting does not hide the shape contract above.
-    _ = clean_arr
-
-    return summary
+    arrays = load_candidate_arrays(row, project_root=project_root)
+    maps = compute_case_maps(arrays["clean"], arrays["damaged"], arrays["restored"])
+    regions = build_candidate_regions(row, arrays["mask_values"], config=config)
+    records = [
+        _diagnostic_record(row, region, maps, config=config)
+        for region in regions.values()
+        if region.validity_status == "valid"
+    ]
+    diagnostics = pd.DataFrame(records, columns=SPATIAL_DIAGNOSTICS_COLUMNS)
+    schema_result = validate_dataframe(diagnostics, SPATIAL_DIAGNOSTICS_SCHEMA)
+    if not schema_result.passed:
+        raise ValueError(f"Candidate diagnostics violate schema: {schema_result.to_dict()}")
+    return SpatialCandidateResult(maps=maps, regions=regions, diagnostics=diagnostics)
 
 
 def _sample_values(
     values: np.ndarray,
-    maximum_samples: int,
-    rng: np.random.Generator,
+    *,
+    maximum: int,
+    seed: int,
 ) -> np.ndarray:
-    values = np.asarray(values, dtype=np.float32)
-    values = values[np.isfinite(values)]
-
-    if values.size <= maximum_samples:
-        return values
-
-    selected_indices = rng.choice(values.size, size=int(maximum_samples), replace=False)
-    return values[selected_indices]
+    flat = np.asarray(values, dtype=np.float32).ravel()
+    if flat.size <= maximum:
+        return flat
+    rng = np.random.default_rng(seed)
+    indices = rng.choice(flat.size, size=maximum, replace=False)
+    return flat[indices]
 
 
 def compute_global_visualization_scales(
-    cases_metadata: pd.DataFrame,
-    clean_path_column: str = "clean_path",
-    damaged_path_column: str = "damaged_path",
-    restored_path_column: str = "restored_path",
-    mask_path_column: str = "mask_path",
-    absolute_percentile: float = 99.5,
-    signed_percentile: float = 99.5,
-    maximum_samples_per_case: int = 10_000,
-    random_seed: int = 42,
-    sample_region: str = "masked",
-    mask_threshold: int = 0,
-    project_root: str | Path | None = None,
-) -> pd.DataFrame:
-    """Compute comparable absolute-error and signed-improvement colour scales."""
-    required_columns = {
-        clean_path_column,
-        damaged_path_column,
-        restored_path_column,
-        mask_path_column,
-    }
-    missing_columns = sorted(required_columns - set(cases_metadata.columns))
+    worklist: pd.DataFrame,
+    *,
+    project_root: str | Path,
+    config: Mapping[str, Any],
+    progress_callback: Callable[[int, int], None] | None = None,
+) -> dict[str, dict[str, Any]]:
+    """Compute one globally comparable absolute and signed display scale."""
 
-    if missing_columns:
-        raise ValueError(f"Cases metadata missing required columns: {missing_columns}")
-
-    if not 0.0 < absolute_percentile <= 100.0:
-        raise ValueError("absolute_percentile must be within (0, 100].")
-
-    if not 0.0 < signed_percentile <= 100.0:
-        raise ValueError("signed_percentile must be within (0, 100].")
-
-    normalized_region = str(sample_region).strip().lower()
-
-    if normalized_region not in {"masked", "full"}:
-        raise ValueError("sample_region must be either 'masked' or 'full'.")
-
-    rng = np.random.default_rng(int(random_seed))
+    if worklist.empty:
+        raise ValueError("Cannot compute visualization scales from an empty worklist")
+    visual = config["visualization"]
+    maximum = int(visual["maximum_sampled_pixels_per_candidate"])
+    base_seed = int(visual["deterministic_sampling_seed"])
     absolute_samples: list[np.ndarray] = []
     signed_samples: list[np.ndarray] = []
-    sampled_case_count = 0
-    sampled_absolute_value_count = 0
-    sampled_signed_value_count = 0
-
-    for _, row in cases_metadata.iterrows():
-        maps = compute_case_maps(
-            clean_path=row[clean_path_column],
-            damaged_path=row[damaged_path_column],
-            restored_path=row[restored_path_column],
-            mask_path=row[mask_path_column],
-            mask_threshold=mask_threshold,
-            project_root=project_root,
+    total = len(worklist)
+    for number, (_, row) in enumerate(worklist.iterrows(), start=1):
+        result = compute_candidate_spatial_diagnostics(
+            row, project_root=project_root, config=config
         )
-        mask_bool = maps["mask_bool"]
-        damaged_error_map = maps["damaged_error_map"]
-        restored_error_map = maps["restored_error_map"]
-        signed_improvement_map = maps["signed_improvement_map"]
-
-        if normalized_region == "masked" and mask_bool.any():
-            absolute_values = np.concatenate(
-                [damaged_error_map[mask_bool], restored_error_map[mask_bool]]
-            )
-            signed_values = signed_improvement_map[mask_bool]
-        else:
-            absolute_values = np.concatenate(
-                [damaged_error_map.ravel(), restored_error_map.ravel()]
-            )
-            signed_values = signed_improvement_map.ravel()
-
-        sampled_absolute_values = _sample_values(
-            absolute_values,
-            maximum_samples=maximum_samples_per_case,
-            rng=rng,
-        )
-        sampled_signed_values = _sample_values(
-            signed_values,
-            maximum_samples=maximum_samples_per_case,
-            rng=rng,
-        )
-        absolute_samples.append(sampled_absolute_values)
-        signed_samples.append(np.abs(sampled_signed_values))
-        sampled_case_count += 1
-        sampled_absolute_value_count += int(sampled_absolute_values.size)
-        sampled_signed_value_count += int(sampled_signed_values.size)
-
-    if sampled_case_count == 0:
-        raise ValueError("Cannot compute visualization scales from an empty dataframe.")
-
-    pooled_absolute = np.concatenate(absolute_samples)
-    pooled_signed_absolute = np.concatenate(signed_samples)
-    absolute_vmax = float(np.percentile(pooled_absolute, absolute_percentile))
-    signed_limit = float(np.percentile(pooled_signed_absolute, signed_percentile))
-    absolute_vmax = max(absolute_vmax, float(np.finfo(np.float32).eps))
-    signed_limit = max(signed_limit, float(np.finfo(np.float32).eps))
-
-    common_metadata = {
-        "sample_region": normalized_region,
-        "random_seed": int(random_seed),
-        "maximum_samples_per_case": int(maximum_samples_per_case),
-        "sampled_case_count": int(sampled_case_count),
-        "mask_threshold": int(mask_threshold),
-        "error_map_version": ERROR_MAP_VERSION,
+        content = result.regions["content_region"].mask
+        candidate_seed = int(
+            hashlib.sha256(str(row["candidate_id"]).encode("utf-8")).hexdigest()[:8],
+            16,
+        ) ^ base_seed
+        absolute_values = np.concatenate((
+            result.maps["damaged_absolute_error"][content],
+            result.maps["restored_absolute_error"][content],
+        ))
+        signed_values = np.abs(result.maps["signed_improvement"][content])
+        absolute_samples.append(_sample_values(
+            absolute_values, maximum=maximum, seed=candidate_seed
+        ))
+        signed_samples.append(_sample_values(
+            signed_values, maximum=maximum, seed=candidate_seed + 1
+        ))
+        if progress_callback is not None:
+            progress_callback(number, total)
+    absolute_pool = np.concatenate(absolute_samples)
+    signed_pool = np.concatenate(signed_samples)
+    absolute_cfg = visual["absolute_error"]
+    signed_cfg = visual["signed_improvement"]
+    absolute_max = max(
+        float(np.percentile(absolute_pool, float(absolute_cfg["percentile"]))),
+        float(np.finfo(np.float32).eps),
+    )
+    signed_limit = max(
+        float(np.percentile(
+            signed_pool, float(signed_cfg["absolute_percentile"])
+        )),
+        float(np.finfo(np.float32).eps),
+    )
+    scope = str(visual["scale_population"])
+    return {
+        "absolute_error": {
+            "cmap": str(absolute_cfg["cmap"]),
+            "vmin": float(absolute_cfg["vmin"]),
+            "vmax": absolute_max,
+            "center": np.nan,
+            "percentile": float(absolute_cfg["percentile"]),
+            "scale_scope": scope,
+            "sampled_value_count": int(absolute_pool.size),
+        },
+        "signed_improvement": {
+            "cmap": str(signed_cfg["cmap"]),
+            "vmin": -signed_limit,
+            "vmax": signed_limit,
+            "center": float(signed_cfg["center"]),
+            "percentile": float(signed_cfg["absolute_percentile"]),
+            "scale_scope": scope,
+            "sampled_value_count": int(signed_pool.size),
+        },
     }
 
-    return pd.DataFrame(
-        [
-            {
-                "scale_name": "absolute_error",
-                "cmap": DEFAULT_ERROR_CMAP,
-                "vmin": 0.0,
-                "vmax": absolute_vmax,
-                "percentile": float(absolute_percentile),
-                "sampled_value_count": int(sampled_absolute_value_count),
-                **common_metadata,
-            },
-            {
-                "scale_name": "signed_improvement",
-                "cmap": DEFAULT_SIGNED_CMAP,
-                "vmin": -signed_limit,
-                "vmax": signed_limit,
-                "percentile": float(signed_percentile),
-                "sampled_value_count": int(sampled_signed_value_count),
-                **common_metadata,
-            },
-        ]
+
+def _indexed_palette(cmap_name: str) -> list[int]:
+    cmap = colormaps.get_cmap(cmap_name)
+    palette = [224, 224, 224]
+    for value in np.linspace(0.0, 1.0, 255):
+        rgb = cmap(float(value))[:3]
+        palette.extend(int(round(channel * 255.0)) for channel in rgb)
+    return palette
+
+
+def save_indexed_map_png(
+    values: np.ndarray,
+    output_path: str | Path,
+    *,
+    cmap: str,
+    vmin: float,
+    vmax: float,
+    center: float | None = None,
+    no_data_mask: np.ndarray | None = None,
+    compress_level: int = 9,
+) -> None:
+    """Save one deterministic 8-bit indexed display map."""
+
+    array = np.asarray(values, dtype=np.float32)
+    if array.ndim != 2:
+        raise ValueError("Numeric display maps must be two-dimensional")
+    if not np.isfinite(array).all():
+        raise ValueError("Numeric display maps must contain only finite values")
+    if not float(vmax) > float(vmin):
+        raise ValueError("vmax must be greater than vmin")
+    norm = (
+        TwoSlopeNorm(vmin=float(vmin), vcenter=float(center), vmax=float(vmax))
+        if center is not None and np.isfinite(center)
+        else Normalize(vmin=float(vmin), vmax=float(vmax), clip=True)
+    )
+    normalized = np.clip(norm(array), 0.0, 1.0)
+    indices = 1 + np.rint(normalized * 254.0).astype(np.uint8)
+    has_no_data = no_data_mask is not None
+    if has_no_data:
+        no_data = np.asarray(no_data_mask, dtype=bool)
+        if no_data.shape != array.shape:
+            raise ValueError("no_data_mask shape does not match numeric map")
+        indices[no_data] = 0
+    image = Image.fromarray(indices, mode="P")
+    image.putpalette(_indexed_palette(cmap))
+    output = Path(output_path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    save_kwargs: dict[str, Any] = {
+        "format": "PNG", "optimize": True, "compress_level": int(compress_level)
+    }
+    if has_no_data:
+        save_kwargs["transparency"] = 0
+    image.save(output, **save_kwargs)
+
+
+def _rgba_layer(mask: np.ndarray, colour: Sequence[int]) -> Image.Image:
+    mask_bool = np.asarray(mask, dtype=bool)
+    rgba = np.zeros((*mask_bool.shape, 4), dtype=np.uint8)
+    rgba[mask_bool] = np.asarray(colour, dtype=np.uint8)
+    return Image.fromarray(rgba, mode="RGBA")
+
+
+def build_spatial_overlay_image(
+    regions: Mapping[str, Region],
+    *,
+    config: Mapping[str, Any],
+) -> Image.Image:
+    """Build a transparent reusable geometry and boundary overlay."""
+
+    full = regions["full_image"]
+    overlay = Image.new("RGBA", (full.width, full.height), (0, 0, 0, 0))
+    colours = config["visualization"]["overlay_colours"]
+    for region_id, colour_key in (
+        ("masked_region", "mask_fill_rgba"),
+        ("outside_boundary_ring", "outside_spillover_rgba"),
+        ("outer_boundary_band", "outer_boundary_rgba"),
+        ("inner_boundary_band", "inner_boundary_rgba"),
+    ):
+        overlay = Image.alpha_composite(
+            overlay, _rgba_layer(regions[region_id].mask, colours[colour_key])
+        )
+    draw = ImageDraw.Draw(overlay)
+    for region_id, colour_key in (
+        ("content_region", "content_box_rgba"),
+        ("mask_bbox_crop", "mask_box_rgba"),
+    ):
+        bbox = regions[region_id].bbox
+        if bbox is not None:
+            x0, y0, x1, y1 = bbox
+            draw.rectangle(
+                (x0, y0, x1 - 1, y1 - 1),
+                outline=tuple(colours[colour_key]),
+                width=2,
+            )
+    return overlay
+
+
+def save_spatial_overlay_png(
+    regions: Mapping[str, Region],
+    output_path: str | Path,
+    *,
+    config: Mapping[str, Any],
+) -> None:
+    """Save a transparent reusable geometry and boundary overlay."""
+
+    output = Path(output_path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    build_spatial_overlay_image(regions, config=config).save(
+        output,
+        format="PNG",
+        optimize=True,
+        compress_level=int(config["visualization"]["png_compress_level"]),
     )
 
 
-def scales_dataframe_to_limits(scales_df: pd.DataFrame) -> dict[str, float]:
-    """Extract plotting limits from a two-row scale dataframe."""
-    required_columns = {"scale_name", "vmin", "vmax"}
-    missing_columns = sorted(required_columns - set(scales_df.columns))
-
-    if missing_columns:
-        raise ValueError(f"Scale dataframe missing required columns: {missing_columns}")
-
-    scale_rows = {
-        str(row["scale_name"]): row
-        for _, row in scales_df.iterrows()
-    }
-
-    for scale_name in ("absolute_error", "signed_improvement"):
-        if scale_name not in scale_rows:
-            raise ValueError(f"Scale dataframe missing {scale_name!r} row.")
-
+def _candidate_manifest_base(
+    row: Mapping[str, Any] | pd.Series,
+    *,
+    map_id: str,
+) -> dict[str, Any]:
     return {
-        "error_vmin": float(scale_rows["absolute_error"]["vmin"]),
-        "error_vmax": float(scale_rows["absolute_error"]["vmax"]),
-        "improvement_vmin": float(scale_rows["signed_improvement"]["vmin"]),
-        "improvement_vmax": float(scale_rows["signed_improvement"]["vmax"]),
+        "asset_kind": "candidate_map",
+        "map_id": map_id,
+        "candidate_id": str(_row_value(row, "candidate_id")),
+        "case_id": str(_row_value(row, "case_id")),
+        "model_id": str(_row_value(row, "model_id")),
+        "painting_id": str(_row_value(row, "painting_id")),
+        "selection_role": "",
+        "renderer_version": SPATIAL_MAP_RENDERER_VERSION,
+        "status": "passed",
+        "issue": "",
     }
-
-
-def _numeric_map_to_rgba(
-    map_arr: np.ndarray,
-    cmap: str,
-    vmin: float,
-    vmax: float,
-    center: float | None = None,
-) -> np.ndarray:
-    map_arr = np.asarray(map_arr, dtype=np.float32)
-    finite_mask = np.isfinite(map_arr)
-
-    if center is None:
-        norm = Normalize(vmin=float(vmin), vmax=float(vmax), clip=True)
-    else:
-        norm = TwoSlopeNorm(vmin=float(vmin), vcenter=float(center), vmax=float(vmax))
-
-    rgba = plt.get_cmap(cmap)(norm(np.where(finite_mask, map_arr, np.nan)))
-    rgba_uint8 = np.clip(rgba * 255.0, 0, 255).astype(np.uint8)
-    rgba_uint8[~finite_mask] = np.asarray([0, 0, 0, 0], dtype=np.uint8)
-
-    return rgba_uint8
-
-
-def save_numeric_map_png(
-    map_arr: np.ndarray,
-    output_path: str | Path,
-    cmap: str,
-    vmin: float,
-    vmax: float,
-    center: float | None = None,
-) -> None:
-    """Save a 2D numeric map as a standardized RGBA PNG."""
-    output_path = Path(output_path)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    rgba_uint8 = _numeric_map_to_rgba(map_arr, cmap=cmap, vmin=vmin, vmax=vmax, center=center)
-    Image.fromarray(rgba_uint8, mode="RGBA").save(output_path)
-
-
-def save_rgb_png(image_arr: np.ndarray, output_path: str | Path) -> None:
-    """Save an RGB array as a PNG."""
-    output_path = Path(output_path)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    Image.fromarray(np.clip(image_arr, 0, 255).astype(np.uint8), mode="RGB").save(output_path)
-
-
-def short_map_filename(map_id: str, asset_type: str) -> str:
-    """Return a deterministic short filename for one map asset."""
-    if asset_type not in MAP_ASSET_SPECS:
-        raise ValueError(f"Unsupported map asset type: {asset_type!r}")
-
-    suffix = MAP_ASSET_SPECS[asset_type]["suffix"]
-    return f"{map_id}_{suffix}.png"
-
-
-def make_map_id(index: int, prefix: str = "dm") -> str:
-    """Return a deterministic short map ID such as ``dm_000001``."""
-    if index < 1:
-        raise ValueError("index must be at least 1.")
-
-    return f"{prefix}_{int(index):06d}"
-
-
-def _copy_metadata_from_row(row: pd.Series | Mapping[str, Any]) -> dict[str, Any]:
-    return {
-        column: row.get(column, "")
-        for column in METADATA_COLUMNS_TO_COPY
-        if column in row
-    }
-
-
-def _asset_output_path(output_root: Path, map_id: str, asset_type: str) -> Path:
-    spec = MAP_ASSET_SPECS[asset_type]
-    return output_root / spec["subdir"] / short_map_filename(map_id, asset_type)
 
 
 def save_candidate_map_assets(
-    case_row: pd.Series | Mapping[str, Any],
-    output_root: str | Path,
-    map_index: int,
-    map_id_prefix: str = "dm",
-    asset_types: Sequence[str] = DEFAULT_MAP_ASSET_TYPES,
-    error_vmin: float = 0.0,
-    error_vmax: float = 255.0,
-    improvement_vmin: float = -255.0,
-    improvement_vmax: float = 255.0,
-    boundary_width_pixels: int = 3,
-    boundary_mode: str = "both",
-    mask_threshold: int = 0,
-    project_root: str | Path | None = None,
-) -> dict[str, Any]:
-    """Save all requested short-name map assets for one candidate."""
-    output_root = Path(output_root)
-    map_id = make_map_id(map_index, prefix=map_id_prefix)
-
-    unsupported_assets = sorted(set(asset_types) - set(MAP_ASSET_SPECS))
-
-    if unsupported_assets:
-        raise ValueError(f"Unsupported map asset types: {unsupported_assets}")
-
-    maps = compute_case_maps(
-        clean_path=case_row["clean_path"],
-        damaged_path=case_row["damaged_path"],
-        restored_path=case_row["restored_path"],
-        mask_path=case_row["mask_path"],
-        boundary_width_pixels=boundary_width_pixels,
-        boundary_mode=boundary_mode,
-        mask_threshold=mask_threshold,
-        project_root=project_root,
-    )
-
-    image_arrays = {
-        "damaged_error": maps["damaged_error_map"],
-        "restored_error": maps["restored_error_map"],
-        "signed_improvement": maps["signed_improvement_map"],
-        "masked_signed_improvement": maps["masked_signed_improvement_map"],
-        "boundary_signed_improvement": maps["boundary_signed_improvement_map"],
-    }
-
-    mask_overlay = create_spatial_overlay(
-        image_arr=maps["damaged_arr"],
-        mask_bool=maps["mask_bool"],
-        boundary_bool=None,
-    )
-    boundary_overlay = create_spatial_overlay(
-        image_arr=maps["damaged_arr"],
-        mask_bool=maps["mask_bool"],
-        boundary_bool=maps["boundary_bool"],
-    )
-
-    record = {
-        "map_id": map_id,
-        "map_index": int(map_index),
-        "map_asset_count": int(len(asset_types)),
-        "map_asset_types": " | ".join(asset_types),
-        "status": "ok",
-        "issue": "",
-        "error_map_version": ERROR_MAP_VERSION,
-        "boundary_width_pixels": int(boundary_width_pixels),
-        "boundary_mode": str(boundary_mode),
-        "mask_threshold": int(mask_threshold),
-        "error_vmin": float(error_vmin),
-        "error_vmax": float(error_vmax),
-        "improvement_vmin": float(improvement_vmin),
-        "improvement_vmax": float(improvement_vmax),
-        **_copy_metadata_from_row(case_row),
-    }
-
-    for asset_type in asset_types:
-        output_path = _asset_output_path(output_root, map_id, asset_type)
-        spec = MAP_ASSET_SPECS[asset_type]
-
-        if asset_type in {"damaged_error", "restored_error"}:
-            save_numeric_map_png(
-                image_arrays[asset_type],
-                output_path,
-                cmap=DEFAULT_ERROR_CMAP,
-                vmin=error_vmin,
-                vmax=error_vmax,
-            )
-        elif asset_type in {
-            "signed_improvement",
-            "masked_signed_improvement",
-            "boundary_signed_improvement",
-        }:
-            save_numeric_map_png(
-                image_arrays[asset_type],
-                output_path,
-                cmap=DEFAULT_SIGNED_CMAP,
-                vmin=improvement_vmin,
-                vmax=improvement_vmax,
-                center=0.0,
-            )
-        elif asset_type == "mask_overlay":
-            save_rgb_png(mask_overlay, output_path)
-        elif asset_type == "boundary_overlay":
-            save_rgb_png(boundary_overlay, output_path)
-
-        record[spec["path_column"]] = str(output_path)
-        record[spec["filename_column"]] = output_path.name
-        record[f"{asset_type}_filename_length"] = len(output_path.name)
-        record[f"{asset_type}_file_size_bytes"] = int(output_path.stat().st_size)
-
-    summary = compute_error_map_summary(
-        clean_path=case_row["clean_path"],
-        damaged_path=case_row["damaged_path"],
-        restored_path=case_row["restored_path"],
-        mask_path=case_row["mask_path"],
-        boundary_width_pixels=boundary_width_pixels,
-        boundary_mode=boundary_mode,
-        mask_threshold=mask_threshold,
-        project_root=project_root,
-    )
-    record.update(summary)
-
-    return record
-
-
-def generate_candidate_map_assets_for_cases(
-    cases_metadata: pd.DataFrame,
-    output_root: str | Path,
-    map_id_prefix: str = "dm",
-    asset_types: Sequence[str] = DEFAULT_MAP_ASSET_TYPES,
-    error_vmin: float = 0.0,
-    error_vmax: float = 255.0,
-    improvement_vmin: float = -255.0,
-    improvement_vmax: float = 255.0,
-    boundary_width_pixels: int = 3,
-    boundary_mode: str = "both",
-    mask_threshold: int = 0,
-    project_root: str | Path | None = None,
-    continue_on_error: bool = True,
-    progress_every: int | None = 50,
+    row: Mapping[str, Any] | pd.Series,
+    result: SpatialCandidateResult,
+    *,
+    scales: Mapping[str, Mapping[str, Any]],
+    maps_root: str | Path,
+    project_root: str | Path,
+    config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Generate all requested map PNG assets for candidate-level rows."""
-    required_columns = {"clean_path", "damaged_path", "restored_path", "mask_path"}
-    missing_columns = sorted(required_columns - set(cases_metadata.columns))
+    """Persist the five canonical display assets for one non-zero candidate."""
 
-    if missing_columns:
-        raise ValueError(f"Cases metadata missing required columns: {missing_columns}")
-
-    output_root = Path(output_root)
-    output_root.mkdir(parents=True, exist_ok=True)
+    if bool(_row_value(row, "is_zero_control", False)):
+        return pd.DataFrame(columns=SPATIAL_MAP_IMAGE_MANIFEST_COLUMNS)
+    map_id = make_map_id(str(_row_value(row, "candidate_id")))
+    model_id = str(_row_value(row, "model_id"))
+    output_dir = Path(maps_root) / model_id / map_id
+    compress = int(config["visualization"]["png_compress_level"])
+    paths = {
+        map_type: output_dir / f"{map_type}.png"
+        for map_type in CANDIDATE_MAP_TYPES
+    }
+    absolute_scale = scales["absolute_error"]
+    signed_scale = scales["signed_improvement"]
+    for map_type, source_key, scale, no_data in (
+        ("damaged_absolute_error", "damaged_absolute_error", absolute_scale, None),
+        ("restored_absolute_error", "restored_absolute_error", absolute_scale, None),
+        ("signed_improvement", "signed_improvement", signed_scale, None),
+        (
+            "masked_signed_improvement", "signed_improvement", signed_scale,
+            ~result.regions["masked_region"].mask,
+        ),
+    ):
+        center = scale["center"]
+        save_indexed_map_png(
+            result.maps[source_key],
+            paths[map_type],
+            cmap=str(scale["cmap"]),
+            vmin=float(scale["vmin"]),
+            vmax=float(scale["vmax"]),
+            center=float(center) if np.isfinite(center) else None,
+            no_data_mask=no_data,
+            compress_level=compress,
+        )
+    save_spatial_overlay_png(result.regions, paths["spatial_overlay"], config=config)
+    height, width = result.maps["signed_improvement"].shape
     records: list[dict[str, Any]] = []
-    total_cases = len(cases_metadata)
-
-    for map_index, (_, row) in enumerate(cases_metadata.iterrows(), start=1):
-        map_id = make_map_id(map_index, prefix=map_id_prefix)
-
-        try:
-            record = save_candidate_map_assets(
-                row,
-                output_root=output_root,
-                map_index=map_index,
-                map_id_prefix=map_id_prefix,
-                asset_types=asset_types,
-                error_vmin=error_vmin,
-                error_vmax=error_vmax,
-                improvement_vmin=improvement_vmin,
-                improvement_vmax=improvement_vmax,
-                boundary_width_pixels=boundary_width_pixels,
-                boundary_mode=boundary_mode,
-                mask_threshold=mask_threshold,
-                project_root=project_root,
-            )
-        except Exception as exc:
-            if not continue_on_error:
-                raise
-
-            record = {
-                "map_id": map_id,
-                "map_index": int(map_index),
-                "map_asset_count": int(len(asset_types)),
-                "map_asset_types": " | ".join(asset_types),
-                "status": "error",
-                "issue": f"{type(exc).__name__}: {exc}",
-                "error_map_version": ERROR_MAP_VERSION,
-                "boundary_width_pixels": int(boundary_width_pixels),
-                "boundary_mode": str(boundary_mode),
-                "mask_threshold": int(mask_threshold),
-                **_copy_metadata_from_row(row),
-            }
-
-        records.append(record)
-
-        if progress_every is not None and (
-            map_index == 1 or map_index % progress_every == 0 or map_index == total_cases
-        ):
-            print(f"Processed map assets for {map_index}/{total_cases} candidates...")
-
-    return pd.DataFrame(records)
+    base = _candidate_manifest_base(row, map_id=map_id)
+    for map_type, path in paths.items():
+        is_absolute = map_type in {
+            "damaged_absolute_error", "restored_absolute_error"
+        }
+        is_signed = map_type in {
+            "signed_improvement", "masked_signed_improvement"
+        }
+        scale = absolute_scale if is_absolute else signed_scale if is_signed else None
+        records.append({
+            **base,
+            "map_image_id": make_map_image_id(map_id, map_type),
+            "map_type": map_type,
+            "relative_path": project_relative_path(path, project_root),
+            "sha256": sha256_path(path),
+            "size_bytes": int(path.stat().st_size),
+            "width": int(width),
+            "height": int(height),
+            "image_mode": "P" if scale is not None else "RGBA",
+            "format": "PNG",
+            "cmap": str(scale["cmap"]) if scale is not None else "",
+            "vmin": float(scale["vmin"]) if scale is not None else np.nan,
+            "vmax": float(scale["vmax"]) if scale is not None else np.nan,
+            "center": (
+                float(scale["center"])
+                if scale is not None and np.isfinite(scale["center"])
+                else np.nan
+            ),
+            "scale_scope": (
+                str(scale["scale_scope"]) if scale is not None else "geometry_overlay"
+            ),
+            "quantization_policy": (
+                "indexed_uint8_documented_scale" if scale is not None else "rgba_overlay"
+            ),
+            "no_data_policy": (
+                "transparent_outside_active_mask"
+                if map_type == "masked_signed_improvement"
+                else "not_applicable"
+            ),
+        })
+    frame = pd.DataFrame(records, columns=SPATIAL_MAP_IMAGE_MANIFEST_COLUMNS)
+    validation = validate_dataframe(frame, SPATIAL_MAP_IMAGE_MANIFEST_SCHEMA)
+    if not validation.passed:
+        raise ValueError(f"Candidate map manifest violates schema: {validation.to_dict()}")
+    return frame
 
 
-def create_error_map_figure(
-    case_row: pd.Series | Mapping[str, Any],
-    output_path: str | Path,
-    selection_group: str = "",
-    error_vmin: float = 0.0,
-    error_vmax: float = 255.0,
-    improvement_vmin: float = -255.0,
-    improvement_vmax: float = 255.0,
-    content_bbox: Sequence[int | float] | None = None,
-    mask_bbox: Sequence[int | float] | None = None,
-    mask_bbox_margin: int = 0,
-    boundary_width_pixels: int = 3,
-    boundary_mode: str = "both",
-    mask_threshold: int = 0,
-    project_root: str | Path | None = None,
-    show: bool = False,
-    dpi: int = 150,
+def write_dataframe_atomic(
+    dataframe: pd.DataFrame,
+    path: str | Path,
+    *,
+    attempts: int = 8,
+    retry_delay_seconds: float = 0.25,
 ) -> None:
-    """Create and save a standardized nine-panel spatial diagnostic figure."""
-    maps = compute_case_maps(
-        clean_path=case_row["clean_path"],
-        damaged_path=case_row["damaged_path"],
-        restored_path=case_row["restored_path"],
-        mask_path=case_row["mask_path"],
-        boundary_width_pixels=boundary_width_pixels,
-        boundary_mode=boundary_mode,
-        mask_threshold=mask_threshold,
-        project_root=project_root,
-    )
-    clean_arr = maps["clean_arr"]
-    damaged_arr = maps["damaged_arr"]
-    restored_arr = maps["restored_arr"]
-    mask_bool = maps["mask_bool"]
-    boundary_bool = maps["boundary_bool"]
-    damaged_error_map = maps["damaged_error_map"]
-    restored_error_map = maps["restored_error_map"]
-    signed_improvement_map = maps["signed_improvement_map"]
-    masked_signed_improvement_map = maps["masked_signed_improvement_map"]
-    boundary_signed_improvement_map = maps["boundary_signed_improvement_map"]
+    """Write a CSV atomically with bounded Windows replace retries."""
 
-    height, width = mask_bool.shape
-
-    if content_bbox is None:
-        content_bbox = _coerce_optional_bbox_from_row(
-            case_row=case_row,
-            candidate_column_sets=(
-                ("content_x_min", "content_y_min", "content_x_max", "content_y_max"),
-                (
-                    "content_bbox_x_min",
-                    "content_bbox_y_min",
-                    "content_bbox_x_max",
-                    "content_bbox_y_max",
-                ),
-            ),
-            width=width,
-            height=height,
-        )
-    else:
-        content_bbox = clip_bbox(bbox=content_bbox, width=width, height=height)
-
-    if mask_bbox is None:
-        mask_bbox = _coerce_optional_bbox_from_row(
-            case_row=case_row,
-            candidate_column_sets=(
-                ("mask_bbox_x_min", "mask_bbox_y_min", "mask_bbox_x_max", "mask_bbox_y_max"),
-                ("bbox_x_min", "bbox_y_min", "bbox_x_max", "bbox_y_max"),
-            ),
-            width=width,
-            height=height,
-        )
-
-    if mask_bbox is None:
-        mask_bbox = bbox_from_binary_mask(mask_bool=mask_bool, margin=mask_bbox_margin)
-    else:
-        mask_bbox = clip_bbox(bbox=mask_bbox, width=width, height=height)
-
-    overlay_arr = create_spatial_overlay(
-        image_arr=damaged_arr,
-        mask_bool=mask_bool,
-        boundary_bool=boundary_bool,
-    )
-
-    fig, axes = plt.subplots(3, 3, figsize=(16, 16))
-    axes[0, 0].imshow(clean_arr.astype(np.uint8))
-    axes[0, 0].set_title("Clean reference")
-    axes[0, 1].imshow(damaged_arr.astype(np.uint8))
-    axes[0, 1].set_title("Damaged input")
-    axes[0, 2].imshow(restored_arr.astype(np.uint8))
-    axes[0, 2].set_title("Stable Diffusion restored")
-
-    axes[1, 0].imshow(overlay_arr)
-    axes[1, 0].set_title("Mask and boundary overlay")
-    draw_bbox(
-        axis=axes[1, 0],
-        bbox=content_bbox,
-        edgecolor=np.asarray(DEFAULT_CONTENT_BOX_RGB) / 255.0,
-        linestyle="--",
-        label="Content box",
-    )
-    draw_bbox(
-        axis=axes[1, 0],
-        bbox=mask_bbox,
-        edgecolor=np.asarray(DEFAULT_MASK_BOX_RGB) / 255.0,
-        linestyle="-",
-        label="Mask box",
-    )
-    axes[1, 0].legend(
-        handles=[
-            Patch(
-                facecolor=np.asarray(DEFAULT_MASK_OVERLAY_RGB) / 255.0,
-                alpha=0.35,
-                label="Mask overlay",
-            ),
-            Patch(
-                facecolor=np.asarray(DEFAULT_BOUNDARY_OVERLAY_RGB) / 255.0,
-                alpha=0.85,
-                label="Boundary ring",
-            ),
-            Rectangle(
-                (0, 0),
-                1,
-                1,
-                fill=False,
-                edgecolor=np.asarray(DEFAULT_CONTENT_BOX_RGB) / 255.0,
-                linestyle="--",
-                label="Content box",
-            ),
-            Rectangle(
-                (0, 0),
-                1,
-                1,
-                fill=False,
-                edgecolor=np.asarray(DEFAULT_MASK_BOX_RGB) / 255.0,
-                label="Mask box",
-            ),
-        ],
-        loc="lower right",
-        fontsize=8,
-        framealpha=0.8,
-    )
-
-    panels = (
-        (axes[1, 1], damaged_error_map, DEFAULT_ERROR_CMAP, error_vmin, error_vmax, None,
-         "Clean vs damaged\nabsolute error"),
-        (axes[1, 2], restored_error_map, DEFAULT_ERROR_CMAP, error_vmin, error_vmax, None,
-         "Clean vs restored\nabsolute error"),
-        (axes[2, 0], signed_improvement_map, DEFAULT_SIGNED_CMAP,
-         improvement_vmin, improvement_vmax, 0.0,
-         "Signed improvement\npositive = reduced error"),
-        (axes[2, 1], masked_signed_improvement_map, DEFAULT_SIGNED_CMAP,
-         improvement_vmin, improvement_vmax, 0.0,
-         "Masked signed improvement"),
-        (axes[2, 2], boundary_signed_improvement_map, DEFAULT_SIGNED_CMAP,
-         improvement_vmin, improvement_vmax, 0.0,
-         f"Boundary signed improvement\nwidth={boundary_width_pixels}px"),
-    )
-
-    for axis, image_arr, cmap, vmin, vmax, center, title in panels:
-        norm = (
-            TwoSlopeNorm(vmin=float(vmin), vcenter=float(center), vmax=float(vmax))
-            if center is not None
-            else Normalize(vmin=float(vmin), vmax=float(vmax), clip=True)
-        )
-        display = axis.imshow(image_arr, cmap=cmap, norm=norm)
-        axis.set_title(title)
-        fig.colorbar(display, ax=axis, fraction=0.046, pad=0.04)
-
-    for axis in axes.ravel():
-        axis.axis("off")
-
-    title_parts = [
-        str(case_row.get("candidate_id", "")),
-        str(case_row.get("restoration_case_id", case_row.get("case_id", ""))),
-        str(case_row.get("mask_type", "")),
-    ]
-
-    if selection_group:
-        title_parts.append(f"selection={selection_group}")
-
-    fig.suptitle(" | ".join([part for part in title_parts if part]), fontsize=13)
-    plt.tight_layout(rect=(0, 0, 1, 0.97))
-
-    output_path = Path(output_path)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(output_path, dpi=dpi, bbox_inches="tight")
-
-    if show:
-        plt.show()
-
-    plt.close(fig)
-
-
-def generate_error_map_figures_for_cases(
-    cases_metadata: pd.DataFrame,
-    output_dir: str | Path,
-    selection_group_column: str = "selection_group",
-    error_vmin: float = 0.0,
-    error_vmax: float = 255.0,
-    improvement_vmin: float = -255.0,
-    improvement_vmax: float = 255.0,
-    boundary_width_pixels: int = 3,
-    boundary_mode: str = "both",
-    mask_threshold: int = 0,
-    project_root: str | Path | None = None,
-    show: bool = False,
-    dpi: int = 150,
-    progress_every: int | None = 25,
-) -> pd.DataFrame:
-    """Generate selected diagnostic panels with short deterministic filenames."""
-    required_columns = {"clean_path", "mask_path", "damaged_path", "restored_path"}
-    missing_columns = sorted(required_columns - set(cases_metadata.columns))
-
-    if missing_columns:
-        raise ValueError(f"Cases metadata missing required columns: {missing_columns}")
-
-    output_dir = Path(output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
-    records: list[dict[str, Any]] = []
-    total_cases = len(cases_metadata)
-
-    for idx, (_, row) in enumerate(cases_metadata.iterrows(), start=1):
-        figure_id = f"dm_panel_{idx:03d}"
-        figure_filename = f"{figure_id}.png"
-        figure_path = output_dir / figure_filename
-        selection_group = (
-            str(row.get(selection_group_column, ""))
-            if selection_group_column in row.index
-            else ""
-        )
-        status = "ok"
-        issue = ""
-        summary: dict[str, Any] = {}
-
+    target = Path(path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    temporary = target.with_name(target.name + f".{os.getpid()}.tmp")
+    dataframe.to_csv(temporary, index=False)
+    last_error: OSError | None = None
+    for attempt in range(int(attempts)):
         try:
-            create_error_map_figure(
-                case_row=row,
-                output_path=figure_path,
-                selection_group=selection_group,
-                error_vmin=error_vmin,
-                error_vmax=error_vmax,
-                improvement_vmin=improvement_vmin,
-                improvement_vmax=improvement_vmax,
-                boundary_width_pixels=boundary_width_pixels,
-                boundary_mode=boundary_mode,
-                mask_threshold=mask_threshold,
-                project_root=project_root,
-                show=show,
-                dpi=dpi,
-            )
-            summary = compute_error_map_summary(
-                clean_path=row["clean_path"],
-                damaged_path=row["damaged_path"],
-                restored_path=row["restored_path"],
-                mask_path=row["mask_path"],
-                boundary_width_pixels=boundary_width_pixels,
-                boundary_mode=boundary_mode,
-                mask_threshold=mask_threshold,
-                project_root=project_root,
-            )
-        except Exception as exc:
-            status = "error"
-            issue = f"{type(exc).__name__}: {exc}"
-
-        records.append(
-            {
-                "figure_id": figure_id,
-                "figure_filename": figure_filename,
-                "figure_path": str(figure_path),
-                "figure_filename_length": len(figure_filename),
-                "selection_group": selection_group,
-                "status": status,
-                "issue": issue,
-                **_copy_metadata_from_row(row),
-                **summary,
-            }
-        )
-
-        if progress_every is not None and (
-            idx == 1 or idx % progress_every == 0 or idx == total_cases
-        ):
-            print(f"Processed diagnostic panels for {idx}/{total_cases} cases...")
-
-    return pd.DataFrame(records)
+            os.replace(temporary, target)
+            return
+        except OSError as error:
+            last_error = error
+            if attempt + 1 < attempts:
+                time.sleep(float(retry_delay_seconds))
+    temporary.unlink(missing_ok=True)
+    assert last_error is not None
+    raise last_error
 
 
-def _path_exists_and_nonempty(path_value: Any, project_root: str | Path | None = None) -> bool:
-    if pd.isna(path_value) or str(path_value).strip() == "":
+def _candidate_complete(
+    candidate_id: str,
+    *,
+    is_zero_control: bool,
+    diagnostics: pd.DataFrame,
+    manifest: pd.DataFrame,
+    project_root: str | Path,
+) -> bool:
+    candidate_diagnostics = diagnostics.loc[
+        diagnostics.get("candidate_id", pd.Series(dtype=str)).astype(str).eq(candidate_id)
+    ]
+    if candidate_diagnostics.empty:
         return False
+    if is_zero_control:
+        return True
+    candidate_maps = manifest.loc[
+        manifest.get("candidate_id", pd.Series(dtype=str)).astype(str).eq(candidate_id)
+        & manifest.get("asset_kind", pd.Series(dtype=str)).astype(str).eq("candidate_map")
+    ]
+    if set(candidate_maps.get("map_type", pd.Series(dtype=str))) != set(CANDIDATE_MAP_TYPES):
+        return False
+    return all(
+        resolve_path(path, project_root).is_file()
+        for path in candidate_maps["relative_path"]
+    )
 
-    path = resolve_path(str(path_value), project_root=project_root)
-    return path.exists() and path.stat().st_size > 0
+
+def run_spatial_diagnostics(
+    worklist: pd.DataFrame,
+    *,
+    project_root: str | Path,
+    maps_root: str | Path,
+    config: Mapping[str, Any],
+    scales: Mapping[str, Mapping[str, Any]],
+    diagnostics_checkpoint_path: str | Path | None = None,
+    map_manifest_checkpoint_path: str | Path | None = None,
+    progress_callback: Callable[[int, int, int], None] | None = None,
+) -> SpatialRunResult:
+    """Compute summaries and map assets with resumable bounded checkpoints."""
+
+    diagnostics = (
+        pd.read_csv(diagnostics_checkpoint_path)
+        if diagnostics_checkpoint_path and Path(diagnostics_checkpoint_path).is_file()
+        else pd.DataFrame(columns=SPATIAL_DIAGNOSTICS_COLUMNS)
+    )
+    manifest = (
+        pd.read_csv(map_manifest_checkpoint_path)
+        if map_manifest_checkpoint_path and Path(map_manifest_checkpoint_path).is_file()
+        else pd.DataFrame(columns=SPATIAL_MAP_IMAGE_MANIFEST_COLUMNS)
+    )
+    completed_ids: set[str] = set()
+    for row in worklist.itertuples(index=False):
+        candidate_id = str(row.candidate_id)
+        if _candidate_complete(
+            candidate_id,
+            is_zero_control=bool(row.is_zero_control),
+            diagnostics=diagnostics,
+            manifest=manifest,
+            project_root=project_root,
+        ):
+            completed_ids.add(candidate_id)
+    reused = len(completed_ids)
+    total = len(worklist)
+    interval = int(config["execution"]["checkpoint_interval_candidates"])
+    for number, (_, row) in enumerate(worklist.iterrows(), start=1):
+        candidate_id = str(row["candidate_id"])
+        if candidate_id not in completed_ids:
+            result = compute_candidate_spatial_diagnostics(
+                row, project_root=project_root, config=config
+            )
+            diagnostics = (
+                result.diagnostics.copy()
+                if diagnostics.empty
+                else pd.concat([diagnostics, result.diagnostics], ignore_index=True)
+            )
+            if not bool(row["is_zero_control"]):
+                map_rows = save_candidate_map_assets(
+                    row,
+                    result,
+                    scales=scales,
+                    maps_root=maps_root,
+                    project_root=project_root,
+                    config=config,
+                )
+                manifest = (
+                    map_rows.copy()
+                    if manifest.empty
+                    else pd.concat([manifest, map_rows], ignore_index=True)
+                )
+            completed_ids.add(candidate_id)
+        if number % interval == 0 or number == total:
+            diagnostics = diagnostics.drop_duplicates(
+                "spatial_diagnostic_id", keep="last"
+            ).loc[:, SPATIAL_DIAGNOSTICS_COLUMNS]
+            manifest = manifest.drop_duplicates(
+                "map_image_id", keep="last"
+            ).loc[:, SPATIAL_MAP_IMAGE_MANIFEST_COLUMNS]
+            if diagnostics_checkpoint_path:
+                write_dataframe_atomic(diagnostics, diagnostics_checkpoint_path)
+            if map_manifest_checkpoint_path:
+                write_dataframe_atomic(manifest, map_manifest_checkpoint_path)
+        if progress_callback is not None:
+            progress_callback(number, total, reused)
+    diagnostics = diagnostics.sort_values(
+        ["candidate_id", "region_id"], kind="stable"
+    ).reset_index(drop=True)
+    manifest = manifest.sort_values(
+        ["model_id", "candidate_id", "map_type"], kind="stable"
+    ).reset_index(drop=True)
+    return SpatialRunResult(
+        diagnostics=diagnostics,
+        map_images=manifest,
+        completed_candidates=len(completed_ids),
+        reused_candidates=reused,
+    )
+
+
+def validate_spatial_diagnostics(
+    diagnostics: pd.DataFrame,
+    *,
+    expected_candidate_ids: Sequence[str] | None = None,
+    tolerance: float = 1e-5,
+) -> dict[str, Any]:
+    """Validate schema, arithmetic, fractions, and candidate coverage."""
+
+    schema = validate_dataframe(diagnostics, SPATIAL_DIAGNOSTICS_SCHEMA)
+    observed = set(diagnostics.get("candidate_id", pd.Series(dtype=str)).astype(str))
+    expected = (
+        set()
+        if expected_candidate_ids is None
+        else set(map(str, expected_candidate_ids))
+    )
+    fraction_columns = [
+        "improved_pixel_fraction", "worsened_pixel_fraction",
+        "unchanged_pixel_fraction", "restoration_changed_pixel_fraction",
+    ]
+    bounds_valid = all(
+        diagnostics[column].dropna().between(0.0, 1.0).all()
+        for column in fraction_columns if column in diagnostics
+    )
+    signed_arithmetic = (
+        diagnostics["damaged_error_mean"]
+        - diagnostics["restored_error_mean"]
+        - diagnostics["signed_improvement_mean"]
+    ).abs()
+    fractions_sum = (
+        diagnostics["improved_pixel_fraction"]
+        + diagnostics["worsened_pixel_fraction"]
+        + diagnostics["unchanged_pixel_fraction"]
+    )
+    missing = sorted(expected - observed) if expected else []
+    unexpected = sorted(observed - expected) if expected else []
+    result = {
+        "schema": schema.to_dict(),
+        "missing_candidate_count": len(missing),
+        "unexpected_candidate_count": len(unexpected),
+        "missing_candidate_examples": missing[:5],
+        "unexpected_candidate_examples": unexpected[:5],
+        "positive_region_pixels": bool(
+            (diagnostics["region_pixel_count"] > 0).all()
+        ),
+        "fraction_bounds_valid": bool(bounds_valid),
+        "fraction_partition_max_error": float((fractions_sum - 1.0).abs().max()),
+        "signed_mean_arithmetic_max_error": float(signed_arithmetic.max()),
+    }
+    result["passed"] = bool(
+        schema.passed
+        and not missing and not unexpected
+        and result["positive_region_pixels"]
+        and result["fraction_bounds_valid"]
+        and result["fraction_partition_max_error"] <= tolerance
+        and result["signed_mean_arithmetic_max_error"] <= tolerance
+    )
+    return result
 
 
 def validate_map_image_manifest(
-    manifest_df: pd.DataFrame,
-    expected_rows: int | None = None,
-    expected_assets_per_row: int | None = None,
-    asset_types: Sequence[str] = DEFAULT_MAP_ASSET_TYPES,
-    max_filename_length: int = 40,
-    require_unique_map_ids: bool = True,
-    project_root: str | Path | None = None,
-) -> pd.DataFrame:
-    """Validate the all-candidate map image manifest."""
-    validation_rows: list[dict[str, Any]] = []
+    manifest: pd.DataFrame,
+    *,
+    project_root: str | Path,
+    verify_checksums: bool = False,
+) -> dict[str, Any]:
+    """Validate normalized image metadata and linked PNG assets."""
 
-    def add_row(
-        check_name: str,
-        observed_value: Any,
-        expected_value: Any,
-        passed: bool,
-        failure_message: str,
-    ) -> None:
-        validation_rows.append(
-            {
-                "check_name": check_name,
-                "observed_value": observed_value,
-                "expected_value": expected_value,
-                "passed": bool(passed),
-                "failure_message": "" if passed else failure_message,
-            }
-        )
-
-    path_columns = [
-        MAP_ASSET_SPECS[asset_type]["path_column"]
-        for asset_type in asset_types
-        if asset_type in MAP_ASSET_SPECS
-    ]
-    filename_columns = [
-        MAP_ASSET_SPECS[asset_type]["filename_column"]
-        for asset_type in asset_types
-        if asset_type in MAP_ASSET_SPECS
-    ]
-    required_columns = ["map_id", "map_index", "status", "issue", *path_columns]
-    missing_columns = [column for column in required_columns if column not in manifest_df.columns]
-
-    add_row(
-        "required_columns_present",
-        missing_columns,
-        [],
-        len(missing_columns) == 0,
-        f"Manifest missing required columns: {missing_columns}",
-    )
-
-    if expected_rows is not None:
-        add_row(
-            "expected_row_count",
-            len(manifest_df),
-            int(expected_rows),
-            len(manifest_df) == int(expected_rows),
-            "Manifest row count does not match expected candidate count.",
-        )
-
-    if expected_assets_per_row is not None and "map_asset_count" in manifest_df.columns:
-        asset_counts_ok = manifest_df["map_asset_count"].fillna(-1).astype(int).eq(
-            int(expected_assets_per_row)
-        )
-        add_row(
-            "expected_asset_count_per_row",
-            sorted(manifest_df["map_asset_count"].dropna().astype(int).unique().tolist()),
-            int(expected_assets_per_row),
-            bool(asset_counts_ok.all()),
-            "One or more rows have the wrong map_asset_count.",
-        )
-
-    if require_unique_map_ids and "map_id" in manifest_df.columns:
-        duplicate_map_ids = int(manifest_df["map_id"].duplicated().sum())
-        add_row(
-            "unique_map_ids",
-            duplicate_map_ids,
-            0,
-            duplicate_map_ids == 0,
-            "Map IDs are not unique.",
-        )
-
-    if "status" in manifest_df.columns:
-        non_ok_rows = int(manifest_df["status"].astype(str).ne("ok").sum())
-        add_row(
-            "status_ok",
-            non_ok_rows,
-            0,
-            non_ok_rows == 0,
-            "One or more manifest rows have non-ok status.",
-        )
-
-    if not missing_columns:
-        for path_column in path_columns:
-            existing_count = int(
-                manifest_df[path_column].map(
-                    lambda value: _path_exists_and_nonempty(value, project_root=project_root)
-                ).sum()
-            )
-            add_row(
-                f"{path_column}_files_exist",
-                existing_count,
-                len(manifest_df),
-                existing_count == len(manifest_df),
-                f"One or more files referenced by {path_column} are missing or empty.",
-            )
-
-    for filename_column in filename_columns:
-        if filename_column not in manifest_df.columns:
+    schema = validate_dataframe(manifest, SPATIAL_MAP_IMAGE_MANIFEST_SCHEMA)
+    missing_paths: list[str] = []
+    checksum_mismatches: list[str] = []
+    for row in manifest.itertuples(index=False):
+        path = resolve_path(row.relative_path, project_root)
+        if not path.is_file() or path.stat().st_size <= 0:
+            missing_paths.append(str(row.relative_path))
             continue
-
-        max_length = int(manifest_df[filename_column].astype(str).str.len().max())
-        add_row(
-            f"{filename_column}_short",
-            max_length,
-            f"<= {max_filename_length}",
-            max_length <= int(max_filename_length),
-            f"One or more filenames in {filename_column} exceed the length policy.",
-        )
-
-    return pd.DataFrame(validation_rows)
-
-
-def validate_error_map_manifest(
-    manifest_df: pd.DataFrame,
-    expected_rows: int | None = None,
-    require_unique_case_ids: bool = False,
-    require_nonempty_figures: bool = True,
-    project_root: str | Path | None = None,
-) -> pd.DataFrame:
-    """Validate a selected diagnostic-panel manifest dataframe."""
-    validation_rows: list[dict[str, Any]] = []
-    required_columns = ["figure_path", "status", "issue"]
-    missing_columns = [column for column in required_columns if column not in manifest_df.columns]
-
-    validation_rows.append(
-        {
-            "check_name": "required_columns_present",
-            "observed_value": missing_columns,
-            "expected_value": [],
-            "passed": len(missing_columns) == 0,
-            "failure_message": ""
-            if not missing_columns
-            else f"Missing columns: {missing_columns}",
-        }
+        if verify_checksums and sha256_path(path) != str(row.sha256):
+            checksum_mismatches.append(str(row.relative_path))
+    result = {
+        "schema": schema.to_dict(),
+        "missing_asset_count": len(missing_paths),
+        "checksum_mismatch_count": len(checksum_mismatches),
+        "missing_asset_examples": missing_paths[:5],
+        "checksum_mismatch_examples": checksum_mismatches[:5],
+    }
+    result["passed"] = bool(
+        schema.passed and not missing_paths and not checksum_mismatches
     )
+    return result
 
-    if expected_rows is not None:
-        validation_rows.append(
-            {
-                "check_name": "row_count",
-                "observed_value": len(manifest_df),
-                "expected_value": int(expected_rows),
-                "passed": len(manifest_df) == int(expected_rows),
-                "failure_message": "Panel manifest row count mismatch.",
-            }
-        )
 
-    if require_unique_case_ids:
-        case_id_column = (
-            "candidate_id"
-            if "candidate_id" in manifest_df.columns
-            else "restoration_case_id"
-            if "restoration_case_id" in manifest_df.columns
-            else "case_id"
-        )
+def render_candidate_spatial_panel(
+    row: Mapping[str, Any] | pd.Series,
+    *,
+    project_root: str | Path,
+    config: Mapping[str, Any],
+    scales: Mapping[str, Mapping[str, Any]],
+    output_path: str | Path | None = None,
+    selection_role: str = "preview",
+) -> plt.Figure:
+    """Render a labelled nine-panel diagnostic view for one candidate."""
 
-        if case_id_column in manifest_df.columns:
-            duplicate_count = int(manifest_df[case_id_column].duplicated().sum())
-            validation_rows.append(
-                {
-                    "check_name": f"unique_{case_id_column}",
-                    "observed_value": duplicate_count,
-                    "expected_value": 0,
-                    "passed": duplicate_count == 0,
-                    "failure_message": f"Duplicate {case_id_column} values found.",
-                }
-            )
-
-    if "status" in manifest_df.columns:
-        error_rows = int(manifest_df["status"].astype(str).ne("ok").sum())
-        validation_rows.append(
-            {
-                "check_name": "status_ok",
-                "observed_value": error_rows,
-                "expected_value": 0,
-                "passed": error_rows == 0,
-                "failure_message": "Rows with non-ok status found.",
-            }
-        )
-
-    if "figure_path" in manifest_df.columns:
-        existing_figures = manifest_df["figure_path"].map(
-            lambda value: _path_exists_and_nonempty(value, project_root=project_root)
-        )
-        missing_figures = int((~existing_figures).sum())
-        validation_rows.append(
-            {
-                "check_name": "figures_exist",
-                "observed_value": len(manifest_df) - missing_figures,
-                "expected_value": len(manifest_df),
-                "passed": missing_figures == 0,
-                "failure_message": f"Missing figure files: {missing_figures}.",
-            }
-        )
-
-        if require_nonempty_figures:
-            validation_rows.append(
-                {
-                    "check_name": "figures_nonempty",
-                    "observed_value": int(existing_figures.sum()),
-                    "expected_value": len(manifest_df),
-                    "passed": bool(existing_figures.all()),
-                    "failure_message": "One or more panel figures are empty or missing.",
-                }
-            )
-
-    return pd.DataFrame(validation_rows)
+    arrays = load_candidate_arrays(row, project_root=project_root)
+    result = compute_candidate_spatial_diagnostics(
+        row, project_root=project_root, config=config
+    )
+    active_mask = result.regions["masked_region"].mask
+    absolute = scales["absolute_error"]
+    signed = scales["signed_improvement"]
+    fig, axes = plt.subplots(3, 3, figsize=(15, 14), constrained_layout=True)
+    for axis, image, title in (
+        (axes[0, 0], arrays["clean"].astype(np.uint8), "Clean reference"),
+        (axes[0, 1], arrays["damaged"].astype(np.uint8), "Damaged input"),
+        (axes[0, 2], arrays["restored"].astype(np.uint8), "Restored output"),
+    ):
+        axis.imshow(image)
+        axis.set_title(title)
+    axes[1, 0].imshow(active_mask, cmap="gray", vmin=0, vmax=1)
+    axes[1, 0].set_title("Active mask / effect support")
+    damaged_artist = axes[1, 1].imshow(
+        result.maps["damaged_absolute_error"],
+        cmap=absolute["cmap"],
+        vmin=absolute["vmin"],
+        vmax=absolute["vmax"],
+    )
+    axes[1, 1].set_title("Clean-damaged absolute error")
+    axes[1, 2].imshow(
+        result.maps["restored_absolute_error"],
+        cmap=absolute["cmap"],
+        vmin=absolute["vmin"],
+        vmax=absolute["vmax"],
+    )
+    axes[1, 2].set_title("Clean-restored absolute error")
+    signed_norm = TwoSlopeNorm(
+        vmin=signed["vmin"], vcenter=signed["center"], vmax=signed["vmax"]
+    )
+    signed_artist = axes[2, 0].imshow(
+        result.maps["signed_improvement"], cmap=signed["cmap"], norm=signed_norm
+    )
+    axes[2, 0].set_title("Signed improvement: positive = reduced error")
+    masked = np.ma.masked_where(~active_mask, result.maps["signed_improvement"])
+    axes[2, 1].imshow(masked, cmap=signed["cmap"], norm=signed_norm)
+    axes[2, 1].set_title("Masked signed improvement")
+    axes[2, 2].imshow(arrays["restored"].astype(np.uint8))
+    axes[2, 2].imshow(np.asarray(
+        build_spatial_overlay_image(result.regions, config=config)
+    ))
+    axes[2, 2].set_title("Mask, boxes, boundaries, and spillover ring")
+    for axis in axes.ravel():
+        axis.axis("off")
+    fig.colorbar(
+        damaged_artist,
+        ax=[axes[1, 1], axes[1, 2]],
+        shrink=0.72,
+        label="Mean absolute RGB error [0-255]",
+    )
+    fig.colorbar(
+        signed_artist,
+        ax=[axes[2, 0], axes[2, 1]],
+        shrink=0.72,
+        label="Damaged error - restored error",
+    )
+    fig.suptitle(
+        f"{_row_value(row, 'model_id')} | {_row_value(row, 'case_id')}\n"
+        f"selection={selection_role}; diagnostic-only evidence",
+        fontsize=14,
+    )
+    if output_path is not None:
+        output = Path(output_path)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        fig.savefig(output, dpi=180, bbox_inches="tight")
+    return fig
 
 
 __all__ = [
+    "CANDIDATE_MAP_TYPES",
     "ERROR_MAP_MODULE_NAME",
     "ERROR_MAP_VERSION",
-    "DEFAULT_MAP_ASSET_TYPES",
-    "MAP_ASSET_SPECS",
-    "apply_mask_to_map",
-    "bbox_from_binary_mask",
-    "build_boundary_ring",
-    "clip_bbox",
-    "compute_absolute_error_map",
+    "NUMERIC_MAP_TYPES",
+    "SPATIAL_DIAGNOSTIC_VERSION",
+    "SPATIAL_MAP_MANIFEST_VERSION",
+    "SPATIAL_MAP_RENDERER_VERSION",
+    "SPATIAL_REGION_ORDER",
+    "SpatialCandidateResult",
+    "SpatialRunResult",
+    "build_candidate_regions",
+    "build_spatial_overlay_image",
+    "compute_candidate_spatial_diagnostics",
     "compute_case_maps",
-    "compute_error_map_summary",
     "compute_global_visualization_scales",
-    "compute_map_region_summary",
-    "compute_signed_improvement_map",
-    "create_error_map_figure",
-    "create_spatial_overlay",
-    "disk_footprint",
-    "generate_candidate_map_assets_for_cases",
-    "generate_error_map_figures_for_cases",
-    "load_image_for_display",
-    "load_mask_bool",
+    "load_candidate_arrays",
+    "load_mask_array",
     "load_rgb_array",
+    "load_spatial_diagnostics_config",
     "make_map_id",
+    "make_map_image_id",
+    "make_spatial_diagnostic_id",
+    "project_relative_path",
+    "render_candidate_spatial_panel",
+    "resolve_path",
+    "run_spatial_diagnostics",
     "save_candidate_map_assets",
-    "save_numeric_map_png",
-    "scales_dataframe_to_limits",
-    "short_map_filename",
-    "validate_error_map_manifest",
+    "save_indexed_map_png",
+    "save_spatial_overlay_png",
+    "sha256_path",
     "validate_map_image_manifest",
+    "validate_spatial_diagnostics",
+    "write_dataframe_atomic",
 ]

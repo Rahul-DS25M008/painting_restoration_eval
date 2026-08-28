@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-27T22:23:25.954058Z`
-- Registered artifacts: 84
+- Updated: `2026-08-28T23:47:07.282991Z`
+- Registered artifacts: 89
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -61,6 +61,10 @@
 | sdxl.partial_evaluation_report | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/reports/partial_evaluation_report.md` | partial_scope_and_limitations | passed |
 | sdxl.restored_images | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/images/restored` | technically_valid_partial_restorations | passed |
 | sdxl.runtime_summary | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/metrics/runtime_summary.csv` | bounded_runtime_evidence | passed |
+| spatial_diagnostics.candidate_maps | 16_difference_maps_and_spatial_diagnostics | `outputs/16_difference_maps_and_spatial_diagnostics/images/maps` | reusable_spatial_map_evidence | passed |
+| spatial_diagnostics.map_manifest | 16_difference_maps_and_spatial_diagnostics | `outputs/16_difference_maps_and_spatial_diagnostics/manifests/map_images.csv` | normalized_spatial_image_index | passed |
+| spatial_diagnostics.metrics | 16_difference_maps_and_spatial_diagnostics | `outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv` | primary_downstream_evidence | passed |
+| spatial_diagnostics.selected_panels | 16_difference_maps_and_spatial_diagnostics | `outputs/16_difference_maps_and_spatial_diagnostics/figures/selected_spatial_panels` | human_review_figures | passed |
 | stable_diffusion.candidate_examples | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/figures/candidate_examples.png` | candidate_and_seed_visual_evidence | passed |
 | stable_diffusion.candidates | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/data/candidates.csv` | primary_candidate_records | passed |
 | stable_diffusion.prompt_ablation_design | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/metrics/prompt_ablation_design.csv` | controlled_experimental_design | passed |
@@ -90,3 +94,4 @@
 | validation.13_classical_metrics | 13_classical_metrics | `outputs/13_classical_metrics/validation/checks.csv` | validation_evidence | passed |
 | validation.14_lpips_metrics | 14_lpips_metrics | `outputs/14_lpips_metrics/validation/checks.csv` | validation_evidence | passed |
 | validation.15_feature_similarity | 15_feature_similarity | `outputs/15_feature_similarity/validation/checks.csv` | validation_evidence | passed |
+| validation.16_difference_maps_and_spatial_diagnostics | 16_difference_maps_and_spatial_diagnostics | `outputs/16_difference_maps_and_spatial_diagnostics/validation/checks.csv` | validation_evidence | passed |
