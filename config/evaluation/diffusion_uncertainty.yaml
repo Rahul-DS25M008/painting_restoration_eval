@@ -1,0 +1,234 @@
+config_schema_version: "diffusion_uncertainty_config.v1"
+config_version: "1.0.0"
+
+diffusion_uncertainty:
+  notebook_id: "18"
+  notebook_stem: "18_diffusion_uncertainty_analysis"
+  origin: "Existing Previous Version of Notebook 27, Pre-refactor"
+  metric_version: "empirical_seed_uncertainty.v1"
+  output_schema_version: "diffusion_uncertainty.v1"
+  calibration_schema_version: "uncertainty_calibration_inputs.v1"
+
+  inputs:
+    inventory_path: "outputs/inventory/project_file_inventory.csv"
+    inventory_run_path: "outputs/inventory/inventory_run.json"
+    project_paths_path: "outputs/inventory/project_paths.json"
+    artworks_path: "outputs/01_dataset_verification/data/artworks.csv"
+    artworks_run_manifest_path: "outputs/01_dataset_verification/manifests/run_manifest.json"
+    geometry_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+    geometry_run_manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+    case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+    model_eligibility_path: "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv"
+    region_policy_path: "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv"
+    schema_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json"
+    contracts_run_manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+    evaluation_contract_config_path: "config/experiments/evaluation_contract.yaml"
+    stable_diffusion_candidates_path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+    stable_diffusion_output_root: "outputs/11_stable_diffusion_restoration"
+    stable_diffusion_run_manifest_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+    sdxl_candidates_path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
+    sdxl_run_manifest_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+    classical_metrics_path: "outputs/13_classical_metrics/metrics/classical_metrics.csv"
+    classical_run_manifest_path: "outputs/13_classical_metrics/manifests/run_manifest.json"
+    lpips_config_path: "config/evaluation/lpips.yaml"
+    lpips_metrics_path: "outputs/14_lpips_metrics/metrics/lpips_metrics.csv"
+    lpips_run_manifest_path: "outputs/14_lpips_metrics/manifests/run_manifest.json"
+    feature_metrics_path: "outputs/15_feature_similarity/metrics/feature_metrics.csv"
+    feature_embedding_manifest_path: "outputs/15_feature_similarity/manifests/embeddings.csv"
+    feature_embeddings_path: "outputs/15_feature_similarity/data/embeddings.npz"
+    feature_run_manifest_path: "outputs/15_feature_similarity/manifests/run_manifest.json"
+    local_consistency_metrics_path: "outputs/17_local_consistency_metrics/metrics/local_consistency.csv"
+    local_consistency_run_manifest_path: "outputs/17_local_consistency_metrics/manifests/run_manifest.json"
+
+  output:
+    root: "outputs/18_diffusion_uncertainty_analysis"
+    metrics_path: "metrics/uncertainty_metrics.csv"
+    calibration_inputs_path: "metrics/uncertainty_calibration_inputs.csv"
+    distributions_figure_path: "figures/uncertainty_distributions.png"
+    performance_figure_path: "figures/uncertainty_vs_performance.png"
+    run_manifest_path: "manifests/run_manifest.json"
+    artifacts_path: "manifests/artifacts.csv"
+    validation_path: "validation/checks.csv"
+    image_checkpoint_path: "work/image_uncertainty_checkpoint.csv"
+    lpips_checkpoint_path: "work/lpips_uncertainty_checkpoint.csv"
+
+  population:
+    eligible_model_id: "stable_diffusion_inpainting"
+    eligible_status: "completed"
+    expected_seeds: [2026, 2027, 2028, 2029]
+    group_keys:
+      - "case_id"
+      - "prompt_policy_id"
+      - "prompt_variant_id"
+      - "configuration_id"
+    exact_seed_coverage_required: true
+    separate_prompt_variants: true
+    generic_prompt_variant_id: "p00_generic"
+    scratch_aware_prompt_variant_id: "p05_scratch_aware"
+    scratch_case_suffix: "__scratch_thin"
+    sdxl_policy: "not_applicable_insufficient_seed_coverage"
+    deterministic_model_policy: "exclude_and_reserve_robustness_or_sensitivity_terminology"
+    missing_style_policy: "retain_explicit_unclassified_label; category remains the complete stratification field"
+
+  regions:
+    policy_version: "evaluation_region_policy.v1"
+    mask_bbox_margin_pixels: 8
+    boundary_width_pixels: 3
+    active_mask_threshold_source: "candidate.mask_threshold"
+    threshold_comparison: "greater_than_or_equal"
+    pixel_regions:
+      - "full_image"
+      - "content_region"
+      - "masked_region"
+      - "mask_bbox_crop"
+      - "boundary_ring"
+      - "outside_mask_content"
+    learned_metric_regions:
+      - "content_region"
+      - "mask_bbox_crop"
+
+  metrics:
+    pixel_variability:
+      per_pixel_channel_reduction: "mean_rgb_channel_standard_deviation"
+      seed_standard_deviation_ddof: 0
+      summary_statistics: ["mean", "p95"]
+      metric_names: ["pixel_rgb_std_mean", "pixel_rgb_std_p95"]
+      value_unit: "normalized_rgb_0_1"
+    pixel_pairwise:
+      metric_names: ["pairwise_rgb_mae", "pairwise_rgb_rmse"]
+      value_unit: "normalized_rgb_0_1"
+      unordered_pairs_only: true
+    perceptual_pairwise:
+      metric_name: "pairwise_lpips_distance"
+      value_unit: "lpips_distance"
+      preprocessing_source: "config/evaluation/lpips.yaml"
+    feature_pairwise:
+      metric_names:
+        clip_vit_b32: "pairwise_clip_cosine_distance"
+        dinov2_vits14: "pairwise_dinov2_cosine_distance"
+      value_unit: "cosine_distance"
+      embedding_source: "outputs/15_feature_similarity/data/embeddings.npz"
+    combined_index:
+      retained: false
+      reason: "No empirically justified scaling or weighting exists before downstream semantic and human-review evidence."
+
+  calibration:
+    row_unit: "one_independent_uncertainty_group"
+    group_reducers: ["mean", "sample_std", "worst"]
+    reference_metrics:
+      - alias: "reference_mae_masked"
+        source: "classical"
+        metric_name: "mae"
+        region_id: "masked_region"
+        value_column: "restored_value"
+        higher_is_better: false
+      - alias: "reference_psnr_content"
+        source: "classical"
+        metric_name: "psnr"
+        region_id: "content_region"
+        value_column: "restored_value"
+        higher_is_better: true
+      - alias: "reference_ssim_crop"
+        source: "classical"
+        metric_name: "ssim"
+        region_id: "mask_bbox_crop"
+        value_column: "restored_value"
+        higher_is_better: true
+      - alias: "reference_lpips_crop"
+        source: "lpips"
+        metric_name: "lpips"
+        region_id: "mask_bbox_crop"
+        value_column: "restored_value"
+        higher_is_better: false
+      - alias: "reference_clip_crop"
+        source: "feature"
+        metric_name: "clip_cosine_similarity"
+        region_id: "mask_bbox_crop"
+        value_column: "restored_value"
+        higher_is_better: true
+      - alias: "reference_dino_crop"
+        source: "feature"
+        metric_name: "dinov2_cosine_similarity"
+        region_id: "mask_bbox_crop"
+        value_column: "restored_value"
+        higher_is_better: true
+      - alias: "texture_error_p95_crop"
+        source: "local_consistency"
+        metric_name: "local_texture_error_p95"
+        region_id: "mask_bbox_crop"
+        value_column: "restored_value"
+        higher_is_better: false
+      - alias: "colour_delta_e_masked"
+        source: "local_consistency"
+        metric_name: "delta_e_ciede2000_mean"
+        region_id: "masked_region"
+        value_column: "restored_value"
+        higher_is_better: false
+      - alias: "seam_gradient_mismatch"
+        source: "local_consistency"
+        metric_name: "boundary_gradient_mismatch"
+        region_id: "boundary_ring"
+        value_column: "restored_value"
+        higher_is_better: false
+      - alias: "seam_ssim_error"
+        source: "local_consistency"
+        metric_name: "boundary_local_ssim_map_error"
+        region_id: "boundary_ring"
+        value_column: "restored_value"
+        higher_is_better: false
+    unavailable_evidence:
+      semantic_evidence_available: false
+      semantic_evidence_owner: "Notebook 20"
+      human_review_flag_available: false
+      human_review_owner: "Notebook 26"
+      failure_category_available: false
+      failure_category_owner: "Notebook 26"
+
+  execution:
+    progress_interval_groups: 10
+    checkpoint_interval_groups: 10
+    lpips_batch_size: 12
+    atomic_replace_attempts: 8
+    atomic_replace_retry_seconds: 0.25
+    checkpoint_recovery_policy: "unique_temporary_file_with_retry_and_timestamped_recovery_fallback"
+    image_resume_policy: "reuse_only_groups_with_exact_complete_pixel_metric_keys"
+    lpips_resume_policy: "reuse_only_groups_with_all_unordered_pairs_and_both_regions"
+    work_cleanup_policy: "remove_notebook_owned_checkpoints_after_canonical_outputs_validate"
+
+  expected_counts:
+    uncertainty_groups: 130
+    unique_cases: 80
+    candidates: 520
+    seeds_per_group: 4
+    unordered_pairs_per_group: 6
+    unordered_candidate_pairs: 780
+    generic_prompt_groups: 80
+    scratch_aware_prompt_groups: 50
+    pixel_group_summary_rows: 1560
+    pixel_pair_rows: 9360
+    lpips_pair_rows: 1560
+    feature_pair_rows: 3120
+    seed_reference_rows: 5200
+    uncertainty_metric_rows: 20800
+    calibration_rows: 130
+    sdxl_candidates: 10
+    sdxl_distinct_seeds: 1
+
+  evidence_policy:
+    interpretation: "empirical_seed_variability_proxy_not_calibrated_confidence"
+    low_uncertainty_proves_correctness: false
+    evidence_role: "empirical_uncertainty_proxy"
+    is_final_trustworthiness_flag: false
+    combined_index_retained: false
+    persisted_heatmaps: false
+    spatial_map_owner: "Notebook 19"
+
+  known_limitations:
+    - "The eligible population is Stable Diffusion 1.5 only; SDXL has one seed per case and cannot support empirical seed uncertainty."
+    - "All eligible cases are canonical binary missing-region experiments; generalization to synthetic degradations is not established."
+    - "Artwork style_or_period metadata is incomplete; missing values are retained as the explicit unclassified label while category remains complete."
+    - "Repeated seeds are candidate-level observations nested within cases, not independent paintings."
+    - "CLIP and DINOv2 distances are general-purpose representation proxies, not conservation-specific semantic judgments."
+    - "LPIPS is a learned perceptual proxy and is evaluated only on contiguous content and mask-bounding-box crops."
+    - "Low candidate variability can coexist with consistently incorrect restoration."
+    - "No combined uncertainty index is reported before downstream semantic and human-review evidence becomes available."

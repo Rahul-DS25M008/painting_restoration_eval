@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.14.0"
+SCHEMAS_MODULE_VERSION = "1.15.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -541,6 +541,52 @@ LOCAL_CONSISTENCY_MAP_MANIFEST_COLUMNS = (
     "image_mode", "format", "cmap", "vmin", "vmax", "center",
     "scale_scope", "quantization_policy", "no_data_policy",
     "renderer_version", "status", "issue",
+)
+DIFFUSION_UNCERTAINTY_COLUMNS = (
+    "uncertainty_metric_id", "uncertainty_group_id", "observation_level",
+    "case_id", "model_id", "painting_id", "category", "style_or_period",
+    "dataset_id", "dataset_scope", "experiment_id",
+    "damage_or_degradation_type", "case_label",
+    "target_damage_fraction", "realized_damage_fraction",
+    "configuration_id", "prompt_policy_id", "prompt_variant_id",
+    "execution_role", "seed_count", "expected_seed_count",
+    "seed_coverage_status", "candidate_id", "seed",
+    "candidate_id_a", "candidate_id_b", "seed_a", "seed_b",
+    "metric_family", "metric_name", "region_id", "summary_statistic",
+    "value", "value_unit", "metric_version", "region_policy_version",
+    "evidence_role", "is_combined_index", "status", "issue",
+)
+UNCERTAINTY_CALIBRATION_INPUTS_COLUMNS = (
+    "uncertainty_group_id", "case_id", "model_id", "painting_id",
+    "category", "style_or_period", "dataset_id", "dataset_scope",
+    "experiment_id", "damage_or_degradation_type", "case_label",
+    "target_damage_fraction", "realized_damage_fraction",
+    "configuration_id", "prompt_policy_id", "prompt_variant_id",
+    "execution_role", "seeds", "seed_count", "expected_seed_count",
+    "seed_coverage_status",
+    "rgb_std_mean_masked", "rgb_std_p95_masked",
+    "rgb_pair_mae_mean_masked", "rgb_pair_rmse_mean_masked",
+    "lpips_pair_mean_content", "lpips_pair_mean_crop",
+    "clip_pair_distance_mean_content", "clip_pair_distance_mean_crop",
+    "dino_pair_distance_mean_content", "dino_pair_distance_mean_crop",
+    "reference_mae_masked_mean", "reference_mae_masked_std",
+    "reference_mae_masked_worst", "reference_psnr_content_mean",
+    "reference_psnr_content_std", "reference_psnr_content_worst",
+    "reference_ssim_crop_mean", "reference_ssim_crop_std",
+    "reference_ssim_crop_worst", "reference_lpips_crop_mean",
+    "reference_lpips_crop_std", "reference_lpips_crop_worst",
+    "reference_clip_crop_mean", "reference_clip_crop_std",
+    "reference_clip_crop_worst", "reference_dino_crop_mean",
+    "reference_dino_crop_std", "reference_dino_crop_worst",
+    "texture_error_p95_crop_mean", "texture_error_p95_crop_std",
+    "texture_error_p95_crop_worst", "colour_delta_e_masked_mean",
+    "colour_delta_e_masked_std", "colour_delta_e_masked_worst",
+    "seam_gradient_mismatch_mean", "seam_gradient_mismatch_std",
+    "seam_gradient_mismatch_worst", "seam_ssim_error_mean",
+    "seam_ssim_error_std", "seam_ssim_error_worst",
+    "semantic_evidence_available", "human_review_flag_available",
+    "failure_category_available", "combined_uncertainty_index_available",
+    "calibration_scope", "schema_version", "status", "issue",
 )
 
 @dataclass(frozen=True)
@@ -1409,6 +1455,56 @@ LOCAL_CONSISTENCY_MAP_MANIFEST_SCHEMA = DataFrameSchema(
         "status": frozenset({"passed", "error"}),
     },
 )
+DIFFUSION_UNCERTAINTY_SCHEMA = DataFrameSchema(
+    name="diffusion_uncertainty",
+    version="diffusion_uncertainty.v1",
+    required_columns=DIFFUSION_UNCERTAINTY_COLUMNS,
+    primary_key=("uncertainty_metric_id",),
+    non_nullable=tuple(
+        column for column in DIFFUSION_UNCERTAINTY_COLUMNS
+        if column not in {
+            "target_damage_fraction", "realized_damage_fraction",
+            "candidate_id", "seed", "candidate_id_a", "candidate_id_b",
+            "seed_a", "seed_b", "value", "issue",
+        }
+    ),
+    allowed_values={
+        "observation_level": frozenset({
+            "group_summary", "candidate_pair", "seed_reference"
+        }),
+        "seed_coverage_status": frozenset({"complete", "insufficient"}),
+        "metric_family": frozenset({
+            "pixel_variability", "pixel_pairwise", "perceptual_pairwise",
+            "feature_pairwise", "classical_reference",
+            "perceptual_reference", "feature_reference",
+            "local_consistency_reference",
+        }),
+        "evidence_role": frozenset({
+            "empirical_uncertainty_proxy", "calibration_reference"
+        }),
+        "is_combined_index": frozenset({False}),
+        "status": frozenset({"ok", "not_applicable", "error"}),
+    },
+)
+UNCERTAINTY_CALIBRATION_INPUTS_SCHEMA = DataFrameSchema(
+    name="uncertainty_calibration_inputs",
+    version="uncertainty_calibration_inputs.v1",
+    required_columns=UNCERTAINTY_CALIBRATION_INPUTS_COLUMNS,
+    primary_key=("uncertainty_group_id",),
+    non_nullable=tuple(
+        column for column in UNCERTAINTY_CALIBRATION_INPUTS_COLUMNS
+        if column not in {"target_damage_fraction", "realized_damage_fraction", "issue"}
+    ),
+    allowed_values={
+        "seed_coverage_status": frozenset({"complete", "insufficient"}),
+        "semantic_evidence_available": frozenset({False}),
+        "human_review_flag_available": frozenset({False}),
+        "failure_category_available": frozenset({False}),
+        "combined_uncertainty_index_available": frozenset({False}),
+        "calibration_scope": frozenset({"pre_semantic_pre_human_partial"}),
+        "status": frozenset({"ok", "error"}),
+    },
+)
 
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
@@ -1446,6 +1542,8 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     SPATIAL_MAP_IMAGE_MANIFEST_SCHEMA.name: SPATIAL_MAP_IMAGE_MANIFEST_SCHEMA,
     LOCAL_CONSISTENCY_SCHEMA.name: LOCAL_CONSISTENCY_SCHEMA,
     LOCAL_CONSISTENCY_MAP_MANIFEST_SCHEMA.name: LOCAL_CONSISTENCY_MAP_MANIFEST_SCHEMA,
+    DIFFUSION_UNCERTAINTY_SCHEMA.name: DIFFUSION_UNCERTAINTY_SCHEMA,
+    UNCERTAINTY_CALIBRATION_INPUTS_SCHEMA.name: UNCERTAINTY_CALIBRATION_INPUTS_SCHEMA,
 }
 
 

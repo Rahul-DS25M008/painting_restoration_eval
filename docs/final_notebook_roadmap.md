@@ -1026,7 +1026,7 @@ Notebooks 19–35.
 **Notebook:** `18_diffusion_uncertainty_analysis.ipynb`  
 **Origin:** Existing Previous Version of Notebook 27, Pre-refactor  
 **Output root:** `outputs/18_diffusion_uncertainty_analysis/`  
-**Depends on:** Notebooks 11–15 and conditional Notebook 12
+**Depends on:** Notebooks 11–15, Notebook 17, and conditional Notebook 12
 
 ### Purpose
 

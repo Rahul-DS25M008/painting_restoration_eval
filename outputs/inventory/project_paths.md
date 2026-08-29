@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-29T18:18:25.552620Z`
-- Registered artifacts: 95
+- Updated: `2026-08-29T22:36:27.781391Z`
+- Registered artifacts: 100
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -22,6 +22,10 @@
 | dataset.audit | 01_dataset_verification | `outputs/01_dataset_verification/metrics/dataset_audit.csv` | audit_reporting | passed |
 | dataset.figure_distribution | 01_dataset_verification | `outputs/01_dataset_verification/figures/dataset_distribution.png` | reporting | passed |
 | dataset.figure_preview | 01_dataset_verification | `outputs/01_dataset_verification/figures/dataset_preview.png` | qa_reporting | passed |
+| diffusion_uncertainty.calibration_inputs | 18_diffusion_uncertainty_analysis | `outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_calibration_inputs.csv` | calibration_ready_evidence | passed |
+| diffusion_uncertainty.distributions_figure | 18_diffusion_uncertainty_analysis | `outputs/18_diffusion_uncertainty_analysis/figures/uncertainty_distributions.png` | thesis_facing_summary | passed |
+| diffusion_uncertainty.metrics | 18_diffusion_uncertainty_analysis | `outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_metrics.csv` | primary_downstream_evidence | passed |
+| diffusion_uncertainty.performance_figure | 18_diffusion_uncertainty_analysis | `outputs/18_diffusion_uncertainty_analysis/figures/uncertainty_vs_performance.png` | thesis_facing_summary | passed |
 | experiment_contracts.case_registry | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv` | primary_cross_experiment_registry | passed |
 | experiment_contracts.figure_region_definitions | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/figures/region_definitions.png` | methodology_visualization | passed |
 | experiment_contracts.model_eligibility | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv` | authoritative_model_routing | passed |
@@ -101,3 +105,4 @@
 | validation.15_feature_similarity | 15_feature_similarity | `outputs/15_feature_similarity/validation/checks.csv` | validation_evidence | passed |
 | validation.16_difference_maps_and_spatial_diagnostics | 16_difference_maps_and_spatial_diagnostics | `outputs/16_difference_maps_and_spatial_diagnostics/validation/checks.csv` | validation_evidence | passed |
 | validation.17_local_consistency_metrics | 17_local_consistency_metrics | `outputs/17_local_consistency_metrics/validation/checks.csv` | validation_evidence | passed |
+| validation.18_diffusion_uncertainty_analysis | 18_diffusion_uncertainty_analysis | `outputs/18_diffusion_uncertainty_analysis/validation/checks.csv` | validation_evidence | passed |

@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-29T18:18:25.552620Z",
+  "updated_at_utc": "2026-08-29T22:36:27.781391Z",
   "artifacts": [
     {
       "artifact_key": "classical_metrics.distributions",
@@ -225,6 +225,62 @@
       "row_count": "",
       "file_count": 1,
       "checksum": "a477a1dfd3df7d109889356bc32df0c97c64d350264419977157af5a26072e2a"
+    },
+    {
+      "artifact_key": "diffusion_uncertainty.calibration_inputs",
+      "producer_notebook": "18_diffusion_uncertainty_analysis",
+      "relative_path": "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_calibration_inputs.csv",
+      "artifact_type": "table",
+      "artifact_role": "calibration_ready_evidence",
+      "schema_version": "uncertainty_calibration_inputs.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "diffusion_seed_uncertainty",
+      "validation_status": "passed",
+      "row_count": 130,
+      "file_count": 1,
+      "checksum": "fd89fe9ff75cd9c29a3e22203399ca4ebaa5e2abb64a8e42c217795a4e5149fa"
+    },
+    {
+      "artifact_key": "diffusion_uncertainty.distributions_figure",
+      "producer_notebook": "18_diffusion_uncertainty_analysis",
+      "relative_path": "outputs/18_diffusion_uncertainty_analysis/figures/uncertainty_distributions.png",
+      "artifact_type": "figure",
+      "artifact_role": "thesis_facing_summary",
+      "schema_version": "diffusion_uncertainty_figure.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "diffusion_seed_uncertainty",
+      "validation_status": "passed",
+      "row_count": 1,
+      "file_count": 1,
+      "checksum": "6d23234b8b6e85eb6ebf27540f345cf7ff5a3a68e2a8083c9426b8ab5cf09e21"
+    },
+    {
+      "artifact_key": "diffusion_uncertainty.metrics",
+      "producer_notebook": "18_diffusion_uncertainty_analysis",
+      "relative_path": "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_metrics.csv",
+      "artifact_type": "table",
+      "artifact_role": "primary_downstream_evidence",
+      "schema_version": "diffusion_uncertainty.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "diffusion_seed_uncertainty",
+      "validation_status": "passed",
+      "row_count": 20800,
+      "file_count": 1,
+      "checksum": "a10a17314557c486fd4a1c6020c2398163d2d63993e5c95ddf7bda132b953101"
+    },
+    {
+      "artifact_key": "diffusion_uncertainty.performance_figure",
+      "producer_notebook": "18_diffusion_uncertainty_analysis",
+      "relative_path": "outputs/18_diffusion_uncertainty_analysis/figures/uncertainty_vs_performance.png",
+      "artifact_type": "figure",
+      "artifact_role": "thesis_facing_summary",
+      "schema_version": "diffusion_uncertainty_figure.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "diffusion_seed_uncertainty",
+      "validation_status": "passed",
+      "row_count": 1,
+      "file_count": 1,
+      "checksum": "09b221b0376575088c59954b7e05ed5e61c6723b280600806d51f4a464bb930f"
     },
     {
       "artifact_key": "experiment_contracts.case_registry",
@@ -1331,6 +1387,20 @@
       "row_count": 176,
       "file_count": 1,
       "checksum": "bd50b7dbcb90193d9c2e5a863551d260b5b388d5e7356a0307c7aa16d0ad8146"
+    },
+    {
+      "artifact_key": "validation.18_diffusion_uncertainty_analysis",
+      "producer_notebook": "18_diffusion_uncertainty_analysis",
+      "relative_path": "outputs/18_diffusion_uncertainty_analysis/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "diffusion_seed_uncertainty",
+      "validation_status": "passed",
+      "row_count": 150,
+      "file_count": 1,
+      "checksum": "d236f419810c618ffa3f34526a9b90dbf9fa1a18e3410a362cc02971cbac8513"
     }
   ]
 }
