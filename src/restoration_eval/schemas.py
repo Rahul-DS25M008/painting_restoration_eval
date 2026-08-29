@@ -521,6 +521,27 @@ SPATIAL_MAP_IMAGE_MANIFEST_COLUMNS = (
     "scale_scope", "quantization_policy", "no_data_policy",
     "renderer_version", "status", "issue",
 )
+LOCAL_CONSISTENCY_COLUMNS = (
+    "local_consistency_id", "case_id", "candidate_id", "model_id",
+    "painting_id", "dataset_id", "dataset_scope", "experiment_id",
+    "damage_or_degradation_type", "target_damage_fraction",
+    "realized_damage_fraction", "candidate_index", "seed",
+    "prompt_policy_id", "prompt_variant_id", "execution_role",
+    "is_zero_control", "metric_family", "metric_name",
+    "evidence_component", "region_id", "region_type", "spatial_support",
+    "region_pixel_count", "damaged_value", "restored_value",
+    "improvement_value", "improvement_direction", "value_unit",
+    "metric_version", "region_policy_version", "evidence_role",
+    "is_final_trustworthiness_flag", "status", "issue",
+)
+LOCAL_CONSISTENCY_MAP_MANIFEST_COLUMNS = (
+    "map_image_id", "asset_kind", "map_id", "candidate_id", "case_id",
+    "model_id", "painting_id", "map_type", "selection_role",
+    "relative_path", "sha256", "size_bytes", "width", "height",
+    "image_mode", "format", "cmap", "vmin", "vmax", "center",
+    "scale_scope", "quantization_policy", "no_data_policy",
+    "renderer_version", "status", "issue",
+)
 
 @dataclass(frozen=True)
 class DataFrameSchema:
@@ -1341,6 +1362,53 @@ SPATIAL_MAP_IMAGE_MANIFEST_SCHEMA = DataFrameSchema(
         "status": frozenset({"passed", "error"}),
     },
 )
+LOCAL_CONSISTENCY_SCHEMA = DataFrameSchema(
+    name="local_consistency",
+    version="local_consistency.v1",
+    required_columns=LOCAL_CONSISTENCY_COLUMNS,
+    primary_key=("local_consistency_id",),
+    non_nullable=tuple(
+        column for column in LOCAL_CONSISTENCY_COLUMNS
+        if column not in {
+            "target_damage_fraction", "realized_damage_fraction", "seed",
+            "prompt_policy_id", "prompt_variant_id", "damaged_value",
+            "restored_value", "improvement_value", "issue",
+        }
+    ),
+    allowed_values={
+        "metric_family": frozenset({
+            "texture_descriptor", "texture_map", "colour", "seam"
+        }),
+        "improvement_direction": frozenset({"damaged_minus_restored"}),
+        "evidence_role": frozenset({"diagnostic_only"}),
+        "is_final_trustworthiness_flag": frozenset({False}),
+        "status": frozenset({"ok", "not_applicable", "error"}),
+    },
+)
+LOCAL_CONSISTENCY_MAP_MANIFEST_SCHEMA = DataFrameSchema(
+    name="local_consistency_map_images",
+    version="local_consistency_map_images.v1",
+    required_columns=LOCAL_CONSISTENCY_MAP_MANIFEST_COLUMNS,
+    primary_key=("map_image_id",),
+    non_nullable=tuple(
+        column for column in LOCAL_CONSISTENCY_MAP_MANIFEST_COLUMNS
+        if column not in {
+            "candidate_id", "case_id", "model_id", "painting_id",
+            "selection_role", "center", "issue",
+        }
+    ),
+    allowed_values={
+        "asset_kind": frozenset({"candidate_map", "selected_panel"}),
+        "map_type": frozenset({
+            "texture", "colour", "seam",
+            "local_consistency_candidate_panel",
+            "cross_model_local_consistency_panel",
+        }),
+        "format": frozenset({"PNG"}),
+        "renderer_version": frozenset({"local_consistency_map_renderer.v1"}),
+        "status": frozenset({"passed", "error"}),
+    },
+)
 
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
@@ -1376,6 +1444,8 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     FEATURE_EMBEDDING_MANIFEST_SCHEMA.name: FEATURE_EMBEDDING_MANIFEST_SCHEMA,
     SPATIAL_DIAGNOSTICS_SCHEMA.name: SPATIAL_DIAGNOSTICS_SCHEMA,
     SPATIAL_MAP_IMAGE_MANIFEST_SCHEMA.name: SPATIAL_MAP_IMAGE_MANIFEST_SCHEMA,
+    LOCAL_CONSISTENCY_SCHEMA.name: LOCAL_CONSISTENCY_SCHEMA,
+    LOCAL_CONSISTENCY_MAP_MANIFEST_SCHEMA.name: LOCAL_CONSISTENCY_MAP_MANIFEST_SCHEMA,
 }
 
 

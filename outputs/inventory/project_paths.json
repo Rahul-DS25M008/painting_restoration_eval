@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-28T23:47:07.282991Z",
+  "updated_at_utc": "2026-08-29T18:18:25.552620Z",
   "artifacts": [
     {
       "artifact_key": "classical_metrics.distributions",
@@ -421,6 +421,76 @@
       "row_count": 5,
       "file_count": 1,
       "checksum": "dcbf17cca2e1ffceb18637dba75c884f789e1aa2dbe4d51ef83023a516c69197"
+    },
+    {
+      "artifact_key": "local_consistency.candidate_maps",
+      "producer_notebook": "17_local_consistency_metrics",
+      "relative_path": "outputs/17_local_consistency_metrics/images/maps",
+      "artifact_type": "image_collection",
+      "artifact_role": "reusable_local_consistency_maps",
+      "schema_version": "local_consistency_map_renderer.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_model_local_consistency",
+      "validation_status": "passed",
+      "row_count": 3270,
+      "file_count": 3270,
+      "checksum": "3208e4a4c21b3bcd0373336abb95cf274831984ed688df96c38c57b9239d5c9c"
+    },
+    {
+      "artifact_key": "local_consistency.map_manifest",
+      "producer_notebook": "17_local_consistency_metrics",
+      "relative_path": "outputs/17_local_consistency_metrics/manifests/map_images.csv",
+      "artifact_type": "table",
+      "artifact_role": "normalized_local_consistency_image_index",
+      "schema_version": "local_consistency_map_images.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_model_local_consistency",
+      "validation_status": "passed",
+      "row_count": 3282,
+      "file_count": 1,
+      "checksum": "e62db622f9b4c0716f6693cd385fde19034215e26721f5d02a65ff9bd16c71da"
+    },
+    {
+      "artifact_key": "local_consistency.metrics",
+      "producer_notebook": "17_local_consistency_metrics",
+      "relative_path": "outputs/17_local_consistency_metrics/metrics/local_consistency.csv",
+      "artifact_type": "table",
+      "artifact_role": "primary_downstream_evidence",
+      "schema_version": "local_consistency.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_model_local_consistency",
+      "validation_status": "passed",
+      "row_count": 271988,
+      "file_count": 1,
+      "checksum": "a0fd95fbddd0e70ac89507241cf4794217d1f27bd75d6b0e474fbc93154a9bd8"
+    },
+    {
+      "artifact_key": "local_consistency.selected_panels",
+      "producer_notebook": "17_local_consistency_metrics",
+      "relative_path": "outputs/17_local_consistency_metrics/figures/selected_local_consistency_panels",
+      "artifact_type": "figure_collection",
+      "artifact_role": "deterministic_human_review_figures",
+      "schema_version": "local_consistency_map_renderer.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_model_local_consistency",
+      "validation_status": "passed",
+      "row_count": 12,
+      "file_count": 12,
+      "checksum": "16fe653ab4803d4c8c7fc3979fe45cf9ebca82ee8f4e14de47c3fbd3d822a0ba"
+    },
+    {
+      "artifact_key": "local_consistency.summary_figure",
+      "producer_notebook": "17_local_consistency_metrics",
+      "relative_path": "outputs/17_local_consistency_metrics/figures/local_consistency_summary.png",
+      "artifact_type": "figure",
+      "artifact_role": "thesis_facing_summary",
+      "schema_version": "local_consistency_map_renderer.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_model_local_consistency",
+      "validation_status": "passed",
+      "row_count": 1,
+      "file_count": 1,
+      "checksum": "74cb4c422e60d711a904c47b861a0b4844728fb86118979d7429e3c182e963df"
     },
     {
       "artifact_key": "lpips_metrics.distributions",
@@ -1247,6 +1317,20 @@
       "row_count": 134,
       "file_count": 1,
       "checksum": "2204cca3ac9bd040eafe08df3fe6340d1ab4b7baea4b9388f083f4e547cc5e37"
+    },
+    {
+      "artifact_key": "validation.17_local_consistency_metrics",
+      "producer_notebook": "17_local_consistency_metrics",
+      "relative_path": "outputs/17_local_consistency_metrics/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_model_local_consistency",
+      "validation_status": "passed",
+      "row_count": 176,
+      "file_count": 1,
+      "checksum": "bd50b7dbcb90193d9c2e5a863551d260b5b388d5e7356a0307c7aa16d0ad8146"
     }
   ]
 }

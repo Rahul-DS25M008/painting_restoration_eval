@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-28T23:47:07.282991Z`
-- Registered artifacts: 89
+- Updated: `2026-08-29T18:18:25.552620Z`
+- Registered artifacts: 95
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -36,6 +36,11 @@
 | lama.restorations | 10_lama_restoration | `outputs/10_lama_restoration/data/restorations.csv` | primary_restoration_records | passed |
 | lama.restored_images | 10_lama_restoration | `outputs/10_lama_restoration/images/restored` | primary_restored_images | passed |
 | lama.runtime_summary | 10_lama_restoration | `outputs/10_lama_restoration/metrics/runtime_summary.csv` | runtime_evidence | passed |
+| local_consistency.candidate_maps | 17_local_consistency_metrics | `outputs/17_local_consistency_metrics/images/maps` | reusable_local_consistency_maps | passed |
+| local_consistency.map_manifest | 17_local_consistency_metrics | `outputs/17_local_consistency_metrics/manifests/map_images.csv` | normalized_local_consistency_image_index | passed |
+| local_consistency.metrics | 17_local_consistency_metrics | `outputs/17_local_consistency_metrics/metrics/local_consistency.csv` | primary_downstream_evidence | passed |
+| local_consistency.selected_panels | 17_local_consistency_metrics | `outputs/17_local_consistency_metrics/figures/selected_local_consistency_panels` | deterministic_human_review_figures | passed |
+| local_consistency.summary_figure | 17_local_consistency_metrics | `outputs/17_local_consistency_metrics/figures/local_consistency_summary.png` | thesis_facing_summary | passed |
 | lpips_metrics.distributions | 14_lpips_metrics | `outputs/14_lpips_metrics/figures/lpips_distributions.png` | reporting_visualization | passed |
 | lpips_metrics.metrics | 14_lpips_metrics | `outputs/14_lpips_metrics/metrics/lpips_metrics.csv` | primary_downstream_evidence | passed |
 | mask_robustness.cases | 06_mask_robustness_dataset_generation | `outputs/06_mask_robustness_dataset_generation/data/cases.csv` | primary_case_manifest | passed |
@@ -95,3 +100,4 @@
 | validation.14_lpips_metrics | 14_lpips_metrics | `outputs/14_lpips_metrics/validation/checks.csv` | validation_evidence | passed |
 | validation.15_feature_similarity | 15_feature_similarity | `outputs/15_feature_similarity/validation/checks.csv` | validation_evidence | passed |
 | validation.16_difference_maps_and_spatial_diagnostics | 16_difference_maps_and_spatial_diagnostics | `outputs/16_difference_maps_and_spatial_diagnostics/validation/checks.csv` | validation_evidence | passed |
+| validation.17_local_consistency_metrics | 17_local_consistency_metrics | `outputs/17_local_consistency_metrics/validation/checks.csv` | validation_evidence | passed |
