@@ -1097,6 +1097,26 @@ validation/checks.csv
 - Select representative maps through auditable rules.
 - Prepare assets for semantic/XAI analysis, flags, case reports, and dashboard use.
 
+### Implementation-contract clarifications
+
+- The spatial population preserves Notebook 18's 130 prompt-specific uncertainty
+  groups. Because generic and scratch-aware groups can share a `case_id`, owned
+  map filenames use `uncertainty_group_id` to prevent collisions while the map
+  manifest retains both identifiers.
+- The per-pixel uncertainty definition is the mean RGB-channel population
+  standard deviation across seeds and must reproduce Notebook 18's regional
+  scalar summaries within the declared tolerance.
+- One global robust visualization scale is shared across all eligible groups and
+  all regional views. Numeric map values are retained separately from visually
+  clipped PNG assets.
+- Validated Notebook 16 and 17 component maps are linked rather than copied.
+  Scratch-aware texture, colour, and seam presentation maps absent from Notebook
+  17 may be rendered with the same approved helper, configuration, and global
+  scales without introducing new metrics.
+- Notebook 19 does not generate a standalone report. Its canonical figures and
+  normalized manifests are downstream assets for later semantic, flagging,
+  reporting, case-page, and dashboard stages.
+
 ### Canonical outputs
 
 ```text

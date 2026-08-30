@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-29T22:36:27.781391Z`
-- Registered artifacts: 100
+- Updated: `2026-08-30T17:30:33.523075Z`
+- Registered artifacts: 108
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -74,6 +74,13 @@
 | spatial_diagnostics.map_manifest | 16_difference_maps_and_spatial_diagnostics | `outputs/16_difference_maps_and_spatial_diagnostics/manifests/map_images.csv` | normalized_spatial_image_index | passed |
 | spatial_diagnostics.metrics | 16_difference_maps_and_spatial_diagnostics | `outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv` | primary_downstream_evidence | passed |
 | spatial_diagnostics.selected_panels | 16_difference_maps_and_spatial_diagnostics | `outputs/16_difference_maps_and_spatial_diagnostics/figures/selected_spatial_panels` | human_review_figures | passed |
+| spatial_explanations.integrated_local_images | 19_uncertainty_and_spatial_explanation_maps | `outputs/19_uncertainty_and_spatial_explanation_maps/images/integrated_local/stable_diffusion_inpainting` | scratch_aware_local_component_maps | passed |
+| spatial_explanations.map_manifest | 19_uncertainty_and_spatial_explanation_maps | `outputs/19_uncertainty_and_spatial_explanation_maps/manifests/map_images.csv` | normalized_spatial_map_index | passed |
+| spatial_explanations.metrics | 19_uncertainty_and_spatial_explanation_maps | `outputs/19_uncertainty_and_spatial_explanation_maps/metrics/spatial_explanations.csv` | regional_spatial_explanation_evidence | passed |
+| spatial_explanations.numeric_maps | 19_uncertainty_and_spatial_explanation_maps | `outputs/19_uncertainty_and_spatial_explanation_maps/data/uncertainty_maps.npz` | raw_spatial_uncertainty_evidence | passed |
+| spatial_explanations.overlay_images | 19_uncertainty_and_spatial_explanation_maps | `outputs/19_uncertainty_and_spatial_explanation_maps/images/overlays/stable_diffusion_inpainting` | uncertainty_geometry_overlays | passed |
+| spatial_explanations.selected_panels | 19_uncertainty_and_spatial_explanation_maps | `outputs/19_uncertainty_and_spatial_explanation_maps/figures/selected_explanation_panels` | rule_selected_combined_diagnostics | passed |
+| spatial_explanations.uncertainty_images | 19_uncertainty_and_spatial_explanation_maps | `outputs/19_uncertainty_and_spatial_explanation_maps/images/uncertainty/stable_diffusion_inpainting` | uncertainty_variant_panels | passed |
 | stable_diffusion.candidate_examples | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/figures/candidate_examples.png` | candidate_and_seed_visual_evidence | passed |
 | stable_diffusion.candidates | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/data/candidates.csv` | primary_candidate_records | passed |
 | stable_diffusion.prompt_ablation_design | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/metrics/prompt_ablation_design.csv` | controlled_experimental_design | passed |
@@ -106,3 +113,4 @@
 | validation.16_difference_maps_and_spatial_diagnostics | 16_difference_maps_and_spatial_diagnostics | `outputs/16_difference_maps_and_spatial_diagnostics/validation/checks.csv` | validation_evidence | passed |
 | validation.17_local_consistency_metrics | 17_local_consistency_metrics | `outputs/17_local_consistency_metrics/validation/checks.csv` | validation_evidence | passed |
 | validation.18_diffusion_uncertainty_analysis | 18_diffusion_uncertainty_analysis | `outputs/18_diffusion_uncertainty_analysis/validation/checks.csv` | validation_evidence | passed |
+| validation.19_uncertainty_and_spatial_explanation_maps | 19_uncertainty_and_spatial_explanation_maps | `outputs/19_uncertainty_and_spatial_explanation_maps/validation/checks.csv` | validation_evidence | passed |

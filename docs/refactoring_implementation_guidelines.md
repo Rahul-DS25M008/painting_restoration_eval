@@ -134,6 +134,61 @@ The workflow for every notebook is:
   and project-path registries may still be edited when explicitly within the
   approved preparation or completion workflow.
 
+#### 6.1.1 Mandatory opening Markdown contract cell
+
+Every refactored notebook must begin with one standalone Markdown cell that
+identifies the notebook and summarizes its scientific and artifact contract.
+This cell must appear before the first batch heading. It must not be merged with
+`## Batch 1`, code, generated output, or execution instructions.
+
+Before Batch 1 is generated, the assistant must provide this complete opening
+Markdown cell in chat for the user to paste as the notebook's first cell. The
+assistant must verify its presence and structure during the final notebook
+sweep. Inspecting only the status fields is insufficient.
+
+The cell begins with the following metadata block, in this order:
+
+```markdown
+# NN — Notebook Title
+
+**Origin:** Approved lineage description  
+**Refactor status:** In progress  
+**Validation status:** Pending  
+**Completion gate passed:** No  
+**Output root:** `outputs/NN_notebook_name/`  
+**Depends on:** Declared upstream notebooks or `None`
+```
+
+At completion, the same opening cell is updated to `Refactor status: Finished`,
+`Validation status: Finished`, and `Completion gate passed: Yes` only after the
+corresponding final checks have passed. These human-readable fields must agree
+with the canonical run manifest and validation evidence.
+
+After the metadata block, the opening cell must contain a tailored, concise
+scientific overview. Use the successfully refactored notebooks, especially the
+later metric and analysis notebooks, as structural references. The overview
+must include:
+
+- `## Purpose`;
+- the approved evidence population, candidate scope, or dataset scope when
+  applicable, including important inclusion and exclusion rules;
+- the principal methods, evidence components, or responsibilities when they
+  materially help define the notebook;
+- the notebook-specific interpretation limits and scientific boundaries;
+- `## Canonical outputs`, listing the declared persisted outputs; and
+- an explicit statement declaring the standalone report path or stating that
+  the notebook does not generate a standalone report.
+
+Section names between `Purpose` and `Canonical outputs` are notebook-specific.
+For example, a restoration notebook may explain its inference scope and prompt
+policy, while an uncertainty, colour, seam, semantic, or human-evaluation
+notebook needs different evidence and interpretation sections. Do not force one
+scientific subsection template onto every notebook.
+
+The opening cell must be understandable without reading Batch 1. Batch 1 then
+starts in a separate Markdown cell and owns executable contract, dependency,
+path, configuration, schema, and preflight details.
+
 ### 6.2 Notebooks that generate important reports
 
 For any notebook that generates an important end-to-end or standalone report,

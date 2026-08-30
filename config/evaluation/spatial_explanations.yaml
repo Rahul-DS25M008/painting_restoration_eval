@@ -1,0 +1,199 @@
+config_schema_version: "spatial_explanations_config.v1"
+config_version: "1.0.1"
+
+spatial_explanations:
+  notebook_id: "19"
+  notebook_stem: "19_uncertainty_and_spatial_explanation_maps"
+  origin: "Existing Previous Version of Notebook 32, Pre-refactor, expanded"
+  metric_version: "spatial_explanations.v1"
+  map_manifest_version: "spatial_explanation_map_images.v1"
+  renderer_version: "spatial_explanation_renderer.v1.1"
+
+  inputs:
+    inventory_path: "outputs/inventory/project_file_inventory.csv"
+    inventory_run_path: "outputs/inventory/inventory_run.json"
+    project_paths_path: "outputs/inventory/project_paths.json"
+    artworks_path: "outputs/01_dataset_verification/data/artworks.csv"
+    artworks_run_manifest_path: "outputs/01_dataset_verification/manifests/run_manifest.json"
+    geometry_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+    geometry_run_manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+    case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+    model_eligibility_path: "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv"
+    region_policy_path: "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv"
+    schema_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json"
+    contracts_run_manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+    stable_diffusion_candidates_path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+    stable_diffusion_output_root: "outputs/11_stable_diffusion_restoration"
+    stable_diffusion_run_manifest_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+    spatial_diagnostics_config_path: "config/evaluation/spatial_diagnostics.yaml"
+    spatial_diagnostics_metrics_path: "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv"
+    spatial_diagnostics_map_manifest_path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/map_images.csv"
+    spatial_diagnostics_run_manifest_path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json"
+    local_consistency_config_path: "config/evaluation/local_consistency.yaml"
+    local_consistency_metrics_path: "outputs/17_local_consistency_metrics/metrics/local_consistency.csv"
+    local_consistency_map_manifest_path: "outputs/17_local_consistency_metrics/manifests/map_images.csv"
+    local_consistency_run_manifest_path: "outputs/17_local_consistency_metrics/manifests/run_manifest.json"
+    diffusion_uncertainty_config_path: "config/evaluation/diffusion_uncertainty.yaml"
+    uncertainty_metrics_path: "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_metrics.csv"
+    uncertainty_calibration_inputs_path: "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_calibration_inputs.csv"
+    uncertainty_run_manifest_path: "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json"
+    implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+    notebook_roadmap_path: "docs/final_notebook_roadmap.md"
+
+  output:
+    root: "outputs/19_uncertainty_and_spatial_explanation_maps"
+    numeric_maps_path: "data/uncertainty_maps.npz"
+    metrics_path: "metrics/spatial_explanations.csv"
+    uncertainty_images_root: "images/uncertainty/stable_diffusion_inpainting"
+    overlay_images_root: "images/overlays/stable_diffusion_inpainting"
+    integrated_local_images_root: "images/integrated_local/stable_diffusion_inpainting"
+    selected_panels_root: "figures/selected_explanation_panels"
+    map_manifest_path: "manifests/map_images.csv"
+    run_manifest_path: "manifests/run_manifest.json"
+    artifacts_path: "manifests/artifacts.csv"
+    validation_path: "validation/checks.csv"
+    raw_map_work_root: "work/raw_maps"
+    map_checkpoint_path: "work/map_checkpoint.csv"
+    render_checkpoint_path: "work/render_checkpoint.csv"
+
+  population:
+    eligible_model_id: "stable_diffusion_inpainting"
+    eligible_status: "completed"
+    expected_seeds: [2026, 2027, 2028, 2029]
+    representative_seed: 2026
+    group_keys:
+      - "case_id"
+      - "prompt_policy_id"
+      - "prompt_variant_id"
+      - "configuration_id"
+    exact_seed_coverage_required: true
+    separate_prompt_variants: true
+    generic_prompt_variant_id: "p00_generic"
+    scratch_aware_prompt_variant_id: "p05_scratch_aware"
+    sdxl_policy: "not_applicable_insufficient_seed_coverage"
+    filename_identity: "uncertainty_group_id"
+
+  map_definition:
+    metric_name: "pixel_rgb_std_mean"
+    formula: "mean(std(restored_rgb_across_seeds, ddof=0), axis=rgb)"
+    input_data_range: 255.0
+    output_value_unit: "normalized_rgb_0_1"
+    compute_dtype: "float32"
+    archive_dtype: "float16"
+    archive_format: "compressed_npz"
+    archive_quantization_tolerance: 0.0005
+    cross_notebook_summary_tolerance: 0.000001
+
+  regions:
+    policy_version: "evaluation_region_policy.v1"
+    mask_bbox_margin_pixels: 8
+    boundary_width_pixels: 3
+    active_mask_threshold_source: "candidate.mask_threshold"
+    threshold_comparison: "greater_than_or_equal"
+    region_order:
+      - "full_image"
+      - "content_region"
+      - "masked_region"
+      - "mask_bbox_crop"
+      - "boundary_ring"
+      - "outside_mask_content"
+    summary_statistics: ["mean", "median", "p95", "max", "nonzero_fraction"]
+
+  normalization:
+    policy_id: "global_content_p99_5.v1"
+    cmap: "magma"
+    vmin: 0.0
+    percentile: 99.5
+    scale_population: "all 130 eligible prompt-specific uncertainty groups"
+    scale_region: "content_region"
+    maximum_sampled_pixels_per_group: 8192
+    deterministic_sampling_seed: 190019
+    clipping_policy: "clip_visual_assets_only; preserve numeric map values"
+    panel_no_data_policy: "transparent_outside_selected_region"
+    overlay_alpha_max: 0.72
+    png_mode: "RGBA"
+    png_compress_level: 9
+
+  overlays:
+    base_candidate_policy: "representative_seed_2026"
+    mask_fill_rgba: [255, 0, 255, 42]
+    boundary_rgba: [255, 215, 0, 220]
+    content_box_rgba: [0, 255, 255, 255]
+    mask_box_rgba: [255, 0, 255, 255]
+
+  integration:
+    error_map_types: ["restored_absolute_error", "signed_improvement"]
+    local_map_types: ["texture", "colour", "seam"]
+    upstream_link_policy: "link validated upstream assets without copying"
+    missing_scratch_aware_local_policy: "render presentation maps with Notebook 17 helper, configuration, and global scales"
+    integrated_local_metrics_policy: "presentation_only; do not add or alter scientific metrics"
+
+  representative_panels:
+    categories:
+      - "abstraction_surrealism"
+      - "architecture_structured"
+      - "high_texture_brushwork"
+      - "landscape_natural"
+      - "portrait_figure"
+    rules:
+      - "category_median_generic_masked_uncertainty"
+      - "category_max_generic_boundary_concentration"
+      - "category_max_absolute_scratch_prompt_difference"
+    cases_per_rule_and_category: 1
+    panel_count: 15
+    tie_breakers: ["case_id", "uncertainty_group_id"]
+    preview_panel_count: 3
+
+  execution:
+    progress_interval_groups: 10
+    checkpoint_interval_groups: 10
+    atomic_replace_attempts: 8
+    atomic_replace_retry_seconds: 0.25
+    raw_map_resume_policy: "reuse only group files with matching group id, seeds, geometry, definition, and checksum"
+    render_resume_policy: "reuse only validated files matching manifest checksum and renderer version"
+    work_cleanup_policy: "remove notebook-owned temporary state after all canonical outputs reload and validate"
+
+  expected_counts:
+    uncertainty_groups: 130
+    unique_cases: 80
+    candidates: 520
+    seeds_per_group: 4
+    generic_groups: 80
+    scratch_aware_groups: 50
+    representative_candidates: 130
+    spatial_explanation_rows: 780
+    numeric_map_archive_entries: 130
+    uncertainty_panels: 130
+    overlay_panels: 130
+    upstream_error_component_links: 260
+    upstream_generic_local_component_links: 240
+    owned_scratch_aware_local_component_maps: 150
+    selected_panels: 15
+    map_manifest_rows: 1055
+    artifact_records: 8
+    canonical_file_count: 431
+
+  evidence_policy:
+    interpretation: "empirical_seed_variability_spatial_proxy_not_calibrated_confidence"
+    low_uncertainty_proves_correctness: false
+    combined_explanation_score_retained: false
+    evidence_role: "spatial_diagnostic_proxy"
+    is_final_trustworthiness_flag: false
+    deterministic_model_terminology: "robustness_or_sensitivity_not_uncertainty"
+
+  downstream_consumers:
+    - "20_semantic_and_structural_consistency"
+    - "21_multi_model_comparison"
+    - "26_failure_detection_and_trustworthiness_flags"
+    - "30_model_report_generation"
+    - "32_painting_level_case_reports"
+    - "34_streamlit_dashboard_and_deployment_validation"
+
+  known_limitations:
+    - "The uncertainty maps cover Stable Diffusion 1.5 only; SDXL has one seed per case and cannot support empirical seed variability maps."
+    - "The eligible population contains canonical binary missing-region cases and does not establish behavior for synthetic degradations."
+    - "Per-pixel seed variability is an empirical consistency proxy, not calibrated confidence or restoration correctness."
+    - "Low spatial variability can coexist with consistently incorrect, semantically implausible, or historically unsupported restoration."
+    - "The numeric archive uses documented float16 storage after float32 computation; canonical scalar evidence remains in Notebook 18 and spatial_explanations.csv."
+    - "Visual heatmaps use a globally clipped robust scale for comparability; unclipped numeric maps and clipping metadata remain available."
+    - "Texture, colour, seam, absolute-error, signed-improvement, and uncertainty evidence remain separate and are not collapsed into a combined score."

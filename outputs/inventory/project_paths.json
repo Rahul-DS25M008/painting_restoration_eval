@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-29T22:36:27.781391Z",
+  "updated_at_utc": "2026-08-30T17:30:33.523075Z",
   "artifacts": [
     {
       "artifact_key": "classical_metrics.distributions",
@@ -955,6 +955,104 @@
       "checksum": "38c102c25f76bd7402ddd2583596024c5db7608d11f8c3d115dbcd6773032a75"
     },
     {
+      "artifact_key": "spatial_explanations.integrated_local_images",
+      "producer_notebook": "19_uncertainty_and_spatial_explanation_maps",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/images/integrated_local/stable_diffusion_inpainting",
+      "artifact_type": "image_collection",
+      "artifact_role": "scratch_aware_local_component_maps",
+      "schema_version": "local_consistency_map_renderer.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "spatial_explanation_mapping",
+      "validation_status": "passed",
+      "row_count": 150,
+      "file_count": 150,
+      "checksum": "2784354dd7a301132612ce7a625e7ee01b43a20b62f8036f94c54dbdf873361d"
+    },
+    {
+      "artifact_key": "spatial_explanations.map_manifest",
+      "producer_notebook": "19_uncertainty_and_spatial_explanation_maps",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/map_images.csv",
+      "artifact_type": "table",
+      "artifact_role": "normalized_spatial_map_index",
+      "schema_version": "spatial_explanation_map_images.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "spatial_explanation_mapping",
+      "validation_status": "passed",
+      "row_count": 1055,
+      "file_count": 1,
+      "checksum": "be791e3d1f205407563f018cfa35ceef6bdf24f4dbf1669759126b8a8aaa4843"
+    },
+    {
+      "artifact_key": "spatial_explanations.metrics",
+      "producer_notebook": "19_uncertainty_and_spatial_explanation_maps",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/metrics/spatial_explanations.csv",
+      "artifact_type": "table",
+      "artifact_role": "regional_spatial_explanation_evidence",
+      "schema_version": "spatial_explanations.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "spatial_explanation_mapping",
+      "validation_status": "passed",
+      "row_count": 780,
+      "file_count": 1,
+      "checksum": "97db00153de398b8a2cc61e156addb5a092d817e87b2f2ac6a009edaebc43a94"
+    },
+    {
+      "artifact_key": "spatial_explanations.numeric_maps",
+      "producer_notebook": "19_uncertainty_and_spatial_explanation_maps",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/data/uncertainty_maps.npz",
+      "artifact_type": "numeric_map_archive",
+      "artifact_role": "raw_spatial_uncertainty_evidence",
+      "schema_version": "spatial_uncertainty_numeric_archive.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "spatial_explanation_mapping",
+      "validation_status": "passed",
+      "row_count": 130,
+      "file_count": 1,
+      "checksum": "dcadaaefa27047ce9eb0f4149b4938b5912ea4bc228b9b42509f00d9e1ae4b3f"
+    },
+    {
+      "artifact_key": "spatial_explanations.overlay_images",
+      "producer_notebook": "19_uncertainty_and_spatial_explanation_maps",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/images/overlays/stable_diffusion_inpainting",
+      "artifact_type": "image_collection",
+      "artifact_role": "uncertainty_geometry_overlays",
+      "schema_version": "spatial_explanation_renderer.v1.1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "spatial_explanation_mapping",
+      "validation_status": "passed",
+      "row_count": 130,
+      "file_count": 130,
+      "checksum": "53aa0bd5fe775a623a6ca11e67639ea668b469862b5912306b72fd848cc68a12"
+    },
+    {
+      "artifact_key": "spatial_explanations.selected_panels",
+      "producer_notebook": "19_uncertainty_and_spatial_explanation_maps",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/figures/selected_explanation_panels",
+      "artifact_type": "figure_collection",
+      "artifact_role": "rule_selected_combined_diagnostics",
+      "schema_version": "selected_explanation_panel_layout.v1.1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "spatial_explanation_mapping",
+      "validation_status": "passed",
+      "row_count": 15,
+      "file_count": 15,
+      "checksum": "d7d2e1562131d6236d171a727a55e631deeb2f11154e8a325becd323ba33c648"
+    },
+    {
+      "artifact_key": "spatial_explanations.uncertainty_images",
+      "producer_notebook": "19_uncertainty_and_spatial_explanation_maps",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/images/uncertainty/stable_diffusion_inpainting",
+      "artifact_type": "image_collection",
+      "artifact_role": "uncertainty_variant_panels",
+      "schema_version": "spatial_explanation_renderer.v1.1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "spatial_explanation_mapping",
+      "validation_status": "passed",
+      "row_count": 130,
+      "file_count": 130,
+      "checksum": "1a3a3fd48950dc58353623915657c123604fec69798ffc760614b21af188ae4e"
+    },
+    {
       "artifact_key": "stable_diffusion.candidate_examples",
       "producer_notebook": "11_stable_diffusion_restoration",
       "relative_path": "outputs/11_stable_diffusion_restoration/figures/candidate_examples.png",
@@ -1401,6 +1499,20 @@
       "row_count": 150,
       "file_count": 1,
       "checksum": "d236f419810c618ffa3f34526a9b90dbf9fa1a18e3410a362cc02971cbac8513"
+    },
+    {
+      "artifact_key": "validation.19_uncertainty_and_spatial_explanation_maps",
+      "producer_notebook": "19_uncertainty_and_spatial_explanation_maps",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "spatial_explanation_mapping",
+      "validation_status": "passed",
+      "row_count": 149,
+      "file_count": 1,
+      "checksum": "960ba63bdfe77b38e3a8a16e128bb17cb58db24b5f950cb65b413036c239d22d"
     }
   ]
 }

@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.15.0"
+SCHEMAS_MODULE_VERSION = "1.16.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -587,6 +587,36 @@ UNCERTAINTY_CALIBRATION_INPUTS_COLUMNS = (
     "semantic_evidence_available", "human_review_flag_available",
     "failure_category_available", "combined_uncertainty_index_available",
     "calibration_scope", "schema_version", "status", "issue",
+)
+SPATIAL_EXPLANATIONS_COLUMNS = (
+    "spatial_explanation_id", "uncertainty_group_id", "case_id",
+    "model_id", "painting_id", "category", "style_or_period",
+    "dataset_id", "dataset_scope", "experiment_id",
+    "damage_or_degradation_type", "case_label",
+    "target_damage_fraction", "realized_damage_fraction",
+    "configuration_id", "prompt_policy_id", "prompt_variant_id",
+    "execution_role", "seeds", "seed_count", "expected_seed_count",
+    "seed_coverage_status", "representative_candidate_id",
+    "representative_seed", "region_id", "region_pixel_count",
+    "map_metric_name", "mean_value", "median_value", "p95_value",
+    "max_value", "nonzero_fraction", "value_unit",
+    "normalization_policy_id", "normalization_vmin",
+    "normalization_vmax", "normalization_scope", "raw_map_key",
+    "uncertainty_image_path", "overlay_image_path",
+    "source_uncertainty_metric_version", "region_policy_version",
+    "evidence_role", "is_calibrated_confidence",
+    "is_final_trustworthiness_flag", "status", "issue",
+)
+SPATIAL_EXPLANATION_MAP_IMAGE_COLUMNS = (
+    "map_asset_id", "asset_kind", "ownership", "uncertainty_group_id",
+    "case_id", "candidate_id", "model_id", "painting_id",
+    "prompt_variant_id", "map_type", "region_scope", "selection_role",
+    "relative_path", "archive_key", "source_artifact_key",
+    "source_map_image_id", "source_notebook", "sha256", "size_bytes",
+    "width", "height", "image_mode", "format", "cmap", "vmin",
+    "vmax", "center", "scale_scope", "normalization_policy_id",
+    "quantization_policy", "no_data_policy", "renderer_version",
+    "status", "issue",
 )
 
 @dataclass(frozen=True)
@@ -1505,6 +1535,68 @@ UNCERTAINTY_CALIBRATION_INPUTS_SCHEMA = DataFrameSchema(
         "status": frozenset({"ok", "error"}),
     },
 )
+SPATIAL_EXPLANATIONS_SCHEMA = DataFrameSchema(
+    name="spatial_explanations",
+    version="spatial_explanations.v1",
+    required_columns=SPATIAL_EXPLANATIONS_COLUMNS,
+    primary_key=("spatial_explanation_id",),
+    non_nullable=tuple(
+        column for column in SPATIAL_EXPLANATIONS_COLUMNS
+        if column not in {
+            "target_damage_fraction", "realized_damage_fraction", "issue",
+        }
+    ),
+    allowed_values={
+        "seed_coverage_status": frozenset({"complete"}),
+        "region_id": frozenset({
+            "full_image", "content_region", "masked_region",
+            "mask_bbox_crop", "boundary_ring", "outside_mask_content",
+        }),
+        "map_metric_name": frozenset({"pixel_rgb_std_mean"}),
+        "value_unit": frozenset({"normalized_rgb_0_1"}),
+        "evidence_role": frozenset({"spatial_diagnostic_proxy"}),
+        "is_calibrated_confidence": frozenset({False}),
+        "is_final_trustworthiness_flag": frozenset({False}),
+        "status": frozenset({"ok", "error"}),
+    },
+)
+SPATIAL_EXPLANATION_MAP_IMAGE_SCHEMA = DataFrameSchema(
+    name="spatial_explanation_map_images",
+    version="spatial_explanation_map_images.v1",
+    required_columns=SPATIAL_EXPLANATION_MAP_IMAGE_COLUMNS,
+    primary_key=("map_asset_id",),
+    non_nullable=tuple(
+        column for column in SPATIAL_EXPLANATION_MAP_IMAGE_COLUMNS
+        if column not in {
+            "candidate_id", "selection_role", "relative_path",
+            "archive_key", "source_artifact_key", "source_map_image_id",
+            "source_notebook", "sha256", "size_bytes", "width", "height",
+            "image_mode", "cmap", "vmin", "vmax", "center", "issue",
+        }
+    ),
+    allowed_values={
+        "asset_kind": frozenset({
+            "uncertainty_panel", "uncertainty_overlay", "raw_numeric_map",
+            "component_map", "selected_panel",
+        }),
+        "ownership": frozenset({"owned", "upstream_link"}),
+        "map_type": frozenset({
+            "uncertainty_variants", "uncertainty_overlay",
+            "uncertainty_numeric", "restored_absolute_error",
+            "signed_improvement", "texture", "colour", "seam",
+            "selected_median", "selected_boundary_concentration",
+            "selected_prompt_difference",
+        }),
+        "format": frozenset({"PNG", "NPZ"}),
+        "renderer_version": frozenset({
+            "spatial_explanation_renderer.v1",
+            "spatial_explanation_renderer.v1.1",
+            "spatial_map_renderer.v1",
+            "local_consistency_map_renderer.v1",
+        }),
+        "status": frozenset({"passed", "not_available", "error"}),
+    },
+)
 
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
@@ -1544,6 +1636,8 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     LOCAL_CONSISTENCY_MAP_MANIFEST_SCHEMA.name: LOCAL_CONSISTENCY_MAP_MANIFEST_SCHEMA,
     DIFFUSION_UNCERTAINTY_SCHEMA.name: DIFFUSION_UNCERTAINTY_SCHEMA,
     UNCERTAINTY_CALIBRATION_INPUTS_SCHEMA.name: UNCERTAINTY_CALIBRATION_INPUTS_SCHEMA,
+    SPATIAL_EXPLANATIONS_SCHEMA.name: SPATIAL_EXPLANATIONS_SCHEMA,
+    SPATIAL_EXPLANATION_MAP_IMAGE_SCHEMA.name: SPATIAL_EXPLANATION_MAP_IMAGE_SCHEMA,
 }
 
 
