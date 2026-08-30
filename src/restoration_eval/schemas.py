@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.16.0"
+SCHEMAS_MODULE_VERSION = "1.17.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -613,6 +613,31 @@ SPATIAL_EXPLANATION_MAP_IMAGE_COLUMNS = (
     "prompt_variant_id", "map_type", "region_scope", "selection_role",
     "relative_path", "archive_key", "source_artifact_key",
     "source_map_image_id", "source_notebook", "sha256", "size_bytes",
+    "width", "height", "image_mode", "format", "cmap", "vmin",
+    "vmax", "center", "scale_scope", "normalization_policy_id",
+    "quantization_policy", "no_data_policy", "renderer_version",
+    "status", "issue",
+)
+SEMANTIC_STRUCTURAL_METRIC_COLUMNS = (
+    "semantic_metric_id", "case_id", "candidate_id", "model_id",
+    "painting_id", "category", "style_or_period", "dataset_id",
+    "dataset_scope", "experiment_id", "damage_or_degradation_type",
+    "target_damage_fraction", "realized_damage_fraction",
+    "candidate_index", "seed", "prompt_policy_id", "prompt_variant_id",
+    "execution_role", "is_zero_control", "semantic_target_scope",
+    "applicability_status", "evidence_family", "metric_name",
+    "feature_model_id", "region_id", "summary_statistic",
+    "damaged_value", "restored_value", "improvement_value",
+    "improvement_direction", "value_unit", "source_metric_row_id",
+    "metric_version", "region_policy_version", "preprocessing_id",
+    "evidence_role", "is_combined_score",
+    "is_final_trustworthiness_flag", "status", "issue",
+)
+SEMANTIC_MAP_ASSET_COLUMNS = (
+    "semantic_map_asset_id", "asset_kind", "ownership", "candidate_id",
+    "case_id", "model_id", "painting_id", "feature_model_id",
+    "region_id", "map_type", "relative_path", "archive_key",
+    "channel_schema", "selection_role", "sha256", "size_bytes",
     "width", "height", "image_mode", "format", "cmap", "vmin",
     "vmax", "center", "scale_scope", "normalization_policy_id",
     "quantization_policy", "no_data_policy", "renderer_version",
@@ -1597,6 +1622,70 @@ SPATIAL_EXPLANATION_MAP_IMAGE_SCHEMA = DataFrameSchema(
         "status": frozenset({"passed", "not_available", "error"}),
     },
 )
+SEMANTIC_STRUCTURAL_METRIC_SCHEMA = DataFrameSchema(
+    name="semantic_structural_metrics",
+    version="semantic_structural_metrics.v1",
+    required_columns=SEMANTIC_STRUCTURAL_METRIC_COLUMNS,
+    primary_key=("semantic_metric_id",),
+    non_nullable=tuple(
+        column for column in SEMANTIC_STRUCTURAL_METRIC_COLUMNS
+        if column not in {
+            "target_damage_fraction", "realized_damage_fraction",
+            "candidate_index", "seed", "prompt_policy_id",
+            "prompt_variant_id", "damaged_value", "restored_value",
+            "improvement_value", "source_metric_row_id", "issue",
+        }
+    ),
+    allowed_values={
+        "semantic_target_scope": frozenset({
+            "facial_anatomical_structure_proxy",
+            "architectural_layout_proxy",
+            "natural_object_structure_proxy",
+            "abstract_compositional_structure_proxy",
+            "painterly_surface_structure_proxy",
+        }),
+        "applicability_status": frozenset({"applicable", "not_applicable"}),
+        "evidence_family": frozenset({
+            "subject_preservation", "local_semantic_preservation",
+            "local_semantic_worsening", "outside_context_preservation",
+            "structural_layout", "painterly_representation",
+            "encoder_agreement",
+        }),
+        "feature_model_id": frozenset({
+            "clip_vit_b32", "dinov2_vits14",
+            "clip_vit_b32+dinov2_vits14",
+        }),
+        "evidence_role": frozenset({"semantic_structural_diagnostic_proxy"}),
+        "is_combined_score": frozenset({False}),
+        "is_final_trustworthiness_flag": frozenset({False}),
+        "status": frozenset({"ok", "error"}),
+    },
+)
+SEMANTIC_MAP_ASSET_SCHEMA = DataFrameSchema(
+    name="semantic_map_assets",
+    version="semantic_map_assets.v1",
+    required_columns=SEMANTIC_MAP_ASSET_COLUMNS,
+    primary_key=("semantic_map_asset_id",),
+    non_nullable=tuple(
+        column for column in SEMANTIC_MAP_ASSET_COLUMNS
+        if column not in {
+            "relative_path", "archive_key", "selection_role", "sha256",
+            "size_bytes", "width", "height", "image_mode", "cmap",
+            "vmin", "vmax", "center", "issue",
+        }
+    ),
+    allowed_values={
+        "asset_kind": frozenset({"numeric_map_bundle", "rendered_semantic_panel"}),
+        "ownership": frozenset({"owned"}),
+        "feature_model_id": frozenset({
+            "clip_vit_b32", "dinov2_vits14", "multi_encoder",
+        }),
+        "map_type": frozenset({"local_semantic_bundle", "semantic_panel"}),
+        "format": frozenset({"NPZ", "PNG"}),
+        "renderer_version": frozenset({"semantic_map_renderer.v1"}),
+        "status": frozenset({"passed", "error"}),
+    },
+)
 
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
@@ -1638,6 +1727,8 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     UNCERTAINTY_CALIBRATION_INPUTS_SCHEMA.name: UNCERTAINTY_CALIBRATION_INPUTS_SCHEMA,
     SPATIAL_EXPLANATIONS_SCHEMA.name: SPATIAL_EXPLANATIONS_SCHEMA,
     SPATIAL_EXPLANATION_MAP_IMAGE_SCHEMA.name: SPATIAL_EXPLANATION_MAP_IMAGE_SCHEMA,
+    SEMANTIC_STRUCTURAL_METRIC_SCHEMA.name: SEMANTIC_STRUCTURAL_METRIC_SCHEMA,
+    SEMANTIC_MAP_ASSET_SCHEMA.name: SEMANTIC_MAP_ASSET_SCHEMA,
 }
 
 

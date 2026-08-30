@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-30T17:30:33.523075Z`
-- Registered artifacts: 108
+- Updated: `2026-08-30T23:07:40.034791Z`
+- Registered artifacts: 114
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -70,6 +70,11 @@
 | sdxl.partial_evaluation_report | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/reports/partial_evaluation_report.md` | partial_scope_and_limitations | passed |
 | sdxl.restored_images | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/images/restored` | technically_valid_partial_restorations | passed |
 | sdxl.runtime_summary | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/metrics/runtime_summary.csv` | bounded_runtime_evidence | passed |
+| semantic_structural.examples | 20_semantic_and_structural_consistency | `outputs/20_semantic_and_structural_consistency/figures/semantic_examples.png` | representative_semantic_diagnostics | passed |
+| semantic_structural.map_images | 20_semantic_and_structural_consistency | `outputs/20_semantic_and_structural_consistency/images/maps` | rendered_semantic_diagnostics | passed |
+| semantic_structural.map_manifest | 20_semantic_and_structural_consistency | `outputs/20_semantic_and_structural_consistency/manifests/semantic_maps.csv` | normalized_semantic_map_index | passed |
+| semantic_structural.metrics | 20_semantic_and_structural_consistency | `outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv` | semantic_structural_evidence | passed |
+| semantic_structural.numeric_maps | 20_semantic_and_structural_consistency | `outputs/20_semantic_and_structural_consistency/data/semantic_maps.npz` | raw_local_semantic_evidence | passed |
 | spatial_diagnostics.candidate_maps | 16_difference_maps_and_spatial_diagnostics | `outputs/16_difference_maps_and_spatial_diagnostics/images/maps` | reusable_spatial_map_evidence | passed |
 | spatial_diagnostics.map_manifest | 16_difference_maps_and_spatial_diagnostics | `outputs/16_difference_maps_and_spatial_diagnostics/manifests/map_images.csv` | normalized_spatial_image_index | passed |
 | spatial_diagnostics.metrics | 16_difference_maps_and_spatial_diagnostics | `outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv` | primary_downstream_evidence | passed |
@@ -114,3 +119,4 @@
 | validation.17_local_consistency_metrics | 17_local_consistency_metrics | `outputs/17_local_consistency_metrics/validation/checks.csv` | validation_evidence | passed |
 | validation.18_diffusion_uncertainty_analysis | 18_diffusion_uncertainty_analysis | `outputs/18_diffusion_uncertainty_analysis/validation/checks.csv` | validation_evidence | passed |
 | validation.19_uncertainty_and_spatial_explanation_maps | 19_uncertainty_and_spatial_explanation_maps | `outputs/19_uncertainty_and_spatial_explanation_maps/validation/checks.csv` | validation_evidence | passed |
+| validation.20_semantic_and_structural_consistency | 20_semantic_and_structural_consistency | `outputs/20_semantic_and_structural_consistency/validation/checks.csv` | validation_evidence | passed |

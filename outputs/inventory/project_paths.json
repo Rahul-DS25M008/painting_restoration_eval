@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-30T17:30:33.523075Z",
+  "updated_at_utc": "2026-08-30T23:07:40.034791Z",
   "artifacts": [
     {
       "artifact_key": "classical_metrics.distributions",
@@ -899,6 +899,76 @@
       "checksum": "7dcba00801acc11c809dc89f7e20615bc02467fe56f101db55320fc4f385a4c4"
     },
     {
+      "artifact_key": "semantic_structural.examples",
+      "producer_notebook": "20_semantic_and_structural_consistency",
+      "relative_path": "outputs/20_semantic_and_structural_consistency/figures/semantic_examples.png",
+      "artifact_type": "figure",
+      "artifact_role": "representative_semantic_diagnostics",
+      "schema_version": "semantic_examples_layout.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "semantic_structural_consistency",
+      "validation_status": "passed",
+      "row_count": 15,
+      "file_count": 1,
+      "checksum": "00a80b9c1bcc485e9c4d21659bd467036d29a6ffdaba847565cba5b33fa71b1c"
+    },
+    {
+      "artifact_key": "semantic_structural.map_images",
+      "producer_notebook": "20_semantic_and_structural_consistency",
+      "relative_path": "outputs/20_semantic_and_structural_consistency/images/maps",
+      "artifact_type": "image_collection",
+      "artifact_role": "rendered_semantic_diagnostics",
+      "schema_version": "semantic_map_renderer.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "semantic_structural_consistency",
+      "validation_status": "passed",
+      "row_count": 1090,
+      "file_count": 1090,
+      "checksum": "02f3617057535acc5cd2b2c121cbcf2af982e4a5d0692c59ce0394c9d6817d18"
+    },
+    {
+      "artifact_key": "semantic_structural.map_manifest",
+      "producer_notebook": "20_semantic_and_structural_consistency",
+      "relative_path": "outputs/20_semantic_and_structural_consistency/manifests/semantic_maps.csv",
+      "artifact_type": "table",
+      "artifact_role": "normalized_semantic_map_index",
+      "schema_version": "semantic_map_assets.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "semantic_structural_consistency",
+      "validation_status": "passed",
+      "row_count": 9430,
+      "file_count": 1,
+      "checksum": "edbdc7e45964a2ff801bed2a3d83c9a8232716104cb37f21780ecb470047d87d"
+    },
+    {
+      "artifact_key": "semantic_structural.metrics",
+      "producer_notebook": "20_semantic_and_structural_consistency",
+      "relative_path": "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv",
+      "artifact_type": "table",
+      "artifact_role": "semantic_structural_evidence",
+      "schema_version": "semantic_structural_metrics.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "semantic_structural_consistency",
+      "validation_status": "passed",
+      "row_count": 58980,
+      "file_count": 1,
+      "checksum": "33e8cf29fe2272a120bc78231b688a19a94c52ade998b3695ad4e0e66ac8a1cd"
+    },
+    {
+      "artifact_key": "semantic_structural.numeric_maps",
+      "producer_notebook": "20_semantic_and_structural_consistency",
+      "relative_path": "outputs/20_semantic_and_structural_consistency/data/semantic_maps.npz",
+      "artifact_type": "numeric_map_archive",
+      "artifact_role": "raw_local_semantic_evidence",
+      "schema_version": "semantic_numeric_maps.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "semantic_structural_consistency",
+      "validation_status": "passed",
+      "row_count": 8340,
+      "file_count": 1,
+      "checksum": "29925a0bfadea2a90f5d0665c8e0806490c0dbe12f007135377bd4842ef2855a"
+    },
+    {
       "artifact_key": "spatial_diagnostics.candidate_maps",
       "producer_notebook": "16_difference_maps_and_spatial_diagnostics",
       "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/images/maps",
@@ -1513,6 +1583,20 @@
       "row_count": 149,
       "file_count": 1,
       "checksum": "960ba63bdfe77b38e3a8a16e128bb17cb58db24b5f950cb65b413036c239d22d"
+    },
+    {
+      "artifact_key": "validation.20_semantic_and_structural_consistency",
+      "producer_notebook": "20_semantic_and_structural_consistency",
+      "relative_path": "outputs/20_semantic_and_structural_consistency/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "semantic_structural_consistency",
+      "validation_status": "passed",
+      "row_count": 177,
+      "file_count": 1,
+      "checksum": "b44bb7ec856b82e92be61c1695ac9b9a7c2f5f0a05f3d9eb8d921485509e408c"
     }
   ]
 }

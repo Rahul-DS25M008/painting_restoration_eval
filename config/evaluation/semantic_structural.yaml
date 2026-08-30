@@ -1,0 +1,289 @@
+config_schema_version: "semantic_structural_config.v1"
+config_version: "1.0.0"
+
+semantic_structural:
+  notebook_id: "20"
+  notebook_stem: "20_semantic_and_structural_consistency"
+  origin: "New Notebook"
+  metric_version: "semantic_structural_metrics.v1"
+  map_manifest_version: "semantic_map_assets.v1"
+  numeric_archive_version: "semantic_numeric_maps.v1"
+  renderer_version: "semantic_map_renderer.v1"
+
+  inputs:
+    inventory_path: "outputs/inventory/project_file_inventory.csv"
+    inventory_run_path: "outputs/inventory/inventory_run.json"
+    project_paths_path: "outputs/inventory/project_paths.json"
+    artworks_path: "outputs/01_dataset_verification/data/artworks.csv"
+    artworks_run_manifest_path: "outputs/01_dataset_verification/manifests/run_manifest.json"
+    geometry_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+    geometry_run_manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+    case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+    model_eligibility_path: "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv"
+    region_policy_path: "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv"
+    schema_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json"
+    contracts_run_manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+    opencv_candidates_path: "outputs/09_opencv_telea_restoration/data/restorations.csv"
+    opencv_run_manifest_path: "outputs/09_opencv_telea_restoration/manifests/run_manifest.json"
+    lama_candidates_path: "outputs/10_lama_restoration/data/restorations.csv"
+    lama_run_manifest_path: "outputs/10_lama_restoration/manifests/run_manifest.json"
+    stable_diffusion_candidates_path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+    stable_diffusion_prompt_policy_path: "outputs/11_stable_diffusion_restoration/data/prompt_policy.csv"
+    stable_diffusion_run_manifest_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+    sdxl_candidates_path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
+    sdxl_run_manifest_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+    feature_config_path: "config/evaluation/feature_similarity.yaml"
+    feature_metrics_path: "outputs/15_feature_similarity/metrics/feature_metrics.csv"
+    feature_embeddings_path: "outputs/15_feature_similarity/data/embeddings.npz"
+    feature_embedding_manifest_path: "outputs/15_feature_similarity/manifests/embeddings.csv"
+    feature_run_manifest_path: "outputs/15_feature_similarity/manifests/run_manifest.json"
+    spatial_metrics_path: "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv"
+    spatial_map_manifest_path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/map_images.csv"
+    spatial_run_manifest_path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json"
+    local_metrics_path: "outputs/17_local_consistency_metrics/metrics/local_consistency.csv"
+    local_map_manifest_path: "outputs/17_local_consistency_metrics/manifests/map_images.csv"
+    local_run_manifest_path: "outputs/17_local_consistency_metrics/manifests/run_manifest.json"
+    uncertainty_metrics_path: "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_metrics.csv"
+    uncertainty_run_manifest_path: "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json"
+    explanation_metrics_path: "outputs/19_uncertainty_and_spatial_explanation_maps/metrics/spatial_explanations.csv"
+    explanation_map_manifest_path: "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/map_images.csv"
+    explanation_run_manifest_path: "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json"
+    implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+    notebook_roadmap_path: "docs/final_notebook_roadmap.md"
+
+  output:
+    root: "outputs/20_semantic_and_structural_consistency"
+    numeric_maps_path: "data/semantic_maps.npz"
+    metrics_path: "metrics/semantic_structural_metrics.csv"
+    map_images_root: "images/maps"
+    semantic_examples_path: "figures/semantic_examples.png"
+    map_manifest_path: "manifests/semantic_maps.csv"
+    run_manifest_path: "manifests/run_manifest.json"
+    artifacts_path: "manifests/artifacts.csv"
+    validation_path: "validation/checks.csv"
+    base_token_cache_root: "work/base_tokens"
+    bundle_checkpoint_root: "work/semantic_bundles"
+    extraction_checkpoint_path: "work/extraction_checkpoint.csv"
+    render_checkpoint_path: "work/render_checkpoint.csv"
+
+  population:
+    eligible_status: "completed"
+    technical_validation_required_for_sdxl: true
+    model_order:
+      - "opencv_telea"
+      - "lama"
+      - "stable_diffusion_inpainting"
+      - "sdxl_inpainting"
+    map_scope_policy: "nonzero_primary_candidates_plus_all_completed_sdxl"
+    stable_diffusion_primary_role: "primary"
+    retain_all_prompt_and_seed_candidates_in_metrics: true
+    zero_controls_retained_in_metrics: true
+    zero_controls_rendered: false
+    sdxl_scope: "predeclared_technically_validated_ten_case_partial_scope"
+    filename_identity: "candidate_id"
+
+  feature_models:
+    clip_vit_b32:
+      feature_model_id: "clip_vit_b32"
+      model_name: "openai/clip-vit-base-patch32"
+      model_revision: "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268"
+      model_checksum_sha256: "a63082132ba4f97a80bea76823f544493bffa8082296d62d71581a4feff1576f"
+      embedding_dimension: 512
+      input_size: 224
+      patch_size: 32
+      grid_height: 7
+      grid_width: 7
+      preprocessing_id: "clip_letterbox_224_local_tokens.v1"
+      diagnostic_scope: "coarse local vision-language representation; not object detection or conservation-specific"
+    dinov2_vits14:
+      feature_model_id: "dinov2_vits14"
+      model_name: "dinov2_vits14"
+      model_revision: "facebookresearch_dinov2_main_published_checkpoint"
+      model_checksum_sha256: "b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9"
+      embedding_dimension: 384
+      input_size: 224
+      patch_size: 14
+      grid_height: 16
+      grid_width: 16
+      preprocessing_id: "dinov2_letterbox_224_local_tokens.v1"
+      normalization_mean: [0.485, 0.456, 0.406]
+      normalization_std: [0.229, 0.224, 0.225]
+      diagnostic_scope: "local self-supervised visual representation; not conservation-specific"
+
+  regions:
+    policy_version: "evaluation_region_policy.v1"
+    encoded_regions: ["content_region", "mask_bbox_crop"]
+    content_region_required: true
+    mask_bbox_omitted_for_zero_control: true
+    mask_bbox_margin_pixels: 8
+    active_mask_threshold_source: "candidate.mask_threshold"
+    threshold_comparison: "greater_than_or_equal"
+    letterbox_policy: "preserve_aspect_ratio_centered_model_mean_padding"
+    token_validity_policy: "exclude_tokens_without_valid_image_support"
+    mask_intersection_policy: "area_weighted_token_overlap"
+    outside_context_policy: "tokens_with_zero_active_mask_overlap"
+
+  metric_families:
+    subject_preservation:
+      metric_name: "global_feature_cosine_similarity"
+      source: "notebook_15_validated_feature_metrics"
+      feature_models: ["clip_vit_b32", "dinov2_vits14"]
+      regions: ["content_region"]
+      rows: 4320
+    local_semantic_preservation:
+      metric_name: "local_patch_cosine_similarity"
+      feature_models: ["clip_vit_b32", "dinov2_vits14"]
+      regions: ["content_region", "mask_bbox_crop"]
+      summary_statistics: ["mean", "median", "p10"]
+      rows: 25020
+    local_semantic_worsening:
+      metric_name: "local_patch_worsened_fraction"
+      feature_models: ["clip_vit_b32", "dinov2_vits14"]
+      regions: ["content_region", "mask_bbox_crop"]
+      summary_statistics: ["fraction"]
+      rows: 8340
+    outside_context_preservation:
+      metric_name: "outside_context_feature_change"
+      feature_models: ["clip_vit_b32", "dinov2_vits14"]
+      regions: ["outside_mask_patch_subset"]
+      summary_statistics: ["mean"]
+      rows: 4320
+    structural_layout:
+      feature_models: ["dinov2_vits14"]
+      regions: ["content_region"]
+      metric_names:
+        - "reference_affinity_map_correlation"
+        - "reference_affinity_js_divergence"
+        - "reference_affinity_centroid_shift"
+        - "reference_affinity_weighted_similarity"
+      rows: 8640
+    painterly_representation:
+      metric_name: "dinov2_patch_covariance_distance"
+      feature_models: ["dinov2_vits14"]
+      regions: ["content_region", "mask_bbox_crop"]
+      rows: 4170
+    encoder_agreement:
+      metric_name: "clip_dinov2_local_map_agreement"
+      feature_models: ["clip_vit_b32+dinov2_vits14"]
+      regions: ["content_region", "mask_bbox_crop"]
+      rows: 4170
+
+  semantic_target_scopes:
+    portrait_figure: "facial_anatomical_structure_proxy"
+    architecture_structured: "architectural_layout_proxy"
+    landscape_natural: "natural_object_structure_proxy"
+    abstraction_surrealism: "abstract_compositional_structure_proxy"
+    high_texture_brushwork: "painterly_surface_structure_proxy"
+
+  numeric_maps:
+    archive_format: "compressed_npz"
+    compute_dtype: "float32"
+    archive_dtype: "float16"
+    archive_quantization_tolerance: 0.0005
+    bundle_channels:
+      - "damaged_clean_similarity"
+      - "restored_clean_similarity"
+      - "signed_improvement"
+      - "restored_damaged_similarity"
+      - "clean_reference_affinity"
+      - "damaged_reference_affinity"
+      - "restored_reference_affinity"
+
+  visualization:
+    similarity_cmap: "viridis"
+    similarity_vmin: -1.0
+    similarity_vmax: 1.0
+    drift_cmap: "magma"
+    drift_global_percentile: 99.5
+    improvement_cmap: "coolwarm"
+    improvement_global_absolute_percentile: 99.5
+    clipping_policy: "clip_visual_assets_only; preserve numeric map values"
+    png_mode: "RGBA"
+    png_compress_level: 9
+    representative_categories:
+      - "abstraction_surrealism"
+      - "architecture_structured"
+      - "high_texture_brushwork"
+      - "landscape_natural"
+      - "portrait_figure"
+    representative_rules:
+      - "category_median_dinov2_local_similarity"
+      - "category_worst_dinov2_local_similarity"
+      - "category_max_clip_dinov2_disagreement"
+    representative_case_count: 15
+
+  execution:
+    preferred_device: "cuda"
+    allow_cpu_fallback: true
+    deterministic_algorithms: true
+    initial_batch_size: 16
+    oom_batch_size_backoff: [8, 4, 2, 1]
+    progress_interval_candidates: 10
+    checkpoint_interval_candidates: 10
+    atomic_replace_attempts: 8
+    atomic_replace_retry_seconds: 0.25
+    base_token_cache_dtype: "float16"
+    resume_policy: "reuse only checksum- and contract-matching token or bundle records"
+    work_cleanup_policy: "remove notebook-owned temporary state after canonical outputs reload and validate"
+
+  expected_counts:
+    evaluated_cases: 410
+    evaluated_candidates: 2160
+    nonzero_candidates: 2010
+    zero_control_candidates: 150
+    candidates_by_model:
+      opencv_telea: 410
+      lama: 410
+      stable_diffusion_inpainting: 1330
+      sdxl_inpainting: 10
+    candidate_region_evaluations_per_encoder: 4170
+    content_region_evaluations_per_encoder: 2160
+    mask_bbox_evaluations_per_encoder: 2010
+    source_token_records: 10700
+    subject_preservation_rows: 4320
+    local_similarity_summary_rows: 25020
+    local_worsened_fraction_rows: 8340
+    outside_context_rows: 4320
+    structural_layout_rows: 8640
+    painterly_proxy_rows: 4170
+    encoder_agreement_rows: 4170
+    semantic_metric_rows: 58980
+    numeric_map_bundles: 8340
+    rendered_semantic_panels: 1090
+    map_manifest_rows: 9430
+    representative_cases: 15
+    artifact_records: 6
+    canonical_file_count: 1097
+
+  evidence_policy:
+    interpretation: "reference_based_semantic_and_structural_diagnostic_proxies"
+    subject_recognition_claim: false
+    object_detection_claim: false
+    face_or_anatomy_detector_used: false
+    artist_or_style_authentication_claim: false
+    historical_correctness_claim: false
+    calibrated_confidence_claim: false
+    combined_semantic_score_retained: false
+    final_trustworthiness_flag_assigned: false
+    occlusion_sensitivity_status: "not_applicable_without_stable_prediction_target"
+    saliency_proxy: "reference_derived_cls_to_patch_feature_affinity"
+
+  downstream_consumers:
+    - "21_multi_model_comparison"
+    - "25_grouped_statistical_analysis_and_metric_disagreement"
+    - "26_failure_detection_and_trustworthiness_flags"
+    - "27_metric_region_threshold_and_signal_ablation"
+    - "28_explainable_ai_and_case_retrieval"
+    - "30_model_report_generation"
+    - "32_painting_level_case_reports"
+    - "34_streamlit_dashboard_and_deployment_validation"
+
+  known_limitations:
+    - "CLIP and DINOv2 are general-purpose pretrained encoders, not conservation-specific semantic judges."
+    - "Aligned local-token similarity is a representation-space proxy and does not prove object identity, historical correctness, or plausible reconstruction."
+    - "CLIP's 7x7 token grid is coarse and is used only as a complementary semantic localization signal."
+    - "DINOv2 feature affinity is a diagnostic saliency proxy, not validated eye-tracking, attribution, or causal occlusion sensitivity."
+    - "Category-conditioned interpretation does not imply that faces, anatomy, architecture, objects, or authentic brushwork were detected."
+    - "The painterly representation metric compares DINOv2 patch-feature covariance and does not authenticate style, artist, or brushstrokes."
+    - "SDXL evidence remains a predeclared ten-case partial scope and must not be interpreted as full model coverage."
+    - "Low semantic drift can coexist with consistently incorrect or historically unsupported restoration."

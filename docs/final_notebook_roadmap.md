@@ -1137,7 +1137,7 @@ validation/checks.csv
 **Notebook:** `20_semantic_and_structural_consistency.ipynb`  
 **Origin:** New Notebook  
 **Output root:** `outputs/20_semantic_and_structural_consistency/`  
-**Depends on:** Notebooks 08, 11–12, 15–19
+**Depends on:** Notebooks 01, 02, 08–12, and 15–19
 
 ### Responsibilities
 
@@ -1158,11 +1158,38 @@ validation/checks.csv
 - State limitations of pretrained non-conservation-specific models.
 - Produce machine-readable semantic evidence for later flags rather than assigning final flags here.
 
+### Implementation-contract clarifications
+
+- Retain semantic and structural metrics for all 2,160 completed candidates,
+  including zero controls, Stable Diffusion prompt/seed candidates, and the
+  explicitly partial ten-case SDXL scope.
+- Extract aligned local CLIP and DINOv2 token grids from the canonical
+  `content_region` and `mask_bbox_crop`. Use reference-derived local similarity,
+  feature-affinity, layout, covariance, and cross-encoder-agreement evidence as
+  transparent diagnostic components; do not collapse them into a semantic or
+  trustworthiness score.
+- Use category-conditioned interpretation scopes for portrait/figure,
+  architecture, landscape, abstraction/surrealism, and high-texture/brushwork
+  works. These scopes do not assert that a face, anatomy, object, architecture,
+  artist, style, or authentic brushwork was detected.
+- Do not introduce a photographic face-landmark or object detector without a
+  separately validated painting-domain contract. Occlusion sensitivity is not
+  applicable without a stable semantic prediction target; reference-derived
+  DINOv2 feature affinity may be retained only as a labelled saliency proxy.
+- Retain unclipped numerical local-map bundles in a compressed archive for
+  downstream flagging and XAI. Render PNG panels only for the 1,090 nonzero
+  primary comparison candidates.
+- Use `candidate_id`, rather than `case_id`, as the owned map filename identity
+  because Stable Diffusion contains multiple candidates for the same case.
+- Notebook 20 produces machine-readable evidence and selected visualizations;
+  it does not generate a standalone report.
+
 ### Canonical outputs
 
 ```text
 metrics/semantic_structural_metrics.csv
-images/maps/<model_id>/<case_id>/semantic.png
+data/semantic_maps.npz
+images/maps/<model_id>/<candidate_id>/semantic.png
 figures/semantic_examples.png
 manifests/semantic_maps.csv
 manifests/run_manifest.json
