@@ -1226,6 +1226,44 @@ validation/checks.csv
 - Never describe a vote as conservation truth.
 - Select representative disagreement and success/failure cases through explicit rules.
 
+### Approved comparison and reporting contract
+
+- The full-scope paired comparison contains exactly 410 identical cases for
+  OpenCV Telea, LaMa, and Stable Diffusion: 1,230 selected candidates.
+- The four-model comparison is a separate exact ten-case subset containing the
+  same three candidates plus the technically validated SDXL candidate: 40
+  candidates. SDXL must never be presented as full-dataset evidence.
+- Candidate selection is metric-independent. OpenCV and LaMa contribute their
+  sole completed candidate; Stable Diffusion contributes only its completed
+  generic `execution_role == "primary"` candidate; SDXL contributes its ten
+  completed technically validated primary candidates. Prompt-ablation and
+  repeated-seed candidates remain contextual evidence and cannot replace or
+  overweight the baseline.
+- Stable Diffusion uncertainty comprises 80 generic and 50 scratch-aware
+  prompt-specific groups. It is model-specific contextual evidence, not a
+  cross-model ranking dimension. Deterministic models and single-seed SDXL do
+  not receive artificial uncertainty values.
+- Direction-aware comparisons retain all declared evidence families. Metric
+  disagreement uses predeclared anchors and a family-balanced diagnostic vote;
+  families with many correlated metrics do not receive additional voting weight.
+  Runtime and uncertainty are excluded from quality voting. No combined quality
+  or trustworthiness score is retained.
+- Ranking stability uses deterministic leave-one-painting-out analysis so the
+  nested 410-case, 50-painting design is not treated as 410 independent artworks.
+- The standalone report is structured around the proposal research questions
+  and approved roadmap extensions. It must provide scoped section-level
+  conclusions and a balanced mixture of paragraphs, finding bullets, tables,
+  metrics, analytical plots, restoration grids, crops, uncertainty or semantic
+  diagnostics, limitations, and thesis-level synthesis.
+- The report is self-contained when downloaded alone. It embeds web-sized copies
+  of every required figure and representative image, includes all ten SDXL case
+  panels, uses a substantial auditable core-case and diagnostic visual atlas, and
+  may embed additional presentation-only views beyond the two separately saved
+  canonical figures.
+- Computational winners remain evidence-defined results. They are not historical
+  authenticity findings, physical-treatment recommendations, museum approval,
+  or substitutes for conservator judgement.
+
 ### Canonical outputs
 
 ```text

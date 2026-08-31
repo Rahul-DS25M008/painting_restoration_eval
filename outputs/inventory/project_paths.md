@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-30T23:07:40.034791Z`
-- Registered artifacts: 114
+- Updated: `2026-08-31T14:36:51.078756Z`
+- Registered artifacts: 121
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -58,6 +58,12 @@
 | masks.figure_examples | 03_canonical_mask_generation | `outputs/03_canonical_mask_generation/figures/mask_examples.png` | qa_reporting | passed |
 | masks.figure_morphology | 03_canonical_mask_generation | `outputs/03_canonical_mask_generation/figures/mask_morphology.png` | thesis_reporting | passed |
 | masks.protocol | 03_canonical_mask_generation | `outputs/03_canonical_mask_generation/reports/mask_protocol.md` | methodology_reporting | passed |
+| multi_model_comparison.disagreement | 21_multi_model_comparison | `outputs/21_multi_model_comparison/metrics/metric_disagreement.csv` | family_balanced_disagreement_evidence | passed |
+| multi_model_comparison.disagreement_figure | 21_multi_model_comparison | `outputs/21_multi_model_comparison/figures/metric_disagreement.png` | metric_disagreement_visual_evidence | passed |
+| multi_model_comparison.metrics | 21_multi_model_comparison | `outputs/21_multi_model_comparison/metrics/model_comparison.csv` | cross_model_metric_evidence | passed |
+| multi_model_comparison.model_figure | 21_multi_model_comparison | `outputs/21_multi_model_comparison/figures/model_comparison.png` | model_comparison_visual_evidence | passed |
+| multi_model_comparison.report | 21_multi_model_comparison | `outputs/21_multi_model_comparison/reports/multi_model_comparison.html` | thesis_aligned_comparison_report | passed |
+| multi_model_comparison.representatives | 21_multi_model_comparison | `outputs/21_multi_model_comparison/data/representative_cases.csv` | report_and_visual_selection_index | passed |
 | opencv_telea.restoration_examples | 09_opencv_telea_restoration | `outputs/09_opencv_telea_restoration/figures/restoration_examples.png` | representative_visual_evidence | passed |
 | opencv_telea.restorations | 09_opencv_telea_restoration | `outputs/09_opencv_telea_restoration/data/restorations.csv` | primary_restoration_records | passed |
 | opencv_telea.restored_images | 09_opencv_telea_restoration | `outputs/09_opencv_telea_restoration/images/restored` | primary_restored_images | passed |
@@ -120,3 +126,4 @@
 | validation.18_diffusion_uncertainty_analysis | 18_diffusion_uncertainty_analysis | `outputs/18_diffusion_uncertainty_analysis/validation/checks.csv` | validation_evidence | passed |
 | validation.19_uncertainty_and_spatial_explanation_maps | 19_uncertainty_and_spatial_explanation_maps | `outputs/19_uncertainty_and_spatial_explanation_maps/validation/checks.csv` | validation_evidence | passed |
 | validation.20_semantic_and_structural_consistency | 20_semantic_and_structural_consistency | `outputs/20_semantic_and_structural_consistency/validation/checks.csv` | validation_evidence | passed |
+| validation.21_multi_model_comparison | 21_multi_model_comparison | `outputs/21_multi_model_comparison/validation/checks.csv` | validation_evidence | passed |

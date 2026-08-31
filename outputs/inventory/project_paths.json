@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-30T23:07:40.034791Z",
+  "updated_at_utc": "2026-08-31T14:36:51.078756Z",
   "artifacts": [
     {
       "artifact_key": "classical_metrics.distributions",
@@ -729,6 +729,90 @@
       "row_count": "",
       "file_count": 1,
       "checksum": "3808f8eb764f3279135000f20090e7547cd6bd6b9d5ebc8fbe931619714a41dd"
+    },
+    {
+      "artifact_key": "multi_model_comparison.disagreement",
+      "producer_notebook": "21_multi_model_comparison",
+      "relative_path": "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv",
+      "artifact_type": "normalized_disagreement_table",
+      "artifact_role": "family_balanced_disagreement_evidence",
+      "schema_version": "metric_disagreement.v1",
+      "dataset_scope": "core_and_bounded_sdxl",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": 839,
+      "file_count": 1,
+      "checksum": "212f1fc8747d79c72928884f564172e0a872c4786a908185b3ccb4b9a9b41fc2"
+    },
+    {
+      "artifact_key": "multi_model_comparison.disagreement_figure",
+      "producer_notebook": "21_multi_model_comparison",
+      "relative_path": "outputs/21_multi_model_comparison/figures/metric_disagreement.png",
+      "artifact_type": "analytical_figure",
+      "artifact_role": "metric_disagreement_visual_evidence",
+      "schema_version": "metric_disagreement_figure.v1",
+      "dataset_scope": "core_and_bounded_sdxl",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "218386bd56dbd717953c41e0cc3d7188dbbf64efd08c04da2d959f87774fb44b"
+    },
+    {
+      "artifact_key": "multi_model_comparison.metrics",
+      "producer_notebook": "21_multi_model_comparison",
+      "relative_path": "outputs/21_multi_model_comparison/metrics/model_comparison.csv",
+      "artifact_type": "normalized_comparison_table",
+      "artifact_role": "cross_model_metric_evidence",
+      "schema_version": "model_comparison.v1",
+      "dataset_scope": "core_and_bounded_sdxl",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": 86531,
+      "file_count": 1,
+      "checksum": "1bfc698d9c5d1ebe60fc03d17a1f67ed1e9f475cf34b43fbd709bb2ec11f50aa"
+    },
+    {
+      "artifact_key": "multi_model_comparison.model_figure",
+      "producer_notebook": "21_multi_model_comparison",
+      "relative_path": "outputs/21_multi_model_comparison/figures/model_comparison.png",
+      "artifact_type": "analytical_figure",
+      "artifact_role": "model_comparison_visual_evidence",
+      "schema_version": "model_comparison_figure.v1",
+      "dataset_scope": "core_and_bounded_sdxl",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "fdc84f77c2a8d5a06e38ab23e1366b92025467f47345a87779bb3af13430d1a8"
+    },
+    {
+      "artifact_key": "multi_model_comparison.report",
+      "producer_notebook": "21_multi_model_comparison",
+      "relative_path": "outputs/21_multi_model_comparison/reports/multi_model_comparison.html",
+      "artifact_type": "self_contained_html_report",
+      "artifact_role": "thesis_aligned_comparison_report",
+      "schema_version": "multi_model_comparison_report.v1",
+      "dataset_scope": "core_and_bounded_sdxl",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "b1474ef6f219bb4f585755f3190999f26d5f5da1315bbdbc6e58b8cee81418af"
+    },
+    {
+      "artifact_key": "multi_model_comparison.representatives",
+      "producer_notebook": "21_multi_model_comparison",
+      "relative_path": "outputs/21_multi_model_comparison/data/representative_cases.csv",
+      "artifact_type": "representative_case_index",
+      "artifact_role": "report_and_visual_selection_index",
+      "schema_version": "representative_cases.v1",
+      "dataset_scope": "core_and_bounded_sdxl",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": 76,
+      "file_count": 1,
+      "checksum": "dd07ee58d49be2b0754a44573de260747dce6aa5a8902e44559dbbb5e929ecf2"
     },
     {
       "artifact_key": "opencv_telea.restoration_examples",
@@ -1597,6 +1681,20 @@
       "row_count": 177,
       "file_count": 1,
       "checksum": "b44bb7ec856b82e92be61c1695ac9b9a7c2f5f0a05f3d9eb8d921485509e408c"
+    },
+    {
+      "artifact_key": "validation.21_multi_model_comparison",
+      "producer_notebook": "21_multi_model_comparison",
+      "relative_path": "outputs/21_multi_model_comparison/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "notebook_21",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": 196,
+      "file_count": 1,
+      "checksum": "db8f4ede7b581a3f43940534d34c7b9d9ed84e7f4b7c871b54612324c4759d8b"
     }
   ]
 }

@@ -643,6 +643,46 @@ SEMANTIC_MAP_ASSET_COLUMNS = (
     "quantization_policy", "no_data_policy", "renderer_version",
     "status", "issue",
 )
+MODEL_COMPARISON_COLUMNS = (
+    "comparison_row_id", "population_id", "analysis_scope", "scope_value",
+    "source_notebook_id", "evidence_family", "metric_family", "metric_id",
+    "metric_name", "feature_model_id", "region_id", "summary_statistic",
+    "value_unit", "comparison_basis", "comparison_direction",
+    "quality_ranking_eligible", "anchor_id", "model_id",
+    "population_case_count", "paired_case_count", "paired_painting_count",
+    "coverage_fraction", "damaged_mean", "damaged_median", "restored_mean",
+    "restored_std", "restored_median", "restored_q25", "restored_q75",
+    "improvement_mean", "improvement_median", "directional_utility_mean",
+    "aggregate_rank", "winner_model_id", "winner_status", "tie_model_ids",
+    "loo_replicate_count", "loo_top_rank_fraction", "loo_rank_min",
+    "loo_rank_max", "selection_policy_id", "schema_version", "status",
+    "issue",
+)
+METRIC_DISAGREEMENT_COLUMNS = (
+    "disagreement_row_id", "population_id", "analysis_scope", "scope_value",
+    "anchor_id", "evidence_family", "metric_id", "metric_name",
+    "feature_model_id", "region_id", "summary_statistic",
+    "comparison_direction", "eligible_case_count", "eligible_painting_count",
+    "model_rank_order", "winner_model_id", "tie_model_ids",
+    "family_consensus_winner_model_id", "agrees_with_family_consensus",
+    "majority_vote_winner_model_id", "agrees_with_majority_vote",
+    "family_vote_count", "family_vote_share", "distinct_metric_winner_count",
+    "loo_replicate_count", "loo_winner_stability_fraction",
+    "comparison_policy_id", "is_conservation_truth", "schema_version",
+    "status", "issue",
+)
+REPRESENTATIVE_CASES_COLUMNS = (
+    "representative_row_id", "selection_slot_id", "selection_role",
+    "selection_priority", "population_id", "case_id", "painting_id",
+    "category", "style_or_period", "experiment_id",
+    "damage_or_degradation_type", "damage_type", "degradation_type",
+    "severity", "model_id", "candidate_id", "candidate_selection_policy",
+    "clean_image_path", "input_image_path", "mask_or_effect_path",
+    "restored_path", "input_sha256", "mask_sha256", "restored_sha256",
+    "selection_metric_id", "selection_score", "selection_rank",
+    "selection_reason", "source_artifact_paths", "embedded_report_role",
+    "path_validation_status", "schema_version", "status", "issue",
+)
 
 @dataclass(frozen=True)
 class DataFrameSchema:
@@ -1686,6 +1726,79 @@ SEMANTIC_MAP_ASSET_SCHEMA = DataFrameSchema(
         "status": frozenset({"passed", "error"}),
     },
 )
+MODEL_COMPARISON_SCHEMA = DataFrameSchema(
+    name="model_comparison",
+    version="model_comparison.v1",
+    required_columns=MODEL_COMPARISON_COLUMNS,
+    primary_key=("comparison_row_id",),
+    non_nullable=tuple(
+        column for column in MODEL_COMPARISON_COLUMNS
+        if column not in {
+            "feature_model_id", "anchor_id", "damaged_mean",
+            "damaged_median", "improvement_mean", "improvement_median",
+            "aggregate_rank", "winner_model_id", "tie_model_ids",
+            "loo_top_rank_fraction", "loo_rank_min", "loo_rank_max", "issue",
+        }
+    ),
+    allowed_values={
+        "population_id": frozenset({"core_three_model", "sdxl_four_model_subset"}),
+        "comparison_direction": frozenset({
+            "higher_is_better", "lower_is_better", "descriptive_only",
+        }),
+        "quality_ranking_eligible": frozenset({True, False}),
+        "winner_status": frozenset({"winner", "tied", "not_winner", "not_ranked"}),
+        "selection_policy_id": frozenset({"non_metric_primary_candidate_selection.v1"}),
+        "schema_version": frozenset({"model_comparison.v1"}),
+        "status": frozenset({"ok", "not_applicable", "error"}),
+    },
+)
+METRIC_DISAGREEMENT_SCHEMA = DataFrameSchema(
+    name="metric_disagreement",
+    version="metric_disagreement.v1",
+    required_columns=METRIC_DISAGREEMENT_COLUMNS,
+    primary_key=("disagreement_row_id",),
+    non_nullable=tuple(
+        column for column in METRIC_DISAGREEMENT_COLUMNS
+        if column not in {
+            "feature_model_id", "tie_model_ids",
+            "family_consensus_winner_model_id", "majority_vote_winner_model_id",
+            "loo_winner_stability_fraction", "issue",
+        }
+    ),
+    allowed_values={
+        "population_id": frozenset({"core_three_model", "sdxl_four_model_subset"}),
+        "comparison_direction": frozenset({"higher_is_better", "lower_is_better"}),
+        "agrees_with_family_consensus": frozenset({True, False}),
+        "agrees_with_majority_vote": frozenset({True, False}),
+        "comparison_policy_id": frozenset({"family_balanced_anchor_disagreement.v1"}),
+        "is_conservation_truth": frozenset({False}),
+        "schema_version": frozenset({"metric_disagreement.v1"}),
+        "status": frozenset({"ok", "not_applicable", "error"}),
+    },
+)
+REPRESENTATIVE_CASES_SCHEMA = DataFrameSchema(
+    name="representative_cases",
+    version="representative_cases.v1",
+    required_columns=REPRESENTATIVE_CASES_COLUMNS,
+    primary_key=("representative_row_id",),
+    non_nullable=tuple(
+        column for column in REPRESENTATIVE_CASES_COLUMNS
+        if column not in {
+            "style_or_period", "damage_type", "degradation_type", "severity",
+            "clean_image_path", "input_image_path", "mask_or_effect_path",
+            "restored_path", "input_sha256", "mask_sha256", "restored_sha256",
+            "selection_metric_id", "selection_score", "selection_rank",
+            "source_artifact_paths", "issue",
+        }
+    ),
+    allowed_values={
+        "population_id": frozenset({"core_three_model", "sdxl_four_model_subset"}),
+        "candidate_selection_policy": frozenset({"non_metric_primary_candidate_selection.v1"}),
+        "path_validation_status": frozenset({"passed", "not_available", "error"}),
+        "schema_version": frozenset({"representative_cases.v1"}),
+        "status": frozenset({"ok", "not_applicable", "error"}),
+    },
+)
 
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
@@ -1729,6 +1842,9 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     SPATIAL_EXPLANATION_MAP_IMAGE_SCHEMA.name: SPATIAL_EXPLANATION_MAP_IMAGE_SCHEMA,
     SEMANTIC_STRUCTURAL_METRIC_SCHEMA.name: SEMANTIC_STRUCTURAL_METRIC_SCHEMA,
     SEMANTIC_MAP_ASSET_SCHEMA.name: SEMANTIC_MAP_ASSET_SCHEMA,
+    MODEL_COMPARISON_SCHEMA.name: MODEL_COMPARISON_SCHEMA,
+    METRIC_DISAGREEMENT_SCHEMA.name: METRIC_DISAGREEMENT_SCHEMA,
+    REPRESENTATIVE_CASES_SCHEMA.name: REPRESENTATIVE_CASES_SCHEMA,
 }
 
 
