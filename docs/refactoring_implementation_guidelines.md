@@ -272,6 +272,12 @@ analysis, comparison, or thesis-level result as a standalone document.
   other declared constructs. They must not be escalated into claims of historical
   authenticity, physical conservation suitability, or museum approval unless
   suitable evidence later exists for those claims.
+- Use clear, direct, and concise language even when the underlying analysis is
+  technically detailed. Prefer wording such as "LaMa had the lowest deterioration
+  slope on 6 of 11 measures" over denser phrases such as "LaMa had the shallowest
+  adverse slope on 6 of 11 anchors." Retain exact statistical terminology in
+  methods, tables, captions, and provenance where it is needed for precision, but
+  explain the main finding in plain language first.
 
 #### Evidence selection and interpretation
 
