@@ -90,32 +90,34 @@ Stable Diffusion complete four-seed groups in the frozen baseline:
 Prompt variants at a single seed measure prompt sensitivity and cannot be used as
 a replacement for repeated-seed uncertainty.
 
-## 5. Approved post-freeze evidence closure
+## 5. Completed post-freeze evidence closure
 
 Notebook 22, `22_damage_size_diffusion_uncertainty_extension.ipynb`, is the only
-approved missing-evidence generation extension.
+approved missing-evidence generation extension. It completed at commit
+`547a8687` (`notebook 22 done`) with its completion gate passed.
 
-It will:
+It:
 
-- reference the 35 frozen Notebook 11 generic seed-2026 damage-size candidates;
-- generate seeds 2027–2029 for the same 35 cases;
-- own exactly 105 new restoration images;
-- construct 35 complete four-seed uncertainty groups;
-- compute transparent RGB, LPIPS, CLIP, DINOv2, regional, and spatial uncertainty
-  evidence under its own output root;
-- leave every Notebook 01–21 source and output untouched.
+- referenced the 35 frozen Notebook 11 generic seed-2026 damage-size candidates;
+- generated seeds 2027–2029 for the same 35 cases;
+- owns exactly 105 new restoration images;
+- constructed 35 complete four-seed uncertainty groups and 210 unique unordered
+  seed pairs;
+- persisted 4,760 transparent RGB, LPIPS, CLIP, DINOv2, regional, pairwise, and
+  reference-evidence metric rows plus 35 raw uncertainty maps and 35 overlays;
+- passed all 234 validation checks and all 12 roadmap traceability requirements;
+- left every Notebook 01–21 source and output untouched.
 
-After Notebook 22 passes, Notebook 23 may test generative uncertainty against
-target and realized damage size. Notebook 18 remains the canonical uncertainty
-source for its original canonical-case population; Notebook 22 is the canonical
-source for damage-size uncertainty.
+Notebook 23 may therefore test generative uncertainty against target and realized
+damage size. Notebook 18 remains the canonical uncertainty source for its original
+canonical-case population; Notebook 22 is the canonical source for damage-size
+uncertainty. Notebook 22 is now a read-only approved upstream dependency.
 
 ## 6. Remaining-notebook evidence gate
 
 | Notebook | Supported evidence contract | Required scope discipline |
 |---|---|---|
-| 22 Damage-size uncertainty extension | N05 cases, N11 seed-2026 candidates, frozen model/prompt contract, canonical region policy | generate only the 105 missing candidates; no frozen writes |
-| 23 Damage-size analysis | all primary metric families plus N22 uncertainty | five paintings are independent trajectories; category-labelled trajectories are not category effects |
+| 23 Damage-size analysis | all primary metric families plus completed N22 four-seed uncertainty evidence | five paintings are independent trajectories; category-labelled trajectories are not category effects; uncertainty is empirical seed variability rather than calibrated confidence |
 | 24 Mask robustness | N06 variants, three-model primary metrics, geometry fields | use robustness/sensitivity terminology; variants are nested within groups and paintings |
 | 25 Synthetic degradation | 50 eligible cases, primary model metrics, six-case SDXL subset | compare only eligibility-approved combinations; analyze painting rather than infer category/style effects |
 | 26 Grouped statistics | N13–25 canonical tables | condition every test on actual coverage and independent unit; semantic/feature affinity is not human plausibility |

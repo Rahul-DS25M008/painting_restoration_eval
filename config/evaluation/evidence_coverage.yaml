@@ -295,7 +295,8 @@ evidence_coverage:
   planned_notebooks:
     - notebook_id: "22"
       stem: "22_damage_size_diffusion_uncertainty_extension"
-      status: "approved_extension_pending_implementation"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
       output_root: "outputs/22_damage_size_diffusion_uncertainty_extension"
       required_inputs:
         - "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv"
@@ -316,10 +317,34 @@ evidence_coverage:
         unordered_seed_pairs: 210
       owns_new_inference: true
       may_write_frozen_outputs: false
+      observed_population:
+        cases: 35
+        paintings: 5
+        seeds_per_group: 4
+        referenced_seed_2026_candidates: 35
+        new_candidates: 105
+        uncertainty_groups: 35
+        unordered_seed_pairs: 210
+        metric_rows: 4760
+        uncertainty_maps: 35
+        uncertainty_overlays: 35
+        validation_checks: 234
+        roadmap_requirements: 12
+      primary_artifacts:
+        - path: "outputs/22_damage_size_diffusion_uncertainty_extension/data/candidates.csv"
+          rows: 105
+        - path: "outputs/22_damage_size_diffusion_uncertainty_extension/metrics/damage_size_uncertainty.csv"
+          rows: 4760
+        - path: "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/map_images.csv"
+          rows: 35
+      interpretation_boundary:
+        - "empirical_seed_variability_not_calibrated_confidence"
+        - "no_combined_uncertainty_index"
+        - "painting_and_category_confounded"
 
     - notebook_id: "23"
       stem: "23_damage_size_sensitivity_analysis"
-      status: "planned_supported_after_22"
+      status: "planned_supported_ready"
       required_evidence: ["n05_damage_size", "n09_n11_primary_candidates", "n13_n20_metric_families", "n22_damage_size_uncertainty"]
       independent_unit: "five_painting_trajectories"
       prohibited_claims: ["independent_category_effect", "independent_style_effect", "universal_damage_threshold"]

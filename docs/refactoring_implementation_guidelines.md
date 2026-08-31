@@ -118,8 +118,18 @@ The workflow for every notebook is:
 11. Validate the notebook against the approved truth sources and input/output contract.
 12. Provide targeted replacement cells or helper changes when issues are isolated.
 13. Rerun the required cells and repeat validation.
-14. Update the evidence-coverage registry and project paths registry only after the notebook passes its completion gate.
-15. Refresh the project inventory again so the next notebook receives the validated state.
+14. After the completion gate passes, the user updates the notebook's opening
+    metadata to `Refactor status: Finished`, `Validation status: Finished`, and
+    `Completion gate passed: Yes`; the assistant verifies that these fields agree
+    with the run manifest and validation evidence.
+15. Update both governing evidence-audit sources after every completed notebook:
+    `docs/evidence_dependency_audit.md` for the human-readable evidence ledger and
+    `config/evaluation/evidence_coverage.yaml` for the machine-readable coverage
+    state. Record the validated population, canonical evidence, interpretation
+    boundaries, completion status, and any downstream contract change. Also
+    verify the completed notebook's entries in the project paths registry. These
+    updates occur only after the notebook passes its completion gate.
+16. Refresh the project inventory again so the next notebook receives the validated state.
 
 ### 6.1 Manual notebook editing policy
 
@@ -1332,6 +1342,10 @@ A notebook is complete only when all applicable checks pass:
 - scientific invariants passed;
 - visual QA was completed where applicable;
 - run, artifact, and validation manifests are complete;
+- the opening notebook metadata reads `Finished`, `Finished`, and `Yes` and agrees
+  with the canonical run manifest;
+- the human evidence dependency audit and machine-readable evidence-coverage
+  registry record the completed notebook's validated evidence and limitations;
 - project paths registry was updated;
 - inventory was refreshed after completion;
 - limitations and deviations are documented;
