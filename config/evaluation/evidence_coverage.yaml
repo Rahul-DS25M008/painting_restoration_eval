@@ -1,0 +1,437 @@
+config_schema_version: "evidence_coverage.v1"
+config_version: "1.0.0"
+
+evidence_coverage:
+  authority:
+    human_readable_audit: "docs/evidence_dependency_audit.md"
+    implementation_guidelines: "docs/refactoring_implementation_guidelines.md"
+    notebook_roadmap: "docs/final_notebook_roadmap.md"
+    inventory_path: "outputs/inventory/project_file_inventory.csv"
+    project_paths_path: "outputs/inventory/project_paths.json"
+
+  frozen_baseline:
+    through_notebook_id: "21"
+    data_producing_commit: "0aac25ef"
+    policy: "read_only_notebooks_outputs_manifests_and_scientific_populations"
+    allow_append_to_frozen_outputs: false
+    allow_rerun_to_expand_population: false
+    allow_manifest_rewrite: false
+    extension_policy: "post_21_notebook_owned_artifacts_with_explicit_ownership"
+    blocking_validation_failures: 0
+    declared_nonblocking_warnings:
+      - notebook_id: "15"
+        warning_id: "cuda_bitwise_repeatability"
+        interpretation: "metric_validity_and_coverage_passed_exact_cuda_bitwise_identity_not_asserted"
+
+  terminology:
+    generative_uncertainty: "repeated_seed_variation_for_fixed_case_prompt_and_configuration"
+    input_robustness: "variation_across_mask_placement_geometry_or_component_arrangement"
+    prompt_sensitivity: "variation_across_prompt_policies_or_variants"
+    semantic_feature_affinity: "computational_proxy_not_human_visual_plausibility"
+    trustworthiness_flag: "rule_defined_decision_support_not_conservation_ground_truth"
+
+  frozen_notebooks:
+    - notebook_id: "01"
+      stem: "01_dataset_verification"
+      output_root: "outputs/01_dataset_verification"
+      manifest_path: "outputs/01_dataset_verification/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/01_dataset_verification/data/artworks.csv"
+          rows: 50
+          schema_version: "artworks.v1"
+        - path: "outputs/01_dataset_verification/metrics/dataset_audit.csv"
+          rows: 101
+      supported_scope: ["controlled_50", "five_balanced_visual_categories"]
+      constraints:
+        - "style_date_and_medium_populated_for_18_of_50"
+        - "no_expanded_dataset"
+
+    - notebook_id: "02"
+      stem: "02_image_preprocessing"
+      output_root: "outputs/02_image_preprocessing"
+      manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+      status: "frozen_supported"
+      supported_scope: ["50_clean_references", "768x768_rgb_png", "authoritative_content_geometry"]
+      constraints: ["consumers_must_use_recorded_content_bounds"]
+
+    - notebook_id: "03"
+      stem: "03_canonical_mask_generation"
+      output_root: "outputs/03_canonical_mask_generation"
+      manifest_path: "outputs/03_canonical_mask_generation/manifests/run_manifest.json"
+      status: "frozen_supported"
+      supported_scope: ["250_canonical_binary_masks", "deterministic_morphology"]
+      constraints: ["synthetic_masks_not_physical_conservation_damage"]
+
+    - notebook_id: "04"
+      stem: "04_canonical_damaged_image_generation"
+      output_root: "outputs/04_canonical_damaged_image_generation"
+      manifest_path: "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/04_canonical_damaged_image_generation/data/cases.csv"
+          rows: 250
+      supported_scope: ["200_nonzero_canonical_cases", "50_zero_controls"]
+
+    - notebook_id: "05"
+      stem: "05_damage_size_sensitivity_dataset_generation"
+      output_root: "outputs/05_damage_size_sensitivity_dataset_generation"
+      manifest_path: "outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv"
+          rows: 35
+        - path: "outputs/05_damage_size_sensitivity_dataset_generation/metrics/generation_audit.csv"
+          rows: 35
+      supported_scope: ["five_paintings", "seven_nested_damage_levels", "target_and_realized_area", "mask_morphology"]
+      independent_unit: "painting_trajectory"
+      constraints: ["one_painting_per_category_category_confounded_with_painting"]
+
+    - notebook_id: "06"
+      stem: "06_mask_robustness_dataset_generation"
+      output_root: "outputs/06_mask_robustness_dataset_generation"
+      manifest_path: "outputs/06_mask_robustness_dataset_generation/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/06_mask_robustness_dataset_generation/data/cases.csv"
+          rows: 75
+      supported_scope: ["15_robustness_groups", "five_variants_per_group", "location_and_morphology_fields"]
+      independent_unit: "painting_mask_family_group"
+      constraints:
+        - "input_robustness_not_generative_uncertainty"
+        - "one_painting_per_category_category_confounded_with_painting"
+
+    - notebook_id: "07"
+      stem: "07_synthetic_degradation_dataset_generation"
+      output_root: "outputs/07_synthetic_degradation_dataset_generation"
+      manifest_path: "outputs/07_synthetic_degradation_dataset_generation/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/07_synthetic_degradation_dataset_generation/data/cases.csv"
+          rows: 165
+      supported_scope: ["procedural_degradations", "severity", "affected_area", "operator_parameters"]
+      constraints:
+        - "50_cases_restoration_eligible"
+        - "one_painting_per_category_category_confounded_with_painting"
+        - "procedural_effects_not_exact_conservation_damage"
+
+    - notebook_id: "08"
+      stem: "08_experiment_contracts_and_region_policy"
+      output_root: "outputs/08_experiment_contracts_and_region_policy"
+      manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+          rows: 525
+        - path: "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv"
+          rows: 2100
+        - path: "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv"
+          rows: 143
+      supported_scope: ["410_eligible_cases_per_model", "metric_region_compatibility", "region_ablation_memberships"]
+
+    - notebook_id: "09"
+      stem: "09_opencv_telea_restoration"
+      output_root: "outputs/09_opencv_telea_restoration"
+      manifest_path: "outputs/09_opencv_telea_restoration/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/09_opencv_telea_restoration/data/restorations.csv"
+          rows: 410
+      supported_scope: ["completed_deterministic_baseline", "runtime"]
+      constraints: ["no_generative_uncertainty"]
+
+    - notebook_id: "10"
+      stem: "10_lama_restoration"
+      output_root: "outputs/10_lama_restoration"
+      manifest_path: "outputs/10_lama_restoration/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/10_lama_restoration/data/restorations.csv"
+          rows: 410
+      supported_scope: ["completed_deterministic_learned_baseline", "runtime"]
+      constraints: ["no_generative_uncertainty"]
+
+    - notebook_id: "11"
+      stem: "11_stable_diffusion_restoration"
+      output_root: "outputs/11_stable_diffusion_restoration"
+      manifest_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+          rows: 1330
+        - path: "outputs/11_stable_diffusion_restoration/metrics/prompt_ablation_design.csv"
+      supported_scope:
+        - "410_primary_candidates"
+        - "80_complete_generic_canonical_uncertainty_groups"
+        - "50_complete_scratch_aware_canonical_uncertainty_groups"
+        - "controlled_prompt_sensitivity"
+      constraints:
+        - "all_35_damage_size_cases_have_one_seed"
+        - "no_complete_robustness_or_synthetic_uncertainty_groups"
+
+    - notebook_id: "12"
+      stem: "12_sdxl_feasibility_or_restoration"
+      output_root: "outputs/12_sdxl_feasibility_or_restoration"
+      manifest_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
+          rows: 10
+      supported_scope: ["four_canonical_cases", "six_synthetic_cases", "partial_model_comparison"]
+      constraints: ["one_seed_per_case", "no_damage_size_or_robustness_cases"]
+
+    - notebook_id: "13"
+      stem: "13_classical_metrics"
+      output_root: "outputs/13_classical_metrics"
+      manifest_path: "outputs/13_classical_metrics/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/13_classical_metrics/metrics/classical_metrics.csv"
+          rows: 63018
+      supported_scope: ["mse", "mae", "psnr", "ssim", "2160_candidates"]
+
+    - notebook_id: "14"
+      stem: "14_lpips_metrics"
+      output_root: "outputs/14_lpips_metrics"
+      manifest_path: "outputs/14_lpips_metrics/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/14_lpips_metrics/metrics/lpips_metrics.csv"
+          rows: 4170
+      supported_scope: ["content_region", "mask_bbox_crop", "2160_candidates"]
+
+    - notebook_id: "15"
+      stem: "15_feature_similarity"
+      output_root: "outputs/15_feature_similarity"
+      manifest_path: "outputs/15_feature_similarity/manifests/run_manifest.json"
+      status: "frozen_supported_with_warning"
+      primary_artifacts:
+        - path: "outputs/15_feature_similarity/metrics/feature_metrics.csv"
+          rows: 8340
+        - path: "outputs/15_feature_similarity/manifests/embeddings.csv"
+          rows: 10700
+        - path: "outputs/15_feature_similarity/data/embeddings.npz"
+      supported_scope: ["clip", "dinov2", "retrieval_embeddings", "2160_candidates"]
+      constraints: ["pretrained_features_not_conservation_specific", "cuda_bitwise_identity_not_asserted"]
+
+    - notebook_id: "16"
+      stem: "16_difference_maps_and_spatial_diagnostics"
+      output_root: "outputs/16_difference_maps_and_spatial_diagnostics"
+      manifest_path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv"
+          rows: 18896
+        - path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/map_images.csv"
+          rows: 10062
+      supported_scope: ["error_maps", "signed_improvement", "spillover", "canonical_regions"]
+
+    - notebook_id: "17"
+      stem: "17_local_consistency_metrics"
+      output_root: "outputs/17_local_consistency_metrics"
+      manifest_path: "outputs/17_local_consistency_metrics/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/17_local_consistency_metrics/metrics/local_consistency.csv"
+          rows: 271988
+        - path: "outputs/17_local_consistency_metrics/manifests/map_images.csv"
+          rows: 3282
+      supported_scope: ["texture", "colour", "seam", "brushstroke_proxies", "2160_candidates"]
+      constraints: ["3308_chroma_rows_not_applicable", "brushstroke_proxies_not_authentication"]
+
+    - notebook_id: "18"
+      stem: "18_diffusion_uncertainty_analysis"
+      output_root: "outputs/18_diffusion_uncertainty_analysis"
+      manifest_path: "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_metrics.csv"
+          rows: 20800
+        - path: "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_calibration_inputs.csv"
+          rows: 130
+      supported_scope: ["80_generic_canonical_groups", "50_scratch_aware_canonical_groups", "four_seeds"]
+      constraints: ["canonical_missing_region_only", "not_calibrated_confidence"]
+
+    - notebook_id: "19"
+      stem: "19_uncertainty_and_spatial_explanation_maps"
+      output_root: "outputs/19_uncertainty_and_spatial_explanation_maps"
+      manifest_path: "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/19_uncertainty_and_spatial_explanation_maps/metrics/spatial_explanations.csv"
+          rows: 780
+        - path: "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/map_images.csv"
+          rows: 1055
+      supported_scope: ["130_canonical_uncertainty_groups", "numeric_and_visual_maps"]
+
+    - notebook_id: "20"
+      stem: "20_semantic_and_structural_consistency"
+      output_root: "outputs/20_semantic_and_structural_consistency"
+      manifest_path: "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv"
+          rows: 58980
+        - path: "outputs/20_semantic_and_structural_consistency/manifests/semantic_maps.csv"
+          rows: 9430
+      supported_scope: ["semantic_and_structural_proxies", "local_feature_maps", "2160_candidates"]
+      constraints:
+        - "not_validated_face_anatomy_object_or_iconographic_detection"
+        - "118_outside_context_values_not_estimable_at_encoder_grid"
+
+    - notebook_id: "21"
+      stem: "21_multi_model_comparison"
+      output_root: "outputs/21_multi_model_comparison"
+      manifest_path: "outputs/21_multi_model_comparison/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/21_multi_model_comparison/metrics/model_comparison.csv"
+          rows: 86531
+        - path: "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv"
+          rows: 839
+      supported_scope: ["410_case_three_model_population", "10_case_four_model_subset", "family_balanced_disagreement"]
+      constraints: ["uncertainty_not_cross_model_quality_vote", "no_conservation_winner_claim"]
+
+  planned_notebooks:
+    - notebook_id: "22"
+      stem: "22_damage_size_diffusion_uncertainty_extension"
+      status: "approved_extension_pending_implementation"
+      output_root: "outputs/22_damage_size_diffusion_uncertainty_extension"
+      required_inputs:
+        - "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv"
+        - "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+        - "outputs/13_classical_metrics/metrics/classical_metrics.csv"
+        - "outputs/14_lpips_metrics/metrics/lpips_metrics.csv"
+        - "outputs/15_feature_similarity/metrics/feature_metrics.csv"
+        - "outputs/17_local_consistency_metrics/metrics/local_consistency.csv"
+        - "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv"
+      expected_population:
+        cases: 35
+        paintings: 5
+        seeds_per_group: 4
+        referenced_seed_2026_candidates: 35
+        new_candidates: 105
+        uncertainty_groups: 35
+        unordered_seed_pairs: 210
+      owns_new_inference: true
+      may_write_frozen_outputs: false
+
+    - notebook_id: "23"
+      stem: "23_damage_size_sensitivity_analysis"
+      status: "planned_supported_after_22"
+      required_evidence: ["n05_damage_size", "n09_n11_primary_candidates", "n13_n20_metric_families", "n22_damage_size_uncertainty"]
+      independent_unit: "five_painting_trajectories"
+      prohibited_claims: ["independent_category_effect", "independent_style_effect", "universal_damage_threshold"]
+
+    - notebook_id: "24"
+      stem: "24_mask_robustness_analysis"
+      status: "planned_supported"
+      required_evidence: ["n06_robustness_groups", "n09_n11_primary_candidates", "n13_n20_metric_families"]
+      terminology: "input_mask_robustness"
+      prohibited_claims: ["mask_variation_is_generative_uncertainty", "independent_category_effect"]
+
+    - notebook_id: "25"
+      stem: "25_synthetic_degradation_analysis"
+      status: "planned_supported"
+      required_evidence: ["n07_degradation_cases", "n08_model_eligibility", "n09_n21_evidence"]
+      population_rule: "eligibility_approved_combinations_only"
+      prohibited_claims: ["procedural_degradation_is_exact_conservation_damage", "independent_category_effect"]
+
+    - notebook_id: "26"
+      stem: "26_grouped_and_statistical_analysis"
+      status: "planned_supported"
+      required_evidence: ["n13_n25_canonical_tables"]
+      prohibited_claims: ["semantic_affinity_is_human_visual_plausibility", "repeated_observations_are_independent"]
+
+    - notebook_id: "27"
+      stem: "27_failure_taxonomy_and_trustworthiness_flags"
+      status: "planned_supported"
+      required_evidence: ["reference_metrics", "spatial", "texture", "colour", "seam", "semantic_proxies", "uncertainty", "metric_disagreement"]
+      prohibited_claims: ["calibrated_confidence", "verified_face_anatomy_or_object_detection", "conservation_approval"]
+
+    - notebook_id: "28"
+      stem: "28_metric_and_region_policy_ablation"
+      status: "planned_supported"
+      required_evidence: ["n08_region_ablation_memberships", "n21_comparison", "n27_flags"]
+      prohibited_claims: ["universal_trust_score"]
+
+    - notebook_id: "29"
+      stem: "29_explainable_ai_and_case_retrieval"
+      status: "planned_supported"
+      required_evidence: ["n15_embeddings", "n16_n20_maps", "n23_n25_counterfactual_structures", "n27_flags", "n28_ablations"]
+      prohibited_claims: ["rule_defined_success_is_human_ground_truth"]
+
+    - notebook_id: "30"
+      stem: "30_model_cards_compute_and_scalability"
+      status: "planned_supported"
+      required_evidence: ["model_manifests", "runtime_tables", "inventory", "primary_model_sources"]
+      prohibited_claims: ["projected_300_painting_cost_is_executed_result", "full_sdxl_evaluation"]
+
+    - notebook_id: "31"
+      stem: "31_model_report_generation"
+      status: "planned_supported"
+      required_evidence: ["n09_n30_model_specific_evidence"]
+
+    - notebook_id: "32"
+      stem: "32_case_and_painting_report_generation"
+      status: "planned_supported"
+      required_evidence: ["n09_n31_case_model_evidence"]
+
+    - notebook_id: "33"
+      stem: "33_final_evaluation_report"
+      status: "planned_supported"
+      required_evidence: ["n21_n32_synthesis_outputs", "frozen_methodology"]
+      prohibited_claims: ["expanded_dataset_executed", "human_validation_completed", "historical_correctness", "conservation_approval"]
+
+    - notebook_id: "34"
+      stem: "34_final_streamlit_dashboard_assets"
+      status: "planned_supported"
+      required_evidence: ["n01_n33_canonical_artifacts"]
+
+    - notebook_id: "35"
+      stem: "35_dashboard_and_deployment_validation"
+      status: "planned_supported"
+      required_evidence: ["n34_dashboard_assets", "streamlit_app.py"]
+      prohibited_claims: ["dashboard_is_restoration_tool", "dashboard_recomputes_scientific_metrics"]
+
+    - notebook_id: "36"
+      stem: "36_supervisor_publication_reproducibility_package"
+      status: "planned_supported"
+      required_evidence: ["n01_n35_manifests_and_selected_artifacts"]
+
+  removed_unsupported_requirements:
+    - requirement_id: "focused_experiment_inferential_category_style_interactions"
+      reason: "one_painting_per_category_in_notebooks_05_06_07"
+    - requirement_id: "human_visual_plausibility_comparison"
+      reason: "no_human_or_expert_rating_dataset"
+    - requirement_id: "automatic_verified_face_anatomy_object_failure_detection"
+      reason: "no_validated_painting_domain_detector_contract"
+    - requirement_id: "uncertainty_calibration_against_independent_ground_truth"
+      reason: "available_flags_are_rule_derived_computational_evidence"
+    - requirement_id: "expanded_main_executed_results"
+      reason: "no_expanded_dataset_configuration_or_artifacts"
+
+  consumer_preflight_gate:
+    require_governing_files: true
+    require_exact_artifact_paths: true
+    require_population_counts: true
+    require_independent_unit: true
+    require_supported_and_prohibited_claims: true
+    block_unmapped_required_responsibility: true
+    remove_unsupported_promises_before_batch_1: true
+    prohibit_directory_scanning_as_input_selection: true
+
+  repository_ownership_debt:
+    canonical_global_output_exception: "outputs/inventory"
+    noncanonical_tracked_global_roots:
+      - path: "outputs/figures"
+        files_at_audit: 430
+      - path: "outputs/metrics"
+        files_at_audit: 16
+      - path: "outputs/reports"
+        files_at_audit: 19
+      - path: "outputs/manifests"
+        files_at_audit: 1
+      - path: "outputs/validation"
+        files_at_audit: 3
+    cleanup_policy: "separate_exact_path_migration_or_deletion_audit_required"

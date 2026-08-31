@@ -1,4 +1,4 @@
-# Final 35-Notebook Roadmap
+# Final 36-Notebook Roadmap
 
 ## 1. Purpose
 
@@ -6,7 +6,7 @@ This roadmap defines the final dependency order and detailed responsibility of e
 
 **Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration**
 
-It consolidates the previously planned 40-notebook roadmap into 35 stages while preserving the complete methodological, experimental, engineering, reporting, explainability, and deployment scope.
+It consolidates the previously planned roadmap into 36 stages while preserving the supported methodological, experimental, engineering, reporting, explainability, and deployment scope.
 
 Nothing is considered complete at the start of the refactoring cycle. `Origin` records lineage only.
 
@@ -19,10 +19,9 @@ The pipeline supports these configuration-driven scopes:
 ```text
 smoke
 controlled_50
-expanded_main
 ```
 
-The controlled 50-painting dataset remains the development and validation baseline. Expansion toward approximately 300 paintings uses the same notebooks and schemas through configuration.
+The controlled 50-painting dataset is the validated experimental scope. Compute and storage may be projected toward larger datasets, but projections are not reported as executed experimental results.
 
 Every notebook writes only to:
 
@@ -46,8 +45,8 @@ validation/checks.csv
 Dataset and experiment generation: 01–08
 Model restoration and candidate generation: 09–12
 Unified evidence generation: 13–20
-Comparative and focused analysis: 21–29
-Reporting, dashboard, and packaging: 30–35
+Comparative and focused analysis: 21–30
+Reporting, dashboard, and packaging: 31–36
 ```
 
 ---
@@ -89,7 +88,7 @@ Establish the authoritative artwork table and verify that every dataset scope is
 - Record known historical, geographic, source, and representation biases.
 - Validate deterministic ordering.
 - Record dataset version and optional file checksums.
-- Support the controlled 50-painting and expanded-main profiles.
+- Support the controlled 50-painting profile.
 - Produce prompt-metadata readiness information without making prompt policy decisions.
 - Render a compact rule-selected dataset preview.
 
@@ -118,7 +117,7 @@ Additional persisted summaries are allowed only if required downstream.
 
 ### Downstream consumers
 
-Notebooks 02, 25, 29, 32, 33, and 35.
+Notebooks 02, 26, 30, 33, 34, and 36.
 
 ---
 
@@ -386,7 +385,7 @@ Test whether conclusions depend excessively on one favorable or unfavorable mask
 - Produce a normalized robustness case manifest.
 - Prepare cases for every eligible restoration model.
 - Render representative within-group comparison grids.
-- Leave metric variance, confidence intervals, and ranking stability to Notebook 23.
+- Leave metric variance, confidence intervals, and ranking stability to Notebook 24.
 
 ### Canonical outputs
 
@@ -519,7 +518,7 @@ Create the normalized cross-experiment case registry, formalize model eligibilit
 - Define valid and invalid metric-region combinations.
 - Define mask-box margin, boundary widths, threshold policies, and spatial-support metadata.
 - Generate the thesis/dashboard region-policy table.
-- Prepare alternative region policies for Notebook 27.
+- Prepare alternative region policies for Notebook 28.
 - Validate the canonical `regions.py` helper against representative masks.
 - Explicitly prohibit sparse masked-pixel SSIM.
 
@@ -547,7 +546,7 @@ validation/checks.csv
 
 ### Downstream consumers
 
-All notebooks 09–35.
+All notebooks 09–36.
 
 ---
 
@@ -797,7 +796,7 @@ validation/checks.csv
 
 ### Downstream consumers
 
-Notebooks 13–35, conditional on validated availability state.
+Notebooks 13–36, conditional on validated availability state.
 
 ---
 
@@ -1017,7 +1016,7 @@ validation/checks.csv
 
 ### Downstream consumers
 
-Notebooks 19–35.
+Notebooks 19–36.
 
 ---
 
@@ -1280,12 +1279,80 @@ validation/checks.csv
 
 ---
 
-## 22 — Damage-Size Sensitivity Analysis
+## 22 — Damage-Size Diffusion Uncertainty Extension
 
-**Notebook:** `22_damage_size_sensitivity_analysis.ipynb`  
+**Notebook:** `22_damage_size_diffusion_uncertainty_extension.ipynb`\
+**Origin:** New post-freeze evidence extension correcting a downstream dependency omitted from the frozen 01–21 baseline\
+**Output root:** `outputs/22_damage_size_diffusion_uncertainty_extension/`\
+**Depends on:** Notebooks 05, 08, 11, and validated metric/region contracts from Notebooks 13–20
+
+### Purpose
+
+Create the repeated-seed Stable Diffusion evidence required to analyze generative uncertainty against damage size without modifying or rerunning any frozen Notebook 01–21 artifact.
+
+### Frozen-baseline boundary
+
+- Treat every Notebook 01–21 notebook, output, manifest, helper contract, and validated population as read-only evidence.
+- Reuse the existing Notebook 11 generic primary candidate at seed `2026` by reference; do not copy, overwrite, or relabel it.
+- Generate only the missing generic-prompt candidates at seeds `2027`, `2028`, and `2029` for the 35 Notebook 05 damage-size cases.
+- Own all 105 new restoration images, candidate records, uncertainty metrics, maps, checkpoints, manifests, and validation artifacts under the Notebook 22 output root.
+- Keep extension candidate IDs and ownership explicit so later notebooks can combine evidence without rewriting Notebook 11 history.
+
+### Responsibilities
+
+- Build exactly 35 prompt-specific uncertainty groups covering five paintings and seven nested target levels: 2%, 4%, 6%, 8%, 10%, 15%, and 20%.
+- Use the frozen Notebook 11 `p00_generic` prompt policy, model revision, scheduler, inference steps, guidance, strength, resolution, compositing, and mask-threshold contracts.
+- Preserve the exact seed set `2026`, `2027`, `2028`, and `2029` in every group.
+- Support checksum-aware resume and generate only missing extension candidates.
+- Print progress at least every ten candidates and checkpoint safely on Windows.
+- Validate dimensions, masks, compositing, outside-mask invariance, image readability, checksums, candidate uniqueness, and exact seed coverage.
+- Compute transparent image-space and pairwise uncertainty components without constructing a combined uncertainty score:
+  - per-pixel RGB standard deviation;
+  - pairwise RGB MAE and RMSE;
+  - pairwise LPIPS distance;
+  - pairwise CLIP cosine distance;
+  - pairwise DINOv2 cosine distance.
+- Summarize uncertainty over the canonical full-image, content, masked, mask-crop, boundary, and outside-mask regions where methodologically valid.
+- Retain raw numerical uncertainty maps and selected readable overlays.
+- Join validated primary-candidate reference, perceptual, feature, texture, colour, seam, spatial, and semantic evidence for downstream association analysis; do not recompute or overwrite frozen canonical tables.
+- State that repeated-seed variation is empirical generative variability, not calibrated confidence or restoration correctness.
+
+### Exact population contract
+
+```text
+damage-size cases: 35
+paintings: 5
+damage levels per painting: 7
+seeds per group: 4
+referenced frozen candidates: 35
+new extension candidates: 105
+complete uncertainty groups: 35
+unique unordered seed pairs: 210
+```
+
+### Canonical outputs
+
+```text
+data/candidates.csv
+data/uncertainty_maps.npz
+metrics/damage_size_uncertainty.csv
+images/restored/<case_id>/<candidate_id>.png
+images/uncertainty/<uncertainty_group_id>.png
+figures/uncertainty_extension_summary.png
+manifests/map_images.csv
+manifests/run_manifest.json
+manifests/artifacts.csv
+validation/checks.csv
+```
+
+---
+
+## 23 — Damage-Size Sensitivity Analysis
+
+**Notebook:** `23_damage_size_sensitivity_analysis.ipynb`\
 **Origin:** New analysis stage separated from Notebook 05 generation  
-**Output root:** `outputs/22_damage_size_sensitivity_analysis/`  
-**Depends on:** Notebooks 05, 09–21
+**Output root:** `outputs/23_damage_size_sensitivity_analysis/`\
+**Depends on:** Notebooks 05, 09–22
 
 ### Responsibilities
 
@@ -1294,7 +1361,7 @@ validation/checks.csv
 - Identify nonlinear degradation points.
 - Test whether model rankings change with damage size.
 - Test whether uncertainty increases with damage size.
-- Test interactions with category/style and mask morphology.
+- Analyze painting-specific trajectories and mask-morphology relationships without treating one painting per category as an independently estimated category effect.
 - Compare deterministic and generative sensitivity.
 - Use paired/matched statistical methods.
 - Report confidence intervals and effect sizes.
@@ -1315,22 +1382,22 @@ validation/checks.csv
 
 ---
 
-## 23 — Mask Robustness Analysis
+## 24 — Mask Robustness Analysis
 
-**Notebook:** `23_mask_robustness_analysis.ipynb`  
+**Notebook:** `24_mask_robustness_analysis.ipynb`\
 **Origin:** New analysis stage separated from Notebook 06 generation  
-**Output root:** `outputs/23_mask_robustness_analysis/`  
+**Output root:** `outputs/24_mask_robustness_analysis/`\
 **Depends on:** Notebooks 06, 09–21
 
 ### Responsibilities
 
 - Measure metric variance within matched robustness groups.
-- Measure uncertainty due to placement and exact geometry.
+- Measure input-mask robustness variation due to placement and exact geometry.
 - Analyze model-ranking stability.
 - Analyze metric-ranking stability.
 - Analyze sensitivity to location, morphology, boundary contact, and component arrangement.
 - Compute confidence intervals and effect sizes.
-- Compare robustness by model, style/category, and damage family.
+- Compare robustness by model, painting, robustness group, target percentage, and damage family.
 - Distinguish stochastic candidate variation from input-mask robustness.
 - Identify conclusions that depend excessively on one mask realization.
 
@@ -1348,11 +1415,11 @@ validation/checks.csv
 
 ---
 
-## 24 — Synthetic Degradation Analysis
+## 25 — Synthetic Degradation Analysis
 
-**Notebook:** `24_synthetic_degradation_analysis.ipynb`  
+**Notebook:** `25_synthetic_degradation_analysis.ipynb`\
 **Origin:** New analysis stage separated from Notebook 07 generation  
-**Output root:** `outputs/24_synthetic_degradation_analysis/`  
+**Output root:** `outputs/25_synthetic_degradation_analysis/`\
 **Depends on:** Notebooks 07–21
 
 ### Responsibilities
@@ -1360,7 +1427,7 @@ validation/checks.csv
 - Analyze only model/degradation combinations marked eligible.
 - Separate missing-region restoration from degradation correction/robustness.
 - Compare individual and selected combined degradations.
-- Analyze by degradation type, severity, affected area, category/style, and model.
+- Analyze by degradation type, severity, affected area, painting, and model.
 - Use suitable reference, colour, texture, seam, semantic, and spillover evidence.
 - Report excluded combinations and eligibility reasons.
 - Compare quality, failure behavior, and compute.
@@ -1380,19 +1447,18 @@ validation/checks.csv
 
 ---
 
-## 25 — Grouped and Statistical Analysis
+## 26 — Grouped and Statistical Analysis
 
-**Notebook:** `25_grouped_and_statistical_analysis.ipynb`  
+**Notebook:** `26_grouped_and_statistical_analysis.ipynb`\
 **Origin:** New Notebook; consolidates statistical responsibilities previously dispersed across comparisons  
-**Output root:** `outputs/25_grouped_and_statistical_analysis/`  
-**Depends on:** Notebooks 13–24
+**Output root:** `outputs/26_grouped_and_statistical_analysis/`\
+**Depends on:** Notebooks 13–25
 
 ### Responsibilities
 
 Analyze performance by:
 
 - model;
-- painting style;
 - painting category;
 - damage type;
 - damage percentage;
@@ -1401,8 +1467,6 @@ Analyze performance by:
 - uncertainty level;
 - degradation type;
 - dataset source;
-- historical period where sufficiently populated;
-- dataset scope.
 
 Required methods:
 
@@ -1422,7 +1486,7 @@ Required methods:
 - classical versus LPIPS disagreement;
 - CLIP versus DINOv2 disagreement;
 - semantic versus texture disagreement;
-- visual plausibility versus reference fidelity;
+- semantic/feature affinity versus pixel, perceptual, texture, colour, and seam reference fidelity;
 - uncertainty versus scalar performance;
 - region-policy disagreement;
 - cross-model disagreement.
@@ -1446,22 +1510,21 @@ validation/checks.csv
 
 ---
 
-## 26 — Failure Taxonomy and Trustworthiness Flags
+## 27 — Failure Taxonomy and Trustworthiness Flags
 
-**Notebook:** `26_failure_taxonomy_and_trustworthiness_flags.ipynb`  
+**Notebook:** `27_failure_taxonomy_and_trustworthiness_flags.ipynb`\
 **Origin:** New Notebook  
-**Output root:** `outputs/26_failure_taxonomy_and_trustworthiness_flags/`  
-**Depends on:** Notebooks 13–25
+**Output root:** `outputs/27_failure_taxonomy_and_trustworthiness_flags/`\
+**Depends on:** Notebooks 13–26
 
 ### Failure taxonomy
 
 Candidate categories include:
 
-- residual visible damage;
+- residual masked-region error;
 - excessive blur;
 - structural collapse;
-- semantic hallucination;
-- object hallucination;
+- semantic inconsistency proxy;
 - repeated texture;
 - texture smoothing;
 - texture discontinuity;
@@ -1471,10 +1534,7 @@ Candidate categories include:
 - mask spillover;
 - outside-mask alteration;
 - composition change;
-- facial distortion;
-- anatomical distortion;
 - unstable multi-seed completion;
-- plausible but reference-inconsistent reconstruction.
 
 ### Trustworthiness flags
 
@@ -1497,7 +1557,7 @@ Independent flags include:
 - Define every taxonomy category and evidence requirement.
 - Generate independent flags rather than one trust score.
 - Record flag name, triggering rule, supporting evidence, affected region, threshold, severity where defensible, explanation, and recommended action.
-- Calibrate uncertainty against observed poor evidence and failure categories.
+- Analyze co-occurrence between uncertainty, reference error, semantic, texture, colour, seam evidence, and rule-defined failure assignments without describing the result as calibrated confidence.
 - Distinguish missing evidence from passing evidence.
 - Test internal rule consistency.
 - Generate recommendation categories such as:
@@ -1522,12 +1582,12 @@ validation/checks.csv
 
 ---
 
-## 27 — Metric and Region-Policy Ablation
+## 28 — Metric and Region-Policy Ablation
 
-**Notebook:** `27_metric_and_region_policy_ablation.ipynb`  
+**Notebook:** `28_metric_and_region_policy_ablation.ipynb`\
 **Origin:** New Notebook; includes alternatives prepared by Previous Notebook 26  
-**Output root:** `outputs/27_metric_and_region_policy_ablation/`  
-**Depends on:** Notebooks 13–26
+**Output root:** `outputs/28_metric_and_region_policy_ablation/`\
+**Depends on:** Notebooks 13–27
 
 ### Metric-family ablations
 
@@ -1568,7 +1628,7 @@ Test:
 - model-ranking changes;
 - case-ranking changes;
 - flag changes;
-- style/damage subgroup changes;
+- category/damage subgroup changes where the independent group count is sufficient;
 - disagreement changes;
 - conclusion stability.
 
@@ -1589,12 +1649,12 @@ validation/checks.csv
 
 ---
 
-## 28 — Explainable AI and Case Retrieval
+## 29 — Explainable AI and Case Retrieval
 
-**Notebook:** `28_explainable_ai_and_case_retrieval.ipynb`  
+**Notebook:** `29_explainable_ai_and_case_retrieval.ipynb`\
 **Origin:** New Notebook  
-**Output root:** `outputs/28_explainable_ai_and_case_retrieval/`  
-**Depends on:** Notebooks 15–27
+**Output root:** `outputs/29_explainable_ai_and_case_retrieval/`\
+**Depends on:** Notebooks 15–28
 
 ### Spatial explanations
 
@@ -1634,16 +1694,16 @@ Compare:
 
 Provide:
 
-- representative successful cases;
-- representative failed cases;
-- nearest similar successful case;
-- nearest similar failed case;
+- representative rule-defined lower-risk cases;
+- representative rule-defined flagged cases;
+- nearest similar lower-risk case;
+- nearest similar flagged case;
 - examples by style, damage type, model, and flag;
 - embedding-based retrieval using validated feature artifacts.
 
 ### Rule-based explanations
 
-Every flag explanation includes rule, evidence, affected region, threshold, uncertainty, and recommended human action.
+Every flag explanation includes the rule, evidence, affected region, threshold, applicable uncertainty evidence, and recommended human action.
 
 ### Canonical outputs
 
@@ -1660,12 +1720,12 @@ validation/checks.csv
 
 ---
 
-## 29 — Model Cards, Compute, and Scalability
+## 30 — Model Cards, Compute, and Scalability
 
-**Notebook:** `29_model_cards_compute_and_scalability.ipynb`  
+**Notebook:** `30_model_cards_compute_and_scalability.ipynb`\
 **Origin:** New Notebook; incorporates existing model-audit documentation  
-**Output root:** `outputs/29_model_cards_compute_and_scalability/`  
-**Depends on:** Notebooks 09–28 and model-audit sources
+**Output root:** `outputs/30_model_cards_compute_and_scalability/`\
+**Depends on:** Notebooks 09–29 and model-audit sources
 
 ### Model/method cards
 
@@ -1719,12 +1779,12 @@ validation/checks.csv
 
 # Reporting, Dashboard, and Packaging
 
-## 30 — Model Report Generation
+## 31 — Model Report Generation
 
-**Notebook:** `30_model_report_generation.ipynb`  
+**Notebook:** `31_model_report_generation.ipynb`\
 **Origin:** Consolidates Existing Notebooks 13, 19, and 26  
-**Output root:** `outputs/30_model_report_generation/`  
-**Depends on:** Notebooks 09–29
+**Output root:** `outputs/31_model_report_generation/`\
+**Depends on:** Notebooks 09–30
 
 ### Responsibilities
 
@@ -1758,12 +1818,12 @@ validation/checks.csv
 
 ---
 
-## 31 — Case and Painting Report Generation
+## 32 — Case and Painting Report Generation
 
-**Notebook:** `31_case_and_painting_report_generation.ipynb`  
+**Notebook:** `32_case_and_painting_report_generation.ipynb`\
 **Origin:** Existing Previous Version of Notebook 33, Pre-refactor  
-**Output root:** `outputs/31_case_and_painting_report_generation/`  
-**Depends on:** Notebooks 09–30
+**Output root:** `outputs/32_case_and_painting_report_generation/`\
+**Depends on:** Notebooks 09–31
 
 ### Responsibilities
 
@@ -1813,12 +1873,12 @@ validation/checks.csv
 
 ---
 
-## 32 — Final Evaluation Report
+## 33 — Final Evaluation Report
 
-**Notebook:** `32_final_evaluation_report.ipynb`  
+**Notebook:** `33_final_evaluation_report.ipynb`\
 **Origin:** Existing Previous Version of Notebook 28, Pre-refactor  
-**Output root:** `outputs/32_final_evaluation_report/`  
-**Depends on:** Notebooks 21–31
+**Output root:** `outputs/33_final_evaluation_report/`\
+**Depends on:** Notebooks 21–32
 
 ### Responsibilities
 
@@ -1840,7 +1900,7 @@ Consolidate:
 - explainability findings;
 - compute/scalability;
 - model-card summaries;
-- controlled-50 and expanded-main results;
+- controlled-50 results and transparent compute/storage scaling projections;
 - deviations, limitations, and exclusions.
 
 Generate:
@@ -1872,12 +1932,12 @@ validation/checks.csv
 
 ---
 
-## 33 — Final Streamlit Dashboard Assets
+## 34 — Final Streamlit Dashboard Assets
 
-**Notebook:** `33_final_streamlit_dashboard_assets.ipynb`  
+**Notebook:** `34_final_streamlit_dashboard_assets.ipynb`\
 **Origin:** Consolidates Existing Previous Versions of Notebooks 29 and 34, Pre-refactor  
-**Output root:** `outputs/33_final_streamlit_dashboard_assets/`  
-**Depends on:** Notebooks 01–32
+**Output root:** `outputs/34_final_streamlit_dashboard_assets/`\
+**Depends on:** Notebooks 01–33
 
 ### Responsibilities
 
@@ -1927,12 +1987,12 @@ The Streamlit application must be updated to read this notebook-owned asset root
 
 ---
 
-## 34 — Dashboard and Deployment Validation
+## 35 — Dashboard and Deployment Validation
 
-**Notebook:** `34_dashboard_and_deployment_validation.ipynb`  
+**Notebook:** `35_dashboard_and_deployment_validation.ipynb`\
 **Origin:** New Notebook  
-**Output root:** `outputs/34_dashboard_and_deployment_validation/`  
-**Depends on:** Notebook 33 and `streamlit_app.py`
+**Output root:** `outputs/35_dashboard_and_deployment_validation/`\
+**Depends on:** Notebook 34 and `streamlit_app.py`
 
 ### Purpose
 
@@ -1944,7 +2004,7 @@ Validate the dashboard as a reproducible inspection and decision-support layer.
 - Validate asset-manifest completeness.
 - Validate case/report/image links.
 - Validate that no dashboard section depends on missing legacy global paths.
-- Validate controlled and expanded scope labeling.
+- Validate controlled-scope and scaling-projection labeling.
 - Validate model availability handling.
 - Validate missing/optional SDXL behavior.
 - Validate figure and heatmap rendering references.
@@ -1966,12 +2026,12 @@ manifests/artifacts.csv
 
 ---
 
-## 35 — Supervisor, Publication, and Reproducibility Package
+## 36 — Supervisor, Publication, and Reproducibility Package
 
-**Notebook:** `35_supervisor_publication_reproducibility_package.ipynb`  
+**Notebook:** `36_supervisor_publication_reproducibility_package.ipynb`\
 **Origin:** Consolidates Existing Previous Versions of Notebooks 30 and 35, Pre-refactor  
-**Output root:** `outputs/35_supervisor_publication_reproducibility_package/`  
-**Depends on:** Notebooks 01–34
+**Output root:** `outputs/36_supervisor_publication_reproducibility_package/`\
+**Depends on:** Notebooks 01–35
 
 ### Responsibilities
 
@@ -2031,7 +2091,7 @@ validation/checks.csv
 - Every path is repository-relative and valid.
 - Every optional omission has a documented reason.
 - Package manifest counts reconcile with disk.
-- Controlled and expanded results are clearly distinguished.
+- Controlled results and scaling projections are clearly distinguished.
 - Feasibility-only methods are not presented as evaluated models.
 - Thesis interpretation boundaries are repeated.
 - The package is ready for supervisor, thesis, publication, and reproducibility review.
@@ -2046,9 +2106,9 @@ validation/checks.csv
 | 768 × 768 preprocessing and content bounds | 02 |
 | Parameterized canonical masks and morphology | 03 |
 | Canonical damaged images | 04 |
-| Damage-size experimental generation and analysis | 05, 22 |
-| Mask-robustness generation and analysis | 06, 23 |
-| Synthetic degradation generation and analysis | 07, 24 |
+| Damage-size generation, repeated-seed extension, and analysis | 05, 22, 23 |
+| Mask-robustness generation and analysis | 06, 24 |
+| Synthetic degradation generation and analysis | 07, 25 |
 | Case contracts, eligibility, and region policy | 08 |
 | OpenCV, LaMa, Stable Diffusion, SDXL | 09–12 |
 | Classical metrics | 13 |
@@ -2058,30 +2118,30 @@ validation/checks.csv
 | Texture and brushstroke proxies | 17 |
 | Colour consistency | 17 |
 | Seam and boundary consistency | 17 |
-| Diffusion uncertainty | 18 |
+| Diffusion uncertainty | 18, 22 |
 | Heatmaps and spatial explanations | 19 |
 | Semantic and structural consistency | 20 |
 | Multi-model comparison | 21 |
-| Grouped/statistical analysis and metric disagreement | 25 |
-| Failure taxonomy and independent flags | 26 |
-| Metric/region/threshold ablation | 27 |
-| Counterfactual, example-based, and rule-based XAI | 28 |
-| Model cards and compute/scalability | 29 |
-| Per-model reports | 30 |
-| Case and painting reports | 31 |
-| Final report and publication assets | 32 |
-| Dashboard assets | 33 |
-| Dashboard/deployment validation | 34 |
-| Supervisor/publication/reproducibility package | 35 |
+| Grouped/statistical analysis and metric disagreement | 26 |
+| Failure taxonomy and independent flags | 27 |
+| Metric/region/threshold ablation | 28 |
+| Counterfactual, example-based, and rule-based XAI | 29 |
+| Model cards and compute/scalability | 30 |
+| Per-model reports | 31 |
+| Case and painting reports | 32 |
+| Final report and publication assets | 33 |
+| Dashboard assets | 34 |
+| Dashboard/deployment validation | 35 |
+| Supervisor/publication/reproducibility package | 36 |
 
 ## 5. Implementation sequence
 
-The immediate sequence after approval is:
+The immediate sequence after the Notebook 01–21 freeze is:
 
-1. Perform an explicitly approved cleanup audit.
-2. Update the inventory tool and foundational path/schema/manifest/validation/region helpers.
-3. Refresh the inventory.
-4. Define Notebook 01 batches and exact input/output contract.
-5. Create Notebook 01 with Batch 1 only.
-6. Continue through the approved batch workflow.
+1. Maintain the frozen baseline and evidence-coverage governing files.
+2. Implement Notebook 22 as a notebook-owned damage-size repeated-seed extension.
+3. Validate the 35 complete damage-size uncertainty groups without rewriting frozen artifacts.
+4. Continue with focused analysis Notebooks 23–30.
+5. Continue with reporting, dashboard, and packaging Notebooks 31–36.
+6. Apply the approved manual batch workflow and evidence-dependency gate to every remaining notebook.
 

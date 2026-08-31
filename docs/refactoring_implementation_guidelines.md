@@ -8,7 +8,7 @@ This document is the approved project-wide implementation contract for refactori
 
 It governs notebook design, helper modules, configuration, paths, generated artifacts, validation, manifests, reporting, dashboard preparation, reproducibility, and migration from the current repository layout.
 
-The repository will be rebuilt from Notebook 01 onward. No existing notebook is treated as complete merely because it was previously refactored or executed successfully.
+The repository was rebuilt from Notebook 01 onward. Notebooks 01–21 are now frozen only because their approved completion gates, manifests, canonical outputs, and cross-notebook evidence audit have been completed. Later notebooks remain unimplemented until their own gates pass.
 
 The central methodological boundary remains:
 
@@ -18,15 +18,16 @@ The central methodological boundary remains:
 
 The following decisions are approved:
 
-1. The final pipeline uses the consolidated 35-notebook architecture documented in `docs/final_notebook_roadmap.md`.
+1. The final pipeline uses the consolidated 36-notebook architecture documented in `docs/final_notebook_roadmap.md`.
 2. Generated content will migrate from `data/processed/` and legacy global output folders into notebook-owned output folders.
 3. `outputs/inventory/` is the sole global output exception.
 4. Restoration notebooks remain model-specific.
 5. Metric notebooks are model-agnostic and organized by evidence family.
 6. Handoffs use normalized manifests joined by stable identifiers rather than progressively wider tables.
 7. One canonical region helper defines every evaluation region used throughout the project.
-8. Notebook 34 remains a separate dashboard and deployment validation stage.
-9. Python 3.11 is the provisional default because it is recommended by `requirements_experiments.txt` and used in the README setup instructions. Python 3.12 may be adopted later only after compatibility is verified during execution.
+8. Notebook 35 remains a separate dashboard and deployment validation stage.
+9. Notebooks 01–21 and their canonical outputs are a frozen validated baseline. Missing downstream evidence is added only through explicitly approved post-21 extension notebooks with notebook-owned outputs; frozen notebooks are not silently revised or rerun.
+10. Python 3.11 is the provisional default because it is recommended by `requirements_experiments.txt` and used in the README setup instructions. Python 3.12 may be adopted later only after compatibility is verified during execution.
 
 ## 3. Scope and interpretation boundaries
 
@@ -64,12 +65,13 @@ When project sources disagree, use this precedence:
 1. The user's latest explicit instruction.
 2. The approved master additions and implementation checklist.
 3. This implementation guideline.
-4. The approved detailed notebook roadmap.
-5. The approved notebook-specific batch and input/output contract.
-6. Versioned configuration and schema definitions.
-7. Validated upstream manifests.
-8. The current project inventory.
-9. Existing notebooks, helpers, reports, and generated outputs.
+4. The governing evidence audit and machine-readable evidence-coverage registry.
+5. The approved detailed notebook roadmap.
+6. The approved notebook-specific batch and input/output contract.
+7. Versioned configuration and schema definitions.
+8. Validated upstream manifests.
+9. The current project inventory.
+10. Existing notebooks, helpers, reports, and generated outputs.
 
 Existing code and outputs provide evidence about prior behavior. They do not override the approved design.
 
@@ -102,20 +104,22 @@ No notebook may be labelled complete until its final completion gate passes unde
 The workflow for every notebook is:
 
 1. Refresh the project inventory.
-2. Inspect the latest inventory, approved requirements, upstream manifests, current notebook, relevant helpers, and current configuration.
-3. Determine whether helpers require no change, targeted changes, or complete replacement.
-4. Define every planned cell batch before generating notebook code.
-5. Define and approve the exact input/output contract before Batch 1 is generated.
-6. The user creates the correctly numbered, named, and otherwise blank notebook.
-7. Provide Batch 1 and every later batch as complete, separately labelled
+2. Inspect `docs/evidence_dependency_audit.md` and `config/evaluation/evidence_coverage.yaml`.
+3. Inspect the latest inventory, approved requirements, upstream manifests, current notebook, relevant helpers, and current configuration.
+4. Resolve every roadmap responsibility to exact evidence and remove unsupported promises.
+5. Determine whether helpers require no change, targeted changes, or complete replacement.
+6. Define every planned cell batch before generating notebook code.
+7. Define and approve the exact input/output contract before Batch 1 is generated.
+8. The user creates the correctly numbered, named, and otherwise blank notebook.
+9. Provide Batch 1 and every later batch as complete, separately labelled
    Markdown and code cells in chat for manual insertion, execution, and testing
    by the user.
-8. Inspect the executed final notebook and generated artifacts.
-9. Validate the notebook against the approved truth sources and input/output contract.
-10. Provide targeted replacement cells or helper changes when issues are isolated.
-11. Rerun the required cells and repeat validation.
-12. Update the project paths registry only after the notebook passes its completion gate.
-13. Refresh the project inventory again so the next notebook receives the validated state.
+10. Inspect the executed final notebook and generated artifacts.
+11. Validate the notebook against the approved truth sources and input/output contract.
+12. Provide targeted replacement cells or helper changes when issues are isolated.
+13. Rerun the required cells and repeat validation.
+14. Update the evidence-coverage registry and project paths registry only after the notebook passes its completion gate.
+15. Refresh the project inventory again so the next notebook receives the validated state.
 
 ### 6.1 Manual notebook editing policy
 
@@ -467,6 +471,61 @@ section template for model reports or for other report categories.
 
 The inventory refresh is a controlled write operation. During explicitly read-only phases, the existing inventory may be inspected but must not be regenerated.
 
+### 6.3 Frozen baseline and evidence-dependency gate
+
+Notebooks 01–21 and their canonical outputs are frozen at the validated baseline
+recorded by their run manifests and the repository history. They are read-only
+inputs for the remainder of the refactoring cycle.
+
+Rules for the frozen baseline:
+
+- Do not edit, regenerate, append to, or overwrite Notebook 01–21 source files or
+  their notebook-owned outputs merely to satisfy a later notebook.
+- Do not change a frozen notebook's scientific population by altering its helper
+  or configuration and then treating its earlier manifest as current.
+- If a later requirement needs evidence absent from the frozen baseline, either
+  remove the unsupported requirement before implementation or create an approved
+  post-21 extension notebook that owns every new candidate, metric, map, manifest,
+  and validation artifact.
+- Extension notebooks may reference validated frozen artifacts but must never
+  present their new outputs as if the frozen producer created them.
+- Existing frozen manifests remain historical provenance and are not rewritten to
+  include extension artifacts.
+
+Two governing files make downstream evidence availability explicit:
+
+```text
+docs/evidence_dependency_audit.md
+config/evaluation/evidence_coverage.yaml
+```
+
+Before approving the contract for any remaining notebook, the assistant must:
+
+1. Read both governing files together with this guideline and the roadmap.
+2. Map every proposed responsibility, result, figure, report conclusion, and
+   canonical output to an exact validated source artifact or to an explicitly
+   approved notebook-owned computation.
+3. Record the evidence population, coverage, independent statistical unit,
+   supported interpretation, and prohibited interpretation.
+4. Remove unsupported promises from the planned notebook rather than generating
+   placeholder analyses or repeatedly advertising evidence that was never
+   collected.
+5. Block Batch 1 when a required responsibility has no valid evidence mapping.
+6. Update both governing files whenever a notebook completes, an extension is
+   approved, or a future responsibility is materially changed.
+
+Completion checks inside a producer notebook are necessary but not sufficient.
+The preparation layer for each consumer must also validate that the producer's
+actual population and fields satisfy the consumer's downstream requirement.
+
+Availability terminology must remain construct-specific:
+
+- repeated-seed variation is generative uncertainty;
+- variation across mask placements or geometries is input robustness;
+- variation across prompts is prompt sensitivity;
+- feature or semantic affinity is not a human visual-plausibility rating;
+- rule-derived flags are not independent human or conservation ground truth.
+
 ## 7. Repository layout
 
 The intended high-level structure is:
@@ -597,7 +656,6 @@ config/
   project.yaml
   datasets/
     controlled_50.yaml
-    expanded_main.yaml
   experiments/
     canonical_damage.yaml
     damage_size.yaml
@@ -629,10 +687,9 @@ Supported execution profiles:
 ```text
 smoke
 controlled_50
-expanded_main
 ```
 
-Scaling from 50 paintings toward approximately 300 is an execution profile, not a duplicate notebook pipeline.
+Any later dataset expansion requires a separately approved configuration and evidence audit. Projected scaling may be reported as a projection but must not be presented as an executed dataset result.
 
 ## 10. Project inventory contract
 
@@ -1297,4 +1354,4 @@ Recommended cleanup order:
 7. Create only foundational folders required before Notebook 01.
 8. Let each notebook create its own output subfolders during execution.
 
-Broad pre-creation of all 35 output trees is discouraged because it creates empty and misleading folders.
+Broad pre-creation of all 36 output trees is discouraged because it creates empty and misleading folders.

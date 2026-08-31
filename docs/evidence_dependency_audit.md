@@ -1,0 +1,185 @@
+# Evidence Dependency Audit
+
+## 1. Status and authority
+
+This document is the human-readable evidence-coverage gate for the remaining
+notebook pipeline. It must be read together with:
+
+- `docs/refactoring_implementation_guidelines.md`;
+- `docs/final_notebook_roadmap.md`;
+- `config/evaluation/evidence_coverage.yaml`.
+
+The machine-readable YAML is authoritative for automated preflight. This file
+explains the scientific meaning of that registry and records the decisions that
+must not be silently reversed during later notebook planning.
+
+## 2. Frozen baseline
+
+Notebooks 01–21 and their notebook-owned canonical outputs are frozen. Their
+last common validated data-producing baseline is repository commit `0aac25ef`
+(`notebook 21 done`). Later documentation and governing-file commits do not
+change the scientific population recorded by those manifests.
+
+Frozen means:
+
+- no `.ipynb` source changes;
+- no rerunning or appending to Notebook 01–21 output roots;
+- no helper/configuration change may be used to reinterpret a frozen manifest as
+  if it described a newly expanded population;
+- later evidence extensions own new candidates and artifacts under their own
+  notebook output roots;
+- consumers join frozen and extension evidence through stable identifiers and
+  explicit ownership fields.
+
+The frozen validation state contains no blocking validation failure. Notebook 15
+retains one declared non-blocking CUDA/CuBLAS bitwise-repeatability warning;
+metric validity and coverage passed.
+
+## 3. Frozen notebook evidence ledger
+
+| Notebook | Frozen evidence | Validated coverage | Downstream interpretation boundary |
+|---|---|---:|---|
+| 01 Dataset Verification | artwork registry and dataset audit | 50 controlled artworks; 5 balanced visual categories | `style_or_period`, `date_or_period`, and `medium` are populated for 18/50 artworks; category is complete; no expanded dataset exists |
+| 02 Image Preprocessing | 768×768 clean references and content geometry | 50 paintings | content bounds, resize, and padding are authoritative; later notebooks must not infer bounds from padding colour |
+| 03 Canonical Mask Generation | binary mask families and morphology | 250 masks | deterministic controlled masks; synthetic masks are not physical conservation damage |
+| 04 Canonical Damaged Images | canonical case table and damaged images | 250 cases | 50 zero controls and 200 non-zero binary missing-region cases |
+| 05 Damage-Size Dataset | nested masks, damaged images, and generation audit | 35 cases = 5 paintings × 7 levels | one painting per category; category and painting identity are confounded |
+| 06 Mask Robustness Dataset | matched mask variants and geometry | 75 cases = 15 groups × 5 variants | variation is input-mask robustness, not diffusion seed uncertainty; one painting per category |
+| 07 Synthetic Degradation Dataset | procedural degradation cases and operator audit | 165 generated cases | 50 cases are restoration-eligible; one painting per category; operators are controlled simulations, not exact conservation damage |
+| 08 Experiment Contracts | case registry, model eligibility, region policy, schema registry | 525 cases; 2,100 eligibility rows; 143 metric-region rows | 410 cases are eligible for each restoration method; region ablation memberships are encoded in `ablation_policy_ids_json` |
+| 09 OpenCV Telea | deterministic restorations and runtime | 410 completed candidates | fixed classical baseline; no generative uncertainty |
+| 10 LaMa | deterministic restorations and runtime | 410 completed candidates | deterministic learned baseline; no generative uncertainty |
+| 11 Stable Diffusion | primary, prompt-context, scratch-aware, and repeated-seed candidates | 1,330 completed candidates; 410 primary | complete four-seed groups exist only for canonical cases; all 35 damage-size cases have one seed |
+| 12 SDXL | technically validated partial candidates | 10 completed cases | partial evaluation only: 4 canonical and 6 synthetic cases; one seed per case |
+| 13 Classical Metrics | MSE, MAE, PSNR, SSIM | 63,018 rows | reference-based metrics do not establish semantic or conservation correctness |
+| 14 LPIPS | perceptual distance | 4,170 rows | content and mask-crop regions only; sparse masked pixels are not treated as images |
+| 15 Feature Similarity | CLIP/DINOv2 metrics and reusable embeddings | 8,340 metric rows; 10,700 embeddings | diagnostic pretrained features; one non-blocking CUDA bitwise-repeatability warning |
+| 16 Spatial Diagnostics | error/improvement metrics and maps | 18,896 rows; 10,062 image assets | spatial error evidence is distinct from uncertainty and final trustworthiness flags |
+| 17 Local Consistency | texture, colour, seam, and brushstroke-proxy evidence | 271,988 rows; 3,282 image assets | 3,308 chroma rows are legitimately `not_applicable` where no sufficiently chromatic pixels exist; brushstroke proxies are not authentication |
+| 18 Diffusion Uncertainty | repeated-seed scalar and calibration-ready components | 130 groups; 20,800 metric rows | 80 generic and 50 scratch-aware canonical groups only; no damage-size, robustness, or synthetic groups |
+| 19 Spatial Explanations | uncertainty maps and integrated diagnostic panels | 780 scalar rows; 1,055 map assets | spatial uncertainty is available only for the 130 frozen Notebook 18 groups |
+| 20 Semantic/Structural Consistency | patch-level semantic and structural proxies | 58,980 rows; 9,430 map assets | category-conditioned proxies are not validated face, anatomy, object, iconographic, or conservation detectors; 118 outside-context values are not estimable at the encoder grid |
+| 21 Multi-Model Comparison | comparison, disagreement, representative cases, self-contained report | 86,531 comparison rows; 839 disagreement rows | three-model comparison covers 410 paired cases; four-model comparison covers the 10-case SDXL subset; uncertainty is contextual, not a cross-model quality vote |
+
+## 4. Validated population facts
+
+```text
+dataset scope: controlled_50
+artworks: 50
+case registry: 525
+eligible restoration cases: 410
+Telea candidates: 410
+LaMa candidates: 410
+Stable Diffusion primary candidates: 410
+Stable Diffusion total candidates: 1,330
+SDXL candidates: 10
+all evaluated candidates: 2,160
+frozen complete uncertainty groups: 130
+frozen damage-size uncertainty groups: 0
+```
+
+Stable Diffusion complete four-seed groups in the frozen baseline:
+
+| Scope | Generic groups | Scratch-aware groups |
+|---|---:|---:|
+| Canonical missing-region | 80 | 50 |
+| Damage-size sensitivity | 0 | 0 |
+| Mask robustness | 0 | 0 |
+| Synthetic degradation | 0 | 0 |
+
+Prompt variants at a single seed measure prompt sensitivity and cannot be used as
+a replacement for repeated-seed uncertainty.
+
+## 5. Approved post-freeze evidence closure
+
+Notebook 22, `22_damage_size_diffusion_uncertainty_extension.ipynb`, is the only
+approved missing-evidence generation extension.
+
+It will:
+
+- reference the 35 frozen Notebook 11 generic seed-2026 damage-size candidates;
+- generate seeds 2027–2029 for the same 35 cases;
+- own exactly 105 new restoration images;
+- construct 35 complete four-seed uncertainty groups;
+- compute transparent RGB, LPIPS, CLIP, DINOv2, regional, and spatial uncertainty
+  evidence under its own output root;
+- leave every Notebook 01–21 source and output untouched.
+
+After Notebook 22 passes, Notebook 23 may test generative uncertainty against
+target and realized damage size. Notebook 18 remains the canonical uncertainty
+source for its original canonical-case population; Notebook 22 is the canonical
+source for damage-size uncertainty.
+
+## 6. Remaining-notebook evidence gate
+
+| Notebook | Supported evidence contract | Required scope discipline |
+|---|---|---|
+| 22 Damage-size uncertainty extension | N05 cases, N11 seed-2026 candidates, frozen model/prompt contract, canonical region policy | generate only the 105 missing candidates; no frozen writes |
+| 23 Damage-size analysis | all primary metric families plus N22 uncertainty | five paintings are independent trajectories; category-labelled trajectories are not category effects |
+| 24 Mask robustness | N06 variants, three-model primary metrics, geometry fields | use robustness/sensitivity terminology; variants are nested within groups and paintings |
+| 25 Synthetic degradation | 50 eligible cases, primary model metrics, six-case SDXL subset | compare only eligibility-approved combinations; analyze painting rather than infer category/style effects |
+| 26 Grouped statistics | N13–25 canonical tables | condition every test on actual coverage and independent unit; semantic/feature affinity is not human plausibility |
+| 27 Failure taxonomy | reference, spatial, texture, colour, seam, semantic, uncertainty, and disagreement evidence | flags are rule-defined decision support; retain only computationally supportable failure categories |
+| 28 Metric/region ablation | N08 ablation memberships, N21 rankings, N27 rules | preserve metric-family disagreement; do not create a universal trust score |
+| 29 XAI/retrieval | embeddings, numeric maps, counterfactual experiment structures, rule-defined flags | retrieval labels are rule-defined; seed comparisons use only complete uncertainty groups |
+| 30 Model cards/compute | model manifests, runtimes, hardware, inventory, primary model sources | larger-dataset and SDXL costs are projections, not executed results |
+| 31 Model reports | N09–30 evidence | report model and experiment coverage exactly; uncertainty appears only where supported |
+| 32 Case/painting reports | N09–31 evidence | include only evidence applicable to each case and model |
+| 33 Final evaluation report | N21–32 plus frozen methodology artifacts | report controlled-50 results and transparent projections; no human or conservation validation claim |
+| 34 Dashboard assets | N01–33 canonical outputs | package evidence without recomputation and retain scope labels |
+| 35 Dashboard/deployment validation | N34 assets and application | validate paths, schemas, rendering, and deployment state; do not recompute metrics |
+| 36 Reproducibility package | N01–35 manifests and selected artifacts | reconcile package contents with the controlled evidence and declared projections |
+
+## 7. Removed unsupported promises
+
+The following items were removed from the future roadmap and must not be silently
+reintroduced without new evidence and an updated audit:
+
+- inferential category/style interactions in the five-painting damage-size,
+  robustness, and synthetic-degradation cohorts;
+- treating feature or semantic affinity as an independent human visual-
+  plausibility rating;
+- automatic verified face, anatomy, or object-hallucination detection;
+- describing associations with rule-derived computational flags as uncertainty
+  calibration or calibrated confidence;
+- presenting expanded-main or approximately 300-painting experimental results;
+- describing prompt sensitivity or mask-placement robustness as generative
+  uncertainty.
+
+## 8. Repository ownership debt
+
+The scientific freeze does not make legacy global output folders canonical.
+`outputs/inventory/` remains the sole approved global exception.
+
+The audit found 469 tracked legacy files under:
+
+```text
+outputs/figures/
+outputs/metrics/
+outputs/reports/
+outputs/manifests/
+outputs/validation/
+```
+
+It also found legacy notebooks whose numbers overlap later roadmap stages. They
+remain non-canonical until a separate exact-path migration/deletion audit is
+approved. No future notebook may consume them merely because they exist.
+
+## 9. Update protocol
+
+Before Batch 1 of every remaining notebook:
+
+1. Resolve every responsibility to an entry in
+   `config/evaluation/evidence_coverage.yaml`.
+2. Confirm exact source paths, row/file counts, population filters, and ownership.
+3. Confirm the independent statistical unit and repeated/nested observations.
+4. Remove any result or report claim that lacks validated evidence.
+5. Add planned outputs and checks to the consumer contract.
+
+At completion:
+
+1. Update the YAML with actual counts and the new manifest path.
+2. Update this document's ledger and remaining-notebook table.
+3. Refresh `outputs/inventory/`.
+4. Commit the notebook, owned outputs, governing-file updates, and inventory
+   together unless an approved staged commit is required.
