@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-31T14:36:51.078756Z`
-- Registered artifacts: 121
+- Updated: `2026-08-31T21:33:13.203255Z`
+- Registered artifacts: 129
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -18,6 +18,13 @@
 | damage_size.figure_progression | 05_damage_size_sensitivity_dataset_generation | `outputs/05_damage_size_sensitivity_dataset_generation/figures/damage_size_progression.png` | thesis_reporting | passed |
 | damage_size.generation_audit | 05_damage_size_sensitivity_dataset_generation | `outputs/05_damage_size_sensitivity_dataset_generation/metrics/generation_audit.csv` | audit_reporting | passed |
 | damage_size.masks | 05_damage_size_sensitivity_dataset_generation | `outputs/05_damage_size_sensitivity_dataset_generation/images/masks` | primary_downstream | passed |
+| damage_size_diffusion_uncertainty.candidates | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/data/candidates.csv` | notebook_22_extension_candidates | passed |
+| damage_size_diffusion_uncertainty.map_manifest | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/manifests/map_images.csv` | overlay_provenance_and_file_audit | passed |
+| damage_size_diffusion_uncertainty.maps | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/data/uncertainty_maps.npz` | raw_seed_variability_maps | passed |
+| damage_size_diffusion_uncertainty.metrics | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/metrics/damage_size_uncertainty.csv` | damage_size_seed_variability_evidence | passed |
+| damage_size_diffusion_uncertainty.overlays | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/images/uncertainty` | readable_spatial_uncertainty_evidence | passed |
+| damage_size_diffusion_uncertainty.restored_images | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/images/restored` | notebook_22_generated_candidates | passed |
+| damage_size_diffusion_uncertainty.summary_figure | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/figures/uncertainty_extension_summary.png` | painting_trajectory_uncertainty_summary | passed |
 | dataset.artworks | 01_dataset_verification | `outputs/01_dataset_verification/data/artworks.csv` | primary_downstream | passed |
 | dataset.audit | 01_dataset_verification | `outputs/01_dataset_verification/metrics/dataset_audit.csv` | audit_reporting | passed |
 | dataset.figure_distribution | 01_dataset_verification | `outputs/01_dataset_verification/figures/dataset_distribution.png` | reporting | passed |
@@ -127,3 +134,4 @@
 | validation.19_uncertainty_and_spatial_explanation_maps | 19_uncertainty_and_spatial_explanation_maps | `outputs/19_uncertainty_and_spatial_explanation_maps/validation/checks.csv` | validation_evidence | passed |
 | validation.20_semantic_and_structural_consistency | 20_semantic_and_structural_consistency | `outputs/20_semantic_and_structural_consistency/validation/checks.csv` | validation_evidence | passed |
 | validation.21_multi_model_comparison | 21_multi_model_comparison | `outputs/21_multi_model_comparison/validation/checks.csv` | validation_evidence | passed |
+| validation.22_damage_size_diffusion_uncertainty_extension | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/validation/checks.csv` | validation_evidence | passed |

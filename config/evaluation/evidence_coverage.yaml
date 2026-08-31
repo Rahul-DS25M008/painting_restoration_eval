@@ -303,6 +303,7 @@ evidence_coverage:
         - "outputs/13_classical_metrics/metrics/classical_metrics.csv"
         - "outputs/14_lpips_metrics/metrics/lpips_metrics.csv"
         - "outputs/15_feature_similarity/metrics/feature_metrics.csv"
+        - "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv"
         - "outputs/17_local_consistency_metrics/metrics/local_consistency.csv"
         - "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv"
       expected_population:

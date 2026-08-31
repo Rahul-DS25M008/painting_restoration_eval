@@ -1,0 +1,311 @@
+config_schema_version: "damage_size_diffusion_uncertainty_extension_config.v1"
+config_version: "1.0.0"
+
+damage_size_diffusion_uncertainty_extension:
+  notebook_id: "22"
+  notebook_stem: "22_damage_size_diffusion_uncertainty_extension"
+  origin: "New post-freeze evidence extension"
+  metric_version: "damage_size_empirical_seed_uncertainty.v1"
+  candidates_schema_version: "stable_diffusion_candidates.v1"
+  metrics_schema_version: "damage_size_diffusion_uncertainty.v1"
+  map_manifest_schema_version: "damage_size_uncertainty_map_images.v1"
+
+  inputs:
+    inventory_path: "outputs/inventory/project_file_inventory.csv"
+    inventory_run_path: "outputs/inventory/inventory_run.json"
+    project_paths_path: "outputs/inventory/project_paths.json"
+    evidence_coverage_path: "config/evaluation/evidence_coverage.yaml"
+    evidence_audit_path: "docs/evidence_dependency_audit.md"
+    roadmap_path: "docs/final_notebook_roadmap.md"
+    implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+    stable_diffusion_config_path: "config/experiments/stable_diffusion.yaml"
+    diffusion_uncertainty_config_path: "config/evaluation/diffusion_uncertainty.yaml"
+    lpips_config_path: "config/evaluation/lpips.yaml"
+    feature_similarity_config_path: "config/evaluation/feature_similarity.yaml"
+    artworks_path: "outputs/01_dataset_verification/data/artworks.csv"
+    artworks_run_manifest_path: "outputs/01_dataset_verification/manifests/run_manifest.json"
+    geometry_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+    geometry_run_manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+    damage_size_cases_path: "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv"
+    damage_size_run_manifest_path: "outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json"
+    case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+    region_policy_path: "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv"
+    contracts_run_manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+    stable_diffusion_candidates_path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+    stable_diffusion_output_root: "outputs/11_stable_diffusion_restoration"
+    stable_diffusion_run_manifest_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+    classical_metrics_path: "outputs/13_classical_metrics/metrics/classical_metrics.csv"
+    classical_run_manifest_path: "outputs/13_classical_metrics/manifests/run_manifest.json"
+    lpips_metrics_path: "outputs/14_lpips_metrics/metrics/lpips_metrics.csv"
+    lpips_run_manifest_path: "outputs/14_lpips_metrics/manifests/run_manifest.json"
+    feature_metrics_path: "outputs/15_feature_similarity/metrics/feature_metrics.csv"
+    feature_embedding_manifest_path: "outputs/15_feature_similarity/manifests/embeddings.csv"
+    feature_embeddings_path: "outputs/15_feature_similarity/data/embeddings.npz"
+    feature_run_manifest_path: "outputs/15_feature_similarity/manifests/run_manifest.json"
+    spatial_diagnostics_path: "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv"
+    spatial_run_manifest_path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json"
+    local_consistency_path: "outputs/17_local_consistency_metrics/metrics/local_consistency.csv"
+    local_consistency_run_manifest_path: "outputs/17_local_consistency_metrics/manifests/run_manifest.json"
+    semantic_structural_path: "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv"
+    semantic_run_manifest_path: "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json"
+
+  output:
+    root: "outputs/22_damage_size_diffusion_uncertainty_extension"
+    candidates_path: "data/candidates.csv"
+    uncertainty_maps_path: "data/uncertainty_maps.npz"
+    metrics_path: "metrics/damage_size_uncertainty.csv"
+    restored_directory: "images/restored"
+    restored_path_template: "{case_id}/{candidate_id}.png"
+    uncertainty_image_directory: "images/uncertainty"
+    uncertainty_image_path_template: "{uncertainty_group_id}.png"
+    summary_figure_path: "figures/uncertainty_extension_summary.png"
+    map_manifest_path: "manifests/map_images.csv"
+    run_manifest_path: "manifests/run_manifest.json"
+    artifacts_path: "manifests/artifacts.csv"
+    validation_path: "validation/checks.csv"
+    candidate_checkpoint_path: "work/candidate_checkpoint.csv"
+    image_metrics_checkpoint_path: "work/image_uncertainty_checkpoint.csv"
+    lpips_metrics_checkpoint_path: "work/lpips_uncertainty_checkpoint.csv"
+    feature_manifest_checkpoint_path: "work/feature_embedding_checkpoint.csv"
+    feature_matrix_directory: "work/feature_embedding_matrices"
+    smoke_directory: "work/smoke"
+
+  frozen_boundary:
+    frozen_notebook_range: "01-21"
+    may_write_frozen_outputs: false
+    anchor_owner_notebook_id: "11"
+    anchor_output_root: "outputs/11_stable_diffusion_restoration"
+    anchor_seed: 2026
+    anchor_execution_role: "primary"
+    anchor_status: "completed"
+    reuse_policy: "reference_by_validated_path_and_checksum"
+    copy_anchor_images: false
+
+  population:
+    experiment_id: "damage_size_sensitivity"
+    model_id: "stable_diffusion_inpainting"
+    prompt_policy_id: "sd15_prompt_policy.v3"
+    prompt_variant_id: "p00_generic"
+    configuration_id: "sd15_inpaint_fixed_policy_v1"
+    expected_seeds: [2026, 2027, 2028, 2029]
+    generated_seeds: [2027, 2028, 2029]
+    group_keys: ["case_id", "prompt_policy_id", "prompt_variant_id", "configuration_id"]
+    target_damage_fractions: [0.02, 0.04, 0.06, 0.08, 0.10, 0.15, 0.20]
+    selection_policy: "all_damage_size_cases_post_freeze_extension.v1"
+    extension_execution_role: "uncertainty_extension"
+
+  generation_contract:
+    hf_model_id: "stable-diffusion-v1-5/stable-diffusion-inpainting"
+    model_revision: "8a4288a76071f7280aedbdb3253bdb9e9d5d84bb"
+    scheduler: "DDIMScheduler"
+    prompt: "a complete aged fine-art painting with seamless visual continuity, coherent composition, and a consistent colour palette, brushwork, canvas texture, lighting, and level of detail"
+    negative_prompt: "modern objects, text, watermark, signature, frame, border, added people, changed faces, extra objects, oversharpened, cartoon, digital art, photorealistic replacement, unrealistic texture, harsh seams"
+    num_inference_steps: 30
+    guidance_scale: 7.5
+    strength: 1.0
+    precision: "float16"
+    requested_device: "cuda"
+    allow_cpu_fallback: false
+    inference_width: 512
+    inference_height: 512
+    output_width: 768
+    output_height: 768
+    mask_threshold: 128
+    compositing_policy: "masked_composite_preserve_outside.v1"
+    safety_checker_policy: "disabled_research_dataset"
+    maximum_retries: 1
+    retry_seed_policy: "preserve_exact_seed"
+
+  regions:
+    policy_version: "evaluation_region_policy.v1"
+    mask_bbox_margin_pixels: 8
+    boundary_width_pixels: 3
+    pixel_regions:
+      - "full_image"
+      - "content_region"
+      - "masked_region"
+      - "mask_bbox_crop"
+      - "boundary_ring"
+      - "outside_mask_content"
+    learned_metric_regions:
+      - "content_region"
+      - "mask_bbox_crop"
+
+  metrics:
+    pixel_variability:
+      metric_names: ["pixel_rgb_std_mean", "pixel_rgb_std_p95"]
+      seed_standard_deviation_ddof: 0
+      value_unit: "normalized_rgb_0_1"
+    pixel_pairwise:
+      metric_names: ["pairwise_rgb_mae", "pairwise_rgb_rmse"]
+      unordered_pairs_only: true
+      value_unit: "normalized_rgb_0_1"
+    perceptual_pairwise:
+      metric_name: "pairwise_lpips_distance"
+      value_unit: "lpips_distance"
+    feature_pairwise:
+      metric_names:
+        clip_vit_b32: "pairwise_clip_cosine_distance"
+        dinov2_vits14: "pairwise_dinov2_cosine_distance"
+      value_unit: "cosine_distance"
+    combined_index:
+      retained: false
+      reason: "No empirically justified cross-family scaling or weighting exists."
+
+  reference_evidence:
+    row_scope: "frozen_seed_2026_anchor_only"
+    specifications:
+      - alias: "reference_mae_masked"
+        source: "classical"
+        filters: {metric_name: "mae", region_id: "masked_region"}
+        value_column: "restored_value"
+        value_unit: "normalized_absolute_error"
+        metric_family: "classical_reference"
+      - alias: "reference_psnr_content"
+        source: "classical"
+        filters: {metric_name: "psnr", region_id: "content_region"}
+        value_column: "restored_value"
+        value_unit: "decibel"
+        metric_family: "classical_reference"
+      - alias: "reference_ssim_crop"
+        source: "classical"
+        filters: {metric_name: "ssim", region_id: "mask_bbox_crop"}
+        value_column: "restored_value"
+        value_unit: "ssim"
+        metric_family: "classical_reference"
+      - alias: "reference_lpips_crop"
+        source: "lpips"
+        filters: {metric_name: "lpips", region_id: "mask_bbox_crop"}
+        value_column: "restored_value"
+        value_unit: "lpips_distance"
+        metric_family: "perceptual_reference"
+      - alias: "reference_clip_crop"
+        source: "feature"
+        filters: {metric_name: "clip_cosine_similarity", region_id: "mask_bbox_crop"}
+        value_column: "restored_value"
+        value_unit: "cosine_similarity"
+        metric_family: "feature_reference"
+      - alias: "reference_dino_crop"
+        source: "feature"
+        filters: {metric_name: "dinov2_cosine_similarity", region_id: "mask_bbox_crop"}
+        value_column: "restored_value"
+        value_unit: "cosine_similarity"
+        metric_family: "feature_reference"
+      - alias: "spatial_restored_error_p95_masked"
+        source: "spatial"
+        filters: {region_id: "masked_region"}
+        value_column: "restored_error_p95"
+        value_unit: "normalized_rgb_error"
+        metric_family: "spatial_reference"
+      - alias: "spatial_improved_fraction_masked"
+        source: "spatial"
+        filters: {region_id: "masked_region"}
+        value_column: "improved_pixel_fraction"
+        value_unit: "fraction"
+        metric_family: "spatial_reference"
+      - alias: "spatial_worsened_fraction_masked"
+        source: "spatial"
+        filters: {region_id: "masked_region"}
+        value_column: "worsened_pixel_fraction"
+        value_unit: "fraction"
+        metric_family: "spatial_reference"
+      - alias: "texture_error_p95_crop"
+        source: "local_consistency"
+        filters: {metric_name: "local_texture_error_p95", region_id: "mask_bbox_crop"}
+        value_column: "restored_value"
+        value_unit: "normalized_error"
+        metric_family: "local_consistency_reference"
+      - alias: "colour_delta_e_masked"
+        source: "local_consistency"
+        filters: {metric_name: "delta_e_ciede2000_mean", region_id: "masked_region"}
+        value_column: "restored_value"
+        value_unit: "CIEDE2000"
+        metric_family: "local_consistency_reference"
+      - alias: "seam_gradient_mismatch"
+        source: "local_consistency"
+        filters: {metric_name: "boundary_gradient_mismatch", region_id: "boundary_ring"}
+        value_column: "restored_value"
+        value_unit: "normalized_error"
+        metric_family: "local_consistency_reference"
+      - alias: "seam_ssim_error"
+        source: "local_consistency"
+        filters: {metric_name: "boundary_local_ssim_map_error", region_id: "boundary_ring"}
+        value_column: "restored_value"
+        value_unit: "ssim_error"
+        metric_family: "local_consistency_reference"
+      - alias: "semantic_clip_local_similarity_crop"
+        source: "semantic"
+        filters: {metric_name: "local_patch_cosine_similarity", feature_model_id: "clip_vit_b32", region_id: "mask_bbox_crop", summary_statistic: "mean"}
+        value_column: "restored_value"
+        value_unit: "cosine_similarity"
+        metric_family: "semantic_reference"
+      - alias: "semantic_dino_local_similarity_crop"
+        source: "semantic"
+        filters: {metric_name: "local_patch_cosine_similarity", feature_model_id: "dinov2_vits14", region_id: "mask_bbox_crop", summary_statistic: "mean"}
+        value_column: "restored_value"
+        value_unit: "cosine_similarity"
+        metric_family: "semantic_reference"
+      - alias: "semantic_dino_reference_affinity_content"
+        source: "semantic"
+        filters: {metric_name: "reference_affinity_weighted_similarity", feature_model_id: "dinov2_vits14", region_id: "content_region", summary_statistic: "reference_affinity_weighted_mean"}
+        value_column: "restored_value"
+        value_unit: "cosine_similarity"
+        metric_family: "semantic_reference"
+
+  execution:
+    progress_interval_candidates: 10
+    checkpoint_interval_candidates: 5
+    progress_interval_groups: 10
+    checkpoint_interval_groups: 10
+    progress_interval_embeddings: 100
+    checkpoint_interval_embeddings: 100
+    lpips_batch_size: 12
+    compute_checksums: true
+    resume_enabled: true
+    overwrite_existing: false
+    stale_file_action: "remove"
+    png_compress_level: 6
+    atomic_replace_attempts: 10
+    atomic_replace_retry_seconds: 0.125
+    work_cleanup_policy: "remove_after_canonical_outputs_validate"
+
+  expected_counts:
+    cases: 35
+    paintings: 5
+    damage_levels_per_painting: 7
+    frozen_anchor_candidates: 35
+    new_candidates: 105
+    total_candidates: 140
+    seeds_per_group: 4
+    uncertainty_groups: 35
+    unordered_pairs_per_group: 6
+    unordered_candidate_pairs: 210
+    pixel_group_summary_rows: 420
+    pixel_pair_rows: 2520
+    lpips_pair_rows: 420
+    feature_pair_rows: 840
+    uncertainty_only_metric_rows: 4200
+    reference_specifications: 16
+    anchor_reference_rows: 560
+    total_metric_rows: 4760
+    raw_uncertainty_maps: 35
+    uncertainty_overlay_images: 35
+
+  evidence_policy:
+    independent_unit: "painting_trajectory"
+    repeated_unit: "damage_level_nested_within_painting"
+    stochastic_unit: "seed_nested_within_case"
+    interpretation: "empirical_seed_variability_proxy_not_calibrated_confidence"
+    low_uncertainty_proves_correctness: false
+    category_effect_permitted: false
+    style_effect_permitted: false
+    combined_index_retained: false
+
+  known_limitations:
+    - "Repeated-seed variability is empirical generative variation, not calibrated confidence or restoration correctness."
+    - "The five painting trajectories do not independently identify category or style effects."
+    - "Only the frozen seed-2026 anchor has upstream reference, spatial, local-consistency, and semantic evidence."
+    - "CLIP and DINOv2 are general-purpose representation proxies, not conservation-specific judgments."
+    - "LPIPS is a learned perceptual proxy and is evaluated only over approved contiguous regions."
+    - "The extension preserves the frozen Notebook 11 model and prompt contract and does not tune settings by damage level."
+    - "CUDA execution may not be byte-identical across different hardware or software stacks."
