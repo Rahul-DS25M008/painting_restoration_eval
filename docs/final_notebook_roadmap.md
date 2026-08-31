@@ -1963,7 +1963,11 @@ Produce the final delivery package containing:
 - complete artifact index;
 - final package manifest.
 
-Large reports should use linked images and must respect Git/LFS constraints.
+Standalone HTML reports must follow the approved self-contained embedding policy:
+required narrative figures and representative images remain visible when the HTML
+is downloaded alone, while unrestricted full-resolution collections are not
+embedded. Canonical sources, checksums, report size, and Git/LFS constraints must
+remain auditable.
 
 ### Canonical outputs
 

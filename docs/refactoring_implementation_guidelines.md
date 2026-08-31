@@ -224,13 +224,61 @@ analysis, comparison, or thesis-level result as a standalone document.
   or evaluation pipeline. Its wording and structure must suit the notebook rather
   than follow a fixed conclusion template.
 
+#### Thesis-question alignment and conclusion density
+
+- Before planning any important report, inspect the current thesis proposal under
+  `docs/proposal/` and the current notebook roadmap. Treat the proposal's central
+  research questions as thematic anchors and the approved roadmap and
+  implementation contracts as the authoritative expanded scope. The proposal is
+  intentionally earlier and may not describe later additions such as region-aware
+  colour and seam evidence, robustness and sensitivity analysis, failure flags,
+  XAI, human evaluation, model cards, deployment, or reproducibility packaging.
+- Reports must explicitly show which thesis research question, practical output,
+  or approved scope extension each major analysis helps answer. This may use a
+  concise research-question orientation near the beginning, section-level
+  question labels, conclusion callouts, and a final contribution-to-thesis
+  synthesis. Do not force unrelated evidence into a research question merely to
+  complete a template.
+- The recurring thesis themes are trustworthy and museum-oriented evaluation;
+  evidence beyond traditional image similarity; conditional model behaviour
+  across paintings, styles, damage geometries, and degradations; uncertainty and
+  speculative restoration regions; transparent metric disagreement; and support
+  for human conservation judgement rather than replacement of that judgement.
+  Report emphasis must be adapted to the producing notebook while remaining
+  visibly connected to these themes.
+- Reports should draw as many defensible conclusions as the validated evidence
+  supports. Do not stop at listing metric values or repeatedly defer all
+  interpretation to a later notebook. A conclusion should normally state the
+  observed result, its metric-defined interpretation, the population and scope
+  to which it applies, an important nearby limitation, and its relevance to the
+  notebook's thesis question or approved extension.
+- Conclusions must remain proportionate to the evidence. Computational metrics
+  may support conclusions about measured fidelity, perceptual similarity,
+  feature consistency, texture, colour, seams, spatial change, uncertainty, or
+  other declared constructs. They must not be escalated into claims of historical
+  authenticity, physical conservation suitability, or museum approval unless
+  suitable evidence later exists for those claims.
+
 #### Evidence selection and interpretation
 
-- Reports must remain clear and reasonably concise. Use a balanced combination of
-  quantitative results, plain-language interpretation, tables, plots, source or
-  restoration images where relevant, diagnostic visualizations, and concise
-  methodological context. Do not create exhaustive metric dumps or large
-  collections of numbers without a clear interpretive purpose.
+- Reports must remain clear without becoming artificially terse. Use a healthy
+  mixture of quantitative results, conclusions, plain-language interpretation,
+  short paragraphs, finding bullets, tables, plots, source and restoration
+  images, diagnostic visualizations, captions, and concise methodological
+  context. Paragraphs should carry connected reasoning and synthesis; bullets
+  should improve scanning of findings, conditions, strengths, weaknesses, and
+  limitations rather than replace narrative entirely.
+- Use as many scientifically useful images, restoration panels, crops, plots,
+  heatmaps, overlays, and comparison views as the evidence and report purpose can
+  support without repetitive padding. Prefer visual evidence over another block
+  of prose when it makes a spatial, perceptual, comparative, or failure-pattern
+  conclusion easier to inspect. Do not enforce a low arbitrary visual cap, but
+  every included visual must have a declared question, auditable selection rule,
+  readable caption, and interpretive role.
+- Avoid both extremes: do not create a text-heavy report with only token figures,
+  and do not create an unexplained image gallery or exhaustive metric dump. Group
+  related restorations into readable panels, alternate analytical and visual
+  sections, and explain what each visual adds beyond its accompanying metrics.
 - Select main-narrative quantitative results because they answer a scientific
   question or represent a distinct evidence family, not merely because a metric
   exists. Where several metrics capture substantially similar behaviour, use a
@@ -288,13 +336,33 @@ analysis, comparison, or thesis-level result as a standalone document.
 
 #### Report assets, readability, and portability
 
-- Report planning must define how figures and images are supplied. Large images
-  must be linked rather than embedded as base64 payloads.
+- Report planning must define how figures and images are supplied. Unless the
+  user explicitly approves a multi-file report package, a canonical standalone
+  HTML report must be self-contained: downloading and opening that HTML file by
+  itself must preserve every narrative figure and representative image required
+  to understand the report.
+- Self-contained HTML reports may embed declared, report-relevant figures and
+  resized representative images as data URIs. Do not embed unrestricted
+  full-resolution image collections. Prepare web-sized display copies in memory,
+  retain aspect ratio, use an appropriate browser-supported format and quality,
+  and keep the resulting report size proportionate to its scientific purpose.
+- Canonical figures remain separately persisted and registered even when a
+  display copy is also embedded in the HTML. The report should record source
+  artifact paths and checksums for traceability, while optional links to
+  full-resolution originals may supplement—but must not replace—the visible
+  embedded evidence.
+- A small canonical figure list does not cap the number of visuals inside the
+  report. Additional presentation-only plots, crops, restoration grids,
+  thumbnails, and diagnostic composites may be generated in memory from
+  validated canonical evidence and embedded directly in the standalone HTML
+  without becoming separate output files. Declare and count these embedded
+  views in report metadata so their evidence sources and construction rules
+  remain auditable.
 - Report-specific composites, thumbnails, or presentation figures may be stored
   under the producing notebook's output root when they are declared canonical
-  report assets. Direct links to upstream artifacts must use stable
-  repository-relative paths and be recorded as report dependencies. Do not
-  silently duplicate large upstream image collections.
+  report assets. Upstream artifacts used to construct embedded display images
+  must be recorded as report dependencies. Do not silently duplicate large
+  upstream image collections as additional persistent files.
 - Figures and tables must use readable labels, units, metric directionality,
   legends, captions, and colour scales. Important visual evidence needs concise
   alternative text or an equivalent descriptive caption.
@@ -310,6 +378,33 @@ analysis, comparison, or thesis-level result as a standalone document.
 
 - During batch planning, the assistant must present a notebook-specific report
   skeleton for user review before generating report-implementation cells.
+- After the skeleton, the assistant must also render a realistic chat-only mock
+  report at approximately the intended final verbosity and visual density. Do
+  not create or save a mock-report file in the repository.
+- The chat mock report must show how the report will actually read, not merely
+  repeat its headings. It must include representative prose, explanations after
+  quantitative results, captions, limitations near affected claims, and the
+  proposed placement and approximate number of tables, figures, plots, and
+  restoration or diagnostic images.
+- The mock report must demonstrate the intended mixture of paragraphs, bullet
+  points, tables, metric summaries, conclusion callouts, plots, restorations, and
+  diagnostic images. It must contain enough plausible section-level conclusions
+  for the user to judge interpretive depth rather than showing only one executive
+  summary and mostly placeholders.
+- The mock report must identify the proposal research question or approved scope
+  extension addressed by each major results section and must demonstrate how the
+  final synthesis will connect notebook-specific findings back to the central
+  thesis narrative.
+- Before real results exist, use clearly labelled fictional metric values and
+  numbered visual placeholders such as `Image 1`, `Figure 2`, or `Plot 3`.
+  Placeholders should state what would be visible—for example clean, damaged,
+  restored, mask, crop, heatmap, or multi-model panel—so the user can judge the
+  proposed image density and narrative flow. These fictional values and
+  placeholders are planning aids only and must never be copied into the
+  implemented report.
+- Report approval therefore covers both scientific organization and presentation
+  density: the user may request more or less explanation, images, plots, tables,
+  captions, or technical detail before implementation begins.
 - The skeleton must show the intended narrative flow rather than only generic
   headings. For every proposed section it should state:
   - the scientific question or communication purpose;
@@ -346,13 +441,22 @@ Before notebook completion, validate at minimum:
 
 - expected report paths and report counts;
 - non-empty HTML content and expected high-level components;
-- successful local resolution of owned and upstream-linked assets;
-- absence of unintended base64 image payloads;
+- successful rendering of every intended embedded figure and representative
+  image when the HTML is opened without its original output directory;
+- absence of unintended, undeclared, malformed, or excessively large embedded
+  payloads, together with validation of expected payload counts and MIME types;
+- no required narrative image or figure that depends only on a local filesystem
+  path or repository-relative link;
 - valid internal links where applicable;
 - recorded input dependencies and source run identifiers;
 - artifact-manifest registration for the report and its owned assets;
 - consistency between displayed counts, denominators, coverage statements, and
   canonical evidence;
+- traceable alignment between major report conclusions and the relevant proposal
+  research question, practical output, or documented roadmap extension;
+- a balanced rendered mixture of narrative, finding bullets, tables, plots,
+  restorations or diagnostic images, captions, and scoped conclusions, without
+  long avoidable text walls or unexplained visual galleries;
 - clear separation between scientific validation failures and HTML/rendering
   failures.
 
@@ -1136,7 +1240,11 @@ If Python 3.12 is adopted, the change must be documented with compatibility evid
 - Do not commit environments, caches, notebook checkpoints, replaceable temporary files, or unnecessary logs.
 - Generated images under notebook-owned `outputs/` are covered by existing Git LFS patterns.
 - After migration, no authoritative generated images should remain under `data/processed/`.
-- Large HTML reports should use linked images rather than embedded base64 content.
+- Standalone HTML reports may embed declared web-sized figures and
+  representative images so the report remains usable when downloaded alone.
+  Avoid embedding unrestricted full-resolution collections, and register the
+  canonical source artifacts and checksums used to construct each embedded
+  display image.
 - Notebook sizes should remain reviewable; very large embedded outputs must be reduced.
 
 ## 28. Error correction workflow
