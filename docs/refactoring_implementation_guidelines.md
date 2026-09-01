@@ -1491,4 +1491,26 @@ Recommended cleanup order:
 7. Create only foundational folders required before Notebook 01.
 8. Let each notebook create its own output subfolders during execution.
 
+### 30.1 Post-generation output closure audit
+
+After the last dataset-generation, restoration, or metric-production notebook
+needed by the remaining analytical stages has completed, perform another
+read-only output audit before continuing. This audit must:
+
+- compare every numbered notebook-owned output tree with its final artifact
+  manifest and approved contract;
+- identify legacy global `outputs/figures/`, `outputs/metrics/`,
+  `outputs/reports/`, `outputs/manifests/`, and `outputs/validation/` trees;
+- identify empty or replaceable `work/`, checkpoint, temporary, cache, and smoke-
+  test material;
+- preserve `outputs/inventory/` as the sole global output exception;
+- preserve every declared canonical artifact and every upstream input required by
+  future notebooks;
+- present exact resolved deletion targets and file counts before deletion; and
+- refresh the inventory after the user completes or explicitly authorizes the
+  cleanup.
+
+The audit is read-only by default. Do not delete legacy or temporary material
+automatically merely because the pipeline has moved past its producing notebook.
+
 Broad pre-creation of all 36 output trees is discouraged because it creates empty and misleading folders.

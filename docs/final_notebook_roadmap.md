@@ -1558,7 +1558,22 @@ validation/checks.csv
 **Notebook:** `27_failure_taxonomy_and_trustworthiness_flags.ipynb`\
 **Origin:** New Notebook  
 **Output root:** `outputs/27_failure_taxonomy_and_trustworthiness_flags/`\
-**Depends on:** Notebooks 13–26
+**Depends on:** Notebook 08 for case identity, Notebooks 09–12 for candidate identity,
+and Notebooks 13–26 for analytical evidence
+
+### Approved population
+
+- 1,240 primary comparison candidates: 1,230 core Telea, LaMa, and Stable
+  Diffusion candidates plus the bounded ten-case SDXL subset;
+- 660 candidates in complete supported repeated-seed groups: 520 from the
+  canonical uncertainty experiment and 140 from the damage-size extension;
+- 115 candidates shared by the primary and repeated-seed populations;
+- 545 uncertainty-only candidates;
+- 1,785 unique candidates in the complete Notebook 27 union.
+
+The population role must remain explicit. Uncertainty-only seeds and prompt arms
+must not enter ordinary model comparison, and bounded SDXL evidence must not be
+presented as full-population evidence.
 
 ### Failure taxonomy
 
@@ -1566,17 +1581,17 @@ Candidate categories include:
 
 - residual masked-region error;
 - excessive blur;
-- structural collapse;
+- structural-collapse proxy;
 - semantic inconsistency proxy;
-- repeated texture;
+- repeated-texture proxy;
 - texture smoothing;
 - texture discontinuity;
-- colour bleeding;
+- colour-bleeding proxy;
 - colour drift;
 - boundary seam;
 - mask spillover;
 - outside-mask alteration;
-- composition change;
+- composition-change proxy;
 - unstable multi-seed completion;
 
 ### Trustworthiness flags
@@ -1588,7 +1603,7 @@ Independent flags include:
 - structural inconsistency;
 - texture inconsistency;
 - colour inconsistency;
-- visible boundary artifact;
+- visible boundary-artifact proxy;
 - outside-mask alteration;
 - restoration instability;
 - metric disagreement;
@@ -1603,6 +1618,16 @@ Independent flags include:
 - Analyze co-occurrence between uncertainty, reference error, semantic, texture, colour, seam evidence, and rule-defined failure assignments without describing the result as calibrated confidence.
 - Distinguish missing evidence from passing evidence.
 - Test internal rule consistency.
+- Use transparent operational warning and critical thresholds rather than
+  learned failure labels: fit the initial 90th and 97.5th percentile adverse-tail
+  rules on the 1,080 non-zero primary core candidates, exclude zero controls and
+  bounded SDXL from fitting, preserve experiment and indicator strata, and keep
+  prompt arms separate for uncertainty evidence.
+- Treat percentile severity as rule strength and review priority, not
+  conservation severity. Notebook 28 owns threshold and aggregation sensitivity.
+- Persist the complete candidate-by-category and candidate-by-flag grids so that
+  `insufficient_evidence` and `not_applicable` remain distinct from
+  `not_triggered`.
 - Generate recommendation categories such as:
   - suitable for preliminary inspection;
   - specialist review required;
@@ -1616,12 +1641,16 @@ Independent flags include:
 data/failure_taxonomy.csv
 metrics/failure_assignments.csv
 metrics/trustworthiness_flags.csv
-reports/flag_definitions.md
+reports/flag_definitions.html
 figures/failure_taxonomy.png
 manifests/run_manifest.json
 manifests/artifacts.csv
 validation/checks.csv
 ```
+
+The HTML report is self-contained and retains the approved mock's fifteen-section
+structure, visual atlas, evidence-to-assertion conclusions, nearby limitations,
+and embedded diagnostic images when downloaded without the repository.
 
 ---
 

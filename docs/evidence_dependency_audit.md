@@ -263,7 +263,7 @@ quality or trust score.
 
 | Notebook | Supported evidence contract | Required scope discipline |
 |---|---|---|
-| 27 Failure taxonomy | reference, spatial, texture, colour, seam, semantic, uncertainty, and disagreement evidence | flags are rule-defined decision support; retain only computationally supportable failure categories |
+| 27 Failure taxonomy | 1,785-candidate primary-plus-supported-uncertainty union; reference, spatial, texture, colour, seam, semantic-proxy, uncertainty, and disagreement evidence | keep population roles and prompt arms separate; persist complete ledgers; missing evidence is not passing; flags are operational decision support rather than confidence or approval |
 | 28 Metric/region ablation | N08 ablation memberships, N21 rankings, N27 rules | preserve metric-family disagreement; do not create a universal trust score |
 | 29 XAI/retrieval | embeddings, numeric maps, counterfactual experiment structures, rule-defined flags | retrieval labels are rule-defined; seed comparisons use only complete uncertainty groups |
 | 30 Model cards/compute | model manifests, runtimes, hardware, inventory, primary model sources | larger-dataset and SDXL costs are projections, not executed results |
@@ -295,7 +295,7 @@ reintroduced without new evidence and an updated audit:
 The scientific freeze does not make legacy global output folders canonical.
 `outputs/inventory/` remains the sole approved global exception.
 
-The audit found 469 tracked legacy files under:
+The post-Notebook-26 audit found 56 remaining tracked legacy files under:
 
 ```text
 outputs/figures/
@@ -308,6 +308,11 @@ outputs/validation/
 It also found legacy notebooks whose numbers overlap later roadmap stages. They
 remain non-canonical until a separate exact-path migration/deletion audit is
 approved. No future notebook may consume them merely because they exist.
+
+The same audit found empty non-canonical runtime directories under the output
+roots of Notebooks 10, 11, 12, 25, and 26. These global legacy trees and empty
+runtime directories may be removed manually after reviewing the exact path list;
+`outputs/inventory/` remains preserved.
 
 ## 9. Update protocol
 
