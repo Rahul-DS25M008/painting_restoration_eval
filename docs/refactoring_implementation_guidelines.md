@@ -339,6 +339,46 @@ analysis, comparison, or thesis-level result as a standalone document.
 - State important limitations close enough to affected conclusions for correct
   interpretation. A short consolidated limitations section may also be included.
 
+#### Evidence-to-assertion rule
+
+Reports must not stop at factual observations, metric values, or descriptions of
+plot direction. Every important result in the main narrative must be followed by
+one or two short, plain-language assertions explaining what the result means for
+the evaluated restoration behaviour and, where the comparison supports it, which
+model was better, worse, more stable, less stable, stronger, or weaker within the
+stated scope.
+
+For example, a statement such as "thin scratches produced the smallest variation
+for Telea and LaMa" must be followed by an interpretation such as: "Both methods
+were therefore dependable for this controlled thin-scratch population. If LaMa's
+dispersion was lower on the relevant local metrics, LaMa was the more robust of
+the two for thin scratches; if their uncertainty interval or effect evidence did
+not resolve the difference, the comparison remains inconclusive."
+
+Apply this rule as follows:
+
+- state the factual result first, then the practical assertion;
+- name the relevant model, metric or evidence family, region, experiment, and
+  population when needed to prevent the assertion from sounding universal;
+- use direct comparative language such as `better`, `worse`, `more robust`, or
+  `less stable` when the validated direction and evidence support it;
+- explicitly say `inconclusive` or `no clear difference` when sampling limits,
+  intervals, corrected tests, ties, or metric disagreement do not support a
+  binary conclusion;
+- explain the likely restoration consequence in simple terms, such as stronger
+  boundary continuity, worse colour matching, more variable structure, or more
+  dependable reconstruction under the tested condition;
+- avoid merely restating the number in different words and avoid adding generic
+  conclusions that are not specific to the displayed evidence;
+- preserve nearby uncertainty and scope limits, and never turn a metric-specific
+  better/worse assertion into historical-authenticity, conservation-approval,
+  or universal model-superiority language.
+
+The approved mock should reserve these assertion or conclusion positions, and
+the final report must populate them from validated canonical evidence rather
+than weakening them into descriptive commentary or replacing them with a new
+narrative structure.
+
 #### Canonical evidence and permitted report processing
 
 - Conclusions must derive only from validated canonical evidence produced by the

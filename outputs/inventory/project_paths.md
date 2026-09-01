@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-09-01T01:32:54.553284Z`
-- Registered artifacts: 135
+- Updated: `2026-09-01T10:59:01.335323Z`
+- Registered artifacts: 140
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -64,6 +64,10 @@
 | mask_robustness.figure_examples | 06_mask_robustness_dataset_generation | `outputs/06_mask_robustness_dataset_generation/figures/robustness_examples.png` | representative_visual_evidence | passed |
 | mask_robustness.generation_audit | 06_mask_robustness_dataset_generation | `outputs/06_mask_robustness_dataset_generation/metrics/generation_audit.csv` | generation_audit | passed |
 | mask_robustness.masks | 06_mask_robustness_dataset_generation | `outputs/06_mask_robustness_dataset_generation/images/masks` | mask_collection | passed |
+| mask_robustness_analysis.metrics | 24_mask_robustness_analysis | `outputs/24_mask_robustness_analysis/metrics/mask_robustness_analysis.csv` | mask_robustness_scalar_evidence | passed |
+| mask_robustness_analysis.ranking_figure | 24_mask_robustness_analysis | `outputs/24_mask_robustness_analysis/figures/ranking_stability.png` | ranking_and_conclusion_stability | passed |
+| mask_robustness_analysis.report | 24_mask_robustness_analysis | `outputs/24_mask_robustness_analysis/reports/mask_robustness_analysis.html` | thesis_aligned_mask_robustness_report | passed |
+| mask_robustness_analysis.robustness_figure | 24_mask_robustness_analysis | `outputs/24_mask_robustness_analysis/figures/robustness_variance.png` | quality_anchor_robustness_dispersion | passed |
 | masks.audit | 03_canonical_mask_generation | `outputs/03_canonical_mask_generation/metrics/mask_audit.csv` | audit_reporting | passed |
 | masks.canonical | 03_canonical_mask_generation | `outputs/03_canonical_mask_generation/data/masks.csv` | primary_downstream | passed |
 | masks.canonical_images | 03_canonical_mask_generation | `outputs/03_canonical_mask_generation/images/masks` | primary_downstream | passed |
@@ -141,3 +145,4 @@
 | validation.21_multi_model_comparison | 21_multi_model_comparison | `outputs/21_multi_model_comparison/validation/checks.csv` | validation_evidence | passed |
 | validation.22_damage_size_diffusion_uncertainty_extension | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/validation/checks.csv` | validation_evidence | passed |
 | validation.23_damage_size_sensitivity_analysis | 23_damage_size_sensitivity_analysis | `outputs/23_damage_size_sensitivity_analysis/validation/checks.csv` | validation_evidence | passed |
+| validation.24_mask_robustness_analysis | 24_mask_robustness_analysis | `outputs/24_mask_robustness_analysis/validation/checks.csv` | validation_evidence | passed |

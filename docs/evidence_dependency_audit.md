@@ -143,11 +143,44 @@ seed variability is not calibrated confidence. The analysis does not estimate
 independent category or style effects and does not establish a universal damage
 threshold or conservation approval.
 
+Notebook 24, `24_mask_robustness_analysis.ipynb`, subsequently completed the
+approved input-mask robustness analysis with its completion gate passed. It:
+
+- analyzed five paintings, three fixed family–area conditions, 15 matched
+  robustness groups, five mask variants per group, 75 cases, and 225 preselected
+  primary candidates from OpenCV Telea, LaMa, and Stable Diffusion Inpainting;
+- retained 11 quality anchors as separate evidence and persisted 5,373 unique
+  canonical rows covering variant quality, within-group dispersion, paired model
+  contrasts, family-balanced ranks, winner stability, morphology associations,
+  painting and fixed family–area profiles, and operational runtime dispersion;
+- treated paintings as the independent units and mask variants as repeated
+  observations nested within painting–family groups;
+- found LaMa to be the broadest descriptive robustness leader, while none of the
+  132 paired model contrasts or 297 exploratory morphology associations survived
+  FDR correction;
+- preserved the design boundary that `scratch_thin`, `loss_small`, and
+  `loss_large` are paired with target damaged fractions of 2%, 4.5%, and 12.5%,
+  so independent mask-family and damage-size effects cannot be separated;
+- produced two canonical figures and a self-contained 13-section HTML report
+  with 10 analytical views, eight restoration or diagnostic panels, 18 embedded
+  images, 149 panel tiles, and no external image dependency;
+- passed all 136 validation checks and all nine roadmap traceability requirements
+  with zero blocking or warning failures;
+- registered exactly five non-self-referential artifacts and seven canonical
+  files under `outputs/24_mask_robustness_analysis/`.
+
+Notebook 24 is now the canonical scalar and report source for the controlled
+mask-placement robustness experiment. Downstream consumers must preserve the
+matched five-variant grouping, the five-painting dependency structure, metric-
+family disagreement, and the distinction between input-mask robustness and
+stochastic candidate uncertainty. Low dispersion does not establish restoration
+quality, historical authenticity, or conservation approval. Runtime remains
+operational evidence and must not enter quality ranking.
+
 ## 6. Remaining-notebook evidence gate
 
 | Notebook | Supported evidence contract | Required scope discipline |
 |---|---|---|
-| 24 Mask robustness | N06 variants, three-model primary metrics, geometry fields | use robustness/sensitivity terminology; variants are nested within groups and paintings |
 | 25 Synthetic degradation | 50 eligible cases, primary model metrics, six-case SDXL subset | compare only eligibility-approved combinations; analyze painting rather than infer category/style effects |
 | 26 Grouped statistics | N13–25 canonical tables | condition every test on actual coverage and independent unit; semantic/feature affinity is not human plausibility |
 | 27 Failure taxonomy | reference, spatial, texture, colour, seam, semantic, uncertainty, and disagreement evidence | flags are rule-defined decision support; retain only computationally supportable failure categories |

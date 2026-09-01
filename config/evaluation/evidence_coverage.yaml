@@ -400,10 +400,69 @@ evidence_coverage:
 
     - notebook_id: "24"
       stem: "24_mask_robustness_analysis"
-      status: "planned_supported"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
       required_evidence: ["n06_robustness_groups", "n09_n11_primary_candidates", "n13_n20_metric_families"]
       terminology: "input_mask_robustness"
-      prohibited_claims: ["mask_variation_is_generative_uncertainty", "independent_category_effect"]
+      validated_population:
+        paintings: 5
+        mask_families: 3
+        robustness_groups: 15
+        variants_per_group: 5
+        cases: 75
+        primary_candidates: 225
+        candidates_by_model:
+          opencv_telea: 75
+          lama: 75
+          stable_diffusion_inpainting: 75
+        quality_anchors: 11
+        canonical_analysis_rows: 5373
+        validation_checks: 136
+        roadmap_requirements: 9
+        analytical_report_views: 10
+        report_visual_panels: 8
+        report_embedded_images: 18
+        report_external_images: 0
+        report_tile_count: 149
+        canonical_output_files: 7
+      primary_artifacts:
+        - path: "outputs/24_mask_robustness_analysis/metrics/mask_robustness_analysis.csv"
+          rows: 5373
+          schema_version: "mask_robustness_analysis.v1"
+        - path: "outputs/24_mask_robustness_analysis/figures/robustness_variance.png"
+        - path: "outputs/24_mask_robustness_analysis/figures/ranking_stability.png"
+        - path: "outputs/24_mask_robustness_analysis/reports/mask_robustness_analysis.html"
+        - path: "outputs/24_mask_robustness_analysis/validation/checks.csv"
+          rows: 136
+      supported_scope:
+        - "matched_five_variant_input_mask_robustness"
+        - "within_group_quality_dispersion"
+        - "paired_painting_level_model_robustness_contrasts"
+        - "family_balanced_variant_ranking_and_conclusion_stability"
+        - "exploratory_within_group_morphology_and_location_associations"
+        - "painting_and_fixed_family_area_profiles"
+        - "operational_runtime_dispersion_separate_from_quality"
+      report_contract:
+        section_count: 13
+        self_contained: true
+        mock_to_final_traceability_passed: true
+        required_visuals_depend_on_external_links: false
+      downstream_contract:
+        - "use_mask_robustness_analysis_csv_as_the_canonical_scalar_source"
+        - "retain_painting_as_the_independent_unit"
+        - "retain_mask_variants_as_repeated_observations_nested_within_painting_family_groups"
+        - "do_not_interpret_input_mask_robustness_as_stochastic_uncertainty_or_calibrated_confidence"
+        - "do_not_separate_mask_family_from_its_fixed_target_damage_fraction"
+        - "keep_runtime_out_of_quality_ranking"
+      prohibited_claims:
+        - "mask_variation_is_generative_uncertainty"
+        - "independent_mask_family_effect"
+        - "independent_damage_size_effect"
+        - "independent_category_effect"
+        - "independent_style_effect"
+        - "causal_morphology_effect"
+        - "historical_authenticity"
+        - "conservation_approval"
 
     - notebook_id: "25"
       stem: "25_synthetic_degradation_analysis"

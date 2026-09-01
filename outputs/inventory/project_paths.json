@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-01T01:32:54.553284Z",
+  "updated_at_utc": "2026-09-01T10:59:01.335323Z",
   "artifacts": [
     {
       "artifact_key": "classical_metrics.distributions",
@@ -813,6 +813,62 @@
       "row_count": 75,
       "file_count": 75,
       "checksum": "e2242917842a02adf6b7feb1d25840d03aa356ee94d8d89a40f01c11b518b02b"
+    },
+    {
+      "artifact_key": "mask_robustness_analysis.metrics",
+      "producer_notebook": "24_mask_robustness_analysis",
+      "relative_path": "outputs/24_mask_robustness_analysis/metrics/mask_robustness_analysis.csv",
+      "artifact_type": "canonical_metrics_table",
+      "artifact_role": "mask_robustness_scalar_evidence",
+      "schema_version": "mask_robustness_analysis.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "mask_robustness",
+      "validation_status": "passed",
+      "row_count": 5373,
+      "file_count": 1,
+      "checksum": "5dd8c7144ed16534634c7a1fbba4128db2f154789a497aca397481cd351d60ed"
+    },
+    {
+      "artifact_key": "mask_robustness_analysis.ranking_figure",
+      "producer_notebook": "24_mask_robustness_analysis",
+      "relative_path": "outputs/24_mask_robustness_analysis/figures/ranking_stability.png",
+      "artifact_type": "analytical_figure",
+      "artifact_role": "ranking_and_conclusion_stability",
+      "schema_version": "mask_ranking_stability_figure.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "mask_robustness",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "54bf95fb3ed2f029551d024fc61319cc53a345fbd38e6b20dc10ec25fbab166f"
+    },
+    {
+      "artifact_key": "mask_robustness_analysis.report",
+      "producer_notebook": "24_mask_robustness_analysis",
+      "relative_path": "outputs/24_mask_robustness_analysis/reports/mask_robustness_analysis.html",
+      "artifact_type": "self_contained_html_report",
+      "artifact_role": "thesis_aligned_mask_robustness_report",
+      "schema_version": "approved_mock_aligned_self_contained_mask_robustness_report.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "mask_robustness",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "b3eb57d6f2b7d6cdec006d4ec97a326ee25a11f6ddcdada957bfb4bfcfd8668d"
+    },
+    {
+      "artifact_key": "mask_robustness_analysis.robustness_figure",
+      "producer_notebook": "24_mask_robustness_analysis",
+      "relative_path": "outputs/24_mask_robustness_analysis/figures/robustness_variance.png",
+      "artifact_type": "analytical_figure",
+      "artifact_role": "quality_anchor_robustness_dispersion",
+      "schema_version": "mask_robustness_figure.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "mask_robustness",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "b78881a07b2c51cb0ae38c412c2253e56f9c866b59983f0fbb076ecbb57a5722"
     },
     {
       "artifact_key": "masks.audit",
@@ -1891,6 +1947,20 @@
       "row_count": 115,
       "file_count": 1,
       "checksum": "ef8c825c8d1372aefa4eaff540ae20ec6928c7d40ff22eb58194d7627cad4d93"
+    },
+    {
+      "artifact_key": "validation.24_mask_robustness_analysis",
+      "producer_notebook": "24_mask_robustness_analysis",
+      "relative_path": "outputs/24_mask_robustness_analysis/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "mask_robustness",
+      "validation_status": "passed",
+      "row_count": 136,
+      "file_count": 1,
+      "checksum": "de30bc8343a25366a250d568935c3133605039ab7f978445f7e61fb263b98c20"
     }
   ]
 }
