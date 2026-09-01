@@ -216,11 +216,53 @@ support independent category or style effects, physical degradation interaction,
 historical authenticity, conservation approval, or synthetic-degradation
 uncertainty.
 
+Notebook 26, `26_grouped_and_statistical_analysis.ipynb`, subsequently completed
+the approved cross-experiment statistical synthesis with its completion gate
+passed. It:
+
+- selected 1,230 metric-independent primary core candidates across 410 cases and
+  kept the ten completed SDXL candidates as a separate bounded descriptive subset;
+- excluded 150 canonical zero-control candidates from restoration-quality
+  inference, leaving 1,080 nonzero core candidates while retaining the controls as
+  integrity evidence;
+- retained 11 quality anchors as separate evidence and persisted 4,174 statistical
+  result rows across 14 result kinds, 504 metric-correlation rows across five
+  correlation kinds, and 258 ranking-stability rows across six sensitivity kinds;
+- used painting as the independent unit while preserving cases, candidates,
+  mask variants, seeds, regions, metrics, and within-painting trajectories as
+  repeated or nested evidence;
+- combined the 130 canonical and 35 damage-size prompt-specific repeated-seed
+  groups without pooling the generic and scratch-aware prompt arms, and did not
+  assign artificial uncertainty to mask robustness or synthetic degradation;
+- covered descriptive statistics, confidence intervals, paired comparisons,
+  matched effect sizes, non-parametric tests, FDR correction, metric and region
+  disagreement, uncertainty associations, ranking sensitivity, and operational
+  quality-versus-compute associations without creating a combined score;
+- found LaMa to be the strongest overall computational model across ten of the
+  eleven retained quality anchors, while keeping metric-specific exceptions,
+  disagreement, and the faster operational Telea baseline visible;
+- produced three canonical figures and a self-contained 15-section HTML report
+  with 12 analytical views, 22 restoration panels, 34 embedded images, 132 panel
+  tiles, and no external image dependency;
+- passed all 111 validation checks and all 12 roadmap traceability requirements
+  with zero blocking or warning failures;
+- registered exactly eight non-self-referential artifacts and ten canonical files
+  under `outputs/26_grouped_and_statistical_analysis/`.
+
+Notebook 26 is now the canonical grouped-statistics source for downstream failure
+taxonomy, ablation, reporting, dashboard, and thesis-synthesis stages. Consumers
+must preserve metric-family and region-policy disagreement, the independent-unit
+boundary, prompt-arm separation, the single-dataset limitation, and the distinction
+between empirical seed variability and calibrated confidence. Runtime remains
+operational evidence outside quality ranking. The analysis does not establish an
+independent style effect, a between-dataset comparison, a full SDXL comparison,
+historical authenticity, conservation suitability, museum approval, or a universal
+quality or trust score.
+
 ## 6. Remaining-notebook evidence gate
 
 | Notebook | Supported evidence contract | Required scope discipline |
 |---|---|---|
-| 26 Grouped statistics | N13–25 canonical tables | condition every test on actual coverage and independent unit; semantic/feature affinity is not human plausibility |
 | 27 Failure taxonomy | reference, spatial, texture, colour, seam, semantic, uncertainty, and disagreement evidence | flags are rule-defined decision support; retain only computationally supportable failure categories |
 | 28 Metric/region ablation | N08 ablation memberships, N21 rankings, N27 rules | preserve metric-family disagreement; do not create a universal trust score |
 | 29 XAI/retrieval | embeddings, numeric maps, counterfactual experiment structures, rule-defined flags | retrieval labels are rule-defined; seed comparisons use only complete uncertainty groups |

@@ -1468,7 +1468,7 @@ validation/checks.csv
 **Notebook:** `26_grouped_and_statistical_analysis.ipynb`\
 **Origin:** New Notebook; consolidates statistical responsibilities previously dispersed across comparisons  
 **Output root:** `outputs/26_grouped_and_statistical_analysis/`\
-**Depends on:** Notebooks 13–25
+**Depends on:** Notebooks 08–25, using validated metric evidence from Notebooks 13–25
 
 ### Responsibilities
 
@@ -1482,7 +1482,29 @@ Analyze performance by:
 - mask seed;
 - uncertainty level;
 - degradation type;
-- dataset source;
+- dataset source, recorded as not applicable for comparison because the repository
+  contains only `controlled_50`;
+
+The primary cross-model population is fixed before reading metric values: 410
+OpenCV Telea, 410 LaMa, and 410 primary generic-prompt Stable Diffusion
+candidates. The 50 canonical zero-control cases remain an integrity population,
+so restoration-quality inference uses 360 nonzero cases and 1,080 core
+candidates. Ten technically valid SDXL candidates form a separate bounded,
+descriptive population and cannot be used as a full-model comparison.
+
+Painting is the independent statistical unit. Cases, candidates, mask variants,
+seeds, regions, and metrics are repeated or nested observations. Category-level
+inference is restricted to the balanced 50-painting canonical population.
+Damage-size, mask-robustness, and synthetic-degradation cohorts contain one
+painting per category and therefore support painting-specific patterns rather
+than independent category effects. Incomplete metadata does not support a
+general independent style effect.
+
+Generative uncertainty covers exactly 165 prompt-specific repeated-seed groups:
+130 canonical groups from Notebook 18 and 35 damage-size groups from Notebook 22.
+The generic and scratch-aware prompt arms remain separate. Mask robustness and
+synthetic degradation have no repeated-seed population and must not receive
+artificial uncertainty values.
 
 Required methods:
 
@@ -1508,6 +1530,11 @@ Required methods:
 - cross-model disagreement.
 
 Do not overstate results for small or imbalanced groups. Metric disagreement must remain visible rather than being averaged away.
+Do not retain a combined quality, efficiency, uncertainty, or trust score.
+Runtime remains operational evidence outside restoration-quality ranking.
+Uncertainty is empirical seed variability, not calibrated confidence. Results do
+not establish historical authenticity, conservation suitability, or museum
+approval.
 
 ### Canonical outputs
 

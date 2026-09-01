@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-01T14:26:11.511040Z",
+  "updated_at_utc": "2026-09-01T19:24:30.894854Z",
   "artifacts": [
     {
       "artifact_key": "classical_metrics.distributions",
@@ -589,6 +589,104 @@
       "row_count": 8340,
       "file_count": 1,
       "checksum": "5a680cd39605cb94c76f134f00927046baae52a09a1ea5db887e063a493d003f"
+    },
+    {
+      "artifact_key": "grouped_statistics.correlation_figure",
+      "producer_notebook": "26_grouped_and_statistical_analysis",
+      "relative_path": "outputs/26_grouped_and_statistical_analysis/figures/correlation_matrix.png",
+      "artifact_type": "analytical_figure",
+      "artifact_role": "model_specific_metric_agreement",
+      "schema_version": "grouped_correlation_matrix_figure.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_grouped_analysis",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "5ddf7763a567eff6c347e8fb120197ad152cbcf5114f8031231b45e3e5c1a499"
+    },
+    {
+      "artifact_key": "grouped_statistics.effect_sizes_figure",
+      "producer_notebook": "26_grouped_and_statistical_analysis",
+      "relative_path": "outputs/26_grouped_and_statistical_analysis/figures/effect_sizes.png",
+      "artifact_type": "analytical_figure",
+      "artifact_role": "paired_painting_level_effect_sizes",
+      "schema_version": "grouped_effect_sizes_figure.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_grouped_analysis",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "2638c52dea372aaef5802b602839947da70bb556f9ba786f4d9f6d8accffa637"
+    },
+    {
+      "artifact_key": "grouped_statistics.grouped_performance_figure",
+      "producer_notebook": "26_grouped_and_statistical_analysis",
+      "relative_path": "outputs/26_grouped_and_statistical_analysis/figures/grouped_performance.png",
+      "artifact_type": "analytical_figure",
+      "artifact_role": "metric_specific_grouped_performance",
+      "schema_version": "grouped_performance_figure.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_grouped_analysis",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "4776ddde7dceee47bef0a9facbd712ae61709efc87d85f08528d40fc11f76761"
+    },
+    {
+      "artifact_key": "grouped_statistics.metric_correlations",
+      "producer_notebook": "26_grouped_and_statistical_analysis",
+      "relative_path": "outputs/26_grouped_and_statistical_analysis/metrics/metric_correlations.csv",
+      "artifact_type": "normalized_correlation_table",
+      "artifact_role": "metric_region_and_model_agreement",
+      "schema_version": "grouped_metric_correlations.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_grouped_analysis",
+      "validation_status": "passed",
+      "row_count": 504,
+      "file_count": 1,
+      "checksum": "2e6b96abc5ac294ec186f8078b742af0520edc5d5c74a359540e0a79c5120662"
+    },
+    {
+      "artifact_key": "grouped_statistics.ranking_stability",
+      "producer_notebook": "26_grouped_and_statistical_analysis",
+      "relative_path": "outputs/26_grouped_and_statistical_analysis/metrics/ranking_stability.csv",
+      "artifact_type": "normalized_ranking_table",
+      "artifact_role": "ranking_stability_and_sensitivity",
+      "schema_version": "grouped_ranking_stability.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_grouped_analysis",
+      "validation_status": "passed",
+      "row_count": 258,
+      "file_count": 1,
+      "checksum": "57d8eae38f342b687b97e040413a0884be0b3ad93d61fef154cc0aa051a61a7a"
+    },
+    {
+      "artifact_key": "grouped_statistics.report",
+      "producer_notebook": "26_grouped_and_statistical_analysis",
+      "relative_path": "outputs/26_grouped_and_statistical_analysis/reports/statistical_analysis.html",
+      "artifact_type": "self_contained_html_report",
+      "artifact_role": "thesis_aligned_grouped_statistical_report",
+      "schema_version": "approved_mock_aligned_self_contained_grouped_statistics_report.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_grouped_analysis",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "d6061185f7a1145f4728ac6fad3081b69b2ac6eda5e45ee75323198a3e76cf2d"
+    },
+    {
+      "artifact_key": "grouped_statistics.statistical_results",
+      "producer_notebook": "26_grouped_and_statistical_analysis",
+      "relative_path": "outputs/26_grouped_and_statistical_analysis/metrics/statistical_results.csv",
+      "artifact_type": "normalized_analysis_table",
+      "artifact_role": "cross_experiment_statistical_evidence",
+      "schema_version": "grouped_statistical_results.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_grouped_analysis",
+      "validation_status": "passed",
+      "row_count": 4174,
+      "file_count": 1,
+      "checksum": "6f2487d4c13bf7f9cb44e004675ae2141eae0fa4002a099dcc93eca70c5f63b5"
     },
     {
       "artifact_key": "lama.restoration_examples",
@@ -2031,6 +2129,20 @@
       "row_count": 125,
       "file_count": 1,
       "checksum": "ae456b313634892fd2e31c871882c0db51339a0c772ba6ac1efcf5fc7104f4b4"
+    },
+    {
+      "artifact_key": "validation.26_grouped_and_statistical_analysis",
+      "producer_notebook": "26_grouped_and_statistical_analysis",
+      "relative_path": "outputs/26_grouped_and_statistical_analysis/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_grouped_analysis",
+      "validation_status": "passed",
+      "row_count": 111,
+      "file_count": 1,
+      "checksum": "8f80fe9d71fb0f64b83557511a4a4bfa2bc63152a0ce303445e890c8ab619952"
     }
   ]
 }

@@ -536,9 +536,111 @@ evidence_coverage:
 
     - notebook_id: "26"
       stem: "26_grouped_and_statistical_analysis"
-      status: "planned_supported"
-      required_evidence: ["n13_n25_canonical_tables"]
-      prohibited_claims: ["semantic_affinity_is_human_visual_plausibility", "repeated_observations_are_independent"]
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      output_root: "outputs/26_grouped_and_statistical_analysis"
+      manifest_path: "outputs/26_grouped_and_statistical_analysis/manifests/run_manifest.json"
+      config_path: "config/evaluation/grouped_statistical_analysis.yaml"
+      helper_path: "src/restoration_eval/grouped_statistical_analysis.py"
+      test_path: "tests/test_grouped_statistical_analysis.py"
+      required_evidence:
+        - "n08_case_registry_and_region_policy"
+        - "n09_n12_metric_independent_primary_candidates"
+        - "n13_n17_and_n20_normalized_quality_evidence"
+        - "n18_canonical_prompt_specific_uncertainty_130_groups"
+        - "n21_comparison_disagreement_and_representative_cases"
+        - "n22_damage_size_uncertainty_35_groups"
+        - "n23_n25_focused_experiment_analysis_tables"
+      population_contract:
+        dataset_sources: ["controlled_50"]
+        evaluated_cases: 410
+        primary_core_candidates: 1230
+        quality_cases_excluding_canonical_zero_controls: 360
+        quality_core_candidates: 1080
+        bounded_sdxl_candidates: 10
+        supported_uncertainty_groups: 165
+      independent_unit: "painting"
+      nested_units: ["case", "candidate", "mask_variant", "seed", "region", "metric"]
+      observed_population:
+        evaluated_cases: 410
+        selected_candidates: 1240
+        primary_core_candidates: 1230
+        quality_core_candidates: 1080
+        bounded_sdxl_candidates: 10
+        quality_anchors: 11
+        supported_uncertainty_groups: 165
+        statistical_result_rows: 4174
+        statistical_result_kinds: 14
+        metric_correlation_rows: 504
+        correlation_kinds: 5
+        ranking_stability_rows: 258
+        ranking_stability_kinds: 6
+        validation_checks: 111
+        roadmap_requirements: 12
+        analytical_report_views: 12
+        report_visual_panels: 22
+        report_embedded_images: 34
+        report_external_images: 0
+        report_tile_count: 132
+        canonical_output_files: 10
+      primary_artifacts:
+        - path: "outputs/26_grouped_and_statistical_analysis/metrics/statistical_results.csv"
+          rows: 4174
+          schema_version: "grouped_statistical_results.v1"
+        - path: "outputs/26_grouped_and_statistical_analysis/metrics/metric_correlations.csv"
+          rows: 504
+          schema_version: "grouped_metric_correlations.v1"
+        - path: "outputs/26_grouped_and_statistical_analysis/metrics/ranking_stability.csv"
+          rows: 258
+          schema_version: "grouped_ranking_stability.v1"
+        - path: "outputs/26_grouped_and_statistical_analysis/figures/correlation_matrix.png"
+        - path: "outputs/26_grouped_and_statistical_analysis/figures/grouped_performance.png"
+        - path: "outputs/26_grouped_and_statistical_analysis/figures/effect_sizes.png"
+        - path: "outputs/26_grouped_and_statistical_analysis/reports/statistical_analysis.html"
+        - path: "outputs/26_grouped_and_statistical_analysis/validation/checks.csv"
+          rows: 111
+      supported_scope:
+        - "painting_level_core_model_descriptions_paired_tests_and_effect_sizes"
+        - "balanced_canonical_category_and_damage_type_analysis"
+        - "focused_damage_size_mask_robustness_and_synthetic_degradation_synthesis"
+        - "metric_family_region_policy_and_cross_model_agreement_and_disagreement"
+        - "canonical_and_damage_size_repeated_seed_uncertainty_associations"
+        - "ranking_stability_and_sensitivity_without_a_combined_score"
+        - "quality_compute_associations_with_runtime_separate_from_quality"
+        - "bounded_ten_case_sdxl_description"
+      report_contract:
+        section_count: 15
+        self_contained: true
+        mock_to_final_traceability_passed: true
+        required_visuals_depend_on_external_links: false
+      downstream_contract:
+        - "use_the_three_notebook_26_metric_tables_as_canonical_grouped_statistical_sources"
+        - "retain_painting_as_the_independent_unit_and_within_painting_trajectories_as_nested_evidence"
+        - "retain_metric_family_and_region_policy_disagreement"
+        - "keep_prompt_arms_separate_and_uncertainty_uncalibrated"
+        - "keep_runtime_out_of_quality_ranking"
+        - "treat_sdxl_as_a_bounded_descriptive_subset"
+        - "do_not_construct_a_combined_quality_efficiency_uncertainty_or_trust_score"
+      scope_constraints:
+        - "category_inference_only_for_balanced_canonical_50"
+        - "focused_five_painting_experiments_are_painting_specific"
+        - "dataset_source_comparison_not_applicable_single_dataset"
+        - "uncertainty_only_for_canonical_and_damage_size_groups"
+        - "generic_and_scratch_aware_prompt_arms_remain_separate"
+        - "sdxl_is_bounded_descriptive_only"
+        - "runtime_remains_outside_quality_ranking"
+      prohibited_claims:
+        - "semantic_affinity_is_human_visual_plausibility"
+        - "repeated_observations_are_independent"
+        - "independent_style_effect"
+        - "focused_experiment_category_effect"
+        - "between_dataset_comparison"
+        - "robustness_or_synthetic_degradation_is_generative_uncertainty"
+        - "calibrated_confidence"
+        - "full_sdxl_comparison"
+        - "combined_quality_efficiency_uncertainty_or_trust_score"
+        - "historical_authenticity"
+        - "conservation_approval"
 
     - notebook_id: "27"
       stem: "27_failure_taxonomy_and_trustworthiness_flags"

@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-09-01T14:26:11.511040Z`
-- Registered artifacts: 145
+- Updated: `2026-09-01T19:24:30.894854Z`
+- Registered artifacts: 153
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -48,6 +48,13 @@
 | feature_similarity.embedding_manifest | 15_feature_similarity | `outputs/15_feature_similarity/manifests/embeddings.csv` | reusable_embedding_index | passed |
 | feature_similarity.embeddings | 15_feature_similarity | `outputs/15_feature_similarity/data/embeddings.npz` | reusable_embedding_evidence | passed |
 | feature_similarity.metrics | 15_feature_similarity | `outputs/15_feature_similarity/metrics/feature_metrics.csv` | primary_downstream_evidence | passed |
+| grouped_statistics.correlation_figure | 26_grouped_and_statistical_analysis | `outputs/26_grouped_and_statistical_analysis/figures/correlation_matrix.png` | model_specific_metric_agreement | passed |
+| grouped_statistics.effect_sizes_figure | 26_grouped_and_statistical_analysis | `outputs/26_grouped_and_statistical_analysis/figures/effect_sizes.png` | paired_painting_level_effect_sizes | passed |
+| grouped_statistics.grouped_performance_figure | 26_grouped_and_statistical_analysis | `outputs/26_grouped_and_statistical_analysis/figures/grouped_performance.png` | metric_specific_grouped_performance | passed |
+| grouped_statistics.metric_correlations | 26_grouped_and_statistical_analysis | `outputs/26_grouped_and_statistical_analysis/metrics/metric_correlations.csv` | metric_region_and_model_agreement | passed |
+| grouped_statistics.ranking_stability | 26_grouped_and_statistical_analysis | `outputs/26_grouped_and_statistical_analysis/metrics/ranking_stability.csv` | ranking_stability_and_sensitivity | passed |
+| grouped_statistics.report | 26_grouped_and_statistical_analysis | `outputs/26_grouped_and_statistical_analysis/reports/statistical_analysis.html` | thesis_aligned_grouped_statistical_report | passed |
+| grouped_statistics.statistical_results | 26_grouped_and_statistical_analysis | `outputs/26_grouped_and_statistical_analysis/metrics/statistical_results.csv` | cross_experiment_statistical_evidence | passed |
 | lama.restoration_examples | 10_lama_restoration | `outputs/10_lama_restoration/figures/restoration_examples.png` | representative_visual_evidence | passed |
 | lama.restorations | 10_lama_restoration | `outputs/10_lama_restoration/data/restorations.csv` | primary_restoration_records | passed |
 | lama.restored_images | 10_lama_restoration | `outputs/10_lama_restoration/images/restored` | primary_restored_images | passed |
@@ -151,3 +158,4 @@
 | validation.23_damage_size_sensitivity_analysis | 23_damage_size_sensitivity_analysis | `outputs/23_damage_size_sensitivity_analysis/validation/checks.csv` | validation_evidence | passed |
 | validation.24_mask_robustness_analysis | 24_mask_robustness_analysis | `outputs/24_mask_robustness_analysis/validation/checks.csv` | validation_evidence | passed |
 | validation.25_synthetic_degradation_analysis | 25_synthetic_degradation_analysis | `outputs/25_synthetic_degradation_analysis/validation/checks.csv` | validation_evidence | passed |
+| validation.26_grouped_and_statistical_analysis | 26_grouped_and_statistical_analysis | `outputs/26_grouped_and_statistical_analysis/validation/checks.csv` | validation_evidence | passed |
