@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-01T19:24:30.894854Z",
+  "updated_at_utc": "2026-09-01T22:12:05.347810Z",
   "artifacts": [
     {
       "artifact_key": "classical_metrics.distributions",
@@ -533,6 +533,76 @@
       "row_count": 5,
       "file_count": 1,
       "checksum": "0a75cb8fb1d7762d1ded04944a895dda65d417d771624cb286359c4d1942018a"
+    },
+    {
+      "artifact_key": "failure_taxonomy.assignments",
+      "producer_notebook": "27_failure_taxonomy_and_trustworthiness_flags",
+      "relative_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/failure_assignments.csv",
+      "artifact_type": "normalized_assignment_table",
+      "artifact_role": "candidate_failure_category_evidence",
+      "schema_version": "failure_assignments.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_failure_screening",
+      "validation_status": "passed",
+      "row_count": 24990,
+      "file_count": 1,
+      "checksum": "3ed75de17102fce62062c46febd26aca41a7d4f9e3f8beb0a0e8a107bb1c6bb2"
+    },
+    {
+      "artifact_key": "failure_taxonomy.figure",
+      "producer_notebook": "27_failure_taxonomy_and_trustworthiness_flags",
+      "relative_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/figures/failure_taxonomy.png",
+      "artifact_type": "analytical_figure",
+      "artifact_role": "failure_flag_and_recommendation_overview",
+      "schema_version": "failure_taxonomy_figure.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_failure_screening",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "e5d57203a2ca789aaa0f16c691b71a204820d5b04ed2f3237c3e3b79c3d89fd1"
+    },
+    {
+      "artifact_key": "failure_taxonomy.flags",
+      "producer_notebook": "27_failure_taxonomy_and_trustworthiness_flags",
+      "relative_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv",
+      "artifact_type": "normalized_flag_table",
+      "artifact_role": "independent_candidate_trustworthiness_flags",
+      "schema_version": "trustworthiness_flags.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_failure_screening",
+      "validation_status": "passed",
+      "row_count": 19635,
+      "file_count": 1,
+      "checksum": "c3f48e8690c34eba622f102012e57156050f483593ff324418f62d1a28502ac8"
+    },
+    {
+      "artifact_key": "failure_taxonomy.report",
+      "producer_notebook": "27_failure_taxonomy_and_trustworthiness_flags",
+      "relative_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/reports/flag_definitions.html",
+      "artifact_type": "self_contained_html_report",
+      "artifact_role": "thesis_aligned_failure_and_flag_report",
+      "schema_version": "approved_mock_aligned_self_contained_flag_report.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_failure_screening",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "32b8f507c9ca6c37c3b7d4c6c058069c59944542862f2f104c7ce0d7fd7c3f39"
+    },
+    {
+      "artifact_key": "failure_taxonomy.taxonomy",
+      "producer_notebook": "27_failure_taxonomy_and_trustworthiness_flags",
+      "relative_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/data/failure_taxonomy.csv",
+      "artifact_type": "normalized_taxonomy_table",
+      "artifact_role": "transparent_failure_category_definitions",
+      "schema_version": "failure_taxonomy.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_failure_screening",
+      "validation_status": "passed",
+      "row_count": 14,
+      "file_count": 1,
+      "checksum": "3c09f1e425757279510ebd8d548bba7fd62fb7ae280536652d81cbc9f6c833a9"
     },
     {
       "artifact_key": "feature_similarity.distributions",
@@ -2143,6 +2213,20 @@
       "row_count": 111,
       "file_count": 1,
       "checksum": "8f80fe9d71fb0f64b83557511a4a4bfa2bc63152a0ce303445e890c8ab619952"
+    },
+    {
+      "artifact_key": "validation.27_failure_taxonomy_and_trustworthiness_flags",
+      "producer_notebook": "27_failure_taxonomy_and_trustworthiness_flags",
+      "relative_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "cross_experiment_failure_screening",
+      "validation_status": "passed",
+      "row_count": 167,
+      "file_count": 1,
+      "checksum": "e349b2c49031d9dc7a773c1141ce45b2819a80bf376ee95f8fb8a9a1987d8c92"
     }
   ]
 }

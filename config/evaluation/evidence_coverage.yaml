@@ -644,7 +644,10 @@ evidence_coverage:
 
     - notebook_id: "27"
       stem: "27_failure_taxonomy_and_trustworthiness_flags"
-      status: "preparation_complete"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      output_root: "outputs/27_failure_taxonomy_and_trustworthiness_flags"
+      manifest_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json"
       config_path: "config/evaluation/failure_taxonomy.yaml"
       helper_path: "src/restoration_eval/failure_taxonomy.py"
       test_path: "tests/test_failure_taxonomy.py"
@@ -656,6 +659,64 @@ evidence_coverage:
         union_candidates: 1785
       required_evidence: ["reference_metrics", "spatial", "texture", "colour", "seam", "semantic_proxies", "canonical_uncertainty", "damage_size_uncertainty", "metric_disagreement"]
       required_outputs: ["failure_taxonomy", "complete_failure_assignment_grid", "complete_trustworthiness_flag_grid", "self_contained_flag_report", "taxonomy_figure", "run_manifest", "artifact_manifest", "validation_checks"]
+      observed_population:
+        primary_candidates: 1240
+        primary_core_candidates: 1230
+        repeated_seed_candidates: 660
+        uncertainty_only_candidates: 545
+        bounded_sdxl_candidates: 10
+        supported_uncertainty_groups: 165
+        union_candidates: 1785
+        failure_categories: 14
+        failure_assignment_rows: 24990
+        trust_flags: 11
+        trustworthiness_flag_rows: 19635
+        validation_checks: 167
+        roadmap_requirements: 12
+        mock_traceability_rows: 29
+        analytical_report_views: 7
+        diagnostic_report_panels: 7
+        report_embedded_images: 56
+        report_external_images: 0
+        report_tile_count: 49
+        canonical_output_files: 8
+      primary_artifacts:
+        - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/data/failure_taxonomy.csv"
+          rows: 14
+          schema_version: "failure_taxonomy.v1"
+        - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/failure_assignments.csv"
+          rows: 24990
+          schema_version: "failure_assignments.v1"
+        - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv"
+          rows: 19635
+          schema_version: "trustworthiness_flags.v1"
+        - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/figures/failure_taxonomy.png"
+        - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/reports/flag_definitions.html"
+        - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/validation/checks.csv"
+          rows: 167
+      supported_scope:
+        - "complete_candidate_by_category_and_candidate_by_flag_screening_ledgers"
+        - "transparent_operational_warning_and_critical_thresholds"
+        - "strict_adverse_quantile_tie_handling"
+        - "independent_failure_and_trustworthiness_flags_without_a_combined_score"
+        - "canonical_and_damage_size_repeated_seed_uncertainty_evidence"
+        - "metric_disagreement_and_flag_cooccurrence"
+        - "candidate_level_review_recommendations"
+        - "bounded_ten_case_sdxl_description"
+      report_contract:
+        section_count: 15
+        self_contained: true
+        mock_to_final_traceability_passed: true
+        required_visuals_depend_on_external_links: false
+        embedded_images: 56
+        image_decode_failures: 0
+      downstream_contract:
+        - "use_the_complete_notebook_27_taxonomy_assignment_and_flag_tables_as_canonical_sources"
+        - "preserve_population_roles_and_prompt_arm_separation"
+        - "preserve_insufficient_and_not_applicable_states_instead_of_treating_them_as_passing"
+        - "treat_deterministic_uncertainty_as_not_applicable_and_single_seed_sdxl_uncertainty_as_insufficient"
+        - "retain_metric_disagreement_and_independent_flags_without_aggregation"
+        - "treat_recommendations_as_decision_support_only"
       scope_rules: ["population_roles_remain_separate", "prompt_arms_remain_separate", "missing_evidence_is_not_passing", "deterministic_uncertainty_is_not_applicable", "single_seed_sdxl_uncertainty_is_insufficient", "thresholds_are_operational_not_calibrated", "recommendations_are_decision_support_only"]
       prohibited_claims: ["combined_trust_score", "calibrated_confidence", "verified_face_anatomy_or_object_detection", "historical_authenticity", "conservation_approval", "full_sdxl_comparison"]
 

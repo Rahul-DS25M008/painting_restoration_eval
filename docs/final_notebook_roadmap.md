@@ -1623,6 +1623,9 @@ Independent flags include:
   rules on the 1,080 non-zero primary core candidates, exclude zero controls and
   bounded SDXL from fitting, preserve experiment and indicator strata, and keep
   prompt arms separate for uncertainty evidence.
+- Apply strict adverse comparisons to percentile thresholds so observations tied
+  at a zero floor or unit ceiling are not misclassified as warning or critical;
+  retain inclusive comparisons for explicit absolute-tolerance rules.
 - Treat percentile severity as rule strength and review priority, not
   conservation severity. Notebook 28 owns threshold and aggregation sensitivity.
 - Persist the complete candidate-by-category and candidate-by-flag grids so that

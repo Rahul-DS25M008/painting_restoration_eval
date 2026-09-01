@@ -23,7 +23,7 @@ from .paths import find_project_root, resolve_repo_path
 
 
 MODULE_NAME = "restoration_eval.failure_taxonomy"
-MODULE_VERSION = "1.0.0"
+MODULE_VERSION = "1.0.1"
 CONFIG_SCHEMA_VERSION = "failure_taxonomy_config.v1"
 TAXONOMY_SCHEMA_VERSION = "failure_taxonomy.v1"
 ASSIGNMENT_SCHEMA_VERSION = "failure_assignments.v1"
@@ -805,13 +805,27 @@ def classify_evidence_against_thresholds(
         if subset.empty:
             continue
         value = pd.to_numeric(subset["raw_value"], errors="coerce")
+        threshold_mode = str(threshold["threshold_mode"])
         if threshold["direction"] == "higher_is_worse":
-            critical = value >= float(threshold["critical_threshold"])
-            warning = value >= float(threshold["warning_threshold"])
+            if threshold_mode == "quantile":
+                # Strict adverse comparisons prevent a tied floor value (for
+                # example, a zero-valued 97.5th percentile) from classifying
+                # every zero observation as critical.
+                critical = value > float(threshold["critical_threshold"])
+                warning = value > float(threshold["warning_threshold"])
+            else:
+                critical = value >= float(threshold["critical_threshold"])
+                warning = value >= float(threshold["warning_threshold"])
             favourable = value <= float(threshold["favourable_threshold"])
         else:
-            critical = value <= float(threshold["critical_threshold"])
-            warning = value <= float(threshold["warning_threshold"])
+            if threshold_mode == "quantile":
+                # The mirrored strict comparison provides the same protection
+                # when a lower-is-worse metric is tied at its ceiling.
+                critical = value < float(threshold["critical_threshold"])
+                warning = value < float(threshold["warning_threshold"])
+            else:
+                critical = value <= float(threshold["critical_threshold"])
+                warning = value <= float(threshold["warning_threshold"])
             favourable = value >= float(threshold["favourable_threshold"])
         subset["evidence_state"] = np.select(
             [critical, warning, favourable],

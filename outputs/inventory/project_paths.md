@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-09-01T19:24:30.894854Z`
-- Registered artifacts: 153
+- Updated: `2026-09-01T22:12:05.347810Z`
+- Registered artifacts: 159
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -44,6 +44,11 @@
 | experiment_contracts.region_policy | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv` | authoritative_metric_region_policy | passed |
 | experiment_contracts.report | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/reports/evaluation_contract.md` | evaluation_contract | passed |
 | experiment_contracts.schema_registry | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json` | machine_readable_schema_handoff | passed |
+| failure_taxonomy.assignments | 27_failure_taxonomy_and_trustworthiness_flags | `outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/failure_assignments.csv` | candidate_failure_category_evidence | passed |
+| failure_taxonomy.figure | 27_failure_taxonomy_and_trustworthiness_flags | `outputs/27_failure_taxonomy_and_trustworthiness_flags/figures/failure_taxonomy.png` | failure_flag_and_recommendation_overview | passed |
+| failure_taxonomy.flags | 27_failure_taxonomy_and_trustworthiness_flags | `outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv` | independent_candidate_trustworthiness_flags | passed |
+| failure_taxonomy.report | 27_failure_taxonomy_and_trustworthiness_flags | `outputs/27_failure_taxonomy_and_trustworthiness_flags/reports/flag_definitions.html` | thesis_aligned_failure_and_flag_report | passed |
+| failure_taxonomy.taxonomy | 27_failure_taxonomy_and_trustworthiness_flags | `outputs/27_failure_taxonomy_and_trustworthiness_flags/data/failure_taxonomy.csv` | transparent_failure_category_definitions | passed |
 | feature_similarity.distributions | 15_feature_similarity | `outputs/15_feature_similarity/figures/feature_similarity_distributions.png` | reporting_visualization | passed |
 | feature_similarity.embedding_manifest | 15_feature_similarity | `outputs/15_feature_similarity/manifests/embeddings.csv` | reusable_embedding_index | passed |
 | feature_similarity.embeddings | 15_feature_similarity | `outputs/15_feature_similarity/data/embeddings.npz` | reusable_embedding_evidence | passed |
@@ -159,3 +164,4 @@
 | validation.24_mask_robustness_analysis | 24_mask_robustness_analysis | `outputs/24_mask_robustness_analysis/validation/checks.csv` | validation_evidence | passed |
 | validation.25_synthetic_degradation_analysis | 25_synthetic_degradation_analysis | `outputs/25_synthetic_degradation_analysis/validation/checks.csv` | validation_evidence | passed |
 | validation.26_grouped_and_statistical_analysis | 26_grouped_and_statistical_analysis | `outputs/26_grouped_and_statistical_analysis/validation/checks.csv` | validation_evidence | passed |
+| validation.27_failure_taxonomy_and_trustworthiness_flags | 27_failure_taxonomy_and_trustworthiness_flags | `outputs/27_failure_taxonomy_and_trustworthiness_flags/validation/checks.csv` | validation_evidence | passed |

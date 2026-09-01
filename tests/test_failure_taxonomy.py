@@ -195,6 +195,65 @@ class FailureTaxonomyTests(unittest.TestCase):
         self.assertEqual(high.sort_values("raw_value").iloc[-1]["evidence_state"], "critical")
         self.assertEqual(low.sort_values("raw_value").iloc[0]["evidence_state"], "critical")
 
+    def test_tied_quantile_floor_and_ceiling_are_not_critical(self) -> None:
+        config = copy.deepcopy(self.config)
+        config["failure_taxonomy"]["threshold_policy"]["minimum_fitting_candidates"] = 1
+        population = pd.DataFrame(
+            {
+                "candidate_id": ["c1", "c2", "c3", "c4"],
+                "quality_analysis_eligible": [True] * 4,
+                "is_zero_control": [False] * 4,
+                "model_id": ["lama"] * 4,
+            }
+        )
+        base = {
+            "uncertainty_group_id": pd.NA,
+            "case_id": "case",
+            "painting_id": "p001",
+            "model_id": "lama",
+            "experiment_id": "canonical_missing_region",
+            "prompt_variant_id": pd.NA,
+            "population_role": "primary_comparison",
+            "source_notebook_id": "13",
+            "source_row_ids_json": "[]",
+            "source": "classical",
+            "evidence_family": "classical",
+            "component": "component",
+            "metric_name": "metric",
+            "feature_model_id": "",
+            "region_id": "masked_region",
+            "summary_statistic": "value",
+            "threshold_mode": "quantile",
+            "schema_version": "failure_evidence.v1",
+            "status": "ok",
+            "issue": "",
+        }
+        rows = []
+        for direction, indicator_id, value in (
+            ("higher_is_worse", "tied_floor", 0.0),
+            ("lower_is_worse", "tied_ceiling", 1.0),
+        ):
+            for candidate_id in population["candidate_id"]:
+                rows.append(
+                    {
+                        **base,
+                        "evidence_id": f"{indicator_id}_{candidate_id}",
+                        "candidate_id": candidate_id,
+                        "indicator_id": indicator_id,
+                        "direction": direction,
+                        "raw_value": value,
+                        "adverse_value": value if direction == "higher_is_worse" else -value,
+                    }
+                )
+        evidence = pd.DataFrame(rows)
+        thresholds = calibrate_operational_thresholds(
+            evidence, population, config=config
+        )
+        classified = classify_evidence_against_thresholds(evidence, thresholds)
+        self.assertFalse(classified["evidence_state"].eq("critical").any())
+        self.assertFalse(classified["evidence_state"].eq("warning").any())
+        self.assertTrue(classified["evidence_state"].eq("favourable").all())
+
     def test_mock_aligned_report_contract(self) -> None:
         settings = self.config["failure_taxonomy"]
         images = "".join(

@@ -259,11 +259,50 @@ independent style effect, a between-dataset comparison, a full SDXL comparison,
 historical authenticity, conservation suitability, museum approval, or a universal
 quality or trust score.
 
+Notebook 27, `27_failure_taxonomy_and_trustworthiness_flags.ipynb`, subsequently
+completed the approved failure-taxonomy and trustworthiness-flag analysis with its
+completion gate passed. It:
+
+- assembled the exact 1,785-candidate union containing 1,240 primary candidates,
+  660 candidates in 165 complete four-seed groups, 115 candidates shared by the
+  primary and uncertainty populations, and 545 uncertainty-only candidates;
+- persisted a 14-row versioned failure taxonomy, the complete 24,990-row
+  candidate-by-category assignment grid, and the complete 19,635-row
+  candidate-by-flag grid;
+- retained `triggered`, `not_triggered`, `insufficient_evidence`, and
+  `not_applicable` as distinct states and did not treat missing evidence as a
+  passing result;
+- applied transparent experiment-stratified warning and critical thresholds,
+  excluded zero controls and bounded SDXL from threshold fitting, kept prompt arms
+  separate, and used strict adverse comparisons for percentile ties while retaining
+  inclusive explicit absolute tolerances;
+- generated 11 independent flags, candidate-level co-occurrence and disagreement
+  evidence, and exactly one of four review recommendations for every candidate
+  without constructing a combined trust score;
+- limited stochastic uncertainty to the 165 supported repeated-seed groups,
+  recorded deterministic-method uncertainty as not applicable, and recorded the
+  bounded ten-case single-seed SDXL subset as insufficient for uncertainty;
+- produced one canonical four-panel figure and a self-contained 15-section HTML
+  report with seven analytical views, seven rule-selected diagnostic panels, 49
+  diagnostic tiles, 56 embedded images, and no external image dependency;
+- passed all 167 validation checks, all 12 roadmap requirements, and all 29
+  mock-to-final traceability rows with zero blocking or warning failures;
+- registered exactly six non-self-referential artifacts and eight canonical files
+  under `outputs/27_failure_taxonomy_and_trustworthiness_flags/`.
+
+Notebook 27 is now the canonical source for downstream failure categories,
+candidate-category assignments, independent trustworthiness flags, and transparent
+review recommendations. Consumers must preserve population roles, prompt-arm
+separation, missingness, proxy language, threshold provenance, and the distinction
+between empirical seed variability and calibrated confidence. The flags and
+recommendations are operational decision support. They do not establish historical
+authenticity, physical-treatment suitability, conservation approval, a full SDXL
+comparison, or a universal trust score.
+
 ## 6. Remaining-notebook evidence gate
 
 | Notebook | Supported evidence contract | Required scope discipline |
 |---|---|---|
-| 27 Failure taxonomy | 1,785-candidate primary-plus-supported-uncertainty union; reference, spatial, texture, colour, seam, semantic-proxy, uncertainty, and disagreement evidence | keep population roles and prompt arms separate; persist complete ledgers; missing evidence is not passing; flags are operational decision support rather than confidence or approval |
 | 28 Metric/region ablation | N08 ablation memberships, N21 rankings, N27 rules | preserve metric-family disagreement; do not create a universal trust score |
 | 29 XAI/retrieval | embeddings, numeric maps, counterfactual experiment structures, rule-defined flags | retrieval labels are rule-defined; seed comparisons use only complete uncertainty groups |
 | 30 Model cards/compute | model manifests, runtimes, hardware, inventory, primary model sources | larger-dataset and SDXL costs are projections, not executed results |
@@ -295,7 +334,7 @@ reintroduced without new evidence and an updated audit:
 The scientific freeze does not make legacy global output folders canonical.
 `outputs/inventory/` remains the sole approved global exception.
 
-The post-Notebook-26 audit found 56 remaining tracked legacy files under:
+The post-Notebook-26 audit identified 56 tracked legacy files under:
 
 ```text
 outputs/figures/
@@ -309,10 +348,11 @@ It also found legacy notebooks whose numbers overlap later roadmap stages. They
 remain non-canonical until a separate exact-path migration/deletion audit is
 approved. No future notebook may consume them merely because they exist.
 
-The same audit found empty non-canonical runtime directories under the output
-roots of Notebooks 10, 11, 12, 25, and 26. These global legacy trees and empty
-runtime directories may be removed manually after reviewing the exact path list;
-`outputs/inventory/` remains preserved.
+The user removed all 56 files and the five empty non-canonical runtime directories
+under the output roots of Notebooks 10, 11, 12, 25, and 26 in commit `bbb2c6fc`.
+The cleanup was verified with a clean, synchronized Git worktree: no legacy global
+output tree remains, every numbered Notebook 01--26 output root remains present,
+and `outputs/inventory/` remains the sole global output exception.
 
 ## 9. Update protocol
 

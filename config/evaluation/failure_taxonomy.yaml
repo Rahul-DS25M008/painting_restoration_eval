@@ -1,5 +1,5 @@
 config_schema_version: "failure_taxonomy_config.v1"
-config_version: "1.0.0"
+config_version: "1.0.1"
 
 failure_taxonomy:
   notebook_id: "27"
@@ -113,11 +113,17 @@ failure_taxonomy:
     distinct_warning_components_required: 2
     outside_mask_absolute_warning_tolerance: 0.0000005
     outside_mask_absolute_critical_tolerance: 0.000005
+    quantile_tie_policy: "strict_adverse"
     threshold_interpretation: "operational_relative_screening_not_ground_truth"
     severity_interpretation: "rule_strength_and_review_priority_not_conservation_severity"
 
   indicators:
     - {indicator_id: "masked_mae", source: "classical", source_notebook_id: "13", metric_name: "mae", region_id: "masked_region", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "masked_reference_error"}
+    - {indicator_id: "crop_ssim", source: "classical", source_notebook_id: "13", metric_name: "ssim", region_id: "mask_bbox_crop", summary_statistic: "restored_value", value_column: "restored_value", direction: "lower_is_worse", component: "structural_similarity"}
+    - {indicator_id: "content_psnr", source: "classical", source_notebook_id: "13", metric_name: "psnr", region_id: "content_region", summary_statistic: "restored_value", value_column: "restored_value", direction: "lower_is_worse", component: "content_pixel_fidelity"}
+    - {indicator_id: "crop_lpips", source: "perceptual", source_notebook_id: "14", metric_name: "lpips", region_id: "mask_bbox_crop", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "perceptual_similarity"}
+    - {indicator_id: "crop_clip_similarity", source: "feature", source_notebook_id: "15", metric_name: "clip_cosine_similarity", feature_model_id: "clip_vit_b32", region_id: "mask_bbox_crop", summary_statistic: "restored_value", value_column: "restored_value", direction: "lower_is_worse", component: "clip_feature_similarity"}
+    - {indicator_id: "crop_dino_similarity", source: "feature", source_notebook_id: "15", metric_name: "dinov2_cosine_similarity", feature_model_id: "dinov2_vits14", region_id: "mask_bbox_crop", summary_statistic: "restored_value", value_column: "restored_value", direction: "lower_is_worse", component: "dino_feature_similarity"}
     - {indicator_id: "masked_error_p95", source: "spatial", source_notebook_id: "16", metric_name: "restored_error_p95", region_id: "masked_region", summary_statistic: "p95", value_column: "restored_error_p95", direction: "higher_is_worse", component: "masked_reference_error_tail"}
     - {indicator_id: "smoothing_fraction", source: "local", source_notebook_id: "17", metric_name: "smoothing_proxy_fraction", region_id: "mask_bbox_crop", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "texture_smoothing"}
     - {indicator_id: "gradient_magnitude_error", source: "local", source_notebook_id: "17", metric_name: "gradient_magnitude_error", region_id: "mask_bbox_crop", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "edge_loss"}
