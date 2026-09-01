@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-08-31T21:33:13.203255Z",
+  "updated_at_utc": "2026-09-01T01:32:54.553284Z",
   "artifacts": [
     {
       "artifact_key": "classical_metrics.distributions",
@@ -169,6 +169,76 @@
       "row_count": 35,
       "file_count": 35,
       "checksum": "e76f157ad4c53729fbd73c191fd96b071692ea18d3cc7e57ebc7f9aa16614583"
+    },
+    {
+      "artifact_key": "damage_size_analysis.metrics",
+      "producer_notebook": "23_damage_size_sensitivity_analysis",
+      "relative_path": "outputs/23_damage_size_sensitivity_analysis/metrics/damage_size_analysis.csv",
+      "artifact_type": "damage_size_analysis_table",
+      "artifact_role": "canonical_damage_size_evidence",
+      "schema_version": "damage_size_analysis.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "damage_size_sensitivity",
+      "validation_status": "passed",
+      "row_count": 1901,
+      "file_count": 1,
+      "checksum": "74064d71c1802c1f47aae1fb13f0f312abb88e0ec19b979d65aea2b59be09e48"
+    },
+    {
+      "artifact_key": "damage_size_analysis.performance_figure",
+      "producer_notebook": "23_damage_size_sensitivity_analysis",
+      "relative_path": "outputs/23_damage_size_sensitivity_analysis/figures/performance_vs_damage.png",
+      "artifact_type": "analytical_figure",
+      "artifact_role": "performance_damage_trajectories",
+      "schema_version": "damage_size_performance_figure.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "damage_size_sensitivity",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "dccb5a2a351d9d3c1006d8de89e04cbee0bd98f1e108cde6a5bc6377b5427ff0"
+    },
+    {
+      "artifact_key": "damage_size_analysis.ranking_figure",
+      "producer_notebook": "23_damage_size_sensitivity_analysis",
+      "relative_path": "outputs/23_damage_size_sensitivity_analysis/figures/ranking_vs_damage.png",
+      "artifact_type": "analytical_figure",
+      "artifact_role": "family_balanced_ranking_stability",
+      "schema_version": "damage_size_ranking_figure.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "damage_size_sensitivity",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "dba8ea26f52aa36197560edb37ddc2c902136c2528056b0080430d6f4dc1a303"
+    },
+    {
+      "artifact_key": "damage_size_analysis.report",
+      "producer_notebook": "23_damage_size_sensitivity_analysis",
+      "relative_path": "outputs/23_damage_size_sensitivity_analysis/reports/damage_size_analysis.html",
+      "artifact_type": "self_contained_html_report",
+      "artifact_role": "thesis_aligned_damage_size_report",
+      "schema_version": "self_contained_plain_language_damage_size_report.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "damage_size_sensitivity",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "46c97547d16caa238533b2efcab0951f778bc62c8b50afd53c63f41635e28fef"
+    },
+    {
+      "artifact_key": "damage_size_analysis.uncertainty_figure",
+      "producer_notebook": "23_damage_size_sensitivity_analysis",
+      "relative_path": "outputs/23_damage_size_sensitivity_analysis/figures/uncertainty_vs_damage.png",
+      "artifact_type": "analytical_figure",
+      "artifact_role": "damage_size_seed_variability",
+      "schema_version": "damage_size_uncertainty_figure.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "damage_size_sensitivity",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "41458f1c546e37f4aca7baef4097a969b1d190e12a8ee2a7999d79d0e76838f4"
     },
     {
       "artifact_key": "damage_size_diffusion_uncertainty.candidates",
@@ -1807,6 +1877,20 @@
       "row_count": 234,
       "file_count": 1,
       "checksum": "2412dbf3caa08b0fdf0a70d9aaa4eb5638f9fbb4db72fbbf088f335d9d08c5c6"
+    },
+    {
+      "artifact_key": "validation.23_damage_size_sensitivity_analysis",
+      "producer_notebook": "23_damage_size_sensitivity_analysis",
+      "relative_path": "outputs/23_damage_size_sensitivity_analysis/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "damage_size_sensitivity",
+      "validation_status": "passed",
+      "row_count": 115,
+      "file_count": 1,
+      "checksum": "ef8c825c8d1372aefa4eaff540ae20ec6928c7d40ff22eb58194d7627cad4d93"
     }
   ]
 }

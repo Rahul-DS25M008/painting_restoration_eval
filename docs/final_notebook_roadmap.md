@@ -39,6 +39,16 @@ validation/checks.csv
 
 `outputs/inventory/` is the only global-output exception.
 
+For every notebook that produces a standalone report, an explicitly approved
+chat mock is the binding report blueprint. The implemented report must retain the
+mock's section order, question flow, table and visual roles, deterministic case
+selection, conclusion and limitation placement, and approximate narrative and
+visual density. Fictional planning values are replaced by validated results, and
+validated additions may extend the report, but the assistant must not silently
+redesign or replace the approved structure. Material deviations require renewed
+user approval and must be recorded in mock-to-final traceability and final
+validation as defined by `docs/refactoring_implementation_guidelines.md`.
+
 ## 3. Dependency overview
 
 ```text
@@ -1351,8 +1361,11 @@ validation/checks.csv
 
 **Notebook:** `23_damage_size_sensitivity_analysis.ipynb`\
 **Origin:** New analysis stage separated from Notebook 05 generation  
+**Refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
 **Output root:** `outputs/23_damage_size_sensitivity_analysis/`\
-**Depends on:** Notebooks 05, 09–22
+**Depends on:** Notebooks 05, 08–17, and 20–22
 
 ### Responsibilities
 

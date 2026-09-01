@@ -455,6 +455,79 @@ analysis, comparison, or thesis-level result as a standalone document.
   evidence, or that a materially different structure is scientifically preferable,
   surface the issue and obtain approval rather than silently changing the report.
 
+#### Approved mock-to-final fidelity contract
+
+Once the user approves a notebook-specific mock report, that mock becomes the
+binding structural and editorial baseline for the implemented report. It is not
+merely an example, mood board, checklist of topics, or permission to design a
+different report from scratch. The final report must be an evidence-populated,
+scientifically corrected, and where useful expanded version of the approved mock.
+
+The implemented report must preserve the approved mock's recognizable identity,
+including all applicable elements below:
+
+- title and subtitle framing;
+- executive-summary order, headline indicators, and main-conclusion placement;
+- section sequence, section numbering, scientific questions, and narrative flow;
+- the role and approximate location of each approved table, canonical figure,
+  report-only plot, restoration panel, diagnostic panel, and visual atlas;
+- declared visual-selection rules and the kinds of cases represented;
+- section-level conclusion placement and nearby limitation placement;
+- the balance between paragraphs, bullets, tables, metrics, visuals, conclusions,
+  supported claims, unsupported claims, and final thesis synthesis; and
+- approximately the approved explanation depth, visual density, and tile count.
+
+Implementation replaces fictional values, illustrative model winners, invented
+confidence intervals, placeholder captions, and hypothetical conclusions with
+values and conclusions derived from validated canonical evidence. That required
+replacement does not authorize deleting, merging, renaming, reordering, or
+substantially rewriting approved sections and visual roles.
+
+Upgrades are normally additive. The assistant may improve accessibility,
+responsive layout, provenance, traceability, captions, concise wording, or add
+validated supporting evidence while retaining the approved structure. An upgrade
+must not displace an approved section, reduce the agreed analytical or visual
+density, or turn the report into a different narrative design.
+
+Before generating the report-implementation cells, the assistant must create an
+in-memory mock-to-final traceability table with at least:
+
+```text
+mock_element_id
+mock_section
+approved_role
+final_section
+canonical_evidence_source
+implementation_status
+deviation_reason
+```
+
+`implementation_status` must be one of:
+
+```text
+preserved
+upgraded_additively
+approved_deviation
+```
+
+Every approved section, table role, figure or plot role, image-panel role,
+conclusion block, limitation block, and final synthesis element must appear in
+this traceability table. The notebook's final validation must confirm that:
+
+- all approved mock elements are represented;
+- the final section order matches the approved order;
+- every required visual and table role is present;
+- actual embedded-image and tile counts meet the approved density;
+- all report values and directional claims come from validated evidence; and
+- every deviation carries prior user approval and a recorded reason.
+
+If validated evidence contradicts a fictional mock result, keep the approved
+section and replace its fictional result with the real result. If evidence cannot
+support an approved element, or implementation requires a material structural
+change, stop before generating or replacing report cells and obtain explicit user
+approval. Never silently substitute a new report structure because it is easier
+to implement or appears cleaner after results are known.
+
 #### Rendered-report validation
 
 Before notebook completion, validate at minimum:
@@ -474,6 +547,10 @@ Before notebook completion, validate at minimum:
   canonical evidence;
 - traceable alignment between major report conclusions and the relevant proposal
   research question, practical output, or documented roadmap extension;
+- validated mock-to-final traceability showing that the approved section order,
+  tables, visual roles, selection rules, conclusion placement, limitations,
+  narrative density, and thesis synthesis were preserved or changed only through
+  an explicitly approved deviation;
 - a balanced rendered mixture of narrative, finding bullets, tables, plots,
   restorations or diagnostic images, captions, and scoped conclusions, without
   long avoidable text walls or unexplained visual galleries;

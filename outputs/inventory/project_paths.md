@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-08-31T21:33:13.203255Z`
-- Registered artifacts: 129
+- Updated: `2026-09-01T01:32:54.553284Z`
+- Registered artifacts: 135
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -18,6 +18,11 @@
 | damage_size.figure_progression | 05_damage_size_sensitivity_dataset_generation | `outputs/05_damage_size_sensitivity_dataset_generation/figures/damage_size_progression.png` | thesis_reporting | passed |
 | damage_size.generation_audit | 05_damage_size_sensitivity_dataset_generation | `outputs/05_damage_size_sensitivity_dataset_generation/metrics/generation_audit.csv` | audit_reporting | passed |
 | damage_size.masks | 05_damage_size_sensitivity_dataset_generation | `outputs/05_damage_size_sensitivity_dataset_generation/images/masks` | primary_downstream | passed |
+| damage_size_analysis.metrics | 23_damage_size_sensitivity_analysis | `outputs/23_damage_size_sensitivity_analysis/metrics/damage_size_analysis.csv` | canonical_damage_size_evidence | passed |
+| damage_size_analysis.performance_figure | 23_damage_size_sensitivity_analysis | `outputs/23_damage_size_sensitivity_analysis/figures/performance_vs_damage.png` | performance_damage_trajectories | passed |
+| damage_size_analysis.ranking_figure | 23_damage_size_sensitivity_analysis | `outputs/23_damage_size_sensitivity_analysis/figures/ranking_vs_damage.png` | family_balanced_ranking_stability | passed |
+| damage_size_analysis.report | 23_damage_size_sensitivity_analysis | `outputs/23_damage_size_sensitivity_analysis/reports/damage_size_analysis.html` | thesis_aligned_damage_size_report | passed |
+| damage_size_analysis.uncertainty_figure | 23_damage_size_sensitivity_analysis | `outputs/23_damage_size_sensitivity_analysis/figures/uncertainty_vs_damage.png` | damage_size_seed_variability | passed |
 | damage_size_diffusion_uncertainty.candidates | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/data/candidates.csv` | notebook_22_extension_candidates | passed |
 | damage_size_diffusion_uncertainty.map_manifest | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/manifests/map_images.csv` | overlay_provenance_and_file_audit | passed |
 | damage_size_diffusion_uncertainty.maps | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/data/uncertainty_maps.npz` | raw_seed_variability_maps | passed |
@@ -135,3 +140,4 @@
 | validation.20_semantic_and_structural_consistency | 20_semantic_and_structural_consistency | `outputs/20_semantic_and_structural_consistency/validation/checks.csv` | validation_evidence | passed |
 | validation.21_multi_model_comparison | 21_multi_model_comparison | `outputs/21_multi_model_comparison/validation/checks.csv` | validation_evidence | passed |
 | validation.22_damage_size_diffusion_uncertainty_extension | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/validation/checks.csv` | validation_evidence | passed |
+| validation.23_damage_size_sensitivity_analysis | 23_damage_size_sensitivity_analysis | `outputs/23_damage_size_sensitivity_analysis/validation/checks.csv` | validation_evidence | passed |

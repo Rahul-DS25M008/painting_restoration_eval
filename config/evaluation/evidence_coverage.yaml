@@ -344,9 +344,58 @@ evidence_coverage:
 
     - notebook_id: "23"
       stem: "23_damage_size_sensitivity_analysis"
-      status: "planned_supported_ready"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      output_root: "outputs/23_damage_size_sensitivity_analysis"
+      manifest_path: "outputs/23_damage_size_sensitivity_analysis/manifests/run_manifest.json"
       required_evidence: ["n05_damage_size", "n09_n11_primary_candidates", "n13_n20_metric_families", "n22_damage_size_uncertainty"]
       independent_unit: "five_painting_trajectories"
+      observed_population:
+        paintings: 5
+        damage_levels: 7
+        cases: 35
+        primary_candidates: 105
+        quality_anchors: 11
+        uncertainty_groups: 35
+        seeds_per_uncertainty_group: 4
+        unordered_seed_pairs: 210
+        analysis_rows: 1901
+        inferential_rows: 646
+        validation_checks: 115
+        roadmap_requirements: 10
+        analytical_report_views: 10
+        report_visual_panels: 8
+        report_embedded_images: 18
+        report_external_images: 0
+        report_tile_count: 95
+        canonical_output_files: 8
+      primary_artifacts:
+        - path: "outputs/23_damage_size_sensitivity_analysis/metrics/damage_size_analysis.csv"
+          rows: 1901
+          schema_version: "damage_size_analysis.v1"
+        - path: "outputs/23_damage_size_sensitivity_analysis/figures/performance_vs_damage.png"
+        - path: "outputs/23_damage_size_sensitivity_analysis/figures/ranking_vs_damage.png"
+        - path: "outputs/23_damage_size_sensitivity_analysis/figures/uncertainty_vs_damage.png"
+        - path: "outputs/23_damage_size_sensitivity_analysis/reports/damage_size_analysis.html"
+        - path: "outputs/23_damage_size_sensitivity_analysis/validation/checks.csv"
+          rows: 115
+      supported_scope:
+        - "target_and_realized_damage_size_trends"
+        - "matched_painting_quality_slopes_and_adjacent_changes"
+        - "paired_model_contrasts_and_family_balanced_rankings"
+        - "leave_one_painting_out_ranking_stability"
+        - "stable_diffusion_damage_size_uncertainty_trends"
+        - "painting_specific_and_mask_morphology_analysis"
+      report_contract:
+        section_count: 13
+        self_contained: true
+        mock_to_final_traceability_passed: true
+        required_visuals_depend_on_external_links: false
+      downstream_contract:
+        - "use_damage_size_analysis_csv_as_the_canonical_scalar_source"
+        - "retain_target_and_realized_exposure_definitions"
+        - "retain_painting_as_the_independent_unit"
+        - "do_not_convert_seed_variability_to_calibrated_confidence"
       prohibited_claims: ["independent_category_effect", "independent_style_effect", "universal_damage_threshold"]
 
     - notebook_id: "24"

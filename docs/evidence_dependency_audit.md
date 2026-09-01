@@ -90,7 +90,7 @@ Stable Diffusion complete four-seed groups in the frozen baseline:
 Prompt variants at a single seed measure prompt sensitivity and cannot be used as
 a replacement for repeated-seed uncertainty.
 
-## 5. Completed post-freeze evidence closure
+## 5. Completed post-freeze evidence and analysis stages
 
 Notebook 22, `22_damage_size_diffusion_uncertainty_extension.ipynb`, is the only
 approved missing-evidence generation extension. It completed at commit
@@ -113,11 +113,40 @@ damage size. Notebook 18 remains the canonical uncertainty source for its origin
 canonical-case population; Notebook 22 is the canonical source for damage-size
 uncertainty. Notebook 22 is now a read-only approved upstream dependency.
 
+Notebook 23, `23_damage_size_sensitivity_analysis.ipynb`, subsequently completed
+the approved damage-size analysis with its completion gate passed. It:
+
+- analyzed five matched painting trajectories at seven nested target levels using
+  35 cases and 105 primary candidates from OpenCV Telea, LaMa, and Stable
+  Diffusion Inpainting;
+- retained 11 quality anchors as separate evidence and used both target and
+  realized damaged fractions rather than constructing a combined quality score;
+- persisted 1,901 canonical analysis rows, including 646 rows with inferential
+  evidence, and retained painting as the independent unit;
+- covered painting-level adverse slopes, adjacent deterioration, paired model
+  contrasts, evaluated-baseline contrasts, family-balanced rankings,
+  leave-one-painting-out stability, uncertainty trends, and exploratory
+  size-adjusted morphology associations;
+- produced three canonical figures and a self-contained 13-section HTML report
+  with 10 analytical views, eight restoration or diagnostic panels, 18 embedded
+  images, 95 panel tiles, and no external image dependency;
+- passed all 115 validation checks and all 10 roadmap traceability requirements
+  with zero blocking or warning failures;
+- registered exactly six non-self-referential artifacts and eight canonical files
+  under `outputs/23_damage_size_sensitivity_analysis/`.
+
+Notebook 23 is now the canonical scalar and report source for the controlled
+damage-size sensitivity experiment. Downstream consumers must preserve target
+and realized exposure definitions, the five-painting dependency structure,
+metric-family disagreement, and the boundary that empirical Stable Diffusion
+seed variability is not calibrated confidence. The analysis does not estimate
+independent category or style effects and does not establish a universal damage
+threshold or conservation approval.
+
 ## 6. Remaining-notebook evidence gate
 
 | Notebook | Supported evidence contract | Required scope discipline |
 |---|---|---|
-| 23 Damage-size analysis | all primary metric families plus completed N22 four-seed uncertainty evidence | five paintings are independent trajectories; category-labelled trajectories are not category effects; uncertainty is empirical seed variability rather than calibrated confidence |
 | 24 Mask robustness | N06 variants, three-model primary metrics, geometry fields | use robustness/sensitivity terminology; variants are nested within groups and paintings |
 | 25 Synthetic degradation | 50 eligible cases, primary model metrics, six-case SDXL subset | compare only eligibility-approved combinations; analyze painting rather than infer category/style effects |
 | 26 Grouped statistics | N13–25 canonical tables | condition every test on actual coverage and independent unit; semantic/feature affinity is not human plausibility |
