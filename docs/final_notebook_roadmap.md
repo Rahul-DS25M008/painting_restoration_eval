@@ -1433,7 +1433,7 @@ validation/checks.csv
 **Notebook:** `25_synthetic_degradation_analysis.ipynb`\
 **Origin:** New analysis stage separated from Notebook 07 generation  
 **Output root:** `outputs/25_synthetic_degradation_analysis/`\
-**Depends on:** Notebooks 07–21
+**Depends on:** Notebooks 01, 07–17, 20, and 21
 
 ### Responsibilities
 
@@ -1445,6 +1445,9 @@ validation/checks.csv
 - Report excluded combinations and eligibility reasons.
 - Compare quality, failure behavior, and compute.
 - Reiterate that procedural degradations are not exact conservation simulations.
+- Treat Notebooks 18 and 19 as not applicable because no repeated-seed
+  synthetic-degradation uncertainty groups were generated; do not create or
+  imply unavailable uncertainty evidence.
 
 ### Canonical outputs
 

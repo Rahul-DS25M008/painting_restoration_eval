@@ -466,10 +466,73 @@ evidence_coverage:
 
     - notebook_id: "25"
       stem: "25_synthetic_degradation_analysis"
-      status: "planned_supported"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      output_root: "outputs/25_synthetic_degradation_analysis"
+      manifest_path: "outputs/25_synthetic_degradation_analysis/manifests/run_manifest.json"
       required_evidence: ["n07_degradation_cases", "n08_model_eligibility", "n09_n21_evidence"]
       population_rule: "eligibility_approved_combinations_only"
-      prohibited_claims: ["procedural_degradation_is_exact_conservation_damage", "independent_category_effect"]
+      independent_unit: "five_paintings_with_cases_nested_within_painting"
+      observed_population:
+        generated_cases: 165
+        eligible_cases: 50
+        paintings: 5
+        primary_core_candidates: 150
+        candidates_by_core_model:
+          opencv_telea: 50
+          lama: 50
+          stable_diffusion_inpainting: 50
+        bounded_sdxl_candidates: 6
+        selected_candidates: 156
+        quality_anchors: 11
+        canonical_analysis_rows: 4695
+        analysis_kinds: 17
+        validation_checks: 125
+        roadmap_requirements: 9
+        analytical_report_views: 14
+        report_visual_panels: 9
+        report_embedded_images: 23
+        report_external_images: 0
+        report_tile_count: 238
+        canonical_output_files: 7
+      primary_artifacts:
+        - path: "outputs/25_synthetic_degradation_analysis/metrics/degradation_analysis.csv"
+          rows: 4695
+          schema_version: "synthetic_degradation_analysis.v1"
+        - path: "outputs/25_synthetic_degradation_analysis/figures/degradation_performance.png"
+        - path: "outputs/25_synthetic_degradation_analysis/figures/degradation_failure_examples.png"
+        - path: "outputs/25_synthetic_degradation_analysis/reports/synthetic_degradation_analysis.html"
+        - path: "outputs/25_synthetic_degradation_analysis/validation/checks.csv"
+          rows: 125
+      supported_scope:
+        - "eligibility_gated_localized_synthetic_degradation_analysis"
+        - "degradation_family_severity_affected_area_and_painting_profiles"
+        - "painting_level_slopes_and_paired_core_model_contrasts"
+        - "ordered_combined_component_comparisons"
+        - "quality_failure_spillover_rank_and_runtime_evidence"
+        - "bounded_six_case_sdxl_description"
+      report_contract:
+        section_count: 15
+        self_contained: true
+        mock_to_final_traceability_passed: true
+        required_visuals_depend_on_external_links: false
+      downstream_contract:
+        - "use_degradation_analysis_csv_as_the_canonical_scalar_source"
+        - "retain_eligibility_exclusions_as_scope_decisions_not_model_failures"
+        - "retain_painting_as_the_independent_unit"
+        - "keep_metric_families_separate_and_preserve_disagreement"
+        - "keep_runtime_out_of_quality_ranking"
+        - "treat_sdxl_as_a_bounded_descriptive_subset"
+        - "do_not_create_synthetic_degradation_uncertainty_without_repeated_seed_evidence"
+      prohibited_claims:
+        - "procedural_degradation_is_exact_conservation_damage"
+        - "independent_category_effect"
+        - "independent_style_effect"
+        - "physical_degradation_interaction"
+        - "full_sdxl_evaluation"
+        - "synthetic_degradation_uncertainty"
+        - "historical_authenticity"
+        - "conservation_approval"
 
     - notebook_id: "26"
       stem: "26_grouped_and_statistical_analysis"

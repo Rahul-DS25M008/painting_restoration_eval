@@ -177,11 +177,49 @@ stochastic candidate uncertainty. Low dispersion does not establish restoration
 quality, historical authenticity, or conservation approval. Runtime remains
 operational evidence and must not enter quality ranking.
 
+Notebook 25, `25_synthetic_degradation_analysis.ipynb`, subsequently completed
+the approved synthetic-degradation analysis with its completion gate passed. It:
+
+- audited all 165 Notebook 07 procedural cases while restricting model comparison
+  to the 50 localized cases approved by Notebook 08;
+- analyzed 150 primary core candidates, comprising 50 OpenCV Telea, 50 LaMa, and
+  50 Stable Diffusion Inpainting candidates, plus a separate bounded six-case
+  SDXL subset;
+- retained 11 quality anchors as separate evidence and persisted 4,695 unique
+  canonical rows across 17 analysis kinds without creating a combined quality,
+  efficiency, uncertainty, or trust score;
+- covered eligibility and exclusions, degradation family, configured severity,
+  affected area, painting-level slopes, paired model contrasts, ordered combined-
+  component contrasts, failure profiles, spillover, family-balanced ranks, runtime,
+  and the bounded SDXL subset;
+- found LaMa to have the best overall family-balanced rank, to lead all four
+  eligible degradation families, and to lead eight of 11 individual anchors;
+  no paired core-model, severity, or affected-area result survived FDR correction;
+- preserved the boundaries that procedural RGB effects are not exact material-
+  conservation simulations, painting and category are confounded, the ordered
+  water-stain-and-dirt condition is not a physical interaction experiment, and
+  repeated-seed synthetic-degradation uncertainty is unavailable;
+- produced two canonical figures and a self-contained 15-section HTML report
+  with 14 analytical views, nine restoration or diagnostic panels, 23 embedded
+  images, 238 panel tiles, and no external image dependency;
+- passed all 125 validation checks and all nine roadmap traceability requirements
+  with zero blocking or warning failures;
+- registered exactly five non-self-referential artifacts and seven canonical
+  files under `outputs/25_synthetic_degradation_analysis/`.
+
+Notebook 25 is now the canonical scalar and report source for the controlled
+synthetic-degradation experiment. Downstream consumers must use its eligibility
+ledger rather than treating excluded objectives as model failures, retain painting
+as the independent unit, keep runtime separate from quality, and preserve metric-
+family disagreement. Its six-case SDXL evidence is descriptive only. It does not
+support independent category or style effects, physical degradation interaction,
+historical authenticity, conservation approval, or synthetic-degradation
+uncertainty.
+
 ## 6. Remaining-notebook evidence gate
 
 | Notebook | Supported evidence contract | Required scope discipline |
 |---|---|---|
-| 25 Synthetic degradation | 50 eligible cases, primary model metrics, six-case SDXL subset | compare only eligibility-approved combinations; analyze painting rather than infer category/style effects |
 | 26 Grouped statistics | N13–25 canonical tables | condition every test on actual coverage and independent unit; semantic/feature affinity is not human plausibility |
 | 27 Failure taxonomy | reference, spatial, texture, colour, seam, semantic, uncertainty, and disagreement evidence | flags are rule-defined decision support; retain only computationally supportable failure categories |
 | 28 Metric/region ablation | N08 ablation memberships, N21 rankings, N27 rules | preserve metric-family disagreement; do not create a universal trust score |

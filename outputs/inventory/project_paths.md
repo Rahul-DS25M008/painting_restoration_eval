@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-09-01T10:59:01.335323Z`
-- Registered artifacts: 140
+- Updated: `2026-09-01T14:26:11.511040Z`
+- Registered artifacts: 145
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -122,6 +122,10 @@
 | synthetic_degradation.generation_audit | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/metrics/generation_audit.csv` | generation_audit | passed |
 | synthetic_degradation.images | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/images/degraded` | degraded_image_collection | passed |
 | synthetic_degradation.protocol | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/reports/degradation_protocol.md` | degradation_protocol | passed |
+| synthetic_degradation_analysis.failure_figure | 25_synthetic_degradation_analysis | `outputs/25_synthetic_degradation_analysis/figures/degradation_failure_examples.png` | representative_failure_evidence | passed |
+| synthetic_degradation_analysis.metrics | 25_synthetic_degradation_analysis | `outputs/25_synthetic_degradation_analysis/metrics/degradation_analysis.csv` | synthetic_degradation_evidence | passed |
+| synthetic_degradation_analysis.performance_figure | 25_synthetic_degradation_analysis | `outputs/25_synthetic_degradation_analysis/figures/degradation_performance.png` | direction_aware_performance_summary | passed |
+| synthetic_degradation_analysis.report | 25_synthetic_degradation_analysis | `outputs/25_synthetic_degradation_analysis/reports/synthetic_degradation_analysis.html` | thesis_aligned_synthetic_degradation_report | passed |
 | validation.01_dataset_verification | 01_dataset_verification | `outputs/01_dataset_verification/validation/checks.csv` | validation | passed |
 | validation.02_image_preprocessing | 02_image_preprocessing | `outputs/02_image_preprocessing/validation/checks.csv` | validation | passed |
 | validation.03_canonical_mask_generation | 03_canonical_mask_generation | `outputs/03_canonical_mask_generation/validation/checks.csv` | validation | passed |
@@ -146,3 +150,4 @@
 | validation.22_damage_size_diffusion_uncertainty_extension | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/validation/checks.csv` | validation_evidence | passed |
 | validation.23_damage_size_sensitivity_analysis | 23_damage_size_sensitivity_analysis | `outputs/23_damage_size_sensitivity_analysis/validation/checks.csv` | validation_evidence | passed |
 | validation.24_mask_robustness_analysis | 24_mask_robustness_analysis | `outputs/24_mask_robustness_analysis/validation/checks.csv` | validation_evidence | passed |
+| validation.25_synthetic_degradation_analysis | 25_synthetic_degradation_analysis | `outputs/25_synthetic_degradation_analysis/validation/checks.csv` | validation_evidence | passed |
