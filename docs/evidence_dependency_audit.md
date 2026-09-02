@@ -496,6 +496,40 @@ populations, and SDXL remains a ten-case partial evaluation with insufficient
 seed coverage. Computational flags and review actions are not expert annotations,
 historical-authenticity evidence, or physical conservation advice.
 
+Notebook 33 is complete and passed its completion gate. It consumed the frozen
+methodology and validated Notebook 21--32 synthesis artifacts without running
+restoration inference, recomputing scientific metrics, creating new statistical
+tests, or constructing a universal combined score. It persisted 293 canonical
+thesis-table rows across 15 tables, 15 LaTeX-ready table records, 106 evidence-
+catalog records, 18 thesis figures, six publication figures, one standalone HTML
+report, and one explicit limitations report.
+
+The final HTML preserves all 19 approved sections, 48 evidence-backed claim
+positions, and 18 explicit limitations. It embeds 68 images representing 281
+analytical or restoration tiles, contains no external image dependency, and is
+portable as a single 13.46 MiB file. Twelve selected case grids support detailed
+visual discussion, while complete case and painting evidence remains available
+through Notebook 32 and complete machine-readable candidate evidence remains in
+the canonical producing notebooks.
+
+The completed synthesis passed all 535 stage-scoped validation checks, all 21
+roadmap responsibilities, and all 125 approved mock-to-final traceability roles
+with zero blocking or warning failures. Eight artifact groups and exactly 32
+physical files were registered under `outputs/33_final_evaluation_report/`; all
+artifact checksums, the artifact-manifest checksum, and the manifest-declared
+physical-file set were independently reverified.
+
+Notebook 33 is now the canonical final-report source for Notebook 34. Downstream
+consumers must preserve its applicability boundaries: the complete comparison is
+limited to Telea, LaMa, and Stable Diffusion; SDXL remains a ten-case, five-
+painting feasibility population; uncertainty covers supported Stable Diffusion
+repeated-seed populations only; the five-painting extensions do not estimate
+independent category or style effects; and scaling projections are not executed
+results or confidence intervals. Computational flags, feature similarity,
+retrieval results, and visual plausibility do not establish expert ground truth,
+historical authenticity, conservation approval, or a physical treatment
+recommendation.
+
 Notebook 28 is now the canonical source for downstream evaluation-policy
 sensitivity and metric/region ablation evidence. Consumers must distinguish the
 stable model-level winner from policy-sensitive case priorities and flags, retain
@@ -511,7 +545,6 @@ comparison.
 
 | Notebook | Supported evidence contract | Required scope discipline |
 |---|---|---|
-| 33 Final evaluation report | N21–32 plus frozen methodology artifacts | report controlled-50 results and transparent projections; no human or conservation validation claim |
 | 34 Dashboard assets | N01–33 canonical outputs | package evidence without recomputation and retain scope labels |
 | 35 Dashboard/deployment validation | N34 assets and application | validate paths, schemas, rendering, and deployment state; do not recompute metrics |
 | 36 Reproducibility package | N01–35 manifests and selected artifacts | reconcile package contents with the controlled evidence and declared projections |

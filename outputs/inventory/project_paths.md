@@ -1,11 +1,19 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-09-02T17:57:37.758183Z`
-- Registered artifacts: 183
+- Updated: `2026-09-02T22:22:14.183325Z`
+- Registered artifacts: 199
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
+| case_painting_reports.case_report_index | 32_case_and_painting_report_generation | `outputs/32_case_and_painting_report_generation/data/case_report_index.csv` | detailed_case_report_registry | passed |
+| case_painting_reports.case_reports | 32_case_and_painting_report_generation | `outputs/32_case_and_painting_report_generation/reports/cases` | thirty_detailed_case_reports | passed |
+| case_painting_reports.collection_index | 32_case_and_painting_report_generation | `outputs/32_case_and_painting_report_generation/reports/index.html` | browse_all_case_and_painting_reports | passed |
+| case_painting_reports.painting_report_index | 32_case_and_painting_report_generation | `outputs/32_case_and_painting_report_generation/data/painting_report_index.csv` | complete_painting_report_registry | passed |
+| case_painting_reports.painting_reports | 32_case_and_painting_report_generation | `outputs/32_case_and_painting_report_generation/reports/paintings` | fifty_complete_painting_reports | passed |
+| case_painting_reports.selected_case_grids | 32_case_and_painting_report_generation | `outputs/32_case_and_painting_report_generation/figures/selected_case_grids` | canonical_visual_grids_for_selected_cases | passed |
+| case_painting_reports.selected_cases | 32_case_and_painting_report_generation | `outputs/32_case_and_painting_report_generation/data/selected_cases.csv` | deterministic_detailed_case_selection | passed |
+| case_painting_reports.validation | 32_case_and_painting_report_generation | `outputs/32_case_and_painting_report_generation/validation/checks.csv` | consolidated_notebook_validation_checks | passed |
 | classical_metrics.distributions | 13_classical_metrics | `outputs/13_classical_metrics/figures/classical_metric_distributions.png` | reporting_visualization | passed |
 | classical_metrics.improvement_by_region | 13_classical_metrics | `outputs/13_classical_metrics/figures/classical_improvement_by_region.png` | reporting_visualization | passed |
 | classical_metrics.metrics | 13_classical_metrics | `outputs/13_classical_metrics/metrics/classical_metrics.csv` | primary_downstream_evidence | passed |
@@ -58,6 +66,14 @@
 | feature_similarity.embedding_manifest | 15_feature_similarity | `outputs/15_feature_similarity/manifests/embeddings.csv` | reusable_embedding_index | passed |
 | feature_similarity.embeddings | 15_feature_similarity | `outputs/15_feature_similarity/data/embeddings.npz` | reusable_embedding_evidence | passed |
 | feature_similarity.metrics | 15_feature_similarity | `outputs/15_feature_similarity/metrics/feature_metrics.csv` | primary_downstream_evidence | passed |
+| final_report.evidence_catalog | 33_final_evaluation_report | `outputs/33_final_evaluation_report/data/report_evidence_catalog.csv` | report_claim_table_figure_registry | passed |
+| final_report.html | 33_final_evaluation_report | `outputs/33_final_evaluation_report/reports/final_evaluation.html` | final_thesis_evaluation_synthesis | passed |
+| final_report.latex_tables | 33_final_evaluation_report | `outputs/33_final_evaluation_report/data/latex_tables.csv` | thesis_ready_latex_tables | passed |
+| final_report.limitations | 33_final_evaluation_report | `outputs/33_final_evaluation_report/reports/limitations_and_deviations.md` | explicit_interpretation_boundaries | passed |
+| final_report.publication_figures | 33_final_evaluation_report | `outputs/33_final_evaluation_report/figures/publication` | compact_publication_plot_set | passed |
+| final_report.thesis_figures | 33_final_evaluation_report | `outputs/33_final_evaluation_report/figures/thesis` | complete_thesis_figure_set | passed |
+| final_report.thesis_tables | 33_final_evaluation_report | `outputs/33_final_evaluation_report/data/thesis_tables.csv` | complete_final_result_table_catalog | passed |
+| final_report.validation | 33_final_evaluation_report | `outputs/33_final_evaluation_report/validation/checks.csv` | consolidated_notebook_validation_checks | passed |
 | grouped_statistics.correlation_figure | 26_grouped_and_statistical_analysis | `outputs/26_grouped_and_statistical_analysis/figures/correlation_matrix.png` | model_specific_metric_agreement | passed |
 | grouped_statistics.effect_sizes_figure | 26_grouped_and_statistical_analysis | `outputs/26_grouped_and_statistical_analysis/figures/effect_sizes.png` | paired_painting_level_effect_sizes | passed |
 | grouped_statistics.grouped_performance_figure | 26_grouped_and_statistical_analysis | `outputs/26_grouped_and_statistical_analysis/figures/grouped_performance.png` | metric_specific_grouped_performance | passed |

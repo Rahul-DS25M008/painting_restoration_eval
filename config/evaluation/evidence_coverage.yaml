@@ -1196,9 +1196,147 @@ evidence_coverage:
 
     - notebook_id: "33"
       stem: "33_final_evaluation_report"
-      status: "planned_supported"
-      required_evidence: ["n21_n32_synthesis_outputs", "frozen_methodology"]
-      prohibited_claims: ["expanded_dataset_executed", "human_validation_completed", "historical_correctness", "conservation_approval"]
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      run_id: "run_ffab0ce2624e43608c3c21764b7f6f1b"
+      output_root: "outputs/33_final_evaluation_report"
+      manifest_path: "outputs/33_final_evaluation_report/manifests/run_manifest.json"
+      preparation_contract:
+        config_path: "config/evaluation/final_evaluation_report.yaml"
+        helper_path: "src/restoration_eval/final_evaluation_report.py"
+        test_path: "tests/test_final_evaluation_report.py"
+        approved_mock_structure_locked: true
+        creates_new_scientific_evidence: false
+        upstream_manifest_count: 32
+        input_table_count: 33
+        painting_count: 50
+        unified_case_count: 525
+        eligible_restoration_case_count: 410
+        approved_report_candidate_count: 1785
+        primary_core_candidate_count: 1230
+        quality_anchor_count: 11
+        canonical_uncertainty_group_count: 130
+        damage_size_uncertainty_group_count: 35
+        ablation_scenario_count: 23
+        table_definition_count: 15
+        thesis_table_rows: 293
+        latex_table_rows: 15
+        evidence_catalog_rows: 106
+        evidence_claim_count: 48
+        limitation_record_count: 18
+        report_section_count: 19
+        thesis_figure_count: 18
+        publication_figure_count: 6
+        persisted_figure_count: 24
+        selected_case_grid_count: 12
+        minimum_embedded_image_count: 64
+        minimum_embedded_tile_count: 260
+        mock_traceability_rows: 125
+        artifact_records: 8
+        physical_output_files: 32
+      completion_contract:
+        run_status: "completed"
+        validation_status: "passed"
+        creates_new_scientific_evidence: false
+        paintings: 50
+        unified_cases: 525
+        eligible_restoration_cases: 410
+        approved_report_candidates: 1785
+        primary_core_candidates: 1230
+        canonical_uncertainty_groups: 130
+        damage_size_uncertainty_groups: 35
+        total_supported_uncertainty_groups: 165
+        thesis_table_rows: 293
+        thesis_tables: 15
+        latex_tables: 15
+        evidence_catalog_rows: 106
+        report_sections: 19
+        evidence_claims: 48
+        limitations: 18
+        thesis_figures: 18
+        publication_figures: 6
+        persisted_figures: 24
+        selected_case_grids: 12
+        embedded_images: 68
+        embedded_tiles: 281
+        external_image_dependencies: 0
+        validation_checks: 535
+        blocking_failures: 0
+        warning_failures: 0
+        roadmap_requirements: 21
+        mock_traceability_rows: 125
+        artifact_records: 8
+        physical_output_files: 32
+      required_evidence:
+        - "n01_n08_frozen_dataset_damage_and_region_methodology"
+        - "n21_multi_model_comparison_and_metric_disagreement"
+        - "n22_n25_damage_size_mask_robustness_and_synthetic_extensions"
+        - "n26_grouped_statistics_correlations_and_ranking_stability"
+        - "n27_failure_taxonomy_flags_and_review_recommendations"
+        - "n28_metric_region_threshold_and_flag_policy_ablation"
+        - "n29_complete_explanation_catalog_and_retrieval_evidence"
+        - "n30_model_cards_observed_compute_and_transparent_projections"
+        - "n31_model_report_discovery_and_provenance"
+        - "n32_selected_case_and_complete_painting_report_discovery"
+      primary_outputs:
+        - path: "outputs/33_final_evaluation_report/data/thesis_tables.csv"
+          rows: 293
+          schema_version: "thesis_tables.v1"
+        - path: "outputs/33_final_evaluation_report/data/latex_tables.csv"
+          rows: 15
+          schema_version: "latex_tables.v1"
+        - path: "outputs/33_final_evaluation_report/data/report_evidence_catalog.csv"
+          rows: 106
+          schema_version: "final_report_evidence_catalog.v1"
+        - path: "outputs/33_final_evaluation_report/figures/thesis"
+          files: 18
+          schema_version: "final_evaluation_thesis_figures.v1"
+        - path: "outputs/33_final_evaluation_report/figures/publication"
+          files: 6
+          schema_version: "final_evaluation_publication_figures.v1"
+        - path: "outputs/33_final_evaluation_report/reports/final_evaluation.html"
+          files: 1
+          schema_version: "final_evaluation_report.v1"
+        - path: "outputs/33_final_evaluation_report/reports/limitations_and_deviations.md"
+          files: 1
+          schema_version: "final_evaluation_limitations.v1"
+        - path: "outputs/33_final_evaluation_report/validation/checks.csv"
+          rows: 535
+          schema_version: "validation_checks.v1"
+      supported_scope:
+        - "proposal_research_question_oriented_final_synthesis"
+        - "controlled_50_dataset_and_410_eligible_case_evidence"
+        - "complete_three_model_comparison_and_bounded_sdxl_evidence"
+        - "separate_classical_perceptual_feature_texture_colour_seam_semantic_and_uncertainty_evidence"
+        - "damage_size_mask_robustness_and_synthetic_degradation_extensions"
+        - "metric_disagreement_grouped_statistics_and_ranking_stability"
+        - "failure_taxonomy_independent_flags_and_review_recommendations"
+        - "evaluation_policy_ablation_and_explainability"
+        - "observed_compute_and_transparent_linear_scaling_projections"
+        - "self_contained_final_html_with_auditable_visual_selection"
+      applicability_rules:
+        - "candidate_case_and_painting_observations_remain_nested"
+        - "painting_is_the_independent_unit_for_grouped_inference"
+        - "five_painting_extensions_do_not_estimate_independent_category_or_style_effects"
+        - "telea_and_lama_repeated_seed_uncertainty_is_not_applicable_deterministic_method"
+        - "stable_diffusion_uncertainty_covers_canonical_and_damage_size_populations_only"
+        - "sdxl_is_ten_case_five_painting_partial_evaluation"
+        - "runtime_is_operational_evidence_outside_quality_ranking"
+        - "report_examples_are_illustrative_not_independent_evidence"
+        - "report_layer_performs_presentation_only_transformations"
+      prohibited_claims:
+        - "new_scientific_evidence_created_by_final_report"
+        - "expanded_dataset_executed"
+        - "independent_style_effect"
+        - "human_or_expert_validation_completed"
+        - "computational_flag_is_expert_ground_truth"
+        - "uncertainty_is_calibrated_confidence"
+        - "sdxl_full_evaluation_or_uncertainty"
+        - "projected_scaling_is_executed_result_or_confidence_interval"
+        - "historical_correctness_or_authenticity"
+        - "conservation_approval_or_physical_treatment_recommendation"
+        - "universal_model_superiority"
+        - "combined_universal_quality_or_trust_score"
 
     - notebook_id: "34"
       stem: "34_final_streamlit_dashboard_assets"
