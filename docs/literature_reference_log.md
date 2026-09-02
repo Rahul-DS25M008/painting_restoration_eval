@@ -2617,7 +2617,119 @@ Possible thesis wording:
 
 ---
 
-## 30. Supervisor Package and Proposal Alignment
+## 30. Model Cards, Compute, and Scalability
+
+### Decision supported
+
+Notebook 30 makes the evaluated model stack auditable and operationally comparable without introducing a combined quality score or pretending that projected scale was executed.
+
+It produces four portable Markdown model cards for OpenCV Telea, LaMa, Stable Diffusion Inpainting, and the bounded SDXL partial evaluation. It also separates observed runtime/storage evidence from transparent 300-painting sensitivity projections.
+
+### Primary model and method sources
+
+#### Telea (2004) — An Image Inpainting Technique Based on the Fast Marching Method
+
+Relevant point:
+Telea defines the classical local inpainting method used by OpenCV’s `INPAINT_TELEA` implementation.
+
+How Notebook 30 uses it:
+The source supports Telea’s identity and original purpose. The notebook still treats the executed OpenCV artifacts and version metadata as the evidence for this project’s implementation and runtime.
+
+#### OpenCV inpainting documentation and repository
+
+Relevant point:
+The official documentation identifies `cv2.INPAINT_TELEA`, while the repository records the Apache-2.0 software licence.
+
+How Notebook 30 uses it:
+The OpenCV card distinguishes software licence, absence of learned weights, and the fixed classical configuration.
+
+#### Suvorov et al. (2022) — Resolution-Robust Large Mask Inpainting with Fourier Convolutions (LaMa)
+
+Relevant point:
+LaMa motivates the learned large-mask inpainting baseline and documents its Fourier-convolution design and general-scene training context.
+
+How Notebook 30 uses it:
+The LaMa card records the method’s intended purpose and domain gap. It does not convert strong scoped evaluation results into a conservation claim.
+
+#### IOPaint repository and LaMa runtime source
+
+Relevant point:
+IOPaint is the actual project runtime wrapper used to execute the converted Big-LaMa checkpoint.
+
+How Notebook 30 uses it:
+The card separates the academic method from the executed implementation and states that the exact converted-checkpoint lineage and separate weight licence were not independently verified.
+
+#### Rombach et al. (2022) — High-Resolution Image Synthesis with Latent Diffusion Models
+
+Relevant point:
+Latent diffusion provides the methodological basis for the Stable Diffusion inpainting family.
+
+How Notebook 30 uses it:
+The Stable Diffusion card explains why prompt, seed, web-data, hallucination, and lossy-autoencoder risks are relevant to restoration candidates.
+
+#### Stable Diffusion v1.5 inpainting model card
+
+Relevant point:
+The pinned model card documents the checkpoint identity, licence, 512-pixel inpainting configuration, and LAION-derived training context.
+
+How Notebook 30 uses it:
+The card records provenance, licence scope, training-data transparency, evaluated 512-to-768 pipeline geometry, and prompt dependence.
+
+#### SDXL inpainting and SDXL base model cards
+
+Relevant point:
+The official cards document the SDXL inpainting checkpoint, base-model relationship, licence, and training details that are publicly available.
+
+How Notebook 30 uses it:
+The SDXL card records a ten-case partial evaluation. It does not claim full evaluation, full-design scalability, or a universally valid minimum VRAM requirement.
+
+### Trustworthy reporting sources
+
+#### Mitchell et al. (2019) — Model Cards for Model Reporting
+
+Relevant point:
+Model cards motivate structured disclosure of intended use, limitations, evaluation context, and ethical considerations.
+
+How Notebook 30 uses it:
+The notebook adapts that disclosure principle to restoration candidates while retaining a project-specific thirteen-section Markdown structure.
+
+#### Gebru et al. (2021) — Datasheets for Datasets
+
+Relevant point:
+Datasheets motivate explicit provenance, composition, scope, and limitation documentation.
+
+How Notebook 30 uses it:
+The cards connect model claims to the controlled dataset scope and state where SDXL coverage differs from the complete three-model population.
+
+#### Van Vijle et al. (2025) — Machine Learning for Painting Conservation: A State-of-the-Art Review
+
+Relevant point:
+The review emphasizes reliability, limited conservation datasets, and careful validation for machine-learning use in painting conservation.
+
+How Notebook 30 uses it:
+The cards foreground domain gap, human review, and the boundary between virtual restoration evaluation and physical conservation decisions.
+
+### Project decision
+
+- Persist four rows in `data/model_cards.csv` and 35 rows in `metrics/compute_scalability.csv`.
+- Preserve 27 observed runtime-summary rows and eight clearly labelled projection rows.
+- Retain Notebook 21’s eleven validated quality anchors as separate descriptive evidence; do not create a combined quality score.
+- Keep the full three-model and bounded four-model populations separate.
+- Treat median/mean/p95 projections as sensitivity values, not confidence intervals.
+- State that no 300-painting experiment, energy measurement, carbon estimate, or universal hardware benchmark was executed.
+- Produce four standalone text-native Markdown cards; Notebook 31 owns image-heavy model reports.
+
+### Notes for final thesis writing
+
+Possible thesis wording:
+
+> Model documentation combined provenance, intended and excluded uses, training-data transparency, domain-gap risks, executed coverage, scoped evaluation evidence, and observed compute measurements. Runtime and storage values were reported for the recorded local environment. A separate linear sensitivity analysis estimated two 300-painting scenarios; these estimates were not presented as executed experiments or confidence intervals.
+
+---
+
+## Legacy planning note — Supervisor Package and Proposal Alignment
+
+This preserved planning note predates the consolidated 36-notebook roadmap. Its supervisor-package responsibility now belongs to Notebook 36; its former Notebook 30 numbering and output paths are historical only.
 
 ### Decision supported
 

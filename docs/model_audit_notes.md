@@ -1,621 +1,274 @@
 # Model Audit Notes
 
-This document records model-selection logic, audit concerns, current inclusion status, and interpretation boundaries for the painting-restoration evaluation framework.
-
-It is intentionally concise.
+This document records the current model roles, evidence boundaries, reproducibility risks, and project decisions used by Notebook 30.
 
 - Literature justification belongs in `docs/literature_reference_log.md`.
 - General methodology belongs in `docs/methodology_notes.md`.
-- Output inventories belong in manifests, reports, or notebook outputs.
-- This file focuses on model role, risks, domain gap, reproducibility, and current project decision.
+- Executed counts and artifacts belong in notebook-owned manifests and canonical tables.
+- Notebook 30 turns this audit into four portable Markdown model cards and a transparent compute/scalability table.
 
 ---
 
-## 1. Model-audit purpose
+## 1. Audit purpose
 
-The thesis evaluates restoration candidates under controlled synthetic damage.
+The thesis evaluates restoration candidates under controlled synthetic damage. It does not treat any pretrained inpainting method as a conservation-grade restoration system.
 
-The project does not treat pretrained inpainting models as conservation-grade restoration systems. Each model is audited as a candidate method whose behavior must be measured across:
+Each method is audited across:
 
-- painting category,
-- damage type,
-- metric family,
-- local evaluation region,
-- visual diagnostics,
-- uncertainty where relevant.
+- painting category and damage condition;
+- reference, perceptual, feature, local-consistency, semantic, and structural evidence;
+- local evaluation region;
+- failure and robustness evidence;
+- empirical seed variability where repeated candidates exist;
+- observed runtime, memory, and storage under the recorded environment.
 
-The central audit concern is domain gap.
+The central risk is domain gap. General-image or web-scale training does not establish painting-specific, historically correct, or conservation-safe behaviour.
 
-Most available inpainting models are trained on natural images, scene datasets, or broad web-scale image corpora, not on controlled painting-restoration data. This matters for:
+> Visual plausibility is not the same as reference fidelity, historical authenticity, calibrated confidence, or approval for physical treatment.
 
-- brushstroke texture,
-- historical style,
-- abstraction and surrealism,
-- iconographic detail,
-- conservation faithfulness,
-- generative hallucination.
+## 2. Evaluated model stack
 
-Core model-audit claim:
+| Model | Evaluation status | Methodological role | Executed candidates |
+|---|---|---|---:|
+| OpenCV Telea | Fully evaluated | Classical deterministic baseline | 410 |
+| LaMa | Fully evaluated | Learned deterministic inpainting baseline | 410 |
+| Stable Diffusion Inpainting | Fully evaluated | Prompt-conditioned stochastic baseline | 1,330 |
+| SDXL Inpainting | Partial evaluation | Bounded higher-capacity diffusion candidate | 10 |
 
-> A model can produce a visually plausible restoration while still failing reference fidelity, texture consistency, semantic stability, or uncertainty requirements.
+OpenCV Telea, LaMa, and Stable Diffusion share the complete controlled 50-painting scope. SDXL is restricted to ten predeclared cases across five paintings and must not be presented as a full-scope comparison.
 
----
+DALL-E/OpenAI Image Editing remains outside the reproducible core experiment because its closed, changeable service contract would weaken local reproducibility and training-data transparency.
 
-## 2. Current model stack
+## 3. OpenCV Telea
 
-| Model | Status | Role |
-|---|---|---|
-| OpenCV Telea | Fully evaluated | Classical deterministic baseline |
-| LaMa | Fully evaluated | Pretrained learned inpainting baseline |
-| Stable Diffusion Inpainting | Fully evaluated | Generative diffusion baseline |
-| SDXL Inpainting | Feasibility-audited only | Higher-capacity diffusion candidate |
-| DALL-E / OpenAI Image Editing | Excluded from core experiment | Optional closed commercial comparison |
+### Role and implementation
 
-Current fully evaluated local model stack:
-
-- OpenCV Telea,
-- LaMa,
-- Stable Diffusion Inpainting.
-
-SDXL is excluded from the full local comparison due hardware/runtime constraints, not because of a concluded quality failure.
-
----
-
-## 3. OpenCV Telea audit
-
-### Role
-
-OpenCV Telea is the classical deterministic baseline.
-
-It provides a simple, fast, reproducible non-learning reference point before evaluating learned or generative models.
+- implementation: `cv2.INPAINT_TELEA`;
+- fixed radius: `3`;
+- execution: CPU;
+- learned weights: none;
+- zero controls: copied without inpainting.
 
 ### Strengths
 
-- deterministic,
-- fast,
-- lightweight,
-- transparent classical algorithm,
-- no learned training-data bias,
-- useful for thin scratches and small local damage,
-- easy to reproduce across machines.
+- deterministic, fast, and lightweight;
+- transparent classical baseline;
+- useful for local interpolation and thin damage;
+- avoids learned training-data bias.
 
-### Risks and limitations
+### Limitations
 
-- no semantic understanding,
-- no painting-specific knowledge,
-- no brushstroke or style model,
-- weak on large missing regions,
-- weak on structured content reconstruction,
-- can interpolate locally without restoring meaningful structure.
+- no semantic or painting-specific knowledge;
+- weak reconstruction of large missing structures;
+- local interpolation can lose meaningful structure and painterly texture;
+- numerical improvement does not establish historical correctness.
 
 ### Project decision
 
-OpenCV Telea remains the first baseline.
+Retain Telea as the reproducible low-compute baseline. Its results define what can be achieved without learned or generative priors.
 
-Policy:
+## 4. LaMa
 
-- algorithm: `cv2.INPAINT_TELEA`,
-- radius: `3`,
-- no per-case tuning,
-- zero-control cases retained as sanity checks.
+### Role and implementation
 
-### Interpretation boundary
-
-OpenCV success means local numerical or visual improvement over white-filled damage. It does not imply historically correct restoration.
-
----
-
-## 4. LaMa audit
-
-### Role
-
-LaMa is the first pretrained learned inpainting baseline.
-
-It is included because it is designed for large-mask inpainting and can use broader image context than OpenCV Telea.
+- method: LaMa large-mask inpainting;
+- runtime: IOPaint CLI with `model=lama`;
+- project wrapper: `src/restoration_eval/restoration_lama.py`;
+- evaluated execution: CUDA on the recorded RTX 3060 Laptop GPU;
+- zero controls: copied without model inference.
 
 ### Strengths
 
-- open pretrained inpainting model,
-- strong general inpainting baseline,
-- better suited than OpenCV for larger masks,
-- uses broader learned context,
-- practical local execution through IOPaint,
-- fully integrated into the controlled 50-painting pipeline.
-
-### Risks and limitations
-
-- trained for general image inpainting, not painting conservation,
-- domain gap for historical paintings and painterly texture,
-- may synthesize plausible but incorrect structures,
-- may smooth or alter brushstroke-like details,
-- output faithfulness depends on surrounding context and training priors.
-
-### Implementation decision
-
-Method source:
-
-- LaMa paper and official method.
-
-Runtime source:
-
-- IOPaint CLI with `model=lama`.
-
-Project wrapper:
-
-- `src/restoration_eval/restoration_lama.py`.
-
-Zero-control policy:
-
-- copied directly rather than inferred through the runtime.
-
-Reason:
-
-- preserves the no-damage control exactly,
-- avoids depending on external runtime behavior for empty masks.
-
-### Current status
-
-LaMa is fully evaluated for the controlled 50-painting subset.
-
-Completed layers:
-
-- restoration generation,
-- classical metrics,
-- difference/error maps,
-- LPIPS,
-- CLIP/DINOv2 feature similarity,
-- standalone LaMa report,
-- OpenCV-vs-LaMa comparison,
-- three-model comparison,
-- refined comparison,
-- texture and brushstroke-proxy metrics.
-
-### Interpretation boundary
-
-LaMa’s strong reference-based performance makes it the strongest current baseline under the refined metric policy. It is still not conservation-specific and should not be described as producing historically correct restorations.
-
----
-
-## 5. Stable Diffusion Inpainting audit
-
-### Role
-
-Stable Diffusion Inpainting is the first generative diffusion baseline.
-
-It is included to test a prompt-conditioned generative restoration model and to support uncertainty analysis through repeated seed sampling.
-
-### Strengths
-
-- generative inpainting capability,
-- mask-aware editing pipeline,
-- prompt conditioning,
-- seed-controllable outputs,
-- useful for studying stochastic uncertainty,
-- can generate visually plausible completions.
-
-### Risks and limitations
-
-- hallucination risk,
-- may alter style, texture, or local content,
-- may produce plausible but reference-inaccurate regions,
-- prompt sensitivity,
-- seed sensitivity,
-- natural/web-scale training domain gap,
-- weaker reference-based performance in the current 50-painting evaluation.
-
-### Project model
-
-Model:
-
-`runwayml/stable-diffusion-inpainting`
-
-Project model name:
-
-`stable_diffusion_inpainting`
-
-Baseline generation policy:
-
-- fixed prompt,
-- fixed negative prompt,
-- fixed seed,
-- fixed inference steps,
-- fixed guidance scale,
-- fixed inference size,
-- zero-control cases copied directly.
-
-This reduces prompt-engineering bias and keeps the model branch reproducible.
-
-### Current status
-
-Stable Diffusion Inpainting is fully evaluated for the controlled 50-painting subset.
-
-Completed layers:
-
-- restoration generation,
-- classical metrics,
-- difference/error maps,
-- LPIPS,
-- CLIP/DINOv2 feature similarity,
-- standalone Stable Diffusion report,
-- three-model comparison,
-- refined comparison,
-- multi-seed uncertainty subset,
-- texture and brushstroke-proxy metrics.
-
-### Uncertainty status
-
-Stable Diffusion has an additional multi-seed uncertainty analysis.
-
-Current uncertainty subset:
-
-- 40 non-zero cases,
-- 4 seeds per case,
-- 160 generated outputs.
-
-Purpose:
-
-- measure output variability for identical damaged inputs,
-- identify unstable generated restorations,
-- link uncertainty to reference-based performance.
-
-### Interpretation boundary
-
-Stable Diffusion is useful precisely because it exposes the gap between visual plausibility and restoration trustworthiness.
-
-A good-looking output is not automatically a faithful restoration. If multiple seeds generate different plausible completions, that instability is an audit signal.
-
----
-
-## 6. SDXL Inpainting audit
-
-### Role
-
-SDXL Inpainting is a higher-capacity diffusion candidate.
-
-It was considered as a possible fourth model after OpenCV Telea, LaMa, and Stable Diffusion Inpainting.
-
-### Strengths
-
-- stronger diffusion model family than older Stable Diffusion,
-- potentially higher visual quality,
-- relevant candidate for final thesis if stronger compute is available.
-
-### Risks and limitations
-
-- significantly higher VRAM and runtime requirements,
-- local 6 GB GPU environment is insufficient for practical full evaluation,
-- low-step runs produce poor restoration,
-- stronger settings were too slow and showed overgeneration in local smoke tests,
-- visual quality may still hide hallucination or reference mismatch.
-
-### Feasibility decision
-
-SDXL was feasibility-audited locally using:
-
-`diffusers/stable-diffusion-xl-1.0-inpainting-0.1`
-
-Local hardware:
-
-- NVIDIA RTX 3060 Laptop GPU,
-- 6 GB VRAM.
-
-Outcome:
-
-- model loading succeeded,
-- no-offload inference caused CUDA out-of-memory,
-- CPU offload made small tests possible,
-- runtime-quality trade-off was not practical,
-- full local evaluation was excluded.
+- uses broader learned context than Telea;
+- practical open learned baseline for large masks;
+- deterministic under the evaluated contract;
+- strongest model on 10 of the 11 validated Notebook 21 anchors for the complete three-model population.
+
+### Limitations
+
+- general-scene rather than painting-conservation training;
+- can smooth texture or synthesize plausible but unsupported structure;
+- the exact IOPaint-converted checkpoint-to-training-run mapping is not independently verified;
+- reference-based strength is not historical or conservation truth.
 
 ### Project decision
 
-SDXL is not part of the current fully evaluated model stack.
+Retain LaMa as the main learned deterministic baseline. Describe its 10/11 anchor result as a scoped descriptive finding, not a universal combined quality score.
 
-It remains future work or a remote-compute extension.
+## 5. Stable Diffusion Inpainting
 
-Minimum preferred compute for full SDXL evaluation:
+### Role and implementation
 
-- at least 12 GB VRAM,
-- preferably 16 GB or more.
+- model: `stable-diffusion-v1-5/stable-diffusion-inpainting`;
+- runtime: Diffusers `StableDiffusionInpaintPipeline`;
+- inference size: 512 × 512;
+- persisted output size: 768 × 768;
+- prompt-conditioned and seed-controlled;
+- zero controls: copied without model inference.
 
-### Interpretation boundary
+### Evidence population
 
-The SDXL result is a feasibility limitation. It must not be written as evidence that SDXL is worse than LaMa, OpenCV, or Stable Diffusion.
-
----
-
-## 7. DALL-E / OpenAI Image Editing audit
-
-### Role
-
-DALL-E / OpenAI Image Editing was considered as an optional closed commercial comparison.
+- 410 restoration cases;
+- 1,330 persisted candidates;
+- 1,280 model inferences and 50 zero controls;
+- 80 unique restoration cases in the repeated-seed uncertainty population;
+- 130 prompt-specific uncertainty groups;
+- 520 repeated-seed candidates using seeds `2026`, `2027`, `2028`, and `2029`;
+- 50 scratch-aware groups paired with generic-prompt groups for controlled thin-scratch prompt ablation.
 
 ### Strengths
 
-- strong image-editing capabilities,
-- mask-guided editing,
-- potentially useful as an external commercial comparison.
+- generative masked completion;
+- controlled prompt and seed variation;
+- supports empirical variability and prompt-sensitivity analysis;
+- exposes a useful contrast between plausible synthesis and reference fidelity.
 
-### Risks and limitations
+### Limitations
 
-- closed model,
-- limited training-data transparency,
-- weaker reproducibility,
-- API/version behavior may change,
-- prompt-guided editing may not guarantee strict restoration-region fidelity,
-- less suitable for a core reproducible academic experiment.
+- hallucination, prompt, language, cultural, and web-data bias risks;
+- higher compute and candidate multiplier than deterministic methods;
+- thin scratch geometry can remain visible after exact compositing;
+- repeated-seed similarity is not calibrated confidence;
+- weaker scoped reference-based results in the current experiment.
 
 ### Project decision
 
-DALL-E / OpenAI Image Editing is excluded from the core experiment.
+Retain Stable Diffusion as the fully evaluated stochastic baseline and uncertainty target. Do not interpret low variability as correctness or high variability as automatic failure.
 
-It may be mentioned as optional future work, but it should not be part of the main reproducible evaluation framework.
+## 6. SDXL Inpainting
 
----
+### Role and implementation
 
-## 8. Current model comparison interpretation
+- model: `diffusers/stable-diffusion-xl-1.0-inpainting-0.1`;
+- runtime: Diffusers `StableDiffusionXLInpaintPipeline`;
+- evaluated size: 768 × 768;
+- execution: bounded partial evaluation on the recorded 6 GB RTX 3060 Laptop GPU.
 
-The refined comparison uses the final metric-region policy:
+### Evidence population
 
-| Metric family | Region |
-|---|---|
-| MSE | `masked_region` |
-| PSNR | `masked_region` |
-| SSIM | `mask_bbox_crop` |
-| LPIPS | `mask_bbox_crop` |
-| CLIP | `mask_bbox_crop` |
-| DINOv2 | `mask_bbox_crop` |
-| Texture metrics | `mask_bbox_crop` |
-| Brushstroke-proxy orientation metrics | `mask_bbox_crop` |
+- ten completed candidates;
+- five paintings;
+- canonical and synthetic/degradation cases selected for cross-method comparison;
+- one seed per case, so no seed-based uncertainty estimate.
 
-Current interpretation from the controlled 50-painting experiment:
+### Strengths
 
-- LaMa dominates the refined reference-based comparison.
-- OpenCV Telea remains useful as a deterministic baseline.
-- Stable Diffusion rarely wins reference-based metrics but is valuable for studying generative uncertainty.
-- SDXL is excluded only because of local feasibility constraints.
-- Texture and brushstroke-proxy metrics add local texture-consistency and directional-structure audit layers.
-- Metric disagreement is expected and useful.
+- higher-capacity diffusion comparison;
+- provides observed local runtime and memory evidence;
+- ten persisted outputs permit a bounded four-model comparison.
 
-The model comparison should not be described as a simple leaderboard. It is a trustworthiness audit across metric families and model behaviors.
+### Limitations
 
----
+- not evaluated on the complete 410-case design;
+- one seed per case;
+- high local runtime and memory burden;
+- insufficient evidence for a full-scope ranking or current-design projection;
+- no experimentally validated universal minimum VRAM requirement is claimed.
 
-## 9. Current model-risk summary
+### Project decision
 
-| Risk | OpenCV Telea | LaMa | Stable Diffusion | SDXL |
+Retain SDXL as `partial_evaluation`, not feasibility-only and not fully evaluated. Notebook 30 may project the common 300-painting canonical-primary scenario from its four executed canonical non-zero cases, but must mark the complete current-design projection not applicable.
+
+## 7. Quality evidence policy
+
+Notebook 30 reuses Notebook 21’s eleven validated anchors:
+
+- classical masked MAE, PSNR, and SSIM;
+- LPIPS;
+- CLIP and DINOv2 feature evidence;
+- semantic CLIP and DINOv2 evidence;
+- structure edge-overlap F1;
+- local colour difference;
+- local seam energy.
+
+Two populations remain separate:
+
+- `core_three_model`: all 410 shared cases for Telea, LaMa, and Stable Diffusion;
+- `sdxl_four_model_subset`: the bounded 10-case four-model subset.
+
+Anchor wins are descriptive counts across validated evidence views. They are not a weighted score, conservation ranking, or substitute for case-level inspection. Runtime is never added to the quality vote.
+
+## 8. Uncertainty and robustness terminology
+
+- Stable Diffusion receives empirical repeated-seed uncertainty because four candidates exist per approved group.
+- SDXL has insufficient repeated-seed coverage and receives no artificial uncertainty value.
+- Telea and LaMa are deterministic under the evaluated contract; later analyses use robustness or sensitivity terminology.
+- Notebook 18 owns scalar and pairwise uncertainty evidence.
+- Notebook 19 owns numeric uncertainty maps, heatmaps, and spatial overlays.
+- Notebook 22 owns the damage-size repeated-seed extension.
+
+Uncertainty is an empirical variability proxy, not calibrated confidence.
+
+## 9. Texture, colour, seam, semantic, and structural evidence
+
+Notebook 17 owns local consistency evidence, including texture, directional structure, colour, and seam diagnostics. Notebook 20 owns semantic and structural consistency. Notebook 21 combines only the approved anchors while preserving family identities and disagreement.
+
+Texture and brushstroke-proxy measures do not authenticate an artist, date a work, or verify semantic brushstroke intent. Colour and seam measures diagnose local transitions; they do not alone determine restoration quality.
+
+## 10. Compute and scalability policy
+
+Notebook 30 records observed runtime summaries exactly as produced by Notebooks 09–12. These values describe one workstation, software stack, cache state, and execution policy.
+
+Two transparent 300-painting sensitivity scenarios are allowed:
+
+1. `projected_300_canonical_primary`: 1,500 candidate outputs per model, consisting of 1,200 inferred non-zero cases and 300 zero controls.
+2. `projected_300_current_design_mix`: six times the executed complete design—2,460 Telea candidates, 2,460 LaMa candidates, and 7,980 Stable Diffusion candidates. SDXL is not applicable because no full-design SDXL basis exists.
+
+Projection rules:
+
+- median, mean, and p95 observed per-candidate runtimes form sensitivity values;
+- these values are not confidence intervals;
+- no 300-painting experiment was executed;
+- projected storage covers notebook-owned artifacts only;
+- caches, environments, Git history, downstream metrics, energy, and carbon are excluded;
+- no universal runtime or hardware benchmark is claimed.
+
+## 11. Model-card reporting policy
+
+Notebook 30 produces four standalone Markdown cards. Each card must:
+
+- follow the approved thirteen-section structure;
+- state scope and evaluation status near the top;
+- separate observed measurements from projections;
+- name intended and excluded uses;
+- disclose training-data transparency, domain gap, licences, and sources;
+- include simple scoped conclusions after key facts;
+- include no image dependency or base64 payload;
+- remain portable when downloaded alone.
+
+Notebook 31 owns image-heavy model reports. Notebook 32 owns case- and painting-level reports. Notebook 34 owns final dashboard assets. Notebook 36 owns the supervisor/publication/reproducibility package.
+
+## 12. Model-risk summary
+
+| Risk | Telea | LaMa | Stable Diffusion | SDXL |
 |---|---|---|---|---|
-| Training-data opacity | Low | Medium | High | High |
-| Domain gap | High | Medium–High | High | High |
+| Training-data opacity | Not applicable | Medium | High | High |
+| Painting-domain gap | High | Medium–high | High | High |
 | Hallucination risk | Low | Medium | High | High |
-| Large-mask ability | Low | High | Medium | Potentially high |
-| Texture faithfulness risk | High | Medium | High | High |
+| Large-mask capability | Low | High | Medium | Not fully established here |
+| Texture-faithfulness risk | High | Medium | High | High |
 | Reproducibility | High | High | Medium | Medium |
 | Local compute burden | Low | Medium | High | Very high |
-| Current evaluation status | Complete | Complete | Complete | Feasibility only |
+| Evaluation status | Full | Full | Full | Partial |
 
-Texture faithfulness risk includes both general local texture mismatch and brushstroke-like directional structure loss. The brushstroke-proxy metrics measure directional texture preservation, not semantic brushstroke authenticity.
+## 13. Human and conservation boundary
 
----
+The framework supports human review; it does not replace conservators. None of the following is established by a model card, metric, projection, or visual report:
 
----
+- historical authenticity;
+- recovery of the artist’s true intent;
+- material compatibility;
+- reversibility of physical treatment;
+- safety of intervention;
+- approval for conservation action.
 
-## 10. Reporting and inspection policy for model audit
+## 14. Current conclusion
 
-Model-specific reports are treated as stable audit artifacts.
+The model stack is methodologically coherent:
 
-Current stable model reports include:
+1. Telea supplies a transparent classical baseline.
+2. LaMa supplies the strongest scoped learned deterministic baseline.
+3. Stable Diffusion supplies a stochastic generative baseline and uncertainty target.
+4. SDXL supplies a bounded higher-capacity partial comparison.
 
-- OpenCV Telea baseline report,
-- LaMa baseline report,
-- Stable Diffusion baseline report,
-- refined three-model comparison report,
-- Stable Diffusion uncertainty report,
-- Stable Diffusion uncertainty heatmap report,
-- final controlled 50-painting report,
-- selected per-case diagnostic reports.
-
-Future extensions should create targeted extended reports rather than repeatedly rewriting every historical report.
-
-Recommended approach:
-
-- keep old reports as provenance,
-- use texture and heatmap outputs as newer diagnostic layers,
-- use selected case reports for inspection examples,
-- use the Streamlit dashboard as the interactive review interface,
-- avoid committing giant embedded HTML reports unless handled separately.
-
-Current report and inspection entry points:
-
-- `outputs/reports/stable_diffusion_uncertainty_heatmap_report_50.html`
-- `outputs/reports/case_diagnostics/case_report_index.html`
-- `outputs/dashboard/`
-- `streamlit_app.py`
-
-The dashboard and reports should be described as inspection artifacts, not as separate experiments.
-
----
-
-## 11. Stable Diffusion uncertainty audit status
-
-Stable Diffusion has two uncertainty-related audit layers.
-
-### Multi-seed scalar uncertainty
-
-Notebook:
-
-`notebooks/27_diffusion_uncertainty_analysis_cleaned.ipynb`
-
-Current subset:
-
-- 40 non-zero cases,
-- 4 seeds per case,
-- 160 generated outputs.
-
-This layer measures:
-
-- image-space seed variation,
-- pairwise LPIPS variation,
-- pairwise CLIP variation,
-- pairwise DINOv2 variation,
-- combined uncertainty index,
-- uncertainty versus reference-performance relationship.
-
-### Spatial uncertainty heatmaps
-
-Notebook:
-
-`notebooks/32_uncertainty_heatmaps_cleaned.ipynb`
-
-This layer converts seed variation into spatial heatmaps.
-
-The heatmaps summarize uncertainty over:
-
-- full image,
-- masked region,
-- mask-bounding-box crop,
-- outside-mask region,
-- outside boundary ring around the mask.
-
-Important boundary:
-
-The boundary-ring metric currently measures an outside ring around the mask. It is not a symmetric inner-plus-outer boundary band.
-
-Interpretation:
-
-Stable Diffusion uncertainty is seed-based spatial variability, not calibrated confidence.
-
-High uncertainty is an audit warning signal. It does not automatically prove poor restoration, and low uncertainty does not prove correctness. The uncertainty layer should be interpreted together with reference-based metrics, texture diagnostics, and case-level inspection.
-
----
-
-## 12. Texture and brushstroke-proxy audit status
-
-Texture and brushstroke-proxy diagnostics are now part of the model-audit framework.
-
-Notebook:
-
-`notebooks/31_texture_metrics_cleaned.ipynb`
-
-These metrics evaluate local texture consistency between the clean reference crop and the restored crop.
-
-They are computed on:
-
-`mask_bbox_crop`
-
-because texture descriptors require spatial context.
-
-Implemented diagnostic families include:
-
-- GLCM texture differences,
-- Gabor response differences,
-- gradient magnitude differences,
-- edge/detail density difference,
-- orientation coherence difference,
-- orientation histogram distance,
-- normalized combined texture distance.
-
-Interpretation boundary:
-
-Brushstroke-proxy metrics measure directional local texture structure. They do not perform semantic brushstroke recognition, artist authentication, historical verification, or conservation judgment.
-
-Audit role:
-
-- identify smoothing or texture mismatch,
-- compare model behavior on high-texture paintings,
-- expose cases where refined reference metrics and texture diagnostics disagree,
-- strengthen the framework beyond pixel, perceptual, and feature-space similarity.
-
----
-
-## 13. Dashboard and case-report audit status
-
-The updated dashboard and selected case reports are now part of the model-audit inspection layer.
-
-Dashboard assets:
-
-`outputs/dashboard/`
-
-Dashboard app:
-
-`streamlit_app.py`
-
-Case report index:
-
-`outputs/reports/case_diagnostics/case_report_index.html`
-
-The dashboard includes pages for:
-
-- overview,
-- model comparison,
-- texture diagnostics,
-- diffusion uncertainty,
-- case reports,
-- reports,
-- debug information.
-
-The selected case reports combine:
-
-- clean reference,
-- damaged input,
-- mask,
-- OpenCV Telea output,
-- LaMa output,
-- Stable Diffusion output,
-- refined metric evidence,
-- texture diagnostics where available,
-- uncertainty heatmaps where available.
-
-Audit role:
-
-- make aggregate findings inspectable,
-- support supervisor review,
-- expose model behavior in selected edge cases,
-- help identify thesis examples,
-- reduce cherry-picking by using deterministic selection rules.
-
-Interpretation boundary:
-
-Case reports and dashboards do not create new model-quality evidence. They organize existing outputs for inspection.
-
----
-
-## 14. Supervisor questions
-
-Model-related questions to confirm:
-
-- Is LaMa sufficient as the main learned inpainting baseline?
-- Should SDXL be rerun if stronger university compute is available?
-- Should Stable Diffusion uncertainty heatmaps be expanded to all 200 non-zero cases?
-- Should the current 40-case uncertainty subset remain sufficient for the thesis?
-- Should texture and brushstroke-proxy diagnostics remain part of the core model-audit framework?
-- Should semantic/iconographic consistency checks be added after feedback?
-- Should DALL-E / OpenAI Image Editing remain excluded from the reproducible core experiment?
-- Should the Streamlit dashboard be treated as a formal supporting artifact?
-
----
-
-## 15. Current conclusion
-
-The current model stack is methodologically coherent:
-
-1. OpenCV Telea provides a deterministic classical baseline.
-2. LaMa provides a strong open pretrained learned inpainting baseline.
-3. Stable Diffusion Inpainting provides a generative diffusion baseline and uncertainty target.
-4. SDXL is documented as a feasibility-audited higher-capacity candidate.
-
-The current model-audit framework now includes:
-
-- refined reference-based comparison,
-- metric-region policy,
-- texture and brushstroke-proxy diagnostics,
-- Stable Diffusion scalar uncertainty,
-- Stable Diffusion spatial uncertainty heatmaps,
-- selected per-case reports,
-- Streamlit dashboard inspection.
-
-The thesis should frame these models as restoration candidates evaluated under controlled synthetic damage.
-
-The central model-audit conclusion is:
-
-> No pretrained model should be treated as a ground-truth painting restoration system. The research contribution is the evaluation framework that exposes where models succeed, fail, hallucinate, smooth texture, alter brushstroke-like directional structure, or become uncertain.
+The thesis contribution is the evaluation framework that shows where these restoration candidates improve, fail, disagree, hallucinate, smooth texture, create seams, alter structure, or vary across seeds—not a claim that any model reconstructs conservation truth.

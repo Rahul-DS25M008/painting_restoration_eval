@@ -883,9 +883,87 @@ evidence_coverage:
 
     - notebook_id: "30"
       stem: "30_model_cards_compute_and_scalability"
-      status: "planned_supported"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      output_root: "outputs/30_model_cards_compute_and_scalability"
+      manifest_path: "outputs/30_model_cards_compute_and_scalability/manifests/run_manifest.json"
+      run_id: "run_99fc7daf6af54d5992ef6c26f05bd901"
+      config_path: "config/evaluation/model_cards_compute.yaml"
+      helper_path: "src/restoration_eval/model_cards_compute.py"
+      test_path: "tests/test_model_cards_compute.py"
       required_evidence: ["model_manifests", "runtime_tables", "inventory", "primary_model_sources"]
-      prohibited_claims: ["projected_300_painting_cost_is_executed_result", "full_sdxl_evaluation"]
+      preparation_contract:
+        config: "config/evaluation/model_cards_compute.yaml"
+        helper: "src/restoration_eval/model_cards_compute.py"
+        tests: "tests/test_model_cards_compute.py"
+        upstream_manifest_range: "09-29"
+      output_contract:
+        model_cards: "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv"
+        compute_scalability: "outputs/30_model_cards_compute_and_scalability/metrics/compute_scalability.csv"
+        model_card_reports: "outputs/30_model_cards_compute_and_scalability/reports/model_cards"
+        figures: ["quality_vs_compute.png", "scaling_projection.png"]
+        model_card_report_format: "portable_text_native_markdown"
+        external_image_dependencies: 0
+      expected_counts:
+        model_cards: 4
+        observed_compute_rows: 27
+        projection_rows: 8
+        compute_rows: 35
+        quality_anchors_per_population: 11
+        physical_canonical_files: 11
+      observed_population:
+        model_cards: 4
+        telea_candidates: 410
+        lama_candidates: 410
+        stable_diffusion_candidates: 1330
+        sdxl_candidates: 10
+        observed_compute_rows: 27
+        projection_rows: 8
+        applicable_projection_rows: 7
+        compute_rows: 35
+        quality_anchors: 11
+        quality_populations: 2
+        standalone_markdown_cards: 4
+        report_sections_per_card: 13
+        canonical_figures: 2
+        validation_checks: 165
+        roadmap_requirements: 13
+        artifact_records: 6
+        physical_output_files: 11
+      primary_artifacts:
+        - path: "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv"
+          rows: 4
+          schema_version: "model_cards.v1"
+        - path: "outputs/30_model_cards_compute_and_scalability/metrics/compute_scalability.csv"
+          rows: 35
+          schema_version: "compute_scalability.v1"
+        - path: "outputs/30_model_cards_compute_and_scalability/reports/model_cards"
+          files: 4
+        - path: "outputs/30_model_cards_compute_and_scalability/figures/quality_vs_compute.png"
+        - path: "outputs/30_model_cards_compute_and_scalability/figures/scaling_projection.png"
+        - path: "outputs/30_model_cards_compute_and_scalability/validation/checks.csv"
+          rows: 165
+      supported_scope:
+        - "four_complete_machine_readable_and_portable_markdown_method_cards"
+        - "observed_runtime_throughput_failure_retry_memory_storage_and_geometry_evidence"
+        - "transparent_300_painting_runtime_and_storage_projection_sensitivity"
+        - "separate_core_three_model_and_bounded_sdxl_quality_compute_views"
+        - "eleven_descriptive_quality_anchors_without_a_combined_score"
+      downstream_contract:
+        - "use_notebook_30_cards_as_the_canonical_method_disclosure_source"
+        - "use_observed_compute_rows_only_for_executed_runtime_and_resource_claims"
+        - "label_all_300_painting_values_as_linear_projections"
+        - "preserve_the_complete_three_model_and_bounded_sdxl_population_split"
+        - "keep_quality_anchors_separate_and_runtime_outside_the_quality_vote"
+        - "use_notebook_31_for_image_heavy_per_model_reports"
+      scope_rules:
+        - "telea_lama_and_stable_diffusion_use_complete_controlled_50_scope"
+        - "sdxl_is_ten_case_five_painting_partial_evaluation"
+        - "quality_anchor_wins_remain_descriptive_not_a_combined_score"
+        - "observed_compute_and_projected_compute_are_separate_record_types"
+        - "sdxl_current_design_projection_is_not_applicable"
+        - "notebook_31_owns_image_heavy_model_reports"
+      prohibited_claims: ["projected_300_painting_cost_is_executed_result", "full_sdxl_evaluation", "runtime_is_universal_benchmark", "projection_sensitivity_is_confidence_interval", "anchor_wins_are_universal_quality_score", "model_card_is_conservation_approval"]
 
     - notebook_id: "31"
       stem: "31_model_report_generation"

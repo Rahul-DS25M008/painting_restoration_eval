@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-02T11:01:35.702275Z",
+  "updated_at_utc": "2026-09-02T13:17:31.288587Z",
   "artifacts": [
     {
       "artifact_key": "classical_metrics.distributions",
@@ -1263,6 +1263,76 @@
       "checksum": "9e6558b295ed7e27af51a24c6c815385c682c4ae48d9aa96043bf359146b5b74"
     },
     {
+      "artifact_key": "model_cards_compute.compute_scalability",
+      "producer_notebook": "30_model_cards_compute_and_scalability",
+      "relative_path": "outputs/30_model_cards_compute_and_scalability/metrics/compute_scalability.csv",
+      "artifact_type": "normalized_compute_scalability_table",
+      "artifact_role": "observed_compute_and_transparent_scaling_projections",
+      "schema_version": "compute_scalability.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "notebook_30_consolidated",
+      "validation_status": "passed",
+      "row_count": 35,
+      "file_count": 1,
+      "checksum": "16e87f3d73c57e5624e9c31b22c0215e1feb558f4f3179b2669fe2a0bd108caf"
+    },
+    {
+      "artifact_key": "model_cards_compute.model_card_reports",
+      "producer_notebook": "30_model_cards_compute_and_scalability",
+      "relative_path": "outputs/30_model_cards_compute_and_scalability/reports/model_cards",
+      "artifact_type": "standalone_markdown_model_card_collection",
+      "artifact_role": "portable_human_readable_method_disclosures",
+      "schema_version": "model_card_markdown.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "notebook_30_consolidated",
+      "validation_status": "passed",
+      "row_count": 4,
+      "file_count": 4,
+      "checksum": "c9ed2a2ec5aef4267f012524fab16bab72f649c8814a4e124dd2a87e815b8dda"
+    },
+    {
+      "artifact_key": "model_cards_compute.model_cards",
+      "producer_notebook": "30_model_cards_compute_and_scalability",
+      "relative_path": "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv",
+      "artifact_type": "normalized_model_card_table",
+      "artifact_role": "complete_machine_readable_method_disclosures",
+      "schema_version": "model_cards.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "notebook_30_consolidated",
+      "validation_status": "passed",
+      "row_count": 4,
+      "file_count": 1,
+      "checksum": "34900309628ea968c8b82931bfd3f37af2862201f8a969d36108ddb5c36b3b35"
+    },
+    {
+      "artifact_key": "model_cards_compute.quality_vs_compute_figure",
+      "producer_notebook": "30_model_cards_compute_and_scalability",
+      "relative_path": "outputs/30_model_cards_compute_and_scalability/figures/quality_vs_compute.png",
+      "artifact_type": "analytical_figure",
+      "artifact_role": "population_matched_quality_and_compute_context",
+      "schema_version": "png.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "notebook_30_consolidated",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "e524aa63094659129cc99cdfc8249e87b9852c655741bd5e2c22ef065964485b"
+    },
+    {
+      "artifact_key": "model_cards_compute.scaling_projection_figure",
+      "producer_notebook": "30_model_cards_compute_and_scalability",
+      "relative_path": "outputs/30_model_cards_compute_and_scalability/figures/scaling_projection.png",
+      "artifact_type": "analytical_figure",
+      "artifact_role": "transparent_300_painting_scalability_projection",
+      "schema_version": "png.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "notebook_30_consolidated",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "0542eb1dee9e3751a92f5d42c7332d8ae7ad3a01d6172317f53598287ae14b3a"
+    },
+    {
       "artifact_key": "multi_model_comparison.disagreement",
       "producer_notebook": "21_multi_model_comparison",
       "relative_path": "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv",
@@ -2395,6 +2465,20 @@
       "row_count": 145,
       "file_count": 1,
       "checksum": "f3816e014c71ce949cf7e6a00be039dd8425082cdefc7ea2020c6523064f62c9"
+    },
+    {
+      "artifact_key": "validation.30_model_cards_compute_and_scalability",
+      "producer_notebook": "30_model_cards_compute_and_scalability",
+      "relative_path": "outputs/30_model_cards_compute_and_scalability/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "notebook_30_consolidated",
+      "validation_status": "passed",
+      "row_count": 165,
+      "file_count": 1,
+      "checksum": "944624bbe73efca2d24d042e59e1f687b3e63a090432902f8d99fa939d322b95"
     }
   ]
 }

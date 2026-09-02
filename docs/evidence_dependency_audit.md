@@ -385,6 +385,46 @@ changes, and empirical seed variability do not establish restoration correctness
 calibrated confidence, historical authenticity, conservation approval, or
 universal model superiority.
 
+Notebook 30, `30_model_cards_compute_and_scalability.ipynb`, subsequently
+completed the approved model-card and compute/scalability stage with its
+completion gate passed. It:
+
+- persisted four machine-readable method cards and four portable standalone
+  Markdown cards for OpenCV Telea, LaMa, Stable Diffusion Inpainting, and SDXL
+  Inpainting;
+- recorded exact implementation identity, versions and revisions, licences,
+  available training-data disclosure, intended and unsupported uses, input and
+  mask constraints, painting-domain gaps, limitations, hardware, and evaluation
+  status for every method;
+- retained the full evaluated populations of 410 Telea, 410 LaMa, and 1,330
+  Stable Diffusion candidates, while keeping SDXL explicitly bounded to ten
+  candidates from five paintings;
+- persisted 35 compute/scalability rows: 27 observed execution summaries and
+  eight transparent 300-painting projection rows;
+- kept observed and projected records separate, retained seven applicable
+  projection rows, and marked the SDXL current-design projection
+  `not_applicable_no_full_design_basis`;
+- retained all eleven Notebook 21 quality anchors as separate descriptive
+  evidence in two population-matched views, without constructing a combined
+  quality/compute score or including runtime in the quality vote;
+- generated two canonical figures and four thirteen-section text-native method
+  cards with no image dependency;
+- passed all 165 validation checks and all 13 roadmap traceability requirements
+  with zero blocking or warning failures;
+- registered six non-self-referential artifacts and exactly eleven physical
+  files under `outputs/30_model_cards_compute_and_scalability/`.
+
+Notebook 30 is now the canonical downstream source for method-card disclosures,
+observed model compute, notebook-owned model output storage, and transparent
+300-painting scalability projections. Notebook 31 must preserve the distinction
+between the complete three-model population and the bounded SDXL subset, between
+observed and projected evidence, and between separate quality anchors and runtime.
+The projections are linear sensitivity estimates rather than executed experiments
+or confidence intervals. Recorded runtime and memory describe one workstation,
+quality-anchor wins are descriptive rather than a universal score, and the cards
+do not establish historical authenticity, conservation suitability, or approval
+for physical treatment.
+
 Notebook 28 is now the canonical source for downstream evaluation-policy
 sensitivity and metric/region ablation evidence. Consumers must distinguish the
 stable model-level winner from policy-sensitive case priorities and flags, retain
@@ -400,7 +440,6 @@ comparison.
 
 | Notebook | Supported evidence contract | Required scope discipline |
 |---|---|---|
-| 30 Model cards/compute | model manifests, runtimes, hardware, inventory, primary model sources | larger-dataset and SDXL costs are projections, not executed results |
 | 31 Model reports | N09–30 evidence | report model and experiment coverage exactly; uncertainty appears only where supported |
 | 32 Case/painting reports | N09–31 evidence | include only evidence applicable to each case and model |
 | 33 Final evaluation report | N21–32 plus frozen methodology artifacts | report controlled-50 results and transparent projections; no human or conservation validation claim |
