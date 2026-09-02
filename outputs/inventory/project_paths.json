@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-02T13:17:31.288587Z",
+  "updated_at_utc": "2026-09-02T17:57:37.758183Z",
   "artifacts": [
     {
       "artifact_key": "classical_metrics.distributions",
@@ -1333,6 +1333,76 @@
       "checksum": "0542eb1dee9e3751a92f5d42c7332d8ae7ad3a01d6172317f53598287ae14b3a"
     },
     {
+      "artifact_key": "model_reports.lama",
+      "producer_notebook": "31_model_report_generation",
+      "relative_path": "outputs/31_model_report_generation/reports/lama.html",
+      "artifact_type": "standalone_html_report",
+      "artifact_role": "model_specific_evaluation_report",
+      "schema_version": "model_report_html.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": "1",
+      "checksum": "82f6d415449ea3cbc11cd16a9701b900a9dc3ffcc3bde9ff60de182fac7d65ce"
+    },
+    {
+      "artifact_key": "model_reports.opencv_telea",
+      "producer_notebook": "31_model_report_generation",
+      "relative_path": "outputs/31_model_report_generation/reports/opencv_telea.html",
+      "artifact_type": "standalone_html_report",
+      "artifact_role": "model_specific_evaluation_report",
+      "schema_version": "model_report_html.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": "1",
+      "checksum": "7fed7532c2edddacbe792b19c7059a6fbdc8600d43ddf895202f911eac0d066b"
+    },
+    {
+      "artifact_key": "model_reports.report_index",
+      "producer_notebook": "31_model_report_generation",
+      "relative_path": "outputs/31_model_report_generation/data/report_index.csv",
+      "artifact_type": "csv",
+      "artifact_role": "model_report_registry",
+      "schema_version": "model_report_index.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": "4",
+      "file_count": "1",
+      "checksum": "80fc6b83dde8c3266f544d6a111fac360d9dee45eb0ed864a0c89f2da4819192"
+    },
+    {
+      "artifact_key": "model_reports.sdxl_inpainting",
+      "producer_notebook": "31_model_report_generation",
+      "relative_path": "outputs/31_model_report_generation/reports/sdxl_inpainting.html",
+      "artifact_type": "standalone_html_report",
+      "artifact_role": "model_specific_evaluation_report",
+      "schema_version": "model_report_html.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": "1",
+      "checksum": "8a5bf4e43157e823738d2b8bed3f8d6e4c978ea6c3e890fdc5bf37f5a94817be"
+    },
+    {
+      "artifact_key": "model_reports.stable_diffusion_inpainting",
+      "producer_notebook": "31_model_report_generation",
+      "relative_path": "outputs/31_model_report_generation/reports/stable_diffusion_inpainting.html",
+      "artifact_type": "standalone_html_report",
+      "artifact_role": "model_specific_evaluation_report",
+      "schema_version": "model_report_html.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": "1",
+      "checksum": "0c70f6552fd5349dd76c6a7c82edf3fffddc63dacc437eee119152b4a7e26c9c"
+    },
+    {
       "artifact_key": "multi_model_comparison.disagreement",
       "producer_notebook": "21_multi_model_comparison",
       "relative_path": "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv",
@@ -2479,6 +2549,20 @@
       "row_count": 165,
       "file_count": 1,
       "checksum": "944624bbe73efca2d24d042e59e1f687b3e63a090432902f8d99fa939d322b95"
+    },
+    {
+      "artifact_key": "validation.31_model_report_generation",
+      "producer_notebook": "31_model_report_generation",
+      "relative_path": "outputs/31_model_report_generation/validation/checks.csv",
+      "artifact_type": "csv",
+      "artifact_role": "consolidated_validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": "324",
+      "file_count": "1",
+      "checksum": "076c2756a3675933b38b18513d31e950c4e59ce00c40c3d88c4176458dcc88f9"
     }
   ]
 }

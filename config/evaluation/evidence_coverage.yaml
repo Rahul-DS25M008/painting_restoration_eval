@@ -967,8 +967,105 @@ evidence_coverage:
 
     - notebook_id: "31"
       stem: "31_model_report_generation"
-      status: "planned_supported"
-      required_evidence: ["n09_n30_model_specific_evidence"]
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      run_id: "run_86faee4c15ee49cbbc5b85a649cdc1b4"
+      output_root: "outputs/31_model_report_generation"
+      manifest_path: "outputs/31_model_report_generation/manifests/run_manifest.json"
+      preparation_contract:
+        config_path: "config/evaluation/model_report_generation.yaml"
+        helper_path: "src/restoration_eval/model_report_generation.py"
+        test_path: "tests/test_model_report_generation.py"
+        approved_mock_structure_locked: true
+        creates_new_scientific_evidence: false
+        upstream_manifest_range: "09-30"
+        upstream_manifest_count: 22
+        model_count: 4
+        report_count: 4
+        report_index_rows: 4
+        artifact_records: 6
+        physical_output_files: 8
+        required_sections_per_report: 15
+        mock_traceability_rows: 39
+      completion_contract:
+        run_status: "completed"
+        validation_status: "passed"
+        creates_new_scientific_evidence: false
+        reports: 4
+        report_index_rows: 4
+        sections_per_report: 15
+        embedded_images: 63
+        embedded_tiles: 298
+        opencv_telea_images: 16
+        opencv_telea_tiles: 76
+        lama_images: 16
+        lama_tiles: 76
+        stable_diffusion_images: 19
+        stable_diffusion_tiles: 90
+        sdxl_images: 12
+        sdxl_tiles: 56
+        validation_checks: 324
+        blocking_failures: 0
+        warning_failures: 0
+        roadmap_requirements: 13
+        mock_traceability_rows: 39
+        artifact_records: 6
+        physical_output_files: 8
+        external_image_dependencies: 0
+      required_evidence:
+        - "n09_n12_candidates_runtime_and_scope"
+        - "n13_n20_reference_local_uncertainty_and_semantic_evidence"
+        - "n21_n28_comparison_robustness_statistics_failures_and_ablation"
+        - "n29_complete_explanation_catalog_and_selected_retrieval_evidence"
+        - "n30_model_cards_compute_and_scalability"
+      primary_outputs:
+        - path: "outputs/31_model_report_generation/reports/opencv_telea.html"
+          files: 1
+          schema_version: "self_contained_model_report.v1"
+        - path: "outputs/31_model_report_generation/reports/lama.html"
+          files: 1
+          schema_version: "self_contained_model_report.v1"
+        - path: "outputs/31_model_report_generation/reports/stable_diffusion_inpainting.html"
+          files: 1
+          schema_version: "self_contained_model_report.v1"
+        - path: "outputs/31_model_report_generation/reports/sdxl_inpainting.html"
+          files: 1
+          schema_version: "self_contained_model_report.v1"
+        - path: "outputs/31_model_report_generation/data/report_index.csv"
+          rows: 4
+          schema_version: "model_report_index.v1"
+        - path: "outputs/31_model_report_generation/validation/checks.csv"
+          rows: 324
+          schema_version: "validation_checks.v1"
+      supported_scope:
+        - "four_parameterized_self_contained_model_reports"
+        - "complete_three_model_and_bounded_sdxl_scope_preserved"
+        - "model_specific_quality_local_semantic_failure_explanation_and_compute_evidence"
+        - "stable_diffusion_canonical_and_damage_size_seed_variability"
+        - "stable_diffusion_scratch_prompt_ablation"
+        - "deterministic_representative_success_failure_selection"
+        - "approved_mock_fidelity_and_embedded_visual_density"
+      applicability_rules:
+        - "telea_and_lama_repeated_seed_uncertainty_is_not_applicable_deterministic_method"
+        - "stable_diffusion_uncertainty_covers_canonical_and_damage_size_populations"
+        - "sdxl_uncertainty_is_not_applicable_insufficient_seed_coverage"
+        - "sdxl_is_ten_case_five_painting_partial_evaluation"
+        - "damage_size_mask_robustness_and_synthetic_extensions_use_painting_as_independent_unit"
+        - "report_examples_are_illustrative_not_independent_evidence"
+      downstream_contract:
+        - "consume_report_index_for_report_discovery_and_provenance"
+        - "use_upstream_canonical_tables_for_complete_machine_readable_evidence"
+        - "do_not_treat_embedded_examples_as_the_complete_evidence_population"
+        - "preserve_model_specific_applicability_and_partial_coverage_labels"
+      prohibited_claims:
+        - "new_scientific_evidence_created_by_report_layer"
+        - "deterministic_method_seed_uncertainty"
+        - "sdxl_full_evaluation_or_uncertainty"
+        - "style_effect_inference"
+        - "calibrated_confidence"
+        - "historical_authenticity"
+        - "conservation_approval"
+        - "universal_model_superiority"
 
     - notebook_id: "32"
       stem: "32_case_and_painting_report_generation"

@@ -425,6 +425,36 @@ quality-anchor wins are descriptive rather than a universal score, and the cards
 do not establish historical authenticity, conservation suitability, or approval
 for physical treatment.
 
+Notebook 31 is complete and passed its completion gate. It consumed validated
+Notebook 09--30 artifacts and produced four standalone, self-contained HTML
+reports plus a four-row report index. All four reports preserve the approved
+executive summary plus fourteen-section structure. Together they contain 63
+embedded report images and 298 embedded visual tiles: 16 images and 76 tiles for
+Telea, 16 and 76 for LaMa, 19 and 90 for Stable Diffusion, and 12 and 56 for
+SDXL. No report contains an external image dependency or planning-mock residue.
+
+The completed report layer passed all 324 validation checks, all 13 roadmap
+responsibilities, and all 39 mock-to-final traceability roles with zero blocking
+or warning failures. Six non-self-referential artifacts and exactly eight
+physical files were registered under `outputs/31_model_report_generation/`.
+The reports are presentation and synthesis artifacts only: they select examples,
+format validated values, create presentation-only plots, and embed web-sized
+visuals, but they do not create new metrics, statistical tests, rankings,
+exclusions, composite scores, or scientific evidence.
+
+Notebook 31 is now the canonical downstream source for model-report discovery
+and provenance through `data/report_index.csv`. Complete machine-readable
+evidence remains in the producing upstream tables, including Notebook 29's
+1,785-row explanation catalog; embedded report examples are auditable
+illustrations rather than the full evidence population or independent
+observations. Consumers must retain the method-specific applicability rules:
+Telea and LaMa are deterministic and have no repeated-seed uncertainty, Stable
+Diffusion reports canonical and damage-size seed variability plus the controlled
+scratch-prompt ablation, and SDXL remains a ten-case, five-painting partial
+evaluation with insufficient seed coverage for uncertainty. The reports do not
+establish historical authenticity, conservation approval, calibrated confidence,
+or universal model superiority.
+
 Notebook 28 is now the canonical source for downstream evaluation-policy
 sensitivity and metric/region ablation evidence. Consumers must distinguish the
 stable model-level winner from policy-sensitive case priorities and flags, retain

@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-09-02T13:17:31.288587Z`
-- Registered artifacts: 177
+- Updated: `2026-09-02T17:57:37.758183Z`
+- Registered artifacts: 183
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -101,6 +101,11 @@
 | model_cards_compute.model_cards | 30_model_cards_compute_and_scalability | `outputs/30_model_cards_compute_and_scalability/data/model_cards.csv` | complete_machine_readable_method_disclosures | passed |
 | model_cards_compute.quality_vs_compute_figure | 30_model_cards_compute_and_scalability | `outputs/30_model_cards_compute_and_scalability/figures/quality_vs_compute.png` | population_matched_quality_and_compute_context | passed |
 | model_cards_compute.scaling_projection_figure | 30_model_cards_compute_and_scalability | `outputs/30_model_cards_compute_and_scalability/figures/scaling_projection.png` | transparent_300_painting_scalability_projection | passed |
+| model_reports.lama | 31_model_report_generation | `outputs/31_model_report_generation/reports/lama.html` | model_specific_evaluation_report | passed |
+| model_reports.opencv_telea | 31_model_report_generation | `outputs/31_model_report_generation/reports/opencv_telea.html` | model_specific_evaluation_report | passed |
+| model_reports.report_index | 31_model_report_generation | `outputs/31_model_report_generation/data/report_index.csv` | model_report_registry | passed |
+| model_reports.sdxl_inpainting | 31_model_report_generation | `outputs/31_model_report_generation/reports/sdxl_inpainting.html` | model_specific_evaluation_report | passed |
+| model_reports.stable_diffusion_inpainting | 31_model_report_generation | `outputs/31_model_report_generation/reports/stable_diffusion_inpainting.html` | model_specific_evaluation_report | passed |
 | multi_model_comparison.disagreement | 21_multi_model_comparison | `outputs/21_multi_model_comparison/metrics/metric_disagreement.csv` | family_balanced_disagreement_evidence | passed |
 | multi_model_comparison.disagreement_figure | 21_multi_model_comparison | `outputs/21_multi_model_comparison/figures/metric_disagreement.png` | metric_disagreement_visual_evidence | passed |
 | multi_model_comparison.metrics | 21_multi_model_comparison | `outputs/21_multi_model_comparison/metrics/model_comparison.csv` | cross_model_metric_evidence | passed |
@@ -183,3 +188,4 @@
 | validation.28_metric_and_region_policy_ablation | 28_metric_and_region_policy_ablation | `outputs/28_metric_and_region_policy_ablation/validation/checks.csv` | validation_evidence | passed |
 | validation.29_explainable_ai_and_case_retrieval | 29_explainable_ai_and_case_retrieval | `outputs/29_explainable_ai_and_case_retrieval/validation/checks.csv` | validation_evidence | passed |
 | validation.30_model_cards_compute_and_scalability | 30_model_cards_compute_and_scalability | `outputs/30_model_cards_compute_and_scalability/validation/checks.csv` | validation_evidence | passed |
+| validation.31_model_report_generation | 31_model_report_generation | `outputs/31_model_report_generation/validation/checks.csv` | consolidated_validation_evidence | passed |

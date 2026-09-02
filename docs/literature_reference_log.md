@@ -2727,6 +2727,59 @@ Possible thesis wording:
 
 ---
 
+## Notebook 31 — Model Report Generation
+
+### Evidence and literature position
+
+Notebook 31 introduces no new scientific method and therefore requires no new
+metric or model reference. It presents validated Notebook 09--30 evidence using
+the reporting, model-documentation, dataset-provenance, visualization, and
+painting-conservation sources already recorded for those producing notebooks.
+
+### Project decision
+
+- Generate one parameterized, standalone HTML report for OpenCV Telea, LaMa,
+  Stable Diffusion Inpainting, and SDXL Inpainting.
+- Preserve the approved mock's executive summary plus fourteen-section sequence,
+  conclusion positions, nearby limitations, representative visual roles, and
+  model-specific visual density.
+- Embed web-sized report visuals as data URIs while retaining canonical upstream
+  artifact paths, checksums, and run IDs in the report index and provenance.
+- Use deterministic, quota-based success/failure selection from Notebook 29's
+  complete 1,785-row explanation catalog. Selected report examples illustrate
+  validated findings and do not replace the full upstream data.
+- Keep uncertainty model-specific: deterministic methods are not applicable,
+  Stable Diffusion uses canonical and damage-size repeated-seed evidence, and
+  SDXL remains not applicable because only one seed exists per evaluated case.
+- Keep SDXL explicitly bounded to ten candidates from five paintings.
+- Do not introduce new metrics, tests, rankings, exclusions, composite scores,
+  historical-authenticity claims, or conservation recommendations.
+
+### Implemented report evidence
+
+- Four self-contained HTML reports were completed, each retaining the approved
+  executive summary plus fourteen-section structure.
+- The reports embed 63 images and 298 visual tiles in total and have no external
+  image dependencies; the four-row report index records discovery and provenance.
+- All 324 validation checks, 13 roadmap responsibilities, and 39 mock-to-final
+  traceability roles passed with zero blocking or warning failures.
+- The report layer created no new scientific evidence. Complete case-level data
+  remain in the validated upstream canonical tables, while selected report cases
+  provide deterministic visual illustrations.
+
+### Notes for final thesis writing
+
+Possible thesis wording:
+
+> Parameterized model reports consolidated validated quality, robustness,
+> uncertainty, failure, explanation, and compute evidence without recomputing
+> scientific results. Each report retained the method's actual evaluation scope
+> and paired concise numerical conclusions with auditable visual examples. The
+> reports support inspection and decision review; they do not establish
+> historical authenticity or authorize physical conservation treatment.
+
+---
+
 ## Legacy planning note — Supervisor Package and Proposal Alignment
 
 This preserved planning note predates the consolidated 36-notebook roadmap. Its supervisor-package responsibility now belongs to Notebook 36; its former Notebook 30 numbering and output paths are historical only.
@@ -2841,7 +2894,13 @@ Possible thesis wording:
 
 ---
 
-## 31. Texture Metrics
+## Legacy planning note — Former Notebook 31 Texture Metrics
+
+This preserved section predates the consolidated 36-notebook roadmap. Its
+texture, colour, seam, and brushstroke-proxy work was implemented by Notebook 17.
+Current Notebook 31 generates model reports and consumes those validated metrics;
+it does not compute a new texture layer. Numbered claims below are historical and
+must be read as describing the implemented Notebook 17 evidence.
 
 ### Decision supported
 
@@ -2870,56 +2929,56 @@ The brushstroke-proxy metrics do not perform semantic brushstroke recognition. T
 Relevant point:  
 The paper argues that image inpainting quality depends on both structure generation and texture synthesis.
 
-How Notebook 31 uses it:  
-Notebook 31 operationalizes this structure-texture motivation by adding texture and brushstroke-proxy metrics to the restoration evaluation framework. The notebook does not implement Jain et al.’s model and does not claim semantic brushstroke recognition. Instead, it uses the paper’s structure-texture argument to justify measuring local texture preservation and directional brushstroke-like continuity as separate diagnostic layers beyond PSNR, SSIM, LPIPS, CLIP, and DINOv2.
+How the implemented texture layer uses it:
+Notebook 17 operationalizes this structure-texture motivation through texture and brushstroke-proxy metrics. It does not implement Jain et al.’s model or claim semantic brushstroke recognition. Notebook 31 only reports the validated Notebook 17 evidence.
 
 #### Sun et al. (2024) — Ancient Paintings Inpainting Based on Dual Encoders and Multi-Scale Feature Fusion
 
 Relevant point:  
 The paper treats texture and detail extraction as important for ancient painting inpainting.
 
-How Notebook 31 uses it:  
-Notebook 31 uses this as painting-specific support for evaluating local texture preservation. This is especially relevant for high-texture brushwork, large losses, and mixed damage cases.
+How the implemented texture layer uses it:
+Notebook 17 uses this as painting-specific support for evaluating local texture preservation. This is especially relevant for high-texture brushwork, large losses, and mixed damage cases.
 
 #### Liu et al. (2024) — Ancient Painting Inpainting Based on Multi-Layer Feature Fusion
 
 Relevant point:  
 The paper discusses detail preservation and frequency-domain or multi-layer feature enhancement for ancient painting inpainting.
 
-How Notebook 31 uses it:  
-Notebook 31 uses this as support for including frequency- and orientation-aware texture descriptors. Gabor responses provide a lightweight way to measure local frequency/orientation texture differences between clean and restored crops.
+How the implemented texture layer uses it:
+Notebook 17 uses this as support for frequency- and orientation-aware texture descriptors. Gabor responses provide a lightweight measure of local frequency/orientation texture differences between clean and restored crops.
 
 #### Van Vijle et al. (2025) — Machine Learning for Painting Conservation: A State-of-the-Art Review
 
 Relevant point:  
 The review identifies virtual restoration as an active machine-learning application in painting conservation and emphasizes reliability, data limitations, and validation concerns.
 
-How Notebook 31 uses it:  
-Notebook 31 frames texture metrics as an additional reliability-oriented diagnostic layer. The texture scores are not treated as conservation truth, but as evidence about local texture consistency under controlled synthetic damage.
+How the implemented texture layer uses it:
+Notebook 17 frames texture metrics as an additional reliability-oriented diagnostic layer. The scores are not conservation truth; Notebook 31 preserves that limitation when reporting them.
 
 #### Fontoura Júnior et al. (2023) — Assessing the Effectiveness of Inpainting Techniques in Cultural Heritage
 
 Relevant point:  
 The paper supports careful evaluation of inpainting in cultural heritage contexts using multiple criteria.
 
-How Notebook 31 uses it:  
-Notebook 31 adds texture-aware evaluation as another criterion in the controlled restoration framework. This supports the project’s broader claim that restoration trustworthiness requires several complementary signals.
+How the implemented texture layer uses it:
+Notebook 17 adds texture-aware evaluation as another criterion in the controlled restoration framework. Notebook 31 presents it alongside the other validated evidence families.
 
 #### Zhang et al. (2018) — LPIPS
 
 Relevant point:  
 LPIPS motivates learned perceptual similarity and shows that pixel-level metrics are insufficient for perceptual evaluation.
 
-How Notebook 31 uses it:  
-Notebook 31 complements LPIPS rather than replacing it. LPIPS gives learned perceptual distance, while GLCM and Gabor provide more explicit local texture descriptors.
+How the implemented texture layer uses it:
+Notebook 17 complements LPIPS rather than replacing it. LPIPS gives learned perceptual distance, while GLCM and Gabor provide more explicit local texture descriptors.
 
 #### Oquab et al. (2023) — DINOv2
 
 Relevant point:  
 DINOv2 provides robust visual features but does not explicitly isolate local texture preservation.
 
-How Notebook 31 uses it:  
-Notebook 31 adds texture metrics as a complementary local descriptor layer. This is useful for cases where DINOv2 feature similarity and explicit texture-distance metrics disagree.
+How the implemented texture layer uses it:
+Notebook 17 adds texture metrics as a complementary local descriptor layer. Notebook 31 may report cases where DINOv2 similarity and explicit texture-distance evidence disagree.
 
 ### Project decision
 
