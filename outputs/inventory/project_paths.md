@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-09-01T22:12:05.347810Z`
-- Registered artifacts: 159
+- Updated: `2026-09-02T08:20:10.888661Z`
+- Registered artifacts: 165
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -86,6 +86,11 @@
 | masks.figure_examples | 03_canonical_mask_generation | `outputs/03_canonical_mask_generation/figures/mask_examples.png` | qa_reporting | passed |
 | masks.figure_morphology | 03_canonical_mask_generation | `outputs/03_canonical_mask_generation/figures/mask_morphology.png` | thesis_reporting | passed |
 | masks.protocol | 03_canonical_mask_generation | `outputs/03_canonical_mask_generation/reports/mask_protocol.md` | methodology_reporting | passed |
+| metric_region_ablation.flag_figure | 28_metric_and_region_policy_ablation | `outputs/28_metric_and_region_policy_ablation/figures/ablation_flag_changes.png` | candidate_and_flag_policy_sensitivity | passed |
+| metric_region_ablation.flag_stability | 28_metric_and_region_policy_ablation | `outputs/28_metric_and_region_policy_ablation/metrics/flag_stability.csv` | candidate_level_policy_sensitivity | passed |
+| metric_region_ablation.ranking_figure | 28_metric_and_region_policy_ablation | `outputs/28_metric_and_region_policy_ablation/figures/ablation_ranking_changes.png` | model_and_case_ranking_sensitivity | passed |
+| metric_region_ablation.report | 28_metric_and_region_policy_ablation | `outputs/28_metric_and_region_policy_ablation/reports/ablation_study.html` | thesis_aligned_ablation_report | passed |
+| metric_region_ablation.results | 28_metric_and_region_policy_ablation | `outputs/28_metric_and_region_policy_ablation/metrics/ablation_results.csv` | metric_region_threshold_and_aggregation_sensitivity_evidence | passed |
 | multi_model_comparison.disagreement | 21_multi_model_comparison | `outputs/21_multi_model_comparison/metrics/metric_disagreement.csv` | family_balanced_disagreement_evidence | passed |
 | multi_model_comparison.disagreement_figure | 21_multi_model_comparison | `outputs/21_multi_model_comparison/figures/metric_disagreement.png` | metric_disagreement_visual_evidence | passed |
 | multi_model_comparison.metrics | 21_multi_model_comparison | `outputs/21_multi_model_comparison/metrics/model_comparison.csv` | cross_model_metric_evidence | passed |
@@ -165,3 +170,4 @@
 | validation.25_synthetic_degradation_analysis | 25_synthetic_degradation_analysis | `outputs/25_synthetic_degradation_analysis/validation/checks.csv` | validation_evidence | passed |
 | validation.26_grouped_and_statistical_analysis | 26_grouped_and_statistical_analysis | `outputs/26_grouped_and_statistical_analysis/validation/checks.csv` | validation_evidence | passed |
 | validation.27_failure_taxonomy_and_trustworthiness_flags | 27_failure_taxonomy_and_trustworthiness_flags | `outputs/27_failure_taxonomy_and_trustworthiness_flags/validation/checks.csv` | validation_evidence | passed |
+| validation.28_metric_and_region_policy_ablation | 28_metric_and_region_policy_ablation | `outputs/28_metric_and_region_policy_ablation/validation/checks.csv` | validation_evidence | passed |

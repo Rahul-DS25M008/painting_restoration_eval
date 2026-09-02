@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-01T22:12:05.347810Z",
+  "updated_at_utc": "2026-09-02T08:20:10.888661Z",
   "artifacts": [
     {
       "artifact_key": "classical_metrics.distributions",
@@ -1123,6 +1123,76 @@
       "checksum": "3808f8eb764f3279135000f20090e7547cd6bd6b9d5ebc8fbe931619714a41dd"
     },
     {
+      "artifact_key": "metric_region_ablation.flag_figure",
+      "producer_notebook": "28_metric_and_region_policy_ablation",
+      "relative_path": "outputs/28_metric_and_region_policy_ablation/figures/ablation_flag_changes.png",
+      "artifact_type": "analytical_figure",
+      "artifact_role": "candidate_and_flag_policy_sensitivity",
+      "schema_version": "ablation_flag_figure.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "evaluation_policy_ablation",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "f083472862198f607709746aafe8510a1052f4a0815982ef0348330c58213750"
+    },
+    {
+      "artifact_key": "metric_region_ablation.flag_stability",
+      "producer_notebook": "28_metric_and_region_policy_ablation",
+      "relative_path": "outputs/28_metric_and_region_policy_ablation/metrics/flag_stability.csv",
+      "artifact_type": "normalized_flag_stability_table",
+      "artifact_role": "candidate_level_policy_sensitivity",
+      "schema_version": "ablation_flag_stability.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "evaluation_policy_ablation",
+      "validation_status": "passed",
+      "row_count": 41055,
+      "file_count": 1,
+      "checksum": "4a37e3cf9cf69097de113a63ac6c6fd88ea1eac39880296d5be0cca3edeaba82"
+    },
+    {
+      "artifact_key": "metric_region_ablation.ranking_figure",
+      "producer_notebook": "28_metric_and_region_policy_ablation",
+      "relative_path": "outputs/28_metric_and_region_policy_ablation/figures/ablation_ranking_changes.png",
+      "artifact_type": "analytical_figure",
+      "artifact_role": "model_and_case_ranking_sensitivity",
+      "schema_version": "ablation_ranking_figure.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "evaluation_policy_ablation",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "af6a9693c3fcd8afc64a586281ac65e094733f47b325d93854b7a4e295ebcf7f"
+    },
+    {
+      "artifact_key": "metric_region_ablation.report",
+      "producer_notebook": "28_metric_and_region_policy_ablation",
+      "relative_path": "outputs/28_metric_and_region_policy_ablation/reports/ablation_study.html",
+      "artifact_type": "self_contained_html_report",
+      "artifact_role": "thesis_aligned_ablation_report",
+      "schema_version": "approved_mock_aligned_self_contained_ablation_report.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "evaluation_policy_ablation",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "e3efc755696ed9dbbf6839154f8414bc85dec6f8cb183223ad06b782a9981d37"
+    },
+    {
+      "artifact_key": "metric_region_ablation.results",
+      "producer_notebook": "28_metric_and_region_policy_ablation",
+      "relative_path": "outputs/28_metric_and_region_policy_ablation/metrics/ablation_results.csv",
+      "artifact_type": "normalized_ablation_table",
+      "artifact_role": "metric_region_threshold_and_aggregation_sensitivity_evidence",
+      "schema_version": "metric_region_ablation_results.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "evaluation_policy_ablation",
+      "validation_status": "passed",
+      "row_count": 7710,
+      "file_count": 1,
+      "checksum": "9e6558b295ed7e27af51a24c6c815385c682c4ae48d9aa96043bf359146b5b74"
+    },
+    {
       "artifact_key": "multi_model_comparison.disagreement",
       "producer_notebook": "21_multi_model_comparison",
       "relative_path": "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv",
@@ -2227,6 +2297,20 @@
       "row_count": 167,
       "file_count": 1,
       "checksum": "e349b2c49031d9dc7a773c1141ce45b2819a80bf376ee95f8fb8a9a1987d8c92"
+    },
+    {
+      "artifact_key": "validation.28_metric_and_region_policy_ablation",
+      "producer_notebook": "28_metric_and_region_policy_ablation",
+      "relative_path": "outputs/28_metric_and_region_policy_ablation/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "evaluation_policy_ablation",
+      "validation_status": "passed",
+      "row_count": 122,
+      "file_count": 1,
+      "checksum": "dfb9fd3311bcd920b6e60a9bbf88c1ec6900c1b4ecbba09ee6a8152354dea551"
     }
   ]
 }

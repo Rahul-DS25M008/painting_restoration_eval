@@ -722,9 +722,79 @@ evidence_coverage:
 
     - notebook_id: "28"
       stem: "28_metric_and_region_policy_ablation"
-      status: "planned_supported"
-      required_evidence: ["n08_region_ablation_memberships", "n21_comparison", "n27_flags"]
-      prohibited_claims: ["universal_trust_score"]
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      output_root: "outputs/28_metric_and_region_policy_ablation"
+      manifest_path: "outputs/28_metric_and_region_policy_ablation/manifests/run_manifest.json"
+      config_path: "config/evaluation/metric_region_ablation.yaml"
+      helper_path: "src/restoration_eval/metric_region_ablation.py"
+      test_path: "tests/test_metric_region_ablation.py"
+      required_evidence: ["n08_region_ablation_memberships", "n13_n20_metric_families", "n21_comparison_and_disagreement", "n26_grouped_rankings", "n27_failure_assignments_and_flags"]
+      scenario_contract:
+        complete_framework_baselines: 1
+        metric_family_scenarios_including_baseline: 12
+        alternative_region_scenarios: 6
+        threshold_scenarios: 2
+        aggregation_scenarios: 3
+        total_scenarios: 23
+        ranking_applicable_scenarios: 18
+      observed_population:
+        core_primary_candidates: 1230
+        matched_cases: 410
+        flag_candidates: 1785
+        bounded_sdxl_candidates: 10
+        trust_flags: 11
+        failure_categories: 14
+        ablation_result_rows: 7710
+        model_rank_rows: 54
+        case_rank_rows: 7380
+        scenario_flag_summary_rows: 253
+        scenario_summary_rows: 23
+        flag_stability_rows: 41055
+        validation_checks: 122
+        roadmap_requirements: 13
+        report_sections: 12
+        analytical_report_views: 5
+        diagnostic_report_panels: 6
+        report_embedded_images: 23
+        report_external_images: 0
+        report_tile_count: 18
+        canonical_output_files: 8
+      primary_artifacts:
+        - path: "outputs/28_metric_and_region_policy_ablation/metrics/ablation_results.csv"
+          rows: 7710
+          schema_version: "metric_region_ablation_results.v1"
+        - path: "outputs/28_metric_and_region_policy_ablation/metrics/flag_stability.csv"
+          rows: 41055
+          schema_version: "ablation_flag_stability.v1"
+        - path: "outputs/28_metric_and_region_policy_ablation/figures/ablation_ranking_changes.png"
+        - path: "outputs/28_metric_and_region_policy_ablation/figures/ablation_flag_changes.png"
+        - path: "outputs/28_metric_and_region_policy_ablation/reports/ablation_study.html"
+        - path: "outputs/28_metric_and_region_policy_ablation/validation/checks.csv"
+          rows: 122
+      supported_scope:
+        - "controlled_metric_family_region_threshold_and_aggregation_sensitivity"
+        - "transparent_model_and_case_rank_sensitivity_without_a_continuous_combined_score"
+        - "candidate_level_flag_state_and_missing_evidence_sensitivity"
+        - "metric_disagreement_and_supported_subgroup_sensitivity"
+        - "complete_framework_conclusion_stability"
+        - "bounded_sdxl_flag_diagnostics_only"
+      report_contract:
+        section_count: 12
+        self_contained: true
+        mock_to_final_traceability_passed: true
+        required_visuals_depend_on_external_links: false
+        embedded_images: 23
+        image_decode_failures: 0
+      downstream_contract:
+        - "use_notebook_28_canonical_tables_for_evaluation_policy_sensitivity"
+        - "preserve_metric_family_and_region_specific_disagreement"
+        - "distinguish_stable_model_winner_from_policy_sensitive_case_priority_and_flags"
+        - "retain_insufficient_evidence_states_when_evidence_is_removed"
+        - "treat_ranks_as_transparent_ordinal_diagnostics_not_quality_or_trust_scores"
+        - "retain_painting_as_the_independent_unit_and_report_five_painting_confounding"
+      scope_rules: ["runtime_remains_outside_quality_ranking", "uncertainty_remains_outside_deterministic_cross_model_ranking", "missing_evidence_is_not_improvement", "rank_changes_are_policy_sensitivity_not_universal_superiority", "operational_thresholds_are_not_calibrated_probabilities", "bounded_sdxl_is_not_a_full_comparison"]
+      prohibited_claims: ["universal_trust_score", "continuous_combined_quality_score", "continuous_case_trust_score", "calibrated_failure_probability", "independent_style_effect", "historical_authenticity", "conservation_approval", "full_sdxl_comparison"]
 
     - notebook_id: "29"
       stem: "29_explainable_ai_and_case_retrieval"

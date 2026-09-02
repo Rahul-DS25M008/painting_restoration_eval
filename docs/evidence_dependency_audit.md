@@ -299,11 +299,61 @@ recommendations are operational decision support. They do not establish historic
 authenticity, physical-treatment suitability, conservation approval, a full SDXL
 comparison, or a universal trust score.
 
+Notebook 28, `28_metric_and_region_policy_ablation.ipynb`, subsequently
+completed the approved evaluation-policy sensitivity analysis with its completion
+gate passed. It:
+
+- evaluated exactly 23 controlled scenarios: the complete-framework baseline,
+  eleven alternative metric-family configurations, six alternative region
+  policies, two threshold alternatives, and three flag-aggregation alternatives;
+- retained the matched 1,230-candidate, 410-case three-model population for the
+  18 ranking-applicable scenarios and the complete 1,785-candidate Notebook 27
+  union for flag-stability analysis, with the ten bounded SDXL candidates limited
+  to separate flag diagnostics;
+- persisted 7,710 canonical ablation rows comprising 54 model-rank rows, 7,380
+  case-priority-rank rows, 253 scenario-by-flag summaries, and 23 scenario
+  summaries, plus 41,055 compact candidate-by-scenario flag-stability rows;
+- retained one equal contribution per available evidence family, kept runtime
+  and deterministic artificial uncertainty outside quality ranking, preserved
+  explicit insufficient-evidence states, and did not construct a continuous
+  quality, case-trust, or universal trust score;
+- found that LaMa remained a winner in all 18 ranking-applicable scenarios, with
+  a transparent LaMa–Telea tie under the classical-only policy, while diagnostic
+  case priorities were strongly policy-sensitive: outside-mask-only and
+  boundary-only case-rank correlations with the complete framework were 0.097
+  and 0.381, respectively;
+- showed that stable model-level conclusions do not imply stable candidate-level
+  screening: removing DINOv2-derived evidence changed at least one flag for
+  1,773 of 1,785 candidates, and single-family or region-restricted policies often
+  created substantial insufficient-evidence populations rather than genuine
+  improvements;
+- retained six supported descriptive subgroup dimensions with a minimum of five
+  independent paintings and explicitly labelled painting-category summaries as
+  controlled and confounded;
+- produced two canonical figures and a self-contained 12-section HTML report
+  with five analytical views, six diagnostic panels, 18 diagnostic tiles, 23
+  embedded images, and no external image dependency;
+- passed all 122 validation checks and all 13 roadmap traceability requirements
+  with zero blocking or warning failures;
+- registered exactly six non-self-referential artifacts and eight canonical files
+  under `outputs/28_metric_and_region_policy_ablation/`, with no retained runtime
+  checkpoint files.
+
+Notebook 28 is now the canonical source for downstream evaluation-policy
+sensitivity and metric/region ablation evidence. Consumers must distinguish the
+stable model-level winner from policy-sensitive case priorities and flags, retain
+metric-family and region disagreement, and never interpret lower flag counts
+caused by removed evidence as improved restoration quality. Its ranks are
+transparent ordinal diagnostics, thresholds are operational rather than
+calibrated probabilities, and five-painting subgroup findings are descriptive.
+The analysis does not establish independent style effects, universal model
+superiority, historical authenticity, conservation approval, or a full SDXL
+comparison.
+
 ## 6. Remaining-notebook evidence gate
 
 | Notebook | Supported evidence contract | Required scope discipline |
 |---|---|---|
-| 28 Metric/region ablation | N08 ablation memberships, N21 rankings, N27 rules | preserve metric-family disagreement; do not create a universal trust score |
 | 29 XAI/retrieval | embeddings, numeric maps, counterfactual experiment structures, rule-defined flags | retrieval labels are rule-defined; seed comparisons use only complete uncertainty groups |
 | 30 Model cards/compute | model manifests, runtimes, hardware, inventory, primary model sources | larger-dataset and SDXL costs are projections, not executed results |
 | 31 Model reports | N09–30 evidence | report model and experiment coverage exactly; uncertainty appears only where supported |
