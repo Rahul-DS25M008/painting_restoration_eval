@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-09-02T08:20:10.888661Z`
-- Registered artifacts: 165
+- Updated: `2026-09-02T11:01:35.702275Z`
+- Registered artifacts: 171
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -44,6 +44,11 @@
 | experiment_contracts.region_policy | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv` | authoritative_metric_region_policy | passed |
 | experiment_contracts.report | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/reports/evaluation_contract.md` | evaluation_contract | passed |
 | experiment_contracts.schema_registry | 08_experiment_contracts_and_region_policy | `outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json` | machine_readable_schema_handoff | passed |
+| explainable_case_retrieval.case_neighbors | 29_explainable_ai_and_case_retrieval | `outputs/29_explainable_ai_and_case_retrieval/data/case_neighbors.csv` | separate_dinov2_and_clip_neighbor_evidence | passed |
+| explainable_case_retrieval.counterfactual_panels | 29_explainable_ai_and_case_retrieval | `outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels` | selected_visual_counterfactual_explanations | passed |
+| explainable_case_retrieval.explanation_cases | 29_explainable_ai_and_case_retrieval | `outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv` | complete_candidate_level_explanation_and_evidence_catalog | passed |
+| explainable_case_retrieval.report | 29_explainable_ai_and_case_retrieval | `outputs/29_explainable_ai_and_case_retrieval/reports/explanation_catalog.html` | mock_bound_thesis_aligned_explanation_report | passed |
+| explainable_case_retrieval.retrieval_panels | 29_explainable_ai_and_case_retrieval | `outputs/29_explainable_ai_and_case_retrieval/figures/example_retrieval_panels` | selected_lower_risk_and_flagged_case_retrieval_examples | passed |
 | failure_taxonomy.assignments | 27_failure_taxonomy_and_trustworthiness_flags | `outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/failure_assignments.csv` | candidate_failure_category_evidence | passed |
 | failure_taxonomy.figure | 27_failure_taxonomy_and_trustworthiness_flags | `outputs/27_failure_taxonomy_and_trustworthiness_flags/figures/failure_taxonomy.png` | failure_flag_and_recommendation_overview | passed |
 | failure_taxonomy.flags | 27_failure_taxonomy_and_trustworthiness_flags | `outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv` | independent_candidate_trustworthiness_flags | passed |
@@ -171,3 +176,4 @@
 | validation.26_grouped_and_statistical_analysis | 26_grouped_and_statistical_analysis | `outputs/26_grouped_and_statistical_analysis/validation/checks.csv` | validation_evidence | passed |
 | validation.27_failure_taxonomy_and_trustworthiness_flags | 27_failure_taxonomy_and_trustworthiness_flags | `outputs/27_failure_taxonomy_and_trustworthiness_flags/validation/checks.csv` | validation_evidence | passed |
 | validation.28_metric_and_region_policy_ablation | 28_metric_and_region_policy_ablation | `outputs/28_metric_and_region_policy_ablation/validation/checks.csv` | validation_evidence | passed |
+| validation.29_explainable_ai_and_case_retrieval | 29_explainable_ai_and_case_retrieval | `outputs/29_explainable_ai_and_case_retrieval/validation/checks.csv` | validation_evidence | passed |

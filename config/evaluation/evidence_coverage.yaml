@@ -798,9 +798,88 @@ evidence_coverage:
 
     - notebook_id: "29"
       stem: "29_explainable_ai_and_case_retrieval"
-      status: "planned_supported"
-      required_evidence: ["n15_embeddings", "n16_n20_maps", "n23_n25_counterfactual_structures", "n27_flags", "n28_ablations"]
-      prohibited_claims: ["rule_defined_success_is_human_ground_truth"]
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      output_root: "outputs/29_explainable_ai_and_case_retrieval"
+      manifest_path: "outputs/29_explainable_ai_and_case_retrieval/manifests/run_manifest.json"
+      config_path: "config/evaluation/explainable_case_retrieval.yaml"
+      helper_path: "src/restoration_eval/explainable_case_retrieval.py"
+      test_path: "tests/test_explainable_case_retrieval.py"
+      required_evidence: ["n15_embeddings", "n16_n20_maps", "n18_n22_uncertainty", "n23_n25_counterfactual_structures", "n27_flags", "n28_ablations"]
+      observed_population:
+        explanation_catalog_candidates: 1785
+        explanation_catalog_cases: 410
+        explanation_catalog_paintings: 50
+        primary_candidates: 1230
+        primary_nonzero_spatial_candidates: 1080
+        bounded_sdxl_candidates: 10
+        dual_feature_retrieval_eligible_candidates: 1680
+        retrieval_ineligible_extension_candidates: 105
+        repeated_seed_candidate_members: 660
+        repeated_seed_groups: 165
+        retrieval_queries: 10
+        retrieval_neighbor_rows: 100
+        lower_risk_neighbor_rows: 50
+        flagged_neighbor_rows: 50
+        counterfactual_types: 7
+        counterfactual_panels: 14
+        retrieval_panels: 10
+        selected_report_units: 24
+        validation_checks: 145
+        roadmap_requirements: 13
+        report_sections: 14
+        analytical_report_views: 5
+        report_embedded_images: 34
+        report_external_images: 0
+        physical_output_files: 30
+        artifact_records: 6
+      primary_artifacts:
+        - path: "outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv"
+          rows: 1785
+          schema_version: "explanation_cases.v1"
+        - path: "outputs/29_explainable_ai_and_case_retrieval/data/case_neighbors.csv"
+          rows: 100
+          schema_version: "case_neighbors.v1"
+        - path: "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels"
+          files: 14
+        - path: "outputs/29_explainable_ai_and_case_retrieval/figures/example_retrieval_panels"
+          files: 10
+        - path: "outputs/29_explainable_ai_and_case_retrieval/reports/explanation_catalog.html"
+        - path: "outputs/29_explainable_ai_and_case_retrieval/validation/checks.csv"
+          rows: 145
+      supported_scope:
+        - "complete_candidate_level_explanation_catalog_for_the_notebook_27_union"
+        - "candidate_level_rule_region_evidence_missingness_and_action_traceability"
+        - "separate_dinov2_primary_and_clip_secondary_case_retrieval"
+        - "damage_size_placement_model_metric_seed_evidence_removal_and_prompt_counterfactuals"
+        - "complete_category_and_descriptive_style_period_examples"
+        - "mock_bound_self_contained_explanation_report"
+      evidence_responsibilities:
+        - "persist_complete_candidate_level_explanation_catalog_not_only_report_examples"
+        - "retain_rule_evidence_regions_thresholds_missingness_and_human_actions"
+        - "retrieve_dinov2_and_clip_neighbours_without_combining_feature_scores"
+        - "exclude_self_same_case_and_same_painting_from_neighbour_retrieval"
+        - "compare_damage_size_placement_model_metric_seed_ablation_and_prompt_counterfactuals"
+        - "embed_selected_visual_explanations_in_a_mock_bound_self_contained_report"
+      report_contract:
+        section_count: 14
+        self_contained: true
+        mock_to_final_traceability_passed: true
+        counterfactual_panels: 14
+        retrieval_panels: 10
+        analytical_views: 5
+        embedded_images: 34
+        external_images: 0
+        required_visuals_depend_on_external_links: false
+      downstream_contract:
+        - "use_the_complete_1785_row_explanation_catalog_for_case_level_discovery"
+        - "use_all_100_neighbor_rows_with_dinov2_and_clip_as_separate_views"
+        - "treat_the_24_visual_report_units_as_examples_not_the_persisted_population"
+        - "preserve_retrieval_leakage_exclusions_and_explicit_embedding_ineligibility"
+        - "preserve_counterfactual_type_prompt_arm_and_seed_group_identity"
+        - "treat_operational_recommendations_as_human_review_support_only"
+      scope_rules: ["category_is_primary_complete_stratification", "style_period_is_descriptive_where_available", "generic_vs_scratch_aware_is_damage_specific_not_style_specific", "sdxl_remains_bounded", "uncertainty_applies_only_with_repeated_seed_coverage", "report_selection_does_not_limit_persisted_case_catalog"]
+      prohibited_claims: ["rule_defined_success_is_human_ground_truth", "independent_style_effect", "style_specific_prompt_ablation", "retrieval_similarity_is_restoration_correctness", "uncertainty_is_calibrated_confidence", "universal_model_superiority", "conservation_approval"]
 
     - notebook_id: "30"
       stem: "30_model_cards_compute_and_scalability"

@@ -339,6 +339,52 @@ gate passed. It:
   under `outputs/28_metric_and_region_policy_ablation/`, with no retained runtime
   checkpoint files.
 
+Notebook 29, `29_explainable_ai_and_case_retrieval.ipynb`, subsequently
+completed the approved explanation-catalog and case-retrieval analysis with its
+completion gate passed. It:
+
+- persisted the complete approved 1,785-candidate, 410-case Notebook 27 union in
+  `data/explanation_cases.csv`, rather than restricting the canonical table to
+  the 24 report-selected visual units;
+- retained 7,140 resolving clean, damaged, mask, and restored-image references,
+  eleven independent flag records per candidate, applicable map families,
+  uncertainty membership, evidence provenance, affected regions, recommended
+  actions, explicit missingness, and report-selection traceability;
+- recorded 1,680 candidates with both restored-content DINOv2 and CLIP evidence
+  and kept the 105-candidate damage-size extension explicitly retrieval-ineligible
+  because Notebook 15 did not compute embeddings for that later extension;
+- selected ten deterministic queries spanning lower-risk and flagged examples in
+  all five complete artwork categories, then persisted 100 neighbour rows: five
+  rule-defined lower-risk and five flagged neighbours per query;
+- used DINOv2 as the primary retrieval view and CLIP as a separate secondary view,
+  never combined the feature scores, and excluded self, same-case, and
+  same-painting leakage;
+- generated fourteen counterfactual panels, two each for damage size, mask
+  placement, cross-model behaviour, metric subsets, diffusion seeds,
+  evidence-family removal, and generic versus scratch-aware damage-specific
+  prompting, plus ten case-retrieval panels;
+- retained exactly 660 candidate members in 165 supported repeated-seed groups
+  and preserved deterministic and single-seed non-applicability rather than
+  assigning artificial uncertainty;
+- produced a self-contained 14-section HTML report with fourteen counterfactual
+  panels, ten retrieval panels, five analytical views, 34 embedded images, and no
+  external image dependency while preserving the approved mock structure;
+- passed all 145 validation checks and all 13 roadmap traceability requirements
+  with zero blocking or warning failures;
+- registered exactly six non-self-referential artifacts and 30 physical files
+  under `outputs/29_explainable_ai_and_case_retrieval/`, with no temporary files.
+
+Notebook 29 is now the canonical source for downstream candidate-level
+explanation discovery and selected similar-case examples. Consumers must use the
+complete 1,785-row catalog when complete case coverage is required, treat the 24
+visual units as report examples only, preserve DINOv2 and CLIP as separate views,
+and retain retrieval exclusions and embedding-ineligibility states. Category is
+the complete primary grouping; style or period is descriptive for 18 of 50
+paintings. Retrieval similarity, operational recommendations, counterfactual
+changes, and empirical seed variability do not establish restoration correctness,
+calibrated confidence, historical authenticity, conservation approval, or
+universal model superiority.
+
 Notebook 28 is now the canonical source for downstream evaluation-policy
 sensitivity and metric/region ablation evidence. Consumers must distinguish the
 stable model-level winner from policy-sensitive case priorities and flags, retain
@@ -354,7 +400,6 @@ comparison.
 
 | Notebook | Supported evidence contract | Required scope discipline |
 |---|---|---|
-| 29 XAI/retrieval | embeddings, numeric maps, counterfactual experiment structures, rule-defined flags | retrieval labels are rule-defined; seed comparisons use only complete uncertainty groups |
 | 30 Model cards/compute | model manifests, runtimes, hardware, inventory, primary model sources | larger-dataset and SDXL costs are projections, not executed results |
 | 31 Model reports | N09–30 evidence | report model and experiment coverage exactly; uncertainty appears only where supported |
 | 32 Case/painting reports | N09–31 evidence | include only evidence applicable to each case and model |

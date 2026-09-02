@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-02T08:20:10.888661Z",
+  "updated_at_utc": "2026-09-02T11:01:35.702275Z",
   "artifacts": [
     {
       "artifact_key": "classical_metrics.distributions",
@@ -533,6 +533,76 @@
       "row_count": 5,
       "file_count": 1,
       "checksum": "0a75cb8fb1d7762d1ded04944a895dda65d417d771624cb286359c4d1942018a"
+    },
+    {
+      "artifact_key": "explainable_case_retrieval.case_neighbors",
+      "producer_notebook": "29_explainable_ai_and_case_retrieval",
+      "relative_path": "outputs/29_explainable_ai_and_case_retrieval/data/case_neighbors.csv",
+      "artifact_type": "normalized_case_retrieval_table",
+      "artifact_role": "separate_dinov2_and_clip_neighbor_evidence",
+      "schema_version": "case_neighbors.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "explainable_case_retrieval",
+      "validation_status": "passed",
+      "row_count": 100,
+      "file_count": 1,
+      "checksum": "837bb1af476fc2b3e243b8d9a693d01a49f738ac45f6f3d85fa6d8874be61a6b"
+    },
+    {
+      "artifact_key": "explainable_case_retrieval.counterfactual_panels",
+      "producer_notebook": "29_explainable_ai_and_case_retrieval",
+      "relative_path": "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels",
+      "artifact_type": "counterfactual_panel_collection",
+      "artifact_role": "selected_visual_counterfactual_explanations",
+      "schema_version": "counterfactual_panels.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "explainable_case_retrieval",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 14,
+      "checksum": "b8f2d3a1189e9716d53ff2b9e9dea714d3cb235ed7f3e02231652fedbdb71c91"
+    },
+    {
+      "artifact_key": "explainable_case_retrieval.explanation_cases",
+      "producer_notebook": "29_explainable_ai_and_case_retrieval",
+      "relative_path": "outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv",
+      "artifact_type": "normalized_explanation_catalog",
+      "artifact_role": "complete_candidate_level_explanation_and_evidence_catalog",
+      "schema_version": "explanation_cases.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "explainable_case_retrieval",
+      "validation_status": "passed",
+      "row_count": 1785,
+      "file_count": 1,
+      "checksum": "694ba2d385aa3c84600eabf698b9316819cc7f0506669c5a71e4730cc1035ae2"
+    },
+    {
+      "artifact_key": "explainable_case_retrieval.report",
+      "producer_notebook": "29_explainable_ai_and_case_retrieval",
+      "relative_path": "outputs/29_explainable_ai_and_case_retrieval/reports/explanation_catalog.html",
+      "artifact_type": "self_contained_html_report",
+      "artifact_role": "mock_bound_thesis_aligned_explanation_report",
+      "schema_version": "approved_mock_aligned_self_contained_explanation_catalog.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "explainable_case_retrieval",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 1,
+      "checksum": "99afd6fab9456b9080cb15d5e44c3af4c65663640e962d5e7f94dc27c4375b49"
+    },
+    {
+      "artifact_key": "explainable_case_retrieval.retrieval_panels",
+      "producer_notebook": "29_explainable_ai_and_case_retrieval",
+      "relative_path": "outputs/29_explainable_ai_and_case_retrieval/figures/example_retrieval_panels",
+      "artifact_type": "case_retrieval_panel_collection",
+      "artifact_role": "selected_lower_risk_and_flagged_case_retrieval_examples",
+      "schema_version": "case_retrieval_panels.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "explainable_case_retrieval",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": 10,
+      "checksum": "531f27f5dfce2b25dcfb6b3fd1bbebec3738492792f5bd98161cd31965530135"
     },
     {
       "artifact_key": "failure_taxonomy.assignments",
@@ -2311,6 +2381,20 @@
       "row_count": 122,
       "file_count": 1,
       "checksum": "dfb9fd3311bcd920b6e60a9bbf88c1ec6900c1b4ecbba09ee6a8152354dea551"
+    },
+    {
+      "artifact_key": "validation.29_explainable_ai_and_case_retrieval",
+      "producer_notebook": "29_explainable_ai_and_case_retrieval",
+      "relative_path": "outputs/29_explainable_ai_and_case_retrieval/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "dataset_scope": "controlled_50",
+      "experiment_scope": "explainable_case_retrieval",
+      "validation_status": "passed",
+      "row_count": 145,
+      "file_count": 1,
+      "checksum": "f3816e014c71ce949cf7e6a00be039dd8425082cdefc7ea2020c6523064f62c9"
     }
   ]
 }

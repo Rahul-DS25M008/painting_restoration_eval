@@ -1763,7 +1763,7 @@ Compare:
 - the same case under different metric subsets;
 - diffusion candidates across seeds;
 - the framework with one evidence family removed;
-- generic versus style-specific prompts where applicable.
+- generic versus scratch-aware damage-specific prompts where applicable.
 
 ### Example-based explanations
 
@@ -1773,8 +1773,22 @@ Provide:
 - representative rule-defined flagged cases;
 - nearest similar lower-risk case;
 - nearest similar flagged case;
-- examples by style, damage type, model, and flag;
+- examples by complete artwork category and, where metadata exists, descriptive style or period;
+- examples by damage type, model, and flag;
 - embedding-based retrieval using validated feature artifacts.
+
+`data/explanation_cases.csv` is the complete machine-readable explanation
+catalog for the approved 1,785-candidate Notebook 27 union, not only the cases
+illustrated in the HTML report. It records population role, recommendation and
+flag evidence, available asset/map paths, uncertainty applicability, retrieval
+eligibility, report-selection roles, counterfactual-panel membership, and
+explicit scope or missingness states. The report uses a deterministic 24-unit
+visual subset (14 counterfactual panels and 10 retrieval queries), while the
+full catalog remains available for case-by-case inspection.
+
+Style or period metadata is descriptive and incomplete. Category coverage is
+complete and is therefore the primary stratification; no independent style
+effect is claimed.
 
 ### Rule-based explanations
 
