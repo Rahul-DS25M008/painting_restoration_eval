@@ -455,6 +455,47 @@ evaluation with insufficient seed coverage for uncertainty. The reports do not
 establish historical authenticity, conservation approval, calibrated confidence,
 or universal model superiority.
 
+Notebook 32 is complete and passed its completion gate. It consumed validated
+Notebook 01 and Notebook 09--31 artifacts and produced 81 self-contained HTML
+reports: 30 deterministically selected deep case reports, one report for each of
+all 50 paintings, and one collection index. It also persisted 30 selected-case
+diagnostic grids. The 50 painting reports retain all 410 evaluated cases and all
+1,785 approved candidates in their evidence tables: each of the 45 standard
+paintings has five canonical cases, while p001, p018, p026, p039, and p043 each
+have 37 canonical and extension cases. The selected deep case reports remain
+auditable illustrations rather than the complete case population.
+
+The completed report package contains 632 embedded report images and 2,146
+embedded visual tiles with zero external image dependencies. All 80 case and
+painting reports are individually portable; the collection index provides 80
+validated package-relative links for navigation. The run registered eight
+artifacts and exactly 117 physical output files, passed all 1,806 validation
+checks, all 12 roadmap responsibilities, and all 67 mock-to-final traceability
+roles with zero blocking or warning failures. All eight persisted artifact
+checksums and all 80 individual report checksums were independently reverified.
+
+The authoritative report-candidate population remains Notebook 29's 1,785
+approved candidates: 410 Telea, 410 LaMa, 955 Stable Diffusion, and ten SDXL
+candidates. The 480 completed Notebook 11 context-prompt candidates from prompt
+variants p01--p04 remain outside the report population because they do not have
+the complete Notebook 27/29 failure, flag, and explanation contract. This is an
+explicit evidence-scope exclusion, not missing execution or complete downstream
+evaluation.
+
+Notebook 32 is now the canonical downstream source for selected case-report and
+complete painting-report discovery through `data/case_report_index.csv` and
+`data/painting_report_index.csv`; `reports/index.html` is the package entry point.
+The report layer groups, sorts, formats, selects declared illustrations, builds
+presentation-only plots, and embeds web-sized visuals, but creates no new
+metrics, statistical tests, exclusions, rankings, composite scores, or scientific
+evidence. Candidate rows remain nested within cases and paintings; only 18
+paintings have documented style or period, and the five-painting extension
+cohorts remain descriptive. Telea and LaMa are deterministic, Stable Diffusion
+uncertainty is limited to the canonical and damage-size repeated-seed
+populations, and SDXL remains a ten-case partial evaluation with insufficient
+seed coverage. Computational flags and review actions are not expert annotations,
+historical-authenticity evidence, or physical conservation advice.
+
 Notebook 28 is now the canonical source for downstream evaluation-policy
 sensitivity and metric/region ablation evidence. Consumers must distinguish the
 stable model-level winner from policy-sensitive case priorities and flags, retain
@@ -470,8 +511,6 @@ comparison.
 
 | Notebook | Supported evidence contract | Required scope discipline |
 |---|---|---|
-| 31 Model reports | N09–30 evidence | report model and experiment coverage exactly; uncertainty appears only where supported |
-| 32 Case/painting reports | N09–31 evidence | include only evidence applicable to each case and model |
 | 33 Final evaluation report | N21–32 plus frozen methodology artifacts | report controlled-50 results and transparent projections; no human or conservation validation claim |
 | 34 Dashboard assets | N01–33 canonical outputs | package evidence without recomputation and retain scope labels |
 | 35 Dashboard/deployment validation | N34 assets and application | validate paths, schemas, rendering, and deployment state; do not recompute metrics |

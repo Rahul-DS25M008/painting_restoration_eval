@@ -1069,8 +1069,130 @@ evidence_coverage:
 
     - notebook_id: "32"
       stem: "32_case_and_painting_report_generation"
-      status: "planned_supported"
-      required_evidence: ["n09_n31_case_model_evidence"]
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      run_id: "run_7a508c540ae74af1ad2bd3c59928e94e"
+      output_root: "outputs/32_case_and_painting_report_generation"
+      manifest_path: "outputs/32_case_and_painting_report_generation/manifests/run_manifest.json"
+      preparation_contract:
+        config_path: "config/evaluation/case_and_painting_reports.yaml"
+        helper_path: "src/restoration_eval/case_painting_reports.py"
+        test_path: "tests/test_case_painting_reports.py"
+        approved_mock_structure_locked: true
+        creates_new_scientific_evidence: false
+        upstream_manifest_count: 24
+        approved_candidate_count: 1785
+        evaluated_case_count: 410
+        uncertainty_case_count: 115
+        uncertainty_group_count: 165
+        painting_count: 50
+        selected_case_count: 30
+        case_report_count: 30
+        painting_report_count: 50
+        collection_index_count: 1
+        report_count: 81
+        selected_case_grid_count: 30
+        artifact_records: 8
+        physical_output_files: 117
+        mock_traceability_rows: 67
+      completion_contract:
+        run_status: "completed"
+        validation_status: "passed"
+        creates_new_scientific_evidence: false
+        paintings: 50
+        evaluated_cases: 410
+        approved_candidates: 1785
+        selected_cases: 30
+        case_reports: 30
+        painting_reports: 50
+        collection_indexes: 1
+        reports: 81
+        selected_case_grids: 30
+        embedded_images: 632
+        embedded_tiles: 2146
+        validation_checks: 1806
+        blocking_failures: 0
+        warning_failures: 0
+        roadmap_requirements: 12
+        mock_traceability_rows: 67
+        artifact_records: 8
+        physical_output_files: 117
+        external_image_dependencies: 0
+      required_evidence:
+        - "n01_artwork_identity_and_metadata"
+        - "n09_n12_restoration_candidates_runtime_and_model_metadata"
+        - "n13_n20_reference_local_uncertainty_spatial_and_semantic_evidence"
+        - "n21_n28_comparison_extensions_statistics_failures_flags_and_ablation"
+        - "n29_approved_candidate_explanation_catalog_and_retrieval_evidence"
+        - "n30_model_cards_compute_and_scalability"
+        - "n31_model_report_discovery_and_provenance"
+      primary_outputs:
+        - path: "outputs/32_case_and_painting_report_generation/data/selected_cases.csv"
+          rows: 30
+          schema_version: "selected_report_cases.v1"
+        - path: "outputs/32_case_and_painting_report_generation/data/case_report_index.csv"
+          rows: 30
+          schema_version: "case_report_index.v1"
+        - path: "outputs/32_case_and_painting_report_generation/data/painting_report_index.csv"
+          rows: 50
+          schema_version: "painting_report_index.v1"
+        - path: "outputs/32_case_and_painting_report_generation/reports/cases"
+          files: 30
+          schema_version: "case_report_collection.v1"
+        - path: "outputs/32_case_and_painting_report_generation/reports/paintings"
+          files: 50
+          schema_version: "painting_report_collection.v1"
+        - path: "outputs/32_case_and_painting_report_generation/reports/index.html"
+          files: 1
+          schema_version: "report_collection_index.v1"
+        - path: "outputs/32_case_and_painting_report_generation/figures/selected_case_grids"
+          files: 30
+          schema_version: "selected_case_grid_collection.v1"
+        - path: "outputs/32_case_and_painting_report_generation/validation/checks.csv"
+          rows: 1806
+          schema_version: "validation_checks.v1"
+      supported_scope:
+        - "thirty_deterministically_selected_deep_case_reports"
+        - "fifty_painting_reports_covering_all_410_evaluated_cases"
+        - "one_thousand_seven_hundred_eighty_five_approved_candidates"
+        - "all_approved_candidates_for_each_selected_case"
+        - "case_specific_classical_perceptual_feature_local_semantic_spatial_and_flag_evidence"
+        - "diffusion_uncertainty_and_prompt_sensitivity_only_where_applicable"
+        - "self_contained_case_and_painting_html_with_embedded_visuals"
+        - "report_collection_index_for_package_navigation"
+      applicability_rules:
+        - "detailed_case_reports_are_selected_illustrations_not_complete_case_population"
+        - "all_410_cases_are_retained_in_the_fifty_painting_report_tables"
+        - "telea_and_lama_uncertainty_is_not_applicable_deterministic_method"
+        - "stable_diffusion_uncertainty_covers_canonical_and_damage_size_populations"
+        - "sdxl_uncertainty_is_not_applicable_insufficient_seed_coverage"
+        - "sdxl_remains_ten_case_five_painting_partial_evaluation"
+        - "only_eighteen_paintings_have_documented_style_or_period"
+        - "five_extension_paintings_support_descriptive_within_painting_evidence"
+        - "computational_review_actions_are_not_conservation_recommendations"
+      excluded_evidence:
+        completed_candidate_count: 480
+        source: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+        prompt_variants: ["p01_category", "p02_artist", "p03_artist_category", "p04_full_context"]
+        reason: "no_complete_notebook_27_and_29_failure_flag_and_explanation_contract"
+      downstream_contract:
+        - "consume_case_report_index_for_selected_case_report_discovery"
+        - "consume_painting_report_index_for_complete_painting_report_discovery"
+        - "use_upstream_canonical_tables_for_complete_machine_readable_scientific_evidence"
+        - "do_not_treat_selected_case_reports_as_the_complete_case_population"
+        - "preserve_candidate_case_painting_nesting_and_model_applicability"
+      prohibited_claims:
+        - "new_scientific_evidence_created_by_report_layer"
+        - "all_completed_prompt_context_candidates_have_complete_flag_coverage"
+        - "selected_case_reports_are_population_representative_sample"
+        - "candidate_rows_are_independent_paintings"
+        - "deterministic_method_seed_uncertainty"
+        - "sdxl_full_evaluation_or_uncertainty"
+        - "style_effect_inference"
+        - "computational_flag_is_expert_ground_truth"
+        - "historical_authenticity"
+        - "conservation_approval"
+        - "universal_model_superiority"
 
     - notebook_id: "33"
       stem: "33_final_evaluation_report"
