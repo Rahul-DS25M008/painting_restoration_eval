@@ -2030,7 +2030,27 @@ validation/checks.csv
 
 ### Responsibilities
 
-Prepare lightweight validated assets for:
+Prepare lightweight validated assets for the approved eight-page application:
+
+1. **Overview** — thesis framing, benchmark scope, headline findings, model
+   roles, representative evidence, and central limitations.
+2. **Study Design** — dataset and bias, canonical damage, damage-size, mask
+   robustness, synthetic degradation, and the experiment pipeline.
+3. **Metric Framework** — canonical regions, valid metric-region combinations,
+   metric families, disagreement, ablation, and interpretation limits.
+4. **Model Performance** — model stack, overall and conditional comparisons,
+   local diagnostics, model cards, and compute trade-offs.
+5. **Robustness & Uncertainty** — damage-size sensitivity, mask robustness,
+   degradation sensitivity, repeated-seed variability, and spatial uncertainty.
+6. **Trustworthiness & XAI** — failure taxonomy, separate diagnostic flags,
+   difference/local/semantic maps, counterfactuals, and CLIP/DINOv2 retrieval.
+7. **Case Explorer** — complete indexed case and painting populations with
+   restorations, maps, evidence, provenance, and report links.
+8. **Reports & Reproducibility** — final, model, case, painting, method, and
+   sensitivity reports together with validation and provenance evidence.
+
+These pages must package and expose the following validated evidence without
+recomputing it:
 
 - overview;
 - dataset and bias;
@@ -2058,7 +2078,29 @@ Prepare lightweight validated assets for:
 - reproducibility;
 - final reports.
 
-The dashboard consumes prepared assets and does not rerun experiments or reconstruct project state from arbitrary outputs.
+The application uses an authored museum-research visual language rather than a
+generic corporate-dashboard treatment: aged-ivory surfaces, painting-derived
+deep green/umber/vermilion/ochre accents, editorial serif headings, readable
+sans-serif controls, restrained paper or canvas texture, thin graphite rules,
+and sparse purposeful annotation marks. Tactile irregularity must remain subtle;
+charts, filters, tables, accessibility, and presentation legibility take
+priority over decoration.
+
+Every principal page leads with a plain-language question or conclusion, then
+balances headline indicators, one or two primary analytical views,
+representative paintings or diagnostic images, concise evidence-backed
+assertions, a nearby limitation, and expandable detail or provenance. The
+approved dashboard mockups establish visual hierarchy and density only;
+fictional mock values and accidental labels must never enter implementation.
+
+Representative defaults are presentation choices, not evidence-availability
+limits. The dashboard indexes must expose every applicable approved case,
+painting, report, restoration, figure, and diagnostic image available from
+validated upstream artifacts. Filters and direct selection provide access to
+the complete indexed population.
+
+The dashboard consumes prepared assets and does not rerun experiments or
+reconstruct project state from arbitrary outputs.
 
 ### Canonical outputs
 

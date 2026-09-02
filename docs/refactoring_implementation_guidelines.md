@@ -602,9 +602,101 @@ The illustrative LaMa model-performance mock-up in
 reference for narrative quality and information density. It is not a mandatory
 section template for model reports or for other report categories.
 
+### 6.3 Dashboard design, mock fidelity, and implementation boundary
+
+Notebook 34 and `streamlit_app.py` follow the same approval discipline used for
+important reports, adapted for an interactive application. Before dashboard
+asset or application implementation, the assistant must render chat-only visual
+mockups that demonstrate navigation, hierarchy, density, plots, paintings,
+restorations, diagnostic maps, conclusions, limitations, filters, and
+provenance. These planning images remain outside the repository unless the user
+explicitly requests that they be retained as project artifacts.
+
+Once the user approves the dashboard architecture and visual direction, the
+approved mockups become a binding interaction and presentation baseline. The
+implemented application may correct fictional values, replace illustrative
+painting IDs, improve responsive behaviour, and make evidence-driven additions,
+but it must not silently replace the approved navigation, hierarchy, visual
+density, or conservator-facing question flow. Material redesign requires renewed
+approval.
+
+The approved application contains no more than ten principal pages. The current
+approved structure contains eight:
+
+1. Overview;
+2. Study Design;
+3. Metric Framework;
+4. Model Performance;
+5. Robustness & Uncertainty;
+6. Trustworthiness & XAI;
+7. Case Explorer;
+8. Reports & Reproducibility.
+
+Dashboard presentation rules:
+
+- Lead each page with one plain-language question or supported conclusion.
+- Use two to four headline indicators, one or two primary analytical views,
+  representative visual evidence, short interpretive bullets, and one nearby
+  limitation where applicable.
+- Prefer concise assertions that explain what a result means for restoration or
+  model behaviour; do not stop at descriptive metric statements.
+- Keep raw tables, full provenance, and technical diagnostics accessible through
+  expanders or drill-down views rather than making them the initial visual focus.
+- Use representative cases for initial presentation while preserving direct
+  filtered access to the complete applicable indexed population.
+- Keep visual comparisons synchronized and explicitly label original, damaged,
+  mask, restoration, difference, uncertainty, seam, semantic, and retrieval
+  views.
+- Treat retrieval as supporting context, uncertainty as empirical variation, and
+  flags as diagnostic rules rather than proof, calibrated confidence, or
+  conservation ground truth.
+
+Approved visual language:
+
+- an authored museum-research and exhibition-catalogue character rather than a
+  glossy corporate or generic AI-generated dashboard;
+- aged-ivory surfaces with subtle paper or canvas texture;
+- a restrained palette derived from painting pigments: deep bottle green, raw
+  umber, faded vermilion, ochre, parchment, and charcoal;
+- editorial serif headings paired with readable sans-serif controls and tables;
+- thin graphite-like dividers, modest spacing variation, archival labels, and
+  sparse purposeful pencil-style circles, arrows, or underlines;
+- limited corner rounding, shadows, icon medallions, gradients, and decorative
+  symmetry;
+- no scrapbook clutter, torn-paper overload, ornamental props, illegible
+  handwriting, or decoration that competes with scientific evidence;
+- accessibility, chart clarity, responsive layout, and thesis-presentation
+  readability override stylistic imperfection.
+
+Scientific and technical boundaries:
+
+- Notebook 34 packages validated upstream evidence into normalized dashboard
+  tables, indexes, summaries, and manifests. It does not recompute scientific
+  metrics or rerun restoration inference.
+- `streamlit_app.py` reads the Notebook 34 asset root and must not scan arbitrary
+  output folders or rely on retired global paths such as `outputs/dashboard/`.
+- The application may aggregate, filter, reshape, or format already validated
+  dashboard assets for presentation, but it must not import experiment,
+  restoration, or metric-computation workflows.
+- Upstream images and self-contained reports may be resolved through validated
+  repository-relative paths recorded by Notebook 34. Default selections do not
+  restrict complete evidence access.
+- Standalone HTML reports offered by the application remain individually
+  downloadable and self-contained according to Section 6.2.
+- The dashboard is an inspection and decision-support interface, not an
+  experiment runner, restoration tool, authenticity assessment, historical-truth
+  claim, or conservation approval system.
+
+Before Notebook 35 validation, create an in-memory dashboard-mock-to-app
+traceability table covering every approved page, major content block, chart role,
+image-panel role, conclusion position, limitation, filter family, drill-down,
+and provenance view. Notebook 35 must validate this traceability together with
+schema, path, relationship, optional-model, static-import, and application-smoke
+checks.
+
 The inventory refresh is a controlled write operation. During explicitly read-only phases, the existing inventory may be inspected but must not be regenerated.
 
-### 6.3 Frozen baseline and evidence-dependency gate
+### 6.4 Frozen baseline and evidence-dependency gate
 
 Notebooks 01–21 and their canonical outputs are frozen at the validated baseline
 recorded by their run manifests and the repository history. They are read-only
