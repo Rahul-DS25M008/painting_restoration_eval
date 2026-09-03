@@ -1451,9 +1451,125 @@ evidence_coverage:
 
     - notebook_id: "35"
       stem: "35_dashboard_and_deployment_validation"
-      status: "planned_supported"
-      required_evidence: ["n34_dashboard_assets", "streamlit_app.py"]
-      prohibited_claims: ["dashboard_is_restoration_tool", "dashboard_recomputes_scientific_metrics"]
+      status: "completed_validation_warning"
+      completion_gate_passed: true
+      run_id: "run_e04d0dfa163b4a15966c5420b01d74c7"
+      output_root: "outputs/35_dashboard_and_deployment_validation"
+      manifest_path: "outputs/35_dashboard_and_deployment_validation/manifests/run_manifest.json"
+      creates_new_scientific_evidence: false
+      completion_contract:
+        run_status: "completed"
+        validation_status: "warning"
+        deployment_readiness_status: "conditionally_ready_for_local_demonstration"
+        local_application_ready: true
+        external_deployment_recorded: false
+        manual_application_review: "approved"
+        approved_application_checksum: "61368870fba5ef39a9d38b8e888b210e7c1483d2eddb7ff23f490e17b525c783"
+        principal_pages: 8
+        paintings: 50
+        restoration_cases: 410
+        approved_candidates: 1785
+        visual_records: 23964
+        reports: 104
+        sdxl_candidates: 10
+        canonical_uncertainty_groups: 130
+        damage_size_uncertainty_groups: 35
+        validation_checks: 582
+        passed_checks: 574
+        blocking_failures: 0
+        warning_failures: 7
+        informational_nonpasses: 1
+        roadmap_requirements: 14
+        artifact_records: 2
+        physical_output_files: 4
+      required_evidence:
+        - "n34_dashboard_assets"
+        - "streamlit_app.py"
+        - "config/evaluation/dashboard_validation.yaml"
+        - "src/restoration_eval/dashboard_application.py"
+      required_artifacts:
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_summary.json"
+          schema_version: "dashboard_package.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables"
+          files: 9
+          schema_version: "dashboard_package.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes"
+          files: 5
+          schema_version: "dashboard_package.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_assets.csv"
+          rows: 15
+          schema_version: "dashboard_assets_manifest.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/validation/checks.csv"
+          rows: 410
+          schema_version: "validation_checks.v1"
+      primary_outputs:
+        - path: "outputs/35_dashboard_and_deployment_validation/validation/dashboard_checks.csv"
+          rows: 582
+          schema_version: "validation_checks.v1"
+        - path: "outputs/35_dashboard_and_deployment_validation/reports/deployment_readiness.md"
+          files: 1
+          schema_version: "deployment_readiness_report.v1"
+        - path: "outputs/35_dashboard_and_deployment_validation/manifests/artifacts.csv"
+          rows: 2
+          schema_version: "artifact_manifest.v1"
+        - path: "outputs/35_dashboard_and_deployment_validation/manifests/run_manifest.json"
+          files: 1
+          schema_version: "run_manifest.v1"
+      expected_population:
+        paintings: 50
+        registered_cases: 525
+        restoration_cases: 410
+        approved_candidates: 1785
+        primary_three_model_candidates: 1230
+        stable_diffusion_candidates: 955
+        sdxl_candidates: 10
+        canonical_uncertainty_groups: 130
+        damage_size_uncertainty_groups: 35
+        reports: 104
+        visual_records: 23964
+      page_ids:
+        - "overview"
+        - "study_design"
+        - "metric_framework"
+        - "model_performance"
+        - "robustness_uncertainty"
+        - "trustworthiness_xai"
+        - "case_explorer"
+        - "reports_reproducibility"
+      supported_scope:
+        - "read_only_eight_page_dashboard"
+        - "fixed_notebook_34_package_consumer"
+        - "complete_candidate_painting_visual_and_report_access"
+        - "representative_defaults_with_complete_filtering"
+        - "repository_safe_indexed_visual_and_report_resolution"
+        - "self_contained_report_downloads"
+        - "bounded_sdxl_ten_case_presentation"
+        - "static_import_and_application_smoke_validation"
+        - "deployment_state_reporting_without_false_url_claim"
+        - "approved_final_eight_page_interface"
+        - "interactive_metric_region_visual_selector"
+        - "condition_and_model_filtered_restoration_comparison"
+        - "focused_robustness_and_uncertainty_visuals"
+        - "proposal_research_question_traceability"
+      applicability_rules:
+        - "dashboard_aggregates_filters_reshapes_and_formats_validated_assets_only"
+        - "dashboard_does_not_run_restoration_or_metric_workflows"
+        - "uncertainty_is_empirical_seed_variability_not_confidence"
+        - "computational_flags_are_review_guidance_not_expert_ground_truth"
+        - "retrieval_is_context_not_restoration_correctness"
+        - "sdxl_is_bounded_partial_evaluation"
+        - "representative_defaults_do_not_limit_complete_index_access"
+        - "external_ui_reference_images_are_not_repository_artifacts"
+      prohibited_claims:
+        - "dashboard_is_restoration_or_experiment_tool"
+        - "dashboard_recomputes_scientific_metrics"
+        - "dashboard_provides_conservation_approval"
+        - "dashboard_establishes_historical_correctness_or_authenticity"
+        - "uncertainty_is_calibrated_confidence"
+        - "computational_flag_is_expert_ground_truth"
+        - "retrieval_is_ground_truth"
+        - "sdxl_is_a_fourth_full_benchmark"
+        - "universal_combined_quality_or_trust_score"
 
     - notebook_id: "36"
       stem: "36_supervisor_publication_reproducibility_package"

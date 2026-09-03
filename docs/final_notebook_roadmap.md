@@ -2122,12 +2122,30 @@ The Streamlit application must be updated to read this notebook-owned asset root
 
 **Notebook:** `35_dashboard_and_deployment_validation.ipynb`\
 **Origin:** New Notebook  
+**Refactor status:** Finished\
+**Validation status:** Finished with non-blocking dependency warnings\
+**Completion gate passed:** Yes\
 **Output root:** `outputs/35_dashboard_and_deployment_validation/`\
-**Depends on:** Notebook 34 and `streamlit_app.py`
+**Depends on:** Notebook 34, `streamlit_app.py`,
+`config/evaluation/dashboard_validation.yaml`, and
+`src/restoration_eval/dashboard_application.py`
 
 ### Purpose
 
 Validate the dashboard as a reproducible inspection and decision-support layer.
+
+The application consumes only the fixed Notebook 34 dashboard package under
+`outputs/34_final_streamlit_dashboard_assets/`. It implements the approved
+eight-page sequence: Overview, Study Design, Metric Framework, Model
+Performance, Robustness & Uncertainty, Trustworthiness & XAI, Case Explorer,
+and Reports & Reproducibility. Representative defaults control initial display
+only; all 1,785 indexed candidates, 50 paintings, 23,964 visual records, and 104
+reports remain accessible through filters or indexed downloads.
+
+The three approved UI reference images remain external read-only planning
+references and are not repository inputs or artifacts. Notebook 35 validates
+mock-to-application traceability against the implemented interaction and visual
+roles without copying those images into the project.
 
 ### Responsibilities
 
@@ -2154,6 +2172,29 @@ reports/deployment_readiness.md
 manifests/run_manifest.json
 manifests/artifacts.csv
 ```
+
+### Completion record
+
+Notebook 35 completed all 14 roadmap responsibilities and persisted exactly
+four canonical files. Its 582 validation checks contain zero blocking failures,
+seven dependency-version warnings, and one informational result recording that
+no public deployment has yet been performed. All eight pages passed the
+in-process Streamlit smoke test with zero exceptions or visible application
+errors. The resulting status is
+`conditionally_ready_for_local_demonstration`: the dashboard is ready for a
+local supervisor demonstration, while exact dependency reconciliation and any
+future public deployment remain separate follow-up actions. The final run ID is
+`run_e04d0dfa163b4a15966c5420b01d74c7`.
+
+The completed live-browser review approved all eight pages. The final interface
+retains the accepted museum-research visual direction and adds explicit visual
+translation where the evidence requires it: experiment walkthroughs, metric
+and region explanations with a selectable diagnostic image, condition- and
+model-filtered restoration comparisons, focused robustness and uncertainty
+views, synchronized trustworthiness filters, complete case inspection, and the
+three proposal research questions with evidence-bounded answers. Representative
+defaults remain presentation choices only; the complete indexed populations
+remain accessible.
 
 ---
 

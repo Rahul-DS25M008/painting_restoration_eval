@@ -577,11 +577,47 @@ The analysis does not establish independent style effects, universal model
 superiority, historical authenticity, conservation approval, or a full SDXL
 comparison.
 
+Notebook 35 is complete against the fixed Notebook 34 dashboard package and the
+versioned contract in `config/evaluation/dashboard_validation.yaml`. The legacy
+Streamlit application was replaced in full by an eight-page, presentation-only
+consumer of the Notebook 34 root. `src/restoration_eval/dashboard_application.py`
+owns shared read-only loading, repository-safe indexed-path resolution, package
+checks, and static application checks. Neither component scans arbitrary output
+folders, runs restoration inference, nor computes scientific metrics.
+
+The completed notebook loaded all nine dashboard tables, four CSV indexes, and
+the filter index at their approved counts. It validated all 1,785 candidates,
+50 paintings, 23,964 visual records, 104 reports, 10 bounded SDXL candidates,
+130 canonical uncertainty groups, and 35 damage-size uncertainty groups. All
+eight pages passed Streamlit's in-process application test with zero exceptions
+or visible application errors. The complete 582-check ledger contains zero
+blocking failures, seven dependency-version warnings, and one informational
+not-deployed result. All 14 roadmap responsibilities passed, and the exact four
+canonical Notebook 35 outputs and two registered artifact checksums were
+independently reverified. The external UI reference images remain read-only
+files outside the repository.
+
+The final validation run is
+`run_e04d0dfa163b4a15966c5420b01d74c7`. The tested Python 3.12 environment
+uses Streamlit 1.59.0 while the repository requirements target Streamlit
+1.56.0; Pillow, Plotly, and PyArrow also differ from their declared pins. The
+application passed the full smoke test despite those differences, so the
+evidence supports conditional local demonstration readiness, not exact
+environment reproduction or completed public deployment. No public URL is
+recorded.
+
+Manual browser review is complete. All eight pages were approved after the
+final interface pass. The accepted application includes an explicit
+metric-region image selector, condition- and model-filtered restoration
+comparisons, focused uncertainty views, proposal-aligned research-question
+traceability, and balanced overview explanations. These are presentation and
+inspection improvements over the fixed Notebook 34 evidence package; they do
+not alter or recompute the scientific results.
+
 ## 6. Remaining-notebook evidence gate
 
 | Notebook | Supported evidence contract | Required scope discipline |
 |---|---|---|
-| 35 Dashboard/deployment validation | N34 assets and application | validate paths, schemas, rendering, and deployment state; do not recompute metrics |
 | 36 Reproducibility package | N01–35 manifests and selected artifacts | reconcile package contents with the controlled evidence and declared projections |
 
 ## 7. Removed unsupported promises
