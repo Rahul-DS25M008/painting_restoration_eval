@@ -1,0 +1,54 @@
+name: Streamlit availability check
+
+on:
+  schedule:
+    # UTC; avoid the busiest start-of-hour scheduling window.
+    - cron: '17 */4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: streamlit-availability
+  cancel-in-progress: false
+
+jobs:
+  visit-dashboard:
+    # Forks must not start visiting the original author's deployment.
+    if: github.repository == 'Rahul-DS25M008/painting_restoration_eval'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Check out only the availability script and its tests
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          lfs: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /tools/check_streamlit_availability.py
+            /tests/test_streamlit_availability.py
+
+      - name: Set up isolated check environment
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install browser checker only
+        run: |
+          python -m pip install --no-cache-dir playwright==1.62.0
+          python -m playwright install --with-deps chromium
+
+      - name: Test wake-up and readiness detection
+        run: python -m unittest discover -s tests -p test_streamlit_availability.py -v
+
+      - name: Visit and verify deployed dashboard
+        run: python tools/check_streamlit_availability.py
+
+      # No commits, app restarts, credentials, datasets, or stored artifacts.
+      # Schedules can be delayed and disabled after 60 days of repository
+      # inactivity. Check Actions periodically; this is not an uptime SLA.
