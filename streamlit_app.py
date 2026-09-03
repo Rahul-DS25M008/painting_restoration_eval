@@ -32,6 +32,16 @@ from restoration_eval.dashboard_application import (  # noqa: E402
     stable_options,
     truthy,
 )
+from restoration_eval.dashboard_metrics import (  # noqa: E402
+    METRIC_SOURCES,
+    CANDIDATE_SOURCES,
+    aggregate_metric_records,
+    attach_candidate_identity,
+    candidate_seed_metadata,
+    load_case_metric_rows,
+    metric_source_path,
+    source_signature,
+)
 
 
 st.set_page_config(
@@ -124,6 +134,95 @@ header[data-testid="stHeader"] { height:0;min-height:0;background:transparent; }
 @st.cache_data(show_spinner="Opening the validated evidence catalogue…")
 def get_bundle() -> DashboardBundle:
     return load_dashboard_package(PROJECT_ROOT)
+
+
+@st.cache_data(max_entries=12, show_spinner="Reading saved case metrics…")
+def get_case_metric_rows(case_id: str, source: str, signature: tuple) -> pd.DataFrame:
+    return load_case_metric_rows(PROJECT_ROOT, case_id, source)
+
+
+@st.cache_data(max_entries=12, show_spinner=False)
+def get_case_seed_metadata(case_id: str, signatures: tuple) -> pd.DataFrame:
+    return candidate_seed_metadata(PROJECT_ROOT, case_id)
+
+
+def render_case_numeric_metrics(bundle: DashboardBundle, selected: pd.Series) -> None:
+    st.subheader("Numerical metrics for this case")
+    st.caption(
+        f"Painting {selected['painting_id']} · case {selected['case_id']}. "
+        "Compare saved values across models below. These controls do not change the images above. "
+        "Each candidate/seed/prompt stays separate; no averages or new metrics are calculated."
+    )
+    candidates = bundle.indexes["case_index"]
+    candidates = candidates[candidates["case_id"].eq(selected["case_id"])].copy()
+    controls = st.columns(3)
+    with controls[0]:
+        source = st.selectbox("Metric family", list(METRIC_SOURCES), key="numeric_family")
+    with controls[1]:
+        scope = st.selectbox("Candidate scope", ["All candidates for this case", "Selected candidate only"], key="numeric_scope")
+    with controls[2]:
+        models = st.multiselect("Compare models", stable_options(candidates, "model_id"),
+                                default=stable_options(candidates, "model_id"),
+                                format_func=model_name, key=f"numeric_models_{selected['case_id']}")
+    candidates = candidates[candidates["model_id"].isin(models)]
+    if scope == "Selected candidate only":
+        candidates = candidates[candidates["candidate_id"].eq(selected["candidate_id"])]
+    if candidates.empty:
+        st.info("Select a model that includes a candidate in this comparison scope.")
+        return
+    try:
+        raw = get_case_metric_rows(str(selected["case_id"]), source,
+                                   source_signature(PROJECT_ROOT, metric_source_path(source)))
+        signatures = tuple(source_signature(PROJECT_ROOT, p) for p in CANDIDATE_SOURCES)
+        seeds = get_case_seed_metadata(str(selected["case_id"]), signatures)
+        values, missing = attach_candidate_identity(raw, candidates, seeds)
+    except (ValueError, KeyError, OSError) as exc:
+        st.error(f"Saved numerical evidence could not be verified: {exc}")
+        return
+    if not missing.empty:
+        st.info(
+            f"{len(missing)} selected candidate(s) have no saved rows in this metric family. "
+            "Additional N22 damage-size seeds have group uncertainty evidence, not individual "
+            "reference-quality scores. Anchor scores are never substituted."
+        )
+        with st.expander("Candidates without saved metrics in this family"):
+            st.dataframe(missing, hide_index=True, width="stretch")
+    if values.empty:
+        return
+    filters = st.columns(4)
+    with filters[0]:
+        regions = stable_options(values, "region_id")
+        default_region = regions.index("masked_region") if "masked_region" in regions else 0
+        region = st.selectbox("Metric region", regions, index=default_region,
+                              key=f"numeric_region_{source}")
+    values = values[values["region_id"].eq(region)]
+    with filters[1]:
+        metric = st.selectbox("Measure", ["All", *stable_options(values, "metric_name")],
+                              key=f"numeric_measure_{source}_{region}")
+    with filters[2]:
+        seed = st.selectbox("Seed", ["All", *stable_options(values, "seed")], key="numeric_seed")
+    with filters[3]:
+        prompt = st.selectbox("Prompt arm", ["All", *stable_options(values, "prompt_variant_id")], key="numeric_prompt")
+    shown = filter_frame(values, metric_name=metric, seed=seed, prompt_variant_id=prompt)
+    shown = shown.sort_values(["metric_name", "model_id", "candidate_id", "source_record_id"], kind="stable")
+    columns = ["model_id", "seed", "prompt_variant_id", "metric_name", "region_id",
+               "damaged_value", "restored_value", "improvement_value", "better_direction",
+               "value_unit", "status", "applicability_status", "issue", "candidate_id", "metric_family",
+               "feature_model_id", "evidence_component", "summary_statistic", "semantic_target_scope"]
+    st.dataframe(shown[[c for c in columns if c in shown]], hide_index=True,
+                 width="stretch", height=360,
+                 column_config={c: st.column_config.NumberColumn(c.replace("_", " ").title(), format="%.6f")
+                                for c in ("damaged_value", "restored_value", "improvement_value")})
+    st.caption(
+        f"{len(shown)} saved records. Positive improvement means better than the damaged input "
+        "under the stored direction. Blank/not-applicable values are not zero; infinite PSNR "
+        "can represent zero reconstruction error. Rows marked not applicable must not be ranked, "
+        "even if the producer retained a diagnostic number. Table display is rounded; CSV retains numeric precision. "
+        "Proxy metrics do not establish conservation suitability."
+    )
+    st.download_button("Download displayed case metrics (CSV)", shown.to_csv(index=False).encode("utf-8"),
+                       file_name=f"{selected['case_id']}_metrics.csv", mime="text/csv", key="numeric_download")
+    st.caption(f"Read-only source: {metric_source_path(source)} · exact source IDs and provenance included in CSV.")
 
 
 def esc(value: Any) -> str:
@@ -1237,6 +1336,16 @@ def render_model_performance(bundle: DashboardBundle) -> None:
             )
         st.caption("The interval bars show the stored uncertainty interval for the declared grouped summary; paintings, not candidate rows, are the independent unit.")
 
+    with st.expander("Exact numerical values behind this plot"):
+        numeric = aggregate_metric_records(metric_rows)
+        st.caption(
+            "The same stored estimates and intervals used by the plot—not per-painting scores. "
+            "Case and painting counts show the actual denominator. Candidates and seeds are not independent paintings."
+        )
+        st.dataframe(numeric, hide_index=True, width="stretch")
+        st.download_button("Download plotted metric values (CSV)", numeric.to_csv(index=False).encode("utf-8"),
+                           file_name="model_performance_values.csv", mime="text/csv", key="performance_numeric_download")
+
     st.subheader("Inspect the restorations behind the comparison")
     example_row = render_performance_comparison(bundle)
     if example_row is not None and not metric_policy.empty:
@@ -1563,6 +1672,7 @@ def render_case_explorer(bundle: DashboardBundle) -> None:
     for tab, items in zip(tabs, tab_paths):
         with tab:
             show_paths(items, max_items=4)
+    render_case_numeric_metrics(bundle, row)
     left, right = st.columns([1.2, 1])
     with left:
         st.subheader("All candidates in this filtered case set")
@@ -1684,7 +1794,15 @@ def render_reports(bundle: DashboardBundle) -> None:
     with st.expander("Notebook 34 package provenance"):
         manifest = bundle.upstream_manifest
         st.json({"run_id": manifest.get("run_id"), "notebook": manifest.get("notebook_name"), "git_commit": manifest.get("git_commit"), "inventory_run_id": manifest.get("inventory_run_id"), "python_version": manifest.get("python_version"), "validation_summary": manifest.get("validation_summary")}, expanded=False)
-    evidence_note("Deployment state", "This repository view is ready for local validation. A public deployment URL is not claimed until an external deployment is explicitly completed and recorded.")
+    rich_evidence_note(
+        "Live deployment",
+        'The dashboard is publicly available on Streamlit Community Cloud: '
+        '<a href="https://fhtw-painting-restoration.streamlit.app/" '
+        'target="_blank" rel="noopener noreferrer">'
+        'https://fhtw-painting-restoration.streamlit.app/</a>. '
+        'It presents saved evaluation evidence without running restoration models or recomputing metrics.',
+        "good",
+    )
 
 
 bundle = get_bundle()
