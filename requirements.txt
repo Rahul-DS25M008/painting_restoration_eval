@@ -5,3 +5,4 @@ numpy==1.26.4
 pyarrow==20.0.0
 pillow==12.3.0
 jmespath
+PyYAML==6.0.3
