@@ -1,0 +1,1655 @@
+config_schema_version: "evidence_coverage.v1"
+config_version: "1.0.0"
+
+evidence_coverage:
+  authority:
+    human_readable_audit: "docs/evidence_dependency_audit.md"
+    implementation_guidelines: "docs/refactoring_implementation_guidelines.md"
+    notebook_roadmap: "docs/final_notebook_roadmap.md"
+    inventory_path: "outputs/inventory/project_file_inventory.csv"
+    project_paths_path: "outputs/inventory/project_paths.json"
+
+  frozen_baseline:
+    through_notebook_id: "21"
+    data_producing_commit: "0aac25ef"
+    policy: "read_only_notebooks_outputs_manifests_and_scientific_populations"
+    allow_append_to_frozen_outputs: false
+    allow_rerun_to_expand_population: false
+    allow_manifest_rewrite: false
+    extension_policy: "post_21_notebook_owned_artifacts_with_explicit_ownership"
+    blocking_validation_failures: 0
+    declared_nonblocking_warnings:
+      - notebook_id: "15"
+        warning_id: "cuda_bitwise_repeatability"
+        interpretation: "metric_validity_and_coverage_passed_exact_cuda_bitwise_identity_not_asserted"
+
+  terminology:
+    generative_uncertainty: "repeated_seed_variation_for_fixed_case_prompt_and_configuration"
+    input_robustness: "variation_across_mask_placement_geometry_or_component_arrangement"
+    prompt_sensitivity: "variation_across_prompt_policies_or_variants"
+    semantic_feature_affinity: "computational_proxy_not_human_visual_plausibility"
+    trustworthiness_flag: "rule_defined_decision_support_not_conservation_ground_truth"
+
+  frozen_notebooks:
+    - notebook_id: "01"
+      stem: "01_dataset_verification"
+      output_root: "outputs/01_dataset_verification"
+      manifest_path: "outputs/01_dataset_verification/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/01_dataset_verification/data/artworks.csv"
+          rows: 50
+          schema_version: "artworks.v1"
+        - path: "outputs/01_dataset_verification/metrics/dataset_audit.csv"
+          rows: 101
+      supported_scope: ["controlled_50", "five_balanced_visual_categories"]
+      constraints:
+        - "style_date_and_medium_populated_for_18_of_50"
+        - "no_expanded_dataset"
+
+    - notebook_id: "02"
+      stem: "02_image_preprocessing"
+      output_root: "outputs/02_image_preprocessing"
+      manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+      status: "frozen_supported"
+      supported_scope: ["50_clean_references", "768x768_rgb_png", "authoritative_content_geometry"]
+      constraints: ["consumers_must_use_recorded_content_bounds"]
+
+    - notebook_id: "03"
+      stem: "03_canonical_mask_generation"
+      output_root: "outputs/03_canonical_mask_generation"
+      manifest_path: "outputs/03_canonical_mask_generation/manifests/run_manifest.json"
+      status: "frozen_supported"
+      supported_scope: ["250_canonical_binary_masks", "deterministic_morphology"]
+      constraints: ["synthetic_masks_not_physical_conservation_damage"]
+
+    - notebook_id: "04"
+      stem: "04_canonical_damaged_image_generation"
+      output_root: "outputs/04_canonical_damaged_image_generation"
+      manifest_path: "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/04_canonical_damaged_image_generation/data/cases.csv"
+          rows: 250
+      supported_scope: ["200_nonzero_canonical_cases", "50_zero_controls"]
+
+    - notebook_id: "05"
+      stem: "05_damage_size_sensitivity_dataset_generation"
+      output_root: "outputs/05_damage_size_sensitivity_dataset_generation"
+      manifest_path: "outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv"
+          rows: 35
+        - path: "outputs/05_damage_size_sensitivity_dataset_generation/metrics/generation_audit.csv"
+          rows: 35
+      supported_scope: ["five_paintings", "seven_nested_damage_levels", "target_and_realized_area", "mask_morphology"]
+      independent_unit: "painting_trajectory"
+      constraints: ["one_painting_per_category_category_confounded_with_painting"]
+
+    - notebook_id: "06"
+      stem: "06_mask_robustness_dataset_generation"
+      output_root: "outputs/06_mask_robustness_dataset_generation"
+      manifest_path: "outputs/06_mask_robustness_dataset_generation/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/06_mask_robustness_dataset_generation/data/cases.csv"
+          rows: 75
+      supported_scope: ["15_robustness_groups", "five_variants_per_group", "location_and_morphology_fields"]
+      independent_unit: "painting_mask_family_group"
+      constraints:
+        - "input_robustness_not_generative_uncertainty"
+        - "one_painting_per_category_category_confounded_with_painting"
+
+    - notebook_id: "07"
+      stem: "07_synthetic_degradation_dataset_generation"
+      output_root: "outputs/07_synthetic_degradation_dataset_generation"
+      manifest_path: "outputs/07_synthetic_degradation_dataset_generation/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/07_synthetic_degradation_dataset_generation/data/cases.csv"
+          rows: 165
+      supported_scope: ["procedural_degradations", "severity", "affected_area", "operator_parameters"]
+      constraints:
+        - "50_cases_restoration_eligible"
+        - "one_painting_per_category_category_confounded_with_painting"
+        - "procedural_effects_not_exact_conservation_damage"
+
+    - notebook_id: "08"
+      stem: "08_experiment_contracts_and_region_policy"
+      output_root: "outputs/08_experiment_contracts_and_region_policy"
+      manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+          rows: 525
+        - path: "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv"
+          rows: 2100
+        - path: "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv"
+          rows: 143
+      supported_scope: ["410_eligible_cases_per_model", "metric_region_compatibility", "region_ablation_memberships"]
+
+    - notebook_id: "09"
+      stem: "09_opencv_telea_restoration"
+      output_root: "outputs/09_opencv_telea_restoration"
+      manifest_path: "outputs/09_opencv_telea_restoration/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/09_opencv_telea_restoration/data/restorations.csv"
+          rows: 410
+      supported_scope: ["completed_deterministic_baseline", "runtime"]
+      constraints: ["no_generative_uncertainty"]
+
+    - notebook_id: "10"
+      stem: "10_lama_restoration"
+      output_root: "outputs/10_lama_restoration"
+      manifest_path: "outputs/10_lama_restoration/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/10_lama_restoration/data/restorations.csv"
+          rows: 410
+      supported_scope: ["completed_deterministic_learned_baseline", "runtime"]
+      constraints: ["no_generative_uncertainty"]
+
+    - notebook_id: "11"
+      stem: "11_stable_diffusion_restoration"
+      output_root: "outputs/11_stable_diffusion_restoration"
+      manifest_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+          rows: 1330
+        - path: "outputs/11_stable_diffusion_restoration/metrics/prompt_ablation_design.csv"
+      supported_scope:
+        - "410_primary_candidates"
+        - "80_complete_generic_canonical_uncertainty_groups"
+        - "50_complete_scratch_aware_canonical_uncertainty_groups"
+        - "controlled_prompt_sensitivity"
+      constraints:
+        - "all_35_damage_size_cases_have_one_seed"
+        - "no_complete_robustness_or_synthetic_uncertainty_groups"
+
+    - notebook_id: "12"
+      stem: "12_sdxl_feasibility_or_restoration"
+      output_root: "outputs/12_sdxl_feasibility_or_restoration"
+      manifest_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
+          rows: 10
+      supported_scope: ["four_canonical_cases", "six_synthetic_cases", "partial_model_comparison"]
+      constraints: ["one_seed_per_case", "no_damage_size_or_robustness_cases"]
+
+    - notebook_id: "13"
+      stem: "13_classical_metrics"
+      output_root: "outputs/13_classical_metrics"
+      manifest_path: "outputs/13_classical_metrics/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/13_classical_metrics/metrics/classical_metrics.csv"
+          rows: 63018
+      supported_scope: ["mse", "mae", "psnr", "ssim", "2160_candidates"]
+
+    - notebook_id: "14"
+      stem: "14_lpips_metrics"
+      output_root: "outputs/14_lpips_metrics"
+      manifest_path: "outputs/14_lpips_metrics/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/14_lpips_metrics/metrics/lpips_metrics.csv"
+          rows: 4170
+      supported_scope: ["content_region", "mask_bbox_crop", "2160_candidates"]
+
+    - notebook_id: "15"
+      stem: "15_feature_similarity"
+      output_root: "outputs/15_feature_similarity"
+      manifest_path: "outputs/15_feature_similarity/manifests/run_manifest.json"
+      status: "frozen_supported_with_warning"
+      primary_artifacts:
+        - path: "outputs/15_feature_similarity/metrics/feature_metrics.csv"
+          rows: 8340
+        - path: "outputs/15_feature_similarity/manifests/embeddings.csv"
+          rows: 10700
+        - path: "outputs/15_feature_similarity/data/embeddings.npz"
+      supported_scope: ["clip", "dinov2", "retrieval_embeddings", "2160_candidates"]
+      constraints: ["pretrained_features_not_conservation_specific", "cuda_bitwise_identity_not_asserted"]
+
+    - notebook_id: "16"
+      stem: "16_difference_maps_and_spatial_diagnostics"
+      output_root: "outputs/16_difference_maps_and_spatial_diagnostics"
+      manifest_path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv"
+          rows: 18896
+        - path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/map_images.csv"
+          rows: 10062
+      supported_scope: ["error_maps", "signed_improvement", "spillover", "canonical_regions"]
+
+    - notebook_id: "17"
+      stem: "17_local_consistency_metrics"
+      output_root: "outputs/17_local_consistency_metrics"
+      manifest_path: "outputs/17_local_consistency_metrics/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/17_local_consistency_metrics/metrics/local_consistency.csv"
+          rows: 271988
+        - path: "outputs/17_local_consistency_metrics/manifests/map_images.csv"
+          rows: 3282
+      supported_scope: ["texture", "colour", "seam", "brushstroke_proxies", "2160_candidates"]
+      constraints: ["3308_chroma_rows_not_applicable", "brushstroke_proxies_not_authentication"]
+
+    - notebook_id: "18"
+      stem: "18_diffusion_uncertainty_analysis"
+      output_root: "outputs/18_diffusion_uncertainty_analysis"
+      manifest_path: "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_metrics.csv"
+          rows: 20800
+        - path: "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_calibration_inputs.csv"
+          rows: 130
+      supported_scope: ["80_generic_canonical_groups", "50_scratch_aware_canonical_groups", "four_seeds"]
+      constraints: ["canonical_missing_region_only", "not_calibrated_confidence"]
+
+    - notebook_id: "19"
+      stem: "19_uncertainty_and_spatial_explanation_maps"
+      output_root: "outputs/19_uncertainty_and_spatial_explanation_maps"
+      manifest_path: "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/19_uncertainty_and_spatial_explanation_maps/metrics/spatial_explanations.csv"
+          rows: 780
+        - path: "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/map_images.csv"
+          rows: 1055
+      supported_scope: ["130_canonical_uncertainty_groups", "numeric_and_visual_maps"]
+
+    - notebook_id: "20"
+      stem: "20_semantic_and_structural_consistency"
+      output_root: "outputs/20_semantic_and_structural_consistency"
+      manifest_path: "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv"
+          rows: 58980
+        - path: "outputs/20_semantic_and_structural_consistency/manifests/semantic_maps.csv"
+          rows: 9430
+      supported_scope: ["semantic_and_structural_proxies", "local_feature_maps", "2160_candidates"]
+      constraints:
+        - "not_validated_face_anatomy_object_or_iconographic_detection"
+        - "118_outside_context_values_not_estimable_at_encoder_grid"
+
+    - notebook_id: "21"
+      stem: "21_multi_model_comparison"
+      output_root: "outputs/21_multi_model_comparison"
+      manifest_path: "outputs/21_multi_model_comparison/manifests/run_manifest.json"
+      status: "frozen_supported"
+      primary_artifacts:
+        - path: "outputs/21_multi_model_comparison/metrics/model_comparison.csv"
+          rows: 86531
+        - path: "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv"
+          rows: 839
+      supported_scope: ["410_case_three_model_population", "10_case_four_model_subset", "family_balanced_disagreement"]
+      constraints: ["uncertainty_not_cross_model_quality_vote", "no_conservation_winner_claim"]
+
+  planned_notebooks:
+    - notebook_id: "22"
+      stem: "22_damage_size_diffusion_uncertainty_extension"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      output_root: "outputs/22_damage_size_diffusion_uncertainty_extension"
+      required_inputs:
+        - "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv"
+        - "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+        - "outputs/13_classical_metrics/metrics/classical_metrics.csv"
+        - "outputs/14_lpips_metrics/metrics/lpips_metrics.csv"
+        - "outputs/15_feature_similarity/metrics/feature_metrics.csv"
+        - "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv"
+        - "outputs/17_local_consistency_metrics/metrics/local_consistency.csv"
+        - "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv"
+      expected_population:
+        cases: 35
+        paintings: 5
+        seeds_per_group: 4
+        referenced_seed_2026_candidates: 35
+        new_candidates: 105
+        uncertainty_groups: 35
+        unordered_seed_pairs: 210
+      owns_new_inference: true
+      may_write_frozen_outputs: false
+      observed_population:
+        cases: 35
+        paintings: 5
+        seeds_per_group: 4
+        referenced_seed_2026_candidates: 35
+        new_candidates: 105
+        uncertainty_groups: 35
+        unordered_seed_pairs: 210
+        metric_rows: 4760
+        uncertainty_maps: 35
+        uncertainty_overlays: 35
+        validation_checks: 234
+        roadmap_requirements: 12
+      primary_artifacts:
+        - path: "outputs/22_damage_size_diffusion_uncertainty_extension/data/candidates.csv"
+          rows: 105
+        - path: "outputs/22_damage_size_diffusion_uncertainty_extension/metrics/damage_size_uncertainty.csv"
+          rows: 4760
+        - path: "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/map_images.csv"
+          rows: 35
+      interpretation_boundary:
+        - "empirical_seed_variability_not_calibrated_confidence"
+        - "no_combined_uncertainty_index"
+        - "painting_and_category_confounded"
+
+    - notebook_id: "23"
+      stem: "23_damage_size_sensitivity_analysis"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      output_root: "outputs/23_damage_size_sensitivity_analysis"
+      manifest_path: "outputs/23_damage_size_sensitivity_analysis/manifests/run_manifest.json"
+      required_evidence: ["n05_damage_size", "n09_n11_primary_candidates", "n13_n20_metric_families", "n22_damage_size_uncertainty"]
+      independent_unit: "five_painting_trajectories"
+      observed_population:
+        paintings: 5
+        damage_levels: 7
+        cases: 35
+        primary_candidates: 105
+        quality_anchors: 11
+        uncertainty_groups: 35
+        seeds_per_uncertainty_group: 4
+        unordered_seed_pairs: 210
+        analysis_rows: 1901
+        inferential_rows: 646
+        validation_checks: 115
+        roadmap_requirements: 10
+        analytical_report_views: 10
+        report_visual_panels: 8
+        report_embedded_images: 18
+        report_external_images: 0
+        report_tile_count: 95
+        canonical_output_files: 8
+      primary_artifacts:
+        - path: "outputs/23_damage_size_sensitivity_analysis/metrics/damage_size_analysis.csv"
+          rows: 1901
+          schema_version: "damage_size_analysis.v1"
+        - path: "outputs/23_damage_size_sensitivity_analysis/figures/performance_vs_damage.png"
+        - path: "outputs/23_damage_size_sensitivity_analysis/figures/ranking_vs_damage.png"
+        - path: "outputs/23_damage_size_sensitivity_analysis/figures/uncertainty_vs_damage.png"
+        - path: "outputs/23_damage_size_sensitivity_analysis/reports/damage_size_analysis.html"
+        - path: "outputs/23_damage_size_sensitivity_analysis/validation/checks.csv"
+          rows: 115
+      supported_scope:
+        - "target_and_realized_damage_size_trends"
+        - "matched_painting_quality_slopes_and_adjacent_changes"
+        - "paired_model_contrasts_and_family_balanced_rankings"
+        - "leave_one_painting_out_ranking_stability"
+        - "stable_diffusion_damage_size_uncertainty_trends"
+        - "painting_specific_and_mask_morphology_analysis"
+      report_contract:
+        section_count: 13
+        self_contained: true
+        mock_to_final_traceability_passed: true
+        required_visuals_depend_on_external_links: false
+      downstream_contract:
+        - "use_damage_size_analysis_csv_as_the_canonical_scalar_source"
+        - "retain_target_and_realized_exposure_definitions"
+        - "retain_painting_as_the_independent_unit"
+        - "do_not_convert_seed_variability_to_calibrated_confidence"
+      prohibited_claims: ["independent_category_effect", "independent_style_effect", "universal_damage_threshold"]
+
+    - notebook_id: "24"
+      stem: "24_mask_robustness_analysis"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      required_evidence: ["n06_robustness_groups", "n09_n11_primary_candidates", "n13_n20_metric_families"]
+      terminology: "input_mask_robustness"
+      validated_population:
+        paintings: 5
+        mask_families: 3
+        robustness_groups: 15
+        variants_per_group: 5
+        cases: 75
+        primary_candidates: 225
+        candidates_by_model:
+          opencv_telea: 75
+          lama: 75
+          stable_diffusion_inpainting: 75
+        quality_anchors: 11
+        canonical_analysis_rows: 5373
+        validation_checks: 136
+        roadmap_requirements: 9
+        analytical_report_views: 10
+        report_visual_panels: 8
+        report_embedded_images: 18
+        report_external_images: 0
+        report_tile_count: 149
+        canonical_output_files: 7
+      primary_artifacts:
+        - path: "outputs/24_mask_robustness_analysis/metrics/mask_robustness_analysis.csv"
+          rows: 5373
+          schema_version: "mask_robustness_analysis.v1"
+        - path: "outputs/24_mask_robustness_analysis/figures/robustness_variance.png"
+        - path: "outputs/24_mask_robustness_analysis/figures/ranking_stability.png"
+        - path: "outputs/24_mask_robustness_analysis/reports/mask_robustness_analysis.html"
+        - path: "outputs/24_mask_robustness_analysis/validation/checks.csv"
+          rows: 136
+      supported_scope:
+        - "matched_five_variant_input_mask_robustness"
+        - "within_group_quality_dispersion"
+        - "paired_painting_level_model_robustness_contrasts"
+        - "family_balanced_variant_ranking_and_conclusion_stability"
+        - "exploratory_within_group_morphology_and_location_associations"
+        - "painting_and_fixed_family_area_profiles"
+        - "operational_runtime_dispersion_separate_from_quality"
+      report_contract:
+        section_count: 13
+        self_contained: true
+        mock_to_final_traceability_passed: true
+        required_visuals_depend_on_external_links: false
+      downstream_contract:
+        - "use_mask_robustness_analysis_csv_as_the_canonical_scalar_source"
+        - "retain_painting_as_the_independent_unit"
+        - "retain_mask_variants_as_repeated_observations_nested_within_painting_family_groups"
+        - "do_not_interpret_input_mask_robustness_as_stochastic_uncertainty_or_calibrated_confidence"
+        - "do_not_separate_mask_family_from_its_fixed_target_damage_fraction"
+        - "keep_runtime_out_of_quality_ranking"
+      prohibited_claims:
+        - "mask_variation_is_generative_uncertainty"
+        - "independent_mask_family_effect"
+        - "independent_damage_size_effect"
+        - "independent_category_effect"
+        - "independent_style_effect"
+        - "causal_morphology_effect"
+        - "historical_authenticity"
+        - "conservation_approval"
+
+    - notebook_id: "25"
+      stem: "25_synthetic_degradation_analysis"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      output_root: "outputs/25_synthetic_degradation_analysis"
+      manifest_path: "outputs/25_synthetic_degradation_analysis/manifests/run_manifest.json"
+      required_evidence: ["n07_degradation_cases", "n08_model_eligibility", "n09_n21_evidence"]
+      population_rule: "eligibility_approved_combinations_only"
+      independent_unit: "five_paintings_with_cases_nested_within_painting"
+      observed_population:
+        generated_cases: 165
+        eligible_cases: 50
+        paintings: 5
+        primary_core_candidates: 150
+        candidates_by_core_model:
+          opencv_telea: 50
+          lama: 50
+          stable_diffusion_inpainting: 50
+        bounded_sdxl_candidates: 6
+        selected_candidates: 156
+        quality_anchors: 11
+        canonical_analysis_rows: 4695
+        analysis_kinds: 17
+        validation_checks: 125
+        roadmap_requirements: 9
+        analytical_report_views: 14
+        report_visual_panels: 9
+        report_embedded_images: 23
+        report_external_images: 0
+        report_tile_count: 238
+        canonical_output_files: 7
+      primary_artifacts:
+        - path: "outputs/25_synthetic_degradation_analysis/metrics/degradation_analysis.csv"
+          rows: 4695
+          schema_version: "synthetic_degradation_analysis.v1"
+        - path: "outputs/25_synthetic_degradation_analysis/figures/degradation_performance.png"
+        - path: "outputs/25_synthetic_degradation_analysis/figures/degradation_failure_examples.png"
+        - path: "outputs/25_synthetic_degradation_analysis/reports/synthetic_degradation_analysis.html"
+        - path: "outputs/25_synthetic_degradation_analysis/validation/checks.csv"
+          rows: 125
+      supported_scope:
+        - "eligibility_gated_localized_synthetic_degradation_analysis"
+        - "degradation_family_severity_affected_area_and_painting_profiles"
+        - "painting_level_slopes_and_paired_core_model_contrasts"
+        - "ordered_combined_component_comparisons"
+        - "quality_failure_spillover_rank_and_runtime_evidence"
+        - "bounded_six_case_sdxl_description"
+      report_contract:
+        section_count: 15
+        self_contained: true
+        mock_to_final_traceability_passed: true
+        required_visuals_depend_on_external_links: false
+      downstream_contract:
+        - "use_degradation_analysis_csv_as_the_canonical_scalar_source"
+        - "retain_eligibility_exclusions_as_scope_decisions_not_model_failures"
+        - "retain_painting_as_the_independent_unit"
+        - "keep_metric_families_separate_and_preserve_disagreement"
+        - "keep_runtime_out_of_quality_ranking"
+        - "treat_sdxl_as_a_bounded_descriptive_subset"
+        - "do_not_create_synthetic_degradation_uncertainty_without_repeated_seed_evidence"
+      prohibited_claims:
+        - "procedural_degradation_is_exact_conservation_damage"
+        - "independent_category_effect"
+        - "independent_style_effect"
+        - "physical_degradation_interaction"
+        - "full_sdxl_evaluation"
+        - "synthetic_degradation_uncertainty"
+        - "historical_authenticity"
+        - "conservation_approval"
+
+    - notebook_id: "26"
+      stem: "26_grouped_and_statistical_analysis"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      output_root: "outputs/26_grouped_and_statistical_analysis"
+      manifest_path: "outputs/26_grouped_and_statistical_analysis/manifests/run_manifest.json"
+      config_path: "config/evaluation/grouped_statistical_analysis.yaml"
+      helper_path: "src/restoration_eval/grouped_statistical_analysis.py"
+      test_path: "tests/test_grouped_statistical_analysis.py"
+      required_evidence:
+        - "n08_case_registry_and_region_policy"
+        - "n09_n12_metric_independent_primary_candidates"
+        - "n13_n17_and_n20_normalized_quality_evidence"
+        - "n18_canonical_prompt_specific_uncertainty_130_groups"
+        - "n21_comparison_disagreement_and_representative_cases"
+        - "n22_damage_size_uncertainty_35_groups"
+        - "n23_n25_focused_experiment_analysis_tables"
+      population_contract:
+        dataset_sources: ["controlled_50"]
+        evaluated_cases: 410
+        primary_core_candidates: 1230
+        quality_cases_excluding_canonical_zero_controls: 360
+        quality_core_candidates: 1080
+        bounded_sdxl_candidates: 10
+        supported_uncertainty_groups: 165
+      independent_unit: "painting"
+      nested_units: ["case", "candidate", "mask_variant", "seed", "region", "metric"]
+      observed_population:
+        evaluated_cases: 410
+        selected_candidates: 1240
+        primary_core_candidates: 1230
+        quality_core_candidates: 1080
+        bounded_sdxl_candidates: 10
+        quality_anchors: 11
+        supported_uncertainty_groups: 165
+        statistical_result_rows: 4174
+        statistical_result_kinds: 14
+        metric_correlation_rows: 504
+        correlation_kinds: 5
+        ranking_stability_rows: 258
+        ranking_stability_kinds: 6
+        validation_checks: 111
+        roadmap_requirements: 12
+        analytical_report_views: 12
+        report_visual_panels: 22
+        report_embedded_images: 34
+        report_external_images: 0
+        report_tile_count: 132
+        canonical_output_files: 10
+      primary_artifacts:
+        - path: "outputs/26_grouped_and_statistical_analysis/metrics/statistical_results.csv"
+          rows: 4174
+          schema_version: "grouped_statistical_results.v1"
+        - path: "outputs/26_grouped_and_statistical_analysis/metrics/metric_correlations.csv"
+          rows: 504
+          schema_version: "grouped_metric_correlations.v1"
+        - path: "outputs/26_grouped_and_statistical_analysis/metrics/ranking_stability.csv"
+          rows: 258
+          schema_version: "grouped_ranking_stability.v1"
+        - path: "outputs/26_grouped_and_statistical_analysis/figures/correlation_matrix.png"
+        - path: "outputs/26_grouped_and_statistical_analysis/figures/grouped_performance.png"
+        - path: "outputs/26_grouped_and_statistical_analysis/figures/effect_sizes.png"
+        - path: "outputs/26_grouped_and_statistical_analysis/reports/statistical_analysis.html"
+        - path: "outputs/26_grouped_and_statistical_analysis/validation/checks.csv"
+          rows: 111
+      supported_scope:
+        - "painting_level_core_model_descriptions_paired_tests_and_effect_sizes"
+        - "balanced_canonical_category_and_damage_type_analysis"
+        - "focused_damage_size_mask_robustness_and_synthetic_degradation_synthesis"
+        - "metric_family_region_policy_and_cross_model_agreement_and_disagreement"
+        - "canonical_and_damage_size_repeated_seed_uncertainty_associations"
+        - "ranking_stability_and_sensitivity_without_a_combined_score"
+        - "quality_compute_associations_with_runtime_separate_from_quality"
+        - "bounded_ten_case_sdxl_description"
+      report_contract:
+        section_count: 15
+        self_contained: true
+        mock_to_final_traceability_passed: true
+        required_visuals_depend_on_external_links: false
+      downstream_contract:
+        - "use_the_three_notebook_26_metric_tables_as_canonical_grouped_statistical_sources"
+        - "retain_painting_as_the_independent_unit_and_within_painting_trajectories_as_nested_evidence"
+        - "retain_metric_family_and_region_policy_disagreement"
+        - "keep_prompt_arms_separate_and_uncertainty_uncalibrated"
+        - "keep_runtime_out_of_quality_ranking"
+        - "treat_sdxl_as_a_bounded_descriptive_subset"
+        - "do_not_construct_a_combined_quality_efficiency_uncertainty_or_trust_score"
+      scope_constraints:
+        - "category_inference_only_for_balanced_canonical_50"
+        - "focused_five_painting_experiments_are_painting_specific"
+        - "dataset_source_comparison_not_applicable_single_dataset"
+        - "uncertainty_only_for_canonical_and_damage_size_groups"
+        - "generic_and_scratch_aware_prompt_arms_remain_separate"
+        - "sdxl_is_bounded_descriptive_only"
+        - "runtime_remains_outside_quality_ranking"
+      prohibited_claims:
+        - "semantic_affinity_is_human_visual_plausibility"
+        - "repeated_observations_are_independent"
+        - "independent_style_effect"
+        - "focused_experiment_category_effect"
+        - "between_dataset_comparison"
+        - "robustness_or_synthetic_degradation_is_generative_uncertainty"
+        - "calibrated_confidence"
+        - "full_sdxl_comparison"
+        - "combined_quality_efficiency_uncertainty_or_trust_score"
+        - "historical_authenticity"
+        - "conservation_approval"
+
+    - notebook_id: "27"
+      stem: "27_failure_taxonomy_and_trustworthiness_flags"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      output_root: "outputs/27_failure_taxonomy_and_trustworthiness_flags"
+      manifest_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json"
+      config_path: "config/evaluation/failure_taxonomy.yaml"
+      helper_path: "src/restoration_eval/failure_taxonomy.py"
+      test_path: "tests/test_failure_taxonomy.py"
+      candidate_population:
+        primary_candidates: 1240
+        repeated_seed_candidates: 660
+        primary_repeated_overlap: 115
+        uncertainty_only_candidates: 545
+        union_candidates: 1785
+      required_evidence: ["reference_metrics", "spatial", "texture", "colour", "seam", "semantic_proxies", "canonical_uncertainty", "damage_size_uncertainty", "metric_disagreement"]
+      required_outputs: ["failure_taxonomy", "complete_failure_assignment_grid", "complete_trustworthiness_flag_grid", "self_contained_flag_report", "taxonomy_figure", "run_manifest", "artifact_manifest", "validation_checks"]
+      observed_population:
+        primary_candidates: 1240
+        primary_core_candidates: 1230
+        repeated_seed_candidates: 660
+        uncertainty_only_candidates: 545
+        bounded_sdxl_candidates: 10
+        supported_uncertainty_groups: 165
+        union_candidates: 1785
+        failure_categories: 14
+        failure_assignment_rows: 24990
+        trust_flags: 11
+        trustworthiness_flag_rows: 19635
+        validation_checks: 167
+        roadmap_requirements: 12
+        mock_traceability_rows: 29
+        analytical_report_views: 7
+        diagnostic_report_panels: 7
+        report_embedded_images: 56
+        report_external_images: 0
+        report_tile_count: 49
+        canonical_output_files: 8
+      primary_artifacts:
+        - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/data/failure_taxonomy.csv"
+          rows: 14
+          schema_version: "failure_taxonomy.v1"
+        - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/failure_assignments.csv"
+          rows: 24990
+          schema_version: "failure_assignments.v1"
+        - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv"
+          rows: 19635
+          schema_version: "trustworthiness_flags.v1"
+        - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/figures/failure_taxonomy.png"
+        - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/reports/flag_definitions.html"
+        - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/validation/checks.csv"
+          rows: 167
+      supported_scope:
+        - "complete_candidate_by_category_and_candidate_by_flag_screening_ledgers"
+        - "transparent_operational_warning_and_critical_thresholds"
+        - "strict_adverse_quantile_tie_handling"
+        - "independent_failure_and_trustworthiness_flags_without_a_combined_score"
+        - "canonical_and_damage_size_repeated_seed_uncertainty_evidence"
+        - "metric_disagreement_and_flag_cooccurrence"
+        - "candidate_level_review_recommendations"
+        - "bounded_ten_case_sdxl_description"
+      report_contract:
+        section_count: 15
+        self_contained: true
+        mock_to_final_traceability_passed: true
+        required_visuals_depend_on_external_links: false
+        embedded_images: 56
+        image_decode_failures: 0
+      downstream_contract:
+        - "use_the_complete_notebook_27_taxonomy_assignment_and_flag_tables_as_canonical_sources"
+        - "preserve_population_roles_and_prompt_arm_separation"
+        - "preserve_insufficient_and_not_applicable_states_instead_of_treating_them_as_passing"
+        - "treat_deterministic_uncertainty_as_not_applicable_and_single_seed_sdxl_uncertainty_as_insufficient"
+        - "retain_metric_disagreement_and_independent_flags_without_aggregation"
+        - "treat_recommendations_as_decision_support_only"
+      scope_rules: ["population_roles_remain_separate", "prompt_arms_remain_separate", "missing_evidence_is_not_passing", "deterministic_uncertainty_is_not_applicable", "single_seed_sdxl_uncertainty_is_insufficient", "thresholds_are_operational_not_calibrated", "recommendations_are_decision_support_only"]
+      prohibited_claims: ["combined_trust_score", "calibrated_confidence", "verified_face_anatomy_or_object_detection", "historical_authenticity", "conservation_approval", "full_sdxl_comparison"]
+
+    - notebook_id: "28"
+      stem: "28_metric_and_region_policy_ablation"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      output_root: "outputs/28_metric_and_region_policy_ablation"
+      manifest_path: "outputs/28_metric_and_region_policy_ablation/manifests/run_manifest.json"
+      config_path: "config/evaluation/metric_region_ablation.yaml"
+      helper_path: "src/restoration_eval/metric_region_ablation.py"
+      test_path: "tests/test_metric_region_ablation.py"
+      required_evidence: ["n08_region_ablation_memberships", "n13_n20_metric_families", "n21_comparison_and_disagreement", "n26_grouped_rankings", "n27_failure_assignments_and_flags"]
+      scenario_contract:
+        complete_framework_baselines: 1
+        metric_family_scenarios_including_baseline: 12
+        alternative_region_scenarios: 6
+        threshold_scenarios: 2
+        aggregation_scenarios: 3
+        total_scenarios: 23
+        ranking_applicable_scenarios: 18
+      observed_population:
+        core_primary_candidates: 1230
+        matched_cases: 410
+        flag_candidates: 1785
+        bounded_sdxl_candidates: 10
+        trust_flags: 11
+        failure_categories: 14
+        ablation_result_rows: 7710
+        model_rank_rows: 54
+        case_rank_rows: 7380
+        scenario_flag_summary_rows: 253
+        scenario_summary_rows: 23
+        flag_stability_rows: 41055
+        validation_checks: 122
+        roadmap_requirements: 13
+        report_sections: 12
+        analytical_report_views: 5
+        diagnostic_report_panels: 6
+        report_embedded_images: 23
+        report_external_images: 0
+        report_tile_count: 18
+        canonical_output_files: 8
+      primary_artifacts:
+        - path: "outputs/28_metric_and_region_policy_ablation/metrics/ablation_results.csv"
+          rows: 7710
+          schema_version: "metric_region_ablation_results.v1"
+        - path: "outputs/28_metric_and_region_policy_ablation/metrics/flag_stability.csv"
+          rows: 41055
+          schema_version: "ablation_flag_stability.v1"
+        - path: "outputs/28_metric_and_region_policy_ablation/figures/ablation_ranking_changes.png"
+        - path: "outputs/28_metric_and_region_policy_ablation/figures/ablation_flag_changes.png"
+        - path: "outputs/28_metric_and_region_policy_ablation/reports/ablation_study.html"
+        - path: "outputs/28_metric_and_region_policy_ablation/validation/checks.csv"
+          rows: 122
+      supported_scope:
+        - "controlled_metric_family_region_threshold_and_aggregation_sensitivity"
+        - "transparent_model_and_case_rank_sensitivity_without_a_continuous_combined_score"
+        - "candidate_level_flag_state_and_missing_evidence_sensitivity"
+        - "metric_disagreement_and_supported_subgroup_sensitivity"
+        - "complete_framework_conclusion_stability"
+        - "bounded_sdxl_flag_diagnostics_only"
+      report_contract:
+        section_count: 12
+        self_contained: true
+        mock_to_final_traceability_passed: true
+        required_visuals_depend_on_external_links: false
+        embedded_images: 23
+        image_decode_failures: 0
+      downstream_contract:
+        - "use_notebook_28_canonical_tables_for_evaluation_policy_sensitivity"
+        - "preserve_metric_family_and_region_specific_disagreement"
+        - "distinguish_stable_model_winner_from_policy_sensitive_case_priority_and_flags"
+        - "retain_insufficient_evidence_states_when_evidence_is_removed"
+        - "treat_ranks_as_transparent_ordinal_diagnostics_not_quality_or_trust_scores"
+        - "retain_painting_as_the_independent_unit_and_report_five_painting_confounding"
+      scope_rules: ["runtime_remains_outside_quality_ranking", "uncertainty_remains_outside_deterministic_cross_model_ranking", "missing_evidence_is_not_improvement", "rank_changes_are_policy_sensitivity_not_universal_superiority", "operational_thresholds_are_not_calibrated_probabilities", "bounded_sdxl_is_not_a_full_comparison"]
+      prohibited_claims: ["universal_trust_score", "continuous_combined_quality_score", "continuous_case_trust_score", "calibrated_failure_probability", "independent_style_effect", "historical_authenticity", "conservation_approval", "full_sdxl_comparison"]
+
+    - notebook_id: "29"
+      stem: "29_explainable_ai_and_case_retrieval"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      output_root: "outputs/29_explainable_ai_and_case_retrieval"
+      manifest_path: "outputs/29_explainable_ai_and_case_retrieval/manifests/run_manifest.json"
+      config_path: "config/evaluation/explainable_case_retrieval.yaml"
+      helper_path: "src/restoration_eval/explainable_case_retrieval.py"
+      test_path: "tests/test_explainable_case_retrieval.py"
+      required_evidence: ["n15_embeddings", "n16_n20_maps", "n18_n22_uncertainty", "n23_n25_counterfactual_structures", "n27_flags", "n28_ablations"]
+      observed_population:
+        explanation_catalog_candidates: 1785
+        explanation_catalog_cases: 410
+        explanation_catalog_paintings: 50
+        primary_candidates: 1230
+        primary_nonzero_spatial_candidates: 1080
+        bounded_sdxl_candidates: 10
+        dual_feature_retrieval_eligible_candidates: 1680
+        retrieval_ineligible_extension_candidates: 105
+        repeated_seed_candidate_members: 660
+        repeated_seed_groups: 165
+        retrieval_queries: 10
+        retrieval_neighbor_rows: 100
+        lower_risk_neighbor_rows: 50
+        flagged_neighbor_rows: 50
+        counterfactual_types: 7
+        counterfactual_panels: 14
+        retrieval_panels: 10
+        selected_report_units: 24
+        validation_checks: 145
+        roadmap_requirements: 13
+        report_sections: 14
+        analytical_report_views: 5
+        report_embedded_images: 34
+        report_external_images: 0
+        physical_output_files: 30
+        artifact_records: 6
+      primary_artifacts:
+        - path: "outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv"
+          rows: 1785
+          schema_version: "explanation_cases.v1"
+        - path: "outputs/29_explainable_ai_and_case_retrieval/data/case_neighbors.csv"
+          rows: 100
+          schema_version: "case_neighbors.v1"
+        - path: "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels"
+          files: 14
+        - path: "outputs/29_explainable_ai_and_case_retrieval/figures/example_retrieval_panels"
+          files: 10
+        - path: "outputs/29_explainable_ai_and_case_retrieval/reports/explanation_catalog.html"
+        - path: "outputs/29_explainable_ai_and_case_retrieval/validation/checks.csv"
+          rows: 145
+      supported_scope:
+        - "complete_candidate_level_explanation_catalog_for_the_notebook_27_union"
+        - "candidate_level_rule_region_evidence_missingness_and_action_traceability"
+        - "separate_dinov2_primary_and_clip_secondary_case_retrieval"
+        - "damage_size_placement_model_metric_seed_evidence_removal_and_prompt_counterfactuals"
+        - "complete_category_and_descriptive_style_period_examples"
+        - "mock_bound_self_contained_explanation_report"
+      evidence_responsibilities:
+        - "persist_complete_candidate_level_explanation_catalog_not_only_report_examples"
+        - "retain_rule_evidence_regions_thresholds_missingness_and_human_actions"
+        - "retrieve_dinov2_and_clip_neighbours_without_combining_feature_scores"
+        - "exclude_self_same_case_and_same_painting_from_neighbour_retrieval"
+        - "compare_damage_size_placement_model_metric_seed_ablation_and_prompt_counterfactuals"
+        - "embed_selected_visual_explanations_in_a_mock_bound_self_contained_report"
+      report_contract:
+        section_count: 14
+        self_contained: true
+        mock_to_final_traceability_passed: true
+        counterfactual_panels: 14
+        retrieval_panels: 10
+        analytical_views: 5
+        embedded_images: 34
+        external_images: 0
+        required_visuals_depend_on_external_links: false
+      downstream_contract:
+        - "use_the_complete_1785_row_explanation_catalog_for_case_level_discovery"
+        - "use_all_100_neighbor_rows_with_dinov2_and_clip_as_separate_views"
+        - "treat_the_24_visual_report_units_as_examples_not_the_persisted_population"
+        - "preserve_retrieval_leakage_exclusions_and_explicit_embedding_ineligibility"
+        - "preserve_counterfactual_type_prompt_arm_and_seed_group_identity"
+        - "treat_operational_recommendations_as_human_review_support_only"
+      scope_rules: ["category_is_primary_complete_stratification", "style_period_is_descriptive_where_available", "generic_vs_scratch_aware_is_damage_specific_not_style_specific", "sdxl_remains_bounded", "uncertainty_applies_only_with_repeated_seed_coverage", "report_selection_does_not_limit_persisted_case_catalog"]
+      prohibited_claims: ["rule_defined_success_is_human_ground_truth", "independent_style_effect", "style_specific_prompt_ablation", "retrieval_similarity_is_restoration_correctness", "uncertainty_is_calibrated_confidence", "universal_model_superiority", "conservation_approval"]
+
+    - notebook_id: "30"
+      stem: "30_model_cards_compute_and_scalability"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      output_root: "outputs/30_model_cards_compute_and_scalability"
+      manifest_path: "outputs/30_model_cards_compute_and_scalability/manifests/run_manifest.json"
+      run_id: "run_99fc7daf6af54d5992ef6c26f05bd901"
+      config_path: "config/evaluation/model_cards_compute.yaml"
+      helper_path: "src/restoration_eval/model_cards_compute.py"
+      test_path: "tests/test_model_cards_compute.py"
+      required_evidence: ["model_manifests", "runtime_tables", "inventory", "primary_model_sources"]
+      preparation_contract:
+        config: "config/evaluation/model_cards_compute.yaml"
+        helper: "src/restoration_eval/model_cards_compute.py"
+        tests: "tests/test_model_cards_compute.py"
+        upstream_manifest_range: "09-29"
+      output_contract:
+        model_cards: "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv"
+        compute_scalability: "outputs/30_model_cards_compute_and_scalability/metrics/compute_scalability.csv"
+        model_card_reports: "outputs/30_model_cards_compute_and_scalability/reports/model_cards"
+        figures: ["quality_vs_compute.png", "scaling_projection.png"]
+        model_card_report_format: "portable_text_native_markdown"
+        external_image_dependencies: 0
+      expected_counts:
+        model_cards: 4
+        observed_compute_rows: 27
+        projection_rows: 8
+        compute_rows: 35
+        quality_anchors_per_population: 11
+        physical_canonical_files: 11
+      observed_population:
+        model_cards: 4
+        telea_candidates: 410
+        lama_candidates: 410
+        stable_diffusion_candidates: 1330
+        sdxl_candidates: 10
+        observed_compute_rows: 27
+        projection_rows: 8
+        applicable_projection_rows: 7
+        compute_rows: 35
+        quality_anchors: 11
+        quality_populations: 2
+        standalone_markdown_cards: 4
+        report_sections_per_card: 13
+        canonical_figures: 2
+        validation_checks: 165
+        roadmap_requirements: 13
+        artifact_records: 6
+        physical_output_files: 11
+      primary_artifacts:
+        - path: "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv"
+          rows: 4
+          schema_version: "model_cards.v1"
+        - path: "outputs/30_model_cards_compute_and_scalability/metrics/compute_scalability.csv"
+          rows: 35
+          schema_version: "compute_scalability.v1"
+        - path: "outputs/30_model_cards_compute_and_scalability/reports/model_cards"
+          files: 4
+        - path: "outputs/30_model_cards_compute_and_scalability/figures/quality_vs_compute.png"
+        - path: "outputs/30_model_cards_compute_and_scalability/figures/scaling_projection.png"
+        - path: "outputs/30_model_cards_compute_and_scalability/validation/checks.csv"
+          rows: 165
+      supported_scope:
+        - "four_complete_machine_readable_and_portable_markdown_method_cards"
+        - "observed_runtime_throughput_failure_retry_memory_storage_and_geometry_evidence"
+        - "transparent_300_painting_runtime_and_storage_projection_sensitivity"
+        - "separate_core_three_model_and_bounded_sdxl_quality_compute_views"
+        - "eleven_descriptive_quality_anchors_without_a_combined_score"
+      downstream_contract:
+        - "use_notebook_30_cards_as_the_canonical_method_disclosure_source"
+        - "use_observed_compute_rows_only_for_executed_runtime_and_resource_claims"
+        - "label_all_300_painting_values_as_linear_projections"
+        - "preserve_the_complete_three_model_and_bounded_sdxl_population_split"
+        - "keep_quality_anchors_separate_and_runtime_outside_the_quality_vote"
+        - "use_notebook_31_for_image_heavy_per_model_reports"
+      scope_rules:
+        - "telea_lama_and_stable_diffusion_use_complete_controlled_50_scope"
+        - "sdxl_is_ten_case_five_painting_partial_evaluation"
+        - "quality_anchor_wins_remain_descriptive_not_a_combined_score"
+        - "observed_compute_and_projected_compute_are_separate_record_types"
+        - "sdxl_current_design_projection_is_not_applicable"
+        - "notebook_31_owns_image_heavy_model_reports"
+      prohibited_claims: ["projected_300_painting_cost_is_executed_result", "full_sdxl_evaluation", "runtime_is_universal_benchmark", "projection_sensitivity_is_confidence_interval", "anchor_wins_are_universal_quality_score", "model_card_is_conservation_approval"]
+
+    - notebook_id: "31"
+      stem: "31_model_report_generation"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      run_id: "run_86faee4c15ee49cbbc5b85a649cdc1b4"
+      output_root: "outputs/31_model_report_generation"
+      manifest_path: "outputs/31_model_report_generation/manifests/run_manifest.json"
+      preparation_contract:
+        config_path: "config/evaluation/model_report_generation.yaml"
+        helper_path: "src/restoration_eval/model_report_generation.py"
+        test_path: "tests/test_model_report_generation.py"
+        approved_mock_structure_locked: true
+        creates_new_scientific_evidence: false
+        upstream_manifest_range: "09-30"
+        upstream_manifest_count: 22
+        model_count: 4
+        report_count: 4
+        report_index_rows: 4
+        artifact_records: 6
+        physical_output_files: 8
+        required_sections_per_report: 15
+        mock_traceability_rows: 39
+      completion_contract:
+        run_status: "completed"
+        validation_status: "passed"
+        creates_new_scientific_evidence: false
+        reports: 4
+        report_index_rows: 4
+        sections_per_report: 15
+        embedded_images: 63
+        embedded_tiles: 298
+        opencv_telea_images: 16
+        opencv_telea_tiles: 76
+        lama_images: 16
+        lama_tiles: 76
+        stable_diffusion_images: 19
+        stable_diffusion_tiles: 90
+        sdxl_images: 12
+        sdxl_tiles: 56
+        validation_checks: 324
+        blocking_failures: 0
+        warning_failures: 0
+        roadmap_requirements: 13
+        mock_traceability_rows: 39
+        artifact_records: 6
+        physical_output_files: 8
+        external_image_dependencies: 0
+      required_evidence:
+        - "n09_n12_candidates_runtime_and_scope"
+        - "n13_n20_reference_local_uncertainty_and_semantic_evidence"
+        - "n21_n28_comparison_robustness_statistics_failures_and_ablation"
+        - "n29_complete_explanation_catalog_and_selected_retrieval_evidence"
+        - "n30_model_cards_compute_and_scalability"
+      primary_outputs:
+        - path: "outputs/31_model_report_generation/reports/opencv_telea.html"
+          files: 1
+          schema_version: "self_contained_model_report.v1"
+        - path: "outputs/31_model_report_generation/reports/lama.html"
+          files: 1
+          schema_version: "self_contained_model_report.v1"
+        - path: "outputs/31_model_report_generation/reports/stable_diffusion_inpainting.html"
+          files: 1
+          schema_version: "self_contained_model_report.v1"
+        - path: "outputs/31_model_report_generation/reports/sdxl_inpainting.html"
+          files: 1
+          schema_version: "self_contained_model_report.v1"
+        - path: "outputs/31_model_report_generation/data/report_index.csv"
+          rows: 4
+          schema_version: "model_report_index.v1"
+        - path: "outputs/31_model_report_generation/validation/checks.csv"
+          rows: 324
+          schema_version: "validation_checks.v1"
+      supported_scope:
+        - "four_parameterized_self_contained_model_reports"
+        - "complete_three_model_and_bounded_sdxl_scope_preserved"
+        - "model_specific_quality_local_semantic_failure_explanation_and_compute_evidence"
+        - "stable_diffusion_canonical_and_damage_size_seed_variability"
+        - "stable_diffusion_scratch_prompt_ablation"
+        - "deterministic_representative_success_failure_selection"
+        - "approved_mock_fidelity_and_embedded_visual_density"
+      applicability_rules:
+        - "telea_and_lama_repeated_seed_uncertainty_is_not_applicable_deterministic_method"
+        - "stable_diffusion_uncertainty_covers_canonical_and_damage_size_populations"
+        - "sdxl_uncertainty_is_not_applicable_insufficient_seed_coverage"
+        - "sdxl_is_ten_case_five_painting_partial_evaluation"
+        - "damage_size_mask_robustness_and_synthetic_extensions_use_painting_as_independent_unit"
+        - "report_examples_are_illustrative_not_independent_evidence"
+      downstream_contract:
+        - "consume_report_index_for_report_discovery_and_provenance"
+        - "use_upstream_canonical_tables_for_complete_machine_readable_evidence"
+        - "do_not_treat_embedded_examples_as_the_complete_evidence_population"
+        - "preserve_model_specific_applicability_and_partial_coverage_labels"
+      prohibited_claims:
+        - "new_scientific_evidence_created_by_report_layer"
+        - "deterministic_method_seed_uncertainty"
+        - "sdxl_full_evaluation_or_uncertainty"
+        - "style_effect_inference"
+        - "calibrated_confidence"
+        - "historical_authenticity"
+        - "conservation_approval"
+        - "universal_model_superiority"
+
+    - notebook_id: "32"
+      stem: "32_case_and_painting_report_generation"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      run_id: "run_7a508c540ae74af1ad2bd3c59928e94e"
+      output_root: "outputs/32_case_and_painting_report_generation"
+      manifest_path: "outputs/32_case_and_painting_report_generation/manifests/run_manifest.json"
+      preparation_contract:
+        config_path: "config/evaluation/case_and_painting_reports.yaml"
+        helper_path: "src/restoration_eval/case_painting_reports.py"
+        test_path: "tests/test_case_painting_reports.py"
+        approved_mock_structure_locked: true
+        creates_new_scientific_evidence: false
+        upstream_manifest_count: 24
+        approved_candidate_count: 1785
+        evaluated_case_count: 410
+        uncertainty_case_count: 115
+        uncertainty_group_count: 165
+        painting_count: 50
+        selected_case_count: 30
+        case_report_count: 30
+        painting_report_count: 50
+        collection_index_count: 1
+        report_count: 81
+        selected_case_grid_count: 30
+        artifact_records: 8
+        physical_output_files: 117
+        mock_traceability_rows: 67
+      completion_contract:
+        run_status: "completed"
+        validation_status: "passed"
+        creates_new_scientific_evidence: false
+        paintings: 50
+        evaluated_cases: 410
+        approved_candidates: 1785
+        selected_cases: 30
+        case_reports: 30
+        painting_reports: 50
+        collection_indexes: 1
+        reports: 81
+        selected_case_grids: 30
+        embedded_images: 632
+        embedded_tiles: 2146
+        validation_checks: 1806
+        blocking_failures: 0
+        warning_failures: 0
+        roadmap_requirements: 12
+        mock_traceability_rows: 67
+        artifact_records: 8
+        physical_output_files: 117
+        external_image_dependencies: 0
+      required_evidence:
+        - "n01_artwork_identity_and_metadata"
+        - "n09_n12_restoration_candidates_runtime_and_model_metadata"
+        - "n13_n20_reference_local_uncertainty_spatial_and_semantic_evidence"
+        - "n21_n28_comparison_extensions_statistics_failures_flags_and_ablation"
+        - "n29_approved_candidate_explanation_catalog_and_retrieval_evidence"
+        - "n30_model_cards_compute_and_scalability"
+        - "n31_model_report_discovery_and_provenance"
+      primary_outputs:
+        - path: "outputs/32_case_and_painting_report_generation/data/selected_cases.csv"
+          rows: 30
+          schema_version: "selected_report_cases.v1"
+        - path: "outputs/32_case_and_painting_report_generation/data/case_report_index.csv"
+          rows: 30
+          schema_version: "case_report_index.v1"
+        - path: "outputs/32_case_and_painting_report_generation/data/painting_report_index.csv"
+          rows: 50
+          schema_version: "painting_report_index.v1"
+        - path: "outputs/32_case_and_painting_report_generation/reports/cases"
+          files: 30
+          schema_version: "case_report_collection.v1"
+        - path: "outputs/32_case_and_painting_report_generation/reports/paintings"
+          files: 50
+          schema_version: "painting_report_collection.v1"
+        - path: "outputs/32_case_and_painting_report_generation/reports/index.html"
+          files: 1
+          schema_version: "report_collection_index.v1"
+        - path: "outputs/32_case_and_painting_report_generation/figures/selected_case_grids"
+          files: 30
+          schema_version: "selected_case_grid_collection.v1"
+        - path: "outputs/32_case_and_painting_report_generation/validation/checks.csv"
+          rows: 1806
+          schema_version: "validation_checks.v1"
+      supported_scope:
+        - "thirty_deterministically_selected_deep_case_reports"
+        - "fifty_painting_reports_covering_all_410_evaluated_cases"
+        - "one_thousand_seven_hundred_eighty_five_approved_candidates"
+        - "all_approved_candidates_for_each_selected_case"
+        - "case_specific_classical_perceptual_feature_local_semantic_spatial_and_flag_evidence"
+        - "diffusion_uncertainty_and_prompt_sensitivity_only_where_applicable"
+        - "self_contained_case_and_painting_html_with_embedded_visuals"
+        - "report_collection_index_for_package_navigation"
+      applicability_rules:
+        - "detailed_case_reports_are_selected_illustrations_not_complete_case_population"
+        - "all_410_cases_are_retained_in_the_fifty_painting_report_tables"
+        - "telea_and_lama_uncertainty_is_not_applicable_deterministic_method"
+        - "stable_diffusion_uncertainty_covers_canonical_and_damage_size_populations"
+        - "sdxl_uncertainty_is_not_applicable_insufficient_seed_coverage"
+        - "sdxl_remains_ten_case_five_painting_partial_evaluation"
+        - "only_eighteen_paintings_have_documented_style_or_period"
+        - "five_extension_paintings_support_descriptive_within_painting_evidence"
+        - "computational_review_actions_are_not_conservation_recommendations"
+      excluded_evidence:
+        completed_candidate_count: 480
+        source: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+        prompt_variants: ["p01_category", "p02_artist", "p03_artist_category", "p04_full_context"]
+        reason: "no_complete_notebook_27_and_29_failure_flag_and_explanation_contract"
+      downstream_contract:
+        - "consume_case_report_index_for_selected_case_report_discovery"
+        - "consume_painting_report_index_for_complete_painting_report_discovery"
+        - "use_upstream_canonical_tables_for_complete_machine_readable_scientific_evidence"
+        - "do_not_treat_selected_case_reports_as_the_complete_case_population"
+        - "preserve_candidate_case_painting_nesting_and_model_applicability"
+      prohibited_claims:
+        - "new_scientific_evidence_created_by_report_layer"
+        - "all_completed_prompt_context_candidates_have_complete_flag_coverage"
+        - "selected_case_reports_are_population_representative_sample"
+        - "candidate_rows_are_independent_paintings"
+        - "deterministic_method_seed_uncertainty"
+        - "sdxl_full_evaluation_or_uncertainty"
+        - "style_effect_inference"
+        - "computational_flag_is_expert_ground_truth"
+        - "historical_authenticity"
+        - "conservation_approval"
+        - "universal_model_superiority"
+
+    - notebook_id: "33"
+      stem: "33_final_evaluation_report"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      run_id: "run_ffab0ce2624e43608c3c21764b7f6f1b"
+      output_root: "outputs/33_final_evaluation_report"
+      manifest_path: "outputs/33_final_evaluation_report/manifests/run_manifest.json"
+      preparation_contract:
+        config_path: "config/evaluation/final_evaluation_report.yaml"
+        helper_path: "src/restoration_eval/final_evaluation_report.py"
+        test_path: "tests/test_final_evaluation_report.py"
+        approved_mock_structure_locked: true
+        creates_new_scientific_evidence: false
+        upstream_manifest_count: 32
+        input_table_count: 33
+        painting_count: 50
+        unified_case_count: 525
+        eligible_restoration_case_count: 410
+        approved_report_candidate_count: 1785
+        primary_core_candidate_count: 1230
+        quality_anchor_count: 11
+        canonical_uncertainty_group_count: 130
+        damage_size_uncertainty_group_count: 35
+        ablation_scenario_count: 23
+        table_definition_count: 15
+        thesis_table_rows: 293
+        latex_table_rows: 15
+        evidence_catalog_rows: 106
+        evidence_claim_count: 48
+        limitation_record_count: 18
+        report_section_count: 19
+        thesis_figure_count: 18
+        publication_figure_count: 6
+        persisted_figure_count: 24
+        selected_case_grid_count: 12
+        minimum_embedded_image_count: 64
+        minimum_embedded_tile_count: 260
+        mock_traceability_rows: 125
+        artifact_records: 8
+        physical_output_files: 32
+      completion_contract:
+        run_status: "completed"
+        validation_status: "passed"
+        creates_new_scientific_evidence: false
+        paintings: 50
+        unified_cases: 525
+        eligible_restoration_cases: 410
+        approved_report_candidates: 1785
+        primary_core_candidates: 1230
+        canonical_uncertainty_groups: 130
+        damage_size_uncertainty_groups: 35
+        total_supported_uncertainty_groups: 165
+        thesis_table_rows: 293
+        thesis_tables: 15
+        latex_tables: 15
+        evidence_catalog_rows: 106
+        report_sections: 19
+        evidence_claims: 48
+        limitations: 18
+        thesis_figures: 18
+        publication_figures: 6
+        persisted_figures: 24
+        selected_case_grids: 12
+        embedded_images: 68
+        embedded_tiles: 281
+        external_image_dependencies: 0
+        validation_checks: 535
+        blocking_failures: 0
+        warning_failures: 0
+        roadmap_requirements: 21
+        mock_traceability_rows: 125
+        artifact_records: 8
+        physical_output_files: 32
+      required_evidence:
+        - "n01_n08_frozen_dataset_damage_and_region_methodology"
+        - "n21_multi_model_comparison_and_metric_disagreement"
+        - "n22_n25_damage_size_mask_robustness_and_synthetic_extensions"
+        - "n26_grouped_statistics_correlations_and_ranking_stability"
+        - "n27_failure_taxonomy_flags_and_review_recommendations"
+        - "n28_metric_region_threshold_and_flag_policy_ablation"
+        - "n29_complete_explanation_catalog_and_retrieval_evidence"
+        - "n30_model_cards_observed_compute_and_transparent_projections"
+        - "n31_model_report_discovery_and_provenance"
+        - "n32_selected_case_and_complete_painting_report_discovery"
+      primary_outputs:
+        - path: "outputs/33_final_evaluation_report/data/thesis_tables.csv"
+          rows: 293
+          schema_version: "thesis_tables.v1"
+        - path: "outputs/33_final_evaluation_report/data/latex_tables.csv"
+          rows: 15
+          schema_version: "latex_tables.v1"
+        - path: "outputs/33_final_evaluation_report/data/report_evidence_catalog.csv"
+          rows: 106
+          schema_version: "final_report_evidence_catalog.v1"
+        - path: "outputs/33_final_evaluation_report/figures/thesis"
+          files: 18
+          schema_version: "final_evaluation_thesis_figures.v1"
+        - path: "outputs/33_final_evaluation_report/figures/publication"
+          files: 6
+          schema_version: "final_evaluation_publication_figures.v1"
+        - path: "outputs/33_final_evaluation_report/reports/final_evaluation.html"
+          files: 1
+          schema_version: "final_evaluation_report.v1"
+        - path: "outputs/33_final_evaluation_report/reports/limitations_and_deviations.md"
+          files: 1
+          schema_version: "final_evaluation_limitations.v1"
+        - path: "outputs/33_final_evaluation_report/validation/checks.csv"
+          rows: 535
+          schema_version: "validation_checks.v1"
+      supported_scope:
+        - "proposal_research_question_oriented_final_synthesis"
+        - "controlled_50_dataset_and_410_eligible_case_evidence"
+        - "complete_three_model_comparison_and_bounded_sdxl_evidence"
+        - "separate_classical_perceptual_feature_texture_colour_seam_semantic_and_uncertainty_evidence"
+        - "damage_size_mask_robustness_and_synthetic_degradation_extensions"
+        - "metric_disagreement_grouped_statistics_and_ranking_stability"
+        - "failure_taxonomy_independent_flags_and_review_recommendations"
+        - "evaluation_policy_ablation_and_explainability"
+        - "observed_compute_and_transparent_linear_scaling_projections"
+        - "self_contained_final_html_with_auditable_visual_selection"
+      applicability_rules:
+        - "candidate_case_and_painting_observations_remain_nested"
+        - "painting_is_the_independent_unit_for_grouped_inference"
+        - "five_painting_extensions_do_not_estimate_independent_category_or_style_effects"
+        - "telea_and_lama_repeated_seed_uncertainty_is_not_applicable_deterministic_method"
+        - "stable_diffusion_uncertainty_covers_canonical_and_damage_size_populations_only"
+        - "sdxl_is_ten_case_five_painting_partial_evaluation"
+        - "runtime_is_operational_evidence_outside_quality_ranking"
+        - "report_examples_are_illustrative_not_independent_evidence"
+        - "report_layer_performs_presentation_only_transformations"
+      prohibited_claims:
+        - "new_scientific_evidence_created_by_final_report"
+        - "expanded_dataset_executed"
+        - "independent_style_effect"
+        - "human_or_expert_validation_completed"
+        - "computational_flag_is_expert_ground_truth"
+        - "uncertainty_is_calibrated_confidence"
+        - "sdxl_full_evaluation_or_uncertainty"
+        - "projected_scaling_is_executed_result_or_confidence_interval"
+        - "historical_correctness_or_authenticity"
+        - "conservation_approval_or_physical_treatment_recommendation"
+        - "universal_model_superiority"
+        - "combined_universal_quality_or_trust_score"
+
+    - notebook_id: "34"
+      stem: "34_final_streamlit_dashboard_assets"
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      run_id: "run_a8d0c877315947ff84d76d93e29c547c"
+      output_root: "outputs/34_final_streamlit_dashboard_assets"
+      manifest_path: "outputs/34_final_streamlit_dashboard_assets/manifests/run_manifest.json"
+      creates_new_scientific_evidence: false
+      preparation_contract:
+        config_path: "config/evaluation/dashboard_assets.yaml"
+        helper_path: "src/restoration_eval/dashboard_assets.py"
+        upstream_manifest_count: 33
+        input_table_count: 41
+        principal_page_count: 8
+        principal_page_limit: 10
+        dashboard_table_count: 9
+        dashboard_index_count: 5
+        painting_index_rows: 50
+        candidate_index_rows: 1785
+        model_report_count: 4
+        case_report_count: 30
+        painting_report_count: 50
+        canonical_uncertainty_groups: 130
+        damage_size_uncertainty_groups: 35
+      completion_contract:
+        run_status: "completed"
+        validation_status: "passed"
+        creates_new_scientific_evidence: false
+        principal_pages: 8
+        dashboard_tables: 9
+        dashboard_indexes: 5
+        dashboard_data_assets: 15
+        headline_findings: 8
+        study_design_rows: 35
+        metric_framework_rows: 178
+        performance_summary_rows: 1241
+        sensitivity_and_statistical_rows: 18951
+        grouped_statistical_rows: 4174
+        correlation_measure_rows: 1008
+        ranking_stability_measure_rows: 1800
+        uncertainty_summary_rows: 1723
+        trustworthiness_summary_rows: 284
+        compute_summary_rows: 35
+        research_question_rows: 4
+        candidate_index_rows: 1785
+        painting_index_rows: 50
+        visual_asset_index_rows: 23964
+        report_index_rows: 104
+        filter_option_groups: 16
+        validation_checks: 410
+        blocking_failures: 0
+        warning_failures: 0
+        roadmap_requirements: 25
+        dashboard_asset_records: 15
+        artifact_records: 17
+        physical_output_files: 19
+      required_evidence:
+        - "n01_n08_dataset_damage_experiment_and_region_contracts"
+        - "n16_n20_spatial_local_uncertainty_and_semantic_map_manifests"
+        - "n21_model_comparison_disagreement_and_representatives"
+        - "n22_n25_damage_size_mask_robustness_and_degradation_evidence"
+        - "n26_grouped_statistics_correlations_and_ranking_stability"
+        - "n27_failure_taxonomy_flags_and_review_recommendations"
+        - "n28_metric_region_and_flag_policy_ablation"
+        - "n29_complete_candidate_explanation_and_retrieval_catalogs"
+        - "n30_model_cards_compute_and_scalability"
+        - "n31_n33_model_case_painting_and_final_reports"
+      primary_outputs:
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_summary.json"
+          files: 1
+          schema_version: "dashboard_package.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables"
+          files: 9
+          schema_version: "dashboard_package.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes"
+          files: 5
+          schema_version: "dashboard_package.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_assets.csv"
+          rows: 15
+          schema_version: "dashboard_assets_manifest.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/validation/checks.csv"
+          rows: 410
+          schema_version: "validation_checks.v1"
+      supported_scope:
+        - "eight_page_manifest_driven_dashboard_package"
+        - "complete_1785_candidate_case_index_and_50_painting_index"
+        - "representative_defaults_with_complete_filterable_evidence_access"
+        - "separate_metric_region_model_robustness_uncertainty_xai_and_report_views"
+        - "bounded_sdxl_feasibility_labels"
+        - "presentation_only_aggregation_filtering_reshaping_and_formatting"
+        - "validated_repository_relative_image_map_figure_and_report_references"
+      applicability_rules:
+        - "dashboard_does_not_recompute_metrics_or_run_restoration_inference"
+        - "candidate_case_and_painting_observations_remain_nested"
+        - "painting_is_the_independent_unit_for_grouped_inference"
+        - "five_painting_extensions_do_not_estimate_independent_category_or_style_effects"
+        - "uncertainty_is_stable_diffusion_repeated_seed_variation_only"
+        - "sdxl_is_ten_case_five_painting_partial_evaluation"
+        - "retrieval_and_feature_affinity_are_supporting_context_not_proof"
+        - "representative_defaults_do_not_limit_complete_indexed_access"
+      prohibited_claims:
+        - "dashboard_is_restoration_or_experiment_tool"
+        - "dashboard_recomputes_scientific_metrics"
+        - "uncertainty_is_calibrated_confidence"
+        - "computational_flag_is_expert_ground_truth"
+        - "retrieval_is_ground_truth_or_historical_proof"
+        - "sdxl_full_evaluation_or_uncertainty"
+        - "independent_style_effect_from_five_painting_extensions"
+        - "historical_correctness_authenticity_or_conservation_approval"
+        - "universal_model_superiority_or_combined_trust_score"
+
+    - notebook_id: "35"
+      stem: "35_dashboard_and_deployment_validation"
+      status: "completed_validation_warning"
+      completion_gate_passed: true
+      run_id: "run_e04d0dfa163b4a15966c5420b01d74c7"
+      output_root: "outputs/35_dashboard_and_deployment_validation"
+      manifest_path: "outputs/35_dashboard_and_deployment_validation/manifests/run_manifest.json"
+      creates_new_scientific_evidence: false
+      completion_contract:
+        run_status: "completed"
+        validation_status: "warning"
+        deployment_readiness_status: "conditionally_ready_for_local_demonstration"
+        local_application_ready: true
+        external_deployment_recorded: false
+        manual_application_review: "approved"
+        approved_application_checksum: "61368870fba5ef39a9d38b8e888b210e7c1483d2eddb7ff23f490e17b525c783"
+        principal_pages: 8
+        paintings: 50
+        restoration_cases: 410
+        approved_candidates: 1785
+        visual_records: 23964
+        reports: 104
+        sdxl_candidates: 10
+        canonical_uncertainty_groups: 130
+        damage_size_uncertainty_groups: 35
+        validation_checks: 582
+        passed_checks: 574
+        blocking_failures: 0
+        warning_failures: 7
+        informational_nonpasses: 1
+        roadmap_requirements: 14
+        artifact_records: 2
+        physical_output_files: 4
+      required_evidence:
+        - "n34_dashboard_assets"
+        - "streamlit_app.py"
+        - "config/evaluation/dashboard_validation.yaml"
+        - "src/restoration_eval/dashboard_application.py"
+      required_artifacts:
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_summary.json"
+          schema_version: "dashboard_package.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables"
+          files: 9
+          schema_version: "dashboard_package.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes"
+          files: 5
+          schema_version: "dashboard_package.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_assets.csv"
+          rows: 15
+          schema_version: "dashboard_assets_manifest.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/validation/checks.csv"
+          rows: 410
+          schema_version: "validation_checks.v1"
+      primary_outputs:
+        - path: "outputs/35_dashboard_and_deployment_validation/validation/dashboard_checks.csv"
+          rows: 582
+          schema_version: "validation_checks.v1"
+        - path: "outputs/35_dashboard_and_deployment_validation/reports/deployment_readiness.md"
+          files: 1
+          schema_version: "deployment_readiness_report.v1"
+        - path: "outputs/35_dashboard_and_deployment_validation/manifests/artifacts.csv"
+          rows: 2
+          schema_version: "artifact_manifest.v1"
+        - path: "outputs/35_dashboard_and_deployment_validation/manifests/run_manifest.json"
+          files: 1
+          schema_version: "run_manifest.v1"
+      expected_population:
+        paintings: 50
+        registered_cases: 525
+        restoration_cases: 410
+        approved_candidates: 1785
+        primary_three_model_candidates: 1230
+        stable_diffusion_candidates: 955
+        sdxl_candidates: 10
+        canonical_uncertainty_groups: 130
+        damage_size_uncertainty_groups: 35
+        reports: 104
+        visual_records: 23964
+      page_ids:
+        - "overview"
+        - "study_design"
+        - "metric_framework"
+        - "model_performance"
+        - "robustness_uncertainty"
+        - "trustworthiness_xai"
+        - "case_explorer"
+        - "reports_reproducibility"
+      supported_scope:
+        - "read_only_eight_page_dashboard"
+        - "fixed_notebook_34_package_consumer"
+        - "complete_candidate_painting_visual_and_report_access"
+        - "representative_defaults_with_complete_filtering"
+        - "repository_safe_indexed_visual_and_report_resolution"
+        - "self_contained_report_downloads"
+        - "bounded_sdxl_ten_case_presentation"
+        - "static_import_and_application_smoke_validation"
+        - "deployment_state_reporting_without_false_url_claim"
+        - "approved_final_eight_page_interface"
+        - "interactive_metric_region_visual_selector"
+        - "condition_and_model_filtered_restoration_comparison"
+        - "focused_robustness_and_uncertainty_visuals"
+        - "proposal_research_question_traceability"
+      applicability_rules:
+        - "dashboard_aggregates_filters_reshapes_and_formats_validated_assets_only"
+        - "dashboard_does_not_run_restoration_or_metric_workflows"
+        - "uncertainty_is_empirical_seed_variability_not_confidence"
+        - "computational_flags_are_review_guidance_not_expert_ground_truth"
+        - "retrieval_is_context_not_restoration_correctness"
+        - "sdxl_is_bounded_partial_evaluation"
+        - "representative_defaults_do_not_limit_complete_index_access"
+        - "external_ui_reference_images_are_not_repository_artifacts"
+      prohibited_claims:
+        - "dashboard_is_restoration_or_experiment_tool"
+        - "dashboard_recomputes_scientific_metrics"
+        - "dashboard_provides_conservation_approval"
+        - "dashboard_establishes_historical_correctness_or_authenticity"
+        - "uncertainty_is_calibrated_confidence"
+        - "computational_flag_is_expert_ground_truth"
+        - "retrieval_is_ground_truth"
+        - "sdxl_is_a_fourth_full_benchmark"
+        - "universal_combined_quality_or_trust_score"
+
+    - notebook_id: "36"
+      stem: "36_supervisor_publication_reproducibility_package"
+      status: "planned_supported"
+      evidence_kind: "delivery_packaging_and_traceability"
+      creates_new_scientific_evidence: false
+      required_evidence:
+        - "35_completed_upstream_run_manifests"
+        - "n30_model_cards_and_compute_scalability"
+        - "n31_four_self_contained_model_reports"
+        - "n32_case_and_painting_report_indexes"
+        - "n33_final_report_24_figures_and_compact_tables"
+        - "n34_dashboard_indexes_and_evidence_scope"
+        - "n35_deployment_readiness"
+        - "current_inventory_and_project_paths_registry"
+      expected_population:
+        upstream_notebooks: 35
+        paintings: 50
+        registered_cases: 525
+        restoration_cases: 410
+        approved_candidates: 1785
+        quality_anchors: 11
+        uncertainty_groups: 165
+        visual_records: 23964
+        indexed_reports: 104
+        sdxl_cases: 10
+        thesis_figures: 18
+        publication_figures: 6
+        model_reports: 4
+        model_cards: 4
+        case_report_records: 30
+        painting_report_records: 50
+      independent_unit: "none_packaging_only"
+      supported_claims:
+        - "validated_results_can_be_traced_to_fixed_artifacts_configs_and_run_manifests"
+        - "the_three_proposal_research_questions_have_evidence_bounded_answers"
+        - "the_curated_package_is_portable_and_checksum_verified"
+        - "omitted_large_collections_remain_indexed_at_canonical_repository_paths"
+      prohibited_claims:
+        - "notebook_36_creates_or_recomputes_scientific_evidence"
+        - "controlled_synthetic_damage_establishes_real_conservation_generality"
+        - "sdxl_is_a_fourth_fully_evaluated_model"
+        - "repeated_seed_variability_is_calibrated_confidence"
+        - "computational_flags_or_retrieval_are_expert_ground_truth"
+        - "visual_plausibility_establishes_historical_correctness_or_conservation_approval"
+        - "a_universal_combined_quality_uncertainty_or_trustworthiness_score_exists"
+
+  removed_unsupported_requirements:
+    - requirement_id: "focused_experiment_inferential_category_style_interactions"
+      reason: "one_painting_per_category_in_notebooks_05_06_07"
+    - requirement_id: "human_visual_plausibility_comparison"
+      reason: "no_human_or_expert_rating_dataset"
+    - requirement_id: "automatic_verified_face_anatomy_object_failure_detection"
+      reason: "no_validated_painting_domain_detector_contract"
+    - requirement_id: "uncertainty_calibration_against_independent_ground_truth"
+      reason: "available_flags_are_rule_derived_computational_evidence"
+    - requirement_id: "expanded_main_executed_results"
+      reason: "no_expanded_dataset_configuration_or_artifacts"
+
+  consumer_preflight_gate:
+    require_governing_files: true
+    require_exact_artifact_paths: true
+    require_population_counts: true
+    require_independent_unit: true
+    require_supported_and_prohibited_claims: true
+    block_unmapped_required_responsibility: true
+    remove_unsupported_promises_before_batch_1: true
+    prohibit_directory_scanning_as_input_selection: true
+
+  repository_ownership_debt:
+    canonical_global_output_exception: "outputs/inventory"
+    noncanonical_tracked_global_roots:
+      - path: "outputs/figures"
+        files_at_audit: 430
+      - path: "outputs/metrics"
+        files_at_audit: 16
+      - path: "outputs/reports"
+        files_at_audit: 19
+      - path: "outputs/manifests"
+        files_at_audit: 1
+      - path: "outputs/validation"
+        files_at_audit: 3
+    cleanup_policy: "separate_exact_path_migration_or_deletion_audit_required"

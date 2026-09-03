@@ -2202,8 +2202,70 @@ remain accessible.
 
 **Notebook:** `36_supervisor_publication_reproducibility_package.ipynb`\
 **Origin:** Consolidates Existing Previous Versions of Notebooks 30 and 35, Pre-refactor  
+**Refactor status:** Finished\
+**Validation status:** Finished with inherited non-blocking dependency warning\
+**Completion gate passed:** Yes\
 **Output root:** `outputs/36_supervisor_publication_reproducibility_package/`\
 **Depends on:** Notebooks 01–35
+
+### Purpose
+
+Assemble the final supervisor-facing, publication-facing, and reproducibility
+delivery from already validated evidence. Notebook 36 is a packaging and
+traceability stage: it does not rerun restoration models, recompute scientific
+metrics, change upstream conclusions, or invent unavailable evidence.
+
+### Approved evidence population
+
+- 35 completed upstream notebook manifests;
+- 50 paintings, 525 registered cases, and 410 restoration cases;
+- 1,785 approved comparison candidates;
+- 11 separate quality anchors;
+- 165 repeated-seed uncertainty groups, comprising 130 canonical groups and 35
+  damage-size groups;
+- 23,964 indexed visual records and 104 indexed reports;
+- ten bounded SDXL feasibility cases;
+- 18 thesis figures and six publication figures;
+- four self-contained model reports and one self-contained final report;
+- 30 case-report records and 50 painting-report records.
+
+### Package boundary
+
+The portable package bundles the material required for efficient review:
+
+- the final self-contained HTML report and four self-contained model reports;
+- all 24 Notebook 33 thesis/publication figures;
+- four model cards and eight compact tables or report indexes;
+- all 35 upstream run manifests and all evaluation-configuration YAML snapshots;
+- the two declared requirements files;
+- the Notebook 35 deployment-readiness report;
+- the Streamlit entry point and its read-only application helper; and
+- Notebook 36 reports, indexes, manifest, and provenance snapshot.
+
+The package indexes but does not duplicate the 30 case reports, 50 painting
+reports, 30 selected-case grids, the 23,964-record dashboard visual collection,
+restoration candidates, raw/map collections, model weights, or caches. Their
+canonical repository-relative paths and checksums remain auditable. This keeps
+the package useful when copied without duplicating the much larger report and
+visual collections.
+
+### Supervisor summary and research-question synthesis
+
+The concise supervisor summary must contain:
+
+- a decision snapshot and exact evaluated scope;
+- the three proposal research questions reproduced verbatim;
+- evidence-bounded answers to each research question;
+- direct model conclusions with the supporting counts or metrics emphasized;
+- robustness, uncertainty, trustworthiness, and XAI conclusions;
+- reproducibility and dashboard-delivery status;
+- explicit interpretation boundaries; and
+- a short list of decisions or feedback requested from the supervisor.
+
+Figures must use package-local links. Important values should be emphasized,
+and factual results should be followed by a plain statement of what they imply
+for restoration quality or model suitability. The summary is not a substitute
+for the full self-contained reports.
 
 ### Responsibilities
 
@@ -2233,6 +2295,26 @@ Produce the final delivery package containing:
 - complete artifact index;
 - final package manifest.
 
+Additionally:
+
+- audit every Notebook 01–35 manifest for completed status, completion gate,
+  unique notebook identity, and zero blocking failures;
+- reconcile the package copy plan against fixed paths rather than discovering
+  arbitrary files from output directories;
+- preserve source bytes and verify source-to-package checksums;
+- distinguish copied artifacts, generated Notebook 36 documents, and indexed
+  but intentionally omitted collections;
+- produce `open_questions.md` and `feedback_agenda.md` as meeting aids, not as
+  new scientific claims;
+- record Python, platform, hardware, package versions, Git state, dataset/config
+  checksums, seeds, model revisions, observed compute, and scaling projections;
+- validate package-relative links, self-contained HTML, path length, package
+  size, file counts, byte counts, checksums, duplicate destinations, temporary
+  files, and writes outside the notebook-owned root;
+- repeat controlled-scope, SDXL, uncertainty, computational-flag, and
+  conservation-approval limitations wherever a reader could otherwise
+  overgeneralize the evidence.
+
 Standalone HTML reports must follow the approved self-contained embedding policy:
 required narrative figures and representative images remain visible when the HTML
 is downloaded alone, while unrestricted full-resolution collections are not
@@ -2255,6 +2337,26 @@ manifests/run_manifest.json
 manifests/artifacts.csv
 validation/checks.csv
 ```
+
+Within `package/`, use the following stable groups:
+
+```text
+README.md
+reports/
+figures/thesis/
+figures/publication/
+tables/
+model_cards/
+manifests/notebook_runs/
+configuration/evaluation/
+environment/
+application/
+provenance/
+```
+
+The exact contract is versioned in
+`config/evaluation/supervisor_package.yaml`; reusable package assembly and
+integrity checks live in `src/restoration_eval/supervisor_package.py`.
 
 ### Final completion gate
 

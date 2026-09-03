@@ -1,0 +1,189 @@
+{
+  "schema_version": "supervisor_key_findings.v1",
+  "notebook_id": "36",
+  "notebook_stem": "36_supervisor_publication_reproducibility_package",
+  "generated_at_utc": "2026-09-03T21:13:24Z",
+  "creates_new_scientific_evidence": false,
+  "dataset_scope": "controlled_50",
+  "finding_count": 8,
+  "findings": [
+    {
+      "finding_key": "controlled_collection",
+      "finding_id": "finding_56068361a2fed88952587082",
+      "display_order": 1,
+      "title": "Controlled painting collection",
+      "value": 50.0,
+      "value_unit": "paintings",
+      "conclusion": "The evaluation covers a balanced 50-painting collection with ten paintings in each of five visual categories.",
+      "plain_implication": "The balanced collection supports controlled within-benchmark comparisons, but conclusions must remain limited to this collection.",
+      "evidence_strength": "validated_scope",
+      "scope": "controlled_50 dataset",
+      "denominator": "50",
+      "source_notebook_ids": [
+        "01"
+      ],
+      "source_paths": [
+        "outputs/01_dataset_verification/data/artworks.csv"
+      ],
+      "limitation": "The controlled collection does not establish real-world conservation generality."
+    },
+    {
+      "finding_key": "approved_candidates",
+      "finding_id": "finding_ff63dfd683e8020e1c767d2d",
+      "display_order": 2,
+      "title": "Approved restoration evidence",
+      "value": 1785.0,
+      "value_unit": "candidates",
+      "conclusion": "All 1,785 approved candidates remain available for filtering and case-level inspection.",
+      "plain_implication": "The complete candidate catalog remains available for inspection; the report does not rely only on its selected examples.",
+      "evidence_strength": "validated_complete_catalog",
+      "scope": "approved candidate population",
+      "denominator": "1785",
+      "source_notebook_ids": [
+        "29",
+        "34"
+      ],
+      "source_paths": [
+        "outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv"
+      ],
+      "limitation": "Candidate count is not an independent sample-size claim because repeated seeds and models share cases."
+    },
+    {
+      "finding_key": "lama_anchor_lead",
+      "finding_id": "finding_d57ce83c3ee8f0ab3b3ad70a",
+      "display_order": 3,
+      "title": "Strongest general benchmark result",
+      "value": 10.0,
+      "value_unit": "of 11 quality anchors",
+      "conclusion": "LaMa ranks first on 10 of 11 quality anchors. Within this controlled benchmark, it is the strongest general restoration baseline across error, colour, perceptual, feature, seam, texture, and structural-affinity evidence.",
+      "plain_implication": "LaMa is the best default baseline among the three fully evaluated methods when several forms of evidence are considered together.",
+      "evidence_strength": "validated_comparative",
+      "scope": "three fully evaluated models across 410 cases",
+      "denominator": "11",
+      "source_notebook_ids": [
+        "21",
+        "33"
+      ],
+      "source_paths": [
+        "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv",
+        "outputs/33_final_evaluation_report/data/thesis_tables.csv"
+      ],
+      "limitation": "Anchor wins are metric-specific benchmark results, not conservation approval or historical authenticity."
+    },
+    {
+      "finding_key": "metric_disagreement",
+      "finding_id": "finding_be0ba692aeac9c0494a5df23",
+      "display_order": 4,
+      "title": "One metric changes the winner",
+      "value": 1.0,
+      "value_unit": "of 11 quality anchors",
+      "conclusion": "OpenCV Telea narrowly leads crop SSIM, while LaMa leads the other ten anchors. SSIM alone would therefore give an incomplete account of restoration quality.",
+      "plain_implication": "A conclusion based only on SSIM would favour Telea and conceal LaMa's broader advantage. Metric choice materially changes the verdict.",
+      "evidence_strength": "validated_metric_disagreement",
+      "scope": "quality-anchor comparison",
+      "denominator": "11",
+      "source_notebook_ids": [
+        "21",
+        "33"
+      ],
+      "source_paths": [
+        "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv",
+        "outputs/33_final_evaluation_report/data/thesis_tables.csv"
+      ],
+      "limitation": "The result demonstrates metric disagreement; it does not make either model universally correct."
+    },
+    {
+      "finding_key": "uncertainty_coverage",
+      "finding_id": "finding_ff1f99bcdade39cf8ed81b9e",
+      "display_order": 5,
+      "title": "Repeated-run uncertainty coverage",
+      "value": 165.0,
+      "value_unit": "uncertainty groups",
+      "conclusion": "Repeated-seed evidence covers 130 canonical groups and 35 damage-size groups for Stable Diffusion.",
+      "plain_implication": "Stable Diffusion outputs that change more across seeds should receive closer visual inspection.",
+      "evidence_strength": "validated_supported_population",
+      "scope": "supported Stable Diffusion repeated-seed groups",
+      "denominator": "165",
+      "source_notebook_ids": [
+        "18",
+        "22"
+      ],
+      "source_paths": [
+        "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_calibration_inputs.csv",
+        "outputs/22_damage_size_diffusion_uncertainty_extension/metrics/damage_size_uncertainty.csv"
+      ],
+      "limitation": "Seed variability is an empirical uncertainty proxy, not calibrated confidence."
+    },
+    {
+      "finding_key": "sdxl_boundary",
+      "finding_id": "finding_4549a08b17e791b97d59ba89",
+      "display_order": 6,
+      "title": "SDXL remains bounded evidence",
+      "value": 10.0,
+      "value_unit": "candidates",
+      "conclusion": "SDXL contributes ten completed cases for qualitative and bounded comparison, not a fourth full benchmark.",
+      "plain_implication": "SDXL can be discussed as a feasibility result, but it cannot be ranked as a fully evaluated fourth model.",
+      "evidence_strength": "validated_partial_coverage",
+      "scope": "partial SDXL feasibility population",
+      "denominator": "410",
+      "source_notebook_ids": [
+        "12",
+        "30",
+        "33"
+      ],
+      "source_paths": [
+        "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv",
+        "outputs/33_final_evaluation_report/data/thesis_tables.csv"
+      ],
+      "limitation": "SDXL results must not be generalized to all 410 restoration-eligible cases."
+    },
+    {
+      "finding_key": "human_review",
+      "finding_id": "finding_3b9d3b11c0241b5a7624f94a",
+      "display_order": 7,
+      "title": "Human review remains central",
+      "value": 95.4,
+      "value_unit": "% of candidates",
+      "conclusion": "1,703 of 1,785 candidates trigger conservative review guidance. Automated restoration should support inspection, not replace expert judgement.",
+      "plain_implication": "The conservative flag rate makes automated restoration unsuitable for unsupervised acceptance.",
+      "evidence_strength": "validated_computational_flags",
+      "scope": "approved candidate population",
+      "denominator": "1785",
+      "source_notebook_ids": [
+        "27",
+        "29",
+        "33"
+      ],
+      "source_paths": [
+        "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv",
+        "outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv"
+      ],
+      "limitation": "Computational review flags are diagnostic rules, not expert annotations or conservation ground truth."
+    },
+    {
+      "finding_key": "no_combined_score",
+      "finding_id": "finding_0463745ce8b0a315e377b4a5",
+      "display_order": 8,
+      "title": "No universal restoration score",
+      "value": 0.0,
+      "value_unit": "approved combined scores",
+      "conclusion": "The evaluation keeps metric families, regions, uncertainty, and failure evidence separate so that important disagreements remain visible.",
+      "plain_implication": "Keeping evidence separate prevents a convenient single number from hiding metric and regional disagreement.",
+      "evidence_strength": "approved_methodological_boundary",
+      "scope": "complete evaluation framework",
+      "denominator": "0",
+      "source_notebook_ids": [
+        "08",
+        "21",
+        "28",
+        "33"
+      ],
+      "source_paths": [
+        "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv",
+        "outputs/28_metric_and_region_policy_ablation/metrics/ablation_results.csv",
+        "outputs/33_final_evaluation_report/data/thesis_tables.csv"
+      ],
+      "limitation": "The dashboard supports evidence review and does not produce conservation approval."
+    }
+  ]
+}

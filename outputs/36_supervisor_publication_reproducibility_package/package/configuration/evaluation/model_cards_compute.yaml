@@ -1,0 +1,443 @@
+config_schema_version: "model_cards_compute_config.v1"
+config_version: "1.0.0"
+
+model_cards_compute:
+  notebook_id: "30"
+  notebook_stem: "30_model_cards_compute_and_scalability"
+  dataset_id: "painting_restoration_eval"
+  dataset_version: "1.0.0"
+  dataset_scope: "controlled_50"
+  model_card_schema_version: "model_cards.v1"
+  compute_schema_version: "compute_scalability.v1"
+
+  inputs:
+    inventory_path: "outputs/inventory/project_file_inventory.csv"
+    inventory_run_path: "outputs/inventory/inventory_run.json"
+    project_paths_path: "outputs/inventory/project_paths.json"
+    proposal_path: "docs/proposal/Rahul_Thesis_Proposal.docx"
+    implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+    notebook_roadmap_path: "docs/final_notebook_roadmap.md"
+    evidence_dependency_audit_path: "docs/evidence_dependency_audit.md"
+    evidence_coverage_path: "config/evaluation/evidence_coverage.yaml"
+    model_audit_notes_path: "docs/model_audit_notes.md"
+    telea_config_path: "config/experiments/opencv_telea.yaml"
+    lama_config_path: "config/experiments/lama.yaml"
+    stable_diffusion_config_path: "config/experiments/stable_diffusion.yaml"
+    scratch_prompt_config_path: "config/experiments/stable_diffusion_scratch_prompt_ablation.yaml"
+    sdxl_config_path: "config/experiments/sdxl.yaml"
+    telea_candidates_path: "outputs/09_opencv_telea_restoration/data/restorations.csv"
+    telea_runtime_path: "outputs/09_opencv_telea_restoration/metrics/runtime_summary.csv"
+    lama_candidates_path: "outputs/10_lama_restoration/data/restorations.csv"
+    lama_runtime_path: "outputs/10_lama_restoration/metrics/runtime_summary.csv"
+    stable_diffusion_candidates_path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+    stable_diffusion_runtime_path: "outputs/11_stable_diffusion_restoration/metrics/runtime_summary.csv"
+    sdxl_candidates_path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
+    sdxl_runtime_path: "outputs/12_sdxl_feasibility_or_restoration/metrics/runtime_summary.csv"
+    model_comparison_path: "outputs/21_multi_model_comparison/metrics/model_comparison.csv"
+    metric_disagreement_path: "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv"
+    manifest_09_path: "outputs/09_opencv_telea_restoration/manifests/run_manifest.json"
+    manifest_10_path: "outputs/10_lama_restoration/manifests/run_manifest.json"
+    manifest_11_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+    manifest_12_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+    manifest_13_path: "outputs/13_classical_metrics/manifests/run_manifest.json"
+    manifest_14_path: "outputs/14_lpips_metrics/manifests/run_manifest.json"
+    manifest_15_path: "outputs/15_feature_similarity/manifests/run_manifest.json"
+    manifest_16_path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json"
+    manifest_17_path: "outputs/17_local_consistency_metrics/manifests/run_manifest.json"
+    manifest_18_path: "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json"
+    manifest_19_path: "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json"
+    manifest_20_path: "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json"
+    manifest_21_path: "outputs/21_multi_model_comparison/manifests/run_manifest.json"
+    manifest_22_path: "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json"
+    manifest_23_path: "outputs/23_damage_size_sensitivity_analysis/manifests/run_manifest.json"
+    manifest_24_path: "outputs/24_mask_robustness_analysis/manifests/run_manifest.json"
+    manifest_25_path: "outputs/25_synthetic_degradation_analysis/manifests/run_manifest.json"
+    manifest_26_path: "outputs/26_grouped_and_statistical_analysis/manifests/run_manifest.json"
+    manifest_27_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json"
+    manifest_28_path: "outputs/28_metric_and_region_policy_ablation/manifests/run_manifest.json"
+    manifest_29_path: "outputs/29_explainable_ai_and_case_retrieval/manifests/run_manifest.json"
+
+  output:
+    root: "outputs/30_model_cards_compute_and_scalability"
+    model_cards_path: "data/model_cards.csv"
+    compute_scalability_path: "metrics/compute_scalability.csv"
+    model_card_reports_dir: "reports/model_cards"
+    quality_vs_compute_figure_path: "figures/quality_vs_compute.png"
+    scaling_projection_figure_path: "figures/scaling_projection.png"
+    run_manifest_path: "manifests/run_manifest.json"
+    artifacts_path: "manifests/artifacts.csv"
+    validation_path: "validation/checks.csv"
+    smoke_dir: "work/smoke"
+
+  models:
+    - model_id: "opencv_telea"
+      display_name: "OpenCV Telea"
+      evaluation_status: "fully_evaluated"
+      model_family: "classical_fast_marching_inpainting"
+      methodological_role: "classical_deterministic_baseline"
+      original_purpose: "Local image inpainting from the boundary of a masked region."
+      implementation: "OpenCV cv2.INPAINT_TELEA"
+      implementation_version_field: "opencv_version"
+      model_identifier: "cv2.INPAINT_TELEA"
+      software_license: "Apache-2.0"
+      weight_license: "not_applicable_no_model_weights"
+      license_scope_note: "OpenCV software licence; the Telea method has no learned weights."
+      training_data_description: "Not applicable; this is a classical non-learning algorithm."
+      training_data_transparency: "not_applicable"
+      deterministic: true
+      stochastic: false
+      prompt_dependent: false
+      evaluated_painting_count: 50
+      evaluated_case_count: 410
+      evaluated_candidate_count: 410
+      model_inference_count: 360
+      zero_control_count: 50
+      output_root: "outputs/09_opencv_telea_restoration"
+      inference_width: 768
+      inference_height: 768
+      output_width: 768
+      output_height: 768
+      input_constraints: "Normalized 768 x 768 RGB uint8 painting input; identity zero controls bypass inference."
+      mask_constraints: "Single-channel binary missing-region mask using threshold 128; fixed Telea radius 3; no per-case tuning."
+      source_ids: ["opencv_inpaint_docs", "opencv_repository"]
+      intended_uses:
+        - "classical deterministic restoration baseline"
+        - "small local damage and thin-scratch comparison"
+        - "reproducible candidate generation for controlled evaluation"
+      excluded_uses:
+        - "historically verified reconstruction"
+        - "semantic reconstruction of large missing structures"
+        - "conservation approval"
+      domain_gap: "No painting-specific knowledge, semantic model, or brushwork model."
+      bias_notes: "No learned training-data bias; locality and interpolation assumptions remain algorithmic biases."
+      hardware_requirements: "CPU execution; no GPU required under the evaluated contract."
+      strengths:
+        - "fast and deterministic"
+        - "transparent classical baseline"
+        - "low compute burden"
+      weaknesses:
+        - "no semantic understanding"
+        - "limited large-mask reconstruction"
+        - "local interpolation may lose meaningful structure"
+    - model_id: "lama"
+      display_name: "LaMa"
+      evaluation_status: "fully_evaluated"
+      model_family: "learned_fourier_convolution_inpainting"
+      methodological_role: "learned_deterministic_inpainting_baseline"
+      original_purpose: "Resolution-robust large-mask image inpainting using Fourier convolutions."
+      implementation: "IOPaint CLI model=lama"
+      implementation_version_field: "iopaint_version"
+      model_identifier: "big-lama.pt"
+      software_license: "Apache-2.0_method_and_runtime_code"
+      weight_license: "not_separately_verified_in_project_sources"
+      license_scope_note: "The LaMa and IOPaint code are Apache-2.0; the downloaded Big-LaMa weight artifact is not assigned a separate project-verified licence claim."
+      training_data_description: "Official LaMa documentation describes Places365/Places-based training; the exact IOPaint-converted checkpoint-to-training-run mapping is not independently verified here."
+      training_data_transparency: "partial"
+      deterministic: true
+      stochastic: false
+      prompt_dependent: false
+      evaluated_painting_count: 50
+      evaluated_case_count: 410
+      evaluated_candidate_count: 410
+      model_inference_count: 360
+      zero_control_count: 50
+      output_root: "outputs/10_lama_restoration"
+      inference_width: 768
+      inference_height: 768
+      output_width: 768
+      output_height: 768
+      input_constraints: "Normalized 768 x 768 RGB painting input passed through the pinned IOPaint LaMa runtime; identity zero controls bypass inference."
+      mask_constraints: "Single-channel binary missing-region mask using threshold 128; exact outside-mask compositing; no per-case tuning."
+      source_ids: ["lama_repository", "iopaint_lama_source", "iopaint_repository"]
+      intended_uses:
+        - "learned large-mask inpainting baseline"
+        - "controlled digital restoration candidate generation"
+        - "quality and robustness comparison against classical and diffusion methods"
+      excluded_uses:
+        - "historically verified reconstruction"
+        - "artist authentication or semantic brushstroke recognition"
+        - "conservation approval"
+      domain_gap: "General-scene inpainting training does not establish painting-specific or conservation-specific competence."
+      bias_notes: "Learned priors may smooth texture or synthesize plausible but unsupported structures."
+      hardware_requirements: "Executed with CUDA on the recorded RTX 3060 Laptop GPU; no experimentally validated minimum VRAM threshold is claimed."
+      strengths:
+        - "broad learned context"
+        - "practical large-mask baseline"
+        - "deterministic under the evaluated contract"
+      weaknesses:
+        - "general-scene rather than painting-specific training"
+        - "possible texture smoothing"
+        - "plausible content may remain historically incorrect"
+    - model_id: "stable_diffusion_inpainting"
+      display_name: "Stable Diffusion Inpainting"
+      evaluation_status: "fully_evaluated"
+      model_family: "prompt_conditioned_latent_diffusion_inpainting"
+      methodological_role: "prompt_conditioned_stochastic_inpainting_baseline"
+      original_purpose: "Text-conditioned image generation and masked image modification."
+      implementation: "Diffusers StableDiffusionInpaintPipeline"
+      implementation_version_field: "generator_version"
+      model_identifier: "stable-diffusion-v1-5/stable-diffusion-inpainting"
+      software_license: "CreativeML-OpenRAIL-M"
+      weight_license: "CreativeML-OpenRAIL-M"
+      license_scope_note: "The pinned Hugging Face model card declares CreativeML OpenRAIL-M."
+      training_data_description: "Stable Diffusion v1 lineage uses LAION-derived data; the inpainting checkpoint was further trained at 512x512 on LAION Aesthetics v2 5+ with synthetic masks."
+      training_data_transparency: "documented_but_not_fully_auditable"
+      deterministic: false
+      stochastic: true
+      prompt_dependent: true
+      evaluated_painting_count: 50
+      evaluated_case_count: 410
+      evaluated_candidate_count: 1330
+      model_inference_count: 1280
+      zero_control_count: 50
+      output_root: "outputs/11_stable_diffusion_restoration"
+      inference_width: 512
+      inference_height: 512
+      output_width: 768
+      output_height: 768
+      input_constraints: "Normalized 768 x 768 RGB painting input resized to 512 x 512 for inference and returned to 768 x 768 for persistence."
+      mask_constraints: "Single-channel missing-region mask using threshold 128; exact outside-mask compositing; empty masks copied; fixed generic or approved scratch-aware prompt policy."
+      source_ids: ["stable_diffusion_inpainting_model_card", "latent_diffusion_paper"]
+      intended_uses:
+        - "prompt-conditioned generative inpainting baseline"
+        - "repeated-seed variability analysis"
+        - "controlled prompt-sensitivity analysis for thin scratches"
+      excluded_uses:
+        - "historically verified reconstruction"
+        - "calibrated confidence estimation"
+        - "unreviewed conservation decisions"
+      domain_gap: "Web-scale and natural-image priors are not painting-conservation training."
+      bias_notes: "Prompt, language, web-data, cultural, memorization, hallucination, and lossy-autoencoder risks apply."
+      hardware_requirements: "Executed in float16 on the recorded RTX 3060 Laptop GPU; observed peak allocation is reported without claiming a universal minimum."
+      strengths:
+        - "prompt-conditioned generative completion"
+        - "seed-controllable stochastic candidates"
+        - "supports empirical variability analysis"
+      weaknesses:
+        - "high hallucination and prompt-sensitivity risk"
+        - "higher compute and candidate multiplier"
+        - "thin-mask geometry can remain visible after compositing"
+    - model_id: "sdxl_inpainting"
+      display_name: "SDXL Inpainting"
+      evaluation_status: "partial_evaluation"
+      model_family: "prompt_conditioned_sdxl_latent_diffusion_inpainting"
+      methodological_role: "bounded_higher_capacity_diffusion_candidate"
+      original_purpose: "Higher-capacity text-conditioned image generation and masked image modification."
+      implementation: "Diffusers StableDiffusionXLInpaintPipeline"
+      implementation_version_field: "generator_version"
+      model_identifier: "diffusers/stable-diffusion-xl-1.0-inpainting-0.1"
+      software_license: "CreativeML-OpenRAIL++-M"
+      weight_license: "CreativeML-OpenRAIL++-M"
+      license_scope_note: "The pinned Hugging Face model card declares CreativeML Open RAIL++-M."
+      training_data_description: "The inpainting checkpoint was initialized from SDXL base and trained for 40k steps at 1024x1024 with synthetic masks; the pinned inpainting card does not provide a complete independently auditable training corpus inventory."
+      training_data_transparency: "partial"
+      deterministic: false
+      stochastic: true
+      prompt_dependent: true
+      evaluated_painting_count: 5
+      evaluated_case_count: 10
+      evaluated_candidate_count: 10
+      model_inference_count: 10
+      zero_control_count: 0
+      output_root: "outputs/12_sdxl_feasibility_or_restoration"
+      inference_width: 768
+      inference_height: 768
+      output_width: 768
+      output_height: 768
+      input_constraints: "Normalized 768 x 768 RGB painting input in the predeclared ten-case bounded scope."
+      mask_constraints: "Single-channel case-semantic missing-region mask using threshold 128; exact outside-mask compositing; no empty-mask controls in the partial evaluation."
+      source_ids: ["sdxl_inpainting_model_card", "sdxl_base_model_card"]
+      intended_uses:
+        - "bounded partial comparison"
+        - "local compute and memory feasibility evidence"
+        - "transparent SDXL scaling projection"
+      excluded_uses:
+        - "full controlled-dataset ranking"
+        - "universal comparison against the three full-scope methods"
+        - "historically verified reconstruction or conservation approval"
+      domain_gap: "The higher-capacity generative model remains non-conservation-specific and only partially evaluated here."
+      bias_notes: "Generative, prompt, cultural, hallucination, compositional, face, and lossy-autoencoder limitations remain."
+      hardware_requirements: "Ten cases completed with model CPU offload on the recorded 6 GB RTX 3060 Laptop GPU; this does not establish a universal minimum-VRAM requirement."
+      strengths:
+        - "higher-capacity diffusion lineage"
+        - "technically valid 768px partial outputs"
+        - "direct local feasibility evidence"
+      weaknesses:
+        - "only ten purposively selected cases"
+        - "very high runtime on recorded hardware"
+        - "no repeated-seed uncertainty coverage"
+
+  sources:
+    checked_at_utc: "2026-09-02T00:00:00Z"
+    records:
+      - source_id: "opencv_inpaint_docs"
+        source_type: "official_documentation"
+        url: "https://docs.opencv.org/4.x/d7/d8b/group__photo__inpaint.html"
+      - source_id: "opencv_repository"
+        source_type: "official_repository"
+        url: "https://github.com/opencv/opencv"
+      - source_id: "lama_repository"
+        source_type: "official_repository"
+        url: "https://github.com/advimman/lama"
+      - source_id: "iopaint_lama_source"
+        source_type: "runtime_source"
+        url: "https://github.com/Sanster/IOPaint/blob/main/iopaint/model/lama.py"
+      - source_id: "iopaint_repository"
+        source_type: "runtime_repository"
+        url: "https://github.com/Sanster/IOPaint"
+      - source_id: "stable_diffusion_inpainting_model_card"
+        source_type: "official_model_card"
+        url: "https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-inpainting"
+      - source_id: "latent_diffusion_paper"
+        source_type: "primary_paper"
+        url: "https://arxiv.org/abs/2112.10752"
+      - source_id: "sdxl_inpainting_model_card"
+        source_type: "official_model_card"
+        url: "https://huggingface.co/diffusers/stable-diffusion-xl-1.0-inpainting-0.1"
+      - source_id: "sdxl_base_model_card"
+        source_type: "official_model_card"
+        url: "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0"
+
+  quality:
+    anchor_count: 11
+    anchors:
+      - "classical_masked_mae"
+      - "structural_crop_ssim"
+      - "perceptual_crop_lpips"
+      - "feature_clip_crop"
+      - "feature_dino_crop"
+      - "spatial_masked_error"
+      - "texture_crop_p95"
+      - "colour_masked_delta_e"
+      - "seam_boundary_gradient"
+      - "semantic_local_dino"
+      - "structural_affinity_correlation"
+    populations:
+      core_three_model:
+        model_ids: ["opencv_telea", "lama", "stable_diffusion_inpainting"]
+        case_count: 410
+        painting_count: 50
+      sdxl_four_model_subset:
+        model_ids: ["opencv_telea", "lama", "stable_diffusion_inpainting", "sdxl_inpainting"]
+        case_count: 10
+        painting_count: 5
+    combined_quality_score_retained: false
+    runtime_in_quality_vote: false
+    anchor_win_count_is_descriptive_only: true
+
+  projections:
+    baseline_painting_count: 50
+    target_painting_count: 300
+    scale_multiplier: 6
+    sensitivity_statistics: ["median", "mean", "p95"]
+    runtime_lower_rule: "minimum_of_scaled_median_and_scaled_mean"
+    runtime_central_rule: "scaled_mean"
+    runtime_upper_rule: "maximum_of_scaled_p95_and_scaled_mean"
+    sensitivity_is_confidence_interval: false
+    include_model_cache_storage: false
+    scenarios:
+      - scenario_id: "projected_300_canonical_primary"
+        target_case_count:
+          opencv_telea: 1500
+          lama: 1500
+          stable_diffusion_inpainting: 1500
+          sdxl_inpainting: 1500
+        target_candidates:
+          opencv_telea: 1500
+          lama: 1500
+          stable_diffusion_inpainting: 1500
+          sdxl_inpainting: 1500
+        target_inference_candidates:
+          opencv_telea: 1200
+          lama: 1200
+          stable_diffusion_inpainting: 1200
+          sdxl_inpainting: 1200
+        target_zero_controls:
+          opencv_telea: 300
+          lama: 300
+          stable_diffusion_inpainting: 300
+          sdxl_inpainting: 300
+      - scenario_id: "projected_300_current_design_mix"
+        target_case_count:
+          opencv_telea: 2460
+          lama: 2460
+          stable_diffusion_inpainting: 2460
+          sdxl_inpainting: null
+        target_candidates:
+          opencv_telea: 2460
+          lama: 2460
+          stable_diffusion_inpainting: 7980
+          sdxl_inpainting: null
+        target_inference_candidates:
+          opencv_telea: 2160
+          lama: 2160
+          stable_diffusion_inpainting: 7680
+          sdxl_inpainting: null
+        target_zero_controls:
+          opencv_telea: 300
+          lama: 300
+          stable_diffusion_inpainting: 300
+          sdxl_inpainting: null
+
+  report:
+    format: "markdown"
+    self_contained_text: true
+    required_external_image_dependencies: 0
+    required_embedded_image_payloads: 0
+    approved_mock_structure_locked: true
+    visual_model_reports_owned_by_notebook: "31"
+    required_section_ids:
+      - "at-a-glance"
+      - "identity-and-provenance"
+      - "intended-and-unsupported-use"
+      - "training-data-and-domain-gap"
+      - "project-implementation"
+      - "evaluated-evidence-coverage"
+      - "compute-and-storage"
+      - "quality-evidence"
+      - "determinism-robustness-and-uncertainty"
+      - "scalability"
+      - "strengths-and-weaknesses"
+      - "human-decision-support-interpretation"
+      - "reproducibility-and-provenance"
+
+  expected_counts:
+    upstream_manifest_count: 21
+    telea_candidate_rows: 410
+    lama_candidate_rows: 410
+    stable_diffusion_candidate_rows: 1330
+    sdxl_candidate_rows: 10
+    telea_runtime_rows: 5
+    lama_runtime_rows: 5
+    stable_diffusion_runtime_rows: 14
+    sdxl_runtime_rows: 3
+    observed_compute_rows: 27
+    projection_rows: 8
+    compute_rows: 35
+    model_card_rows: 4
+    quality_populations: 2
+    quality_anchor_rows: 22
+    model_card_report_count: 4
+    canonical_figure_count: 2
+    artifact_record_count: 6
+    canonical_file_count: 11
+    minimum_validation_rows: 120
+
+  evidence_policy:
+    projections_are_executed_results: false
+    sdxl_is_full_evaluation: false
+    runtime_is_universal_benchmark: false
+    anchor_wins_are_combined_quality_score: false
+    deterministic_models_receive_artificial_uncertainty: false
+    uncertainty_is_calibrated_confidence: false
+    model_card_is_conservation_approval: false
+    historical_authenticity_claim_allowed: false
+    energy_or_carbon_measured: false
+
+  known_limitations:
+    - "Runtime and memory observations describe one recorded local workstation and software environment."
+    - "The 300-painting values are transparent linear projections, not executed experiments."
+    - "Projected storage covers notebook-owned output artifacts and excludes model caches, environments, Git history, and downstream metric outputs."
+    - "SDXL has ten completed candidates nested within five paintings and cannot support a full-scope ranking."
+    - "LaMa per-case runtime includes transparent allocation from IOPaint batch wall-clock measurements."
+    - "Quality-anchor wins are descriptive validated Notebook 21 evidence, not a universal quality or conservation score."

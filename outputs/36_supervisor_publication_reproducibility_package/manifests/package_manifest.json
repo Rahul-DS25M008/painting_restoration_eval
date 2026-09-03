@@ -1,0 +1,763 @@
+{
+  "schema_version": "supervisor_package_manifest.v1",
+  "notebook_id": "36",
+  "notebook_stem": "36_supervisor_publication_reproducibility_package",
+  "generated_at_utc": "2026-09-03T21:13:32Z",
+  "manifest_scope": "physical_files_inside_package_root",
+  "self_included": false,
+  "self_exclusion_reason": "The external manifest is excluded to avoid a recursive checksum definition.",
+  "creates_new_scientific_evidence": false,
+  "package_root": "outputs/36_supervisor_publication_reproducibility_package/package",
+  "package_file_count": 114,
+  "package_size_bytes": 29021450,
+  "package_size_mib": 27.677011,
+  "maximum_package_size_mib": 50,
+  "package_tree_sha256": "3b9585408666f56f2cab02e8b2dc5b3296af605dcffdec8b43b6573e4d06ba03",
+  "package_group_counts": {
+    "application": 2,
+    "configuration": 25,
+    "data": 3,
+    "environment": 2,
+    "figures": 24,
+    "manifests": 35,
+    "model_cards": 4,
+    "provenance": 1,
+    "reports": 9,
+    "root": 1,
+    "tables": 8
+  },
+  "artifact_index": {
+    "relative_path": "outputs/36_supervisor_publication_reproducibility_package/data/artifact_index.csv",
+    "record_count": 120,
+    "sha256": "817c7c0901894158c381e58d04227a906482b6e41126395eca125ff4f4cc1fa1",
+    "delivery_status_counts": {
+      "copied": 106,
+      "generated_by_notebook_36": 8,
+      "indexed_not_bundled": 6
+    }
+  },
+  "upstream": {
+    "manifest_count": 35,
+    "completion_gates_passed": 35,
+    "blocking_failures": 0,
+    "warning_failures": 1
+  },
+  "git": {
+    "git_commit": "ba720c143b74179ceafa2264cd1d9808bfc48944",
+    "git_dirty": true,
+    "git_branch": "main",
+    "git_error": ""
+  },
+  "validation_status": "passed_with_upstream_warning",
+  "files": [
+    {
+      "package_relative_path": "application/dashboard_application.py",
+      "format": "py",
+      "size_bytes": 21784,
+      "sha256": "8cda011b191fc59d23cf02801c899df13ab7ad2c3a14297a264eb1105585df81"
+    },
+    {
+      "package_relative_path": "application/streamlit_app.py",
+      "format": "py",
+      "size_bytes": 89402,
+      "sha256": "61368870fba5ef39a9d38b8e888b210e7c1483d2eddb7ff23f490e17b525c783"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/case_and_painting_reports.yaml",
+      "format": "yaml",
+      "size_bytes": 22811,
+      "sha256": "57b6ed5631c5cc59f576041939c9c2f440f33283971d9af982f50838bed56ec7"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/damage_size_analysis.yaml",
+      "format": "yaml",
+      "size_bytes": 15991,
+      "sha256": "24b1fa0defeba5373985cfcacb5435f9536c6f6df806347affde6e737b4c1b20"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/damage_size_diffusion_uncertainty_extension.yaml",
+      "format": "yaml",
+      "size_bytes": 15064,
+      "sha256": "100808faf373785e41cd992d49a81870822760fd7bbafead4c124a46ab1dde9f"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/dashboard_assets.yaml",
+      "format": "yaml",
+      "size_bytes": 20148,
+      "sha256": "06b7a48527459715df4a8d14998b6f9e930da4f5bd360f91b7c323006acf4bd9"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/dashboard_validation.yaml",
+      "format": "yaml",
+      "size_bytes": 11652,
+      "sha256": "687840dadbabd1942ad6aa4aaa3f228f833f25f635400ca784cc2687127928aa"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/diffusion_uncertainty.yaml",
+      "format": "yaml",
+      "size_bytes": 10827,
+      "sha256": "444523318a19f6cc2536537bb56701abfa37305819d1b8a057008066f24c6bc1"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/evidence_coverage.yaml",
+      "format": "yaml",
+      "size_bytes": 81494,
+      "sha256": "3e23cf3ddb8f1f62f76e820b51ef791fedebab0d9e6b1811ea7b640cf5b89037"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/explainable_case_retrieval.yaml",
+      "format": "yaml",
+      "size_bytes": 11529,
+      "sha256": "e045292ff413d76d699362634be5d97ab6e57769f33031d8d6ec10cb939a766d"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/failure_taxonomy.yaml",
+      "format": "yaml",
+      "size_bytes": 28952,
+      "sha256": "7ef5b0062a08fa95571e9d437672fc06b58b9d1bc2e0b60f30e39be7564c2239"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/feature_similarity.yaml",
+      "format": "yaml",
+      "size_bytes": 9039,
+      "sha256": "a6e192759a77d78babb8282a4ceebed9c52292a44891499d43db8aae09a1c1a5"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/final_evaluation_report.yaml",
+      "format": "yaml",
+      "size_bytes": 24986,
+      "sha256": "b59f2c2b5d228255b6ebbdf1ec9edf4d8f40e65dfdb730b3d6cfb904b8f76c94"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/grouped_statistical_analysis.yaml",
+      "format": "yaml",
+      "size_bytes": 21228,
+      "sha256": "302aadbb45369221a70b0a5db07f9e3af8584cc285a931d906592b9566ef200a"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/local_consistency.yaml",
+      "format": "yaml",
+      "size_bytes": 12596,
+      "sha256": "17346e2e38bd79c08ebc59ffd73effade3b93e2896ed800b11e7a7e28fad0f99"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/lpips.yaml",
+      "format": "yaml",
+      "size_bytes": 6226,
+      "sha256": "83cb97d9876f1039aae244f21368a9e0077e27fca7b4060e1e24889c7b4d6ada"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/mask_robustness_analysis.yaml",
+      "format": "yaml",
+      "size_bytes": 15117,
+      "sha256": "67ccb758f0950f8c071a3b6ea5e63071a6001ea79f2293a790aff545a9286b4f"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/metric_region_ablation.yaml",
+      "format": "yaml",
+      "size_bytes": 16767,
+      "sha256": "1c8093c6980c5ded650069940f54f092a4bd718e83591285fb7fe4ae8c0db8ea"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/metrics.yaml",
+      "format": "yaml",
+      "size_bytes": 7404,
+      "sha256": "c3abb2675aac79563c47d98e7b55b1a6b611cd7af772da5c45891305a919d624"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/model_cards_compute.yaml",
+      "format": "yaml",
+      "size_bytes": 22624,
+      "sha256": "5b01b06bd8aa07fba8d40aa0953a92f4c6e909ce5f931c93feee5acd135cdae0"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/model_report_generation.yaml",
+      "format": "yaml",
+      "size_bytes": 20810,
+      "sha256": "1d5e17c87e4d4ce5090530502d43f4c7a74a066475f89c0e79cfa2d48e794c1c"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/multi_model_comparison.yaml",
+      "format": "yaml",
+      "size_bytes": 18103,
+      "sha256": "de3dc393b29bbffe25d8b3b60ae3edef36423ff289aca1be44b41cf797c8891f"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/semantic_structural.yaml",
+      "format": "yaml",
+      "size_bytes": 13894,
+      "sha256": "e62a742ba3ed55d5bc141f2acee67e181bae42d9d33a07915fcff630fef4ef98"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/spatial_diagnostics.yaml",
+      "format": "yaml",
+      "size_bytes": 9116,
+      "sha256": "3399a9cfb977d12def43cdaf9c8dd080be9a6cf8ff2cb239fc1bb1e45395e184"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/spatial_explanations.yaml",
+      "format": "yaml",
+      "size_bytes": 9876,
+      "sha256": "9ef4edc87c4b9aae1bca6e0221168c1fbe81f1cc80ed8dc5dce0889e6c09a304"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/supervisor_package.yaml",
+      "format": "yaml",
+      "size_bytes": 12342,
+      "sha256": "cc3137fc9541ce7d973c14645f6f7fd31893a557363a755e0e394bbe1af5da74"
+    },
+    {
+      "package_relative_path": "configuration/evaluation/synthetic_degradation_analysis.yaml",
+      "format": "yaml",
+      "size_bytes": 18112,
+      "sha256": "76aa4b5d0ae0eec880778adbb81df1e1968cc038cbf253a59f216af25630d15b"
+    },
+    {
+      "package_relative_path": "data/feedback_agenda.md",
+      "format": "md",
+      "size_bytes": 2130,
+      "sha256": "caafc091239e807b8548d388eeff3200d3d3a53a3ab85b74e984906deef04cfd"
+    },
+    {
+      "package_relative_path": "data/key_findings.json",
+      "format": "json",
+      "size_bytes": 8729,
+      "sha256": "5bb22f1284e6d12ee27796d1dfb36878438347a09ca88e30c38cf4a5411226a4"
+    },
+    {
+      "package_relative_path": "data/open_questions.md",
+      "format": "md",
+      "size_bytes": 1877,
+      "sha256": "972ffb0e7f3f169ee11094ffc3f7f3683b3dec0e756d7fbc6297817820c5444c"
+    },
+    {
+      "package_relative_path": "environment/requirements.txt",
+      "format": "txt",
+      "size_bytes": 107,
+      "sha256": "0d66b4c3bb24e5c03647df89121bd50e76167d6cde0970c027b4545bf660638f"
+    },
+    {
+      "package_relative_path": "environment/requirements_experiments.txt",
+      "format": "txt",
+      "size_bytes": 848,
+      "sha256": "fca385c534df4623f15d058f5b7d188034a6aeb01add4bb0b13aeca6b366dfa5"
+    },
+    {
+      "package_relative_path": "figures/publication/01_benchmark_summary.png",
+      "format": "png",
+      "size_bytes": 56232,
+      "sha256": "ac58f80159b235e3bb36bafd9170311f338c1e4b8259e52e3ea0b9993d8ad56c"
+    },
+    {
+      "package_relative_path": "figures/publication/02_stress_test_summary.png",
+      "format": "png",
+      "size_bytes": 95114,
+      "sha256": "c59df0350005df80a1bfecba8dae88af998d1b123bbfddc94911b3d3208832b2"
+    },
+    {
+      "package_relative_path": "figures/publication/03_uncertainty_spatial_summary.png",
+      "format": "png",
+      "size_bytes": 119779,
+      "sha256": "ebdc07bd86fdf23e995af8c3d88fc600bfba7f5cd676dd6251cbc91cc9e51130"
+    },
+    {
+      "package_relative_path": "figures/publication/04_trustworthiness_ablation_summary.png",
+      "format": "png",
+      "size_bytes": 87607,
+      "sha256": "bcfe0b9a24a23f9d1d45b2b859c3a612db7d79ae1b05f60f3ad6e172bb1b2352"
+    },
+    {
+      "package_relative_path": "figures/publication/05_explainability_summary.png",
+      "format": "png",
+      "size_bytes": 246997,
+      "sha256": "f908d381039eef469294ccf6634bb744dd3656bc71bb99e7ab40b34372f966f2"
+    },
+    {
+      "package_relative_path": "figures/publication/06_quality_compute_summary.png",
+      "format": "png",
+      "size_bytes": 52518,
+      "sha256": "121c9c86d19abc1d93fa5ab1203c3ca8a3a42355b2434523c3a89a301e212c2d"
+    },
+    {
+      "package_relative_path": "figures/thesis/01_framework_evidence_map.png",
+      "format": "png",
+      "size_bytes": 157081,
+      "sha256": "ad66131104b15a744e233ba222ba9960a69a32efc2f4324b72254a34d4c0432c"
+    },
+    {
+      "package_relative_path": "figures/thesis/02_dataset_and_experiment_scope.png",
+      "format": "png",
+      "size_bytes": 69383,
+      "sha256": "633836cbdd51c6af3c0d63c3523eb7d52d170c0f3b19268afa521a8faabe1b34"
+    },
+    {
+      "package_relative_path": "figures/thesis/03_model_coverage.png",
+      "format": "png",
+      "size_bytes": 47926,
+      "sha256": "a17e8a191973ad61471753ebc4b9889fb901ee0576f3483e7cf4c2c16e75b8d4"
+    },
+    {
+      "package_relative_path": "figures/thesis/04_canonical_model_comparison.png",
+      "format": "png",
+      "size_bytes": 99282,
+      "sha256": "571446d1a77a46f43ea86ffd5032a96b1698d2b6e5d9f8fe94f94fe90ac21d4f"
+    },
+    {
+      "package_relative_path": "figures/thesis/05_metric_disagreement.png",
+      "format": "png",
+      "size_bytes": 85557,
+      "sha256": "afb165b5bd2b2345c4422522a154133ede8d9796f50c88dfc89732a4f253ebf7"
+    },
+    {
+      "package_relative_path": "figures/thesis/06_damage_size_sensitivity.png",
+      "format": "png",
+      "size_bytes": 105447,
+      "sha256": "baea92eeaf56f39e0d51144c204eda08386ee349aab86f0902134dfcff2d0de1"
+    },
+    {
+      "package_relative_path": "figures/thesis/07_mask_robustness.png",
+      "format": "png",
+      "size_bytes": 106984,
+      "sha256": "10b66582b910c217bd612634648b70adad6f5d2204066657130fd4c9fc58c435"
+    },
+    {
+      "package_relative_path": "figures/thesis/08_synthetic_degradation.png",
+      "format": "png",
+      "size_bytes": 101826,
+      "sha256": "4fa4bb7427e866b4faaa1e93e470630d82f0299073c08feda466899f2b2e3ec3"
+    },
+    {
+      "package_relative_path": "figures/thesis/09_grouped_effects.png",
+      "format": "png",
+      "size_bytes": 69001,
+      "sha256": "b5faa40bde67a6d7ba842d5bfb0f0e848f52718b92bca57b6a4db4a79b635368"
+    },
+    {
+      "package_relative_path": "figures/thesis/10_metric_correlations.png",
+      "format": "png",
+      "size_bytes": 129274,
+      "sha256": "0410fb06047a0705b12233fd2e790f5e5a3fc46d9bacc817763af8e03a283f40"
+    },
+    {
+      "package_relative_path": "figures/thesis/11_ranking_stability.png",
+      "format": "png",
+      "size_bytes": 86218,
+      "sha256": "bc84c74944d75f362ace31b7f64ad3397fbf476457e4f95f0bbf3fc104fb3a0f"
+    },
+    {
+      "package_relative_path": "figures/thesis/12_uncertainty_summary.png",
+      "format": "png",
+      "size_bytes": 39198,
+      "sha256": "7f794c397a0ba168d745854777ce0583c2788b91eb502b0215c5bda2c8b8fdc8"
+    },
+    {
+      "package_relative_path": "figures/thesis/13_spatial_uncertainty_explanations.png",
+      "format": "png",
+      "size_bytes": 306164,
+      "sha256": "af38b54765bb0a37282ef470132621348023e1d3588f1c9f71b9996422b4f457"
+    },
+    {
+      "package_relative_path": "figures/thesis/14_failure_taxonomy_flags.png",
+      "format": "png",
+      "size_bytes": 86577,
+      "sha256": "d6728a003b02d7d2e8cef97cc30015834ee31c6ec925499e65e2a34e96590e97"
+    },
+    {
+      "package_relative_path": "figures/thesis/15_ablation_ranking_flags.png",
+      "format": "png",
+      "size_bytes": 119992,
+      "sha256": "fa1510bd8c44cfb168aafd38e17b0f9bc63dc3d8ebe0ab3a2dea326a82cd8ae4"
+    },
+    {
+      "package_relative_path": "figures/thesis/16_explainability_retrieval.png",
+      "format": "png",
+      "size_bytes": 44091,
+      "sha256": "bfdf785e720b6c0d459f6ab75888e5be74f139caf9e884983dcfce10d0ef2a9a"
+    },
+    {
+      "package_relative_path": "figures/thesis/17_quality_vs_compute.png",
+      "format": "png",
+      "size_bytes": 47417,
+      "sha256": "c0a0a968d4471635130405b561aa1adf74fd3a6618e10ac9a5b648c1dd58da3a"
+    },
+    {
+      "package_relative_path": "figures/thesis/18_scalability_projection.png",
+      "format": "png",
+      "size_bytes": 67914,
+      "sha256": "8ba4d0227704e1857f798e9835176da9498d3186076065cad21d31b4a44f10f7"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/01_dataset_verification.json",
+      "format": "json",
+      "size_bytes": 8981,
+      "sha256": "4af536c91b81b9e16aa3ffbfb461399b34034ac717c2ad0ec5231d6186b3e15a"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/02_image_preprocessing.json",
+      "format": "json",
+      "size_bytes": 10754,
+      "sha256": "5e7c4076587f9b6d149c897c817c798d596d5e740f016da5ce2aca6dc9ca310e"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/03_canonical_mask_generation.json",
+      "format": "json",
+      "size_bytes": 12774,
+      "sha256": "5c678a0199d405e69c4a321db313c3a97bec349753c116e2740df3d9cbcbd49e"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/04_canonical_damaged_image_generation.json",
+      "format": "json",
+      "size_bytes": 14239,
+      "sha256": "f9e95b91dd72440c36f07c56853b971022a64def824579daeb8c6e484875e6bc"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/05_damage_size_sensitivity_dataset_generation.json",
+      "format": "json",
+      "size_bytes": 22491,
+      "sha256": "a5bad621639729fc4ba7b3dd4ff7551be2f9f4696d341ec146bda1afea792f8d"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/06_mask_robustness_dataset_generation.json",
+      "format": "json",
+      "size_bytes": 14646,
+      "sha256": "9678fc918324a51023bd705ab6cb7c398ccf6771f1910083cce6f00a2dd02ed9"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/07_synthetic_degradation_dataset_generation.json",
+      "format": "json",
+      "size_bytes": 14503,
+      "sha256": "9eb03a79f9faeb0cfe159950642a5fda2f2c0c79b6c230c5a097186458f99d1e"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/08_experiment_contracts_and_region_policy.json",
+      "format": "json",
+      "size_bytes": 16592,
+      "sha256": "d1b62caa720194e666894afd276d0c6a8c973343b4a378bd787467273bbceb8a"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/09_opencv_telea_restoration.json",
+      "format": "json",
+      "size_bytes": 12991,
+      "sha256": "d3cfe89d3ba87f168f7884836caf5cb72f50f675786d1f94cd9904fe0537cbf7"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/10_lama_restoration.json",
+      "format": "json",
+      "size_bytes": 23476,
+      "sha256": "e2c2ce786f030472152142d44322ac90b03b98cdce0f041d00657324df9257ff"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/11_stable_diffusion_restoration.json",
+      "format": "json",
+      "size_bytes": 27662,
+      "sha256": "7b76c94c9b857dcdf7f4efb5c619494b718717126c6f76f8343d8dae8f3a6b73"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/12_sdxl_feasibility_or_restoration.json",
+      "format": "json",
+      "size_bytes": 18784,
+      "sha256": "0b46a1a7fbec8f27bdd0d22266a3d1630f5a4150c0ced3ec0fb6a1e4554ba009"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/13_classical_metrics.json",
+      "format": "json",
+      "size_bytes": 16986,
+      "sha256": "90d5905958348041055dfa915f4577af335c34b26036a31767452297679538d2"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/14_lpips_metrics.json",
+      "format": "json",
+      "size_bytes": 16276,
+      "sha256": "2728e750f41f1441c5cddc6bbfe79a60eeb7b3d318f83e2b93a0396a2be9dfd7"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/15_feature_similarity.json",
+      "format": "json",
+      "size_bytes": 21182,
+      "sha256": "cc9ee35005e9520a56baeeee0b130608e0ef51a00007aac3b459b9e097cb2984"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/16_difference_maps_and_spatial_diagnostics.json",
+      "format": "json",
+      "size_bytes": 24887,
+      "sha256": "5ffa5ee1de12e39f575b29cb760c3e8c86df794aadf7962304a5d3d99dd954a7"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/17_local_consistency_metrics.json",
+      "format": "json",
+      "size_bytes": 25710,
+      "sha256": "78396a22402cb97f49c422f7db22c5134a3d499aa2a96fdc45beb0aed861e51d"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/18_diffusion_uncertainty_analysis.json",
+      "format": "json",
+      "size_bytes": 21218,
+      "sha256": "099e773f7f211ef5ebad0fe2703601a347af88e5fee9426aaea7217c1fda7959"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/19_uncertainty_and_spatial_explanation_maps.json",
+      "format": "json",
+      "size_bytes": 21609,
+      "sha256": "bf2c00948375da795ef2672242be4ca47347440093e3bf82f1f46d2f46250523"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/20_semantic_and_structural_consistency.json",
+      "format": "json",
+      "size_bytes": 27894,
+      "sha256": "c64d4ea1a984a83bd3fc2b7c1ef6b53f67c8fed85156c19888ab23ab51658af6"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/21_multi_model_comparison.json",
+      "format": "json",
+      "size_bytes": 19579,
+      "sha256": "7517eb7ba360302eaa73b4bdda8870a52b4c1a87bf728ac59970c6d48b44c660"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/22_damage_size_diffusion_uncertainty_extension.json",
+      "format": "json",
+      "size_bytes": 19576,
+      "sha256": "dff582edbeb029dca56287dd39dcfc5f29a309a42a3c46b86c7a43e1592df9b8"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/23_damage_size_sensitivity_analysis.json",
+      "format": "json",
+      "size_bytes": 17344,
+      "sha256": "9663eb4762302a03ab09882ebbf1b0a1276815d8ac4bd60a54191cda2f5dcefd"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/24_mask_robustness_analysis.json",
+      "format": "json",
+      "size_bytes": 16857,
+      "sha256": "1210a5776bf930ac5a8039063cb902b4790e8742798492c318a79a470a766b5e"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/25_synthetic_degradation_analysis.json",
+      "format": "json",
+      "size_bytes": 20441,
+      "sha256": "660792ea34d70201df85b1f1a7ac478c0498c0b41bcd9b4bc8f8f18197d4778c"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/26_grouped_and_statistical_analysis.json",
+      "format": "json",
+      "size_bytes": 24549,
+      "sha256": "bf83485f83d6aef2d0f342f0155a8f2ef353f017750a224145c7f09b0d3114db"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/27_failure_taxonomy_and_trustworthiness_flags.json",
+      "format": "json",
+      "size_bytes": 22443,
+      "sha256": "35df0a1169467a9225ae48898def27e727cf2ec16faa928670b7c6fc39a47073"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/28_metric_and_region_policy_ablation.json",
+      "format": "json",
+      "size_bytes": 22403,
+      "sha256": "199a94d16ef679920e17301dc780e4a2c1cdfcb665bcbd8790e27e3502ba180e"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/29_explainable_ai_and_case_retrieval.json",
+      "format": "json",
+      "size_bytes": 23159,
+      "sha256": "35d9d4383c1b25e8f5e61905b9462d22b31344a37571b9167a5ac1b773d64b1f"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/30_model_cards_compute_and_scalability.json",
+      "format": "json",
+      "size_bytes": 19301,
+      "sha256": "6095f48bfae48eca853c6492b403c280b9d67786d0c4e57e27c4c4efdafffc41"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/31_model_report_generation.json",
+      "format": "json",
+      "size_bytes": 23659,
+      "sha256": "568dcb669f227e270057b22043e504b2727c99904d6813952d17745aaf452340"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/32_case_and_painting_report_generation.json",
+      "format": "json",
+      "size_bytes": 52557,
+      "sha256": "7fa92ec00b349a50a6085e09a95c5fb37f05b11bd1ddf60eb0da7614f364c4c7"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/33_final_evaluation_report.json",
+      "format": "json",
+      "size_bytes": 32924,
+      "sha256": "a143fbd5661a540fc6cd9392aec0851d06db419b682a150c94e634b10210289b"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/34_final_streamlit_dashboard_assets.json",
+      "format": "json",
+      "size_bytes": 32789,
+      "sha256": "ca67ab9e2b365d14f67e9c964924cc25f652c8adfdc1ea31d0bbe9d027ecbaa3"
+    },
+    {
+      "package_relative_path": "manifests/notebook_runs/35_dashboard_and_deployment_validation.json",
+      "format": "json",
+      "size_bytes": 13294,
+      "sha256": "be072144cade45550a32f61aef27c2aa5517ca51f9084e94bbfc2eed84a19b43"
+    },
+    {
+      "package_relative_path": "model_cards/lama.md",
+      "format": "md",
+      "size_bytes": 10073,
+      "sha256": "3ff95d1656fb130a774dbe88c896a8577044c9a6a80c3de7a3824315acdc89b8"
+    },
+    {
+      "package_relative_path": "model_cards/opencv_telea.md",
+      "format": "md",
+      "size_bytes": 9131,
+      "sha256": "992f5a33196dbc4fa2bf3f3082e45c03cb5248b6eff7b7cb1b9342e050ed3b22"
+    },
+    {
+      "package_relative_path": "model_cards/sdxl_inpainting.md",
+      "format": "md",
+      "size_bytes": 10104,
+      "sha256": "eb8d40481f2228a47fc0b0b05942a092f79a6763ef1894d41b46646262a2de95"
+    },
+    {
+      "package_relative_path": "model_cards/stable_diffusion_inpainting.md",
+      "format": "md",
+      "size_bytes": 10834,
+      "sha256": "e2e999f7ac3299e3deb2c4678a5676e05f869dd8c08426938be2cdbf55f0eb12"
+    },
+    {
+      "package_relative_path": "provenance/reproducibility_snapshot.json",
+      "format": "json",
+      "size_bytes": 39038,
+      "sha256": "8b1a0499bfcdc9b0b35626df891264d6e40728abf89db19ffbd2f33cfc366684"
+    },
+    {
+      "package_relative_path": "README.md",
+      "format": "md",
+      "size_bytes": 4495,
+      "sha256": "8f8a606bac565e5df00ea4a37ca7b512c4429d53dca614bcabd8638fa9258af0"
+    },
+    {
+      "package_relative_path": "reports/deployment_readiness.md",
+      "format": "md",
+      "size_bytes": 6525,
+      "sha256": "d98e0a5aaf1d45480fd80396161cd6612f771532cc9a20eda346d778072ef54b"
+    },
+    {
+      "package_relative_path": "reports/final_evaluation.html",
+      "format": "html",
+      "size_bytes": 14109594,
+      "sha256": "eea7578934106bf5695fa5451b8432800791ef3ac12a341c8bd567f6e0fda889"
+    },
+    {
+      "package_relative_path": "reports/limitations_and_deviations.md",
+      "format": "md",
+      "size_bytes": 6552,
+      "sha256": "88a368e2331da7b5e84ecbe93de2ed6e0f36df3d3ec4c25f46cf42ab7005c963"
+    },
+    {
+      "package_relative_path": "reports/models/lama.html",
+      "format": "html",
+      "size_bytes": 2550069,
+      "sha256": "82f6d415449ea3cbc11cd16a9701b900a9dc3ffcc3bde9ff60de182fac7d65ce"
+    },
+    {
+      "package_relative_path": "reports/models/opencv_telea.html",
+      "format": "html",
+      "size_bytes": 2636615,
+      "sha256": "7fed7532c2edddacbe792b19c7059a6fbdc8600d43ddf895202f911eac0d066b"
+    },
+    {
+      "package_relative_path": "reports/models/sdxl_inpainting.html",
+      "format": "html",
+      "size_bytes": 2003761,
+      "sha256": "8a5bf4e43157e823738d2b8bed3f8d6e4c978ea6c3e890fdc5bf37f5a94817be"
+    },
+    {
+      "package_relative_path": "reports/models/stable_diffusion_inpainting.html",
+      "format": "html",
+      "size_bytes": 3073545,
+      "sha256": "0c70f6552fd5349dd76c6a7c82edf3fffddc63dacc437eee119152b4a7e26c9c"
+    },
+    {
+      "package_relative_path": "reports/reproducibility_appendix.md",
+      "format": "md",
+      "size_bytes": 10283,
+      "sha256": "0f565c74b0570c4b83a7ddb50468ea18020612676bfa3320c8251e51e3acc95b"
+    },
+    {
+      "package_relative_path": "reports/supervisor_summary.md",
+      "format": "md",
+      "size_bytes": 11874,
+      "sha256": "72e7adcf22ed6f6e73b9d5efda8e95352a47b949e9273d0736c39ce3d9d07e4c"
+    },
+    {
+      "package_relative_path": "tables/case_report_index.csv",
+      "format": "csv",
+      "size_bytes": 106009,
+      "sha256": "4cb4a58195194813133c5482237fc46019ab0d6f4bd53a0d2b2f57aad8710cca"
+    },
+    {
+      "package_relative_path": "tables/latex_tables.csv",
+      "format": "csv",
+      "size_bytes": 82606,
+      "sha256": "696385ce3d98751d6444bc32b8260e1407b7e8ab28115304a5c2af18ab34666d"
+    },
+    {
+      "package_relative_path": "tables/model_cards.csv",
+      "format": "csv",
+      "size_bytes": 17465,
+      "sha256": "34900309628ea968c8b82931bfd3f37af2862201f8a969d36108ddb5c36b3b35"
+    },
+    {
+      "package_relative_path": "tables/model_report_index.csv",
+      "format": "csv",
+      "size_bytes": 61009,
+      "sha256": "80fc6b83dde8c3266f544d6a111fac360d9dee45eb0ed864a0c89f2da4819192"
+    },
+    {
+      "package_relative_path": "tables/painting_report_index.csv",
+      "format": "csv",
+      "size_bytes": 247086,
+      "sha256": "008247cdd36c16c8238a8a3fe1d6ae5e245e5eb1775359e42646ccd63ecdfe18"
+    },
+    {
+      "package_relative_path": "tables/report_evidence_catalog.csv",
+      "format": "csv",
+      "size_bytes": 23975,
+      "sha256": "7db71a0b3f058f05402703f6c00a1eb741c32d16c12a91221842034bff1d5a65"
+    },
+    {
+      "package_relative_path": "tables/selected_cases.csv",
+      "format": "csv",
+      "size_bytes": 23622,
+      "sha256": "f6cbf989cf8fefd7a6b7cc1d2fd9fcfd4d05e8edf4dde94cf0555ad978fa3cc8"
+    },
+    {
+      "package_relative_path": "tables/thesis_tables.csv",
+      "format": "csv",
+      "size_bytes": 223491,
+      "sha256": "803f663b5b589cecd28244168df5935e7ee07688f0ec11802b5d852d2b263462"
+    }
+  ],
+  "presentation_adjustments": [
+    {
+      "package_relative_path": "reports/supervisor_summary.md",
+      "adjustment": "Rebase generated-summary figure links for the package/reports location.",
+      "old_prefix": "../package/figures/",
+      "new_prefix": "../figures/",
+      "adjusted_link_count": 6,
+      "canonical_source_sha256": "30776207bc993ac65fb5d6d7e012f4db94d3f267c7e8b7c17a7192eaf14dbdb8",
+      "package_sha256": "72e7adcf22ed6f6e73b9d5efda8e95352a47b949e9273d0736c39ce3d9d07e4c",
+      "canonical_source_modified": false
+    }
+  ],
+  "portability_validation": {
+    "validated_at_utc": "2026-09-03T21:13:42Z",
+    "check_count": 14,
+    "blocking_failures": 0,
+    "inspected_package_files": 114,
+    "self_contained_html_reports": 5,
+    "validated_local_markdown_links": 22,
+    "validated_png_files": 24,
+    "canonical_sources_modified": false,
+    "upstream_warning_count": 1,
+    "dashboard_scope": "local_demonstration_only",
+    "public_deployment_completed": false
+  }
+}

@@ -1,0 +1,273 @@
+config_schema_version: "failure_taxonomy_config.v1"
+config_version: "1.0.1"
+
+failure_taxonomy:
+  notebook_id: "27"
+  notebook_stem: "27_failure_taxonomy_and_trustworthiness_flags"
+  origin: "New Notebook"
+  taxonomy_schema_version: "failure_taxonomy.v1"
+  assignment_schema_version: "failure_assignments.v1"
+  flag_schema_version: "trustworthiness_flags.v1"
+  threshold_policy_id: "experiment_stratified_operational_outlier_rules.v1"
+  recommendation_policy_id: "transparent_review_escalation.v1"
+  report_policy_id: "approved_mock_aligned_self_contained_flag_report.v1"
+
+  inputs:
+    inventory_path: "outputs/inventory/project_file_inventory.csv"
+    inventory_run_path: "outputs/inventory/inventory_run.json"
+    project_paths_path: "outputs/inventory/project_paths.json"
+    evidence_coverage_path: "config/evaluation/evidence_coverage.yaml"
+    evidence_audit_path: "docs/evidence_dependency_audit.md"
+    implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+    roadmap_path: "docs/final_notebook_roadmap.md"
+    proposal_path: "docs/proposal/Rahul_Thesis_Proposal.docx"
+    grouped_analysis_config_path: "config/evaluation/grouped_statistical_analysis.yaml"
+    case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+    artworks_path: "outputs/01_dataset_verification/data/artworks.csv"
+    opencv_candidates_path: "outputs/09_opencv_telea_restoration/data/restorations.csv"
+    lama_candidates_path: "outputs/10_lama_restoration/data/restorations.csv"
+    stable_diffusion_candidates_path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+    sdxl_candidates_path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
+    classical_metrics_path: "outputs/13_classical_metrics/metrics/classical_metrics.csv"
+    lpips_metrics_path: "outputs/14_lpips_metrics/metrics/lpips_metrics.csv"
+    feature_metrics_path: "outputs/15_feature_similarity/metrics/feature_metrics.csv"
+    spatial_metrics_path: "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv"
+    spatial_map_manifest_path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/map_images.csv"
+    local_metrics_path: "outputs/17_local_consistency_metrics/metrics/local_consistency.csv"
+    local_map_manifest_path: "outputs/17_local_consistency_metrics/manifests/map_images.csv"
+    canonical_uncertainty_metrics_path: "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_metrics.csv"
+    canonical_uncertainty_calibration_path: "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_calibration_inputs.csv"
+    spatial_explanations_path: "outputs/19_uncertainty_and_spatial_explanation_maps/metrics/spatial_explanations.csv"
+    spatial_explanation_manifest_path: "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/map_images.csv"
+    semantic_metrics_path: "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv"
+    semantic_map_manifest_path: "outputs/20_semantic_and_structural_consistency/manifests/semantic_maps.csv"
+    comparison_metrics_path: "outputs/21_multi_model_comparison/metrics/model_comparison.csv"
+    disagreement_metrics_path: "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv"
+    representative_cases_path: "outputs/21_multi_model_comparison/data/representative_cases.csv"
+    damage_size_extension_candidates_path: "outputs/22_damage_size_diffusion_uncertainty_extension/data/candidates.csv"
+    damage_size_uncertainty_metrics_path: "outputs/22_damage_size_diffusion_uncertainty_extension/metrics/damage_size_uncertainty.csv"
+    damage_size_uncertainty_map_manifest_path: "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/map_images.csv"
+    damage_size_analysis_path: "outputs/23_damage_size_sensitivity_analysis/metrics/damage_size_analysis.csv"
+    mask_robustness_analysis_path: "outputs/24_mask_robustness_analysis/metrics/mask_robustness_analysis.csv"
+    degradation_analysis_path: "outputs/25_synthetic_degradation_analysis/metrics/degradation_analysis.csv"
+    statistical_results_path: "outputs/26_grouped_and_statistical_analysis/metrics/statistical_results.csv"
+    metric_correlations_path: "outputs/26_grouped_and_statistical_analysis/metrics/metric_correlations.csv"
+    ranking_stability_path: "outputs/26_grouped_and_statistical_analysis/metrics/ranking_stability.csv"
+    manifest_13_path: "outputs/13_classical_metrics/manifests/run_manifest.json"
+    manifest_14_path: "outputs/14_lpips_metrics/manifests/run_manifest.json"
+    manifest_15_path: "outputs/15_feature_similarity/manifests/run_manifest.json"
+    manifest_16_path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json"
+    manifest_17_path: "outputs/17_local_consistency_metrics/manifests/run_manifest.json"
+    manifest_18_path: "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json"
+    manifest_19_path: "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json"
+    manifest_20_path: "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json"
+    manifest_21_path: "outputs/21_multi_model_comparison/manifests/run_manifest.json"
+    manifest_22_path: "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json"
+    manifest_23_path: "outputs/23_damage_size_sensitivity_analysis/manifests/run_manifest.json"
+    manifest_24_path: "outputs/24_mask_robustness_analysis/manifests/run_manifest.json"
+    manifest_25_path: "outputs/25_synthetic_degradation_analysis/manifests/run_manifest.json"
+    manifest_26_path: "outputs/26_grouped_and_statistical_analysis/manifests/run_manifest.json"
+
+  output:
+    root: "outputs/27_failure_taxonomy_and_trustworthiness_flags"
+    taxonomy_path: "data/failure_taxonomy.csv"
+    assignments_path: "metrics/failure_assignments.csv"
+    flags_path: "metrics/trustworthiness_flags.csv"
+    figure_path: "figures/failure_taxonomy.png"
+    report_path: "reports/flag_definitions.html"
+    run_manifest_path: "manifests/run_manifest.json"
+    artifacts_path: "manifests/artifacts.csv"
+    validation_path: "validation/checks.csv"
+
+  population:
+    dataset_source_levels: ["controlled_50"]
+    primary_population_id: "validated_primary_candidates.v1"
+    uncertainty_population_id: "complete_supported_seed_groups.v1"
+    union_population_id: "primary_plus_supported_uncertainty_candidates.v1"
+    population_roles:
+      - "primary_comparison"
+      - "primary_and_uncertainty"
+      - "uncertainty_only"
+      - "bounded_sdxl"
+    primary_core_models: ["opencv_telea", "lama", "stable_diffusion_inpainting"]
+    bounded_model: "sdxl_inpainting"
+    canonical_prompt_variant: "p00_generic"
+    scratch_prompt_variant: "p05_scratch_aware"
+    repeated_seeds: [2026, 2027, 2028, 2029]
+    comparison_requires_primary_role: true
+    prohibit_prompt_arm_mixing: true
+    zero_controls_excluded_from_threshold_fitting: true
+    bounded_sdxl_excluded_from_threshold_fitting: true
+
+  threshold_policy:
+    warning_quantile: 0.90
+    critical_quantile: 0.975
+    favourable_quantile: 0.25
+    lower_is_worse_warning_quantile: 0.10
+    lower_is_worse_critical_quantile: 0.025
+    lower_is_worse_favourable_quantile: 0.75
+    stratify_by: ["experiment_id", "indicator_id", "region_id", "summary_statistic"]
+    minimum_fitting_candidates: 30
+    fallback_scope: "indicator_region_summary_across_supported_experiments"
+    one_critical_triggers: true
+    distinct_warning_components_required: 2
+    outside_mask_absolute_warning_tolerance: 0.0000005
+    outside_mask_absolute_critical_tolerance: 0.000005
+    quantile_tie_policy: "strict_adverse"
+    threshold_interpretation: "operational_relative_screening_not_ground_truth"
+    severity_interpretation: "rule_strength_and_review_priority_not_conservation_severity"
+
+  indicators:
+    - {indicator_id: "masked_mae", source: "classical", source_notebook_id: "13", metric_name: "mae", region_id: "masked_region", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "masked_reference_error"}
+    - {indicator_id: "crop_ssim", source: "classical", source_notebook_id: "13", metric_name: "ssim", region_id: "mask_bbox_crop", summary_statistic: "restored_value", value_column: "restored_value", direction: "lower_is_worse", component: "structural_similarity"}
+    - {indicator_id: "content_psnr", source: "classical", source_notebook_id: "13", metric_name: "psnr", region_id: "content_region", summary_statistic: "restored_value", value_column: "restored_value", direction: "lower_is_worse", component: "content_pixel_fidelity"}
+    - {indicator_id: "crop_lpips", source: "perceptual", source_notebook_id: "14", metric_name: "lpips", region_id: "mask_bbox_crop", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "perceptual_similarity"}
+    - {indicator_id: "crop_clip_similarity", source: "feature", source_notebook_id: "15", metric_name: "clip_cosine_similarity", feature_model_id: "clip_vit_b32", region_id: "mask_bbox_crop", summary_statistic: "restored_value", value_column: "restored_value", direction: "lower_is_worse", component: "clip_feature_similarity"}
+    - {indicator_id: "crop_dino_similarity", source: "feature", source_notebook_id: "15", metric_name: "dinov2_cosine_similarity", feature_model_id: "dinov2_vits14", region_id: "mask_bbox_crop", summary_statistic: "restored_value", value_column: "restored_value", direction: "lower_is_worse", component: "dino_feature_similarity"}
+    - {indicator_id: "masked_error_p95", source: "spatial", source_notebook_id: "16", metric_name: "restored_error_p95", region_id: "masked_region", summary_statistic: "p95", value_column: "restored_error_p95", direction: "higher_is_worse", component: "masked_reference_error_tail"}
+    - {indicator_id: "smoothing_fraction", source: "local", source_notebook_id: "17", metric_name: "smoothing_proxy_fraction", region_id: "mask_bbox_crop", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "texture_smoothing"}
+    - {indicator_id: "gradient_magnitude_error", source: "local", source_notebook_id: "17", metric_name: "gradient_magnitude_error", region_id: "mask_bbox_crop", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "edge_loss"}
+    - {indicator_id: "edge_density_error", source: "local", source_notebook_id: "17", metric_name: "edge_density_error", region_id: "mask_bbox_crop", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "edge_density"}
+    - {indicator_id: "affinity_map_correlation", source: "semantic", source_notebook_id: "20", metric_name: "reference_affinity_map_correlation", region_id: "content_region", summary_statistic: "pearson_correlation", value_column: "restored_value", direction: "lower_is_worse", component: "structural_affinity"}
+    - {indicator_id: "affinity_js_divergence", source: "semantic", source_notebook_id: "20", metric_name: "reference_affinity_js_divergence", region_id: "content_region", summary_statistic: "jensen_shannon_divergence", value_column: "restored_value", direction: "higher_is_worse", component: "structural_affinity"}
+    - {indicator_id: "affinity_centroid_shift", source: "semantic", source_notebook_id: "20", metric_name: "reference_affinity_centroid_shift", region_id: "content_region", summary_statistic: "normalized_centroid_shift", value_column: "restored_value", direction: "higher_is_worse", component: "structural_position"}
+    - {indicator_id: "local_dino_similarity", source: "semantic", source_notebook_id: "20", metric_name: "local_patch_cosine_similarity", feature_model_id: "dinov2_vits14", region_id: "mask_bbox_crop", summary_statistic: "mean", value_column: "restored_value", direction: "lower_is_worse", component: "local_semantic_similarity"}
+    - {indicator_id: "local_patch_worsened_fraction", source: "semantic", source_notebook_id: "20", metric_name: "local_patch_worsened_fraction", feature_model_id: "dinov2_vits14", region_id: "mask_bbox_crop", summary_statistic: "fraction", value_column: "restored_value", direction: "higher_is_worse", component: "local_semantic_degradation"}
+    - {indicator_id: "periodicity_excess", source: "local", source_notebook_id: "17", metric_name: "periodicity_excess_proxy", region_id: "mask_bbox_crop", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "texture_periodicity"}
+    - {indicator_id: "hallucinated_detail_fraction", source: "local", source_notebook_id: "17", metric_name: "hallucinated_detail_proxy_fraction", region_id: "masked_region", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "generated_detail"}
+    - {indicator_id: "local_texture_error_p95", source: "local", source_notebook_id: "17", metric_name: "local_texture_error_p95", region_id: "mask_bbox_crop", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "texture_error"}
+    - {indicator_id: "transition_roughness_mismatch", source: "local", source_notebook_id: "17", metric_name: "transition_roughness_mismatch", region_id: "boundary_ring", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "texture_transition"}
+    - {indicator_id: "local_gradient_mismatch", source: "local", source_notebook_id: "17", metric_name: "local_gradient_mismatch", region_id: "inner_boundary_band", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "texture_transition"}
+    - {indicator_id: "cross_boundary_colour_error", source: "local", source_notebook_id: "17", metric_name: "cross_boundary_colour_discontinuity_error", region_id: "boundary_ring", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "boundary_colour"}
+    - {indicator_id: "boundary_spillover_p95", source: "local", source_notebook_id: "17", metric_name: "boundary_spillover_change_p95", region_id: "outside_boundary_ring", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "boundary_spillover"}
+    - {indicator_id: "masked_delta_e_mean", source: "local", source_notebook_id: "17", metric_name: "delta_e_ciede2000_mean", region_id: "masked_region", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "colour_difference"}
+    - {indicator_id: "masked_delta_e_p95", source: "local", source_notebook_id: "17", metric_name: "delta_e_ciede2000_p95", region_id: "masked_region", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "colour_difference_tail"}
+    - {indicator_id: "masked_hue_shift", source: "local", source_notebook_id: "17", metric_name: "hue_shift_mean_degrees", region_id: "masked_region", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "colour_hue"}
+    - {indicator_id: "boundary_gradient_mismatch", source: "local", source_notebook_id: "17", metric_name: "boundary_gradient_mismatch", region_id: "boundary_ring", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "boundary_gradient"}
+    - {indicator_id: "boundary_orientation_mismatch", source: "local", source_notebook_id: "17", metric_name: "boundary_orientation_mismatch", region_id: "boundary_ring", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "boundary_orientation"}
+    - {indicator_id: "boundary_ssim_error", source: "local", source_notebook_id: "17", metric_name: "boundary_local_ssim_map_error", region_id: "boundary_ring", summary_statistic: "restored_value", value_column: "restored_value", direction: "higher_is_worse", component: "boundary_structure"}
+    - {indicator_id: "outside_mask_change_fraction", source: "spatial", source_notebook_id: "16", metric_name: "restoration_changed_pixel_fraction", region_id: "outside_mask_content", summary_statistic: "fraction", value_column: "restoration_changed_pixel_fraction", direction: "higher_is_worse", component: "outside_mask_change", threshold_mode: "absolute_tolerance"}
+    - {indicator_id: "outside_mask_change_max", source: "spatial", source_notebook_id: "16", metric_name: "restoration_change_max", region_id: "outside_mask_content", summary_statistic: "max", value_column: "restoration_change_max", direction: "higher_is_worse", component: "outside_mask_change", threshold_mode: "absolute_tolerance"}
+    - {indicator_id: "outside_context_feature_change", source: "semantic", source_notebook_id: "20", metric_name: "outside_context_feature_change", feature_model_id: "dinov2_vits14", region_id: "outside_mask_patch_subset", summary_statistic: "mean", value_column: "restored_value", direction: "higher_is_worse", component: "outside_context_structure"}
+    - {indicator_id: "global_feature_similarity", source: "semantic", source_notebook_id: "20", metric_name: "global_feature_cosine_similarity", feature_model_id: "dinov2_vits14", region_id: "content_region", summary_statistic: "global", value_column: "restored_value", direction: "lower_is_worse", component: "global_structure"}
+    - {indicator_id: "uncertainty_pixel_std_p95", source: "uncertainty", source_notebook_id: "18|22", metric_name: "pixel_rgb_std_p95", region_id: "masked_region", summary_statistic: "p95", value_column: "value", direction: "higher_is_worse", component: "pixel_variability"}
+    - {indicator_id: "uncertainty_pairwise_lpips", source: "uncertainty", source_notebook_id: "18|22", metric_name: "pairwise_lpips_distance", region_id: "mask_bbox_crop", summary_statistic: "value", value_column: "value", direction: "higher_is_worse", component: "perceptual_variability", source_aggregation: "median"}
+    - {indicator_id: "uncertainty_pairwise_dino", source: "uncertainty", source_notebook_id: "18|22", metric_name: "pairwise_dinov2_cosine_distance", region_id: "mask_bbox_crop", summary_statistic: "value", value_column: "value", direction: "higher_is_worse", component: "feature_variability", source_aggregation: "median"}
+    - {indicator_id: "uncertainty_pairwise_rgb", source: "uncertainty", source_notebook_id: "18|22", metric_name: "pairwise_rgb_mae", region_id: "masked_region", summary_statistic: "value", value_column: "value", direction: "higher_is_worse", component: "pixel_pair_variability", source_aggregation: "median"}
+
+  failure_categories:
+    - {category_id: "residual_masked_error", display_name: "Residual masked-region error", is_proxy: false, indicator_ids: ["masked_mae", "masked_error_p95"], applicable_to: "all_candidates", recommended_action: "Inspect the repaired region against the clean reference and error map."}
+    - {category_id: "excessive_blur", display_name: "Excessive blur", is_proxy: false, indicator_ids: ["smoothing_fraction", "gradient_magnitude_error", "edge_density_error"], applicable_to: "all_candidates", recommended_action: "Inspect edges and brushwork inside the repair crop."}
+    - {category_id: "structural_collapse_proxy", display_name: "Structural-collapse proxy", is_proxy: true, indicator_ids: ["affinity_map_correlation", "affinity_js_divergence", "affinity_centroid_shift"], applicable_to: "semantic_evidence_candidates", recommended_action: "Inspect major contours and spatial layout; seek specialist review when critical."}
+    - {category_id: "semantic_inconsistency_proxy", display_name: "Semantic-inconsistency proxy", is_proxy: true, indicator_ids: ["local_dino_similarity", "local_patch_worsened_fraction"], applicable_to: "semantic_evidence_candidates", recommended_action: "Inspect whether repaired structures remain compatible with surrounding content."}
+    - {category_id: "repeated_texture_proxy", display_name: "Repeated-texture proxy", is_proxy: true, indicator_ids: ["periodicity_excess", "hallucinated_detail_fraction"], applicable_to: "local_evidence_candidates", recommended_action: "Inspect repeated motifs and generated-looking surface detail."}
+    - {category_id: "texture_smoothing", display_name: "Texture smoothing", is_proxy: false, indicator_ids: ["smoothing_fraction", "local_texture_error_p95", "edge_density_error"], applicable_to: "local_evidence_candidates", recommended_action: "Inspect whether original brushwork or surface variation was flattened."}
+    - {category_id: "texture_discontinuity", display_name: "Texture discontinuity", is_proxy: false, indicator_ids: ["local_texture_error_p95", "transition_roughness_mismatch", "local_gradient_mismatch"], applicable_to: "local_evidence_candidates", recommended_action: "Inspect texture continuity across the repair boundary."}
+    - {category_id: "colour_bleeding_proxy", display_name: "Colour-bleeding proxy", is_proxy: true, indicator_ids: ["cross_boundary_colour_error", "boundary_spillover_p95"], applicable_to: "local_evidence_candidates", recommended_action: "Inspect colour transfer across the mask boundary."}
+    - {category_id: "colour_drift", display_name: "Colour drift", is_proxy: false, indicator_ids: ["masked_delta_e_mean", "masked_delta_e_p95", "masked_hue_shift"], applicable_to: "local_evidence_candidates", recommended_action: "Inspect colour matching inside the restored region."}
+    - {category_id: "boundary_seam", display_name: "Boundary seam", is_proxy: false, indicator_ids: ["boundary_gradient_mismatch", "boundary_orientation_mismatch", "boundary_ssim_error"], applicable_to: "local_evidence_candidates", recommended_action: "Inspect the boundary ring at full resolution."}
+    - {category_id: "mask_spillover", display_name: "Mask spillover", is_proxy: false, indicator_ids: ["boundary_spillover_p95", "outside_mask_change_fraction"], applicable_to: "spatial_evidence_candidates", recommended_action: "Inspect pixels immediately outside the intended repair."}
+    - {category_id: "outside_mask_alteration", display_name: "Outside-mask alteration", is_proxy: false, indicator_ids: ["outside_mask_change_fraction", "outside_mask_change_max"], applicable_to: "spatial_evidence_candidates", recommended_action: "Do not rely automatically; verify compositing and untouched content."}
+    - {category_id: "composition_change_proxy", display_name: "Composition-change proxy", is_proxy: true, indicator_ids: ["outside_context_feature_change", "global_feature_similarity", "affinity_centroid_shift"], applicable_to: "semantic_evidence_candidates", recommended_action: "Inspect global layout and unchanged context; seek specialist review when critical."}
+    - {category_id: "unstable_multi_seed_completion", display_name: "Unstable multi-seed completion", is_proxy: false, indicator_ids: ["uncertainty_pixel_std_p95", "uncertainty_pairwise_lpips", "uncertainty_pairwise_dino", "uncertainty_pairwise_rgb"], applicable_to: "complete_stochastic_seed_groups", recommended_action: "Inspect all seeds together; do not select one attractive output without reporting variability."}
+
+  trust_flags:
+    - {flag_id: "high_generative_uncertainty", display_name: "High generative uncertainty", source_categories: ["unstable_multi_seed_completion"]}
+    - {flag_id: "semantic_inconsistency", display_name: "Semantic inconsistency", source_categories: ["semantic_inconsistency_proxy"]}
+    - {flag_id: "structural_inconsistency", display_name: "Structural inconsistency", source_categories: ["structural_collapse_proxy", "composition_change_proxy"]}
+    - {flag_id: "texture_inconsistency", display_name: "Texture inconsistency", source_categories: ["repeated_texture_proxy", "texture_smoothing", "texture_discontinuity"]}
+    - {flag_id: "colour_inconsistency", display_name: "Colour inconsistency", source_categories: ["colour_bleeding_proxy", "colour_drift"]}
+    - {flag_id: "visible_boundary_artifact_proxy", display_name: "Visible boundary-artifact proxy", source_categories: ["boundary_seam"]}
+    - {flag_id: "outside_mask_alteration", display_name: "Outside-mask alteration", source_categories: ["mask_spillover", "outside_mask_alteration"]}
+    - {flag_id: "restoration_instability", display_name: "Restoration instability", derivation: "multi_family_uncertainty_or_seed_assignment_variation"}
+    - {flag_id: "metric_disagreement", display_name: "Metric disagreement", derivation: "at_least_two_adverse_and_two_favourable_independent_families"}
+    - {flag_id: "insufficient_evidence", display_name: "Insufficient evidence", derivation: "required_evidence_missing_or_incomplete"}
+    - {flag_id: "manual_review_required", display_name: "Manual review required", derivation: "critical_assignment_or_multiple_domain_flags_or_consequential_missingness"}
+
+  recommendation_priority:
+    - "do_not_rely_automatically"
+    - "unstable_candidate"
+    - "specialist_review_required"
+    - "suitable_for_preliminary_inspection"
+
+  report:
+    title: "Trustworthy Evaluation of AI-Assisted Painting Restoration"
+    subtitle: "Failure Taxonomy and Trustworthiness Flags"
+    self_contained_html: true
+    approved_mock_structure_locked: true
+    required_research_questions: ["RQ1", "RQ2", "RQ3"]
+    required_section_ids:
+      - "executive_summary"
+      - "evaluation_population"
+      - "rule_interpretation"
+      - "threshold_calibration"
+      - "taxonomy_overview"
+      - "visual_failure_atlas"
+      - "trustworthiness_flags"
+      - "model_and_experiment_patterns"
+      - "uncertainty_and_instability"
+      - "metric_disagreement_and_cooccurrence"
+      - "evidence_coverage_and_missingness"
+      - "candidate_recommendations"
+      - "internal_consistency"
+      - "thesis_conclusions"
+      - "limitations_and_provenance"
+    separately_persisted_canonical_figures: 1
+    minimum_embedded_analytical_views: 7
+    minimum_embedded_diagnostic_panels: 5
+    minimum_embedded_images: 42
+    target_embedded_tile_count: 49
+    image_max_dimension_pixels: 900
+    photographic_format: "JPEG"
+    photographic_quality: 82
+    soft_report_size_warning_mib: 60
+    required_visuals_must_not_depend_on_links: true
+    require_section_level_conclusions: true
+    require_evidence_to_assertion_pairs: true
+    require_nearby_scope_and_limitations: true
+    require_mixed_paragraph_bullet_table_visual_structure: true
+    mock_to_final_traceability_required: true
+
+  expected_counts:
+    primary_core_candidates: 1230
+    bounded_sdxl_candidates: 10
+    primary_candidates: 1240
+    canonical_uncertainty_groups: 130
+    canonical_uncertainty_candidates: 520
+    damage_size_uncertainty_groups: 35
+    damage_size_uncertainty_candidates: 140
+    repeated_seed_candidates: 660
+    primary_repeated_overlap: 115
+    uncertainty_only_candidates: 545
+    union_candidates: 1785
+    failure_categories: 14
+    trust_flags: 11
+    failure_assignment_rows: 24990
+    trustworthiness_flag_rows: 19635
+    canonical_output_files: 8
+    artifact_records: 6
+
+  evidence_policy:
+    combined_trust_score_retained: false
+    calibrated_confidence_claim_permitted: false
+    verified_face_anatomy_or_object_detection_claim_permitted: false
+    historical_authenticity_claim_permitted: false
+    conservation_approval_claim_permitted: false
+    missing_evidence_may_count_as_pass: false
+    metric_disagreement_must_remain_visible: true
+    deterministic_methods_receive_uncertainty_values: false
+    single_seed_sdxl_uncertainty_status: "insufficient_evidence"
+    deterministic_uncertainty_status: "not_applicable"
+    recommendation_is_decision_support_only: true
+
+  known_limitations:
+    - "Failure assignments are transparent operational screening rules, not human-labelled or conservation-validated failures."
+    - "Warning and critical percentiles identify relative outliers and do not provide calibrated probabilities."
+    - "Semantic, structural, repeated-texture, colour-bleeding, composition-change, and visible-boundary categories remain computational proxies."
+    - "The 1,785-candidate union contains primary-comparison and uncertainty-only roles that must not be pooled for ordinary model comparison."
+    - "Prompt variants remain separate uncertainty populations and cannot be pooled as repeated seeds."
+    - "Telea and LaMa are deterministic, so stochastic uncertainty is not applicable rather than zero."
+    - "SDXL has one seed for ten selected cases, so stochastic uncertainty is insufficient rather than absent."
+    - "The bounded SDXL population is incomplete and cannot support a general model ranking."
+    - "Metric disagreement is informative evidence and must not be hidden by a combined score."
+    - "No flag or recommendation establishes historical authenticity, conservation suitability, or museum approval."

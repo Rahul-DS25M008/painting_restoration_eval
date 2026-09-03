@@ -1,0 +1,494 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_5bbeb9a089d044fab465d5078aedab39",
+  "notebook_id": "13",
+  "notebook_name": "Classical Metrics",
+  "origin": "Consolidates Existing Notebooks 09, 15, and 22",
+  "run_status": "completed",
+  "started_at_utc": "2026-08-27T06:28:53.446137Z",
+  "completed_at_utc": "2026-08-27T10:06:05.892767Z",
+  "git_commit": "afb2cfffb748dfcb26b662c616ef2d9500a5fd3d",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260826T235404Z_2363d8d5",
+  "dataset_versions": {
+    "dataset_id": "painting_restoration_eval",
+    "dataset_scope": "controlled_50",
+    "experiment_id": "cross_experiment_classical_metrics",
+    "metrics_configuration_schema": "evaluation_metrics_config.v1",
+    "metrics_configuration_version": "1.0.0",
+    "metric_schema": "classical_metrics.v1",
+    "metric_version": "classical_full_reference.v1",
+    "region_policy_version": "evaluation_region_policy.v1",
+    "evaluation_worklist_schema": "evaluation_worklist.v1",
+    "sdxl_availability": "partial_ten_case_scope"
+  },
+  "configuration_paths": [
+    "config/evaluation/metrics.yaml",
+    "config/experiments/evaluation_contract.yaml"
+  ],
+  "configuration_checksums": {
+    "config/evaluation/metrics.yaml": "c3abb2675aac79563c47d98e7b55b1a6b611cd7af772da5c45891305a919d624",
+    "config/experiments/evaluation_contract.yaml": "ae977512636b0ea5eb16b4a3dff95c062f402c086430328a341c9d0bda6a3254"
+  },
+  "helper_versions": {
+    "restoration_eval": "0.1.0",
+    "evaluation_inputs": "1.0.1",
+    "manifests": "1.0.0",
+    "metrics_classical": "3.0.0",
+    "paths": "1.0.0",
+    "regions": "1.1.0",
+    "schemas": "1.11.0",
+    "validation": "1.0.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "matplotlib": "3.11.0",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3",
+    "scikit-image": "0.24.0"
+  },
+  "hardware": {
+    "execution_device": "cpu",
+    "gpu_required": false,
+    "full_execution_seconds": 4186.578
+  },
+  "inputs": [
+    {
+      "input_key": "project_inventory",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "format": "csv",
+      "schema_version": "project_file_inventory.v1",
+      "expected_cardinality": 11431,
+      "role": "repository discovery",
+      "required": true
+    },
+    {
+      "input_key": "inventory_run",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "format": "json",
+      "schema_version": "inventory_run.v1",
+      "expected_cardinality": 1,
+      "role": "inventory provenance",
+      "required": true
+    },
+    {
+      "input_key": "project_paths_registry",
+      "producer": "validated notebook handoffs",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "format": "json",
+      "schema_version": "project_paths.v1",
+      "expected_cardinality": 72,
+      "role": "artifact discovery",
+      "required": true
+    },
+    {
+      "input_key": "preprocessing_geometry",
+      "producer": "Notebook 02",
+      "relative_path": "outputs/02_image_preprocessing/data/preprocessed_images.csv",
+      "format": "csv",
+      "schema_version": "preprocessed_images.v1",
+      "expected_cardinality": 50,
+      "role": "painting-content geometry",
+      "required": true
+    },
+    {
+      "input_key": "case_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
+      "format": "csv",
+      "schema_version": "case_registry.v1",
+      "expected_cardinality": 525,
+      "role": "normalized evaluation cases",
+      "required": true
+    },
+    {
+      "input_key": "model_eligibility",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
+      "format": "csv",
+      "schema_version": "model_eligibility.v1",
+      "expected_cardinality": 2100,
+      "role": "model/case routing",
+      "required": true
+    },
+    {
+      "input_key": "region_policy",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv",
+      "format": "csv",
+      "schema_version": "region_policy.v1",
+      "expected_cardinality": 143,
+      "role": "metric-region compatibility",
+      "required": true
+    },
+    {
+      "input_key": "schema_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json",
+      "format": "json",
+      "schema_version": "schema_registry.v1",
+      "expected_cardinality": 1,
+      "role": "upstream schema discovery",
+      "required": true
+    },
+    {
+      "input_key": "contracts_artifacts",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv",
+      "format": "csv",
+      "schema_version": "artifact_manifest.v1",
+      "expected_cardinality": "one or more",
+      "role": "upstream artifact evidence",
+      "required": true
+    },
+    {
+      "input_key": "evaluation_metrics_config",
+      "producer": "Repository configuration",
+      "relative_path": "config/evaluation/metrics.yaml",
+      "format": "yaml",
+      "schema_version": "evaluation_metrics_config.v1",
+      "expected_cardinality": 1,
+      "role": "metric definitions and numerical policy",
+      "required": true
+    },
+    {
+      "input_key": "evaluation_contract_config",
+      "producer": "Repository configuration",
+      "relative_path": "config/experiments/evaluation_contract.yaml",
+      "format": "yaml",
+      "schema_version": "evaluation_contract_config.v1",
+      "expected_cardinality": 1,
+      "role": "region and eligibility policy",
+      "required": true
+    },
+    {
+      "input_key": "notebook_02_run_manifest",
+      "producer": "notebook_02",
+      "relative_path": "outputs/02_image_preprocessing/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_08_run_manifest",
+      "producer": "notebook_08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_09_opencv_telea_run_manifest",
+      "producer": "notebook_09_opencv_telea",
+      "relative_path": "outputs/09_opencv_telea_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_10_lama_run_manifest",
+      "producer": "notebook_10_lama",
+      "relative_path": "outputs/10_lama_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_11_stable_diffusion_run_manifest",
+      "producer": "notebook_11_stable_diffusion",
+      "relative_path": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_12_sdxl_run_manifest",
+      "producer": "notebook_12_sdxl",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_09_opencv_telea_table",
+      "producer": "notebook_09_opencv_telea",
+      "relative_path": "outputs/09_opencv_telea_restoration/data/restorations.csv",
+      "format": "csv",
+      "schema_version": "restorations.v1",
+      "expected_cardinality": 410,
+      "role": "opencv_telea restoration candidates",
+      "required": true
+    },
+    {
+      "input_key": "notebook_10_lama_table",
+      "producer": "notebook_10_lama",
+      "relative_path": "outputs/10_lama_restoration/data/restorations.csv",
+      "format": "csv",
+      "schema_version": "restorations.v1",
+      "expected_cardinality": 410,
+      "role": "lama restoration candidates",
+      "required": true
+    },
+    {
+      "input_key": "notebook_11_stable_diffusion_table",
+      "producer": "notebook_11_stable_diffusion",
+      "relative_path": "outputs/11_stable_diffusion_restoration/data/candidates.csv",
+      "format": "csv",
+      "schema_version": "stable_diffusion_candidates.v1",
+      "expected_cardinality": 1330,
+      "role": "stable_diffusion_inpainting restoration candidates",
+      "required": true
+    },
+    {
+      "input_key": "notebook_12_sdxl_table",
+      "producer": "notebook_12_sdxl",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv",
+      "format": "csv",
+      "schema_version": "sdxl_partial_candidates.v1",
+      "expected_cardinality": 10,
+      "role": "sdxl_inpainting restoration candidates",
+      "required": true
+    }
+  ],
+  "outputs": [
+    {
+      "artifact_key": "classical_metrics.metrics",
+      "relative_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+      "artifact_type": "table",
+      "artifact_role": "primary_downstream_evidence",
+      "schema_version": "classical_metrics.v1",
+      "expected_row_count": 63018,
+      "canonical": true
+    },
+    {
+      "artifact_key": "classical_metrics.distributions",
+      "relative_path": "outputs/13_classical_metrics/figures/classical_metric_distributions.png",
+      "artifact_type": "figure",
+      "artifact_role": "reporting_visualization",
+      "schema_version": "figure.classical_metric_distributions.v1",
+      "expected_row_count": 1,
+      "canonical": true
+    },
+    {
+      "artifact_key": "classical_metrics.improvement_by_region",
+      "relative_path": "outputs/13_classical_metrics/figures/classical_improvement_by_region.png",
+      "artifact_type": "figure",
+      "artifact_role": "reporting_visualization",
+      "schema_version": "figure.classical_improvement_by_region.v1",
+      "expected_row_count": 1,
+      "canonical": true
+    },
+    {
+      "artifact_key": "validation.13_classical_metrics",
+      "relative_path": "outputs/13_classical_metrics/validation/checks.csv",
+      "artifact_type": "table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "expected_row_count": 251,
+      "canonical": true
+    },
+    {
+      "artifact_key": "classical_metrics.artifacts",
+      "relative_path": "outputs/13_classical_metrics/manifests/artifacts.csv",
+      "artifact_type": "manifest",
+      "artifact_role": "artifact_discovery",
+      "schema_version": "artifact_manifest.v1",
+      "expected_row_count": 4,
+      "canonical": true
+    },
+    {
+      "artifact_key": "classical_metrics.run_manifest",
+      "relative_path": "outputs/13_classical_metrics/manifests/run_manifest.json",
+      "artifact_type": "manifest",
+      "artifact_role": "run_provenance",
+      "schema_version": "run_manifest.v1",
+      "expected_row_count": 1,
+      "canonical": true
+    }
+  ],
+  "expected_counts": {
+    "case_registry_rows": 525,
+    "eligible_case_model_pairs": 1640,
+    "evaluated_unique_cases": 410,
+    "evaluated_candidates": 2160,
+    "zero_control_cases": 50,
+    "zero_control_candidates": 150,
+    "active_threshold_13_candidates": 356,
+    "active_threshold_128_candidates": 1804,
+    "classical_metric_rows_each": 18896,
+    "ssim_rows": 6330,
+    "total_metric_rows": 63018,
+    "candidates_by_model": {
+      "opencv_telea": 410,
+      "lama": 410,
+      "stable_diffusion_inpainting": 1330,
+      "sdxl_inpainting": 10
+    },
+    "sdxl_metric_rows": 318,
+    "validation_row_count": 251,
+    "artifact_record_count": 4,
+    "canonical_output_file_count": 6,
+    "temporary_work_file_count": 0,
+    "blocking_validation_failures": 0
+  },
+  "observed_counts": {
+    "evaluated_unique_cases": 410,
+    "evaluated_candidates": 2160,
+    "metric_rows": 63018,
+    "metric_rows_by_metric": {
+      "mae": 18896,
+      "mse": 18896,
+      "psnr": 18896,
+      "ssim": 6330
+    },
+    "candidates_by_model": {
+      "lama": 410,
+      "opencv_telea": 410,
+      "sdxl_inpainting": 10,
+      "stable_diffusion_inpainting": 1330
+    },
+    "zero_control_candidates": 150,
+    "positive_infinity_values": 11332,
+    "negative_improvement_rows": 8425,
+    "validation_row_count": 251,
+    "artifact_record_count": 4,
+    "canonical_output_file_count": 6,
+    "temporary_work_file_count": 0,
+    "blocking_validation_failures": 0
+  },
+  "validation_summary": {
+    "batch_1_preflight": {
+      "check_count": 76,
+      "passed_count": 76,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "batch_2_input_loading": {
+      "check_count": 38,
+      "passed_count": 38,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "batch_3_smoke_test": {
+      "check_count": 25,
+      "passed_count": 25,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "batch_4_full_execution": {
+      "check_count": 19,
+      "passed_count": 19,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "batch_5_scientific_validation": {
+      "check_count": 29,
+      "passed_count": 29,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "batch_6_analysis_visualization": {
+      "check_count": 21,
+      "passed_count": 21,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "batch_7_canonical_persistence": {
+      "check_count": 17,
+      "passed_count": 17,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "batch_8_roadmap_completion": {
+      "check_count": 16,
+      "passed_count": 16,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "batch_8_completion_gate": {
+      "check_count": 10,
+      "passed_count": 10,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "overall": {
+      "check_count": 251,
+      "passed_count": 251,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    }
+  },
+  "known_limitations": [
+    "SDXL evidence is a predeclared technically validated ten-case partial scope, not full 410-case coverage.",
+    "Stable Diffusion contributes repeated prompt and seed candidates; Notebook 13 reports candidate-level evidence without metric-based selection.",
+    "Synthetic degradation restoration remains a supplementary inpainting diagnostic for the eligible degradation families.",
+    "Classical metrics cannot establish conservation plausibility or semantic correctness alone.",
+    "Positive infinity is an intentional PSNR result for exact equality and must not be coerced to a finite value.",
+    "Candidate-level metric rows are not statistically independent; later inference must respect painting, case, prompt, and seed nesting.",
+    "The two figures are compact descriptive QA views rather than inferential evidence."
+  ],
+  "refactor_status": "refactored",
+  "validation_status": "passed",
+  "depends_on": [
+    "experiment_contracts.case_registry",
+    "experiment_contracts.model_eligibility",
+    "experiment_contracts.region_policy",
+    "experiment_contracts.schema_registry",
+    "lama.restorations",
+    "opencv_telea.restorations",
+    "preprocessing.geometry",
+    "sdxl.candidates",
+    "stable_diffusion.candidates"
+  ],
+  "applicable_dataset_scopes": [
+    "controlled_50"
+  ],
+  "applicable_experiment_scopes": [
+    "canonical_missing_region",
+    "damage_size_sensitivity",
+    "mask_robustness",
+    "synthetic_degradation"
+  ],
+  "expensive_execution": true,
+  "completion_gate_passed": true
+}

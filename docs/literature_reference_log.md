@@ -3343,7 +3343,9 @@ The supervisor-package refresh notebook updates the supervisor-facing review pac
 
 The decision supported by this notebook is to consolidate supervisor-facing information into a small set of current files rather than maintaining many overlapping summaries.
 
-Notebook 35 refreshes the existing supervisor package in place. It does not create duplicate `v2` files.
+This historical planning note assigned package refresh to Notebook 35. In the
+approved final roadmap, Notebook 35 validates dashboard deployment and Notebook
+36 owns the final supervisor/publication/reproducibility package.
 
 ### References
 
@@ -3381,18 +3383,18 @@ Notebook 35 summarizes the framework as a layered evaluation approach that inclu
 
 ### Project decision
 
-Notebook 35 refreshes the supervisor package under:
+Notebook 36 assembles the final package under:
 
-`outputs/supervisor_package/`
+`outputs/36_supervisor_publication_reproducibility_package/`
 
 Main outputs include:
 
-- `outputs/supervisor_package/supervisor_summary.md`
-- `outputs/supervisor_package/supervisor_artifact_index.csv`
-- `outputs/supervisor_package/supervisor_key_findings.json`
-- `outputs/supervisor_package/supervisor_open_questions.md`
-- `outputs/supervisor_package/supervisor_feedback_agenda.md`
-- `outputs/supervisor_package/supervisor_package_manifest.json`
+- `outputs/36_supervisor_publication_reproducibility_package/reports/supervisor_summary.md`
+- `outputs/36_supervisor_publication_reproducibility_package/data/artifact_index.csv`
+- `outputs/36_supervisor_publication_reproducibility_package/data/key_findings.json`
+- `outputs/36_supervisor_publication_reproducibility_package/data/open_questions.md`
+- `outputs/36_supervisor_publication_reproducibility_package/data/feedback_agenda.md`
+- `outputs/36_supervisor_publication_reproducibility_package/manifests/package_manifest.json`
 
 The refreshed package documents:
 
@@ -3415,4 +3417,4 @@ Possible thesis wording:
 
 - Use the supervisor feedback agenda to structure the next meeting.
 - Ask the supervisor to prioritize post-feedback extensions before starting new experiments.
-- Keep the supervisor package lean and regenerate it from Notebook 35 when the project state changes.
+- Keep the supervisor package lean and regenerate it from Notebook 36 when the project state changes.

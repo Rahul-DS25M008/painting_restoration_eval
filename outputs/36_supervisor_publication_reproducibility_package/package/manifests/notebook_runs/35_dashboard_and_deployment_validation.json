@@ -1,0 +1,302 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_e04d0dfa163b4a15966c5420b01d74c7",
+  "notebook_id": "35",
+  "notebook_name": "35_dashboard_and_deployment_validation",
+  "origin": "New Notebook",
+  "run_status": "completed",
+  "started_at_utc": "2026-09-03T13:26:02Z",
+  "completed_at_utc": "2026-09-03T13:27:25Z",
+  "git_commit": "179f72f3c85642596d3010d4c3802ba417b7baad",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260903T100938Z_41e6dccc",
+  "dataset_versions": {
+    "dataset_scope": "controlled_50",
+    "dashboard_package_schema_version": "dashboard_package.v1",
+    "dashboard_validation_schema_version": "dashboard_validation_config.v1",
+    "dashboard_configuration_version": "1.0.0",
+    "notebook_34_run_id": "run_a8d0c877315947ff84d76d93e29c547c"
+  },
+  "configuration_paths": [
+    "config/evaluation/dashboard_validation.yaml",
+    "config/evaluation/evidence_coverage.yaml"
+  ],
+  "configuration_checksums": {
+    "config/evaluation/dashboard_validation.yaml": "687840dadbabd1942ad6aa4aaa3f228f833f25f635400ca784cc2687127928aa",
+    "config/evaluation/evidence_coverage.yaml": "40409c9080b3bfc17ec2e5d1fba6173a0d97a6a9ac3771774fc65902cce9295a"
+  },
+  "helper_versions": {
+    "dashboard_application": "1.0.0",
+    "manifests": "1.0.0",
+    "validation": "1.0.0",
+    "paths": "1.0.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3",
+    "plotly": "6.8.0",
+    "pyarrow": "24.0.0",
+    "streamlit": "1.59.0"
+  },
+  "hardware": {
+    "analysis_mode": "dashboard_application_validation",
+    "streamlit_apptest_used": true,
+    "tested_page_count": 8,
+    "restoration_inference_performed": false,
+    "scientific_metric_recomputation_performed": false,
+    "external_deployment_performed": false
+  },
+  "inputs": [
+    {
+      "input_key": "application.dashboard_helper",
+      "relative_path": "src/restoration_eval/dashboard_application.py",
+      "checksum": "8cda011b191fc59d23cf02801c899df13ab7ad2c3a14297a264eb1105585df81"
+    },
+    {
+      "input_key": "application.streamlit_entrypoint",
+      "relative_path": "streamlit_app.py",
+      "checksum": "61368870fba5ef39a9d38b8e888b210e7c1483d2eddb7ff23f490e17b525c783"
+    },
+    {
+      "input_key": "configuration.dashboard_validation",
+      "relative_path": "config/evaluation/dashboard_validation.yaml",
+      "checksum": "687840dadbabd1942ad6aa4aaa3f228f833f25f635400ca784cc2687127928aa"
+    },
+    {
+      "input_key": "configuration.evidence_coverage",
+      "relative_path": "config/evaluation/evidence_coverage.yaml",
+      "checksum": "40409c9080b3bfc17ec2e5d1fba6173a0d97a6a9ac3771774fc65902cce9295a"
+    },
+    {
+      "input_key": "dashboard_package.case_index",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/case_index.csv",
+      "checksum": "9fbfa714adb4eb05acfa1709a2d81a533384bdb3294e625038f6c2ec09ca5aa5"
+    },
+    {
+      "input_key": "dashboard_package.compute_summary",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/compute_summary.csv",
+      "checksum": "7ab3f1fccf42a8da147931f4a8d0a535af59682bee883190fa8bffbbb353f9c1"
+    },
+    {
+      "input_key": "dashboard_package.dashboard_assets",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_assets.csv",
+      "checksum": "b45cd2317eb8be36582d118408b89e6897fe4c6e239c2e50e8f6febcd90c46e6"
+    },
+    {
+      "input_key": "dashboard_package.dashboard_summary",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_summary.json",
+      "checksum": "2772bced7fe2639009b6292e4796397a6b40027a1fae61418d7e4ae4acfe907e"
+    },
+    {
+      "input_key": "dashboard_package.filter_options",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/filter_options.json",
+      "checksum": "6c57176f877db3f1b3f0b8954f8c8d2c920a9fbc4ae04943bd6e09ce3443e0de"
+    },
+    {
+      "input_key": "dashboard_package.headline_findings",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/headline_findings.csv",
+      "checksum": "02d16b6cae9b7a6594d2270faf15103a94107b6d9c8e964451e3ab64f7bac6ce"
+    },
+    {
+      "input_key": "dashboard_package.metric_framework",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/metric_framework.csv",
+      "checksum": "ce390b97d329e20db56f729ef7b5cf156db277b32620baf8bd9dc02a2f50f1ad"
+    },
+    {
+      "input_key": "dashboard_package.painting_index",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/painting_index.csv",
+      "checksum": "c0f54f7695e7c18600790cce94c283ccb6976a918455a6a2d79f0667b774b131"
+    },
+    {
+      "input_key": "dashboard_package.performance_summary",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/performance_summary.csv",
+      "checksum": "43319aa6e72dfe2d7f9c41ec723d28bd5204480f8b5df783c941d4595d400b06"
+    },
+    {
+      "input_key": "dashboard_package.report_index",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/report_index.csv",
+      "checksum": "f5e5a996c14417108e305a05bc314a7075b6d91b1b88faa86bdd0b2e2e33ce78"
+    },
+    {
+      "input_key": "dashboard_package.research_question_coverage",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/research_question_coverage.csv",
+      "checksum": "a0f7f101147332add582d4f658f410d04c3e162f33a74313222b7bf1305ad4b4"
+    },
+    {
+      "input_key": "dashboard_package.sensitivity_summary",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/sensitivity_summary.csv",
+      "checksum": "7d8a09353433c08759e59677dba22e37f08687eba4a6ddda2d6d78baeb195405"
+    },
+    {
+      "input_key": "dashboard_package.study_design",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/study_design.csv",
+      "checksum": "3a9ed2b892582746ec1c8aa42172bdb6f291f8301fa22da9ed8707af06443a3b"
+    },
+    {
+      "input_key": "dashboard_package.trustworthiness_summary",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/trustworthiness_summary.csv",
+      "checksum": "4c79651663460f41bd4f499f3174c3cbf179497ac67467b8c15796dfa32a6365"
+    },
+    {
+      "input_key": "dashboard_package.uncertainty_summary",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/uncertainty_summary.csv",
+      "checksum": "068a7632f07fdad261c10c2b2c7f4a7a7e79291672f427c91da70a6eae2d96ff"
+    },
+    {
+      "input_key": "dashboard_package.upstream_run_manifest",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/manifests/run_manifest.json",
+      "checksum": "ca67ab9e2b365d14f67e9c964924cc25f652c8adfdc1ea31d0bbe9d027ecbaa3"
+    },
+    {
+      "input_key": "dashboard_package.upstream_validation",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/validation/checks.csv",
+      "checksum": "317472db6624942fd15dce7181cfccf5bde2ec63c20a5927299cee43f14d58fb"
+    },
+    {
+      "input_key": "dashboard_package.visual_asset_index",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/visual_asset_index.csv",
+      "checksum": "7346c818f9db7729febd79f61b13c200000f46d5d28c947b311e55a10a6465e4"
+    },
+    {
+      "input_key": "environment.experiment_requirements",
+      "relative_path": "requirements_experiments.txt",
+      "checksum": "fca385c534df4623f15d058f5b7d188034a6aeb01add4bb0b13aeca6b366dfa5"
+    },
+    {
+      "input_key": "environment.requirements",
+      "relative_path": "requirements.txt",
+      "checksum": "0d66b4c3bb24e5c03647df89121bd50e76167d6cde0970c027b4545bf660638f"
+    },
+    {
+      "input_key": "governance.evidence_dependency_audit",
+      "relative_path": "docs/evidence_dependency_audit.md",
+      "checksum": "9280636ed88bf2e68c68cfcc7722aa04f79b971d4823305c21e77949a663100d"
+    },
+    {
+      "input_key": "governance.implementation_guidelines",
+      "relative_path": "docs/refactoring_implementation_guidelines.md",
+      "checksum": "d0a981a78d5050f76f31f0e9f0fe39b3535b6a0ed3344249848ceaa0333a8d16"
+    },
+    {
+      "input_key": "governance.notebook_roadmap",
+      "relative_path": "docs/final_notebook_roadmap.md",
+      "checksum": "a3060181a04d6511daa71c74aedcb197bda1c00b77966c454de3adfbb56524d0"
+    },
+    {
+      "input_key": "inventory.inventory_run",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "checksum": "f54e03639d26300b09fc26a9f44364d902c42347daf5858b4ed09e05daae2cea"
+    },
+    {
+      "input_key": "inventory.project_file_inventory",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "checksum": "e64574c553c9c2f8b647f4c78b2d5cf20bb02fc82faa500e91bb4e6519ea6823"
+    },
+    {
+      "input_key": "inventory.project_paths",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "checksum": "3f0aa92d945dc6ddc1f04d25943cebc5b9e64b87ff1811a6797b5203762e4e3a"
+    }
+  ],
+  "outputs": [
+    {
+      "artifact_key": "notebook_35.artifacts",
+      "relative_path": "outputs/35_dashboard_and_deployment_validation/manifests/artifacts.csv",
+      "artifact_type": "csv"
+    },
+    {
+      "artifact_key": "notebook_35.dashboard_checks",
+      "relative_path": "outputs/35_dashboard_and_deployment_validation/validation/dashboard_checks.csv",
+      "artifact_type": "csv"
+    },
+    {
+      "artifact_key": "notebook_35.deployment_readiness",
+      "relative_path": "outputs/35_dashboard_and_deployment_validation/reports/deployment_readiness.md",
+      "artifact_type": "md"
+    },
+    {
+      "artifact_key": "notebook_35.run_manifest",
+      "relative_path": "outputs/35_dashboard_and_deployment_validation/manifests/run_manifest.json",
+      "artifact_type": "json"
+    }
+  ],
+  "expected_counts": {
+    "dashboard_pages": 8,
+    "paintings": 50,
+    "restoration_cases": 410,
+    "approved_candidates": 1785,
+    "visual_records": 23964,
+    "reports": 104,
+    "sdxl_candidates": 10,
+    "roadmap_responsibilities": 14,
+    "canonical_outputs": 4,
+    "artifact_records": 2,
+    "dependency_mismatches": 0
+  },
+  "observed_counts": {
+    "dashboard_pages": 8,
+    "paintings": 50,
+    "restoration_cases": 410,
+    "approved_candidates": 1785,
+    "visual_records": 23964,
+    "reports": 104,
+    "sdxl_candidates": 10,
+    "roadmap_responsibilities": 14,
+    "canonical_outputs": 4,
+    "artifact_records": 2,
+    "dependency_mismatches": 4,
+    "validation_rows": 582
+  },
+  "validation_summary": {
+    "check_count": 582,
+    "passed_count": 574,
+    "failed_count": 8,
+    "blocking_failure_count": 0,
+    "overall_passed": true,
+    "failed_check_ids": [
+      "batch_1_dependency_versions:package_version__pillow",
+      "batch_1_dependency_versions:package_version__plotly",
+      "batch_1_dependency_versions:package_version__pyarrow",
+      "batch_1_dependency_versions:package_version__streamlit",
+      "batch_7_runtime_preflight:declared_streamlit_version",
+      "batch_7_final_gate:streamlit_version_alignment",
+      "batch_8_readiness_decision:dependency_pin_alignment",
+      "batch_8_readiness_decision:external_deployment_recorded"
+    ]
+  },
+  "known_limitations": [
+    "The application presents validated evidence and does not create restoration candidates or scientific metrics.",
+    "The benchmark uses controlled synthetic damage and does not establish real-world conservation generality.",
+    "SDXL is a bounded ten-case feasibility study rather than a fourth full benchmark.",
+    "Repeated-seed variability is not calibrated confidence.",
+    "Computational flags and recommendations are not expert or conservation ground truth.",
+    "The dashboard has no deployed URL until an external deployment is explicitly performed and recorded.",
+    "pillow: tested 9.5.0, pinned 12.3.0",
+    "plotly: tested 6.8.0, pinned 6.9.0",
+    "pyarrow: tested 24.0.0, pinned 20.0.0",
+    "streamlit: tested 1.59.0, pinned 1.56.0"
+  ],
+  "validation_status": "warning",
+  "refactor_status": "refactored",
+  "completion_gate_passed": true,
+  "creates_new_scientific_evidence": false,
+  "local_application_ready": true,
+  "deployment_readiness_status": "conditionally_ready_for_local_demonstration",
+  "external_deployment_recorded": false,
+  "deployment_platform": "not_deployed",
+  "deployment_url": "",
+  "dashboard_page_count": 8,
+  "artifact_manifest_checksum": "463353e3b7267a5630067bbebb634551234201fb1dc50ee691668c603ee9659b",
+  "output_checksums": {
+    "outputs/35_dashboard_and_deployment_validation/reports/deployment_readiness.md": "d98e0a5aaf1d45480fd80396161cd6612f771532cc9a20eda346d778072ef54b",
+    "outputs/35_dashboard_and_deployment_validation/validation/dashboard_checks.csv": "f1ea933fb69e269daf4f128207f352231477c63b67e2ebd87ed30b0f94111052",
+    "outputs/35_dashboard_and_deployment_validation/manifests/artifacts.csv": "463353e3b7267a5630067bbebb634551234201fb1dc50ee691668c603ee9659b"
+  }
+}

@@ -1,0 +1,230 @@
+schema_version: dashboard_validation_config.v1
+configuration_version: 1.0.0
+
+notebook:
+  id: "35"
+  stem: "35_dashboard_and_deployment_validation"
+  origin: "New Notebook"
+  output_root: "outputs/35_dashboard_and_deployment_validation"
+  purpose: "Validate the dashboard as a reproducible inspection and decision-support layer."
+
+application:
+  entrypoint: "streamlit_app.py"
+  helper_module: "src/restoration_eval/dashboard_application.py"
+  dashboard_package_root: "outputs/34_final_streamlit_dashboard_assets"
+  package_schema_version: "dashboard_package.v1"
+  asset_manifest_schema_version: "dashboard_assets_manifest.v1"
+  page_count: 8
+  page_ids:
+    - overview
+    - study_design
+    - metric_framework
+    - model_performance
+    - robustness_uncertainty
+    - trustworthiness_xai
+    - case_explorer
+    - reports_reproducibility
+  display_names:
+    overview: "Overview"
+    study_design: "Study Design"
+    metric_framework: "Metric Framework"
+    model_performance: "Model Performance"
+    robustness_uncertainty: "Robustness & Uncertainty"
+    trustworthiness_xai: "Trustworthiness & XAI"
+    case_explorer: "Case Explorer"
+    reports_reproducibility: "Reports & Reproducibility"
+
+required_inputs:
+  dashboard_summary:
+    path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_summary.json"
+    schema_version: "dashboard_package.v1"
+  headline_findings:
+    path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/headline_findings.csv"
+    rows: 8
+    schema_version: "dashboard_headline_findings.v1"
+  study_design:
+    path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/study_design.csv"
+    rows: 35
+    schema_version: "dashboard_study_design.v1"
+  metric_framework:
+    path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/metric_framework.csv"
+    rows: 178
+    schema_version: "dashboard_metric_framework.v1"
+  performance_summary:
+    path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/performance_summary.csv"
+    rows: 1241
+    schema_version: "dashboard_performance_summary.v1"
+  sensitivity_summary:
+    path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/sensitivity_summary.csv"
+    rows: 18951
+    schema_version: "dashboard_sensitivity_summary.v1"
+  uncertainty_summary:
+    path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/uncertainty_summary.csv"
+    rows: 1723
+    schema_version: "dashboard_uncertainty_summary.v1"
+  trustworthiness_summary:
+    path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/trustworthiness_summary.csv"
+    rows: 284
+    schema_version: "dashboard_trustworthiness_summary.v1"
+  compute_summary:
+    path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/compute_summary.csv"
+    rows: 35
+    schema_version: "dashboard_compute_summary.v1"
+  research_question_coverage:
+    path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/research_question_coverage.csv"
+    rows: 4
+    schema_version: "dashboard_research_question_coverage.v1"
+  case_index:
+    path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/case_index.csv"
+    rows: 1785
+    schema_version: "dashboard_case_index.v1"
+  painting_index:
+    path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/painting_index.csv"
+    rows: 50
+    schema_version: "dashboard_painting_index.v1"
+  visual_asset_index:
+    path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/visual_asset_index.csv"
+    rows: 23964
+    schema_version: "dashboard_visual_asset_index.v1"
+  report_index:
+    path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/report_index.csv"
+    rows: 104
+    schema_version: "dashboard_report_index.v1"
+  filter_options:
+    path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/filter_options.json"
+    schema_version: "dashboard_filter_options.v1"
+  dashboard_assets:
+    path: "outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_assets.csv"
+    rows: 15
+    schema_version: "dashboard_assets_manifest.v1"
+  upstream_run_manifest:
+    path: "outputs/34_final_streamlit_dashboard_assets/manifests/run_manifest.json"
+    schema_version: "run_manifest.v1"
+  upstream_validation:
+    path: "outputs/34_final_streamlit_dashboard_assets/validation/checks.csv"
+    rows: 410
+    schema_version: "validation_checks.v1"
+
+expected_population:
+  paintings: 50
+  registered_cases: 525
+  restoration_cases: 410
+  approved_candidates: 1785
+  primary_three_model_candidates: 1230
+  stable_diffusion_candidates: 955
+  sdxl_candidates: 10
+  canonical_uncertainty_groups: 130
+  damage_size_uncertainty_groups: 35
+  reports: 104
+  visual_records: 23964
+
+relationship_expectations:
+  supporting_visual_candidate_ids: 480
+  supporting_visual_records: 4320
+  supporting_visual_model_ids: ["stable_diffusion_inpainting"]
+  supporting_visual_source_notebook_ids: ["16", "20"]
+  supporting_visual_prompt_arms: ["p01", "p02", "p03", "p04"]
+  interpretation: "These maps belong to valid Stable Diffusion prompt-ablation candidates retained as supporting visual evidence; they are not additions to the 1,785-candidate approved comparison index."
+
+required_columns:
+  headline_findings: [finding_id, page_id, display_order, title, value, value_unit, conclusion, limitation, schema_version, status]
+  study_design: [design_row_id, page_id, section_id, record_type, experiment_id, display_name, value, value_unit, interpretation, schema_version, status]
+  metric_framework: [metric_row_id, page_id, section_id, record_type, metric_family, metric_name, region_id, compatible, comparison_direction, interpretation, limitation, schema_version, status]
+  performance_summary: [performance_row_id, page_id, section_id, analysis_scope, evidence_family, metric_name, region_id, comparison_direction, model_id, estimate, rank, winner_model_id, applicability_status, interpretation, schema_version, status]
+  sensitivity_summary: [sensitivity_row_id, page_id, section_id, analysis_family, analysis_kind, experiment_id, condition_value, metric_name, region_id, model_id, estimate, applicability_status, interpretation, schema_version, status]
+  uncertainty_summary: [uncertainty_row_id, page_id, section_id, record_type, experiment_id, prompt_variant_id, uncertainty_group_id, painting_id, metric_name, region_id, value, seed_count, applicability_status, is_calibrated_confidence, interpretation, limitation, schema_version, status]
+  trustworthiness_summary: [trust_row_id, page_id, section_id, record_type, entity_id, display_name, model_id, recommendation_category, value, recommended_action, interpretation, limitation, schema_version, status]
+  compute_summary: [compute_row_id, page_id, section_id, record_type, model_id, display_name, evaluation_status, scenario_id, runtime_seconds, is_executed, is_projected, projection_basis, applicability_status, interpretation, schema_version, status]
+  research_question_coverage: [coverage_row_id, research_question_id, research_question, page_id, coverage_status, supported_interpretation, prohibited_interpretation, schema_version, status]
+  case_index: [case_index_id, candidate_id, case_id, painting_id, model_id, experiment_id, degradation_family, severity, clean_path, damaged_path, mask_path, restored_path, recommendation_category, manual_review_required, uncertainty_applicability, report_selected, case_report_path, painting_report_path, evidence_coverage_status, scope_status, schema_version, status]
+  painting_index: [painting_index_id, painting_id, title, artist, category, raw_image_path, case_count, candidate_count, model_count, has_uncertainty, painting_report_path, schema_version, status]
+  visual_asset_index: [visual_asset_id, asset_role, asset_type, page_id, candidate_id, case_id, painting_id, model_id, map_type, region_id, relative_path, is_default_visual, applicability_status, schema_version, status]
+  report_index: [dashboard_report_id, report_family, report_role, title, report_path, format, self_contained, source_notebook_id, scope, applicability_status, schema_version, status]
+  dashboard_assets: [dashboard_asset_id, asset_key, asset_group, page_ids_json, relative_path, schema_version, validation_status, status]
+
+runtime:
+  provisional_python: "3.11"
+  accepted_python_minor_versions: ["3.11", "3.12"]
+  packages:
+    streamlit: "1.56.0"
+    pandas: "2.3.3"
+    plotly: "6.9.0"
+    numpy: "1.26.4"
+    pyarrow: "20.0.0"
+    pillow: "12.3.0"
+    pyyaml: "6.0.3"
+  smoke_timeout_seconds: 120
+  browser_smoke_required_when_runtime_available: true
+  deployment_url: ""
+  deployment_platform: "not_deployed"
+
+presentation:
+  theme_id: "authored_museum_research_v1"
+  reference_images_are_external_and_read_only: true
+  approved_reference_images:
+    - "D:/Downloads/ui1.jpeg"
+    - "D:/Downloads/ui2.jpeg"
+    - "D:/Downloads/ui3.jpeg"
+  reference_images_must_not_be_copied_to_repository: true
+  representative_defaults_only: true
+  complete_population_must_remain_filterable: true
+  report_downloads_must_be_self_contained: true
+  principal_page_count: 8
+  palette:
+    paper: "#f1eadb"
+    paper_light: "#faf7ef"
+    bottle_green: "#123f3a"
+    deep_green: "#0b302c"
+    raw_umber: "#6e4b32"
+    faded_vermilion: "#b74b32"
+    ochre: "#b88a2e"
+    charcoal: "#272623"
+    graphite: "#777064"
+  visual_principles:
+    - "museum-research and exhibition-catalogue character"
+    - "subtle paper texture and graphite dividers"
+    - "editorial serif display type with readable sans-serif controls"
+    - "restrained hand-drawn notes and modest irregularity"
+    - "dense evidence layouts with clear hierarchy"
+    - "responsive stacking and accessible contrast override decoration"
+
+scientific_boundaries:
+  mandatory_statement: "Visual plausibility is not equivalent to historical correctness, conservation approval, or restoration trustworthiness."
+  no_scientific_recomputation: true
+  no_restoration_inference: true
+  uncertainty_is_empirical_seed_variability: true
+  sdxl_is_bounded_ten_case_evidence: true
+  computational_flags_are_not_expert_ground_truth: true
+  retrieval_is_context_not_ground_truth: true
+  no_universal_combined_score: true
+  prohibited_source_fragments:
+    - "outputs/dashboard"
+    - "outputs/metrics"
+    - "outputs/reports"
+    - "outputs/figures"
+    - "combined_uncertainty_index"
+    - "300 paintings"
+    - "MAT"
+    - "PartialConv"
+
+outputs:
+  dashboard_checks:
+    path: "outputs/35_dashboard_and_deployment_validation/validation/dashboard_checks.csv"
+    schema_version: "validation_checks.v1"
+  deployment_readiness:
+    path: "outputs/35_dashboard_and_deployment_validation/reports/deployment_readiness.md"
+    schema_version: "deployment_readiness_report.v1"
+  run_manifest:
+    path: "outputs/35_dashboard_and_deployment_validation/manifests/run_manifest.json"
+    schema_version: "run_manifest.v1"
+  artifacts:
+    path: "outputs/35_dashboard_and_deployment_validation/manifests/artifacts.csv"
+    schema_version: "artifact_manifest.v1"
+
+known_limitations:
+  - "The application presents validated evidence and does not create restoration candidates or scientific metrics."
+  - "The benchmark uses controlled synthetic damage and does not establish real-world conservation generality."
+  - "SDXL is a bounded ten-case feasibility study rather than a fourth full benchmark."
+  - "Repeated-seed variability is not calibrated confidence."
+  - "Computational flags and recommendations are not expert or conservation ground truth."
+  - "The dashboard has no deployed URL until an external deployment is explicitly performed and recorded."

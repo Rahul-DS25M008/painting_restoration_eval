@@ -2,8 +2,8 @@
 
 ## 1. Status and authority
 
-This document is the human-readable evidence-coverage gate for the remaining
-notebook pipeline. It must be read together with:
+This document is the human-readable evidence-coverage ledger for the completed
+36-notebook pipeline and the gate for any later extension. It must be read together with:
 
 - `docs/refactoring_implementation_guidelines.md`;
 - `docs/final_notebook_roadmap.md`;
@@ -614,11 +614,75 @@ traceability, and balanced overview explanations. These are presentation and
 inspection improvements over the fixed Notebook 34 evidence package; they do
 not alter or recompute the scientific results.
 
-## 6. Remaining-notebook evidence gate
+## 6. Final-package evidence gate
 
 | Notebook | Supported evidence contract | Required scope discipline |
 |---|---|---|
-| 36 Reproducibility package | N01–35 manifests and selected artifacts | reconcile package contents with the controlled evidence and declared projections |
+| 36 Reproducibility package | 35 completed manifests; N30 model cards; N31 model reports; N32 report indexes; N33 report, figures, and tables; N34 indexes; N35 deployment readiness | package only validated evidence; distinguish copied material from indexed omissions; do not recompute or strengthen scientific claims |
+
+### Notebook 36 approved contract and completion
+
+Notebook 36 is a delivery and traceability consumer. It creates no new
+scientific evidence. The approved population is fixed at 50 paintings, 525
+registered cases, 410 restoration cases, 1,785 approved candidates, 11 quality
+anchors, 165 uncertainty groups, 23,964 visual records, 104 report records, and
+ten bounded SDXL feasibility cases.
+
+The curated package copies the final self-contained HTML report, four
+self-contained model reports, 24 final figures, four model cards, eight compact
+tables/indexes, 35 run manifests, evaluation configurations, environment files,
+and dashboard delivery documentation. It records canonical paths and checksums
+without duplicating the 30 case reports, 50 painting reports, selected-case
+grids, complete dashboard visual package, restoration/map collections, model
+weights, or caches.
+
+The package must answer the three proposal research questions only within the
+validated controlled benchmark. It must preserve these boundaries: no universal
+combined score, no calibrated-confidence claim, no expert-ground-truth claim,
+no full-benchmark SDXL claim, and no inference from controlled synthetic damage
+to conservation approval or historical correctness.
+
+The preparation audit also found that the global project-path registry ended at
+Notebook 33. Notebook 34 contributes 17 canonical dashboard records and
+Notebook 35 contributes two completion records with non-blocking warning status.
+Those records were normalized and registered before Notebook 36 Batch 1,
+bringing the preflight registry to 218 artifacts. Overlapping artifact keys
+were namespaced without rewriting the frozen upstream manifests.
+
+Notebook 36 is complete under run `run_4e221aa9405d4d5cbeb7ae120dfad71a`.
+The saved opening metadata reads Finished / Finished / Yes, all 16 roadmap
+responsibilities passed, and the 182-row validation ledger contains 181 passes,
+zero blocking failures, and one inherited Notebook 35 dependency-alignment
+warning. That record summarizes the upstream warning state; it is not a new
+scientific failure or a claim that Notebook 35 had only one individual warning.
+
+The final output root contains exactly 125 files. The 114-file review package
+contains 106 byte-preserved copies and eight Notebook 36-generated files,
+totalling 29,021,450 bytes (27.677 MiB). Its 120-row artifact index distinguishes
+those 114 files from six intentionally indexed but unbundled collections.
+Twelve canonical artifact records are registered, bringing the global registry
+to 230 records, with the inherited warning status preserved.
+
+Independent final inspection verified the saved code syntax, absence of saved
+cell errors, artifact and run-output checksums, every packaged file checksum,
+package-tree checksum, all 22 local Markdown links, and all 24 PNG files.
+The notebook also validated all five self-contained HTML reports. The supervisor
+summary and meeting agenda now refer to the final validation records rather
+than incorrectly describing package assembly as still in progress.
+
+The bundle retains 25 execution-time evaluation-configuration snapshots and
+indexes 13 additional source configurations. These historical snapshots, the
+preflight 218-record registry count, and the recorded pre-commit Git state must
+not be rewritten merely because the governing audit files and global registry
+are updated after completion. Their recorded checksums describe the inputs
+actually consumed by the run, not the later administrative completion state.
+
+The package is ready for supervisor and thesis review. It is not a complete
+executable repository clone; omitted image collections, model weights, and
+the full dashboard assets still require the repository. Dashboard readiness
+remains conditional local demonstration readiness, not completed public
+deployment. No upstream notebook, scientific result, or approved application
+was changed during this final packaging audit.
 
 ## 7. Removed unsupported promises
 

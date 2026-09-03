@@ -1,0 +1,314 @@
+config_schema_version: "final_evaluation_report_config.v1"
+config_version: "1.0.0"
+
+final_evaluation_report:
+  notebook_id: "33"
+  notebook_stem: "33_final_evaluation_report"
+  dataset_id: "painting_restoration_eval"
+  dataset_version: "1.0.0"
+  dataset_scope: "controlled_50"
+  creates_new_scientific_evidence: false
+  thesis_table_schema_version: "thesis_tables.v1"
+  latex_table_schema_version: "latex_tables.v1"
+  evidence_catalog_schema_version: "final_report_evidence_catalog.v1"
+  traceability_schema_version: "final_report_mock_traceability.v1"
+  report_schema_version: "final_evaluation_report.v1"
+
+  inputs:
+    inventory_path: "outputs/inventory/project_file_inventory.csv"
+    inventory_run_path: "outputs/inventory/inventory_run.json"
+    project_paths_path: "outputs/inventory/project_paths.json"
+    proposal_path: "docs/proposal/Rahul_Thesis_Proposal.docx"
+    implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+    notebook_roadmap_path: "docs/final_notebook_roadmap.md"
+    evidence_dependency_audit_path: "docs/evidence_dependency_audit.md"
+    evidence_coverage_path: "config/evaluation/evidence_coverage.yaml"
+    artworks_path: "outputs/01_dataset_verification/data/artworks.csv"
+    dataset_audit_path: "outputs/01_dataset_verification/metrics/dataset_audit.csv"
+    canonical_masks_path: "outputs/03_canonical_mask_generation/data/masks.csv"
+    canonical_cases_path: "outputs/04_canonical_damaged_image_generation/data/cases.csv"
+    damage_size_cases_path: "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv"
+    mask_robustness_cases_path: "outputs/06_mask_robustness_dataset_generation/data/cases.csv"
+    synthetic_degradation_cases_path: "outputs/07_synthetic_degradation_dataset_generation/data/cases.csv"
+    case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+    model_eligibility_path: "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv"
+    region_policy_path: "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv"
+    model_comparison_path: "outputs/21_multi_model_comparison/metrics/model_comparison.csv"
+    metric_disagreement_path: "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv"
+    representative_cases_path: "outputs/21_multi_model_comparison/data/representative_cases.csv"
+    damage_size_uncertainty_path: "outputs/22_damage_size_diffusion_uncertainty_extension/metrics/damage_size_uncertainty.csv"
+    damage_size_analysis_path: "outputs/23_damage_size_sensitivity_analysis/metrics/damage_size_analysis.csv"
+    mask_robustness_analysis_path: "outputs/24_mask_robustness_analysis/metrics/mask_robustness_analysis.csv"
+    degradation_analysis_path: "outputs/25_synthetic_degradation_analysis/metrics/degradation_analysis.csv"
+    statistical_results_path: "outputs/26_grouped_and_statistical_analysis/metrics/statistical_results.csv"
+    metric_correlations_path: "outputs/26_grouped_and_statistical_analysis/metrics/metric_correlations.csv"
+    ranking_stability_path: "outputs/26_grouped_and_statistical_analysis/metrics/ranking_stability.csv"
+    failure_taxonomy_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/data/failure_taxonomy.csv"
+    failure_assignments_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/failure_assignments.csv"
+    trustworthiness_flags_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv"
+    ablation_results_path: "outputs/28_metric_and_region_policy_ablation/metrics/ablation_results.csv"
+    flag_stability_path: "outputs/28_metric_and_region_policy_ablation/metrics/flag_stability.csv"
+    explanation_cases_path: "outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv"
+    case_neighbors_path: "outputs/29_explainable_ai_and_case_retrieval/data/case_neighbors.csv"
+    model_cards_path: "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv"
+    compute_scalability_path: "outputs/30_model_cards_compute_and_scalability/metrics/compute_scalability.csv"
+    model_report_index_path: "outputs/31_model_report_generation/data/report_index.csv"
+    selected_cases_path: "outputs/32_case_and_painting_report_generation/data/selected_cases.csv"
+    case_report_index_path: "outputs/32_case_and_painting_report_generation/data/case_report_index.csv"
+    painting_report_index_path: "outputs/32_case_and_painting_report_generation/data/painting_report_index.csv"
+    selected_case_grids_dir: "outputs/32_case_and_painting_report_generation/figures/selected_case_grids"
+    canonical_uncertainty_panels_dir: "outputs/19_uncertainty_and_spatial_explanation_maps/figures/selected_explanation_panels"
+    damage_size_uncertainty_overlays_dir: "outputs/22_damage_size_diffusion_uncertainty_extension/images/uncertainty"
+    counterfactual_panels_dir: "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels"
+    retrieval_panels_dir: "outputs/29_explainable_ai_and_case_retrieval/figures/example_retrieval_panels"
+
+  upstream_manifests:
+    "01": "outputs/01_dataset_verification/manifests/run_manifest.json"
+    "02": "outputs/02_image_preprocessing/manifests/run_manifest.json"
+    "03": "outputs/03_canonical_mask_generation/manifests/run_manifest.json"
+    "04": "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json"
+    "05": "outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json"
+    "06": "outputs/06_mask_robustness_dataset_generation/manifests/run_manifest.json"
+    "07": "outputs/07_synthetic_degradation_dataset_generation/manifests/run_manifest.json"
+    "08": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+    "09": "outputs/09_opencv_telea_restoration/manifests/run_manifest.json"
+    "10": "outputs/10_lama_restoration/manifests/run_manifest.json"
+    "11": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+    "12": "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+    "13": "outputs/13_classical_metrics/manifests/run_manifest.json"
+    "14": "outputs/14_lpips_metrics/manifests/run_manifest.json"
+    "15": "outputs/15_feature_similarity/manifests/run_manifest.json"
+    "16": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json"
+    "17": "outputs/17_local_consistency_metrics/manifests/run_manifest.json"
+    "18": "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json"
+    "19": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json"
+    "20": "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json"
+    "21": "outputs/21_multi_model_comparison/manifests/run_manifest.json"
+    "22": "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json"
+    "23": "outputs/23_damage_size_sensitivity_analysis/manifests/run_manifest.json"
+    "24": "outputs/24_mask_robustness_analysis/manifests/run_manifest.json"
+    "25": "outputs/25_synthetic_degradation_analysis/manifests/run_manifest.json"
+    "26": "outputs/26_grouped_and_statistical_analysis/manifests/run_manifest.json"
+    "27": "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json"
+    "28": "outputs/28_metric_and_region_policy_ablation/manifests/run_manifest.json"
+    "29": "outputs/29_explainable_ai_and_case_retrieval/manifests/run_manifest.json"
+    "30": "outputs/30_model_cards_compute_and_scalability/manifests/run_manifest.json"
+    "31": "outputs/31_model_report_generation/manifests/run_manifest.json"
+    "32": "outputs/32_case_and_painting_report_generation/manifests/run_manifest.json"
+
+  output:
+    root: "outputs/33_final_evaluation_report"
+    thesis_tables_path: "data/thesis_tables.csv"
+    latex_tables_path: "data/latex_tables.csv"
+    evidence_catalog_path: "data/report_evidence_catalog.csv"
+    thesis_figures_dir: "figures/thesis"
+    publication_figures_dir: "figures/publication"
+    final_report_path: "reports/final_evaluation.html"
+    limitations_path: "reports/limitations_and_deviations.md"
+    run_manifest_path: "manifests/run_manifest.json"
+    artifacts_path: "manifests/artifacts.csv"
+    validation_path: "validation/checks.csv"
+    work_dir: "work"
+
+  input_table_contracts:
+    artworks_path: {rows: 50, required_columns: [painting_id, category, style_or_period, metadata_completeness_pct, acceptance_status]}
+    dataset_audit_path: {rows: 101, required_columns: [audit_section, metric_name, metric_value, denominator, status]}
+    canonical_masks_path: {rows: 250, required_columns: [mask_id, painting_id, mask_type, status]}
+    canonical_cases_path: {rows: 250, required_columns: [case_id, painting_id, mask_type, status]}
+    damage_size_cases_path: {rows: 35, required_columns: [case_id, painting_id, target_damage_fraction, realized_damage_fraction, status]}
+    mask_robustness_cases_path: {rows: 75, required_columns: [case_id, painting_id, mask_type, variant_id, status]}
+    synthetic_degradation_cases_path: {rows: 165, required_columns: [case_id, painting_id, degradation_family, severity, status]}
+    case_registry_path: {rows: 525, required_columns: [case_id, experiment_id, painting_id, clean_image_path, mask_or_effect_path, status]}
+    model_eligibility_path: {rows: 2100, required_columns: [case_id, model_id, eligible, eligibility_reason]}
+    region_policy_path: {rows: 143, required_columns: [metric_family, region_id, compatible, ablation_policy_ids_json, status]}
+    model_comparison_path: {rows: 86531, required_columns: [population_id, analysis_scope, evidence_family, anchor_id, model_id, winner_model_id, status]}
+    metric_disagreement_path: {rows: 839, required_columns: [population_id, anchor_id, model_rank_order, winner_model_id, status]}
+    representative_cases_path: {rows: 76, required_columns: [case_id, painting_id, selection_role, status]}
+    damage_size_uncertainty_path: {rows: 4760, required_columns: [uncertainty_group_id, case_id, metric_name, region_id, value, status]}
+    damage_size_analysis_path: {rows: 1901, required_columns: [analysis_kind, anchor_id, model_id, estimate, independent_unit, applicability_status, status]}
+    mask_robustness_analysis_path: {rows: 5373, required_columns: [analysis_kind, anchor_id, model_id, estimate, independent_unit, applicability_status, status]}
+    degradation_analysis_path: {rows: 4695, required_columns: [analysis_kind, anchor_id, model_id, estimate, independent_unit, applicability_status, status]}
+    statistical_results_path: {rows: 4174, required_columns: [result_kind, metric_name, model_id, estimate, independent_unit, applicability_status, status]}
+    metric_correlations_path: {rows: 504, required_columns: [correlation_kind, left_evidence_family, right_evidence_family, correlation, independent_unit, status]}
+    ranking_stability_path: {rows: 258, required_columns: [ranking_kind, model_id, winner_model_id, independent_unit, applicability_status, status]}
+    failure_taxonomy_path: {rows: 14, required_columns: [category_id, display_name, is_proxy, status]}
+    failure_assignments_path: {rows: 24990, required_columns: [candidate_id, case_id, model_id, category_id, assignment_status, recommended_action, status]}
+    trustworthiness_flags_path: {rows: 19635, required_columns: [candidate_id, case_id, model_id, flag_id, flag_status, recommended_action, status]}
+    ablation_results_path: {rows: 7710, required_columns: [scenario_id, scenario_family, result_kind, model_id, applicability_status, status]}
+    flag_stability_path: {rows: 41055, required_columns: [scenario_id, candidate_id, model_id, flag_state_agreement_fraction, status]}
+    explanation_cases_path: {rows: 1785, required_columns: [candidate_id, case_id, painting_id, model_id, restored_path, recommendation_category, status]}
+    case_neighbors_path: {rows: 100, required_columns: [query_candidate_id, lane, feature_model_id, neighbor_candidate_id, neighbor_rank, status]}
+    model_cards_path: {rows: 4, required_columns: [model_id, display_name, evaluation_status, known_limitations_json, status]}
+    compute_scalability_path: {rows: 35, required_columns: [model_id, record_type, scenario_id, is_executed, is_projected, applicability_status, status]}
+    model_report_index_path: {rows: 4, required_columns: [model_id, evaluation_status, report_path, section_count, self_contained, status]}
+    selected_cases_path: {rows: 30, required_columns: [selection_order, case_id, painting_id, selection_lane, status]}
+    case_report_index_path: {rows: 30, required_columns: [case_id, painting_id, selection_lane, report_path, self_contained, status]}
+    painting_report_index_path: {rows: 50, required_columns: [painting_id, case_count, candidate_count, report_path, self_contained, status]}
+
+  population:
+    painting_count: 50
+    unified_case_count: 525
+    eligible_restoration_case_count: 410
+    approved_report_candidate_count: 1785
+    primary_core_candidate_count: 1230
+    primary_nonzero_core_candidate_count: 1080
+    canonical_uncertainty_group_count: 130
+    damage_size_uncertainty_group_count: 35
+    total_uncertainty_group_count: 165
+    model_count: 4
+    core_model_count: 3
+    quality_anchor_count: 11
+    ablation_scenario_count: 23
+    documented_style_painting_count: 18
+    sdxl_candidate_count: 10
+    excluded_context_prompt_candidate_count: 480
+
+  research_questions:
+    - id: "rq1"
+      title: "Multi-metric evaluation beyond traditional image similarity"
+    - id: "rq2"
+      title: "Conditional model differences across paintings and damage conditions"
+    - id: "rq3"
+      title: "Repeated-candidate uncertainty and speculative restored regions"
+    - id: "practical_output"
+      title: "Interpretable museum-oriented decision-support reporting"
+
+  table_plan:
+    - {table_id: "t01_research_question_map", section_id: "research-questions", expected_rows: 4, source_keys: [evidence_coverage_path]}
+    - {table_id: "t02_dataset_design_scope", section_id: "dataset-design", expected_rows: 8, source_keys: [artworks_path, dataset_audit_path, case_registry_path]}
+    - {table_id: "t03_model_coverage", section_id: "methods-coverage", expected_rows: 4, source_keys: [model_cards_path]}
+    - {table_id: "t04_quality_anchor_summary", section_id: "canonical-comparison", expected_rows: 33, source_keys: [model_comparison_path]}
+    - {table_id: "t05_metric_disagreement", section_id: "canonical-comparison", expected_rows: 11, source_keys: [metric_disagreement_path]}
+    - {table_id: "t06_damage_size", section_id: "damage-size", expected_rows: 33, source_keys: [damage_size_analysis_path]}
+    - {table_id: "t07_mask_robustness", section_id: "mask-robustness", expected_rows: 33, source_keys: [mask_robustness_analysis_path]}
+    - {table_id: "t08_synthetic_degradation", section_id: "synthetic-degradation", expected_rows: 33, source_keys: [degradation_analysis_path]}
+    - {table_id: "t09_uncertainty", section_id: "diffusion-uncertainty", expected_rows: 8, source_keys: [damage_size_uncertainty_path, statistical_results_path]}
+    - {table_id: "t10_grouped_statistics", section_id: "grouped-statistics", expected_rows: 22, source_keys: [statistical_results_path, ranking_stability_path]}
+    - {table_id: "t11_failure_flags", section_id: "failure-flags", expected_rows: 44, source_keys: [failure_assignments_path, trustworthiness_flags_path]}
+    - {table_id: "t12_ablation", section_id: "policy-ablation", expected_rows: 23, source_keys: [ablation_results_path, flag_stability_path]}
+    - {table_id: "t13_explainability", section_id: "explainability", expected_rows: 7, source_keys: [explanation_cases_path, case_neighbors_path]}
+    - {table_id: "t14_compute_scalability", section_id: "compute-scalability", expected_rows: 12, source_keys: [model_cards_path, compute_scalability_path]}
+    - {table_id: "t15_limitations", section_id: "limitations", expected_rows: 18, source_keys: [evidence_dependency_audit_path]}
+
+  thesis_figures:
+    - {figure_id: "f01_framework_evidence_map", filename: "01_framework_evidence_map.png", section_id: "research-questions"}
+    - {figure_id: "f02_dataset_experiment_scope", filename: "02_dataset_and_experiment_scope.png", section_id: "dataset-design"}
+    - {figure_id: "f03_model_coverage", filename: "03_model_coverage.png", section_id: "methods-coverage"}
+    - {figure_id: "f04_canonical_model_comparison", filename: "04_canonical_model_comparison.png", section_id: "canonical-comparison"}
+    - {figure_id: "f05_metric_disagreement", filename: "05_metric_disagreement.png", section_id: "canonical-comparison"}
+    - {figure_id: "f06_damage_size_sensitivity", filename: "06_damage_size_sensitivity.png", section_id: "damage-size"}
+    - {figure_id: "f07_mask_robustness", filename: "07_mask_robustness.png", section_id: "mask-robustness"}
+    - {figure_id: "f08_synthetic_degradation", filename: "08_synthetic_degradation.png", section_id: "synthetic-degradation"}
+    - {figure_id: "f09_grouped_effects", filename: "09_grouped_effects.png", section_id: "grouped-statistics"}
+    - {figure_id: "f10_metric_correlations", filename: "10_metric_correlations.png", section_id: "grouped-statistics"}
+    - {figure_id: "f11_ranking_stability", filename: "11_ranking_stability.png", section_id: "grouped-statistics"}
+    - {figure_id: "f12_uncertainty_summary", filename: "12_uncertainty_summary.png", section_id: "diffusion-uncertainty"}
+    - {figure_id: "f13_spatial_uncertainty", filename: "13_spatial_uncertainty_explanations.png", section_id: "diffusion-uncertainty"}
+    - {figure_id: "f14_failure_taxonomy", filename: "14_failure_taxonomy_flags.png", section_id: "failure-flags"}
+    - {figure_id: "f15_ablation", filename: "15_ablation_ranking_flags.png", section_id: "policy-ablation"}
+    - {figure_id: "f16_explainability", filename: "16_explainability_retrieval.png", section_id: "explainability"}
+    - {figure_id: "f17_quality_compute", filename: "17_quality_vs_compute.png", section_id: "compute-scalability"}
+    - {figure_id: "f18_scalability", filename: "18_scalability_projection.png", section_id: "compute-scalability"}
+
+  publication_figures:
+    - {figure_id: "p01_benchmark_summary", filename: "01_benchmark_summary.png", section_id: "canonical-comparison"}
+    - {figure_id: "p02_stress_test_summary", filename: "02_stress_test_summary.png", section_id: "synthetic-degradation"}
+    - {figure_id: "p03_uncertainty_spatial", filename: "03_uncertainty_spatial_summary.png", section_id: "diffusion-uncertainty"}
+    - {figure_id: "p04_trustworthiness_ablation", filename: "04_trustworthiness_ablation_summary.png", section_id: "policy-ablation"}
+    - {figure_id: "p05_explainability", filename: "05_explainability_summary.png", section_id: "explainability"}
+    - {figure_id: "p06_quality_compute", filename: "06_quality_compute_summary.png", section_id: "compute-scalability"}
+
+  report:
+    approved_mock_structure_locked: true
+    self_contained_html: true
+    required_external_image_dependencies: 0
+    required_section_count: 19
+    required_table_count: 15
+    required_thesis_figure_count: 18
+    required_publication_figure_count: 6
+    minimum_embedded_image_count: 64
+    minimum_embedded_tile_count: 260
+    selected_case_grid_count: 12
+    counterfactual_role_count: 7
+    retrieval_panel_count: 5
+    uncertainty_panel_count: 6
+    failure_panel_count: 4
+    image_max_dimension: 1000
+    photographic_format: "JPEG"
+    photographic_quality: 82
+    soft_report_size_warning_mib: 64
+    hard_report_size_limit_mib: 80
+    progress_interval: 10
+    mandatory_statement: "Visual plausibility is not equivalent to historical or restoration trustworthiness."
+    required_terms: ["better", "worse", "inconclusive", "limitation", "human review"]
+    prohibited_terms: ["MOCK VALUE", "PLACEHOLDER IMAGE", "historically authentic restoration", "conservation approved", "universal best model"]
+    sections:
+      - {section_id: "executive-findings", title: "Executive findings", claim_count: 3, source_keys: [model_comparison_path, statistical_results_path, model_cards_path]}
+      - {section_id: "research-questions", title: "Research questions and evidence map", claim_count: 2, source_keys: [proposal_path, evidence_coverage_path]}
+      - {section_id: "dataset-design", title: "Dataset and experimental design", claim_count: 2, source_keys: [artworks_path, dataset_audit_path, case_registry_path]}
+      - {section_id: "methods-coverage", title: "Restoration methods and coverage", claim_count: 2, source_keys: [model_cards_path, model_report_index_path]}
+      - {section_id: "evaluation-framework", title: "Evaluation framework and metric-region policy", claim_count: 3, source_keys: [region_policy_path, ablation_results_path]}
+      - {section_id: "canonical-comparison", title: "Canonical multi-model comparison", claim_count: 4, source_keys: [model_comparison_path, metric_disagreement_path]}
+      - {section_id: "damage-size", title: "Damage-size sensitivity", claim_count: 3, source_keys: [damage_size_analysis_path, damage_size_uncertainty_path]}
+      - {section_id: "mask-robustness", title: "Mask-placement robustness", claim_count: 3, source_keys: [mask_robustness_analysis_path]}
+      - {section_id: "synthetic-degradation", title: "Synthetic degradations", claim_count: 3, source_keys: [degradation_analysis_path]}
+      - {section_id: "grouped-statistics", title: "Grouped statistics, correlations, and ranking stability", claim_count: 4, source_keys: [statistical_results_path, metric_correlations_path, ranking_stability_path]}
+      - {section_id: "diffusion-uncertainty", title: "Diffusion uncertainty and speculative regions", claim_count: 4, source_keys: [damage_size_uncertainty_path, explanation_cases_path]}
+      - {section_id: "failure-flags", title: "Failure taxonomy and trustworthiness flags", claim_count: 3, source_keys: [failure_taxonomy_path, failure_assignments_path, trustworthiness_flags_path]}
+      - {section_id: "policy-ablation", title: "Metric and region-policy ablation", claim_count: 3, source_keys: [ablation_results_path, flag_stability_path]}
+      - {section_id: "explainability", title: "Explainability and case retrieval", claim_count: 3, source_keys: [explanation_cases_path, case_neighbors_path]}
+      - {section_id: "compute-scalability", title: "Compute, scalability, and model cards", claim_count: 2, source_keys: [model_cards_path, compute_scalability_path]}
+      - {section_id: "case-painting-atlas", title: "Case and painting evidence atlas", claim_count: 1, source_keys: [selected_cases_path, case_report_index_path, painting_report_index_path]}
+      - {section_id: "limitations", title: "Limitations, deviations, and exclusions", claim_count: 1, source_keys: [evidence_dependency_audit_path]}
+      - {section_id: "research-question-answers", title: "Direct answers to the research questions", claim_count: 2, source_keys: [model_comparison_path, statistical_results_path, explanation_cases_path]}
+      - {section_id: "provenance", title: "Reproducibility and provenance", claim_count: 0, source_keys: [inventory_run_path, project_paths_path]}
+
+  visual_selection:
+    selected_case_grid_quotas:
+      category_lower_risk: 1
+      category_flagged: 1
+      metric_disagreement: 2
+      high_uncertainty: 2
+      scratch_prompt_sensitivity: 1
+      extension_representative: 3
+      sdxl_partial_evaluation: 1
+      zero_control: 1
+
+  limitations:
+    - "controlled_artificial_damage_not_real_material_treatment"
+    - "no_paired_real_damaged_undamaged_conservation_dataset"
+    - "controlled_50_not_proposed_expanded_dataset"
+    - "style_or_period_documented_for_18_of_50_paintings"
+    - "five_painting_extensions_confound_category_and_painting"
+    - "sdxl_partial_ten_case_five_painting_evaluation"
+    - "uncertainty_only_for_supported_repeated_seed_populations"
+    - "uncertainty_is_not_calibrated_confidence"
+    - "telea_and_lama_are_deterministic"
+    - "no_human_or_expert_rating_dataset"
+    - "computational_flags_are_not_expert_ground_truth"
+    - "retrieval_similarity_is_not_restoration_correctness"
+    - "feature_similarity_is_not_historical_authenticity"
+    - "runtime_and_memory_describe_one_workstation"
+    - "scaling_projections_are_not_executed_results_or_confidence_intervals"
+    - "context_prompt_candidates_p01_to_p04_lack_complete_downstream_flag_coverage"
+    - "no_combined_universal_quality_or_trust_score"
+    - "no_conservation_approval_or_physical_treatment_recommendation"
+
+  expected_counts:
+    upstream_manifests: 32
+    input_tables: 33
+    table_definitions: 15
+    thesis_table_rows: 293
+    latex_table_rows: 15
+    thesis_figures: 18
+    publication_figures: 6
+    persisted_figures: 24
+    report_sections: 19
+    evidence_claims: 48
+    limitation_records: 18
+    evidence_catalog_rows: 106
+    mock_traceability_rows: 125
+    selected_case_grids: 12
+    report_count: 1
+    artifact_records: 8
+    physical_output_files: 32

@@ -751,6 +751,45 @@ Availability terminology must remain construct-specific:
 - feature or semantic affinity is not a human visual-plausibility rating;
 - rule-derived flags are not independent human or conservation ground truth.
 
+### 6.5 Final supervisor and reproducibility package
+
+Notebook 36 owns the only final delivery package. It is a packaging and
+traceability notebook, not a new experiment. Its preparation layer must freeze a
+versioned copy plan before Batch 1 and map every bundled or indexed item to an
+exact validated source.
+
+Final-package rules:
+
+- copy only fixed approved paths; do not select inputs by scanning arbitrary
+  output folders;
+- preserve copied bytes and verify source-to-destination SHA-256 checksums;
+- keep every generated file under
+  `outputs/36_supervisor_publication_reproducibility_package/`;
+- include the final self-contained report, four self-contained model reports,
+  24 final figures, four model cards, eight compact tables/indexes, all upstream
+  run manifests, evaluation configurations, environment files, dashboard
+  delivery documentation, and Notebook 36 provenance;
+- index rather than duplicate the full case/painting report collection,
+  selected-case grids, complete dashboard visual collection, restoration/map
+  collections, model weights, and caches;
+- distinguish `copied`, `generated_by_notebook_36`, and
+  `indexed_not_bundled` records in the final artifact index;
+- produce a concise supervisor summary using the exact proposal research
+  questions, validated numbers, direct evidence-bounded conclusions, package-
+  local figure links, limitations, and explicit decisions requested;
+- record package size, file count, path lengths, package-relative links,
+  self-contained HTML status, environment, Git state, versions, seeds, model
+  revisions, compute evidence, and intentional omissions;
+- reject duplicate destinations, repository escapes, stale temporary files,
+  checksum mismatches, broken required links, blocking upstream failures, and
+  unregistered scientific claims;
+- do not relabel a non-blocking upstream warning as a pass; preserve it in the
+  package provenance and explain its scope.
+
+The package manifest must allow a reviewer to verify the bundle without the
+notebook. The package README must explain where to begin, what is included, what
+is indexed but absent, how to verify checksums, and what cannot be concluded.
+
 ## 7. Repository layout
 
 The intended high-level structure is:
@@ -969,7 +1008,7 @@ file_count
 checksum
 ```
 
-The registry must not contain temporary, failed, stale, or QA-only artifacts unless they are deliberately retained for audit.
+The registry must not contain temporary, failed, stale, or QA-only artifacts unless they are deliberately retained for audit. A completed upstream artifact with a documented non-blocking warning may be registered with `validation_status: warning`; the warning must not be rewritten as `passed`.
 
 ## 12. Input/output contract
 

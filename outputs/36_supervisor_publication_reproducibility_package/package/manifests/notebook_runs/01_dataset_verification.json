@@ -1,0 +1,278 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_424a69cf0c2c4a228d0919dc2d66258a",
+  "notebook_id": "01",
+  "notebook_name": "Dataset Verification",
+  "origin": "Existing Notebook 01",
+  "run_status": "completed",
+  "started_at_utc": "2026-08-17T11:04:21.869331Z",
+  "completed_at_utc": "2026-08-17T12:14:45.143752Z",
+  "git_commit": "4148e151e712f5bca81813f65c090c1b5b07e651",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260817T101135Z_7fdc3514",
+  "dataset_versions": {
+    "dataset_id": "painting_restoration_eval",
+    "dataset_version": "1.0.0",
+    "dataset_scope": "controlled_50",
+    "execution_profile": "controlled_50",
+    "content_fingerprint": "9c1717b89d6adc4182736c7c879c2d941ebfbf4999870abc14249bb1869c0d47",
+    "fingerprint_version": "dataset_fingerprint.v1",
+    "metadata_schema": "raw_artwork_metadata.v1",
+    "artworks_schema": "artworks.v1",
+    "dataset_audit_schema": "dataset_audit.v1"
+  },
+  "configuration_paths": [
+    "config/datasets/controlled_50.yaml"
+  ],
+  "configuration_checksums": {
+    "config/datasets/controlled_50.yaml": "5568dd93bf606d627e791ff52c2c6c2af3b8a06bfd94f0a78e2a8d245fc86345"
+  },
+  "helper_versions": {
+    "restoration_eval": "0.1.0",
+    "paths": "1.0.0",
+    "schemas": "1.0.0",
+    "manifests": "1.0.0",
+    "validation": "1.0.0",
+    "dataset_verification": "1.0.0",
+    "dataset_fingerprint": "dataset_fingerprint.v1",
+    "near_duplicate_method": "dhash64.v1"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "matplotlib": "3.11.0",
+    "pandas": "2.3.3"
+  },
+  "hardware": {
+    "execution_device": "CPU",
+    "gpu_required": false
+  },
+  "inputs": [
+    {
+      "input_key": "dataset_config",
+      "producer": "project configuration",
+      "relative_path": "config/datasets/controlled_50.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "dataset_config.v1",
+      "expected_cardinality": 1
+    },
+    {
+      "input_key": "raw_metadata",
+      "producer": "source dataset",
+      "relative_path": "data/raw/metadata/metadata_50.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "raw_artwork_metadata.v1",
+      "expected_cardinality": 50
+    },
+    {
+      "input_key": "raw_images",
+      "producer": "source dataset",
+      "relative_path": "data/raw/images",
+      "required": true,
+      "format": "jpeg_collection",
+      "schema_version": "raw_image_collection.v1",
+      "expected_cardinality": 50
+    },
+    {
+      "input_key": "project_inventory",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "project_file_inventory.v1",
+      "expected_cardinality": 10966
+    },
+    {
+      "input_key": "inventory_run",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "inventory_run.v1",
+      "expected_cardinality": 1
+    },
+    {
+      "input_key": "project_paths_registry",
+      "producer": "validated notebook handoffs",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "project_paths.v1",
+      "expected_cardinality": 1
+    }
+  ],
+  "outputs": [
+    {
+      "output_key": "artworks",
+      "relative_path": "outputs/01_dataset_verification/data/artworks.csv",
+      "format": "csv",
+      "schema_version": "artworks.v1",
+      "expected_cardinality": 50,
+      "artifact_role": "primary_downstream"
+    },
+    {
+      "output_key": "dataset_audit",
+      "relative_path": "outputs/01_dataset_verification/metrics/dataset_audit.csv",
+      "format": "csv",
+      "schema_version": "dataset_audit.v1",
+      "expected_cardinality": 101,
+      "artifact_role": "audit_reporting"
+    },
+    {
+      "output_key": "dataset_distribution",
+      "relative_path": "outputs/01_dataset_verification/figures/dataset_distribution.png",
+      "format": "png",
+      "schema_version": "figure.dataset_distribution.v1",
+      "expected_cardinality": 1,
+      "artifact_role": "reporting"
+    },
+    {
+      "output_key": "dataset_preview",
+      "relative_path": "outputs/01_dataset_verification/figures/dataset_preview.png",
+      "format": "png",
+      "schema_version": "figure.dataset_preview.v1",
+      "expected_cardinality": 1,
+      "artifact_role": "qa_reporting"
+    },
+    {
+      "output_key": "validation_checks",
+      "relative_path": "outputs/01_dataset_verification/validation/checks.csv",
+      "format": "csv",
+      "schema_version": "validation_checks.v1",
+      "expected_cardinality": 50,
+      "artifact_role": "validation"
+    },
+    {
+      "output_key": "artifact_manifest",
+      "relative_path": "outputs/01_dataset_verification/manifests/artifacts.csv",
+      "format": "csv",
+      "schema_version": "artifact_manifest.v1",
+      "expected_cardinality": 5,
+      "artifact_role": "handoff"
+    },
+    {
+      "output_key": "run_manifest",
+      "relative_path": "outputs/01_dataset_verification/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "artifact_role": "reproducibility"
+    }
+  ],
+  "expected_counts": {
+    "metadata_rows": 50,
+    "referenced_images": 50,
+    "artwork_rows": 50,
+    "dataset_audit_rows": 101,
+    "validation_rows": 50,
+    "artifact_records": 5,
+    "canonical_figures": 2
+  },
+  "observed_counts": {
+    "metadata_rows": 50,
+    "referenced_images": 50,
+    "accepted_artworks": 50,
+    "excluded_artworks": 0,
+    "artwork_rows": 50,
+    "dataset_audit_rows": 101,
+    "validation_rows": 50,
+    "artifact_records": 5,
+    "canonical_figures": 2,
+    "exact_duplicate_groups": 0,
+    "near_duplicate_candidate_pairs": 0,
+    "registered_project_artifacts": 5
+  },
+  "validation_summary": {
+    "consolidated": {
+      "check_count": 50,
+      "passed_count": 50,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "representative_smoke": {
+      "check_count": 5,
+      "passed_count": 5,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "figure_generation": {
+      "check_count": 5,
+      "passed_count": 5,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "canonical_persistence": {
+      "check_count": 5,
+      "passed_count": 5,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "completion_gate": {
+      "status": "passed",
+      "passed": true,
+      "requirement_count": 21,
+      "failed_requirement_ids": []
+    },
+    "manifest_handoff": {
+      "check_count": 4,
+      "passed_count": 4,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "final_completion_gate": {
+      "check_count": 3,
+      "passed_count": 3,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "registry_update": {
+      "check_count": 3,
+      "passed_count": 3,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    }
+  },
+  "known_limitations": [
+    "The controlled subset contains works from only three institutions, with 60 percent sourced from The Metropolitan Museum of Art.",
+    "Restricting acquisition to public-domain or open-access material favors institutions and works with suitable digitization and rights metadata.",
+    "The five balanced visual categories are a purposive evaluation design and are not a population-representative sample of painting history.",
+    "Optional date, style, and medium metadata is concentrated in portrait and high-texture records and is absent from three categories.",
+    "Historical and geographic representation cannot be quantified reliably from the current fields and requires explicit enrichment before population-level claims.",
+    "Dataset verification establishes technical and metadata suitability; it does not certify historical representativeness or conservation suitability."
+  ],
+  "refactor_status": "complete",
+  "validation_status": "passed",
+  "depends_on": [
+    "raw metadata",
+    "raw images",
+    "dataset configuration",
+    "current inventory"
+  ],
+  "applicable_dataset_scopes": [
+    "controlled_50"
+  ],
+  "applicable_experiment_scopes": [],
+  "expensive_execution": false,
+  "completion_gate_passed": true
+}

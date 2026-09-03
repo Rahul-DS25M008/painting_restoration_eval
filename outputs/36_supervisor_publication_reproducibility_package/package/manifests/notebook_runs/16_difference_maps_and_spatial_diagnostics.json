@@ -1,0 +1,669 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_1181febbbd3d4e63bbd60bc565b2d0c9",
+  "notebook_id": "16",
+  "notebook_name": "16_difference_maps_and_spatial_diagnostics",
+  "origin": "Consolidates Existing Notebooks 10, 16, and 23",
+  "run_status": "completed",
+  "started_at_utc": "2026-08-28T11:40:26.537673Z",
+  "completed_at_utc": "2026-08-28T23:47:06.970082Z",
+  "git_commit": "982d56630b6c7bf88a14408b113775999efb7809",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260828T113521Z_0008448d",
+  "dataset_versions": {
+    "preprocessed_images": "preprocessed_images.v1",
+    "case_registry": "case_registry.v1",
+    "model_eligibility": "model_eligibility.v1",
+    "region_policy": "region_policy.v1",
+    "restorations": "restorations.v1",
+    "stable_diffusion_candidates": "stable_diffusion_candidates.v1",
+    "sdxl_partial_candidates": "sdxl_partial_candidates.v1",
+    "classical_metrics": "classical_metrics.v1",
+    "evaluation_worklist": "evaluation_worklist.v1",
+    "spatial_diagnostics": "spatial_diagnostics.v1",
+    "spatial_map_images": "spatial_map_images.v1"
+  },
+  "configuration_paths": [
+    "config/evaluation/spatial_diagnostics.yaml",
+    "config/experiments/evaluation_contract.yaml"
+  ],
+  "configuration_checksums": {
+    "config/evaluation/spatial_diagnostics.yaml": "3399a9cfb977d12def43cdaf9c8dd080be9a6cf8ff2cb239fc1bb1e45395e184",
+    "config/experiments/evaluation_contract.yaml": "ae977512636b0ea5eb16b4a3dff95c062f402c086430328a341c9d0bda6a3254"
+  },
+  "helper_versions": {
+    "restoration_eval": "0.1.0",
+    "error_maps": "4.0.1",
+    "evaluation_inputs": "1.0.1",
+    "manifests": "1.0.0",
+    "paths": "1.0.0",
+    "regions": "1.1.0",
+    "schemas": "1.14.0",
+    "validation": "1.0.0",
+    "map_renderer": "spatial_map_renderer.v1"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "matplotlib": "3.11.0",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3"
+  },
+  "hardware": {
+    "execution_role": "CPU spatial analysis and rendering",
+    "upstream_restoration_hardware": "recorded in upstream run manifests"
+  },
+  "inputs": [
+    {
+      "input_key": "project_inventory",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "format": "csv",
+      "schema_version": "project_file_inventory.v1",
+      "expected_cardinality": 4226,
+      "role": "repository discovery",
+      "required": true
+    },
+    {
+      "input_key": "inventory_run",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "format": "json",
+      "schema_version": "inventory_run.v1",
+      "expected_cardinality": 1,
+      "role": "inventory provenance",
+      "required": true
+    },
+    {
+      "input_key": "project_paths_registry",
+      "producer": "validated notebook handoffs",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "format": "json",
+      "schema_version": "project_paths.v1",
+      "expected_cardinality": 84,
+      "role": "artifact discovery",
+      "required": true
+    },
+    {
+      "input_key": "preprocessing_geometry",
+      "producer": "Notebook 02",
+      "relative_path": "outputs/02_image_preprocessing/data/preprocessed_images.csv",
+      "format": "csv",
+      "schema_version": "preprocessed_images.v1",
+      "expected_cardinality": 50,
+      "role": "content-box geometry and clean-image metadata",
+      "required": true
+    },
+    {
+      "input_key": "case_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
+      "format": "csv",
+      "schema_version": "case_registry.v1",
+      "expected_cardinality": 525,
+      "role": "normalized evaluation cases",
+      "required": true
+    },
+    {
+      "input_key": "model_eligibility",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
+      "format": "csv",
+      "schema_version": "model_eligibility.v1",
+      "expected_cardinality": 2100,
+      "role": "model and case routing",
+      "required": true
+    },
+    {
+      "input_key": "region_policy",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv",
+      "format": "csv",
+      "schema_version": "region_policy.v1",
+      "expected_cardinality": 143,
+      "role": "canonical region compatibility policy",
+      "required": true
+    },
+    {
+      "input_key": "contracts_artifacts",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv",
+      "format": "csv",
+      "schema_version": "artifact_manifest.v1",
+      "expected_cardinality": 7,
+      "role": "contract artifact provenance",
+      "required": true
+    },
+    {
+      "input_key": "schema_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json",
+      "format": "json",
+      "schema_version": "schema_registry.v1",
+      "expected_cardinality": 1,
+      "role": "upstream schema discovery",
+      "required": true
+    },
+    {
+      "input_key": "classical_metrics",
+      "producer": "Notebook 13",
+      "relative_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+      "format": "csv",
+      "schema_version": "classical_metrics.v1",
+      "expected_cardinality": 63018,
+      "role": "candidate scope and downstream comparison evidence",
+      "required": true
+    },
+    {
+      "input_key": "spatial_diagnostics_config",
+      "producer": "Repository configuration",
+      "relative_path": "config/evaluation/spatial_diagnostics.yaml",
+      "format": "yaml",
+      "schema_version": "spatial_diagnostics_config.v1",
+      "expected_cardinality": 1,
+      "role": "map, region, scale, execution, and output policy",
+      "required": true
+    },
+    {
+      "input_key": "evaluation_contract_config",
+      "producer": "Repository configuration",
+      "relative_path": "config/experiments/evaluation_contract.yaml",
+      "format": "yaml",
+      "schema_version": "evaluation_contract_config.v1",
+      "expected_cardinality": 1,
+      "role": "evaluation and region policy",
+      "required": true
+    },
+    {
+      "input_key": "notebook_02_run_manifest",
+      "producer": "notebook_02",
+      "relative_path": "outputs/02_image_preprocessing/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "upstream execution provenance",
+      "required": true
+    },
+    {
+      "input_key": "notebook_08_run_manifest",
+      "producer": "notebook_08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "upstream execution provenance",
+      "required": true
+    },
+    {
+      "input_key": "notebook_13_run_manifest",
+      "producer": "notebook_13",
+      "relative_path": "outputs/13_classical_metrics/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "upstream execution provenance",
+      "required": true
+    },
+    {
+      "input_key": "notebook_09_opencv_telea_run_manifest",
+      "producer": "notebook_09_opencv_telea",
+      "relative_path": "outputs/09_opencv_telea_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "upstream execution provenance",
+      "required": true
+    },
+    {
+      "input_key": "notebook_10_lama_run_manifest",
+      "producer": "notebook_10_lama",
+      "relative_path": "outputs/10_lama_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "upstream execution provenance",
+      "required": true
+    },
+    {
+      "input_key": "notebook_11_stable_diffusion_run_manifest",
+      "producer": "notebook_11_stable_diffusion",
+      "relative_path": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "upstream execution provenance",
+      "required": true
+    },
+    {
+      "input_key": "notebook_12_sdxl_run_manifest",
+      "producer": "notebook_12_sdxl",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "upstream execution provenance",
+      "required": true
+    },
+    {
+      "input_key": "notebook_09_opencv_telea_table",
+      "producer": "notebook_09_opencv_telea",
+      "relative_path": "outputs/09_opencv_telea_restoration/data/restorations.csv",
+      "format": "csv",
+      "schema_version": "restorations.v1",
+      "expected_cardinality": 410,
+      "role": "completed restoration candidates",
+      "required": true
+    },
+    {
+      "input_key": "notebook_10_lama_table",
+      "producer": "notebook_10_lama",
+      "relative_path": "outputs/10_lama_restoration/data/restorations.csv",
+      "format": "csv",
+      "schema_version": "restorations.v1",
+      "expected_cardinality": 410,
+      "role": "completed restoration candidates",
+      "required": true
+    },
+    {
+      "input_key": "notebook_11_stable_diffusion_table",
+      "producer": "notebook_11_stable_diffusion",
+      "relative_path": "outputs/11_stable_diffusion_restoration/data/candidates.csv",
+      "format": "csv",
+      "schema_version": "stable_diffusion_candidates.v1",
+      "expected_cardinality": 1330,
+      "role": "completed restoration candidates",
+      "required": true
+    },
+    {
+      "input_key": "notebook_12_sdxl_table",
+      "producer": "notebook_12_sdxl",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv",
+      "format": "csv",
+      "schema_version": "sdxl_partial_candidates.v1",
+      "expected_cardinality": 10,
+      "role": "completed restoration candidates",
+      "required": true
+    }
+  ],
+  "outputs": [
+    {
+      "artifact_key": "spatial_diagnostics.metrics",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv",
+      "artifact_type": "table",
+      "artifact_role": "primary_downstream_evidence",
+      "schema_version": "spatial_diagnostics.v1",
+      "expected_row_count": 18896
+    },
+    {
+      "artifact_key": "spatial_diagnostics.candidate_maps",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/images/maps",
+      "artifact_type": "image_collection",
+      "artifact_role": "reusable_spatial_map_evidence",
+      "schema_version": "spatial_map_renderer.v1",
+      "expected_row_count": 10050
+    },
+    {
+      "artifact_key": "spatial_diagnostics.selected_panels",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/figures/selected_spatial_panels",
+      "artifact_type": "figure_collection",
+      "artifact_role": "human_review_figures",
+      "schema_version": "spatial_map_renderer.v1",
+      "expected_row_count": 12
+    },
+    {
+      "artifact_key": "spatial_diagnostics.map_manifest",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/map_images.csv",
+      "artifact_type": "table",
+      "artifact_role": "normalized_spatial_image_index",
+      "schema_version": "spatial_map_images.v1",
+      "expected_row_count": 10062
+    },
+    {
+      "artifact_key": "validation.16_difference_maps_and_spatial_diagnostics",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "expected_row_count": 134
+    },
+    {
+      "artifact_key": "spatial_diagnostics.artifacts",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/artifacts.csv",
+      "artifact_type": "manifest",
+      "artifact_role": "artifact_discovery",
+      "schema_version": "artifact_manifest.v1",
+      "expected_row_count": 5
+    },
+    {
+      "artifact_key": "spatial_diagnostics.run_manifest",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json",
+      "artifact_type": "manifest",
+      "artifact_role": "run_provenance",
+      "schema_version": "run_manifest.v1",
+      "expected_row_count": 1
+    }
+  ],
+  "expected_counts": {
+    "case_registry_rows": 525,
+    "evaluated_unique_cases": 410,
+    "evaluated_candidates": 2160,
+    "nonzero_candidates": 2010,
+    "zero_control_cases": 50,
+    "zero_control_candidates": 150,
+    "synthetic_degradation_candidates": 356,
+    "active_threshold_13_candidates": 356,
+    "active_threshold_128_candidates": 1804,
+    "spatial_diagnostic_rows": 18896,
+    "diagnostic_rows_by_region": {
+      "full_image": 2160,
+      "content_region": 2160,
+      "masked_region": 2010,
+      "mask_bbox_crop": 2010,
+      "inner_boundary_band": 2010,
+      "outer_boundary_band": 2010,
+      "boundary_ring": 2010,
+      "outside_mask_content": 2160,
+      "outside_boundary_ring": 2010,
+      "degradation_support": 356
+    },
+    "candidate_maps_per_nonzero_candidate": 5,
+    "candidate_map_images": 10050,
+    "selected_candidate_panels": 8,
+    "selected_cross_model_panels": 4,
+    "selected_panels_total": 12,
+    "map_manifest_rows": 10062,
+    "candidates_by_model": {
+      "opencv_telea": 410,
+      "lama": 410,
+      "stable_diffusion_inpainting": 1330,
+      "sdxl_inpainting": 10
+    },
+    "canonical_file_count": 10067,
+    "artifact_record_count": 5,
+    "validation_row_count": 134,
+    "temporary_work_file_count": 0,
+    "blocking_validation_failures": 0,
+    "warning_validation_failures": 0
+  },
+  "observed_counts": {
+    "evaluated_unique_cases": 410,
+    "evaluated_candidates": 2160,
+    "spatial_diagnostic_rows": 18896,
+    "diagnostic_rows_by_region": {
+      "content_region": 2160,
+      "full_image": 2160,
+      "outside_mask_content": 2160,
+      "boundary_ring": 2010,
+      "inner_boundary_band": 2010,
+      "mask_bbox_crop": 2010,
+      "masked_region": 2010,
+      "outer_boundary_band": 2010,
+      "outside_boundary_ring": 2010,
+      "degradation_support": 356
+    },
+    "candidates_by_model": {
+      "stable_diffusion_inpainting": 1330,
+      "lama": 410,
+      "opencv_telea": 410,
+      "sdxl_inpainting": 10
+    },
+    "candidate_map_images": 10050,
+    "selected_panels_total": 12,
+    "map_manifest_rows": 10062,
+    "map_rows_by_type": {
+      "damaged_absolute_error": 2010,
+      "masked_signed_improvement": 2010,
+      "restored_absolute_error": 2010,
+      "signed_improvement": 2010,
+      "spatial_overlay": 2010,
+      "candidate_spatial_panel": 8,
+      "cross_model_spatial_panel": 4
+    },
+    "selected_candidate_panels": 8,
+    "selected_cross_model_panels": 4,
+    "canonical_file_count": 10067,
+    "artifact_record_count": 5,
+    "validation_row_count": 134,
+    "temporary_work_file_count": 0,
+    "blocking_validation_failures": 0,
+    "warning_validation_failures": 0
+  },
+  "validation_summary": {
+    "check_count": 134,
+    "passed_count": 134,
+    "failed_count": 0,
+    "blocking_failure_count": 0,
+    "overall_passed": true,
+    "failed_check_ids": [],
+    "warning_failure_count": 0,
+    "stages": [
+      {
+        "validation_stage": "batch_1_preflight",
+        "check_count": 23,
+        "passed_count": 23,
+        "failed_count": 0,
+        "blocking_failure_count": 0,
+        "warning_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_2_input_loading",
+        "check_count": 43,
+        "passed_count": 43,
+        "failed_count": 0,
+        "blocking_failure_count": 0,
+        "warning_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_3_smoke_test",
+        "check_count": 11,
+        "passed_count": 11,
+        "failed_count": 0,
+        "blocking_failure_count": 0,
+        "warning_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_4_global_scale_calibration",
+        "check_count": 8,
+        "passed_count": 8,
+        "failed_count": 0,
+        "blocking_failure_count": 0,
+        "warning_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_5_full_execution",
+        "check_count": 13,
+        "passed_count": 13,
+        "failed_count": 0,
+        "blocking_failure_count": 0,
+        "warning_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_6_analysis_and_selection",
+        "check_count": 12,
+        "passed_count": 12,
+        "failed_count": 0,
+        "blocking_failure_count": 0,
+        "warning_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_7_representative_panels",
+        "check_count": 12,
+        "passed_count": 12,
+        "failed_count": 0,
+        "blocking_failure_count": 0,
+        "warning_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_8_completion_gate",
+        "check_count": 12,
+        "passed_count": 12,
+        "failed_count": 0,
+        "blocking_failure_count": 0,
+        "warning_failure_count": 0
+      }
+    ]
+  },
+  "known_limitations": [
+    "Absolute-error and signed-improvement maps are pixel-aligned descriptive evidence, not perceptual, semantic, conservation, or historical-validity measures.",
+    "Positive local error reduction can coexist with semantically incorrect or historically unsupported reconstruction.",
+    "Standardized PNG rendering clips visual extremes at documented percentiles; canonical CSV summaries retain unclipped numerical statistics.",
+    "Indexed PNG maps are visualization assets and do not replace source-resolution floating-point computation.",
+    "Stable Diffusion prompt and seed candidates are repeated candidate-level observations, not independent paintings.",
+    "SDXL is a predeclared technically validated ten-case partial scope and must not be presented as full-dataset coverage.",
+    "Zero controls remain in canonical diagnostics but redundant all-zero map images are intentionally omitted.",
+    "Highest-worsening representative panels are deliberately difficult examples and are not estimates of population-average performance.",
+    "Cross-model panels include SDXL only when a selected case belongs to its predeclared ten-case scope."
+  ],
+  "refactor_status": "refactored",
+  "validation_status": "passed",
+  "completion_gate_passed": true,
+  "scientific_validation_passed": true,
+  "depends_on": [
+    "02_image_preprocessing",
+    "08_experiment_contracts_and_region_policy",
+    "09_opencv_telea_restoration",
+    "10_lama_restoration",
+    "11_stable_diffusion_restoration",
+    "12_sdxl_feasibility_or_restoration",
+    "13_classical_metrics"
+  ],
+  "applicable_dataset_scopes": [
+    "controlled_50"
+  ],
+  "applicable_experiment_scopes": [
+    "canonical_missing_region",
+    "damage_size_sensitivity",
+    "mask_robustness",
+    "synthetic_degradation",
+    "scratch_prompt_ablation",
+    "sdxl_partial_feasibility"
+  ],
+  "visualization_scales": [
+    {
+      "scale_id": "absolute_error",
+      "cmap": "magma",
+      "vmin": 0.0,
+      "vmax": 208.3333282471,
+      "center": null,
+      "percentile": 99.5,
+      "scale_scope": "all completed technically valid candidates",
+      "sampled_value_count": 8847360,
+      "candidate_count": 2160,
+      "candidate_scope_sha256": "40e5137aa3908fe7eaf28c64b4b83a281900a9436012f22541a8063b3c7042ed",
+      "config_sha256": "3399a9cfb977d12def43cdaf9c8dd080be9a6cf8ff2cb239fc1bb1e45395e184",
+      "helper_sha256": "2c03ae5cde0a2ef6a00f81ed2aeb88996260f52e9bfff5627e8d29a5c3d9fd9a",
+      "renderer_version": "spatial_map_renderer.v1",
+      "created_at_utc": "2026-08-28T13:43:47.035689Z"
+    },
+    {
+      "scale_id": "signed_improvement",
+      "cmap": "RdBu",
+      "vmin": -210.3333435059,
+      "vmax": 210.3333435059,
+      "center": 0.0,
+      "percentile": 99.5,
+      "scale_scope": "all completed technically valid candidates",
+      "sampled_value_count": 8847360,
+      "candidate_count": 2160,
+      "candidate_scope_sha256": "40e5137aa3908fe7eaf28c64b4b83a281900a9436012f22541a8063b3c7042ed",
+      "config_sha256": "3399a9cfb977d12def43cdaf9c8dd080be9a6cf8ff2cb239fc1bb1e45395e184",
+      "helper_sha256": "2c03ae5cde0a2ef6a00f81ed2aeb88996260f52e9bfff5627e8d29a5c3d9fd9a",
+      "renderer_version": "spatial_map_renderer.v1",
+      "created_at_utc": "2026-08-28T13:43:47.035689Z"
+    }
+  ],
+  "representative_selection": {
+    "candidate_panels": [
+      {
+        "selection_role": "model_highest_masked_worsened_fraction",
+        "model_id": "lama",
+        "case_id": "synthetic_degradation__p039__partial_transparency__mild",
+        "candidate_id": "candidate__lama__synthetic_degradation__p039__partial_transparency__mild__c00"
+      },
+      {
+        "selection_role": "model_median_masked_improvement",
+        "model_id": "lama",
+        "case_id": "mask_robustness__p026__scratch_thin__target_02pct__variant_05",
+        "candidate_id": "candidate__lama__mask_robustness__p026__scratch_thin__target_02pct__variant_05__c00"
+      },
+      {
+        "selection_role": "model_highest_masked_worsened_fraction",
+        "model_id": "opencv_telea",
+        "case_id": "synthetic_degradation__p039__partial_transparency__mild",
+        "candidate_id": "candidate__opencv_telea__synthetic_degradation__p039__partial_transparency__mild__c00"
+      },
+      {
+        "selection_role": "model_median_masked_improvement",
+        "model_id": "opencv_telea",
+        "case_id": "canonical__p029__loss_small",
+        "candidate_id": "candidate__opencv_telea__canonical__p029__loss_small__c00"
+      },
+      {
+        "selection_role": "model_highest_masked_worsened_fraction",
+        "model_id": "sdxl_inpainting",
+        "case_id": "synthetic_degradation__p001__water_stain__severe",
+        "candidate_id": "sdxl__ab9ddf049dd2__p00_generic__seed2026"
+      },
+      {
+        "selection_role": "model_median_masked_improvement",
+        "model_id": "sdxl_inpainting",
+        "case_id": "synthetic_degradation__p043__partial_transparency__severe",
+        "candidate_id": "sdxl__e9843f8c0249__p00_generic__seed2026"
+      },
+      {
+        "selection_role": "model_highest_masked_worsened_fraction",
+        "model_id": "stable_diffusion_inpainting",
+        "case_id": "synthetic_degradation__p001__dirt_dust__mild",
+        "candidate_id": "sd15__p00__s2026__553c7fc35343"
+      },
+      {
+        "selection_role": "model_median_masked_improvement",
+        "model_id": "stable_diffusion_inpainting",
+        "case_id": "canonical__p029__mixed_damage",
+        "candidate_id": "sd15__p00__s2026__43b1d9fc3350"
+      }
+    ],
+    "cross_model_panels": [
+      {
+        "selection_role": "cross_model_small_or_localized_loss",
+        "damage_group": "small_or_localized_loss",
+        "case_id": "canonical__p011__loss_small",
+        "models_available": "lama|opencv_telea|stable_diffusion_inpainting",
+        "masked_improvement_spread": 24.8578103365
+      },
+      {
+        "selection_role": "cross_model_thin_scratch",
+        "damage_group": "thin_scratch",
+        "case_id": "mask_robustness__p001__scratch_thin__target_02pct__variant_01",
+        "models_available": "lama|opencv_telea|stable_diffusion_inpainting",
+        "masked_improvement_spread": 76.6483372365
+      },
+      {
+        "selection_role": "cross_model_large_or_structural_loss",
+        "damage_group": "large_or_structural_loss",
+        "case_id": "canonical__p001__loss_large",
+        "models_available": "lama|opencv_telea|sdxl_inpainting|stable_diffusion_inpainting",
+        "masked_improvement_spread": 105.4182487442
+      },
+      {
+        "selection_role": "cross_model_synthetic_degradation",
+        "damage_group": "synthetic_degradation",
+        "case_id": "synthetic_degradation__p018__dirt_dust__severe",
+        "models_available": "lama|opencv_telea|sdxl_inpainting|stable_diffusion_inpainting",
+        "masked_improvement_spread": 111.5435959279
+      }
+    ]
+  },
+  "evidence_policy": {
+    "evidence_role": "diagnostic_only",
+    "is_final_trustworthiness_flag": false,
+    "improved_pixel_tolerance": 1e-06,
+    "changed_pixel_channel_tolerance": 0.5,
+    "qa_indicators_are_final_flags": false
+  }
+}

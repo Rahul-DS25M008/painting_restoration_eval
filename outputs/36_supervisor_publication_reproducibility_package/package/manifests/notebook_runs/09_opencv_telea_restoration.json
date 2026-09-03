@@ -1,0 +1,365 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_eafa3b4f805e472688f1df65b894b96e",
+  "notebook_id": "09",
+  "notebook_name": "OpenCV Telea Restoration",
+  "origin": "Existing Notebook 08; rebuilt against normalized Notebook 08 contracts",
+  "run_status": "completed",
+  "started_at_utc": "2026-08-23T22:30:31.561818Z",
+  "completed_at_utc": "2026-08-23T23:31:50.568852Z",
+  "git_commit": "c46feee50144854d0b7598df7cb24450ed4e98e8",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260823T221607Z_81ea1ca9",
+  "dataset_versions": {
+    "dataset_id": "painting_restoration_eval",
+    "dataset_version": "1.0.0",
+    "dataset_scope": "controlled_50",
+    "experiment_id": "cross_experiment_opencv_telea",
+    "configuration_schema": "opencv_telea_config.v1",
+    "configuration_version": "1.0.0",
+    "configuration_id": "opencv_telea_r3_threshold_policy_v1",
+    "algorithm": "cv2.INPAINT_TELEA",
+    "inpaint_radius": 3,
+    "restorations_schema": "restorations.v1",
+    "runtime_summary_schema": "restoration_runtime_summary.v1",
+    "upstream_notebook": "08_experiment_contracts_and_region_policy",
+    "upstream_run_id": "run_a3734bc2121f401b87de4894717366ab",
+    "upstream_manifest_checksum": "d1b62caa720194e666894afd276d0c6a8c973343b4a378bd787467273bbceb8a",
+    "inventory_checksum": "a9af8179bf21e4a986858e1d8fcdce40ff0a83db34e9ee815280bd2b5bbf6225",
+    "restoration_helper_sha256": "85279e42cb1ae222a3d5714af616d952923f3344065658eb1cba60e963d641fc",
+    "schemas_helper_sha256": "d63b7ab9cd8796222f6dcd083f8329d5805cf1a6d71c623d9ee46640377892a4"
+  },
+  "configuration_paths": [
+    "config/experiments/opencv_telea.yaml",
+    "config/experiments/evaluation_contract.yaml",
+    "config/experiments/synthetic_degradation.yaml"
+  ],
+  "configuration_checksums": {
+    "config/experiments/opencv_telea.yaml": "9295858e27461b90cca89b467a04c6e2d4a076b8d6e74b9b6293541fb5525624",
+    "config/experiments/evaluation_contract.yaml": "ae977512636b0ea5eb16b4a3dff95c062f402c086430328a341c9d0bda6a3254",
+    "config/experiments/synthetic_degradation.yaml": "eaf2d11f3192e7271e11136f023022181bd4b5cfc4e0091316dc1c21a7255bf2"
+  },
+  "helper_versions": {
+    "restoration_eval": "0.1.0",
+    "paths": "1.0.0",
+    "schemas": "1.7.0",
+    "manifests": "1.0.0",
+    "validation": "1.0.0",
+    "restoration_opencv": "3.0.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "matplotlib": "3.11.0",
+    "numpy": "1.26.4",
+    "opencv-python": "4.11.0.86",
+    "pandas": "2.3.3"
+  },
+  "hardware": {
+    "execution_device": "CPU",
+    "gpu_required": false,
+    "execution_backend": "opencv_cpu",
+    "cpu_environment": "Windows-11-10.0.26200-SP0 | AMD64 | Intel64 Family 6 Model 165 Stepping 2, GenuineIntel"
+  },
+  "inputs": [
+    {
+      "input_key": "project_inventory",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "project_file_inventory.v1",
+      "expected_cardinality": 10717,
+      "applicability": "repository"
+    },
+    {
+      "input_key": "inventory_run",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "inventory_run.v1",
+      "expected_cardinality": 1,
+      "applicability": "repository"
+    },
+    {
+      "input_key": "project_paths_registry",
+      "producer": "validated notebook handoffs",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "project_paths.v1",
+      "expected_cardinality": 48,
+      "applicability": "repository"
+    },
+    {
+      "input_key": "opencv_telea_config",
+      "producer": "project configuration",
+      "relative_path": "config/experiments/opencv_telea.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "opencv_telea_config.v1",
+      "expected_cardinality": 1,
+      "applicability": "opencv_telea"
+    },
+    {
+      "input_key": "case_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "case_registry.v1",
+      "expected_cardinality": 525,
+      "applicability": "all_cases"
+    },
+    {
+      "input_key": "model_eligibility",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "model_eligibility.v1",
+      "expected_cardinality": 2100,
+      "applicability": "all_case_model_pairs"
+    },
+    {
+      "input_key": "schema_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "schema_registry.v1",
+      "expected_cardinality": 5,
+      "applicability": "downstream_contracts"
+    },
+    {
+      "input_key": "upstream_run_manifest",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "applicability": "notebook_08_handoff"
+    },
+    {
+      "input_key": "upstream_artifacts",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "artifact_manifest.v1",
+      "expected_cardinality": 7,
+      "applicability": "notebook_08_handoff"
+    },
+    {
+      "input_key": "evaluation_contract_config",
+      "producer": "project configuration",
+      "relative_path": "config/experiments/evaluation_contract.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "evaluation_contract_config.v1",
+      "expected_cardinality": 1,
+      "applicability": "eligibility_policy"
+    },
+    {
+      "input_key": "synthetic_degradation_config",
+      "producer": "project configuration",
+      "relative_path": "config/experiments/synthetic_degradation.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "synthetic_degradation_config.v1",
+      "expected_cardinality": 1,
+      "applicability": "synthetic_mask_threshold"
+    }
+  ],
+  "outputs": [
+    {
+      "output_key": "opencv_telea.restorations",
+      "relative_path": "outputs/09_opencv_telea_restoration/data/restorations.csv",
+      "artifact_role": "primary",
+      "format": "csv",
+      "schema_version": "restorations.v1",
+      "expected_cardinality": 410,
+      "downstream_consumers": "Notebooks 13-17 and later comparisons/reports"
+    },
+    {
+      "output_key": "opencv_telea.restored_images",
+      "relative_path": "outputs/09_opencv_telea_restoration/images/restored",
+      "artifact_role": "primary",
+      "format": "png_directory",
+      "schema_version": "restored_images.opencv_telea.v1",
+      "expected_cardinality": 410,
+      "downstream_consumers": "Notebooks 13-17 and later visual diagnostics"
+    },
+    {
+      "output_key": "opencv_telea.runtime_summary",
+      "relative_path": "outputs/09_opencv_telea_restoration/metrics/runtime_summary.csv",
+      "artifact_role": "downstream",
+      "format": "csv",
+      "schema_version": "restoration_runtime_summary.v1",
+      "expected_cardinality": 5,
+      "downstream_consumers": "runtime comparison and reporting"
+    },
+    {
+      "output_key": "opencv_telea.restoration_examples",
+      "relative_path": "outputs/09_opencv_telea_restoration/figures/restoration_examples.png",
+      "artifact_role": "reporting",
+      "format": "png",
+      "schema_version": "figure.restoration_examples.v1",
+      "expected_cardinality": 1,
+      "downstream_consumers": "thesis and reporting notebooks"
+    },
+    {
+      "output_key": "validation.09_opencv_telea_restoration",
+      "relative_path": "outputs/09_opencv_telea_restoration/validation/checks.csv",
+      "artifact_role": "downstream",
+      "format": "csv",
+      "schema_version": "validation_checks.v1",
+      "expected_cardinality": "one consolidated check table",
+      "downstream_consumers": "completion gate and audit"
+    },
+    {
+      "output_key": "run_manifest",
+      "relative_path": "outputs/09_opencv_telea_restoration/manifests/run_manifest.json",
+      "artifact_role": "handoff",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "downstream_consumers": "all downstream notebooks"
+    },
+    {
+      "output_key": "artifact_manifest",
+      "relative_path": "outputs/09_opencv_telea_restoration/manifests/artifacts.csv",
+      "artifact_role": "handoff",
+      "format": "csv",
+      "schema_version": "artifact_manifest.v1",
+      "expected_cardinality": 5,
+      "downstream_consumers": "project registry and downstream notebooks"
+    }
+  ],
+  "expected_counts": {
+    "case_registry_rows": 525,
+    "model_eligibility_rows": 2100,
+    "eligible_case_count": 410,
+    "eligible_case_count_by_experiment": {
+      "canonical_missing_region": 250,
+      "damage_size_sensitivity": 35,
+      "mask_robustness": 75,
+      "synthetic_degradation": 50
+    },
+    "unique_clean_image_count": 50,
+    "restored_file_count": 410,
+    "restorations_row_count": 410,
+    "runtime_summary_row_count": 5,
+    "representative_case_count": 8,
+    "artifact_record_count": 5,
+    "total_output_file_count": 416,
+    "consolidated_validation_rows": 72,
+    "canonical_output_files": 416,
+    "temporary_work_files_before_completion": 5
+  },
+  "observed_counts": {
+    "case_registry_rows": 525,
+    "model_eligibility_rows": 2100,
+    "eligible_case_count": 410,
+    "restored_file_count": 410,
+    "restorations_row_count": 410,
+    "runtime_summary_row_count": 5,
+    "representative_case_count": 8,
+    "artifact_record_count": 5,
+    "consolidated_validation_rows": 72,
+    "canonical_output_files": 416,
+    "temporary_work_files_before_completion": 5,
+    "temporary_work_files_after_completion": 0,
+    "registered_project_artifacts": 5
+  },
+  "validation_summary": {
+    "consolidated": {
+      "check_count": 72,
+      "passed_count": 72,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "canonical_persistence": {
+      "check_count": 7,
+      "passed_count": 7,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "manifest_handoff": {
+      "check_count": 5,
+      "passed_count": 5,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "completion_gate": {
+      "status": "passed",
+      "passed": true,
+      "requirement_count": 15,
+      "failed_requirement_ids": []
+    },
+    "registry_update": {
+      "check_count": 4,
+      "passed_count": 4,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "work_cleanup": {
+      "status": "passed",
+      "passed": true,
+      "files_before": 5,
+      "files_after": 0
+    },
+    "final_completion_gate": {
+      "check_count": 6,
+      "passed_count": 6,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    }
+  },
+  "known_limitations": [
+    "OpenCV Telea is a local interpolation baseline and does not reconstruct historically verified content.",
+    "A fixed radius of 3 is used without per-case tuning.",
+    "Eligible synthetic-degradation cases are supplementary masked-removal diagnostics and must remain separate from missing-content claims.",
+    "Runtime measurements describe the recorded CPU environment and are not universal benchmarks."
+  ],
+  "refactor_status": "complete",
+  "validation_status": "passed",
+  "depends_on": [
+    "experiment_contracts.case_registry",
+    "experiment_contracts.model_eligibility",
+    "experiment_contracts.schema_registry",
+    "08_experiment_contracts_and_region_policy.run_manifest",
+    "opencv_telea_config",
+    "current_inventory",
+    "project_paths_registry"
+  ],
+  "applicable_dataset_scopes": [
+    "controlled_50"
+  ],
+  "applicable_experiment_scopes": [
+    "canonical_missing_region",
+    "damage_size_sensitivity",
+    "mask_robustness",
+    "synthetic_degradation",
+    "cross_experiment_opencv_telea"
+  ],
+  "expensive_execution": false,
+  "completion_gate_passed": true
+}

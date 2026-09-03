@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-09-02T22:22:14.183325Z`
-- Registered artifacts: 199
+- Updated: `2026-09-03T21:17:42.175924Z`
+- Registered artifacts: 230
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -38,6 +38,25 @@
 | damage_size_diffusion_uncertainty.overlays | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/images/uncertainty` | readable_spatial_uncertainty_evidence | passed |
 | damage_size_diffusion_uncertainty.restored_images | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/images/restored` | notebook_22_generated_candidates | passed |
 | damage_size_diffusion_uncertainty.summary_figure | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/figures/uncertainty_extension_summary.png` | painting_trajectory_uncertainty_summary | passed |
+| dashboard.asset_manifest | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_assets.csv` | dashboard_input_file_registry | passed |
+| dashboard.deployment_readiness | 35_dashboard_and_deployment_validation | `outputs/35_dashboard_and_deployment_validation/reports/deployment_readiness.md` | dashboard_deployment_decision | warning |
+| dashboard.deployment_validation | 35_dashboard_and_deployment_validation | `outputs/35_dashboard_and_deployment_validation/validation/dashboard_checks.csv` | consolidated_dashboard_checks | warning |
+| dashboard.index.case_index | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/case_index.csv` | dashboard_index_case_index | passed |
+| dashboard.index.filter_options | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/filter_options.json` | dashboard_index_filter_options | passed |
+| dashboard.index.painting_index | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/painting_index.csv` | dashboard_index_painting_index | passed |
+| dashboard.index.report_index | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/report_index.csv` | dashboard_index_report_index | passed |
+| dashboard.index.visual_asset_index | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/visual_asset_index.csv` | dashboard_index_visual_asset_index | passed |
+| dashboard.summary | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_summary.json` | dashboard_summary | passed |
+| dashboard.table.compute_summary | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/compute_summary.csv` | dashboard_table_compute_summary | passed |
+| dashboard.table.headline_findings | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/headline_findings.csv` | dashboard_table_headline_findings | passed |
+| dashboard.table.metric_framework | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/metric_framework.csv` | dashboard_table_metric_framework | passed |
+| dashboard.table.performance_summary | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/performance_summary.csv` | dashboard_table_performance_summary | passed |
+| dashboard.table.research_question_coverage | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/research_question_coverage.csv` | dashboard_table_research_question_coverage | passed |
+| dashboard.table.sensitivity_summary | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/sensitivity_summary.csv` | dashboard_table_sensitivity_summary | passed |
+| dashboard.table.study_design | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/study_design.csv` | dashboard_table_study_design | passed |
+| dashboard.table.trustworthiness_summary | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/trustworthiness_summary.csv` | dashboard_table_trustworthiness_summary | passed |
+| dashboard.table.uncertainty_summary | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/uncertainty_summary.csv` | dashboard_table_uncertainty_summary | passed |
+| dashboard.validation | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/validation/checks.csv` | consolidated_dashboard_asset_checks | passed |
 | dataset.artworks | 01_dataset_verification | `outputs/01_dataset_verification/data/artworks.csv` | primary_downstream | passed |
 | dataset.audit | 01_dataset_verification | `outputs/01_dataset_verification/metrics/dataset_audit.csv` | audit_reporting | passed |
 | dataset.figure_distribution | 01_dataset_verification | `outputs/01_dataset_verification/figures/dataset_distribution.png` | reporting | passed |
@@ -164,6 +183,18 @@
 | stable_diffusion.prompt_policy_report | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/reports/prompt_policy.md` | prompt_method_documentation | passed |
 | stable_diffusion.restored_images | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/images/restored` | candidate_images | passed |
 | stable_diffusion.runtime_summary | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/metrics/runtime_summary.csv` | runtime_evidence | passed |
+| supervisor_package.artifact_index | 36_supervisor_publication_reproducibility_package | `outputs/36_supervisor_publication_reproducibility_package/data/artifact_index.csv` | artifact_index | warning |
+| supervisor_package.feedback_agenda | 36_supervisor_publication_reproducibility_package | `outputs/36_supervisor_publication_reproducibility_package/data/feedback_agenda.md` | feedback_agenda | warning |
+| supervisor_package.key_findings | 36_supervisor_publication_reproducibility_package | `outputs/36_supervisor_publication_reproducibility_package/data/key_findings.json` | key_findings | warning |
+| supervisor_package.limitations_and_deviations | 36_supervisor_publication_reproducibility_package | `outputs/36_supervisor_publication_reproducibility_package/reports/limitations_and_deviations.md` | limitations_and_deviations | warning |
+| supervisor_package.open_questions | 36_supervisor_publication_reproducibility_package | `outputs/36_supervisor_publication_reproducibility_package/data/open_questions.md` | open_questions | warning |
+| supervisor_package.package_manifest | 36_supervisor_publication_reproducibility_package | `outputs/36_supervisor_publication_reproducibility_package/manifests/package_manifest.json` | package_manifest | warning |
+| supervisor_package.package_readme | 36_supervisor_publication_reproducibility_package | `outputs/36_supervisor_publication_reproducibility_package/package/README.md` | package_readme | warning |
+| supervisor_package.package_root | 36_supervisor_publication_reproducibility_package | `outputs/36_supervisor_publication_reproducibility_package/package` | package_root | warning |
+| supervisor_package.reproducibility_appendix | 36_supervisor_publication_reproducibility_package | `outputs/36_supervisor_publication_reproducibility_package/reports/reproducibility_appendix.md` | reproducibility_appendix | warning |
+| supervisor_package.reproducibility_snapshot | 36_supervisor_publication_reproducibility_package | `outputs/36_supervisor_publication_reproducibility_package/package/provenance/reproducibility_snapshot.json` | reproducibility_snapshot | warning |
+| supervisor_package.supervisor_summary | 36_supervisor_publication_reproducibility_package | `outputs/36_supervisor_publication_reproducibility_package/reports/supervisor_summary.md` | supervisor_summary | warning |
+| supervisor_package.validation | 36_supervisor_publication_reproducibility_package | `outputs/36_supervisor_publication_reproducibility_package/validation/checks.csv` | validation | warning |
 | synthetic_degradation.cases | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/data/cases.csv` | primary_case_manifest | passed |
 | synthetic_degradation.effect_masks | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/images/effect_masks` | effect_support_collection | passed |
 | synthetic_degradation.figure_examples | 07_synthetic_degradation_dataset_generation | `outputs/07_synthetic_degradation_dataset_generation/figures/degradation_examples.png` | representative_visual_evidence | passed |

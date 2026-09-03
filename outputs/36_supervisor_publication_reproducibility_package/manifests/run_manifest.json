@@ -1,0 +1,1011 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_4e221aa9405d4d5cbeb7ae120dfad71a",
+  "notebook_id": "36",
+  "notebook_name": "36_supervisor_publication_reproducibility_package",
+  "origin": "Consolidates Existing Previous Versions of Notebooks 30 and 35, Pre-refactor",
+  "run_status": "completed",
+  "started_at_utc": "2026-09-03T21:13:19Z",
+  "completed_at_utc": "2026-09-03T21:13:46Z",
+  "git_commit": "ba720c143b74179ceafa2264cd1d9808bfc48944",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260903T140759Z_77bc8d8c",
+  "dataset_versions": {
+    "config_schema_version": "dataset_config.v1",
+    "dataset_id": "painting_restoration_eval",
+    "dataset_version": "1.0.0",
+    "dataset_scope": "controlled_50",
+    "execution_profile": "controlled_50",
+    "expected_paintings": 50,
+    "configuration_path": "config/datasets/controlled_50.yaml",
+    "configuration_sha256": "5568dd93bf606d627e791ff52c2c6c2af3b8a06bfd94f0a78e2a8d245fc86345"
+  },
+  "configuration_paths": [
+    "config/datasets/controlled_50.yaml",
+    "config/evaluation/case_and_painting_reports.yaml",
+    "config/evaluation/damage_size_analysis.yaml",
+    "config/evaluation/damage_size_diffusion_uncertainty_extension.yaml",
+    "config/evaluation/dashboard_assets.yaml",
+    "config/evaluation/dashboard_validation.yaml",
+    "config/evaluation/diffusion_uncertainty.yaml",
+    "config/evaluation/evidence_coverage.yaml",
+    "config/evaluation/explainable_case_retrieval.yaml",
+    "config/evaluation/failure_taxonomy.yaml",
+    "config/evaluation/feature_similarity.yaml",
+    "config/evaluation/final_evaluation_report.yaml",
+    "config/evaluation/grouped_statistical_analysis.yaml",
+    "config/evaluation/local_consistency.yaml",
+    "config/evaluation/lpips.yaml",
+    "config/evaluation/mask_robustness_analysis.yaml",
+    "config/evaluation/metric_region_ablation.yaml",
+    "config/evaluation/metrics.yaml",
+    "config/evaluation/model_cards_compute.yaml",
+    "config/evaluation/model_report_generation.yaml",
+    "config/evaluation/multi_model_comparison.yaml",
+    "config/evaluation/semantic_structural.yaml",
+    "config/evaluation/spatial_diagnostics.yaml",
+    "config/evaluation/spatial_explanations.yaml",
+    "config/evaluation/supervisor_package.yaml",
+    "config/evaluation/synthetic_degradation_analysis.yaml",
+    "config/experiments/canonical_damage.yaml",
+    "config/experiments/damage_size_sensitivity.yaml",
+    "config/experiments/evaluation_contract.yaml",
+    "config/experiments/lama.yaml",
+    "config/experiments/mask_robustness.yaml",
+    "config/experiments/opencv_telea.yaml",
+    "config/experiments/sdxl.yaml",
+    "config/experiments/stable_diffusion.yaml",
+    "config/experiments/stable_diffusion_scratch_prompt_ablation.yaml",
+    "config/experiments/synthetic_degradation.yaml",
+    "config/masks/canonical_binary.yaml",
+    "config/preprocessing/canonical_768.yaml"
+  ],
+  "configuration_checksums": {
+    "config/datasets/controlled_50.yaml": "5568dd93bf606d627e791ff52c2c6c2af3b8a06bfd94f0a78e2a8d245fc86345",
+    "config/evaluation/case_and_painting_reports.yaml": "57b6ed5631c5cc59f576041939c9c2f440f33283971d9af982f50838bed56ec7",
+    "config/evaluation/damage_size_analysis.yaml": "24b1fa0defeba5373985cfcacb5435f9536c6f6df806347affde6e737b4c1b20",
+    "config/evaluation/damage_size_diffusion_uncertainty_extension.yaml": "100808faf373785e41cd992d49a81870822760fd7bbafead4c124a46ab1dde9f",
+    "config/evaluation/dashboard_assets.yaml": "06b7a48527459715df4a8d14998b6f9e930da4f5bd360f91b7c323006acf4bd9",
+    "config/evaluation/dashboard_validation.yaml": "687840dadbabd1942ad6aa4aaa3f228f833f25f635400ca784cc2687127928aa",
+    "config/evaluation/diffusion_uncertainty.yaml": "444523318a19f6cc2536537bb56701abfa37305819d1b8a057008066f24c6bc1",
+    "config/evaluation/evidence_coverage.yaml": "3e23cf3ddb8f1f62f76e820b51ef791fedebab0d9e6b1811ea7b640cf5b89037",
+    "config/evaluation/explainable_case_retrieval.yaml": "e045292ff413d76d699362634be5d97ab6e57769f33031d8d6ec10cb939a766d",
+    "config/evaluation/failure_taxonomy.yaml": "7ef5b0062a08fa95571e9d437672fc06b58b9d1bc2e0b60f30e39be7564c2239",
+    "config/evaluation/feature_similarity.yaml": "a6e192759a77d78babb8282a4ceebed9c52292a44891499d43db8aae09a1c1a5",
+    "config/evaluation/final_evaluation_report.yaml": "b59f2c2b5d228255b6ebbdf1ec9edf4d8f40e65dfdb730b3d6cfb904b8f76c94",
+    "config/evaluation/grouped_statistical_analysis.yaml": "302aadbb45369221a70b0a5db07f9e3af8584cc285a931d906592b9566ef200a",
+    "config/evaluation/local_consistency.yaml": "17346e2e38bd79c08ebc59ffd73effade3b93e2896ed800b11e7a7e28fad0f99",
+    "config/evaluation/lpips.yaml": "83cb97d9876f1039aae244f21368a9e0077e27fca7b4060e1e24889c7b4d6ada",
+    "config/evaluation/mask_robustness_analysis.yaml": "67ccb758f0950f8c071a3b6ea5e63071a6001ea79f2293a790aff545a9286b4f",
+    "config/evaluation/metric_region_ablation.yaml": "1c8093c6980c5ded650069940f54f092a4bd718e83591285fb7fe4ae8c0db8ea",
+    "config/evaluation/metrics.yaml": "c3abb2675aac79563c47d98e7b55b1a6b611cd7af772da5c45891305a919d624",
+    "config/evaluation/model_cards_compute.yaml": "5b01b06bd8aa07fba8d40aa0953a92f4c6e909ce5f931c93feee5acd135cdae0",
+    "config/evaluation/model_report_generation.yaml": "1d5e17c87e4d4ce5090530502d43f4c7a74a066475f89c0e79cfa2d48e794c1c",
+    "config/evaluation/multi_model_comparison.yaml": "de3dc393b29bbffe25d8b3b60ae3edef36423ff289aca1be44b41cf797c8891f",
+    "config/evaluation/semantic_structural.yaml": "e62a742ba3ed55d5bc141f2acee67e181bae42d9d33a07915fcff630fef4ef98",
+    "config/evaluation/spatial_diagnostics.yaml": "3399a9cfb977d12def43cdaf9c8dd080be9a6cf8ff2cb239fc1bb1e45395e184",
+    "config/evaluation/spatial_explanations.yaml": "9ef4edc87c4b9aae1bca6e0221168c1fbe81f1cc80ed8dc5dce0889e6c09a304",
+    "config/evaluation/supervisor_package.yaml": "cc3137fc9541ce7d973c14645f6f7fd31893a557363a755e0e394bbe1af5da74",
+    "config/evaluation/synthetic_degradation_analysis.yaml": "76aa4b5d0ae0eec880778adbb81df1e1968cc038cbf253a59f216af25630d15b",
+    "config/experiments/canonical_damage.yaml": "bc0d7ab095a88f75078db9437a29136bd30d84476e9bb06bce06fd0161b2a342",
+    "config/experiments/damage_size_sensitivity.yaml": "5d16c0f17108a61f5eec1f776284ca3dae5108bd90a939eba1e9fb8d1f1bc025",
+    "config/experiments/evaluation_contract.yaml": "ae977512636b0ea5eb16b4a3dff95c062f402c086430328a341c9d0bda6a3254",
+    "config/experiments/lama.yaml": "7c606eb3c860bbae4ef782ac5f2b7bd31c9dc5d70be8d1eebe2d3fbe6779eb9a",
+    "config/experiments/mask_robustness.yaml": "921db621e36288cefea346b4269e6afdecb946871d11e13349f3e26afce41137",
+    "config/experiments/opencv_telea.yaml": "9295858e27461b90cca89b467a04c6e2d4a076b8d6e74b9b6293541fb5525624",
+    "config/experiments/sdxl.yaml": "e17ae845f5daeefdacda288751befd42b07362a919ac59b93bf038b5d3871f1c",
+    "config/experiments/stable_diffusion.yaml": "394c66a4269b0584539141c409e278939762d065fbc122f2600b340cb8e58dbe",
+    "config/experiments/stable_diffusion_scratch_prompt_ablation.yaml": "be83ff685a5907359fb4858683fb840cf9b1fd34f67b215199232a0fac4a61f3",
+    "config/experiments/synthetic_degradation.yaml": "eaf2d11f3192e7271e11136f023022181bd4b5cfc4e0091316dc1c21a7255bf2",
+    "config/masks/canonical_binary.yaml": "167269a57e45df5295ceba09825ade4b739f566785f4eb579204b4f2d390ef3b",
+    "config/preprocessing/canonical_768.yaml": "82674521e93833b6209e3ee1cbf211404816dae373b48254be3c2066418fd7ad"
+  },
+  "helper_versions": {
+    "supervisor_package": "1.0.0",
+    "manifests": "1.0.0",
+    "validation": "1.0.0",
+    "paths": "1.0.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "accelerate": "1.14.0",
+    "diffusers": "0.27.2",
+    "iopaint": "1.6.0",
+    "jmespath": "1.1.0",
+    "lpips": "0.1.4",
+    "matplotlib": "3.11.0",
+    "numpy": "1.26.4",
+    "opencv-python": "4.11.0.86",
+    "pandas": "2.3.3",
+    "plotly": "6.8.0",
+    "pyarrow": "24.0.0",
+    "safetensors": "0.8.0",
+    "scikit-image": "0.24.0",
+    "scipy": "1.17.1",
+    "streamlit": "1.59.0",
+    "torch": "2.5.1+cu121",
+    "torchvision": "0.20.1+cu121",
+    "transformers": "4.48.3"
+  },
+  "hardware": {
+    "execution_mode": "packaging_and_integrity_validation",
+    "restoration_inference_performed": false,
+    "scientific_metrics_recomputed": false,
+    "upstream_hardware_reference": "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv"
+  },
+  "inputs": [
+    {
+      "input_key": "source_001",
+      "relative_path": "config/datasets/controlled_50.yaml",
+      "checksum": "5568dd93bf606d627e791ff52c2c6c2af3b8a06bfd94f0a78e2a8d245fc86345"
+    },
+    {
+      "input_key": "source_002",
+      "relative_path": "config/evaluation/case_and_painting_reports.yaml",
+      "checksum": "57b6ed5631c5cc59f576041939c9c2f440f33283971d9af982f50838bed56ec7"
+    },
+    {
+      "input_key": "source_003",
+      "relative_path": "config/evaluation/damage_size_analysis.yaml",
+      "checksum": "24b1fa0defeba5373985cfcacb5435f9536c6f6df806347affde6e737b4c1b20"
+    },
+    {
+      "input_key": "source_004",
+      "relative_path": "config/evaluation/damage_size_diffusion_uncertainty_extension.yaml",
+      "checksum": "100808faf373785e41cd992d49a81870822760fd7bbafead4c124a46ab1dde9f"
+    },
+    {
+      "input_key": "source_005",
+      "relative_path": "config/evaluation/dashboard_assets.yaml",
+      "checksum": "06b7a48527459715df4a8d14998b6f9e930da4f5bd360f91b7c323006acf4bd9"
+    },
+    {
+      "input_key": "source_006",
+      "relative_path": "config/evaluation/dashboard_validation.yaml",
+      "checksum": "687840dadbabd1942ad6aa4aaa3f228f833f25f635400ca784cc2687127928aa"
+    },
+    {
+      "input_key": "source_007",
+      "relative_path": "config/evaluation/diffusion_uncertainty.yaml",
+      "checksum": "444523318a19f6cc2536537bb56701abfa37305819d1b8a057008066f24c6bc1"
+    },
+    {
+      "input_key": "source_008",
+      "relative_path": "config/evaluation/evidence_coverage.yaml",
+      "checksum": "3e23cf3ddb8f1f62f76e820b51ef791fedebab0d9e6b1811ea7b640cf5b89037"
+    },
+    {
+      "input_key": "source_009",
+      "relative_path": "config/evaluation/explainable_case_retrieval.yaml",
+      "checksum": "e045292ff413d76d699362634be5d97ab6e57769f33031d8d6ec10cb939a766d"
+    },
+    {
+      "input_key": "source_010",
+      "relative_path": "config/evaluation/failure_taxonomy.yaml",
+      "checksum": "7ef5b0062a08fa95571e9d437672fc06b58b9d1bc2e0b60f30e39be7564c2239"
+    },
+    {
+      "input_key": "source_011",
+      "relative_path": "config/evaluation/feature_similarity.yaml",
+      "checksum": "a6e192759a77d78babb8282a4ceebed9c52292a44891499d43db8aae09a1c1a5"
+    },
+    {
+      "input_key": "source_012",
+      "relative_path": "config/evaluation/final_evaluation_report.yaml",
+      "checksum": "b59f2c2b5d228255b6ebbdf1ec9edf4d8f40e65dfdb730b3d6cfb904b8f76c94"
+    },
+    {
+      "input_key": "source_013",
+      "relative_path": "config/evaluation/grouped_statistical_analysis.yaml",
+      "checksum": "302aadbb45369221a70b0a5db07f9e3af8584cc285a931d906592b9566ef200a"
+    },
+    {
+      "input_key": "source_014",
+      "relative_path": "config/evaluation/local_consistency.yaml",
+      "checksum": "17346e2e38bd79c08ebc59ffd73effade3b93e2896ed800b11e7a7e28fad0f99"
+    },
+    {
+      "input_key": "source_015",
+      "relative_path": "config/evaluation/lpips.yaml",
+      "checksum": "83cb97d9876f1039aae244f21368a9e0077e27fca7b4060e1e24889c7b4d6ada"
+    },
+    {
+      "input_key": "source_016",
+      "relative_path": "config/evaluation/mask_robustness_analysis.yaml",
+      "checksum": "67ccb758f0950f8c071a3b6ea5e63071a6001ea79f2293a790aff545a9286b4f"
+    },
+    {
+      "input_key": "source_017",
+      "relative_path": "config/evaluation/metric_region_ablation.yaml",
+      "checksum": "1c8093c6980c5ded650069940f54f092a4bd718e83591285fb7fe4ae8c0db8ea"
+    },
+    {
+      "input_key": "source_018",
+      "relative_path": "config/evaluation/metrics.yaml",
+      "checksum": "c3abb2675aac79563c47d98e7b55b1a6b611cd7af772da5c45891305a919d624"
+    },
+    {
+      "input_key": "source_019",
+      "relative_path": "config/evaluation/model_cards_compute.yaml",
+      "checksum": "5b01b06bd8aa07fba8d40aa0953a92f4c6e909ce5f931c93feee5acd135cdae0"
+    },
+    {
+      "input_key": "source_020",
+      "relative_path": "config/evaluation/model_report_generation.yaml",
+      "checksum": "1d5e17c87e4d4ce5090530502d43f4c7a74a066475f89c0e79cfa2d48e794c1c"
+    },
+    {
+      "input_key": "source_021",
+      "relative_path": "config/evaluation/multi_model_comparison.yaml",
+      "checksum": "de3dc393b29bbffe25d8b3b60ae3edef36423ff289aca1be44b41cf797c8891f"
+    },
+    {
+      "input_key": "source_022",
+      "relative_path": "config/evaluation/semantic_structural.yaml",
+      "checksum": "e62a742ba3ed55d5bc141f2acee67e181bae42d9d33a07915fcff630fef4ef98"
+    },
+    {
+      "input_key": "source_023",
+      "relative_path": "config/evaluation/spatial_diagnostics.yaml",
+      "checksum": "3399a9cfb977d12def43cdaf9c8dd080be9a6cf8ff2cb239fc1bb1e45395e184"
+    },
+    {
+      "input_key": "source_024",
+      "relative_path": "config/evaluation/spatial_explanations.yaml",
+      "checksum": "9ef4edc87c4b9aae1bca6e0221168c1fbe81f1cc80ed8dc5dce0889e6c09a304"
+    },
+    {
+      "input_key": "source_025",
+      "relative_path": "config/evaluation/supervisor_package.yaml",
+      "checksum": "cc3137fc9541ce7d973c14645f6f7fd31893a557363a755e0e394bbe1af5da74"
+    },
+    {
+      "input_key": "source_026",
+      "relative_path": "config/evaluation/synthetic_degradation_analysis.yaml",
+      "checksum": "76aa4b5d0ae0eec880778adbb81df1e1968cc038cbf253a59f216af25630d15b"
+    },
+    {
+      "input_key": "source_027",
+      "relative_path": "config/experiments/canonical_damage.yaml",
+      "checksum": "bc0d7ab095a88f75078db9437a29136bd30d84476e9bb06bce06fd0161b2a342"
+    },
+    {
+      "input_key": "source_028",
+      "relative_path": "config/experiments/damage_size_sensitivity.yaml",
+      "checksum": "5d16c0f17108a61f5eec1f776284ca3dae5108bd90a939eba1e9fb8d1f1bc025"
+    },
+    {
+      "input_key": "source_029",
+      "relative_path": "config/experiments/evaluation_contract.yaml",
+      "checksum": "ae977512636b0ea5eb16b4a3dff95c062f402c086430328a341c9d0bda6a3254"
+    },
+    {
+      "input_key": "source_030",
+      "relative_path": "config/experiments/lama.yaml",
+      "checksum": "7c606eb3c860bbae4ef782ac5f2b7bd31c9dc5d70be8d1eebe2d3fbe6779eb9a"
+    },
+    {
+      "input_key": "source_031",
+      "relative_path": "config/experiments/mask_robustness.yaml",
+      "checksum": "921db621e36288cefea346b4269e6afdecb946871d11e13349f3e26afce41137"
+    },
+    {
+      "input_key": "source_032",
+      "relative_path": "config/experiments/opencv_telea.yaml",
+      "checksum": "9295858e27461b90cca89b467a04c6e2d4a076b8d6e74b9b6293541fb5525624"
+    },
+    {
+      "input_key": "source_033",
+      "relative_path": "config/experiments/sdxl.yaml",
+      "checksum": "e17ae845f5daeefdacda288751befd42b07362a919ac59b93bf038b5d3871f1c"
+    },
+    {
+      "input_key": "source_034",
+      "relative_path": "config/experiments/stable_diffusion.yaml",
+      "checksum": "394c66a4269b0584539141c409e278939762d065fbc122f2600b340cb8e58dbe"
+    },
+    {
+      "input_key": "source_035",
+      "relative_path": "config/experiments/stable_diffusion_scratch_prompt_ablation.yaml",
+      "checksum": "be83ff685a5907359fb4858683fb840cf9b1fd34f67b215199232a0fac4a61f3"
+    },
+    {
+      "input_key": "source_036",
+      "relative_path": "config/experiments/synthetic_degradation.yaml",
+      "checksum": "eaf2d11f3192e7271e11136f023022181bd4b5cfc4e0091316dc1c21a7255bf2"
+    },
+    {
+      "input_key": "source_037",
+      "relative_path": "config/masks/canonical_binary.yaml",
+      "checksum": "167269a57e45df5295ceba09825ade4b739f566785f4eb579204b4f2d390ef3b"
+    },
+    {
+      "input_key": "source_038",
+      "relative_path": "config/preprocessing/canonical_768.yaml",
+      "checksum": "82674521e93833b6209e3ee1cbf211404816dae373b48254be3c2066418fd7ad"
+    },
+    {
+      "input_key": "source_039",
+      "relative_path": "docs/evidence_dependency_audit.md",
+      "checksum": "222dfa513bfdf14e6e739c7514a19b1aa9571e5d8d6ff5b480edc11c71964345"
+    },
+    {
+      "input_key": "source_040",
+      "relative_path": "docs/final_notebook_roadmap.md",
+      "checksum": "01df2b2cb10835e81bbf551e4994fa6d986db8637200ab9be8536e555aa38b59"
+    },
+    {
+      "input_key": "source_041",
+      "relative_path": "docs/proposal/Rahul_Thesis_Proposal.docx",
+      "checksum": "d8be7149fdcf318c656d0bf6970d6a2c78fa0b7211c28690ccab6be09db9a74b"
+    },
+    {
+      "input_key": "source_042",
+      "relative_path": "docs/refactoring_implementation_guidelines.md",
+      "checksum": "0ceb7f6f01cda637800ed45d3c27caeeea106fa77cba75cd5eca2262a785c4a0"
+    },
+    {
+      "input_key": "source_043",
+      "relative_path": "outputs/01_dataset_verification/manifests/run_manifest.json",
+      "checksum": "4af536c91b81b9e16aa3ffbfb461399b34034ac717c2ad0ec5231d6186b3e15a"
+    },
+    {
+      "input_key": "source_044",
+      "relative_path": "outputs/02_image_preprocessing/manifests/run_manifest.json",
+      "checksum": "5e7c4076587f9b6d149c897c817c798d596d5e740f016da5ce2aca6dc9ca310e"
+    },
+    {
+      "input_key": "source_045",
+      "relative_path": "outputs/03_canonical_mask_generation/manifests/run_manifest.json",
+      "checksum": "5c678a0199d405e69c4a321db313c3a97bec349753c116e2740df3d9cbcbd49e"
+    },
+    {
+      "input_key": "source_046",
+      "relative_path": "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json",
+      "checksum": "f9e95b91dd72440c36f07c56853b971022a64def824579daeb8c6e484875e6bc"
+    },
+    {
+      "input_key": "source_047",
+      "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json",
+      "checksum": "a5bad621639729fc4ba7b3dd4ff7551be2f9f4696d341ec146bda1afea792f8d"
+    },
+    {
+      "input_key": "source_048",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/manifests/run_manifest.json",
+      "checksum": "9678fc918324a51023bd705ab6cb7c398ccf6771f1910083cce6f00a2dd02ed9"
+    },
+    {
+      "input_key": "source_049",
+      "relative_path": "outputs/07_synthetic_degradation_dataset_generation/manifests/run_manifest.json",
+      "checksum": "9eb03a79f9faeb0cfe159950642a5fda2f2c0c79b6c230c5a097186458f99d1e"
+    },
+    {
+      "input_key": "source_050",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+      "checksum": "d1b62caa720194e666894afd276d0c6a8c973343b4a378bd787467273bbceb8a"
+    },
+    {
+      "input_key": "source_051",
+      "relative_path": "outputs/09_opencv_telea_restoration/manifests/run_manifest.json",
+      "checksum": "d3cfe89d3ba87f168f7884836caf5cb72f50f675786d1f94cd9904fe0537cbf7"
+    },
+    {
+      "input_key": "source_052",
+      "relative_path": "outputs/10_lama_restoration/manifests/run_manifest.json",
+      "checksum": "e2c2ce786f030472152142d44322ac90b03b98cdce0f041d00657324df9257ff"
+    },
+    {
+      "input_key": "source_053",
+      "relative_path": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json",
+      "checksum": "7b76c94c9b857dcdf7f4efb5c619494b718717126c6f76f8343d8dae8f3a6b73"
+    },
+    {
+      "input_key": "source_054",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json",
+      "checksum": "0b46a1a7fbec8f27bdd0d22266a3d1630f5a4150c0ced3ec0fb6a1e4554ba009"
+    },
+    {
+      "input_key": "source_055",
+      "relative_path": "outputs/13_classical_metrics/manifests/run_manifest.json",
+      "checksum": "90d5905958348041055dfa915f4577af335c34b26036a31767452297679538d2"
+    },
+    {
+      "input_key": "source_056",
+      "relative_path": "outputs/14_lpips_metrics/manifests/run_manifest.json",
+      "checksum": "2728e750f41f1441c5cddc6bbfe79a60eeb7b3d318f83e2b93a0396a2be9dfd7"
+    },
+    {
+      "input_key": "source_057",
+      "relative_path": "outputs/15_feature_similarity/manifests/run_manifest.json",
+      "checksum": "cc9ee35005e9520a56baeeee0b130608e0ef51a00007aac3b459b9e097cb2984"
+    },
+    {
+      "input_key": "source_058",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json",
+      "checksum": "5ffa5ee1de12e39f575b29cb760c3e8c86df794aadf7962304a5d3d99dd954a7"
+    },
+    {
+      "input_key": "source_059",
+      "relative_path": "outputs/17_local_consistency_metrics/manifests/run_manifest.json",
+      "checksum": "78396a22402cb97f49c422f7db22c5134a3d499aa2a96fdc45beb0aed861e51d"
+    },
+    {
+      "input_key": "source_060",
+      "relative_path": "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json",
+      "checksum": "099e773f7f211ef5ebad0fe2703601a347af88e5fee9426aaea7217c1fda7959"
+    },
+    {
+      "input_key": "source_061",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json",
+      "checksum": "bf2c00948375da795ef2672242be4ca47347440093e3bf82f1f46d2f46250523"
+    },
+    {
+      "input_key": "source_062",
+      "relative_path": "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json",
+      "checksum": "c64d4ea1a984a83bd3fc2b7c1ef6b53f67c8fed85156c19888ab23ab51658af6"
+    },
+    {
+      "input_key": "source_063",
+      "relative_path": "outputs/21_multi_model_comparison/manifests/run_manifest.json",
+      "checksum": "7517eb7ba360302eaa73b4bdda8870a52b4c1a87bf728ac59970c6d48b44c660"
+    },
+    {
+      "input_key": "source_064",
+      "relative_path": "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json",
+      "checksum": "dff582edbeb029dca56287dd39dcfc5f29a309a42a3c46b86c7a43e1592df9b8"
+    },
+    {
+      "input_key": "source_065",
+      "relative_path": "outputs/23_damage_size_sensitivity_analysis/manifests/run_manifest.json",
+      "checksum": "9663eb4762302a03ab09882ebbf1b0a1276815d8ac4bd60a54191cda2f5dcefd"
+    },
+    {
+      "input_key": "source_066",
+      "relative_path": "outputs/24_mask_robustness_analysis/manifests/run_manifest.json",
+      "checksum": "1210a5776bf930ac5a8039063cb902b4790e8742798492c318a79a470a766b5e"
+    },
+    {
+      "input_key": "source_067",
+      "relative_path": "outputs/25_synthetic_degradation_analysis/manifests/run_manifest.json",
+      "checksum": "660792ea34d70201df85b1f1a7ac478c0498c0b41bcd9b4bc8f8f18197d4778c"
+    },
+    {
+      "input_key": "source_068",
+      "relative_path": "outputs/26_grouped_and_statistical_analysis/manifests/run_manifest.json",
+      "checksum": "bf83485f83d6aef2d0f342f0155a8f2ef353f017750a224145c7f09b0d3114db"
+    },
+    {
+      "input_key": "source_069",
+      "relative_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json",
+      "checksum": "35df0a1169467a9225ae48898def27e727cf2ec16faa928670b7c6fc39a47073"
+    },
+    {
+      "input_key": "source_070",
+      "relative_path": "outputs/28_metric_and_region_policy_ablation/manifests/run_manifest.json",
+      "checksum": "199a94d16ef679920e17301dc780e4a2c1cdfcb665bcbd8790e27e3502ba180e"
+    },
+    {
+      "input_key": "source_071",
+      "relative_path": "outputs/29_explainable_ai_and_case_retrieval/manifests/run_manifest.json",
+      "checksum": "35d9d4383c1b25e8f5e61905b9462d22b31344a37571b9167a5ac1b773d64b1f"
+    },
+    {
+      "input_key": "source_072",
+      "relative_path": "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv",
+      "checksum": "34900309628ea968c8b82931bfd3f37af2862201f8a969d36108ddb5c36b3b35"
+    },
+    {
+      "input_key": "source_073",
+      "relative_path": "outputs/30_model_cards_compute_and_scalability/manifests/run_manifest.json",
+      "checksum": "6095f48bfae48eca853c6492b403c280b9d67786d0c4e57e27c4c4efdafffc41"
+    },
+    {
+      "input_key": "source_074",
+      "relative_path": "outputs/30_model_cards_compute_and_scalability/reports/model_cards/lama.md",
+      "checksum": "3ff95d1656fb130a774dbe88c896a8577044c9a6a80c3de7a3824315acdc89b8"
+    },
+    {
+      "input_key": "source_075",
+      "relative_path": "outputs/30_model_cards_compute_and_scalability/reports/model_cards/opencv_telea.md",
+      "checksum": "992f5a33196dbc4fa2bf3f3082e45c03cb5248b6eff7b7cb1b9342e050ed3b22"
+    },
+    {
+      "input_key": "source_076",
+      "relative_path": "outputs/30_model_cards_compute_and_scalability/reports/model_cards/sdxl_inpainting.md",
+      "checksum": "eb8d40481f2228a47fc0b0b05942a092f79a6763ef1894d41b46646262a2de95"
+    },
+    {
+      "input_key": "source_077",
+      "relative_path": "outputs/30_model_cards_compute_and_scalability/reports/model_cards/stable_diffusion_inpainting.md",
+      "checksum": "e2e999f7ac3299e3deb2c4678a5676e05f869dd8c08426938be2cdbf55f0eb12"
+    },
+    {
+      "input_key": "source_078",
+      "relative_path": "outputs/31_model_report_generation/data/report_index.csv",
+      "checksum": "80fc6b83dde8c3266f544d6a111fac360d9dee45eb0ed864a0c89f2da4819192"
+    },
+    {
+      "input_key": "source_079",
+      "relative_path": "outputs/31_model_report_generation/manifests/run_manifest.json",
+      "checksum": "568dcb669f227e270057b22043e504b2727c99904d6813952d17745aaf452340"
+    },
+    {
+      "input_key": "source_080",
+      "relative_path": "outputs/31_model_report_generation/reports/lama.html",
+      "checksum": "82f6d415449ea3cbc11cd16a9701b900a9dc3ffcc3bde9ff60de182fac7d65ce"
+    },
+    {
+      "input_key": "source_081",
+      "relative_path": "outputs/31_model_report_generation/reports/opencv_telea.html",
+      "checksum": "7fed7532c2edddacbe792b19c7059a6fbdc8600d43ddf895202f911eac0d066b"
+    },
+    {
+      "input_key": "source_082",
+      "relative_path": "outputs/31_model_report_generation/reports/sdxl_inpainting.html",
+      "checksum": "8a5bf4e43157e823738d2b8bed3f8d6e4c978ea6c3e890fdc5bf37f5a94817be"
+    },
+    {
+      "input_key": "source_083",
+      "relative_path": "outputs/31_model_report_generation/reports/stable_diffusion_inpainting.html",
+      "checksum": "0c70f6552fd5349dd76c6a7c82edf3fffddc63dacc437eee119152b4a7e26c9c"
+    },
+    {
+      "input_key": "source_084",
+      "relative_path": "outputs/32_case_and_painting_report_generation/data/case_report_index.csv",
+      "checksum": "4cb4a58195194813133c5482237fc46019ab0d6f4bd53a0d2b2f57aad8710cca"
+    },
+    {
+      "input_key": "source_085",
+      "relative_path": "outputs/32_case_and_painting_report_generation/data/painting_report_index.csv",
+      "checksum": "008247cdd36c16c8238a8a3fe1d6ae5e245e5eb1775359e42646ccd63ecdfe18"
+    },
+    {
+      "input_key": "source_086",
+      "relative_path": "outputs/32_case_and_painting_report_generation/data/selected_cases.csv",
+      "checksum": "f6cbf989cf8fefd7a6b7cc1d2fd9fcfd4d05e8edf4dde94cf0555ad978fa3cc8"
+    },
+    {
+      "input_key": "source_087",
+      "relative_path": "outputs/32_case_and_painting_report_generation/manifests/run_manifest.json",
+      "checksum": "7fa92ec00b349a50a6085e09a95c5fb37f05b11bd1ddf60eb0da7614f364c4c7"
+    },
+    {
+      "input_key": "source_088",
+      "relative_path": "outputs/33_final_evaluation_report/data/latex_tables.csv",
+      "checksum": "696385ce3d98751d6444bc32b8260e1407b7e8ab28115304a5c2af18ab34666d"
+    },
+    {
+      "input_key": "source_089",
+      "relative_path": "outputs/33_final_evaluation_report/data/report_evidence_catalog.csv",
+      "checksum": "7db71a0b3f058f05402703f6c00a1eb741c32d16c12a91221842034bff1d5a65"
+    },
+    {
+      "input_key": "source_090",
+      "relative_path": "outputs/33_final_evaluation_report/data/thesis_tables.csv",
+      "checksum": "803f663b5b589cecd28244168df5935e7ee07688f0ec11802b5d852d2b263462"
+    },
+    {
+      "input_key": "source_091",
+      "relative_path": "outputs/33_final_evaluation_report/figures/publication/01_benchmark_summary.png",
+      "checksum": "ac58f80159b235e3bb36bafd9170311f338c1e4b8259e52e3ea0b9993d8ad56c"
+    },
+    {
+      "input_key": "source_092",
+      "relative_path": "outputs/33_final_evaluation_report/figures/publication/02_stress_test_summary.png",
+      "checksum": "c59df0350005df80a1bfecba8dae88af998d1b123bbfddc94911b3d3208832b2"
+    },
+    {
+      "input_key": "source_093",
+      "relative_path": "outputs/33_final_evaluation_report/figures/publication/03_uncertainty_spatial_summary.png",
+      "checksum": "ebdc07bd86fdf23e995af8c3d88fc600bfba7f5cd676dd6251cbc91cc9e51130"
+    },
+    {
+      "input_key": "source_094",
+      "relative_path": "outputs/33_final_evaluation_report/figures/publication/04_trustworthiness_ablation_summary.png",
+      "checksum": "bcfe0b9a24a23f9d1d45b2b859c3a612db7d79ae1b05f60f3ad6e172bb1b2352"
+    },
+    {
+      "input_key": "source_095",
+      "relative_path": "outputs/33_final_evaluation_report/figures/publication/05_explainability_summary.png",
+      "checksum": "f908d381039eef469294ccf6634bb744dd3656bc71bb99e7ab40b34372f966f2"
+    },
+    {
+      "input_key": "source_096",
+      "relative_path": "outputs/33_final_evaluation_report/figures/publication/06_quality_compute_summary.png",
+      "checksum": "121c9c86d19abc1d93fa5ab1203c3ca8a3a42355b2434523c3a89a301e212c2d"
+    },
+    {
+      "input_key": "source_097",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/01_framework_evidence_map.png",
+      "checksum": "ad66131104b15a744e233ba222ba9960a69a32efc2f4324b72254a34d4c0432c"
+    },
+    {
+      "input_key": "source_098",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/02_dataset_and_experiment_scope.png",
+      "checksum": "633836cbdd51c6af3c0d63c3523eb7d52d170c0f3b19268afa521a8faabe1b34"
+    },
+    {
+      "input_key": "source_099",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/03_model_coverage.png",
+      "checksum": "a17e8a191973ad61471753ebc4b9889fb901ee0576f3483e7cf4c2c16e75b8d4"
+    },
+    {
+      "input_key": "source_100",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/04_canonical_model_comparison.png",
+      "checksum": "571446d1a77a46f43ea86ffd5032a96b1698d2b6e5d9f8fe94f94fe90ac21d4f"
+    },
+    {
+      "input_key": "source_101",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/05_metric_disagreement.png",
+      "checksum": "afb165b5bd2b2345c4422522a154133ede8d9796f50c88dfc89732a4f253ebf7"
+    },
+    {
+      "input_key": "source_102",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/06_damage_size_sensitivity.png",
+      "checksum": "baea92eeaf56f39e0d51144c204eda08386ee349aab86f0902134dfcff2d0de1"
+    },
+    {
+      "input_key": "source_103",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/07_mask_robustness.png",
+      "checksum": "10b66582b910c217bd612634648b70adad6f5d2204066657130fd4c9fc58c435"
+    },
+    {
+      "input_key": "source_104",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/08_synthetic_degradation.png",
+      "checksum": "4fa4bb7427e866b4faaa1e93e470630d82f0299073c08feda466899f2b2e3ec3"
+    },
+    {
+      "input_key": "source_105",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/09_grouped_effects.png",
+      "checksum": "b5faa40bde67a6d7ba842d5bfb0f0e848f52718b92bca57b6a4db4a79b635368"
+    },
+    {
+      "input_key": "source_106",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/10_metric_correlations.png",
+      "checksum": "0410fb06047a0705b12233fd2e790f5e5a3fc46d9bacc817763af8e03a283f40"
+    },
+    {
+      "input_key": "source_107",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/11_ranking_stability.png",
+      "checksum": "bc84c74944d75f362ace31b7f64ad3397fbf476457e4f95f0bbf3fc104fb3a0f"
+    },
+    {
+      "input_key": "source_108",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/12_uncertainty_summary.png",
+      "checksum": "7f794c397a0ba168d745854777ce0583c2788b91eb502b0215c5bda2c8b8fdc8"
+    },
+    {
+      "input_key": "source_109",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/13_spatial_uncertainty_explanations.png",
+      "checksum": "af38b54765bb0a37282ef470132621348023e1d3588f1c9f71b9996422b4f457"
+    },
+    {
+      "input_key": "source_110",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/14_failure_taxonomy_flags.png",
+      "checksum": "d6728a003b02d7d2e8cef97cc30015834ee31c6ec925499e65e2a34e96590e97"
+    },
+    {
+      "input_key": "source_111",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/15_ablation_ranking_flags.png",
+      "checksum": "fa1510bd8c44cfb168aafd38e17b0f9bc63dc3d8ebe0ab3a2dea326a82cd8ae4"
+    },
+    {
+      "input_key": "source_112",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/16_explainability_retrieval.png",
+      "checksum": "bfdf785e720b6c0d459f6ab75888e5be74f139caf9e884983dcfce10d0ef2a9a"
+    },
+    {
+      "input_key": "source_113",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/17_quality_vs_compute.png",
+      "checksum": "c0a0a968d4471635130405b561aa1adf74fd3a6618e10ac9a5b648c1dd58da3a"
+    },
+    {
+      "input_key": "source_114",
+      "relative_path": "outputs/33_final_evaluation_report/figures/thesis/18_scalability_projection.png",
+      "checksum": "8ba4d0227704e1857f798e9835176da9498d3186076065cad21d31b4a44f10f7"
+    },
+    {
+      "input_key": "source_115",
+      "relative_path": "outputs/33_final_evaluation_report/manifests/run_manifest.json",
+      "checksum": "a143fbd5661a540fc6cd9392aec0851d06db419b682a150c94e634b10210289b"
+    },
+    {
+      "input_key": "source_116",
+      "relative_path": "outputs/33_final_evaluation_report/reports/final_evaluation.html",
+      "checksum": "eea7578934106bf5695fa5451b8432800791ef3ac12a341c8bd567f6e0fda889"
+    },
+    {
+      "input_key": "source_117",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/manifests/run_manifest.json",
+      "checksum": "ca67ab9e2b365d14f67e9c964924cc25f652c8adfdc1ea31d0bbe9d027ecbaa3"
+    },
+    {
+      "input_key": "source_118",
+      "relative_path": "outputs/35_dashboard_and_deployment_validation/manifests/run_manifest.json",
+      "checksum": "be072144cade45550a32f61aef27c2aa5517ca51f9084e94bbfc2eed84a19b43"
+    },
+    {
+      "input_key": "source_119",
+      "relative_path": "outputs/35_dashboard_and_deployment_validation/reports/deployment_readiness.md",
+      "checksum": "d98e0a5aaf1d45480fd80396161cd6612f771532cc9a20eda346d778072ef54b"
+    },
+    {
+      "input_key": "source_120",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "checksum": "a92f2fde52f77002e4c1ea261ad33789c74756654eabb8558a333bebed6c8547"
+    },
+    {
+      "input_key": "source_121",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "checksum": "06f949b2ed8cf3778c3a55573001e8bf72e7bf1bfa096340a8d52036dec2c964"
+    },
+    {
+      "input_key": "source_122",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "checksum": "ac18f82e2a05567a6fd5f8fde412f61bef35bcaff6a2db813fad0e0c3dee068c"
+    },
+    {
+      "input_key": "source_123",
+      "relative_path": "outputs/inventory/project_paths.md",
+      "checksum": "fec9f2dc0db0a48adcccf634c31f9141f5fa829b17e81e16f0a4dc08ec6b18f5"
+    },
+    {
+      "input_key": "source_124",
+      "relative_path": "requirements.txt",
+      "checksum": "0d66b4c3bb24e5c03647df89121bd50e76167d6cde0970c027b4545bf660638f"
+    },
+    {
+      "input_key": "source_125",
+      "relative_path": "requirements_experiments.txt",
+      "checksum": "fca385c534df4623f15d058f5b7d188034a6aeb01add4bb0b13aeca6b366dfa5"
+    },
+    {
+      "input_key": "source_126",
+      "relative_path": "src/restoration_eval/dashboard_application.py",
+      "checksum": "8cda011b191fc59d23cf02801c899df13ab7ad2c3a14297a264eb1105585df81"
+    },
+    {
+      "input_key": "source_127",
+      "relative_path": "streamlit_app.py",
+      "checksum": "61368870fba5ef39a9d38b8e888b210e7c1483d2eddb7ff23f490e17b525c783"
+    }
+  ],
+  "outputs": [
+    {
+      "artifact_key": "supervisor_package.artifact_index",
+      "relative_path": "outputs/36_supervisor_publication_reproducibility_package/data/artifact_index.csv",
+      "artifact_type": "csv",
+      "checksum": "817c7c0901894158c381e58d04227a906482b6e41126395eca125ff4f4cc1fa1"
+    },
+    {
+      "artifact_key": "supervisor_package.artifacts",
+      "relative_path": "outputs/36_supervisor_publication_reproducibility_package/manifests/artifacts.csv",
+      "artifact_type": "csv",
+      "checksum": "ed43e0351f338ee03ffe2bd9c889dd2adea0de93b54f9513b8ad011ae7e45d59"
+    },
+    {
+      "artifact_key": "supervisor_package.feedback_agenda",
+      "relative_path": "outputs/36_supervisor_publication_reproducibility_package/data/feedback_agenda.md",
+      "artifact_type": "md",
+      "checksum": "caafc091239e807b8548d388eeff3200d3d3a53a3ab85b74e984906deef04cfd"
+    },
+    {
+      "artifact_key": "supervisor_package.key_findings",
+      "relative_path": "outputs/36_supervisor_publication_reproducibility_package/data/key_findings.json",
+      "artifact_type": "json",
+      "checksum": "5bb22f1284e6d12ee27796d1dfb36878438347a09ca88e30c38cf4a5411226a4"
+    },
+    {
+      "artifact_key": "supervisor_package.limitations_and_deviations",
+      "relative_path": "outputs/36_supervisor_publication_reproducibility_package/reports/limitations_and_deviations.md",
+      "artifact_type": "md",
+      "checksum": "88a368e2331da7b5e84ecbe93de2ed6e0f36df3d3ec4c25f46cf42ab7005c963"
+    },
+    {
+      "artifact_key": "supervisor_package.open_questions",
+      "relative_path": "outputs/36_supervisor_publication_reproducibility_package/data/open_questions.md",
+      "artifact_type": "md",
+      "checksum": "972ffb0e7f3f169ee11094ffc3f7f3683b3dec0e756d7fbc6297817820c5444c"
+    },
+    {
+      "artifact_key": "supervisor_package.package_manifest",
+      "relative_path": "outputs/36_supervisor_publication_reproducibility_package/manifests/package_manifest.json",
+      "artifact_type": "json",
+      "checksum": "465ea1a83716a023af7cf8f1cfaf5d42d2cb3b08f906764531111e1802aa65d8"
+    },
+    {
+      "artifact_key": "supervisor_package.package_readme",
+      "relative_path": "outputs/36_supervisor_publication_reproducibility_package/package/README.md",
+      "artifact_type": "md",
+      "checksum": "8f8a606bac565e5df00ea4a37ca7b512c4429d53dca614bcabd8638fa9258af0"
+    },
+    {
+      "artifact_key": "supervisor_package.package_root",
+      "relative_path": "outputs/36_supervisor_publication_reproducibility_package/package",
+      "artifact_type": "directory",
+      "checksum": "692e100e16ebd93c1eb420dbc9f30baf79a419b6d0d549815693a8a8754185f1"
+    },
+    {
+      "artifact_key": "supervisor_package.reproducibility_appendix",
+      "relative_path": "outputs/36_supervisor_publication_reproducibility_package/reports/reproducibility_appendix.md",
+      "artifact_type": "md",
+      "checksum": "0f565c74b0570c4b83a7ddb50468ea18020612676bfa3320c8251e51e3acc95b"
+    },
+    {
+      "artifact_key": "supervisor_package.reproducibility_snapshot",
+      "relative_path": "outputs/36_supervisor_publication_reproducibility_package/package/provenance/reproducibility_snapshot.json",
+      "artifact_type": "json",
+      "checksum": "8b1a0499bfcdc9b0b35626df891264d6e40728abf89db19ffbd2f33cfc366684"
+    },
+    {
+      "artifact_key": "supervisor_package.run_manifest",
+      "relative_path": "outputs/36_supervisor_publication_reproducibility_package/manifests/run_manifest.json",
+      "artifact_type": "json"
+    },
+    {
+      "artifact_key": "supervisor_package.supervisor_summary",
+      "relative_path": "outputs/36_supervisor_publication_reproducibility_package/reports/supervisor_summary.md",
+      "artifact_type": "md",
+      "checksum": "30776207bc993ac65fb5d6d7e012f4db94d3f267c7e8b7c17a7192eaf14dbdb8"
+    },
+    {
+      "artifact_key": "supervisor_package.validation",
+      "relative_path": "outputs/36_supervisor_publication_reproducibility_package/validation/checks.csv",
+      "artifact_type": "csv",
+      "checksum": "0172239430524d6452630e94214aa8853857c812cf91130980fd77b0facc87b4"
+    }
+  ],
+  "expected_counts": {
+    "physical_output_files": 125,
+    "canonical_output_roles": 14,
+    "artifact_records": 12,
+    "artifact_index_records": 120,
+    "package_files": 114,
+    "upstream_notebooks": 35,
+    "roadmap_responsibilities": 16
+  },
+  "observed_counts": {
+    "physical_output_files": 125,
+    "canonical_output_roles": 14,
+    "artifact_records": 12,
+    "artifact_index_records": 120,
+    "package_files": 114,
+    "upstream_notebooks": 35,
+    "roadmap_responsibilities": 16,
+    "validation_rows": 182
+  },
+  "validation_summary": {
+    "check_count": 182,
+    "passed_count": 181,
+    "failed_count": 1,
+    "blocking_failure_count": 0,
+    "overall_passed": true,
+    "failed_check_ids": [
+      "batch_9_inherited_warning:upstream_deployment_warning"
+    ]
+  },
+  "known_limitations": [
+    "The package republishes validated evidence; it does not recompute metrics or restoration candidates.",
+    "The benchmark uses controlled synthetic damage and does not establish real-world conservation generality.",
+    "Visual plausibility is not historical correctness, restoration trustworthiness, or conservation approval.",
+    "SDXL is a bounded ten-case feasibility study, not a fourth fully evaluated benchmark model.",
+    "Repeated-seed variability is an uncertainty proxy, not calibrated confidence.",
+    "Computational flags, retrieval results, and recommendations are decision support, not expert ground truth.",
+    "No universal combined quality, uncertainty, or trustworthiness score is constructed.",
+    "The package is a review bundle, not a complete executable repository clone.",
+    "N35 dependency-version differences remain an inherited warning; public deployment is not completed.",
+    "Generated package-summary links were rebased; the canonical report and upstream files were not modified."
+  ],
+  "validation_status": "warning",
+  "refactor_status": "refactored",
+  "completion_gate_passed": true,
+  "creates_new_scientific_evidence": false,
+  "inherited_upstream_warning_count": 1,
+  "package_validation_status": "passed_with_upstream_warning",
+  "package_tree_sha256": "3b9585408666f56f2cab02e8b2dc5b3296af605dcffdec8b43b6573e4d06ba03",
+  "artifact_manifest_checksum": "ed43e0351f338ee03ffe2bd9c889dd2adea0de93b54f9513b8ad011ae7e45d59",
+  "roadmap_traceability": [
+    {
+      "responsibility_id": "n36_r01",
+      "responsibility": "Supervisor summary and exact proposal questions",
+      "evidence": "Three exact RQs and ten summary sections",
+      "passed": true
+    },
+    {
+      "responsibility_id": "n36_r02",
+      "responsibility": "Final HTML and four model reports",
+      "evidence": "Five self-contained HTML reports",
+      "passed": true
+    },
+    {
+      "responsibility_id": "n36_r03",
+      "responsibility": "Compact evidence and LaTeX-ready tables",
+      "evidence": "Eight tables, including latex_tables.csv",
+      "passed": true
+    },
+    {
+      "responsibility_id": "n36_r04",
+      "responsibility": "Thesis-ready and publication-ready figures",
+      "evidence": "18 thesis figures and six publication figures",
+      "passed": true
+    },
+    {
+      "responsibility_id": "n36_r05",
+      "responsibility": "Model cards and model identities",
+      "evidence": "Four cards, implementations, revisions, and configurations",
+      "passed": true
+    },
+    {
+      "responsibility_id": "n36_r06",
+      "responsibility": "Case and painting report discovery",
+      "evidence": "30 case-report and 50 painting-report records",
+      "passed": true
+    },
+    {
+      "responsibility_id": "n36_r07",
+      "responsibility": "All upstream completion manifests",
+      "evidence": "35 gates passed; zero upstream blocking failures",
+      "passed": true
+    },
+    {
+      "responsibility_id": "n36_r08",
+      "responsibility": "Configuration and dataset traceability",
+      "evidence": "25 bundled evaluation and 13 indexed source configurations",
+      "passed": true
+    },
+    {
+      "responsibility_id": "n36_r09",
+      "responsibility": "Environment, Git, hardware, and seed provenance",
+      "evidence": "20 package versions, two requirements files, six seed policies",
+      "passed": true
+    },
+    {
+      "responsibility_id": "n36_r10",
+      "responsibility": "Observed compute and projection boundaries",
+      "evidence": "Four observed model summaries; projections explicitly labelled",
+      "passed": true
+    },
+    {
+      "responsibility_id": "n36_r11",
+      "responsibility": "Reproducibility appendix and limitations",
+      "evidence": "13 appendix sections and 12 limitations sections",
+      "passed": true
+    },
+    {
+      "responsibility_id": "n36_r12",
+      "responsibility": "Meeting documents and validated findings",
+      "evidence": "Key findings, open questions, and feedback agenda",
+      "passed": true
+    },
+    {
+      "responsibility_id": "n36_r13",
+      "responsibility": "Complete delivery index and intentional omissions",
+      "evidence": "114 package files and six indexed collections",
+      "passed": true
+    },
+    {
+      "responsibility_id": "n36_r14",
+      "responsibility": "Fixed-copy integrity and documented presentation adjustment",
+      "evidence": "106 preserved copies; six rebased summary links",
+      "passed": true
+    },
+    {
+      "responsibility_id": "n36_r15",
+      "responsibility": "Portability, formats, paths, and package size",
+      "evidence": "114 readable files, 22 valid links, and 24 validated PNGs",
+      "passed": true
+    },
+    {
+      "responsibility_id": "n36_r16",
+      "responsibility": "Honest dashboard and scientific scope",
+      "evidence": "Local demonstration only; no new scientific evidence",
+      "passed": true
+    }
+  ]
+}

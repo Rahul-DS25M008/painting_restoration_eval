@@ -1,0 +1,320 @@
+config_schema_version: "model_report_generation_config.v1"
+config_version: "1.0.0"
+
+model_report_generation:
+  notebook_id: "31"
+  notebook_stem: "31_model_report_generation"
+  dataset_id: "painting_restoration_eval"
+  dataset_version: "1.0.0"
+  dataset_scope: "controlled_50"
+  report_index_schema_version: "model_report_index.v1"
+  selection_schema_version: "model_report_selection.v1"
+  traceability_schema_version: "mock_to_final_traceability.v1"
+
+  inputs:
+    inventory_path: "outputs/inventory/project_file_inventory.csv"
+    inventory_run_path: "outputs/inventory/inventory_run.json"
+    project_paths_path: "outputs/inventory/project_paths.json"
+    proposal_path: "docs/proposal/Rahul_Thesis_Proposal.docx"
+    implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+    notebook_roadmap_path: "docs/final_notebook_roadmap.md"
+    evidence_dependency_audit_path: "docs/evidence_dependency_audit.md"
+    evidence_coverage_path: "config/evaluation/evidence_coverage.yaml"
+    artworks_path: "outputs/01_dataset_verification/data/artworks.csv"
+    case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+    model_eligibility_path: "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv"
+    telea_candidates_path: "outputs/09_opencv_telea_restoration/data/restorations.csv"
+    telea_runtime_path: "outputs/09_opencv_telea_restoration/metrics/runtime_summary.csv"
+    lama_candidates_path: "outputs/10_lama_restoration/data/restorations.csv"
+    lama_runtime_path: "outputs/10_lama_restoration/metrics/runtime_summary.csv"
+    stable_diffusion_candidates_path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+    stable_diffusion_runtime_path: "outputs/11_stable_diffusion_restoration/metrics/runtime_summary.csv"
+    sdxl_candidates_path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
+    sdxl_runtime_path: "outputs/12_sdxl_feasibility_or_restoration/metrics/runtime_summary.csv"
+    classical_metrics_path: "outputs/13_classical_metrics/metrics/classical_metrics.csv"
+    lpips_metrics_path: "outputs/14_lpips_metrics/metrics/lpips_metrics.csv"
+    feature_metrics_path: "outputs/15_feature_similarity/metrics/feature_metrics.csv"
+    spatial_diagnostics_path: "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv"
+    spatial_map_manifest_path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/map_images.csv"
+    local_consistency_path: "outputs/17_local_consistency_metrics/metrics/local_consistency.csv"
+    local_map_manifest_path: "outputs/17_local_consistency_metrics/manifests/map_images.csv"
+    canonical_uncertainty_path: "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_metrics.csv"
+    uncertainty_map_manifest_path: "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/map_images.csv"
+    semantic_metrics_path: "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv"
+    semantic_map_manifest_path: "outputs/20_semantic_and_structural_consistency/manifests/semantic_maps.csv"
+    model_comparison_path: "outputs/21_multi_model_comparison/metrics/model_comparison.csv"
+    metric_disagreement_path: "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv"
+    damage_size_uncertainty_path: "outputs/22_damage_size_diffusion_uncertainty_extension/metrics/damage_size_uncertainty.csv"
+    damage_size_analysis_path: "outputs/23_damage_size_sensitivity_analysis/metrics/damage_size_analysis.csv"
+    mask_robustness_path: "outputs/24_mask_robustness_analysis/metrics/mask_robustness_analysis.csv"
+    degradation_analysis_path: "outputs/25_synthetic_degradation_analysis/metrics/degradation_analysis.csv"
+    statistical_results_path: "outputs/26_grouped_and_statistical_analysis/metrics/statistical_results.csv"
+    ranking_stability_path: "outputs/26_grouped_and_statistical_analysis/metrics/ranking_stability.csv"
+    failure_assignments_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/failure_assignments.csv"
+    trustworthiness_flags_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv"
+    ablation_results_path: "outputs/28_metric_and_region_policy_ablation/metrics/ablation_results.csv"
+    flag_stability_path: "outputs/28_metric_and_region_policy_ablation/metrics/flag_stability.csv"
+    explanation_cases_path: "outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv"
+    case_neighbors_path: "outputs/29_explainable_ai_and_case_retrieval/data/case_neighbors.csv"
+    model_cards_path: "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv"
+    compute_scalability_path: "outputs/30_model_cards_compute_and_scalability/metrics/compute_scalability.csv"
+    quality_vs_compute_figure_path: "outputs/30_model_cards_compute_and_scalability/figures/quality_vs_compute.png"
+    scaling_projection_figure_path: "outputs/30_model_cards_compute_and_scalability/figures/scaling_projection.png"
+    manifest_09_path: "outputs/09_opencv_telea_restoration/manifests/run_manifest.json"
+    manifest_10_path: "outputs/10_lama_restoration/manifests/run_manifest.json"
+    manifest_11_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+    manifest_12_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+    manifest_13_path: "outputs/13_classical_metrics/manifests/run_manifest.json"
+    manifest_14_path: "outputs/14_lpips_metrics/manifests/run_manifest.json"
+    manifest_15_path: "outputs/15_feature_similarity/manifests/run_manifest.json"
+    manifest_16_path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json"
+    manifest_17_path: "outputs/17_local_consistency_metrics/manifests/run_manifest.json"
+    manifest_18_path: "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json"
+    manifest_19_path: "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json"
+    manifest_20_path: "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json"
+    manifest_21_path: "outputs/21_multi_model_comparison/manifests/run_manifest.json"
+    manifest_22_path: "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json"
+    manifest_23_path: "outputs/23_damage_size_sensitivity_analysis/manifests/run_manifest.json"
+    manifest_24_path: "outputs/24_mask_robustness_analysis/manifests/run_manifest.json"
+    manifest_25_path: "outputs/25_synthetic_degradation_analysis/manifests/run_manifest.json"
+    manifest_26_path: "outputs/26_grouped_and_statistical_analysis/manifests/run_manifest.json"
+    manifest_27_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json"
+    manifest_28_path: "outputs/28_metric_and_region_policy_ablation/manifests/run_manifest.json"
+    manifest_29_path: "outputs/29_explainable_ai_and_case_retrieval/manifests/run_manifest.json"
+    manifest_30_path: "outputs/30_model_cards_compute_and_scalability/manifests/run_manifest.json"
+
+  output:
+    root: "outputs/31_model_report_generation"
+    report_index_path: "data/report_index.csv"
+    reports_dir: "reports"
+    run_manifest_path: "manifests/run_manifest.json"
+    artifacts_path: "manifests/artifacts.csv"
+    validation_path: "validation/checks.csv"
+    smoke_dir: "work/smoke"
+
+  input_table_contracts:
+    artworks_path: {rows: 50, required_columns: [painting_id, category, style_or_period, raw_image_path, acceptance_status]}
+    case_registry_path: {rows: 525, required_columns: [case_id, experiment_id, painting_id, input_image_path, clean_image_path, mask_or_effect_path, status]}
+    model_eligibility_path: {rows: 2100, required_columns: [case_id, model_id, eligible, eligibility_reason]}
+    telea_candidates_path: {rows: 410, required_columns: [case_id, candidate_id, model_id, restored_path, runtime_seconds, status]}
+    telea_runtime_path: {rows: 5, required_columns: [summary_scope, experiment_id, total_runtime_seconds, status]}
+    lama_candidates_path: {rows: 410, required_columns: [case_id, candidate_id, model_id, restored_path, runtime_seconds, status]}
+    lama_runtime_path: {rows: 5, required_columns: [summary_scope, experiment_id, total_runtime_seconds, status]}
+    stable_diffusion_candidates_path: {rows: 1330, required_columns: [case_id, candidate_id, model_id, prompt_variant_id, seed, restored_path, status]}
+    stable_diffusion_runtime_path: {rows: 14, required_columns: [summary_scope, experiment_id, total_runtime_seconds, status]}
+    sdxl_candidates_path: {rows: 10, required_columns: [case_id, candidate_id, model_id, restored_path, availability_state, status]}
+    sdxl_runtime_path: {rows: 3, required_columns: [summary_scope, experiment_id, total_runtime_seconds, status]}
+    classical_metrics_path: {rows: 63018, required_columns: [case_id, candidate_id, model_id, metric_name, region_id, restored_value, status]}
+    lpips_metrics_path: {rows: 4170, required_columns: [case_id, candidate_id, model_id, metric_name, region_id, restored_value, status]}
+    feature_metrics_path: {rows: 8340, required_columns: [case_id, candidate_id, model_id, metric_name, feature_model_id, region_id, restored_value, status]}
+    spatial_diagnostics_path: {rows: 18896, required_columns: [case_id, candidate_id, model_id, region_id, restored_error_mean, status]}
+    spatial_map_manifest_path: {rows: 10062, required_columns: [candidate_id, model_id, map_type, relative_path, sha256, status]}
+    local_consistency_path: {rows: 271988, required_columns: [case_id, candidate_id, model_id, metric_family, metric_name, region_id, restored_value, status]}
+    local_map_manifest_path: {rows: 3282, required_columns: [candidate_id, model_id, map_type, relative_path, sha256, status]}
+    canonical_uncertainty_path: {rows: 20800, required_columns: [uncertainty_group_id, case_id, model_id, metric_name, region_id, value, status]}
+    uncertainty_map_manifest_path: {rows: 1055, required_columns: [uncertainty_group_id, model_id, map_type, relative_path, sha256, status]}
+    semantic_metrics_path: {rows: 58980, required_columns: [case_id, candidate_id, model_id, evidence_family, metric_name, restored_value, status]}
+    semantic_map_manifest_path: {rows: 9430, required_columns: [candidate_id, model_id, feature_model_id, map_type, relative_path, sha256, status]}
+    model_comparison_path: {rows: 86531, required_columns: [population_id, evidence_family, metric_name, model_id, comparison_direction, status]}
+    metric_disagreement_path: {rows: 839, required_columns: [population_id, anchor_id, model_rank_order, winner_model_id, status]}
+    damage_size_uncertainty_path: {rows: 4760, required_columns: [uncertainty_group_id, case_id, model_id, metric_name, region_id, value, status]}
+    damage_size_analysis_path: {rows: 1901, required_columns: [analysis_kind, metric_name, model_id, independent_unit, estimate, applicability_status, status]}
+    mask_robustness_path: {rows: 5373, required_columns: [analysis_kind, metric_name, model_id, independent_unit, estimate, applicability_status, status]}
+    degradation_analysis_path: {rows: 4695, required_columns: [analysis_kind, metric_name, model_id, independent_unit, estimate, applicability_status, status]}
+    statistical_results_path: {rows: 4174, required_columns: [result_kind, evidence_family, metric_name, model_id, independent_unit, applicability_status, status]}
+    ranking_stability_path: {rows: 258, required_columns: [ranking_kind, model_id, winner_model_id, independent_unit, applicability_status, status]}
+    failure_assignments_path: {rows: 24990, required_columns: [candidate_id, case_id, model_id, category_id, assignment_status, recommended_action, status]}
+    trustworthiness_flags_path: {rows: 19635, required_columns: [candidate_id, case_id, model_id, flag_id, flag_status, recommended_action, status]}
+    ablation_results_path: {rows: 7710, required_columns: [scenario_id, scenario_family, result_kind, model_id, applicability_status, status]}
+    flag_stability_path: {rows: 41055, required_columns: [scenario_id, candidate_id, model_id, flag_state_agreement_fraction, status]}
+    explanation_cases_path: {rows: 1785, required_columns: [candidate_id, case_id, painting_id, model_id, restored_path, recommendation_category, status]}
+    case_neighbors_path: {rows: 100, required_columns: [query_candidate_id, lane, feature_model_id, neighbor_candidate_id, neighbor_rank, status]}
+    model_cards_path: {rows: 4, required_columns: [model_id, display_name, evaluation_status, known_limitations_json, status]}
+    compute_scalability_path: {rows: 35, required_columns: [model_id, record_type, scenario_id, is_executed, is_projected, applicability_status, status]}
+
+  models:
+    - model_id: "opencv_telea"
+      display_name: "OpenCV Telea"
+      evaluation_status: "fully_evaluated"
+      report_filename: "opencv_telea.html"
+      representative_panel_count: 8
+      analytical_view_count: 6
+      visual_atlas_count: 2
+      minimum_embedded_image_count: 16
+      minimum_embedded_tile_count: 60
+      selection_quotas:
+        suitable_for_preliminary_inspection: 2
+        do_not_rely_automatically: 2
+        specialist_review_required: 4
+      applicability:
+        canonical_and_extended_quality: "applicable_complete_scope"
+        prompt_ablation: "not_applicable_not_prompt_conditioned"
+        repeated_seed_uncertainty: "not_applicable_deterministic_method"
+        damage_size_sensitivity: "applicable_five_painting_extension"
+        mask_robustness: "applicable_five_painting_extension"
+        synthetic_degradation: "applicable_five_painting_extension"
+        explanation_and_retrieval: "applicable_complete_catalog"
+    - model_id: "lama"
+      display_name: "LaMa"
+      evaluation_status: "fully_evaluated"
+      report_filename: "lama.html"
+      representative_panel_count: 8
+      analytical_view_count: 6
+      visual_atlas_count: 2
+      minimum_embedded_image_count: 16
+      minimum_embedded_tile_count: 60
+      selection_quotas:
+        suitable_for_preliminary_inspection: 2
+        do_not_rely_automatically: 2
+        specialist_review_required: 4
+      applicability:
+        canonical_and_extended_quality: "applicable_complete_scope"
+        prompt_ablation: "not_applicable_not_prompt_conditioned"
+        repeated_seed_uncertainty: "not_applicable_deterministic_method"
+        damage_size_sensitivity: "applicable_five_painting_extension"
+        mask_robustness: "applicable_five_painting_extension"
+        synthetic_degradation: "applicable_five_painting_extension"
+        explanation_and_retrieval: "applicable_complete_catalog"
+    - model_id: "stable_diffusion_inpainting"
+      display_name: "Stable Diffusion Inpainting"
+      evaluation_status: "fully_evaluated"
+      report_filename: "stable_diffusion_inpainting.html"
+      representative_panel_count: 10
+      analytical_view_count: 7
+      visual_atlas_count: 2
+      minimum_embedded_image_count: 19
+      minimum_embedded_tile_count: 72
+      selection_quotas:
+        suitable_for_preliminary_inspection: 1
+        unstable_candidate: 2
+        do_not_rely_automatically: 2
+        specialist_review_required: 5
+      applicability:
+        canonical_and_extended_quality: "applicable_complete_scope"
+        prompt_ablation: "applicable_scratch_thin_controlled_ablation"
+        repeated_seed_uncertainty: "applicable_canonical_and_damage_size"
+        damage_size_sensitivity: "applicable_five_painting_extension"
+        mask_robustness: "applicable_five_painting_extension"
+        synthetic_degradation: "applicable_five_painting_extension"
+        explanation_and_retrieval: "applicable_complete_catalog"
+    - model_id: "sdxl_inpainting"
+      display_name: "SDXL Inpainting"
+      evaluation_status: "partial_evaluation"
+      report_filename: "sdxl_inpainting.html"
+      representative_panel_count: 6
+      analytical_view_count: 4
+      visual_atlas_count: 2
+      minimum_embedded_image_count: 12
+      minimum_embedded_tile_count: 44
+      selection_quotas:
+        do_not_rely_automatically: 1
+        specialist_review_required: 5
+      applicability:
+        canonical_and_extended_quality: "applicable_ten_case_five_painting_subset"
+        prompt_ablation: "not_evaluated"
+        repeated_seed_uncertainty: "not_applicable_insufficient_seed_coverage"
+        damage_size_sensitivity: "not_evaluated"
+        mask_robustness: "not_evaluated"
+        synthetic_degradation: "partially_evaluated_selected_cases"
+        explanation_and_retrieval: "applicable_ten_candidate_catalog"
+
+  report:
+    approved_mock_structure_locked: true
+    self_contained_html: true
+    required_external_image_dependencies: 0
+    image_max_dimension: 900
+    photographic_format: "JPEG"
+    photographic_quality: 82
+    soft_report_size_warning_mib: 24
+    title_suffix: "Painting Restoration Evaluation Report"
+    required_section_ids:
+      - "executive-summary"
+      - "method-identity"
+      - "coverage-applicability"
+      - "overall-quality"
+      - "damage-and-experiments"
+      - "texture-colour-seam"
+      - "semantic-structural"
+      - "uncertainty-prompt-stability"
+      - "representative-successes-failures"
+      - "difference-explanation-maps"
+      - "failure-taxonomy-flags"
+      - "compute-scalability"
+      - "decision-support"
+      - "limitations"
+      - "reproducibility-provenance"
+    required_terms:
+      - "Visual plausibility is not equivalent to historical or restoration trustworthiness."
+      - "better"
+      - "worse"
+      - "inconclusive"
+      - "limitation"
+      - "RQ1"
+      - "RQ2"
+      - "RQ3"
+    prohibited_terms:
+      - "MOCK VALUE"
+      - "PLACEHOLDER IMAGE"
+      - "historically authentic restoration"
+      - "conservation approved"
+      - "universal best model"
+    traceability_roles:
+      executive-summary: ["headline_indicators", "main_conclusion", "scope_caveat"]
+      method-identity: ["method_card_summary"]
+      coverage-applicability: ["coverage_table", "applicability_statement"]
+      overall-quality: ["quality_table", "quality_plot", "scoped_assertion"]
+      damage-and-experiments: ["damage_summary", "experiment_plot", "scoped_assertion"]
+      texture-colour-seam: ["local_metric_summary", "diagnostic_visual", "scoped_assertion"]
+      semantic-structural: ["semantic_summary", "structural_visual", "scoped_assertion"]
+      uncertainty-prompt-stability: ["applicability_or_results", "nearby_limit"]
+      representative-successes-failures: ["auditable_selection", "success_failure_panels"]
+      difference-explanation-maps: ["difference_maps", "explanation_maps", "scale_caption"]
+      failure-taxonomy-flags: ["failure_summary", "flag_actions", "scoped_assertion"]
+      compute-scalability: ["observed_compute", "projection_scope", "scoped_assertion"]
+      decision-support: ["strengths", "weaknesses", "human_review_action"]
+      limitations: ["model_limitations", "evidence_limits"]
+      reproducibility-provenance: ["run_ids", "source_artifacts", "checksums"]
+
+  expected_counts:
+    upstream_manifest_count: 22
+    model_count: 4
+    report_count: 4
+    report_index_rows: 4
+    artifact_records: 6
+    physical_output_files: 8
+    explanation_case_rows: 1785
+    case_neighbor_rows: 100
+    model_card_rows: 4
+    compute_rows: 35
+    section_count_per_report: 15
+    traceability_rows: 39
+
+  evidence_policy:
+    creates_new_scientific_evidence: false
+    presentation_only_transformations:
+      - "validated_population_filtering"
+      - "deterministic_representative_selection"
+      - "sorting_and_display_formatting"
+      - "display_percentages_from_canonical_counts"
+      - "presentation_only_plots_and_web_sized_images"
+      - "self_contained_html_assembly"
+    prohibited_transformations:
+      - "new_metric_computation"
+      - "new_statistical_test"
+      - "new_post_hoc_exclusion"
+      - "new_composite_score"
+      - "new_scientific_ranking"
+      - "manual_copying_of_experimental_values"
+    independent_units:
+      canonical_comparison: "painting_and_paired_case_as_defined_upstream"
+      extension_experiments: "painting"
+      diffusion_uncertainty: "fixed_case_prompt_configuration_group"
+      report_examples: "illustrative_not_independent_evidence"
+
+  known_limitations:
+    - "controlled synthetic damage does not establish physical conservation validity"
+    - "visual plausibility does not establish historical authenticity"
+    - "style_or_period is descriptive for only 18 of 50 paintings"
+    - "SDXL evidence is limited to ten cases from five paintings"
+    - "repeated-seed uncertainty is empirical variability rather than calibrated confidence"
+    - "runtime and memory describe the recorded workstation rather than a universal benchmark"

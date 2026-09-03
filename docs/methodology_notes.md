@@ -489,20 +489,20 @@ The dashboard is an inspection interface and supporting artifact. It is not a se
 
 Notebook:
 
-`notebooks/35_refresh_supervisor_package_cleaned.ipynb`
+`notebooks/36_supervisor_publication_reproducibility_package.ipynb`
 
 The supervisor-facing package is refreshed in place under:
 
-`outputs/supervisor_package/`
+`outputs/36_supervisor_publication_reproducibility_package/`
 
 Current supervisor package outputs:
 
-- `outputs/supervisor_package/supervisor_summary.md`
-- `outputs/supervisor_package/supervisor_artifact_index.csv`
-- `outputs/supervisor_package/supervisor_key_findings.json`
-- `outputs/supervisor_package/supervisor_open_questions.md`
-- `outputs/supervisor_package/supervisor_feedback_agenda.md`
-- `outputs/supervisor_package/supervisor_package_manifest.json`
+- `outputs/36_supervisor_publication_reproducibility_package/reports/supervisor_summary.md`
+- `outputs/36_supervisor_publication_reproducibility_package/data/artifact_index.csv`
+- `outputs/36_supervisor_publication_reproducibility_package/data/key_findings.json`
+- `outputs/36_supervisor_publication_reproducibility_package/data/open_questions.md`
+- `outputs/36_supervisor_publication_reproducibility_package/data/feedback_agenda.md`
+- `outputs/36_supervisor_publication_reproducibility_package/manifests/package_manifest.json`
 
 The package summarizes:
 

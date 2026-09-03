@@ -1,0 +1,929 @@
+{
+  "schema_version": "reproducibility_snapshot.v1",
+  "notebook_id": "36",
+  "notebook_stem": "36_supervisor_publication_reproducibility_package",
+  "generated_at_utc": "2026-09-03T21:13:25Z",
+  "creates_new_scientific_evidence": false,
+  "environment": {
+    "python_version": "3.12.6",
+    "python_implementation": "CPython",
+    "accepted_python_minor_versions": [
+      "3.11",
+      "3.12"
+    ],
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 165 Stepping 2, GenuineIntel"
+  },
+  "git": {
+    "git_commit": "ba720c143b74179ceafa2264cd1d9808bfc48944",
+    "git_dirty": true,
+    "git_branch": "main",
+    "git_error": ""
+  },
+  "dataset": {
+    "config_schema_version": "dataset_config.v1",
+    "dataset_id": "painting_restoration_eval",
+    "dataset_version": "1.0.0",
+    "dataset_scope": "controlled_50",
+    "execution_profile": "controlled_50",
+    "expected_paintings": 50,
+    "configuration_path": "config/datasets/controlled_50.yaml",
+    "configuration_sha256": "5568dd93bf606d627e791ff52c2c6c2af3b8a06bfd94f0a78e2a8d245fc86345"
+  },
+  "package_versions": [
+    {
+      "package": "Pillow",
+      "distribution": "Pillow",
+      "installed_version": "9.5.0",
+      "availability": "installed"
+    },
+    {
+      "package": "PyYAML",
+      "distribution": "PyYAML",
+      "installed_version": "6.0.3",
+      "availability": "installed"
+    },
+    {
+      "package": "accelerate",
+      "distribution": "accelerate",
+      "installed_version": "1.14.0",
+      "availability": "installed"
+    },
+    {
+      "package": "diffusers",
+      "distribution": "diffusers",
+      "installed_version": "0.27.2",
+      "availability": "installed"
+    },
+    {
+      "package": "iopaint",
+      "distribution": "iopaint",
+      "installed_version": "1.6.0",
+      "availability": "installed"
+    },
+    {
+      "package": "jmespath",
+      "distribution": "jmespath",
+      "installed_version": "1.1.0",
+      "availability": "installed"
+    },
+    {
+      "package": "lpips",
+      "distribution": "lpips",
+      "installed_version": "0.1.4",
+      "availability": "installed"
+    },
+    {
+      "package": "matplotlib",
+      "distribution": "matplotlib",
+      "installed_version": "3.11.0",
+      "availability": "installed"
+    },
+    {
+      "package": "numpy",
+      "distribution": "numpy",
+      "installed_version": "1.26.4",
+      "availability": "installed"
+    },
+    {
+      "package": "opencv-python",
+      "distribution": "opencv-python",
+      "installed_version": "4.11.0.86",
+      "availability": "installed"
+    },
+    {
+      "package": "pandas",
+      "distribution": "pandas",
+      "installed_version": "2.3.3",
+      "availability": "installed"
+    },
+    {
+      "package": "plotly",
+      "distribution": "plotly",
+      "installed_version": "6.8.0",
+      "availability": "installed"
+    },
+    {
+      "package": "pyarrow",
+      "distribution": "pyarrow",
+      "installed_version": "24.0.0",
+      "availability": "installed"
+    },
+    {
+      "package": "safetensors",
+      "distribution": "safetensors",
+      "installed_version": "0.8.0",
+      "availability": "installed"
+    },
+    {
+      "package": "scikit-image",
+      "distribution": "scikit-image",
+      "installed_version": "0.24.0",
+      "availability": "installed"
+    },
+    {
+      "package": "scipy",
+      "distribution": "scipy",
+      "installed_version": "1.17.1",
+      "availability": "installed"
+    },
+    {
+      "package": "streamlit",
+      "distribution": "streamlit",
+      "installed_version": "1.59.0",
+      "availability": "installed"
+    },
+    {
+      "package": "torch",
+      "distribution": "torch",
+      "installed_version": "2.5.1+cu121",
+      "availability": "installed"
+    },
+    {
+      "package": "torchvision",
+      "distribution": "torchvision",
+      "installed_version": "0.20.1+cu121",
+      "availability": "installed"
+    },
+    {
+      "package": "transformers",
+      "distribution": "transformers",
+      "installed_version": "4.48.3",
+      "availability": "installed"
+    }
+  ],
+  "requirements": [
+    {
+      "relative_path": "requirements.txt",
+      "size_bytes": 107,
+      "sha256": "0d66b4c3bb24e5c03647df89121bd50e76167d6cde0970c027b4545bf660638f"
+    },
+    {
+      "relative_path": "requirements_experiments.txt",
+      "size_bytes": 848,
+      "sha256": "fca385c534df4623f15d058f5b7d188034a6aeb01add4bb0b13aeca6b366dfa5"
+    }
+  ],
+  "models": [
+    {
+      "model_id": "lama",
+      "display_name": "LaMa",
+      "evaluation_status": "fully_evaluated",
+      "implementation": "IOPaint CLI model=lama",
+      "implementation_version": "1.6.0",
+      "model_identifier": "big-lama.pt",
+      "model_revision": "iopaint_lama_default",
+      "configuration_id": "lama_iopaint_masked_composite_v1",
+      "seed_policy": "not_applicable",
+      "execution_device": "cuda",
+      "execution_backend": "iopaint",
+      "precision": "float32",
+      "inference_width": 768,
+      "inference_height": 768,
+      "output_width": 768,
+      "output_height": 768,
+      "observed_hardware_json": "{\"cpu_environment\":\"Windows-11-10.0.26200-SP0 | AMD64 | Intel64 Family 6 Model 165 Stepping 2, GenuineIntel | NVIDIA GeForce RTX 3060 Laptop GPU\",\"cuda_available\":true,\"cuda_device_count\":1,\"cuda_device_name\":\"NVIDIA GeForce RTX 3060 Laptop GPU\",\"cuda_runtime_version\":\"12.1\",\"execution_backend\":\"iopaint\",\"execution_device\":\"cuda\",\"gpu_required\":true,\"torch_version\":\"2.5.1+cu121\"}"
+    },
+    {
+      "model_id": "opencv_telea",
+      "display_name": "OpenCV Telea",
+      "evaluation_status": "fully_evaluated",
+      "implementation": "OpenCV cv2.INPAINT_TELEA",
+      "implementation_version": "4.11.0",
+      "model_identifier": "cv2.INPAINT_TELEA",
+      "model_revision": "opencv-4.11.0",
+      "configuration_id": "opencv_telea_r3_threshold_policy_v1",
+      "seed_policy": "not_applicable",
+      "execution_device": "cpu",
+      "execution_backend": "opencv_cpu",
+      "precision": "uint8",
+      "inference_width": 768,
+      "inference_height": 768,
+      "output_width": 768,
+      "output_height": 768,
+      "observed_hardware_json": "{\"cpu_environment\":\"Windows-11-10.0.26200-SP0 | AMD64 | Intel64 Family 6 Model 165 Stepping 2, GenuineIntel\",\"execution_backend\":\"opencv_cpu\",\"execution_device\":\"CPU\",\"gpu_required\":false}"
+    },
+    {
+      "model_id": "sdxl_inpainting",
+      "display_name": "SDXL Inpainting",
+      "evaluation_status": "partial_evaluation",
+      "implementation": "Diffusers StableDiffusionXLInpaintPipeline",
+      "implementation_version": "3.0.0",
+      "model_identifier": "diffusers/stable-diffusion-xl-1.0-inpainting-0.1",
+      "model_revision": "115134f363124c53c7d878647567d04daf26e41e",
+      "configuration_id": "sdxl_quality_preserving_partial_evaluation_v1",
+      "seed_policy": "2026",
+      "execution_device": "cuda",
+      "execution_backend": null,
+      "precision": "float16",
+      "inference_width": 768,
+      "inference_height": 768,
+      "output_width": 768,
+      "output_height": 768,
+      "observed_hardware_json": "{\"cuda_available\":true,\"cuda_device_name\":\"NVIDIA GeForce RTX 3060 Laptop GPU\",\"cuda_runtime_version\":\"12.1\",\"execution_device\":\"cuda\",\"gpu_required\":true,\"maximum_gpu_peak_bytes\":5632166912,\"parent_runtime_seconds\":3846.706,\"torch_version\":\"2.5.1+cu121\"}"
+    },
+    {
+      "model_id": "stable_diffusion_inpainting",
+      "display_name": "Stable Diffusion Inpainting",
+      "evaluation_status": "fully_evaluated",
+      "implementation": "Diffusers StableDiffusionInpaintPipeline",
+      "implementation_version": "1.0.0",
+      "model_identifier": "stable-diffusion-v1-5/stable-diffusion-inpainting",
+      "model_revision": "8a4288a76071f7280aedbdb3253bdb9e9d5d84bb",
+      "configuration_id": "sd15_inpaint_fixed_policy_v1",
+      "seed_policy": "2026",
+      "execution_device": "cuda",
+      "execution_backend": "diffusers_stable_diffusion_inpaint",
+      "precision": "float16",
+      "inference_width": 512,
+      "inference_height": 512,
+      "output_width": 768,
+      "output_height": 768,
+      "observed_hardware_json": "{\"cuda_available\":true,\"cuda_device_name\":\"NVIDIA GeForce RTX 3060 Laptop GPU\",\"cuda_runtime_version\":\"12.1\",\"execution_backend\":\"diffusers_stable_diffusion_inpaint\",\"execution_device\":\"cuda\",\"gpu_required\":true,\"maximum_gpu_peak_bytes\":2821122560,\"torch_version\":\"2.5.1+cu121\"}"
+    }
+  ],
+  "seed_policies": [
+    {
+      "scope": "OpenCV Telea benchmark",
+      "model_id": "opencv_telea",
+      "seeds": "not applicable",
+      "policy": "deterministic classical algorithm"
+    },
+    {
+      "scope": "LaMa benchmark",
+      "model_id": "lama",
+      "seeds": "not applicable",
+      "policy": "deterministic learned baseline"
+    },
+    {
+      "scope": "Stable Diffusion primary comparison",
+      "model_id": "stable_diffusion_inpainting",
+      "seeds": "2026",
+      "policy": "fixed primary candidate seed"
+    },
+    {
+      "scope": "Canonical Stable Diffusion uncertainty",
+      "model_id": "stable_diffusion_inpainting",
+      "seeds": "2026, 2027, 2028, 2029",
+      "policy": "four exact seeds per eligible group"
+    },
+    {
+      "scope": "Damage-size Stable Diffusion uncertainty",
+      "model_id": "stable_diffusion_inpainting",
+      "seeds": "2026, 2027, 2028, 2029",
+      "policy": "seed 2026 reused as the frozen anchor; 2027–2029 generated by Notebook 22"
+    },
+    {
+      "scope": "SDXL bounded feasibility",
+      "model_id": "sdxl_inpainting",
+      "seeds": "2026",
+      "policy": "one fixed seed per selected feasibility case"
+    }
+  ],
+  "bundled_evaluation_configurations": [
+    {
+      "source_path": "config/evaluation/case_and_painting_reports.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/case_and_painting_reports.yaml",
+      "size_bytes": 22811,
+      "source_sha256": "57b6ed5631c5cc59f576041939c9c2f440f33283971d9af982f50838bed56ec7"
+    },
+    {
+      "source_path": "config/evaluation/damage_size_analysis.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/damage_size_analysis.yaml",
+      "size_bytes": 15991,
+      "source_sha256": "24b1fa0defeba5373985cfcacb5435f9536c6f6df806347affde6e737b4c1b20"
+    },
+    {
+      "source_path": "config/evaluation/damage_size_diffusion_uncertainty_extension.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/damage_size_diffusion_uncertainty_extension.yaml",
+      "size_bytes": 15064,
+      "source_sha256": "100808faf373785e41cd992d49a81870822760fd7bbafead4c124a46ab1dde9f"
+    },
+    {
+      "source_path": "config/evaluation/dashboard_assets.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/dashboard_assets.yaml",
+      "size_bytes": 20148,
+      "source_sha256": "06b7a48527459715df4a8d14998b6f9e930da4f5bd360f91b7c323006acf4bd9"
+    },
+    {
+      "source_path": "config/evaluation/dashboard_validation.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/dashboard_validation.yaml",
+      "size_bytes": 11652,
+      "source_sha256": "687840dadbabd1942ad6aa4aaa3f228f833f25f635400ca784cc2687127928aa"
+    },
+    {
+      "source_path": "config/evaluation/diffusion_uncertainty.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/diffusion_uncertainty.yaml",
+      "size_bytes": 10827,
+      "source_sha256": "444523318a19f6cc2536537bb56701abfa37305819d1b8a057008066f24c6bc1"
+    },
+    {
+      "source_path": "config/evaluation/evidence_coverage.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/evidence_coverage.yaml",
+      "size_bytes": 81494,
+      "source_sha256": "3e23cf3ddb8f1f62f76e820b51ef791fedebab0d9e6b1811ea7b640cf5b89037"
+    },
+    {
+      "source_path": "config/evaluation/explainable_case_retrieval.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/explainable_case_retrieval.yaml",
+      "size_bytes": 11529,
+      "source_sha256": "e045292ff413d76d699362634be5d97ab6e57769f33031d8d6ec10cb939a766d"
+    },
+    {
+      "source_path": "config/evaluation/failure_taxonomy.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/failure_taxonomy.yaml",
+      "size_bytes": 28952,
+      "source_sha256": "7ef5b0062a08fa95571e9d437672fc06b58b9d1bc2e0b60f30e39be7564c2239"
+    },
+    {
+      "source_path": "config/evaluation/feature_similarity.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/feature_similarity.yaml",
+      "size_bytes": 9039,
+      "source_sha256": "a6e192759a77d78babb8282a4ceebed9c52292a44891499d43db8aae09a1c1a5"
+    },
+    {
+      "source_path": "config/evaluation/final_evaluation_report.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/final_evaluation_report.yaml",
+      "size_bytes": 24986,
+      "source_sha256": "b59f2c2b5d228255b6ebbdf1ec9edf4d8f40e65dfdb730b3d6cfb904b8f76c94"
+    },
+    {
+      "source_path": "config/evaluation/grouped_statistical_analysis.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/grouped_statistical_analysis.yaml",
+      "size_bytes": 21228,
+      "source_sha256": "302aadbb45369221a70b0a5db07f9e3af8584cc285a931d906592b9566ef200a"
+    },
+    {
+      "source_path": "config/evaluation/local_consistency.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/local_consistency.yaml",
+      "size_bytes": 12596,
+      "source_sha256": "17346e2e38bd79c08ebc59ffd73effade3b93e2896ed800b11e7a7e28fad0f99"
+    },
+    {
+      "source_path": "config/evaluation/lpips.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/lpips.yaml",
+      "size_bytes": 6226,
+      "source_sha256": "83cb97d9876f1039aae244f21368a9e0077e27fca7b4060e1e24889c7b4d6ada"
+    },
+    {
+      "source_path": "config/evaluation/mask_robustness_analysis.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/mask_robustness_analysis.yaml",
+      "size_bytes": 15117,
+      "source_sha256": "67ccb758f0950f8c071a3b6ea5e63071a6001ea79f2293a790aff545a9286b4f"
+    },
+    {
+      "source_path": "config/evaluation/metric_region_ablation.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/metric_region_ablation.yaml",
+      "size_bytes": 16767,
+      "source_sha256": "1c8093c6980c5ded650069940f54f092a4bd718e83591285fb7fe4ae8c0db8ea"
+    },
+    {
+      "source_path": "config/evaluation/metrics.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/metrics.yaml",
+      "size_bytes": 7404,
+      "source_sha256": "c3abb2675aac79563c47d98e7b55b1a6b611cd7af772da5c45891305a919d624"
+    },
+    {
+      "source_path": "config/evaluation/model_cards_compute.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/model_cards_compute.yaml",
+      "size_bytes": 22624,
+      "source_sha256": "5b01b06bd8aa07fba8d40aa0953a92f4c6e909ce5f931c93feee5acd135cdae0"
+    },
+    {
+      "source_path": "config/evaluation/model_report_generation.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/model_report_generation.yaml",
+      "size_bytes": 20810,
+      "source_sha256": "1d5e17c87e4d4ce5090530502d43f4c7a74a066475f89c0e79cfa2d48e794c1c"
+    },
+    {
+      "source_path": "config/evaluation/multi_model_comparison.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/multi_model_comparison.yaml",
+      "size_bytes": 18103,
+      "source_sha256": "de3dc393b29bbffe25d8b3b60ae3edef36423ff289aca1be44b41cf797c8891f"
+    },
+    {
+      "source_path": "config/evaluation/semantic_structural.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/semantic_structural.yaml",
+      "size_bytes": 13894,
+      "source_sha256": "e62a742ba3ed55d5bc141f2acee67e181bae42d9d33a07915fcff630fef4ef98"
+    },
+    {
+      "source_path": "config/evaluation/spatial_diagnostics.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/spatial_diagnostics.yaml",
+      "size_bytes": 9116,
+      "source_sha256": "3399a9cfb977d12def43cdaf9c8dd080be9a6cf8ff2cb239fc1bb1e45395e184"
+    },
+    {
+      "source_path": "config/evaluation/spatial_explanations.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/spatial_explanations.yaml",
+      "size_bytes": 9876,
+      "source_sha256": "9ef4edc87c4b9aae1bca6e0221168c1fbe81f1cc80ed8dc5dce0889e6c09a304"
+    },
+    {
+      "source_path": "config/evaluation/supervisor_package.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/supervisor_package.yaml",
+      "size_bytes": 12342,
+      "source_sha256": "cc3137fc9541ce7d973c14645f6f7fd31893a557363a755e0e394bbe1af5da74"
+    },
+    {
+      "source_path": "config/evaluation/synthetic_degradation_analysis.yaml",
+      "destination_path": "outputs/36_supervisor_publication_reproducibility_package/package/configuration/evaluation/synthetic_degradation_analysis.yaml",
+      "size_bytes": 18112,
+      "source_sha256": "76aa4b5d0ae0eec880778adbb81df1e1968cc038cbf253a59f216af25630d15b"
+    }
+  ],
+  "indexed_source_configurations": [
+    {
+      "relative_path": "config/datasets/controlled_50.yaml",
+      "size_bytes": 4295,
+      "sha256": "5568dd93bf606d627e791ff52c2c6c2af3b8a06bfd94f0a78e2a8d245fc86345",
+      "package_policy": "indexed_not_bundled"
+    },
+    {
+      "relative_path": "config/preprocessing/canonical_768.yaml",
+      "size_bytes": 2294,
+      "sha256": "82674521e93833b6209e3ee1cbf211404816dae373b48254be3c2066418fd7ad",
+      "package_policy": "indexed_not_bundled"
+    },
+    {
+      "relative_path": "config/masks/canonical_binary.yaml",
+      "size_bytes": 6682,
+      "sha256": "167269a57e45df5295ceba09825ade4b739f566785f4eb579204b4f2d390ef3b",
+      "package_policy": "indexed_not_bundled"
+    },
+    {
+      "relative_path": "config/experiments/canonical_damage.yaml",
+      "size_bytes": 2796,
+      "sha256": "bc0d7ab095a88f75078db9437a29136bd30d84476e9bb06bce06fd0161b2a342",
+      "package_policy": "indexed_not_bundled"
+    },
+    {
+      "relative_path": "config/experiments/damage_size_sensitivity.yaml",
+      "size_bytes": 4848,
+      "sha256": "5d16c0f17108a61f5eec1f776284ca3dae5108bd90a939eba1e9fb8d1f1bc025",
+      "package_policy": "indexed_not_bundled"
+    },
+    {
+      "relative_path": "config/experiments/evaluation_contract.yaml",
+      "size_bytes": 9799,
+      "sha256": "ae977512636b0ea5eb16b4a3dff95c062f402c086430328a341c9d0bda6a3254",
+      "package_policy": "indexed_not_bundled"
+    },
+    {
+      "relative_path": "config/experiments/lama.yaml",
+      "size_bytes": 6136,
+      "sha256": "7c606eb3c860bbae4ef782ac5f2b7bd31c9dc5d70be8d1eebe2d3fbe6779eb9a",
+      "package_policy": "indexed_not_bundled"
+    },
+    {
+      "relative_path": "config/experiments/mask_robustness.yaml",
+      "size_bytes": 5512,
+      "sha256": "921db621e36288cefea346b4269e6afdecb946871d11e13349f3e26afce41137",
+      "package_policy": "indexed_not_bundled"
+    },
+    {
+      "relative_path": "config/experiments/opencv_telea.yaml",
+      "size_bytes": 4533,
+      "sha256": "9295858e27461b90cca89b467a04c6e2d4a076b8d6e74b9b6293541fb5525624",
+      "package_policy": "indexed_not_bundled"
+    },
+    {
+      "relative_path": "config/experiments/sdxl.yaml",
+      "size_bytes": 10017,
+      "sha256": "e17ae845f5daeefdacda288751befd42b07362a919ac59b93bf038b5d3871f1c",
+      "package_policy": "indexed_not_bundled"
+    },
+    {
+      "relative_path": "config/experiments/stable_diffusion.yaml",
+      "size_bytes": 7260,
+      "sha256": "394c66a4269b0584539141c409e278939762d065fbc122f2600b340cb8e58dbe",
+      "package_policy": "indexed_not_bundled"
+    },
+    {
+      "relative_path": "config/experiments/stable_diffusion_scratch_prompt_ablation.yaml",
+      "size_bytes": 2755,
+      "sha256": "be83ff685a5907359fb4858683fb840cf9b1fd34f67b215199232a0fac4a61f3",
+      "package_policy": "indexed_not_bundled"
+    },
+    {
+      "relative_path": "config/experiments/synthetic_degradation.yaml",
+      "size_bytes": 7870,
+      "sha256": "eaf2d11f3192e7271e11136f023022181bd4b5cfc4e0091316dc1c21a7255bf2",
+      "package_policy": "indexed_not_bundled"
+    }
+  ],
+  "upstream_manifests": [
+    {
+      "notebook_id": "01",
+      "notebook_name": "Dataset Verification",
+      "run_id": "run_424a69cf0c2c4a228d0919dc2d66258a",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/01_dataset_verification/manifests/run_manifest.json",
+      "manifest_sha256": "4af536c91b81b9e16aa3ffbfb461399b34034ac717c2ad0ec5231d6186b3e15a"
+    },
+    {
+      "notebook_id": "02",
+      "notebook_name": "Image Preprocessing",
+      "run_id": "run_5e54b2de32934e1c9303e7250b932404",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/02_image_preprocessing/manifests/run_manifest.json",
+      "manifest_sha256": "5e7c4076587f9b6d149c897c817c798d596d5e740f016da5ce2aca6dc9ca310e"
+    },
+    {
+      "notebook_id": "03",
+      "notebook_name": "Canonical Mask Generation",
+      "run_id": "run_16536d2f39c54081b0dd58a00b5e9f01",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/03_canonical_mask_generation/manifests/run_manifest.json",
+      "manifest_sha256": "5c678a0199d405e69c4a321db313c3a97bec349753c116e2740df3d9cbcbd49e"
+    },
+    {
+      "notebook_id": "04",
+      "notebook_name": "Canonical Damaged-Image Generation",
+      "run_id": "run_bf312c29726843a4b3c5319e05bf49f0",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json",
+      "manifest_sha256": "f9e95b91dd72440c36f07c56853b971022a64def824579daeb8c6e484875e6bc"
+    },
+    {
+      "notebook_id": "05",
+      "notebook_name": "Damage-Size Sensitivity Dataset Generation",
+      "run_id": "run_519fd38cca4c45d69dc8f43e90cae621",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json",
+      "manifest_sha256": "a5bad621639729fc4ba7b3dd4ff7551be2f9f4696d341ec146bda1afea792f8d"
+    },
+    {
+      "notebook_id": "06",
+      "notebook_name": "Mask Robustness Dataset Generation",
+      "run_id": "run_3d910e4c145e44d18ba19233125634d6",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/06_mask_robustness_dataset_generation/manifests/run_manifest.json",
+      "manifest_sha256": "9678fc918324a51023bd705ab6cb7c398ccf6771f1910083cce6f00a2dd02ed9"
+    },
+    {
+      "notebook_id": "07",
+      "notebook_name": "Synthetic Degradation Dataset Generation",
+      "run_id": "run_306a79f17cfb48edb73fa90d174317f0",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/07_synthetic_degradation_dataset_generation/manifests/run_manifest.json",
+      "manifest_sha256": "9eb03a79f9faeb0cfe159950642a5fda2f2c0c79b6c230c5a097186458f99d1e"
+    },
+    {
+      "notebook_id": "08",
+      "notebook_name": "Experiment Contracts and Region Policy",
+      "run_id": "run_a3734bc2121f401b87de4894717366ab",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+      "manifest_sha256": "d1b62caa720194e666894afd276d0c6a8c973343b4a378bd787467273bbceb8a"
+    },
+    {
+      "notebook_id": "09",
+      "notebook_name": "OpenCV Telea Restoration",
+      "run_id": "run_eafa3b4f805e472688f1df65b894b96e",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/09_opencv_telea_restoration/manifests/run_manifest.json",
+      "manifest_sha256": "d3cfe89d3ba87f168f7884836caf5cb72f50f675786d1f94cd9904fe0537cbf7"
+    },
+    {
+      "notebook_id": "10",
+      "notebook_name": "LaMa Restoration",
+      "run_id": "run_25e38d80461643fb91ba60cb551a9a2f",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/10_lama_restoration/manifests/run_manifest.json",
+      "manifest_sha256": "e2c2ce786f030472152142d44322ac90b03b98cdce0f041d00657324df9257ff"
+    },
+    {
+      "notebook_id": "11",
+      "notebook_name": "Stable Diffusion Restoration",
+      "run_id": "run_82ee1e1c09524a5da3e6fe93016d0627",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json",
+      "manifest_sha256": "7b76c94c9b857dcdf7f4efb5c619494b718717126c6f76f8343d8dae8f3a6b73"
+    },
+    {
+      "notebook_id": "12",
+      "notebook_name": "SDXL Bounded Partial Evaluation",
+      "run_id": "run_1daaf4a3dcb34b5599b0ff89bb7034d3",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json",
+      "manifest_sha256": "0b46a1a7fbec8f27bdd0d22266a3d1630f5a4150c0ced3ec0fb6a1e4554ba009"
+    },
+    {
+      "notebook_id": "13",
+      "notebook_name": "Classical Metrics",
+      "run_id": "run_5bbeb9a089d044fab465d5078aedab39",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/13_classical_metrics/manifests/run_manifest.json",
+      "manifest_sha256": "90d5905958348041055dfa915f4577af335c34b26036a31767452297679538d2"
+    },
+    {
+      "notebook_id": "14",
+      "notebook_name": "14_lpips_metrics",
+      "run_id": "run_4ffd061c775a46f3944ad9e405613b34",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/14_lpips_metrics/manifests/run_manifest.json",
+      "manifest_sha256": "2728e750f41f1441c5cddc6bbfe79a60eeb7b3d318f83e2b93a0396a2be9dfd7"
+    },
+    {
+      "notebook_id": "15",
+      "notebook_name": "15_feature_similarity",
+      "run_id": "run_2b08762834b1423b8a61ef159c2679dc",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 1,
+      "manifest_path": "outputs/15_feature_similarity/manifests/run_manifest.json",
+      "manifest_sha256": "cc9ee35005e9520a56baeeee0b130608e0ef51a00007aac3b459b9e097cb2984"
+    },
+    {
+      "notebook_id": "16",
+      "notebook_name": "16_difference_maps_and_spatial_diagnostics",
+      "run_id": "run_1181febbbd3d4e63bbd60bc565b2d0c9",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json",
+      "manifest_sha256": "5ffa5ee1de12e39f575b29cb760c3e8c86df794aadf7962304a5d3d99dd954a7"
+    },
+    {
+      "notebook_id": "17",
+      "notebook_name": "17_local_consistency_metrics",
+      "run_id": "run_a322000b2a0445c9b5b71a2e0502fdf0",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/17_local_consistency_metrics/manifests/run_manifest.json",
+      "manifest_sha256": "78396a22402cb97f49c422f7db22c5134a3d499aa2a96fdc45beb0aed861e51d"
+    },
+    {
+      "notebook_id": "18",
+      "notebook_name": "18_diffusion_uncertainty_analysis",
+      "run_id": "run_a660cfa509e643a39708d762f18cae2b",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json",
+      "manifest_sha256": "099e773f7f211ef5ebad0fe2703601a347af88e5fee9426aaea7217c1fda7959"
+    },
+    {
+      "notebook_id": "19",
+      "notebook_name": "19_uncertainty_and_spatial_explanation_maps",
+      "run_id": "run_bddab70b2b2c46aaa013f8c45a91fc23",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json",
+      "manifest_sha256": "bf2c00948375da795ef2672242be4ca47347440093e3bf82f1f46d2f46250523"
+    },
+    {
+      "notebook_id": "20",
+      "notebook_name": "20_semantic_and_structural_consistency",
+      "run_id": "run_cb24def4d3134cc3bb6d679d390b777e",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json",
+      "manifest_sha256": "c64d4ea1a984a83bd3fc2b7c1ef6b53f67c8fed85156c19888ab23ab51658af6"
+    },
+    {
+      "notebook_id": "21",
+      "notebook_name": "21_multi_model_comparison",
+      "run_id": "run_2acbdc178f9a470f9c3a0ac4212956bb",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/21_multi_model_comparison/manifests/run_manifest.json",
+      "manifest_sha256": "7517eb7ba360302eaa73b4bdda8870a52b4c1a87bf728ac59970c6d48b44c660"
+    },
+    {
+      "notebook_id": "22",
+      "notebook_name": "22_damage_size_diffusion_uncertainty_extension",
+      "run_id": "run_383fd03e2665485fb49c460866865b72",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json",
+      "manifest_sha256": "dff582edbeb029dca56287dd39dcfc5f29a309a42a3c46b86c7a43e1592df9b8"
+    },
+    {
+      "notebook_id": "23",
+      "notebook_name": "23_damage_size_sensitivity_analysis",
+      "run_id": "run_85d5f0e0228b4e918632433f86493ff0",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/23_damage_size_sensitivity_analysis/manifests/run_manifest.json",
+      "manifest_sha256": "9663eb4762302a03ab09882ebbf1b0a1276815d8ac4bd60a54191cda2f5dcefd"
+    },
+    {
+      "notebook_id": "24",
+      "notebook_name": "24_mask_robustness_analysis",
+      "run_id": "run_2002f9ec00144db083fe2af421c3199d",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/24_mask_robustness_analysis/manifests/run_manifest.json",
+      "manifest_sha256": "1210a5776bf930ac5a8039063cb902b4790e8742798492c318a79a470a766b5e"
+    },
+    {
+      "notebook_id": "25",
+      "notebook_name": "25_synthetic_degradation_analysis",
+      "run_id": "run_65a5abfcedde48f9aa823f60cd6f8baf",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/25_synthetic_degradation_analysis/manifests/run_manifest.json",
+      "manifest_sha256": "660792ea34d70201df85b1f1a7ac478c0498c0b41bcd9b4bc8f8f18197d4778c"
+    },
+    {
+      "notebook_id": "26",
+      "notebook_name": "26_grouped_and_statistical_analysis",
+      "run_id": "run_b223a228966647a291fe71b2df8dee82",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/26_grouped_and_statistical_analysis/manifests/run_manifest.json",
+      "manifest_sha256": "bf83485f83d6aef2d0f342f0155a8f2ef353f017750a224145c7f09b0d3114db"
+    },
+    {
+      "notebook_id": "27",
+      "notebook_name": "27_failure_taxonomy_and_trustworthiness_flags",
+      "run_id": "run_e8c3d7bdf26b4f7e945cab79c71635ea",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json",
+      "manifest_sha256": "35df0a1169467a9225ae48898def27e727cf2ec16faa928670b7c6fc39a47073"
+    },
+    {
+      "notebook_id": "28",
+      "notebook_name": "28_metric_and_region_policy_ablation",
+      "run_id": "run_25d4e0d032c84f0c9508578091a807b0",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/28_metric_and_region_policy_ablation/manifests/run_manifest.json",
+      "manifest_sha256": "199a94d16ef679920e17301dc780e4a2c1cdfcb665bcbd8790e27e3502ba180e"
+    },
+    {
+      "notebook_id": "29",
+      "notebook_name": "29_explainable_ai_and_case_retrieval",
+      "run_id": "run_3163029edceb4fb385cf818d29a36a6f",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/29_explainable_ai_and_case_retrieval/manifests/run_manifest.json",
+      "manifest_sha256": "35d9d4383c1b25e8f5e61905b9462d22b31344a37571b9167a5ac1b773d64b1f"
+    },
+    {
+      "notebook_id": "30",
+      "notebook_name": "30_model_cards_compute_and_scalability",
+      "run_id": "run_99fc7daf6af54d5992ef6c26f05bd901",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/30_model_cards_compute_and_scalability/manifests/run_manifest.json",
+      "manifest_sha256": "6095f48bfae48eca853c6492b403c280b9d67786d0c4e57e27c4c4efdafffc41"
+    },
+    {
+      "notebook_id": "31",
+      "notebook_name": "31_model_report_generation",
+      "run_id": "run_86faee4c15ee49cbbc5b85a649cdc1b4",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/31_model_report_generation/manifests/run_manifest.json",
+      "manifest_sha256": "568dcb669f227e270057b22043e504b2727c99904d6813952d17745aaf452340"
+    },
+    {
+      "notebook_id": "32",
+      "notebook_name": "32_case_and_painting_report_generation",
+      "run_id": "run_7a508c540ae74af1ad2bd3c59928e94e",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/32_case_and_painting_report_generation/manifests/run_manifest.json",
+      "manifest_sha256": "7fa92ec00b349a50a6085e09a95c5fb37f05b11bd1ddf60eb0da7614f364c4c7"
+    },
+    {
+      "notebook_id": "33",
+      "notebook_name": "33_final_evaluation_report",
+      "run_id": "run_ffab0ce2624e43608c3c21764b7f6f1b",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/33_final_evaluation_report/manifests/run_manifest.json",
+      "manifest_sha256": "a143fbd5661a540fc6cd9392aec0851d06db419b682a150c94e634b10210289b"
+    },
+    {
+      "notebook_id": "34",
+      "notebook_name": "34_final_streamlit_dashboard_assets",
+      "run_id": "run_a8d0c877315947ff84d76d93e29c547c",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/34_final_streamlit_dashboard_assets/manifests/run_manifest.json",
+      "manifest_sha256": "ca67ab9e2b365d14f67e9c964924cc25f652c8adfdc1ea31d0bbe9d027ecbaa3"
+    },
+    {
+      "notebook_id": "35",
+      "notebook_name": "35_dashboard_and_deployment_validation",
+      "run_id": "run_e04d0dfa163b4a15966c5420b01d74c7",
+      "run_status": "completed",
+      "completion_gate_passed": true,
+      "blocking_failures": 0,
+      "warning_failures": 0,
+      "manifest_path": "outputs/35_dashboard_and_deployment_validation/manifests/run_manifest.json",
+      "manifest_sha256": "be072144cade45550a32f61aef27c2aa5517ca51f9084e94bbfc2eed84a19b43"
+    }
+  ],
+  "scientific_boundaries": {
+    "no_scientific_recomputation": true,
+    "no_restoration_inference": true,
+    "no_universal_combined_score": true,
+    "controlled_synthetic_scope_only": true,
+    "uncertainty_is_not_calibrated_confidence": true,
+    "sdxl_is_bounded_feasibility_only": true,
+    "computational_flags_are_not_expert_ground_truth": true
+  },
+  "package_boundary": {
+    "portable_review_bundle": true,
+    "complete_repository_clone": false,
+    "evaluation_configuration_count": 25,
+    "indexed_source_configuration_count": 13,
+    "upstream_manifest_count": 35
+  },
+  "assembly": {
+    "assembled_at_utc": "2026-09-03T21:13:26Z",
+    "fixed_copy_file_count": 106,
+    "notebook_document_copy_count": 6,
+    "generated_package_file_count": 2,
+    "expected_package_file_count": 114,
+    "planned_copy_size_bytes": 28936472,
+    "package_size_limit_bytes": 52428800,
+    "package_root": "outputs/36_supervisor_publication_reproducibility_package/package"
+  }
+}

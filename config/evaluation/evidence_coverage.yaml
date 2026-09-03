@@ -1573,8 +1573,96 @@ evidence_coverage:
 
     - notebook_id: "36"
       stem: "36_supervisor_publication_reproducibility_package"
-      status: "planned_supported"
-      required_evidence: ["n01_n35_manifests_and_selected_artifacts"]
+      status: "completed_validation_warning"
+      completion_gate_passed: true
+      run_id: "run_4e221aa9405d4d5cbeb7ae120dfad71a"
+      output_root: "outputs/36_supervisor_publication_reproducibility_package"
+      manifest_path: "outputs/36_supervisor_publication_reproducibility_package/manifests/run_manifest.json"
+      evidence_kind: "delivery_packaging_and_traceability"
+      creates_new_scientific_evidence: false
+      completion_contract:
+        run_status: "completed"
+        validation_status: "warning"
+        opening_refactor_status: "Finished"
+        opening_validation_status: "Finished"
+        validation_checks: 182
+        passed_checks: 181
+        blocking_failures: 0
+        inherited_warning_records: 1
+        warning_scope: "n35_dependency_alignment_local_demonstration_passed"
+        roadmap_requirements: 16
+        physical_output_files: 125
+        canonical_output_roles: 14
+        artifact_records: 12
+        artifact_index_records: 120
+        copied_files: 106
+        generated_package_files: 8
+        indexed_not_bundled_collections: 6
+        package_files: 114
+        package_size_bytes: 29021450
+        package_tree_sha256: "3b9585408666f56f2cab02e8b2dc5b3296af605dcffdec8b43b6573e4d06ba03"
+        self_contained_html_reports: 5
+        validated_png_files: 24
+        validated_local_markdown_links: 22
+        bundled_evaluation_configurations: 25
+        indexed_source_configurations: 13
+        upstream_notebooks: 35
+        local_application_ready: true
+        external_deployment_recorded: false
+        snapshot_policy: "preserve_execution_time_snapshots_when_post_completion_audit_and_registry_are_updated"
+      canonical_artifacts:
+        - "reports/supervisor_summary.md"
+        - "reports/reproducibility_appendix.md"
+        - "reports/limitations_and_deviations.md"
+        - "data/artifact_index.csv"
+        - "data/key_findings.json"
+        - "data/open_questions.md"
+        - "data/feedback_agenda.md"
+        - "package/"
+        - "package/README.md"
+        - "package/provenance/reproducibility_snapshot.json"
+        - "manifests/package_manifest.json"
+        - "validation/checks.csv"
+      required_evidence:
+        - "35_completed_upstream_run_manifests"
+        - "n30_model_cards_and_compute_scalability"
+        - "n31_four_self_contained_model_reports"
+        - "n32_case_and_painting_report_indexes"
+        - "n33_final_report_24_figures_and_compact_tables"
+        - "n34_dashboard_indexes_and_evidence_scope"
+        - "n35_deployment_readiness"
+        - "current_inventory_and_project_paths_registry"
+      expected_population:
+        upstream_notebooks: 35
+        paintings: 50
+        registered_cases: 525
+        restoration_cases: 410
+        approved_candidates: 1785
+        quality_anchors: 11
+        uncertainty_groups: 165
+        visual_records: 23964
+        indexed_reports: 104
+        sdxl_cases: 10
+        thesis_figures: 18
+        publication_figures: 6
+        model_reports: 4
+        model_cards: 4
+        case_report_records: 30
+        painting_report_records: 50
+      independent_unit: "none_packaging_only"
+      supported_claims:
+        - "validated_results_can_be_traced_to_fixed_artifacts_configs_and_run_manifests"
+        - "the_three_proposal_research_questions_have_evidence_bounded_answers"
+        - "the_curated_package_is_portable_and_checksum_verified"
+        - "omitted_large_collections_remain_indexed_at_canonical_repository_paths"
+      prohibited_claims:
+        - "notebook_36_creates_or_recomputes_scientific_evidence"
+        - "controlled_synthetic_damage_establishes_real_conservation_generality"
+        - "sdxl_is_a_fourth_fully_evaluated_model"
+        - "repeated_seed_variability_is_calibrated_confidence"
+        - "computational_flags_or_retrieval_are_expert_ground_truth"
+        - "visual_plausibility_establishes_historical_correctness_or_conservation_approval"
+        - "a_universal_combined_quality_uncertainty_or_trustworthiness_score_exists"
 
   removed_unsupported_requirements:
     - requirement_id: "focused_experiment_inferential_category_style_interactions"

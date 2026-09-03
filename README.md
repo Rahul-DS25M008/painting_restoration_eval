@@ -173,60 +173,25 @@ Current conclusions from the controlled 50-painting experiment:
 
 ## Supervisor review package
 
-A supervisor-facing review package has been refreshed at:
-
-```powershell
-outputs/supervisor_package/
-```
-
-The package is generated/refreshed by:
+Notebook 36 assembles the final supervisor, publication, and reproducibility
+delivery under:
 
 ```text
-notebooks/35_refresh_supervisor_package_cleaned.ipynb
+outputs/36_supervisor_publication_reproducibility_package/
 ```
 
-Important files:
+Its top-level `reports/` and `data/` folders contain the supervisor summary,
+reproducibility appendix, limitations, evidence index, key findings, open
+questions, and meeting agenda. Its `package/` folder is the portable review
+bundle, including the final self-contained HTML report, four self-contained
+model reports, 24 final figures, model cards, compact tables, run manifests,
+configuration snapshots, environment declarations, application entry points,
+and provenance records.
 
-```powershell
-outputs/supervisor_package/README_supervisor.md
-outputs/supervisor_package/supervisor_summary.md
-outputs/supervisor_package/supervisor_artifact_index.csv
-outputs/supervisor_package/supervisor_key_findings.json
-outputs/supervisor_package/supervisor_open_questions.md
-outputs/supervisor_package/supervisor_feedback_agenda.md
-outputs/supervisor_package/supervisor_package_manifest.json
-```
-
-The most important files for supervisor discussion are:
-
-```powershell
-outputs/supervisor_package/supervisor_summary.md
-outputs/supervisor_package/supervisor_feedback_agenda.md
-outputs/supervisor_package/supervisor_open_questions.md
-```
-
-The supervisor package asks for clarification on:
-
-1. whether the controlled 50-painting subset is sufficient,
-2. whether the final experiment should scale toward 300 paintings,
-3. whether the 40-case Stable Diffusion uncertainty subset is sufficient,
-4. whether uncertainty heatmaps should be expanded to all 200 non-zero cases,
-5. whether SDXL should remain feasibility-audited only,
-6. whether university GPU resources should be requested for full SDXL comparison,
-7. whether the refined metric-region policy is accepted,
-8. whether metric-policy ablation should be added after feedback,
-9. whether texture and brushstroke-proxy diagnostics should remain core diagnostics,
-10. whether metadata-driven or computed visual grouping should be added,
-11. whether color consistency metrics should be added,
-12. whether boundary/seam consistency metrics should be added,
-13. whether damage-size sensitivity analysis should be added,
-14. whether restoration risk scoring or diagnostic risk profiles should be added,
-15. whether mask/input robustness analysis should be added,
-16. whether semantic/iconographic checks should be added after feedback,
-17. whether the Streamlit dashboard should be included as a formal supporting artifact.
-18. Compare generic restoration prompts to style-specific restoration prompts
-
-Large copied HTML reports are intentionally not committed inside `outputs/supervisor_package/reports/` because they can exceed GitHub size limits. The package references the main generated reports instead.
+The 30 case reports, 50 painting reports, full dashboard visual collection,
+restoration outputs, model weights, and caches remain at their canonical paths
+and are indexed rather than duplicated. This keeps the final bundle compact
+without making those evidence collections undiscoverable.
 
 Important reports can be accessed in:
 
@@ -253,10 +218,10 @@ A working Streamlit dashboard is available at:
 streamlit_app.py
 ```
 
-The dashboard uses prepared assets from:
+The dashboard uses the validated Notebook 34 package from:
 
 ```powershell
-outputs/dashboard/
+outputs/34_final_streamlit_dashboard_assets/
 ```
 
 It includes:
@@ -361,15 +326,15 @@ For full experimental reproduction, the most important requirements are:
 
 The Streamlit dashboard itself does **not** require a GPU. It only reads prepared CSV, JSON, and figure files.
 
-Generated outputs are intentionally separated by purpose:
+Generated outputs are owned by their numbered producing notebook under
+`outputs/<notebook_stem>/`. `outputs/inventory/` is the sole global exception.
+The final portable delivery is owned by Notebook 36 at
+`outputs/36_supervisor_publication_reproducibility_package/package/`.
 
-- `outputs/metrics/` stores CSV metric and manifest files,
-- `outputs/figures/` stores generated visual artifacts,
-- `outputs/reports/` stores HTML reports,
-- `outputs/dashboard/` stores dashboard-ready assets,
-- `outputs/supervisor_package/` stores supervisor-facing summaries and manifests.
-
-Large HTML files should be handled carefully because GitHub has regular file-size limits. Linked-image HTML reports are preferred over embedded base64 reports whenever possible.
+Standalone HTML reports embed their selected presentation images so they remain
+usable when downloaded alone. Complete full-resolution collections stay at
+their registered canonical paths rather than being duplicated into every HTML
+or package.
 
 ---
 
@@ -416,24 +381,13 @@ The cleaned notebook pipeline is currently organized as follows.
 32_uncertainty_heatmaps_cleaned.ipynb
 33_case_report_generation_cleaned.ipynb
 34_prepare_final_dashboard_assets_cleaned.ipynb
-35_refresh_supervisor_package_cleaned.ipynb
+35_dashboard_and_deployment_validation.ipynb
+36_supervisor_publication_reproducibility_package.ipynb
 ```
 
-Potential post-feedback notebooks may include:
-
-```text
-36_metric_policy_ablation_cleaned.ipynb
-37_color_boundary_damage_sensitivity_cleaned.ipynb
-38_diagnostic_risk_profiles_cleaned.ipynb
-39_uncertainty_expansion_full_cleaned.ipynb
-40_metadata_visual_grouping_cleaned.ipynb
-41_scaling_300_paintings_audit_cleaned.ipynb
-42_sdxl_followup_or_remote_feasibility_cleaned.ipynb
-43_mask_input_robustness_analysis_cleaned.ipynb
-44_semantic_iconographic_consistency_cleaned.ipynb
-```
-
-These are not started before supervisor feedback unless approved. The notebook names are provisional and represent possible extension directions, not committed implementation work.
+The authoritative 36-notebook architecture is maintained in
+`docs/final_notebook_roadmap.md`. Unsupported or superseded extension promises
+are not part of the executable pipeline.
 
 ---
 
@@ -596,32 +550,27 @@ outputs/reports/stable_diffusion_uncertainty_heatmap_report_50.html
 outputs/reports/case_diagnostics/case_report_index.html
 ```
 
-Dashboard assets:
+Dashboard package:
 
 ```text
-outputs/dashboard/dashboard_summary.json
-outputs/dashboard/dashboard_model_winner_summary.csv
-outputs/dashboard/dashboard_metric_vote_summary.csv
-outputs/dashboard/dashboard_texture_summary.csv
-outputs/dashboard/dashboard_texture_disagreements.csv
-outputs/dashboard/dashboard_uncertainty_summary.csv
-outputs/dashboard/dashboard_uncertainty_selected_cases.csv
-outputs/dashboard/dashboard_case_report_manifest.csv
-outputs/dashboard/dashboard_selected_cases.csv
-outputs/dashboard/dashboard_figure_manifest.csv
-outputs/dashboard/dashboard_asset_manifest.json
+outputs/34_final_streamlit_dashboard_assets/data/dashboard_summary.json
+outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/
+outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/
+outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_assets.csv
 ```
 
 Supervisor package:
 
 ```text
-outputs/supervisor_package/README_supervisor.md
-outputs/supervisor_package/supervisor_summary.md
-outputs/supervisor_package/supervisor_artifact_index.csv
-outputs/supervisor_package/supervisor_key_findings.json
-outputs/supervisor_package/supervisor_open_questions.md
-outputs/supervisor_package/supervisor_feedback_agenda.md
-outputs/supervisor_package/supervisor_package_manifest.json
+outputs/36_supervisor_publication_reproducibility_package/package/README.md
+outputs/36_supervisor_publication_reproducibility_package/reports/supervisor_summary.md
+outputs/36_supervisor_publication_reproducibility_package/reports/reproducibility_appendix.md
+outputs/36_supervisor_publication_reproducibility_package/reports/limitations_and_deviations.md
+outputs/36_supervisor_publication_reproducibility_package/data/artifact_index.csv
+outputs/36_supervisor_publication_reproducibility_package/data/key_findings.json
+outputs/36_supervisor_publication_reproducibility_package/data/open_questions.md
+outputs/36_supervisor_publication_reproducibility_package/data/feedback_agenda.md
+outputs/36_supervisor_publication_reproducibility_package/manifests/package_manifest.json
 ```
 
 Final controlled summary files:
@@ -796,7 +745,7 @@ The current pre-feedback package intentionally avoids further scope expansion be
 
 Current likely next steps:
 
-1. Supervisor reviews the package in `outputs/supervisor_package/`.
+1. Supervisor reviews the package in `outputs/36_supervisor_publication_reproducibility_package/package/`.
 2. Confirm whether the 50-painting subset is sufficient.
 3. Confirm whether the final experiment should scale toward 300 paintings.
 4. Confirm whether Stable Diffusion uncertainty should be expanded from 40 to 200 non-zero cases.
@@ -850,10 +799,12 @@ __pycache__/
 
 Large HTML reports can exceed GitHub's regular file-size limits. If they are needed in the remote repository, use Git LFS deliberately. Otherwise, keep large reports local and commit compact summaries, markdown notes, dashboard assets, and selected figures.
 
-The supervisor package intentionally avoids committing copied giant HTML reports under:
+The final package includes the five approved self-contained summary/model HTML
+reports, but intentionally does not duplicate the full case/painting report
+collection under:
 
 ```text
-outputs/supervisor_package/reports/
+outputs/36_supervisor_publication_reproducibility_package/package/reports/
 ```
 
 ## Quick commands

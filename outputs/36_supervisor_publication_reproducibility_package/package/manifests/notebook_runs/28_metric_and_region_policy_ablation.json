@@ -1,0 +1,595 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_25d4e0d032c84f0c9508578091a807b0",
+  "notebook_id": "28",
+  "notebook_name": "28_metric_and_region_policy_ablation",
+  "origin": "New Notebook; includes alternatives prepared by Previous Notebook 26",
+  "run_status": "completed",
+  "started_at_utc": "2026-09-01T23:09:28.743575Z",
+  "completed_at_utc": "2026-09-02T08:20:11.236207Z",
+  "git_commit": "b0279efb9430406d7b5ca9837cc7d344deecc3c6",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260901T230258Z_c57ca690",
+  "dataset_versions": {
+    "configuration_version": "1.0.0",
+    "configuration_schema_version": "metric_region_ablation_config.v1",
+    "scenario_schema_version": "metric_region_ablation_scenarios.v1",
+    "ablation_results_schema_version": "metric_region_ablation_results.v1",
+    "flag_stability_schema_version": "ablation_flag_stability.v1",
+    "upstream_run_ids": {
+      "08": "run_a3734bc2121f401b87de4894717366ab",
+      "13": "run_5bbeb9a089d044fab465d5078aedab39",
+      "14": "run_4ffd061c775a46f3944ad9e405613b34",
+      "15": "run_2b08762834b1423b8a61ef159c2679dc",
+      "16": "run_1181febbbd3d4e63bbd60bc565b2d0c9",
+      "17": "run_a322000b2a0445c9b5b71a2e0502fdf0",
+      "18": "run_a660cfa509e643a39708d762f18cae2b",
+      "19": "run_bddab70b2b2c46aaa013f8c45a91fc23",
+      "20": "run_cb24def4d3134cc3bb6d679d390b777e",
+      "21": "run_2acbdc178f9a470f9c3a0ac4212956bb",
+      "22": "run_383fd03e2665485fb49c460866865b72",
+      "23": "run_85d5f0e0228b4e918632433f86493ff0",
+      "24": "run_2002f9ec00144db083fe2af421c3199d",
+      "25": "run_65a5abfcedde48f9aa823f60cd6f8baf",
+      "26": "run_b223a228966647a291fe71b2df8dee82",
+      "27": "run_e8c3d7bdf26b4f7e945cab79c71635ea"
+    }
+  },
+  "configuration_paths": [
+    "config/evaluation/metric_region_ablation.yaml",
+    "config/evaluation/failure_taxonomy.yaml",
+    "config/evaluation/grouped_statistical_analysis.yaml",
+    "config/evaluation/evidence_coverage.yaml"
+  ],
+  "configuration_checksums": {
+    "config/evaluation/metric_region_ablation.yaml": "1c8093c6980c5ded650069940f54f092a4bd718e83591285fb7fe4ae8c0db8ea",
+    "config/evaluation/failure_taxonomy.yaml": "7ef5b0062a08fa95571e9d437672fc06b58b9d1bc2e0b60f30e39be7564c2239",
+    "config/evaluation/grouped_statistical_analysis.yaml": "302aadbb45369221a70b0a5db07f9e3af8584cc285a931d906592b9566ef200a",
+    "config/evaluation/evidence_coverage.yaml": "65ad2b9b1d6e0ab4259bbe2a08ddd9f22c287a5934ee1c2eb264865feb633a70"
+  },
+  "helper_versions": {
+    "metric_region_ablation": "1.0.0",
+    "manifests": "1.0.0",
+    "paths": "1.0.0",
+    "validation": "1.0.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "matplotlib": "3.11.0",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3",
+    "scipy": "1.17.1"
+  },
+  "hardware": {
+    "analysis_mode": "tabular_visual_and_self_contained_evaluation_policy_ablation",
+    "restoration_inference_performed": false,
+    "feature_inference_performed": false,
+    "checkpoint_cleanup_performed": true
+  },
+  "inputs": [
+    {
+      "input_key": "inventory_path",
+      "producer": "global_inventory",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "required": true,
+      "size_bytes": 9897978
+    },
+    {
+      "input_key": "inventory_run_path",
+      "producer": "global_inventory",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "required": true,
+      "size_bytes": 2632
+    },
+    {
+      "input_key": "project_paths_path",
+      "producer": "global_inventory",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "required": true,
+      "size_bytes": 106535
+    },
+    {
+      "input_key": "evidence_coverage_path",
+      "producer": "repository_control",
+      "relative_path": "config/evaluation/evidence_coverage.yaml",
+      "required": true,
+      "size_bytes": 39321
+    },
+    {
+      "input_key": "evidence_audit_path",
+      "producer": "repository_control",
+      "relative_path": "docs/evidence_dependency_audit.md",
+      "required": true,
+      "size_bytes": 24027
+    },
+    {
+      "input_key": "implementation_guidelines_path",
+      "producer": "repository_control",
+      "relative_path": "docs/refactoring_implementation_guidelines.md",
+      "required": true,
+      "size_bytes": 63223
+    },
+    {
+      "input_key": "roadmap_path",
+      "producer": "repository_control",
+      "relative_path": "docs/final_notebook_roadmap.md",
+      "required": true,
+      "size_bytes": 79273
+    },
+    {
+      "input_key": "proposal_path",
+      "producer": "repository_control",
+      "relative_path": "docs/proposal/Rahul_Thesis_Proposal.docx",
+      "required": true,
+      "size_bytes": 1850918
+    },
+    {
+      "input_key": "failure_taxonomy_config_path",
+      "producer": "repository_control",
+      "relative_path": "config/evaluation/failure_taxonomy.yaml",
+      "required": true,
+      "size_bytes": 28952
+    },
+    {
+      "input_key": "grouped_analysis_config_path",
+      "producer": "repository_control",
+      "relative_path": "config/evaluation/grouped_statistical_analysis.yaml",
+      "required": true,
+      "size_bytes": 21228
+    },
+    {
+      "input_key": "case_registry_path",
+      "producer": "08_experiment_contracts_and_region_policy",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
+      "required": true,
+      "size_bytes": 263890
+    },
+    {
+      "input_key": "region_policy_path",
+      "producer": "08_experiment_contracts_and_region_policy",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv",
+      "required": true,
+      "size_bytes": 51385
+    },
+    {
+      "input_key": "contracts_manifest_path",
+      "producer": "08_experiment_contracts_and_region_policy",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 16592
+    },
+    {
+      "input_key": "artworks_path",
+      "producer": "01_dataset_verification",
+      "relative_path": "outputs/01_dataset_verification/data/artworks.csv",
+      "required": true,
+      "size_bytes": 29822
+    },
+    {
+      "input_key": "opencv_candidates_path",
+      "producer": "09_opencv_telea_restoration",
+      "relative_path": "outputs/09_opencv_telea_restoration/data/restorations.csv",
+      "required": true,
+      "size_bytes": 345159
+    },
+    {
+      "input_key": "lama_candidates_path",
+      "producer": "10_lama_restoration",
+      "relative_path": "outputs/10_lama_restoration/data/restorations.csv",
+      "required": true,
+      "size_bytes": 457518
+    },
+    {
+      "input_key": "stable_diffusion_candidates_path",
+      "producer": "11_stable_diffusion_restoration",
+      "relative_path": "outputs/11_stable_diffusion_restoration/data/candidates.csv",
+      "required": true,
+      "size_bytes": 2436507
+    },
+    {
+      "input_key": "sdxl_candidates_path",
+      "producer": "12_sdxl_feasibility_or_restoration",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv",
+      "required": true,
+      "size_bytes": 20267
+    },
+    {
+      "input_key": "damage_size_extension_candidates_path",
+      "producer": "22_damage_size_diffusion_uncertainty_extension",
+      "relative_path": "outputs/22_damage_size_diffusion_uncertainty_extension/data/candidates.csv",
+      "required": true,
+      "size_bytes": 186053
+    },
+    {
+      "input_key": "classical_metrics_path",
+      "producer": "13_classical_metrics",
+      "relative_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+      "required": true,
+      "size_bytes": 18773255
+    },
+    {
+      "input_key": "lpips_metrics_path",
+      "producer": "14_lpips_metrics",
+      "relative_path": "outputs/14_lpips_metrics/metrics/lpips_metrics.csv",
+      "required": true,
+      "size_bytes": 1821849
+    },
+    {
+      "input_key": "feature_metrics_path",
+      "producer": "15_feature_similarity",
+      "relative_path": "outputs/15_feature_similarity/metrics/feature_metrics.csv",
+      "required": true,
+      "size_bytes": 5248929
+    },
+    {
+      "input_key": "spatial_metrics_path",
+      "producer": "16_difference_maps_and_spatial_diagnostics",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv",
+      "required": true,
+      "size_bytes": 10817207
+    },
+    {
+      "input_key": "local_metrics_path",
+      "producer": "17_local_consistency_metrics",
+      "relative_path": "outputs/17_local_consistency_metrics/metrics/local_consistency.csv",
+      "required": true,
+      "size_bytes": 150969091
+    },
+    {
+      "input_key": "canonical_uncertainty_metrics_path",
+      "producer": "18_diffusion_uncertainty_analysis",
+      "relative_path": "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_metrics.csv",
+      "required": true,
+      "size_bytes": 13310933
+    },
+    {
+      "input_key": "spatial_explanations_path",
+      "producer": "19_uncertainty_and_spatial_explanation_maps",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/metrics/spatial_explanations.csv",
+      "required": true,
+      "size_bytes": 794959
+    },
+    {
+      "input_key": "semantic_metrics_path",
+      "producer": "20_semantic_and_structural_consistency",
+      "relative_path": "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv",
+      "required": true,
+      "size_bytes": 41328738
+    },
+    {
+      "input_key": "comparison_metrics_path",
+      "producer": "21_multi_model_comparison",
+      "relative_path": "outputs/21_multi_model_comparison/metrics/model_comparison.csv",
+      "required": true,
+      "size_bytes": 45983163
+    },
+    {
+      "input_key": "disagreement_metrics_path",
+      "producer": "21_multi_model_comparison",
+      "relative_path": "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv",
+      "required": true,
+      "size_bytes": 324082
+    },
+    {
+      "input_key": "representative_cases_path",
+      "producer": "21_multi_model_comparison",
+      "relative_path": "outputs/21_multi_model_comparison/data/representative_cases.csv",
+      "required": true,
+      "size_bytes": 105088
+    },
+    {
+      "input_key": "damage_size_uncertainty_metrics_path",
+      "producer": "22_damage_size_diffusion_uncertainty_extension",
+      "relative_path": "outputs/22_damage_size_diffusion_uncertainty_extension/metrics/damage_size_uncertainty.csv",
+      "required": true,
+      "size_bytes": 3065506
+    },
+    {
+      "input_key": "damage_size_analysis_path",
+      "producer": "23_damage_size_sensitivity_analysis",
+      "relative_path": "outputs/23_damage_size_sensitivity_analysis/metrics/damage_size_analysis.csv",
+      "required": true,
+      "size_bytes": 2595616
+    },
+    {
+      "input_key": "mask_robustness_analysis_path",
+      "producer": "24_mask_robustness_analysis",
+      "relative_path": "outputs/24_mask_robustness_analysis/metrics/mask_robustness_analysis.csv",
+      "required": true,
+      "size_bytes": 5744922
+    },
+    {
+      "input_key": "degradation_analysis_path",
+      "producer": "25_synthetic_degradation_analysis",
+      "relative_path": "outputs/25_synthetic_degradation_analysis/metrics/degradation_analysis.csv",
+      "required": true,
+      "size_bytes": 4931374
+    },
+    {
+      "input_key": "statistical_results_path",
+      "producer": "26_grouped_and_statistical_analysis",
+      "relative_path": "outputs/26_grouped_and_statistical_analysis/metrics/statistical_results.csv",
+      "required": true,
+      "size_bytes": 2609457
+    },
+    {
+      "input_key": "metric_correlations_path",
+      "producer": "26_grouped_and_statistical_analysis",
+      "relative_path": "outputs/26_grouped_and_statistical_analysis/metrics/metric_correlations.csv",
+      "required": true,
+      "size_bytes": 268012
+    },
+    {
+      "input_key": "ranking_stability_path",
+      "producer": "26_grouped_and_statistical_analysis",
+      "relative_path": "outputs/26_grouped_and_statistical_analysis/metrics/ranking_stability.csv",
+      "required": true,
+      "size_bytes": 98274
+    },
+    {
+      "input_key": "failure_taxonomy_path",
+      "producer": "27_failure_taxonomy_and_trustworthiness_flags",
+      "relative_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/data/failure_taxonomy.csv",
+      "required": true,
+      "size_bytes": 13025
+    },
+    {
+      "input_key": "failure_assignments_path",
+      "producer": "27_failure_taxonomy_and_trustworthiness_flags",
+      "relative_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/failure_assignments.csv",
+      "required": true,
+      "size_bytes": 28778202
+    },
+    {
+      "input_key": "trustworthiness_flags_path",
+      "producer": "27_failure_taxonomy_and_trustworthiness_flags",
+      "relative_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv",
+      "required": true,
+      "size_bytes": 15550425
+    },
+    {
+      "input_key": "manifest_13_path",
+      "producer": "13_classical_metrics",
+      "relative_path": "outputs/13_classical_metrics/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 16986
+    },
+    {
+      "input_key": "manifest_14_path",
+      "producer": "14_lpips_metrics",
+      "relative_path": "outputs/14_lpips_metrics/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 16276
+    },
+    {
+      "input_key": "manifest_15_path",
+      "producer": "15_feature_similarity",
+      "relative_path": "outputs/15_feature_similarity/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 21182
+    },
+    {
+      "input_key": "manifest_16_path",
+      "producer": "16_difference_maps_and_spatial_diagnostics",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 24887
+    },
+    {
+      "input_key": "manifest_17_path",
+      "producer": "17_local_consistency_metrics",
+      "relative_path": "outputs/17_local_consistency_metrics/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 25710
+    },
+    {
+      "input_key": "manifest_18_path",
+      "producer": "18_diffusion_uncertainty_analysis",
+      "relative_path": "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 21218
+    },
+    {
+      "input_key": "manifest_19_path",
+      "producer": "19_uncertainty_and_spatial_explanation_maps",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 21609
+    },
+    {
+      "input_key": "manifest_20_path",
+      "producer": "20_semantic_and_structural_consistency",
+      "relative_path": "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 27894
+    },
+    {
+      "input_key": "manifest_21_path",
+      "producer": "21_multi_model_comparison",
+      "relative_path": "outputs/21_multi_model_comparison/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 19579
+    },
+    {
+      "input_key": "manifest_22_path",
+      "producer": "22_damage_size_diffusion_uncertainty_extension",
+      "relative_path": "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 19576
+    },
+    {
+      "input_key": "manifest_23_path",
+      "producer": "23_damage_size_sensitivity_analysis",
+      "relative_path": "outputs/23_damage_size_sensitivity_analysis/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 17344
+    },
+    {
+      "input_key": "manifest_24_path",
+      "producer": "24_mask_robustness_analysis",
+      "relative_path": "outputs/24_mask_robustness_analysis/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 16857
+    },
+    {
+      "input_key": "manifest_25_path",
+      "producer": "25_synthetic_degradation_analysis",
+      "relative_path": "outputs/25_synthetic_degradation_analysis/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 20441
+    },
+    {
+      "input_key": "manifest_26_path",
+      "producer": "26_grouped_and_statistical_analysis",
+      "relative_path": "outputs/26_grouped_and_statistical_analysis/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 24549
+    },
+    {
+      "input_key": "manifest_27_path",
+      "producer": "27_failure_taxonomy_and_trustworthiness_flags",
+      "relative_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 22443
+    }
+  ],
+  "outputs": [
+    {
+      "artifact_key": "ablation_results",
+      "relative_path": "outputs/28_metric_and_region_policy_ablation/metrics/ablation_results.csv",
+      "artifact_type": "csv"
+    },
+    {
+      "artifact_key": "flag_stability",
+      "relative_path": "outputs/28_metric_and_region_policy_ablation/metrics/flag_stability.csv",
+      "artifact_type": "csv"
+    },
+    {
+      "artifact_key": "ablation_ranking_figure",
+      "relative_path": "outputs/28_metric_and_region_policy_ablation/figures/ablation_ranking_changes.png",
+      "artifact_type": "png"
+    },
+    {
+      "artifact_key": "ablation_flag_figure",
+      "relative_path": "outputs/28_metric_and_region_policy_ablation/figures/ablation_flag_changes.png",
+      "artifact_type": "png"
+    },
+    {
+      "artifact_key": "ablation_report",
+      "relative_path": "outputs/28_metric_and_region_policy_ablation/reports/ablation_study.html",
+      "artifact_type": "self_contained_html"
+    },
+    {
+      "artifact_key": "run_manifest",
+      "relative_path": "outputs/28_metric_and_region_policy_ablation/manifests/run_manifest.json",
+      "artifact_type": "json"
+    },
+    {
+      "artifact_key": "artifacts",
+      "relative_path": "outputs/28_metric_and_region_policy_ablation/manifests/artifacts.csv",
+      "artifact_type": "csv"
+    },
+    {
+      "artifact_key": "validation",
+      "relative_path": "outputs/28_metric_and_region_policy_ablation/validation/checks.csv",
+      "artifact_type": "csv"
+    }
+  ],
+  "expected_counts": {
+    "scenarios": 23,
+    "metric_scenarios_including_baseline": 12,
+    "alternative_region_scenarios": 6,
+    "threshold_scenarios": 2,
+    "aggregation_scenarios": 3,
+    "ranking_scenarios": 18,
+    "core_models": 3,
+    "matched_cases": 410,
+    "flag_candidates": 1785,
+    "trust_flags": 11,
+    "failure_categories": 14,
+    "model_rank_rows": 54,
+    "case_rank_rows": 7380,
+    "flag_summary_rows": 253,
+    "flag_stability_rows": 41055,
+    "minimum_ablation_result_rows": 7710,
+    "canonical_output_files": 8,
+    "artifact_records": 6
+  },
+  "observed_counts": {
+    "scenarios": 23,
+    "ranking_scenarios": 18,
+    "core_candidates": 1230,
+    "flag_candidates": 1785,
+    "matched_cases": 410,
+    "model_rank_rows": 54,
+    "case_rank_rows": 7380,
+    "flag_summary_rows": 253,
+    "flag_stability_rows": 41055,
+    "ablation_result_rows": 7710,
+    "subgroup_summary_rows": 759,
+    "roadmap_responsibilities": 13,
+    "report_sections": 12,
+    "report_embedded_images": 23,
+    "report_external_images": 0,
+    "artifact_record_count": 6,
+    "validation_row_count": 122,
+    "canonical_file_count": 8
+  },
+  "validation_summary": {
+    "check_count": 122,
+    "passed_count": 122,
+    "failed_count": 0,
+    "blocking_failure_count": 0,
+    "overall_passed": true,
+    "failed_check_ids": []
+  },
+  "known_limitations": [
+    "All ablations reuse the validated controlled dataset and do not establish external generalization.",
+    "Artificial degradations do not reproduce every material or historical deterioration process.",
+    "Five-painting extension experiments provide controlled descriptive evidence, not broad style effects.",
+    "Operational quantiles identify relative outliers and are not calibrated failure probabilities.",
+    "CLIP and DINOv2 evidence are diagnostic pretrained-feature proxies, not historical or conservation truth.",
+    "SDXL remains a bounded ten-case diagnostic subset.",
+    "A lower flag count caused by missing evidence is not an improvement.",
+    "No result establishes historical authenticity, conservation suitability, museum approval, or a universal trust score."
+  ],
+  "validation_status": "passed",
+  "refactor_status": "refactored",
+  "completion_gate_passed": true,
+  "report_policy_id": "approved_mock_aligned_self_contained_ablation_report.v1",
+  "combined_trust_score_retained": false,
+  "continuous_quality_score_retained": false,
+  "continuous_case_trust_score_retained": false,
+  "missing_evidence_counts_as_improvement": false,
+  "runtime_in_quality_ranking": false,
+  "uncertainty_in_cross_model_ranking": false,
+  "historical_authenticity_established": false,
+  "conservation_approval_established": false,
+  "universal_model_superiority_claimed": false,
+  "output_checksums": {
+    "metric_region_ablation.results": "9e6558b295ed7e27af51a24c6c815385c682c4ae48d9aa96043bf359146b5b74",
+    "metric_region_ablation.flag_stability": "4a37e3cf9cf69097de113a63ac6c6fd88ea1eac39880296d5be0cca3edeaba82",
+    "metric_region_ablation.ranking_figure": "af6a9693c3fcd8afc64a586281ac65e094733f47b325d93854b7a4e295ebcf7f",
+    "metric_region_ablation.flag_figure": "f083472862198f607709746aafe8510a1052f4a0815982ef0348330c58213750",
+    "metric_region_ablation.report": "e3efc755696ed9dbbf6839154f8414bc85dec6f8cb183223ad06b782a9981d37",
+    "validation.28_metric_and_region_policy_ablation": "dfb9fd3311bcd920b6e60a9bbf88c1ec6900c1b4ecbba09ee6a8152354dea551"
+  },
+  "artifact_manifest_checksum": "701cfcab1e75c894ec73458be23551dcb88d5771abeb3598dc7f8cc30e9a3997",
+  "roadmap_requirement_count": 13,
+  "roadmap_traceability_failures": 0,
+  "report_visual_contract": {
+    "required_sections": 12,
+    "analytical_views": 5,
+    "diagnostic_panels": 6,
+    "diagnostic_tiles": 18,
+    "embedded_images": 23,
+    "external_images": 0,
+    "report_size_bytes": 3199774
+  }
+}

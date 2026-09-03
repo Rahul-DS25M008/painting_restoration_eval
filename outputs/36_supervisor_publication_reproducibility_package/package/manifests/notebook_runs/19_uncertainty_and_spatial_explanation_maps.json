@@ -1,0 +1,545 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_bddab70b2b2c46aaa013f8c45a91fc23",
+  "notebook_id": "19",
+  "notebook_name": "19_uncertainty_and_spatial_explanation_maps",
+  "origin": "Existing Previous Version of Notebook 32, Pre-refactor, expanded",
+  "run_status": "completed",
+  "started_at_utc": "2026-08-30T14:04:52.067647Z",
+  "completed_at_utc": "2026-08-30T17:30:31.403405Z",
+  "git_commit": "e1fd948e5f976aac3f618f103f011721262336b4",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260830T130129Z_a4f4f0f8",
+  "dataset_versions": {
+    "notebook_01": {
+      "run_id": "run_424a69cf0c2c4a228d0919dc2d66258a",
+      "run_status": "completed"
+    },
+    "notebook_02": {
+      "run_id": "run_5e54b2de32934e1c9303e7250b932404",
+      "run_status": "completed"
+    },
+    "notebook_08": {
+      "run_id": "run_a3734bc2121f401b87de4894717366ab",
+      "run_status": "completed"
+    },
+    "notebook_11": {
+      "run_id": "run_82ee1e1c09524a5da3e6fe93016d0627",
+      "run_status": "completed"
+    },
+    "notebook_16": {
+      "run_id": "run_1181febbbd3d4e63bbd60bc565b2d0c9",
+      "run_status": "completed"
+    },
+    "notebook_17": {
+      "run_id": "run_a322000b2a0445c9b5b71a2e0502fdf0",
+      "run_status": "completed"
+    },
+    "notebook_18": {
+      "run_id": "run_a660cfa509e643a39708d762f18cae2b",
+      "run_status": "completed"
+    }
+  },
+  "configuration_paths": [
+    "config/evaluation/spatial_explanations.yaml",
+    "config/evaluation/diffusion_uncertainty.yaml",
+    "config/evaluation/spatial_diagnostics.yaml",
+    "config/evaluation/local_consistency.yaml"
+  ],
+  "configuration_checksums": {
+    "config/evaluation/spatial_explanations.yaml": "9ef4edc87c4b9aae1bca6e0221168c1fbe81f1cc80ed8dc5dce0889e6c09a304",
+    "config/evaluation/diffusion_uncertainty.yaml": "444523318a19f6cc2536537bb56701abfa37305819d1b8a057008066f24c6bc1",
+    "config/evaluation/spatial_diagnostics.yaml": "3399a9cfb977d12def43cdaf9c8dd080be9a6cf8ff2cb239fc1bb1e45395e184",
+    "config/evaluation/local_consistency.yaml": "17346e2e38bd79c08ebc59ffd73effade3b93e2896ed800b11e7a7e28fad0f99"
+  },
+  "helper_versions": {
+    "spatial_explanations": "1.0.1",
+    "diffusion_uncertainty": "1.0.3",
+    "error_maps": "4.0.1",
+    "local_consistency": "1.0.3",
+    "evaluation_inputs": "1.0.1",
+    "regions": "1.1.0",
+    "schemas": "1.16.0",
+    "paths": "1.0.0",
+    "manifests": "1.0.0",
+    "validation": "1.0.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "matplotlib": "3.11.0",
+    "numpy": "1.26.4",
+    "opencv-python": "4.11.0.86",
+    "pandas": "2.3.3",
+    "scikit-image": "0.24.0",
+    "scipy": "1.17.1"
+  },
+  "hardware": {
+    "execution_device": "cpu",
+    "gpu_generation_performed": false
+  },
+  "inputs": [
+    {
+      "input_key": "inventory_path",
+      "producer": "global_inventory",
+      "artifact_role": "inventory_table",
+      "schema_version": "project_file_inventory.v1",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 9282486.0
+    },
+    {
+      "input_key": "inventory_run_path",
+      "producer": "global_inventory",
+      "artifact_role": "run_manifest",
+      "schema_version": "inventory_run.v1",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 2659.0
+    },
+    {
+      "input_key": "project_paths_path",
+      "producer": "global_inventory",
+      "artifact_role": "artifact_registry",
+      "schema_version": "project_paths.v1",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 62746.0
+    },
+    {
+      "input_key": "artworks_path",
+      "producer": "01_dataset_verification",
+      "artifact_role": "artwork_metadata",
+      "schema_version": "artworks.v1",
+      "relative_path": "outputs/01_dataset_verification/data/artworks.csv",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 29822.0
+    },
+    {
+      "input_key": "artworks_run_manifest_path",
+      "producer": "01_dataset_verification",
+      "artifact_role": "run_manifest",
+      "schema_version": "run_manifest.v1",
+      "relative_path": "outputs/01_dataset_verification/manifests/run_manifest.json",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 8981.0
+    },
+    {
+      "input_key": "geometry_path",
+      "producer": "02_image_preprocessing",
+      "artifact_role": "preprocessing_geometry",
+      "schema_version": "preprocessed_images.v1",
+      "relative_path": "outputs/02_image_preprocessing/data/preprocessed_images.csv",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 32706.0
+    },
+    {
+      "input_key": "geometry_run_manifest_path",
+      "producer": "02_image_preprocessing",
+      "artifact_role": "run_manifest",
+      "schema_version": "run_manifest.v1",
+      "relative_path": "outputs/02_image_preprocessing/manifests/run_manifest.json",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 10754.0
+    },
+    {
+      "input_key": "case_registry_path",
+      "producer": "08_experiment_contracts_and_region_policy",
+      "artifact_role": "case_registry",
+      "schema_version": "case_registry.v1",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 263890.0
+    },
+    {
+      "input_key": "model_eligibility_path",
+      "producer": "08_experiment_contracts_and_region_policy",
+      "artifact_role": "model_eligibility",
+      "schema_version": "model_eligibility.v1",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 600509.0
+    },
+    {
+      "input_key": "region_policy_path",
+      "producer": "08_experiment_contracts_and_region_policy",
+      "artifact_role": "region_policy",
+      "schema_version": "region_policy.v1",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 51385.0
+    },
+    {
+      "input_key": "schema_registry_path",
+      "producer": "08_experiment_contracts_and_region_policy",
+      "artifact_role": "schema_registry",
+      "schema_version": "schema_registry.v1",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 4835.0
+    },
+    {
+      "input_key": "contracts_run_manifest_path",
+      "producer": "08_experiment_contracts_and_region_policy",
+      "artifact_role": "run_manifest",
+      "schema_version": "run_manifest.v1",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 16592.0
+    },
+    {
+      "input_key": "stable_diffusion_candidates_path",
+      "producer": "11_stable_diffusion_restoration",
+      "artifact_role": "restoration_candidates",
+      "schema_version": "stable_diffusion_candidates.v1",
+      "relative_path": "outputs/11_stable_diffusion_restoration/data/candidates.csv",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 2436507.0
+    },
+    {
+      "input_key": "stable_diffusion_output_root",
+      "producer": "11_stable_diffusion_restoration",
+      "artifact_role": "candidate_asset_root",
+      "schema_version": "directory",
+      "relative_path": "outputs/11_stable_diffusion_restoration",
+      "path_kind": "directory",
+      "exists": true,
+      "size_bytes": null
+    },
+    {
+      "input_key": "stable_diffusion_run_manifest_path",
+      "producer": "11_stable_diffusion_restoration",
+      "artifact_role": "run_manifest",
+      "schema_version": "run_manifest.v1",
+      "relative_path": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 27662.0
+    },
+    {
+      "input_key": "spatial_diagnostics_config_path",
+      "producer": "16_difference_maps_and_spatial_diagnostics",
+      "artifact_role": "configuration",
+      "schema_version": "spatial_diagnostics_config.v1",
+      "relative_path": "config/evaluation/spatial_diagnostics.yaml",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 9116.0
+    },
+    {
+      "input_key": "spatial_diagnostics_metrics_path",
+      "producer": "16_difference_maps_and_spatial_diagnostics",
+      "artifact_role": "spatial_metrics",
+      "schema_version": "spatial_diagnostics.v1",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 10817207.0
+    },
+    {
+      "input_key": "spatial_diagnostics_map_manifest_path",
+      "producer": "16_difference_maps_and_spatial_diagnostics",
+      "artifact_role": "map_manifest",
+      "schema_version": "spatial_map_images.v1",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/map_images.csv",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 5591171.0
+    },
+    {
+      "input_key": "spatial_diagnostics_run_manifest_path",
+      "producer": "16_difference_maps_and_spatial_diagnostics",
+      "artifact_role": "run_manifest",
+      "schema_version": "run_manifest.v1",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 24887.0
+    },
+    {
+      "input_key": "local_consistency_config_path",
+      "producer": "17_local_consistency_metrics",
+      "artifact_role": "configuration",
+      "schema_version": "local_consistency_config.v1",
+      "relative_path": "config/evaluation/local_consistency.yaml",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 12596.0
+    },
+    {
+      "input_key": "local_consistency_metrics_path",
+      "producer": "17_local_consistency_metrics",
+      "artifact_role": "local_metrics",
+      "schema_version": "local_consistency.v1",
+      "relative_path": "outputs/17_local_consistency_metrics/metrics/local_consistency.csv",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 150969091.0
+    },
+    {
+      "input_key": "local_consistency_map_manifest_path",
+      "producer": "17_local_consistency_metrics",
+      "artifact_role": "map_manifest",
+      "schema_version": "local_consistency_map_images.v1",
+      "relative_path": "outputs/17_local_consistency_metrics/manifests/map_images.csv",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 2163924.0
+    },
+    {
+      "input_key": "local_consistency_run_manifest_path",
+      "producer": "17_local_consistency_metrics",
+      "artifact_role": "run_manifest",
+      "schema_version": "run_manifest.v1",
+      "relative_path": "outputs/17_local_consistency_metrics/manifests/run_manifest.json",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 25710.0
+    },
+    {
+      "input_key": "diffusion_uncertainty_config_path",
+      "producer": "18_diffusion_uncertainty_analysis",
+      "artifact_role": "configuration",
+      "schema_version": "diffusion_uncertainty_config.v1",
+      "relative_path": "config/evaluation/diffusion_uncertainty.yaml",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 10827.0
+    },
+    {
+      "input_key": "uncertainty_metrics_path",
+      "producer": "18_diffusion_uncertainty_analysis",
+      "artifact_role": "uncertainty_metrics",
+      "schema_version": "diffusion_uncertainty.v1",
+      "relative_path": "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_metrics.csv",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 13310933.0
+    },
+    {
+      "input_key": "uncertainty_calibration_inputs_path",
+      "producer": "18_diffusion_uncertainty_analysis",
+      "artifact_role": "calibration_inputs",
+      "schema_version": "uncertainty_calibration_inputs.v1",
+      "relative_path": "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_calibration_inputs.csv",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 163151.0
+    },
+    {
+      "input_key": "uncertainty_run_manifest_path",
+      "producer": "18_diffusion_uncertainty_analysis",
+      "artifact_role": "run_manifest",
+      "schema_version": "run_manifest.v1",
+      "relative_path": "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 21218.0
+    },
+    {
+      "input_key": "implementation_guidelines_path",
+      "producer": "repository_documentation",
+      "artifact_role": "governing_document",
+      "schema_version": "markdown",
+      "relative_path": "docs/refactoring_implementation_guidelines.md",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 40858.0
+    },
+    {
+      "input_key": "notebook_roadmap_path",
+      "producer": "repository_documentation",
+      "artifact_role": "governing_document",
+      "schema_version": "markdown",
+      "relative_path": "docs/final_notebook_roadmap.md",
+      "path_kind": "file",
+      "exists": true,
+      "size_bytes": 66298.0
+    }
+  ],
+  "outputs": [
+    {
+      "artifact_key": "spatial_explanations.numeric_maps",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/data/uncertainty_maps.npz",
+      "artifact_type": "numeric_map_archive",
+      "artifact_role": "raw_spatial_uncertainty_evidence",
+      "schema_version": "spatial_uncertainty_numeric_archive.v1",
+      "expected_row_count": 130
+    },
+    {
+      "artifact_key": "spatial_explanations.metrics",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/metrics/spatial_explanations.csv",
+      "artifact_type": "table",
+      "artifact_role": "regional_spatial_explanation_evidence",
+      "schema_version": "spatial_explanations.v1",
+      "expected_row_count": 780
+    },
+    {
+      "artifact_key": "spatial_explanations.uncertainty_images",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/images/uncertainty/stable_diffusion_inpainting",
+      "artifact_type": "image_collection",
+      "artifact_role": "uncertainty_variant_panels",
+      "schema_version": "spatial_explanation_renderer.v1.1",
+      "expected_row_count": 130
+    },
+    {
+      "artifact_key": "spatial_explanations.overlay_images",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/images/overlays/stable_diffusion_inpainting",
+      "artifact_type": "image_collection",
+      "artifact_role": "uncertainty_geometry_overlays",
+      "schema_version": "spatial_explanation_renderer.v1.1",
+      "expected_row_count": 130
+    },
+    {
+      "artifact_key": "spatial_explanations.integrated_local_images",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/images/integrated_local/stable_diffusion_inpainting",
+      "artifact_type": "image_collection",
+      "artifact_role": "scratch_aware_local_component_maps",
+      "schema_version": "local_consistency_map_renderer.v1",
+      "expected_row_count": 150
+    },
+    {
+      "artifact_key": "spatial_explanations.selected_panels",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/figures/selected_explanation_panels",
+      "artifact_type": "figure_collection",
+      "artifact_role": "rule_selected_combined_diagnostics",
+      "schema_version": "selected_explanation_panel_layout.v1.1",
+      "expected_row_count": 15
+    },
+    {
+      "artifact_key": "spatial_explanations.map_manifest",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/map_images.csv",
+      "artifact_type": "table",
+      "artifact_role": "normalized_spatial_map_index",
+      "schema_version": "spatial_explanation_map_images.v1",
+      "expected_row_count": 1055
+    },
+    {
+      "artifact_key": "validation.19_uncertainty_and_spatial_explanation_maps",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/validation/checks.csv",
+      "artifact_type": "validation_table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "expected_row_count": 149
+    },
+    {
+      "artifact_key": "spatial_explanations.artifacts",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/artifacts.csv",
+      "artifact_type": "manifest",
+      "artifact_role": "artifact_discovery",
+      "schema_version": "artifact_manifest.v1",
+      "expected_row_count": 8
+    },
+    {
+      "artifact_key": "spatial_explanations.run_manifest",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json",
+      "artifact_type": "manifest",
+      "artifact_role": "run_provenance",
+      "schema_version": "run_manifest.v1",
+      "expected_row_count": 1
+    }
+  ],
+  "expected_counts": {
+    "uncertainty_groups": 130,
+    "unique_cases": 80,
+    "candidates": 520,
+    "seeds_per_group": 4,
+    "generic_groups": 80,
+    "scratch_aware_groups": 50,
+    "representative_candidates": 130,
+    "spatial_explanation_rows": 780,
+    "numeric_map_archive_entries": 130,
+    "uncertainty_panels": 130,
+    "overlay_panels": 130,
+    "upstream_error_component_links": 260,
+    "upstream_generic_local_component_links": 240,
+    "owned_scratch_aware_local_component_maps": 150,
+    "selected_panels": 15,
+    "map_manifest_rows": 1055,
+    "artifact_records": 8,
+    "canonical_file_count": 431,
+    "artifact_record_count": 8,
+    "validation_row_count": 149,
+    "temporary_work_file_count": 0,
+    "blocking_validation_failures": 0,
+    "warning_validation_failures": 0
+  },
+  "observed_counts": {
+    "uncertainty_groups": 130,
+    "unique_cases": 80,
+    "candidates": 520,
+    "seeds_per_group": 4,
+    "generic_groups": 80,
+    "scratch_aware_groups": 50,
+    "spatial_explanation_rows": 780,
+    "numeric_archive_entries": 130,
+    "uncertainty_panels": 130,
+    "overlay_panels": 130,
+    "upstream_component_links": 500,
+    "owned_local_component_maps": 150,
+    "selected_panels": 15,
+    "map_manifest_rows": 1055,
+    "artifact_record_count": 8,
+    "validation_row_count": 149,
+    "canonical_file_count": 431,
+    "temporary_work_file_count": 0
+  },
+  "validation_summary": {
+    "check_count": 149,
+    "passed_count": 149,
+    "failed_count": 0,
+    "blocking_failure_count": 0,
+    "overall_passed": true,
+    "failed_check_ids": []
+  },
+  "known_limitations": [
+    "The uncertainty maps cover Stable Diffusion 1.5 only; SDXL has one seed per case and cannot support empirical seed variability maps.",
+    "The eligible population contains canonical binary missing-region cases and does not establish behavior for synthetic degradations.",
+    "Per-pixel seed variability is an empirical consistency proxy, not calibrated confidence or restoration correctness.",
+    "Low spatial variability can coexist with consistently incorrect, semantically implausible, or historically unsupported restoration.",
+    "The numeric archive uses documented float16 storage after float32 computation; canonical scalar evidence remains in Notebook 18 and spatial_explanations.csv.",
+    "Visual heatmaps use a globally clipped robust scale for comparability; unclipped numeric maps and clipping metadata remain available.",
+    "Texture, colour, seam, absolute-error, signed-improvement, and uncertainty evidence remain separate and are not collapsed into a combined score."
+  ],
+  "validation_status": "passed",
+  "refactor_status": "refactored",
+  "completion_gate_passed": true,
+  "helper_checksums": {
+    "spatial_explanations_helper": "3ee4ebdd5e27c14a4a01b53041c9f0a6f35c4436f3f7118f1a3fc799fb5ff474",
+    "diffusion_uncertainty_helper": "34837b12a5b89394f717f70dcaefb6d53e2e3d86b9f241a1028c260e2f1bbc14",
+    "error_maps_helper": "2c03ae5cde0a2ef6a00f81ed2aeb88996260f52e9bfff5627e8d29a5c3d9fd9a",
+    "local_consistency_helper": "38af4c96a55125684937716ebbdcdbd0ee7123b5d03f8c14b910df5c4b6843f2",
+    "evaluation_inputs_helper": "b0a2539734e0291c9c32df435f0aee6ba7e69c5eb644d0f3d433822200cec958",
+    "regions_helper": "8b0c9d413ecba9e5056b3b8f6cd89147d4cfd044291290e31ebc78b882a16e9d",
+    "schemas_helper": "d4d304c0a379d41bc9c03ffa9fc9321d8d0fb6a05ac5a50b1dbdcbd32f71640f",
+    "paths_helper": "bab56054d466d44bc43cc8709542240a690d461cc1be4829a2d67f4a1d8e9806",
+    "manifests_helper": "8ba9846539a63ca14becdf5bb5488204917476169e847233489f0012d5703217",
+    "validation_helper": "1311f816879b60e8314364686e2136eb906ff3718ccf7b6106a3e73f04e09a10"
+  },
+  "map_manifest_checksum": "be791e3d1f205407563f018cfa35ceef6bdf24f4dbf1669759126b8a8aaa4843",
+  "artifact_manifest_checksum": "834a4f1910ba6d08833c4786b0bb0187376bf4027702619a4ee2b6160da48156",
+  "selected_panel_layout_version": "selected_explanation_panel_layout.v1.1",
+  "scientific_interpretation": "empirical_seed_variability_spatial_proxy_not_calibrated_confidence",
+  "combined_explanation_score_retained": false,
+  "sdxl_uncertainty_status": "not_applicable_insufficient_seed_coverage",
+  "roadmap_requirement_count": 20,
+  "roadmap_traceability_failures": 0
+}

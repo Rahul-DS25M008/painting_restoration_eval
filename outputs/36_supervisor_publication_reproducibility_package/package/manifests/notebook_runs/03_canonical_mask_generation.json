@@ -1,0 +1,347 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_16536d2f39c54081b0dd58a00b5e9f01",
+  "notebook_id": "03",
+  "notebook_name": "Canonical Mask Generation",
+  "origin": "Existing Notebook 03",
+  "run_status": "completed",
+  "started_at_utc": "2026-08-18T11:12:50.552543Z",
+  "completed_at_utc": "2026-08-18T11:19:24.263197Z",
+  "git_commit": "e897fb5632b244abd5b5bd51a4751475d57fce71",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260818T085309Z_86038434",
+  "dataset_versions": {
+    "dataset_id": "painting_restoration_eval",
+    "dataset_version": "1.0.0",
+    "dataset_scope": "controlled_50",
+    "execution_profile": "controlled_50",
+    "experiment_id": "canonical_missing_region",
+    "content_fingerprint": "9c1717b89d6adc4182736c7c879c2d941ebfbf4999870abc14249bb1869c0d47",
+    "fingerprint_version": "dataset_fingerprint.v1",
+    "upstream_run_id": "run_5e54b2de32934e1c9303e7250b932404",
+    "upstream_preprocessed_images_sha256": "b6f29c2c71450403042b1bb6c522ea6e50942a940428918b89dac466e0b7152f",
+    "upstream_clean_images_sha256": "287a4a24bcbc1ff6c2aca29e0900cf592ac67ceed920bd997a8dcf531bad347a",
+    "upstream_preprocessed_images_schema": "preprocessed_images.v1",
+    "canonical_masks_schema": "canonical_masks.v1",
+    "mask_audit_schema": "mask_audit.v1",
+    "canonical_mask_config_schema": "canonical_mask_config.v1",
+    "canonical_mask_collection_schema": "canonical_mask_collection.v1",
+    "mask_generator_name": "canonical_synthetic_damage_masks",
+    "mask_generator_version": "3.0.0",
+    "seed_scheme_version": "canonical_mask_seed.v1",
+    "global_seed": 20260630
+  },
+  "configuration_paths": [
+    "config/masks/canonical_binary.yaml"
+  ],
+  "configuration_checksums": {
+    "config/masks/canonical_binary.yaml": "167269a57e45df5295ceba09825ade4b739f566785f4eb579204b4f2d390ef3b"
+  },
+  "helper_versions": {
+    "restoration_eval": "0.1.0",
+    "paths": "1.0.0",
+    "schemas": "1.1.0",
+    "manifests": "1.0.0",
+    "validation": "1.0.0",
+    "regions": "1.0.0",
+    "masks": "3.0.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "matplotlib": "3.11.0",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3"
+  },
+  "hardware": {
+    "execution_device": "CPU",
+    "gpu_required": false
+  },
+  "inputs": [
+    {
+      "input_key": "canonical_mask_config",
+      "producer": "project configuration",
+      "relative_path": "config/masks/canonical_binary.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "canonical_mask_config.v1",
+      "expected_cardinality": 1
+    },
+    {
+      "input_key": "preprocessed_images",
+      "producer": "02_image_preprocessing",
+      "relative_path": "outputs/02_image_preprocessing/data/preprocessed_images.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "preprocessed_images.v1",
+      "expected_cardinality": 50
+    },
+    {
+      "input_key": "clean_images",
+      "producer": "02_image_preprocessing",
+      "relative_path": "outputs/02_image_preprocessing/images/clean",
+      "required": true,
+      "format": "png_collection",
+      "schema_version": "clean_image_collection.v1",
+      "expected_cardinality": 50
+    },
+    {
+      "input_key": "upstream_artifact_manifest",
+      "producer": "02_image_preprocessing",
+      "relative_path": "outputs/02_image_preprocessing/manifests/artifacts.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "artifact_manifest.v1",
+      "expected_cardinality": 5
+    },
+    {
+      "input_key": "upstream_run_manifest",
+      "producer": "02_image_preprocessing",
+      "relative_path": "outputs/02_image_preprocessing/manifests/run_manifest.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1
+    },
+    {
+      "input_key": "project_inventory",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "project_file_inventory.v1",
+      "expected_cardinality": 10771
+    },
+    {
+      "input_key": "inventory_run",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "inventory_run.v1",
+      "expected_cardinality": 1
+    },
+    {
+      "input_key": "project_paths_registry",
+      "producer": "validated notebook handoffs",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "project_paths.v1",
+      "expected_cardinality": 1
+    }
+  ],
+  "outputs": [
+    {
+      "output_key": "canonical_masks",
+      "relative_path": "outputs/03_canonical_mask_generation/data/masks.csv",
+      "format": "csv",
+      "schema_version": "canonical_masks.v1",
+      "expected_cardinality": 250,
+      "artifact_role": "primary_downstream"
+    },
+    {
+      "output_key": "mask_images",
+      "relative_path": "outputs/03_canonical_mask_generation/images/masks",
+      "format": "png_collection",
+      "schema_version": "canonical_mask_collection.v1",
+      "expected_cardinality": 250,
+      "artifact_role": "primary_downstream"
+    },
+    {
+      "output_key": "mask_audit",
+      "relative_path": "outputs/03_canonical_mask_generation/metrics/mask_audit.csv",
+      "format": "csv",
+      "schema_version": "mask_audit.v1",
+      "expected_cardinality": 105,
+      "artifact_role": "audit_reporting"
+    },
+    {
+      "output_key": "mask_morphology_figure",
+      "relative_path": "outputs/03_canonical_mask_generation/figures/mask_morphology.png",
+      "format": "png",
+      "schema_version": "figure.mask_morphology.v1",
+      "expected_cardinality": 1,
+      "artifact_role": "thesis_reporting"
+    },
+    {
+      "output_key": "mask_examples_figure",
+      "relative_path": "outputs/03_canonical_mask_generation/figures/mask_examples.png",
+      "format": "png",
+      "schema_version": "figure.mask_examples.v1",
+      "expected_cardinality": 1,
+      "artifact_role": "qa_reporting"
+    },
+    {
+      "output_key": "mask_protocol",
+      "relative_path": "outputs/03_canonical_mask_generation/reports/mask_protocol.md",
+      "format": "markdown",
+      "schema_version": "mask_protocol.v1",
+      "expected_cardinality": 1,
+      "artifact_role": "methodology_reporting"
+    },
+    {
+      "output_key": "validation_checks",
+      "relative_path": "outputs/03_canonical_mask_generation/validation/checks.csv",
+      "format": "csv",
+      "schema_version": "validation_checks.v1",
+      "expected_cardinality": 50,
+      "artifact_role": "validation"
+    },
+    {
+      "output_key": "artifact_manifest",
+      "relative_path": "outputs/03_canonical_mask_generation/manifests/artifacts.csv",
+      "format": "csv",
+      "schema_version": "artifact_manifest.v1",
+      "expected_cardinality": 7,
+      "artifact_role": "handoff"
+    },
+    {
+      "output_key": "run_manifest",
+      "relative_path": "outputs/03_canonical_mask_generation/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "artifact_role": "reproducibility"
+    }
+  ],
+  "expected_counts": {
+    "painting_rows": 50,
+    "mask_families": 5,
+    "canonical_mask_rows": 250,
+    "mask_image_files": 250,
+    "mask_audit_rows": 105,
+    "validation_rows": 50,
+    "artifact_records": 7,
+    "canonical_figures": 2,
+    "methodology_reports": 1
+  },
+  "observed_counts": {
+    "painting_rows": 50,
+    "mask_families": 5,
+    "canonical_mask_rows": 250,
+    "mask_image_files": 250,
+    "mask_audit_rows": 105,
+    "validation_rows": 50,
+    "artifact_records": 7,
+    "canonical_figures": 2,
+    "methodology_reports": 1,
+    "family_counts": {
+      "zero_control": 50,
+      "scratch_thin": 50,
+      "loss_small": 50,
+      "loss_large": 50,
+      "mixed_damage": 50
+    },
+    "failed_generations": 0,
+    "missing_masks": 0,
+    "stale_masks": 0,
+    "orphan_masks": 0,
+    "nonbinary_masks": 0,
+    "padding_overlap_failures": 0,
+    "area_tolerance_failures": 0,
+    "family_morphology_failures": 0,
+    "deterministic_replay_failures": 0,
+    "total_runtime_seconds": 159.7996728004655,
+    "mean_runtime_seconds": 0.6391986912018619,
+    "maximum_generation_attempts_observed": 10,
+    "registered_project_artifacts": 7
+  },
+  "validation_summary": {
+    "consolidated": {
+      "check_count": 50,
+      "passed_count": 50,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "representative_smoke": {
+      "check_count": 8,
+      "passed_count": 8,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "canonical_persistence": {
+      "check_count": 7,
+      "passed_count": 7,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "completion_gate": {
+      "status": "passed",
+      "passed": true,
+      "requirement_count": 24,
+      "failed_requirement_ids": []
+    },
+    "manifest_handoff": {
+      "check_count": 4,
+      "passed_count": 4,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "final_completion_gate": {
+      "check_count": 3,
+      "passed_count": 3,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "registry_update": {
+      "check_count": 3,
+      "passed_count": 3,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    }
+  },
+  "known_limitations": [
+    "The controlled subset contains works from only three institutions, with 60 percent sourced from The Metropolitan Museum of Art.",
+    "Restricting acquisition to public-domain or open-access material favors institutions and works with suitable digitization and rights metadata.",
+    "The five balanced visual categories are a purposive evaluation design and are not a population-representative sample of painting history.",
+    "Optional date, style, and medium metadata is concentrated in portrait and high-texture records and is absent from three categories.",
+    "Historical and geographic representation cannot be quantified reliably from the current fields and requires explicit enrichment before population-level claims.",
+    "Dataset verification establishes technical and metadata suitability; it does not certify historical representativeness or conservation suitability.",
+    "Images without embedded ICC profiles are processed under the configured sRGB assumption without pixel conversion.",
+    "Median-RGB padding is technical model-canvas content and must be excluded from region-sensitive evaluation through the recorded content bounding box.",
+    "Preprocessing verifies deterministic technical geometry; it does not certify historical, aesthetic, or conservation validity.",
+    "Recorded preprocessing runtimes are specific to the current CPU, storage, Python environment, and system load.",
+    "Canonical masks are controlled synthetic missing-region evaluation instruments; they are not annotations of historically verified damage.",
+    "The binary protocol intentionally excludes blur, fading, discolouration, dirt, dust, stains, partial transparency, and other non-binary degradation.",
+    "Technical preprocessing padding is never eligible for damage; all generated regions are restricted to the authoritative Notebook 02 content boundary.",
+    "Configured family morphology supports controlled comparisons and must not be interpreted as an empirical prior for the distribution of real painting damage.",
+    "Recorded mask-generation runtimes are specific to the current CPU, storage, Python environment, and system load."
+  ],
+  "refactor_status": "complete",
+  "validation_status": "passed",
+  "depends_on": [
+    "02_image_preprocessing.preprocessed_images",
+    "02_image_preprocessing.clean_images",
+    "02_image_preprocessing.artifacts",
+    "02_image_preprocessing.run_manifest",
+    "canonical binary-mask configuration",
+    "current inventory",
+    "project paths registry"
+  ],
+  "applicable_dataset_scopes": [
+    "controlled_50"
+  ],
+  "applicable_experiment_scopes": [
+    "canonical_missing_region"
+  ],
+  "expensive_execution": false,
+  "completion_gate_passed": true
+}

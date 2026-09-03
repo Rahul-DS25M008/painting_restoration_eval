@@ -1,0 +1,201 @@
+config_schema_version: "spatial_diagnostics_config.v1"
+config_version: "1.0.1"
+
+spatial_diagnostics:
+  notebook_id: "16"
+  notebook_stem: "16_difference_maps_and_spatial_diagnostics"
+  origin: "Consolidates Existing Notebooks 10, 16, and 23"
+  diagnostic_version: "spatial_diagnostics.v1"
+  map_manifest_version: "spatial_map_images.v1"
+  map_renderer_version: "spatial_map_renderer.v1"
+
+  inputs:
+    inventory_path: "outputs/inventory/project_file_inventory.csv"
+    inventory_run_path: "outputs/inventory/inventory_run.json"
+    project_paths_path: "outputs/inventory/project_paths.json"
+    geometry_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+    geometry_run_manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+    contracts_run_manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+    contracts_artifacts_path: "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv"
+    evaluation_contract_config_path: "config/experiments/evaluation_contract.yaml"
+    case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+    model_eligibility_path: "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv"
+    region_policy_path: "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv"
+    schema_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json"
+    classical_metrics_path: "outputs/13_classical_metrics/metrics/classical_metrics.csv"
+    classical_metrics_run_manifest_path: "outputs/13_classical_metrics/manifests/run_manifest.json"
+    upstream_sources:
+      - source_table_id: "notebook_09_opencv_telea"
+        model_id: "opencv_telea"
+        path: "outputs/09_opencv_telea_restoration/data/restorations.csv"
+        run_manifest_path: "outputs/09_opencv_telea_restoration/manifests/run_manifest.json"
+        schema_version: "restorations.v1"
+      - source_table_id: "notebook_10_lama"
+        model_id: "lama"
+        path: "outputs/10_lama_restoration/data/restorations.csv"
+        run_manifest_path: "outputs/10_lama_restoration/manifests/run_manifest.json"
+        schema_version: "restorations.v1"
+      - source_table_id: "notebook_11_stable_diffusion"
+        model_id: "stable_diffusion_inpainting"
+        path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+        run_manifest_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+        schema_version: "stable_diffusion_candidates.v1"
+      - source_table_id: "notebook_12_sdxl"
+        model_id: "sdxl_inpainting"
+        path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
+        run_manifest_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+        schema_version: "sdxl_partial_candidates.v1"
+
+  output:
+    root: "outputs/16_difference_maps_and_spatial_diagnostics"
+    diagnostics_path: "metrics/spatial_diagnostics.csv"
+    maps_root: "images/maps"
+    selected_panels_root: "figures/selected_spatial_panels"
+    map_manifest_path: "manifests/map_images.csv"
+    run_manifest_path: "manifests/run_manifest.json"
+    artifacts_path: "manifests/artifacts.csv"
+    validation_path: "validation/checks.csv"
+    diagnostics_checkpoint_path: "work/spatial_diagnostics_checkpoint.csv"
+    map_manifest_checkpoint_path: "work/map_images_checkpoint.csv"
+
+  map_definition:
+    rgb_channel_reduction: "mean_absolute_error"
+    damaged_absolute_error: "mean(abs(clean_rgb - damaged_rgb), axis=rgb)"
+    restored_absolute_error: "mean(abs(clean_rgb - restored_rgb), axis=rgb)"
+    signed_improvement: "damaged_absolute_error - restored_absolute_error"
+    restoration_change: "mean(abs(restored_rgb - damaged_rgb), axis=rgb)"
+    positive_signed_meaning: "restoration reduced reference error"
+    negative_signed_meaning: "restoration increased reference error"
+    data_range: 255.0
+
+  regions:
+    policy_version: "evaluation_region_policy.v1"
+    degradation_support_experiment_ids: ["synthetic_degradation"]
+    mask_bbox_margin_pixels: 8
+    boundary_width_pixels: 3
+    outside_ring_inner_offset_pixels: 3
+    outside_ring_outer_width_pixels: 8
+    effect_support_threshold: 1
+    active_mask_threshold_source: "candidate.mask_threshold"
+    threshold_comparison: "greater_than_or_equal"
+    region_order:
+      - "full_image"
+      - "content_region"
+      - "masked_region"
+      - "mask_bbox_crop"
+      - "inner_boundary_band"
+      - "outer_boundary_band"
+      - "boundary_ring"
+      - "outside_mask_content"
+      - "outside_boundary_ring"
+      - "degradation_support"
+    excluded_regions:
+      patch_window: "Deferred to later local and semantic sliding-window analyses."
+    empty_region_policy: "omit from spatial_diagnostics.csv and validate against the derived valid-region plan"
+
+  visualization:
+    map_types:
+      - "damaged_absolute_error"
+      - "restored_absolute_error"
+      - "signed_improvement"
+      - "masked_signed_improvement"
+      - "spatial_overlay"
+    zero_control_map_policy: "do_not_persist_redundant_all_zero_maps"
+    absolute_error:
+      cmap: "magma"
+      vmin: 0.0
+      percentile: 99.5
+    signed_improvement:
+      cmap: "RdBu"
+      center: 0.0
+      absolute_percentile: 99.5
+      symmetric_limits: true
+    scale_population: "all completed technically valid candidates"
+    scale_region: "content_region"
+    maximum_sampled_pixels_per_candidate: 4096
+    deterministic_sampling_seed: 160016
+    png_mode: "indexed_palette"
+    png_compress_level: 9
+    masked_no_data_index: 0
+    overlay_colours:
+      mask_fill_rgba: [255, 0, 255, 48]
+      inner_boundary_rgba: [255, 215, 0, 112]
+      outer_boundary_rgba: [0, 255, 255, 112]
+      outside_spillover_rgba: [255, 128, 0, 96]
+      content_box_rgba: [0, 255, 255, 255]
+      mask_box_rgba: [255, 0, 255, 255]
+
+  execution:
+    progress_interval_candidates: 10
+    checkpoint_interval_candidates: 10
+    resume_policy: "reuse only candidates with complete diagnostics and all expected non-zero map assets"
+    checkpoint_policy: "notebook-owned temporary work files removed after completion"
+    map_id_policy: "spm_ plus first 16 hexadecimal characters of sha256(candidate_id)"
+    maximum_map_filename_characters: 40
+
+  representative_panels:
+    candidate_panel_count: 8
+    cross_model_panel_count: 4
+    total_panel_count: 12
+    primary_comparison_execution_roles: ["primary"]
+    candidate_roles:
+      - "model_median_masked_improvement"
+      - "model_highest_masked_worsened_fraction"
+    cross_model_damage_groups:
+      - "small_or_localized_loss"
+      - "thin_scratch"
+      - "large_or_structural_loss"
+      - "synthetic_degradation"
+    cross_model_selection_rule: "maximum primary-candidate spatial-performance spread within each declared group"
+    selection_tie_breakers: ["case_id", "candidate_id"]
+    preview_panel_count: 4
+
+  evidence_policy:
+    evidence_role: "diagnostic_only"
+    is_final_trustworthiness_flag: false
+    improved_pixel_tolerance: 0.000001
+    changed_pixel_channel_tolerance: 0.5
+    qa_indicators_are_final_flags: false
+
+  expected_counts:
+    case_registry_rows: 525
+    evaluated_unique_cases: 410
+    evaluated_candidates: 2160
+    nonzero_candidates: 2010
+    zero_control_cases: 50
+    zero_control_candidates: 150
+    synthetic_degradation_candidates: 356
+    active_threshold_13_candidates: 356
+    active_threshold_128_candidates: 1804
+    spatial_diagnostic_rows: 18896
+    diagnostic_rows_by_region:
+      full_image: 2160
+      content_region: 2160
+      masked_region: 2010
+      mask_bbox_crop: 2010
+      inner_boundary_band: 2010
+      outer_boundary_band: 2010
+      boundary_ring: 2010
+      outside_mask_content: 2160
+      outside_boundary_ring: 2010
+      degradation_support: 356
+    candidate_maps_per_nonzero_candidate: 5
+    candidate_map_images: 10050
+    selected_candidate_panels: 8
+    selected_cross_model_panels: 4
+    selected_panels_total: 12
+    map_manifest_rows: 10062
+    candidates_by_model:
+      opencv_telea: 410
+      lama: 410
+      stable_diffusion_inpainting: 1330
+      sdxl_inpainting: 10
+
+  known_limitations:
+    - "Absolute-error and signed-improvement maps are pixel-aligned descriptive evidence, not perceptual, semantic, conservation, or historical-validity measures."
+    - "Positive local error reduction can coexist with semantically incorrect or historically unsupported reconstruction."
+    - "Standardized PNG rendering clips visual extremes at documented percentiles; canonical CSV summaries retain unclipped numerical statistics."
+    - "Indexed PNG maps are visualization assets and do not replace source-resolution floating-point computation."
+    - "Stable Diffusion prompt and seed candidates are repeated candidate-level observations, not independent paintings."
+    - "SDXL is a predeclared technically validated ten-case partial scope and must not be presented as full-dataset coverage."
+    - "Zero controls remain in canonical diagnostics but redundant all-zero map images are intentionally omitted."

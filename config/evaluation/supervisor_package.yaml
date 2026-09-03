@@ -1,0 +1,226 @@
+schema_version: supervisor_package_config.v1
+configuration_version: 1.0.0
+
+notebook:
+  id: "36"
+  stem: "36_supervisor_publication_reproducibility_package"
+  origin: "Consolidates Existing Previous Versions of Notebooks 30 and 35, Pre-refactor"
+  output_root: "outputs/36_supervisor_publication_reproducibility_package"
+  purpose: "Assemble and validate the final supervisor, publication, and reproducibility delivery package without recomputing scientific evidence."
+
+runtime:
+  provisional_python: "3.11"
+  accepted_python_minor_versions: ["3.11", "3.12"]
+  packages: [pandas, numpy, pyyaml, pillow]
+
+governing_inputs:
+  inventory_csv: "outputs/inventory/project_file_inventory.csv"
+  inventory_run: "outputs/inventory/inventory_run.json"
+  project_paths_json: "outputs/inventory/project_paths.json"
+  project_paths_markdown: "outputs/inventory/project_paths.md"
+  roadmap: "docs/final_notebook_roadmap.md"
+  implementation_guidelines: "docs/refactoring_implementation_guidelines.md"
+  evidence_audit: "docs/evidence_dependency_audit.md"
+  evidence_coverage: "config/evaluation/evidence_coverage.yaml"
+  proposal: "docs/proposal/Rahul_Thesis_Proposal.docx"
+
+upstream_run_manifests:
+  - "outputs/01_dataset_verification/manifests/run_manifest.json"
+  - "outputs/02_image_preprocessing/manifests/run_manifest.json"
+  - "outputs/03_canonical_mask_generation/manifests/run_manifest.json"
+  - "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json"
+  - "outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json"
+  - "outputs/06_mask_robustness_dataset_generation/manifests/run_manifest.json"
+  - "outputs/07_synthetic_degradation_dataset_generation/manifests/run_manifest.json"
+  - "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+  - "outputs/09_opencv_telea_restoration/manifests/run_manifest.json"
+  - "outputs/10_lama_restoration/manifests/run_manifest.json"
+  - "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+  - "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+  - "outputs/13_classical_metrics/manifests/run_manifest.json"
+  - "outputs/14_lpips_metrics/manifests/run_manifest.json"
+  - "outputs/15_feature_similarity/manifests/run_manifest.json"
+  - "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json"
+  - "outputs/17_local_consistency_metrics/manifests/run_manifest.json"
+  - "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json"
+  - "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json"
+  - "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json"
+  - "outputs/21_multi_model_comparison/manifests/run_manifest.json"
+  - "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json"
+  - "outputs/23_damage_size_sensitivity_analysis/manifests/run_manifest.json"
+  - "outputs/24_mask_robustness_analysis/manifests/run_manifest.json"
+  - "outputs/25_synthetic_degradation_analysis/manifests/run_manifest.json"
+  - "outputs/26_grouped_and_statistical_analysis/manifests/run_manifest.json"
+  - "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json"
+  - "outputs/28_metric_and_region_policy_ablation/manifests/run_manifest.json"
+  - "outputs/29_explainable_ai_and_case_retrieval/manifests/run_manifest.json"
+  - "outputs/30_model_cards_compute_and_scalability/manifests/run_manifest.json"
+  - "outputs/31_model_report_generation/manifests/run_manifest.json"
+  - "outputs/32_case_and_painting_report_generation/manifests/run_manifest.json"
+  - "outputs/33_final_evaluation_report/manifests/run_manifest.json"
+  - "outputs/34_final_streamlit_dashboard_assets/manifests/run_manifest.json"
+  - "outputs/35_dashboard_and_deployment_validation/manifests/run_manifest.json"
+
+expected_population:
+  upstream_notebooks: 35
+  paintings: 50
+  registered_cases: 525
+  restoration_cases: 410
+  approved_candidates: 1785
+  quality_anchors: 11
+  uncertainty_groups: 165
+  visual_records: 23964
+  indexed_reports: 104
+  sdxl_cases: 10
+  thesis_figures: 18
+  publication_figures: 6
+  model_reports: 4
+  model_cards: 4
+  case_report_records: 30
+  painting_report_records: 50
+
+research_questions:
+  rq1: "How can a multi-metric evaluation framework be designed to assess AI-generated painting restorations beyond traditional image similarity metrics?"
+  rq2: "How do selected pretrained inpainting models differ in restoration quality across artistic styles and artificial damage types?"
+  rq3: "To what extent can uncertainty estimation from multiple restoration candidates identify speculative or unreliable restored regions?"
+
+package_policy:
+  self_contained_html: true
+  repository_relative_paths_only: true
+  preserve_source_bytes: true
+  overwrite_only_matching_destination: true
+  maximum_package_size_mib: 50
+  maximum_relative_path_characters: 220
+  bundled:
+    - "final self-contained HTML report"
+    - "four self-contained model reports"
+    - "18 thesis figures and six publication figures"
+    - "four model cards"
+    - "eight compact tables and indexes"
+    - "35 upstream run manifests"
+    - "all declared evaluation YAML snapshots"
+    - "two requirements files"
+    - "Notebook 35 deployment-readiness report"
+    - "Notebook 36 reports, meeting documents, indexes, and provenance snapshot"
+  indexed_not_bundled:
+    - "30 self-contained case reports"
+    - "50 self-contained painting reports"
+    - "30 selected case grids"
+    - "Notebook 34 complete dashboard visual package"
+    - "restoration candidates, maps, and raw image collections"
+    - "model weights and caches"
+
+copy_plan:
+  reports:
+    - source: "outputs/33_final_evaluation_report/reports/final_evaluation.html"
+      destination: "package/reports/final_evaluation.html"
+      role: "final_self_contained_report"
+    - source: "outputs/31_model_report_generation/reports/lama.html"
+      destination: "package/reports/models/lama.html"
+      role: "model_report"
+    - source: "outputs/31_model_report_generation/reports/opencv_telea.html"
+      destination: "package/reports/models/opencv_telea.html"
+      role: "model_report"
+    - source: "outputs/31_model_report_generation/reports/stable_diffusion_inpainting.html"
+      destination: "package/reports/models/stable_diffusion_inpainting.html"
+      role: "model_report"
+    - source: "outputs/31_model_report_generation/reports/sdxl_inpainting.html"
+      destination: "package/reports/models/sdxl_inpainting.html"
+      role: "model_report"
+    - source: "outputs/35_dashboard_and_deployment_validation/reports/deployment_readiness.md"
+      destination: "package/reports/deployment_readiness.md"
+      role: "deployment_readiness"
+  tables:
+    - source: "outputs/33_final_evaluation_report/data/thesis_tables.csv"
+      destination: "package/tables/thesis_tables.csv"
+      role: "thesis_table_catalog"
+    - source: "outputs/33_final_evaluation_report/data/latex_tables.csv"
+      destination: "package/tables/latex_tables.csv"
+      role: "latex_table_catalog"
+    - source: "outputs/33_final_evaluation_report/data/report_evidence_catalog.csv"
+      destination: "package/tables/report_evidence_catalog.csv"
+      role: "report_evidence_catalog"
+    - source: "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv"
+      destination: "package/tables/model_cards.csv"
+      role: "model_card_table"
+    - source: "outputs/31_model_report_generation/data/report_index.csv"
+      destination: "package/tables/model_report_index.csv"
+      role: "model_report_index"
+    - source: "outputs/32_case_and_painting_report_generation/data/case_report_index.csv"
+      destination: "package/tables/case_report_index.csv"
+      role: "case_report_index"
+    - source: "outputs/32_case_and_painting_report_generation/data/painting_report_index.csv"
+      destination: "package/tables/painting_report_index.csv"
+      role: "painting_report_index"
+    - source: "outputs/32_case_and_painting_report_generation/data/selected_cases.csv"
+      destination: "package/tables/selected_cases.csv"
+      role: "selected_case_index"
+  model_cards:
+    - source: "outputs/30_model_cards_compute_and_scalability/reports/model_cards/lama.md"
+      destination: "package/model_cards/lama.md"
+      role: "model_card"
+    - source: "outputs/30_model_cards_compute_and_scalability/reports/model_cards/opencv_telea.md"
+      destination: "package/model_cards/opencv_telea.md"
+      role: "model_card"
+    - source: "outputs/30_model_cards_compute_and_scalability/reports/model_cards/stable_diffusion_inpainting.md"
+      destination: "package/model_cards/stable_diffusion_inpainting.md"
+      role: "model_card"
+    - source: "outputs/30_model_cards_compute_and_scalability/reports/model_cards/sdxl_inpainting.md"
+      destination: "package/model_cards/sdxl_inpainting.md"
+      role: "model_card"
+  environment:
+    - source: "requirements.txt"
+      destination: "package/environment/requirements.txt"
+      role: "dashboard_environment"
+    - source: "requirements_experiments.txt"
+      destination: "package/environment/requirements_experiments.txt"
+      role: "experiment_environment"
+  application:
+    - source: "streamlit_app.py"
+      destination: "package/application/streamlit_app.py"
+      role: "dashboard_entrypoint"
+    - source: "src/restoration_eval/dashboard_application.py"
+      destination: "package/application/dashboard_application.py"
+      role: "dashboard_helper"
+
+figure_sources:
+  thesis_directory: "outputs/33_final_evaluation_report/figures/thesis"
+  publication_directory: "outputs/33_final_evaluation_report/figures/publication"
+  allowed_suffixes: [".png"]
+
+configuration_sources:
+  directory: "config/evaluation"
+  allowed_suffixes: [".yaml", ".yml"]
+
+outputs:
+  supervisor_summary: "outputs/36_supervisor_publication_reproducibility_package/reports/supervisor_summary.md"
+  reproducibility_appendix: "outputs/36_supervisor_publication_reproducibility_package/reports/reproducibility_appendix.md"
+  limitations_and_deviations: "outputs/36_supervisor_publication_reproducibility_package/reports/limitations_and_deviations.md"
+  artifact_index: "outputs/36_supervisor_publication_reproducibility_package/data/artifact_index.csv"
+  key_findings: "outputs/36_supervisor_publication_reproducibility_package/data/key_findings.json"
+  open_questions: "outputs/36_supervisor_publication_reproducibility_package/data/open_questions.md"
+  feedback_agenda: "outputs/36_supervisor_publication_reproducibility_package/data/feedback_agenda.md"
+  package_root: "outputs/36_supervisor_publication_reproducibility_package/package"
+  package_readme: "outputs/36_supervisor_publication_reproducibility_package/package/README.md"
+  reproducibility_snapshot: "outputs/36_supervisor_publication_reproducibility_package/package/provenance/reproducibility_snapshot.json"
+  package_manifest: "outputs/36_supervisor_publication_reproducibility_package/manifests/package_manifest.json"
+  run_manifest: "outputs/36_supervisor_publication_reproducibility_package/manifests/run_manifest.json"
+  artifacts: "outputs/36_supervisor_publication_reproducibility_package/manifests/artifacts.csv"
+  validation: "outputs/36_supervisor_publication_reproducibility_package/validation/checks.csv"
+
+scientific_boundaries:
+  no_scientific_recomputation: true
+  no_restoration_inference: true
+  no_universal_combined_score: true
+  controlled_synthetic_scope_only: true
+  uncertainty_is_not_calibrated_confidence: true
+  sdxl_is_bounded_feasibility_only: true
+  computational_flags_are_not_expert_ground_truth: true
+  statements:
+    - "The package republishes validated evidence; it does not recompute metrics or restoration candidates."
+    - "The benchmark uses controlled synthetic damage and does not establish real-world conservation generality."
+    - "Visual plausibility is not historical correctness, restoration trustworthiness, or conservation approval."
+    - "SDXL is a bounded ten-case feasibility study, not a fourth fully evaluated benchmark model."
+    - "Repeated-seed variability is an uncertainty proxy, not calibrated confidence."
+    - "Computational flags, retrieval results, and recommendations are decision support, not expert ground truth."
+    - "No universal combined quality, uncertainty, or trustworthiness score is constructed."

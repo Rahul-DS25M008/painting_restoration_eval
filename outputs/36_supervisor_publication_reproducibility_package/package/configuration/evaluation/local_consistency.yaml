@@ -1,0 +1,305 @@
+config_schema_version: "local_consistency_config.v1"
+config_version: "1.0.0"
+
+local_consistency:
+  notebook_id: "17"
+  notebook_stem: "17_local_consistency_metrics"
+  origin: "Existing Previous Version of Notebook 31, Pre-refactor, expanded with colour and seam requirements"
+  metric_schema_version: "local_consistency.v1"
+  metric_version: "local_consistency_metrics.v1"
+  map_manifest_version: "local_consistency_map_images.v1"
+  map_renderer_version: "local_consistency_map_renderer.v1"
+
+  inputs:
+    inventory_path: "outputs/inventory/project_file_inventory.csv"
+    inventory_run_path: "outputs/inventory/inventory_run.json"
+    project_paths_path: "outputs/inventory/project_paths.json"
+    artworks_path: "outputs/01_dataset_verification/data/artworks.csv"
+    artworks_run_manifest_path: "outputs/01_dataset_verification/manifests/run_manifest.json"
+    geometry_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+    geometry_run_manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+    contracts_run_manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+    contracts_artifacts_path: "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv"
+    evaluation_contract_config_path: "config/experiments/evaluation_contract.yaml"
+    case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+    model_eligibility_path: "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv"
+    region_policy_path: "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv"
+    schema_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json"
+    upstream_sources:
+      - source_table_id: "notebook_09_opencv_telea"
+        model_id: "opencv_telea"
+        path: "outputs/09_opencv_telea_restoration/data/restorations.csv"
+        run_manifest_path: "outputs/09_opencv_telea_restoration/manifests/run_manifest.json"
+        schema_version: "restorations.v1"
+      - source_table_id: "notebook_10_lama"
+        model_id: "lama"
+        path: "outputs/10_lama_restoration/data/restorations.csv"
+        run_manifest_path: "outputs/10_lama_restoration/manifests/run_manifest.json"
+        schema_version: "restorations.v1"
+      - source_table_id: "notebook_11_stable_diffusion"
+        model_id: "stable_diffusion_inpainting"
+        path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+        run_manifest_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+        schema_version: "stable_diffusion_candidates.v1"
+      - source_table_id: "notebook_12_sdxl"
+        model_id: "sdxl_inpainting"
+        path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
+        run_manifest_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+        schema_version: "sdxl_partial_candidates.v1"
+
+  output:
+    root: "outputs/17_local_consistency_metrics"
+    metrics_path: "metrics/local_consistency.csv"
+    maps_root: "images/maps"
+    summary_figure_path: "figures/local_consistency_summary.png"
+    selected_panels_root: "figures/selected_local_consistency_panels"
+    map_manifest_path: "manifests/map_images.csv"
+    run_manifest_path: "manifests/run_manifest.json"
+    artifacts_path: "manifests/artifacts.csv"
+    validation_path: "validation/checks.csv"
+    metrics_checkpoint_path: "work/local_consistency_checkpoint.csv"
+    map_manifest_checkpoint_path: "work/map_images_checkpoint.csv"
+
+  colour_policy:
+    source_rgb_interpretation: "use Notebook 02 colour_space_policy; all processed pixels are interpreted as sRGB"
+    rgb_range: [0.0, 1.0]
+    lab_illuminant: "D65"
+    lab_observer: "2"
+    delta_e_method: "CIEDE2000 via skimage.color.deltaE_ciede2000"
+    hue_chroma_space: "CIELCh derived from CIELAB"
+    minimum_chroma_for_hue_degrees: 5.0
+    lab_histogram_bins: [12, 12, 12]
+    channel_wasserstein_bins: 128
+    channel_wasserstein_policy: "fixed-range histogram CDF approximation for bounded repeatable runtime"
+    lab_histogram_ranges:
+      l: [0.0, 100.0]
+      a: [-128.0, 127.0]
+      b: [-128.0, 127.0]
+
+  texture_policy:
+    descriptor_region: "mask_bbox_crop"
+    descriptor_maximum_side_pixels: 256
+    lbp_points: 8
+    lbp_radius: 1
+    lbp_method: "uniform"
+    glcm_levels: 32
+    glcm_distances: [1, 2, 4]
+    glcm_angles_degrees: [0, 45, 90, 135]
+    gabor_frequencies: [0.10, 0.20]
+    gabor_angles_degrees: [0, 45, 90, 135]
+    gabor_kernel_size: 15
+    gabor_sigma: 3.0
+    gabor_gamma: 0.5
+    gabor_phase_offset: 0.0
+    gabor_backend: "opencv_get_gabor_kernel_filter2d"
+    edge_gradient_threshold: 0.05
+    orientation_gradient_floor: 0.01
+    orientation_bins: 12
+    local_window_pixels: 9
+    local_energy_epsilon: 0.001
+    detail_ratio_tolerance: 0.10
+    periodicity_center_exclusion_pixels: 3
+    proxy_interpretation: "diagnostic_only_not_authentication_or_semantic_brushstroke_recognition"
+
+  regions:
+    policy_version: "evaluation_region_policy.v1"
+    mask_bbox_margin_pixels: 8
+    boundary_width_pixels: 3
+    outside_ring_inner_offset_pixels: 3
+    outside_ring_outer_width_pixels: 8
+    effect_support_threshold: 1
+    active_mask_threshold_source: "candidate.mask_threshold"
+    threshold_comparison: "greater_than_or_equal"
+    standard_region_order:
+      - "full_image"
+      - "content_region"
+      - "masked_region"
+      - "mask_bbox_crop"
+      - "inner_boundary_band"
+      - "outer_boundary_band"
+      - "boundary_ring"
+      - "outside_mask_content"
+      - "outside_boundary_ring"
+      - "degradation_support"
+    texture_descriptor_regions: ["mask_bbox_crop"]
+    texture_map_regions:
+      - "masked_region"
+      - "mask_bbox_crop"
+      - "inner_boundary_band"
+      - "outer_boundary_band"
+      - "boundary_ring"
+      - "outside_boundary_ring"
+      - "degradation_support"
+    colour_regions:
+      - "full_image"
+      - "content_region"
+      - "masked_region"
+      - "mask_bbox_crop"
+      - "inner_boundary_band"
+      - "outer_boundary_band"
+      - "boundary_ring"
+      - "outside_mask_content"
+      - "outside_boundary_ring"
+      - "degradation_support"
+    seam_inner_outer_regions: ["inner_boundary_band", "outer_boundary_band"]
+    seam_boundary_regions: ["boundary_ring"]
+    seam_spillover_regions: ["outside_boundary_ring"]
+    patch_window_role: "used internally to derive local texture maps; per-patch rows are not persisted"
+    local_ssim_policy: "compute a valid full-frame local SSIM map before sampling boundary pixels; sparse masked-pixel SSIM is prohibited"
+
+  metric_plan:
+    texture_descriptor:
+      region_ids: ["mask_bbox_crop"]
+      metric_names:
+        - "lbp_histogram_distance"
+        - "gabor_response_distance"
+        - "glcm_feature_distance"
+        - "gradient_magnitude_error"
+        - "edge_density_error"
+        - "orientation_coherence_error"
+        - "orientation_histogram_distance"
+        - "periodicity_excess_proxy"
+    texture_map:
+      region_ids:
+        - "masked_region"
+        - "mask_bbox_crop"
+        - "inner_boundary_band"
+        - "outer_boundary_band"
+        - "boundary_ring"
+        - "outside_boundary_ring"
+        - "degradation_support"
+      metric_names:
+        - "local_texture_error_mean"
+        - "local_texture_error_p95"
+        - "smoothing_proxy_fraction"
+        - "hallucinated_detail_proxy_fraction"
+    colour:
+      region_ids:
+        - "full_image"
+        - "content_region"
+        - "masked_region"
+        - "mask_bbox_crop"
+        - "inner_boundary_band"
+        - "outer_boundary_band"
+        - "boundary_ring"
+        - "outside_mask_content"
+        - "outside_boundary_ring"
+        - "degradation_support"
+      metric_names:
+        - "delta_e_ciede2000_mean"
+        - "delta_e_ciede2000_median"
+        - "delta_e_ciede2000_p95"
+        - "hue_shift_mean_degrees"
+        - "chroma_shift_mean"
+        - "lab_l_wasserstein"
+        - "lab_a_wasserstein"
+        - "lab_b_wasserstein"
+        - "lab_histogram_hellinger"
+    seam_inner_outer:
+      region_ids: ["inner_boundary_band", "outer_boundary_band"]
+      metric_names:
+        - "local_luminance_error"
+        - "local_colour_error"
+        - "local_gradient_mismatch"
+        - "local_orientation_mismatch"
+        - "local_ssim_map_error"
+    seam_boundary:
+      region_ids: ["boundary_ring"]
+      metric_names:
+        - "cross_boundary_luminance_discontinuity_error"
+        - "cross_boundary_colour_discontinuity_error"
+        - "boundary_gradient_mismatch"
+        - "boundary_orientation_mismatch"
+        - "boundary_local_ssim_map_error"
+        - "transition_roughness_mismatch"
+    seam_spillover:
+      region_ids: ["outside_boundary_ring"]
+      metric_names:
+        - "boundary_spillover_change_mean"
+        - "boundary_spillover_change_p95"
+
+  visualization:
+    map_types: ["texture", "colour", "seam"]
+    map_population: "non-zero primary comparison candidates only"
+    zero_control_map_policy: "omit redundant map assets while retaining numeric evidence"
+    error_colormap: "magma"
+    improvement_colormap: "RdBu_r"
+    scale_percentile: 99.0
+    scale_scope: "all candidate-level canonical metric evidence"
+    map_panel_roles: ["damaged_error", "restored_error", "signed_improvement"]
+    png_compress_level: 9
+    no_data_rgba: [245, 245, 245, 255]
+
+  execution:
+    progress_interval_candidates: 10
+    checkpoint_interval_candidates: 10
+    resume_policy: "reuse only candidates with an exact complete metric-key set and no error rows"
+    map_resume_policy: "reuse only candidates with all three registered map files and matching checksums"
+    checkpoint_policy: "notebook-owned temporary work files removed after completion"
+    atomic_replace_attempts: 8
+    atomic_replace_retry_seconds: 0.25
+    map_id_policy: "lcm_ plus first 16 hexadecimal characters of sha256(candidate_id)"
+    maximum_map_filename_characters: 32
+
+  representative_panels:
+    candidate_panel_count: 8
+    cross_model_panel_count: 4
+    total_panel_count: 12
+    candidate_roles:
+      - "model_median_texture_error"
+      - "model_highest_seam_error"
+    cross_model_roles:
+      - "largest_texture_model_spread"
+      - "largest_colour_model_spread"
+      - "largest_seam_model_spread"
+      - "largest_high_texture_category_spread"
+    primary_comparison_execution_roles: ["primary"]
+    selection_tie_breakers: ["case_id", "candidate_id"]
+    preview_panel_count: 4
+
+  evidence_policy:
+    evidence_role: "diagnostic_only"
+    is_final_trustworthiness_flag: false
+    universal_visible_seam_threshold: false
+    brushstroke_authentication_claim: false
+    semantic_texture_recognition_claim: false
+    uncertainty_boundary_evidence_is_separate: true
+
+  expected_counts:
+    artwork_rows: 50
+    geometry_rows: 50
+    case_registry_rows: 525
+    model_eligibility_rows: 2100
+    region_policy_rows: 143
+    evaluated_unique_cases: 410
+    evaluated_candidates: 2160
+    nonzero_candidates: 2010
+    zero_control_candidates: 150
+    synthetic_degradation_candidates: 356
+    primary_candidates: 1240
+    mapped_primary_candidates: 1090
+    texture_descriptor_rows: 16080
+    texture_map_rows: 49664
+    texture_rows_total: 65744
+    colour_rows: 170064
+    seam_rows: 36180
+    total_metric_rows: 271988
+    candidate_map_images: 3270
+    selected_candidate_panels: 8
+    selected_cross_model_panels: 4
+    selected_panels_total: 12
+    map_manifest_rows: 3282
+    candidates_by_model:
+      opencv_telea: 410
+      lama: 410
+      stable_diffusion_inpainting: 1330
+      sdxl_inpainting: 10
+
+  known_limitations:
+    - "The processed images are interpreted as sRGB under the Notebook 02 policy; this is not a fully colour-managed conservation-imaging workflow."
+    - "CIELAB and CIEDE2000 provide perceptual colour-difference evidence but do not establish historical colour correctness."
+    - "Texture, smoothing, repetition, hallucinated-detail, and brushstroke-like measures are diagnostic image-processing proxies, not authentication or semantic brushstroke recognition."
+    - "Visible-seam metrics are continuous comparative evidence; no universal perceptual or conservation threshold is asserted."
+    - "Stable Diffusion prompt and seed candidates are repeated candidate-level observations, not independent paintings."
+    - "SDXL is limited to a predeclared technically validated ten-case partial evaluation."
+    - "Only primary non-zero candidates receive saved local-consistency maps; all 2,160 candidates retain numeric evidence."

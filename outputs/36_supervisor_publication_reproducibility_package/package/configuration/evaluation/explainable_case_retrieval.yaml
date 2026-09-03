@@ -1,0 +1,188 @@
+config_schema_version: "explainable_case_retrieval_config.v1"
+config_version: "1.0.0"
+
+explainable_case_retrieval:
+  notebook_id: "29"
+  notebook_stem: "29_explainable_ai_and_case_retrieval"
+  origin: "New Notebook"
+  explanation_schema_version: "explanation_cases.v1"
+  neighbor_schema_version: "case_neighbors.v1"
+  report_policy_id: "approved_mock_aligned_self_contained_explanation_catalog.v1"
+
+  inputs:
+    inventory_path: "outputs/inventory/project_file_inventory.csv"
+    inventory_run_path: "outputs/inventory/inventory_run.json"
+    project_paths_path: "outputs/inventory/project_paths.json"
+    evidence_coverage_path: "config/evaluation/evidence_coverage.yaml"
+    evidence_audit_path: "docs/evidence_dependency_audit.md"
+    implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+    roadmap_path: "docs/final_notebook_roadmap.md"
+    proposal_path: "docs/proposal/Rahul_Thesis_Proposal.docx"
+    artworks_path: "outputs/01_dataset_verification/data/artworks.csv"
+    case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+    region_policy_path: "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv"
+    opencv_candidates_path: "outputs/09_opencv_telea_restoration/data/restorations.csv"
+    lama_candidates_path: "outputs/10_lama_restoration/data/restorations.csv"
+    stable_diffusion_candidates_path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+    sdxl_candidates_path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
+    damage_size_candidates_path: "outputs/22_damage_size_diffusion_uncertainty_extension/data/candidates.csv"
+    feature_metrics_path: "outputs/15_feature_similarity/metrics/feature_metrics.csv"
+    embedding_manifest_path: "outputs/15_feature_similarity/manifests/embeddings.csv"
+    embedding_archive_path: "outputs/15_feature_similarity/data/embeddings.npz"
+    spatial_metrics_path: "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv"
+    spatial_map_manifest_path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/map_images.csv"
+    local_metrics_path: "outputs/17_local_consistency_metrics/metrics/local_consistency.csv"
+    local_map_manifest_path: "outputs/17_local_consistency_metrics/manifests/map_images.csv"
+    uncertainty_metrics_path: "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_metrics.csv"
+    uncertainty_calibration_path: "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_calibration_inputs.csv"
+    spatial_explanations_path: "outputs/19_uncertainty_and_spatial_explanation_maps/metrics/spatial_explanations.csv"
+    uncertainty_map_manifest_path: "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/map_images.csv"
+    semantic_metrics_path: "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv"
+    semantic_map_manifest_path: "outputs/20_semantic_and_structural_consistency/manifests/semantic_maps.csv"
+    comparison_metrics_path: "outputs/21_multi_model_comparison/metrics/model_comparison.csv"
+    disagreement_metrics_path: "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv"
+    representative_cases_path: "outputs/21_multi_model_comparison/data/representative_cases.csv"
+    damage_size_uncertainty_path: "outputs/22_damage_size_diffusion_uncertainty_extension/metrics/damage_size_uncertainty.csv"
+    damage_size_map_manifest_path: "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/map_images.csv"
+    damage_size_analysis_path: "outputs/23_damage_size_sensitivity_analysis/metrics/damage_size_analysis.csv"
+    mask_robustness_analysis_path: "outputs/24_mask_robustness_analysis/metrics/mask_robustness_analysis.csv"
+    degradation_analysis_path: "outputs/25_synthetic_degradation_analysis/metrics/degradation_analysis.csv"
+    statistical_results_path: "outputs/26_grouped_and_statistical_analysis/metrics/statistical_results.csv"
+    metric_correlations_path: "outputs/26_grouped_and_statistical_analysis/metrics/metric_correlations.csv"
+    ranking_stability_path: "outputs/26_grouped_and_statistical_analysis/metrics/ranking_stability.csv"
+    failure_taxonomy_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/data/failure_taxonomy.csv"
+    failure_assignments_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/failure_assignments.csv"
+    trustworthiness_flags_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv"
+    ablation_results_path: "outputs/28_metric_and_region_policy_ablation/metrics/ablation_results.csv"
+    flag_stability_path: "outputs/28_metric_and_region_policy_ablation/metrics/flag_stability.csv"
+    manifest_15_path: "outputs/15_feature_similarity/manifests/run_manifest.json"
+    manifest_16_path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json"
+    manifest_17_path: "outputs/17_local_consistency_metrics/manifests/run_manifest.json"
+    manifest_18_path: "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json"
+    manifest_19_path: "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json"
+    manifest_20_path: "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json"
+    manifest_21_path: "outputs/21_multi_model_comparison/manifests/run_manifest.json"
+    manifest_22_path: "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json"
+    manifest_23_path: "outputs/23_damage_size_sensitivity_analysis/manifests/run_manifest.json"
+    manifest_24_path: "outputs/24_mask_robustness_analysis/manifests/run_manifest.json"
+    manifest_25_path: "outputs/25_synthetic_degradation_analysis/manifests/run_manifest.json"
+    manifest_26_path: "outputs/26_grouped_and_statistical_analysis/manifests/run_manifest.json"
+    manifest_27_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json"
+    manifest_28_path: "outputs/28_metric_and_region_policy_ablation/manifests/run_manifest.json"
+
+  output:
+    root: "outputs/29_explainable_ai_and_case_retrieval"
+    explanation_cases_path: "data/explanation_cases.csv"
+    case_neighbors_path: "data/case_neighbors.csv"
+    counterfactual_panels_dir: "figures/counterfactual_panels"
+    retrieval_panels_dir: "figures/example_retrieval_panels"
+    report_path: "reports/explanation_catalog.html"
+    run_manifest_path: "manifests/run_manifest.json"
+    artifacts_path: "manifests/artifacts.csv"
+    validation_path: "validation/checks.csv"
+
+  population:
+    dataset_source_levels: ["controlled_50"]
+    approved_catalog_source: "notebook_27_candidate_union"
+    catalog_candidate_count: 1785
+    primary_candidate_count: 1230
+    primary_nonzero_spatial_candidate_count: 1080
+    bounded_sdxl_candidate_count: 10
+    evaluated_case_count: 410
+    artwork_count: 50
+    complete_category_artwork_count: 50
+    style_period_artwork_count: 18
+    lower_risk_candidate_count: 82
+    complete_uncertainty_group_count: 165
+    category_is_primary_stratification: true
+    style_period_is_descriptive_only: true
+
+  catalog:
+    full_population_required: true
+    selection_does_not_filter_persisted_rows: true
+    report_unit_count: 24
+    required_asset_families: ["restored", "difference", "uncertainty", "seam", "colour", "texture", "semantic", "mask_boundary"]
+    explicit_missingness_required: true
+    retain_upstream_paths_without_copying: true
+
+  retrieval:
+    query_count: 10
+    primary_feature_model_id: "dinov2_vits14"
+    secondary_feature_model_id: "clip_vit_b32"
+    image_role: "restored"
+    region_id: "content_region"
+    combine_feature_scores: false
+    neighbors_per_query_per_lane: 5
+    display_neighbors_per_query_per_lane: 2
+    lanes: ["lower_risk", "flagged"]
+    lower_risk_recommendation_category: "suitable_for_preliminary_inspection"
+    exclude_self: true
+    exclude_same_case: true
+    exclude_same_painting: true
+    cross_model_pool: true
+
+  counterfactuals:
+    panels_per_type: 2
+    types:
+      - {counterfactual_type: "damage_size", evidence_source: "notebooks_22_23"}
+      - {counterfactual_type: "mask_placement", evidence_source: "notebook_24"}
+      - {counterfactual_type: "cross_model", evidence_source: "notebook_21"}
+      - {counterfactual_type: "metric_subset", evidence_source: "notebooks_27_28"}
+      - {counterfactual_type: "diffusion_seed", evidence_source: "notebooks_18_22"}
+      - {counterfactual_type: "evidence_family_removal", evidence_source: "notebook_28"}
+      - {counterfactual_type: "prompt_policy", evidence_source: "notebooks_11_18_19"}
+    prompt_policy_arms: ["p00_generic", "p05_scratch_aware"]
+    prompt_policy_interpretation: "damage_specific_not_style_specific"
+
+  report:
+    title: "Trustworthy Evaluation of AI-Assisted Painting Restoration"
+    subtitle: "Explainable AI and Case-Retrieval Catalog"
+    self_contained_html: true
+    approved_mock_structure_locked: true
+    required_research_questions: ["RQ1", "RQ2", "RQ3_scope_extension"]
+    required_section_ids: ["executive_findings", "catalog_scope", "population_coverage", "explanation_anatomy", "spatial_atlas", "lower_risk_examples", "flagged_examples", "similar_case_retrieval", "damage_size_counterfactuals", "placement_and_model_counterfactuals", "seed_and_prompt_counterfactuals", "evaluation_policy_counterfactuals", "disagreement_and_missingness", "thesis_synthesis_and_limits"]
+    minimum_embedded_analytical_views: 5
+    counterfactual_panel_count: 14
+    retrieval_panel_count: 10
+    minimum_embedded_images: 29
+    external_image_dependency_count: 0
+    mock_to_final_traceability_required: true
+    simple_assertion_after_major_result_required: true
+    complete_catalog_must_be_described: true
+
+  expected_counts:
+    explanation_rows: 1785
+    unique_cases: 410
+    retrieval_queries: 10
+    retrieval_lanes: 2
+    neighbors_per_lane: 5
+    neighbor_rows: 100
+    counterfactual_types: 7
+    counterfactual_panels: 14
+    retrieval_panels: 10
+    selected_report_units: 24
+    physical_output_files: 30
+    declared_artifact_paths: 8
+    artifact_records: 6
+
+  evidence_policy:
+    source_dataset_claim: "controlled_50_only"
+    flags_are_human_ground_truth: false
+    flags_are_conservation_ground_truth: false
+    retrieval_similarity_is_correctness: false
+    uncertainty_is_calibrated_confidence: false
+    independent_style_effect_allowed: false
+    style_specific_prompt_claim_allowed: false
+    universal_model_superiority_claim_allowed: false
+    bounded_sdxl_in_full_comparison: false
+    combined_retrieval_score_retained: false
+
+  known_limitations:
+    - "The catalog indexes the approved Notebook 27 union; it does not silently expand to unsupported upstream candidates."
+    - "Nearest-neighbour similarity is visual-feature similarity, not proof of restoration correctness or historical plausibility."
+    - "Rule-defined lower-risk and flagged labels are operational screening evidence, not human or conservation ground truth."
+    - "Uncertainty is empirical repeated-seed variability and applies only where repeated candidates exist."
+    - "Style or period metadata exists for 18 of 50 artworks and cannot support an independent style-effect claim."
+    - "The supported prompt comparison is generic versus scratch-aware damage-specific prompting."
+    - "SDXL remains a bounded ten-case diagnostic subset."
+    - "Selected report panels illustrate the complete catalog but do not replace its machine-readable rows."

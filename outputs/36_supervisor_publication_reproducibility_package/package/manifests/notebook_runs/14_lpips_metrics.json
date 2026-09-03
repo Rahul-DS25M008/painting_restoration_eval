@@ -1,0 +1,474 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_4ffd061c775a46f3944ad9e405613b34",
+  "notebook_id": "14",
+  "notebook_name": "14_lpips_metrics",
+  "origin": "Consolidates Existing Notebooks 11, 17, and 24",
+  "run_status": "completed",
+  "started_at_utc": "2026-08-27T11:54:34.796880Z",
+  "completed_at_utc": "2026-08-27T12:23:34.201549Z",
+  "git_commit": "57b4031d9ad02a7121b990349cd59217e621e718",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260827T111513Z_e9be44ee",
+  "dataset_versions": {
+    "preprocessed_images": "preprocessed_images.v1",
+    "case_registry": "case_registry.v1",
+    "model_eligibility": "model_eligibility.v1",
+    "region_policy": "region_policy.v1",
+    "restorations": "restorations.v1",
+    "stable_diffusion_candidates": "stable_diffusion_candidates.v1",
+    "sdxl_partial_candidates": "sdxl_partial_candidates.v1",
+    "evaluation_worklist": "evaluation_worklist.v1",
+    "lpips_metrics": "lpips_metrics.v1"
+  },
+  "configuration_paths": [
+    "config/evaluation/lpips.yaml",
+    "config/experiments/evaluation_contract.yaml"
+  ],
+  "configuration_checksums": {
+    "config/evaluation/lpips.yaml": "83cb97d9876f1039aae244f21368a9e0077e27fca7b4060e1e24889c7b4d6ada",
+    "config/experiments/evaluation_contract.yaml": "ae977512636b0ea5eb16b4a3dff95c062f402c086430328a341c9d0bda6a3254"
+  },
+  "helper_versions": {
+    "restoration_eval": "0.1.0",
+    "evaluation_inputs": "1.0.1",
+    "manifests": "1.0.0",
+    "metrics_lpips": "3.0.0",
+    "paths": "1.0.0",
+    "regions": "1.1.0",
+    "schemas": "1.12.0",
+    "validation": "1.0.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "lpips": "0.1.4",
+    "matplotlib": "3.11.0",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3",
+    "torch": "2.5.1+cu121",
+    "torchvision": "0.20.1+cu121"
+  },
+  "hardware": {
+    "metric_device": "cuda",
+    "cuda_available": true,
+    "cuda_device_name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "lpips_network": "alex",
+    "lpips_model_state_sha256": "973be7f57af4d36c6aeecee198cb98ae315192054653634e3ba5d1a421a5023b",
+    "full_execution_seconds": 263.39211459993385
+  },
+  "inputs": [
+    {
+      "input_key": "project_inventory",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "format": "csv",
+      "schema_version": "project_file_inventory.v1",
+      "expected_cardinality": 11370,
+      "role": "repository discovery",
+      "required": true
+    },
+    {
+      "input_key": "inventory_run",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "format": "json",
+      "schema_version": "inventory_run.v1",
+      "expected_cardinality": 1,
+      "role": "inventory provenance",
+      "required": true
+    },
+    {
+      "input_key": "project_paths_registry",
+      "producer": "validated notebook handoffs",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "format": "json",
+      "schema_version": "project_paths.v1",
+      "expected_cardinality": 76,
+      "role": "artifact discovery",
+      "required": true
+    },
+    {
+      "input_key": "preprocessing_geometry",
+      "producer": "Notebook 02",
+      "relative_path": "outputs/02_image_preprocessing/data/preprocessed_images.csv",
+      "format": "csv",
+      "schema_version": "preprocessed_images.v1",
+      "expected_cardinality": 50,
+      "role": "painting-content geometry",
+      "required": true
+    },
+    {
+      "input_key": "case_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
+      "format": "csv",
+      "schema_version": "case_registry.v1",
+      "expected_cardinality": 525,
+      "role": "normalized evaluation cases",
+      "required": true
+    },
+    {
+      "input_key": "model_eligibility",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
+      "format": "csv",
+      "schema_version": "model_eligibility.v1",
+      "expected_cardinality": 2100,
+      "role": "model/case routing",
+      "required": true
+    },
+    {
+      "input_key": "region_policy",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv",
+      "format": "csv",
+      "schema_version": "region_policy.v1",
+      "expected_cardinality": 143,
+      "role": "metric-region compatibility",
+      "required": true
+    },
+    {
+      "input_key": "schema_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json",
+      "format": "json",
+      "schema_version": "schema_registry.v1",
+      "expected_cardinality": 1,
+      "role": "upstream schema discovery",
+      "required": true
+    },
+    {
+      "input_key": "contracts_artifacts",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv",
+      "format": "csv",
+      "schema_version": "artifact_manifest.v1",
+      "expected_cardinality": "one or more",
+      "role": "upstream artifact evidence",
+      "required": true
+    },
+    {
+      "input_key": "lpips_metrics_config",
+      "producer": "Repository configuration",
+      "relative_path": "config/evaluation/lpips.yaml",
+      "format": "yaml",
+      "schema_version": "lpips_metrics_config.v1",
+      "expected_cardinality": 1,
+      "role": "LPIPS definitions and numerical policy",
+      "required": true
+    },
+    {
+      "input_key": "evaluation_contract_config",
+      "producer": "Repository configuration",
+      "relative_path": "config/experiments/evaluation_contract.yaml",
+      "format": "yaml",
+      "schema_version": "evaluation_contract_config.v1",
+      "expected_cardinality": 1,
+      "role": "region and eligibility policy",
+      "required": true
+    },
+    {
+      "input_key": "notebook_02_run_manifest",
+      "producer": "notebook_02",
+      "relative_path": "outputs/02_image_preprocessing/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_08_run_manifest",
+      "producer": "notebook_08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_09_opencv_telea_run_manifest",
+      "producer": "notebook_09_opencv_telea",
+      "relative_path": "outputs/09_opencv_telea_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_10_lama_run_manifest",
+      "producer": "notebook_10_lama",
+      "relative_path": "outputs/10_lama_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_11_stable_diffusion_run_manifest",
+      "producer": "notebook_11_stable_diffusion",
+      "relative_path": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_12_sdxl_run_manifest",
+      "producer": "notebook_12_sdxl",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "completed upstream run evidence",
+      "required": true
+    },
+    {
+      "input_key": "notebook_09_opencv_telea_table",
+      "producer": "notebook_09_opencv_telea",
+      "relative_path": "outputs/09_opencv_telea_restoration/data/restorations.csv",
+      "format": "csv",
+      "schema_version": "restorations.v1",
+      "expected_cardinality": 410,
+      "role": "opencv_telea restoration candidates",
+      "required": true
+    },
+    {
+      "input_key": "notebook_10_lama_table",
+      "producer": "notebook_10_lama",
+      "relative_path": "outputs/10_lama_restoration/data/restorations.csv",
+      "format": "csv",
+      "schema_version": "restorations.v1",
+      "expected_cardinality": 410,
+      "role": "lama restoration candidates",
+      "required": true
+    },
+    {
+      "input_key": "notebook_11_stable_diffusion_table",
+      "producer": "notebook_11_stable_diffusion",
+      "relative_path": "outputs/11_stable_diffusion_restoration/data/candidates.csv",
+      "format": "csv",
+      "schema_version": "stable_diffusion_candidates.v1",
+      "expected_cardinality": 1330,
+      "role": "stable_diffusion_inpainting restoration candidates",
+      "required": true
+    },
+    {
+      "input_key": "notebook_12_sdxl_table",
+      "producer": "notebook_12_sdxl",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv",
+      "format": "csv",
+      "schema_version": "sdxl_partial_candidates.v1",
+      "expected_cardinality": 10,
+      "role": "sdxl_inpainting restoration candidates",
+      "required": true
+    }
+  ],
+  "outputs": [
+    {
+      "artifact_key": "lpips_metrics.metrics",
+      "relative_path": "outputs/14_lpips_metrics/metrics/lpips_metrics.csv",
+      "artifact_type": "table",
+      "artifact_role": "primary_downstream_evidence",
+      "schema_version": "lpips_metrics.v1",
+      "expected_row_count": 4170
+    },
+    {
+      "artifact_key": "lpips_metrics.distributions",
+      "relative_path": "outputs/14_lpips_metrics/figures/lpips_distributions.png",
+      "artifact_type": "figure",
+      "artifact_role": "reporting_visualization",
+      "schema_version": "figure.lpips_distributions.v1",
+      "expected_row_count": 1
+    },
+    {
+      "artifact_key": "validation.14_lpips_metrics",
+      "relative_path": "outputs/14_lpips_metrics/validation/checks.csv",
+      "artifact_type": "table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "expected_row_count": 253
+    },
+    {
+      "artifact_key": "lpips_metrics.artifacts",
+      "relative_path": "outputs/14_lpips_metrics/manifests/artifacts.csv",
+      "artifact_type": "manifest",
+      "artifact_role": "artifact_discovery",
+      "schema_version": "artifact_manifest.v1",
+      "expected_row_count": 3
+    },
+    {
+      "artifact_key": "lpips_metrics.run_manifest",
+      "relative_path": "outputs/14_lpips_metrics/manifests/run_manifest.json",
+      "artifact_type": "manifest",
+      "artifact_role": "run_provenance",
+      "schema_version": "run_manifest.v1",
+      "expected_row_count": 1
+    }
+  ],
+  "expected_counts": {
+    "case_registry_rows": 525,
+    "evaluated_unique_cases": 410,
+    "evaluated_candidates": 2160,
+    "zero_control_cases": 50,
+    "zero_control_candidates": 150,
+    "damaged_baseline_pairs": 770,
+    "content_region_rows": 2160,
+    "mask_bbox_crop_rows": 2010,
+    "total_metric_rows": 4170,
+    "candidates_by_model": {
+      "opencv_telea": 410,
+      "lama": 410,
+      "stable_diffusion_inpainting": 1330,
+      "sdxl_inpainting": 10
+    },
+    "metric_rows_by_model": {
+      "opencv_telea": 770,
+      "lama": 770,
+      "stable_diffusion_inpainting": 2610,
+      "sdxl_inpainting": 20
+    },
+    "scratch_prompt_matched_pairs": 400,
+    "canonical_file_count": 5,
+    "artifact_record_count": 3,
+    "validation_row_count": 253,
+    "temporary_work_file_count": 0,
+    "blocking_validation_failures": 0
+  },
+  "observed_counts": {
+    "evaluated_unique_cases": 410,
+    "evaluated_candidates": 2160,
+    "total_metric_rows": 4170,
+    "content_region_rows": 2160,
+    "mask_bbox_crop_rows": 2010,
+    "damaged_baseline_pairs": 770,
+    "scratch_prompt_matched_pairs": 400,
+    "negative_improvement_rows": 701,
+    "positive_improvement_rows": 3319,
+    "validation_row_count": 253,
+    "artifact_record_count": 3,
+    "canonical_file_count": 5,
+    "temporary_work_file_count": 0,
+    "blocking_validation_failures": 0
+  },
+  "validation_summary": {
+    "check_count": 253,
+    "passed_count": 253,
+    "failed_count": 0,
+    "blocking_failure_count": 0,
+    "overall_passed": true,
+    "failed_check_ids": [],
+    "stages": [
+      {
+        "validation_stage": "batch_1_preflight",
+        "check_count": 85,
+        "passed_count": 85,
+        "failed_count": 0,
+        "blocking_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_2_input_loading",
+        "check_count": 47,
+        "passed_count": 47,
+        "failed_count": 0,
+        "blocking_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_3_smoke_test",
+        "check_count": 16,
+        "passed_count": 16,
+        "failed_count": 0,
+        "blocking_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_4_full_execution",
+        "check_count": 17,
+        "passed_count": 17,
+        "failed_count": 0,
+        "blocking_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_5_scientific_validation",
+        "check_count": 24,
+        "passed_count": 24,
+        "failed_count": 0,
+        "blocking_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_6_analysis_visualization",
+        "check_count": 19,
+        "passed_count": 19,
+        "failed_count": 0,
+        "blocking_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_7_canonical_persistence",
+        "check_count": 19,
+        "passed_count": 19,
+        "failed_count": 0,
+        "blocking_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_8_completion_gate",
+        "check_count": 10,
+        "passed_count": 10,
+        "failed_count": 0,
+        "blocking_failure_count": 0
+      },
+      {
+        "validation_stage": "batch_8_roadmap_completion",
+        "check_count": 16,
+        "passed_count": 16,
+        "failed_count": 0,
+        "blocking_failure_count": 0
+      }
+    ]
+  },
+  "known_limitations": [
+    "LPIPS is a learned perceptual similarity proxy and is not conservation-specific.",
+    "SDXL evidence is a predeclared technically validated ten-case partial scope, not full 410-case coverage.",
+    "Stable Diffusion contributes repeated prompt and seed candidates; Notebook 14 reports candidate-level evidence without metric-based selection.",
+    "Aspect-preserving resizing standardizes maximum resolution; minimal neutral padding may still influence very elongated crops.",
+    "Candidate-level forward runtimes are batch-time allocations and must not be summed to reconstruct wall-clock runtime.",
+    "The scratch-aware prompt comparison is descriptive and did not determine candidate selection or validation success."
+  ],
+  "refactor_status": "refactored",
+  "validation_status": "passed",
+  "depends_on": [
+    "02_image_preprocessing",
+    "08_experiment_contracts_and_region_policy",
+    "09_opencv_telea_restoration",
+    "10_lama_restoration",
+    "11_stable_diffusion_restoration",
+    "12_sdxl_feasibility_or_restoration"
+  ],
+  "applicable_dataset_scopes": [
+    "controlled_50"
+  ],
+  "applicable_experiment_scopes": [
+    "canonical",
+    "damage_size",
+    "mask_robustness",
+    "synthetic_degradation",
+    "stable_diffusion_prompt_ablation",
+    "sdxl_partial_feasibility"
+  ],
+  "expensive_execution": {
+    "performed": true,
+    "device": "cuda",
+    "metric_rows": 4170,
+    "execution_seconds": 263.39211459993385,
+    "checkpointed": true,
+    "checkpoint_removed_after_validation": true
+  },
+  "completion_gate_passed": true
+}
