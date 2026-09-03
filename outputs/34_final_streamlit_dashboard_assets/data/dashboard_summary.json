@@ -1,0 +1,386 @@
+{
+  "schema_version": "dashboard_package.v1",
+  "notebook_id": "34",
+  "notebook_stem": "34_final_streamlit_dashboard_assets",
+  "dataset_id": "painting_restoration_eval",
+  "dataset_version": "1.0.0",
+  "dataset_scope": "controlled_50",
+  "generated_at_utc": "2026-09-03T07:24:37Z",
+  "creates_new_scientific_evidence": false,
+  "inventory_run_id": "inventory_20260902T231016Z_d7ee71cf",
+  "page_count": 8,
+  "pages": [
+    {
+      "page_id": "overview",
+      "display_order": 1,
+      "display_name": "Overview",
+      "question": "What does the complete evaluation support?"
+    },
+    {
+      "page_id": "study_design",
+      "display_order": 2,
+      "display_name": "Study Design",
+      "question": "What was evaluated, and under which controlled conditions?"
+    },
+    {
+      "page_id": "metric_framework",
+      "display_order": 3,
+      "display_name": "Metric Framework",
+      "question": "Why do regions and metric families change the conclusion?"
+    },
+    {
+      "page_id": "model_performance",
+      "display_order": 4,
+      "display_name": "Model Performance",
+      "question": "Which model performs better, under which conditions, and by what evidence?"
+    },
+    {
+      "page_id": "robustness_uncertainty",
+      "display_order": 5,
+      "display_name": "Robustness & Uncertainty",
+      "question": "Where do restoration results become less dependable?"
+    },
+    {
+      "page_id": "trustworthiness_xai",
+      "display_order": 6,
+      "display_name": "Trustworthiness & XAI",
+      "question": "Why was a candidate flagged, and what evidence supports review?"
+    },
+    {
+      "page_id": "case_explorer",
+      "display_order": 7,
+      "display_name": "Case Explorer",
+      "question": "What evidence supports an individual restoration conclusion?"
+    },
+    {
+      "page_id": "reports_reproducibility",
+      "display_order": 8,
+      "display_name": "Reports & Reproducibility",
+      "question": "Can each conclusion be traced to validated evidence?"
+    }
+  ],
+  "population": {
+    "paintings": 50,
+    "registered_cases": 525,
+    "restoration_cases": 410,
+    "approved_candidates": 1785,
+    "primary_three_model_candidates": 1230,
+    "stable_diffusion_candidates": 955,
+    "sdxl_candidates": 10,
+    "canonical_uncertainty_groups": 130,
+    "damage_size_uncertainty_groups": 35,
+    "reports": 104,
+    "visual_records": 23964,
+    "visual_physical_files": 14996
+  },
+  "table_rows": {
+    "headline_findings": 8,
+    "study_design": 35,
+    "metric_framework": 178,
+    "performance_summary": 1241,
+    "sensitivity_summary": 18951,
+    "uncertainty_summary": 1723,
+    "trustworthiness_summary": 284,
+    "compute_summary": 35,
+    "research_question_coverage": 4
+  },
+  "index_rows": {
+    "case_index": 1785,
+    "painting_index": 50,
+    "visual_asset_index": 23964,
+    "report_index": 104,
+    "filter_options": 16
+  },
+  "headline_findings": [
+    {
+      "finding_id": "finding_56068361a2fed88952587082",
+      "title": "Controlled painting collection",
+      "value": 50.0,
+      "value_unit": "paintings",
+      "conclusion": "The evaluation covers a balanced 50-painting collection with ten paintings in each of five visual categories.",
+      "limitation": "The controlled collection does not establish real-world conservation generality."
+    },
+    {
+      "finding_id": "finding_ff63dfd683e8020e1c767d2d",
+      "title": "Approved restoration evidence",
+      "value": 1785.0,
+      "value_unit": "candidates",
+      "conclusion": "All 1,785 approved candidates remain available for filtering and case-level inspection.",
+      "limitation": "Candidate count is not an independent sample-size claim because repeated seeds and models share cases."
+    },
+    {
+      "finding_id": "finding_d57ce83c3ee8f0ab3b3ad70a",
+      "title": "Strongest general benchmark result",
+      "value": 10.0,
+      "value_unit": "of 11 quality anchors",
+      "conclusion": "LaMa ranks first on 10 of 11 quality anchors. Within this controlled benchmark, it is the strongest general restoration baseline across error, colour, perceptual, feature, seam, texture, and structural-affinity evidence.",
+      "limitation": "Anchor wins are metric-specific benchmark results, not conservation approval or historical authenticity."
+    },
+    {
+      "finding_id": "finding_be0ba692aeac9c0494a5df23",
+      "title": "One metric changes the winner",
+      "value": 1.0,
+      "value_unit": "of 11 quality anchors",
+      "conclusion": "OpenCV Telea narrowly leads crop SSIM, while LaMa leads the other ten anchors. SSIM alone would therefore give an incomplete account of restoration quality.",
+      "limitation": "The result demonstrates metric disagreement; it does not make either model universally correct."
+    },
+    {
+      "finding_id": "finding_ff1f99bcdade39cf8ed81b9e",
+      "title": "Repeated-run uncertainty coverage",
+      "value": 165.0,
+      "value_unit": "uncertainty groups",
+      "conclusion": "Repeated-seed evidence covers 130 canonical groups and 35 damage-size groups for Stable Diffusion.",
+      "limitation": "Seed variability is an empirical uncertainty proxy, not calibrated confidence."
+    },
+    {
+      "finding_id": "finding_4549a08b17e791b97d59ba89",
+      "title": "SDXL remains bounded evidence",
+      "value": 10.0,
+      "value_unit": "candidates",
+      "conclusion": "SDXL contributes ten completed cases for qualitative and bounded comparison, not a fourth full benchmark.",
+      "limitation": "SDXL results must not be generalized to all 410 restoration-eligible cases."
+    },
+    {
+      "finding_id": "finding_3b9d3b11c0241b5a7624f94a",
+      "title": "Human review remains central",
+      "value": 95.4,
+      "value_unit": "% of candidates",
+      "conclusion": "1,703 of 1,785 candidates trigger conservative review guidance. Automated restoration should support inspection, not replace expert judgement.",
+      "limitation": "Computational review flags are diagnostic rules, not expert annotations or conservation ground truth."
+    },
+    {
+      "finding_id": "finding_0463745ce8b0a315e377b4a5",
+      "title": "No universal restoration score",
+      "value": 0.0,
+      "value_unit": "approved combined scores",
+      "conclusion": "The evaluation keeps metric families, regions, uncertainty, and failure evidence separate so that important disagreements remain visible.",
+      "limitation": "The dashboard supports evidence review and does not produce conservation approval."
+    }
+  ],
+  "model_coverage": [
+    {
+      "model_id": "lama",
+      "display_name": "LaMa",
+      "evaluation_status": "fully_evaluated",
+      "evaluated_case_count": 410,
+      "evaluated_candidate_count": 410
+    },
+    {
+      "model_id": "opencv_telea",
+      "display_name": "OpenCV Telea",
+      "evaluation_status": "fully_evaluated",
+      "evaluated_case_count": 410,
+      "evaluated_candidate_count": 410
+    },
+    {
+      "model_id": "sdxl_inpainting",
+      "display_name": "SDXL Inpainting",
+      "evaluation_status": "partial_evaluation",
+      "evaluated_case_count": 10,
+      "evaluated_candidate_count": 10
+    },
+    {
+      "model_id": "stable_diffusion_inpainting",
+      "display_name": "Stable Diffusion Inpainting",
+      "evaluation_status": "fully_evaluated",
+      "evaluated_case_count": 410,
+      "evaluated_candidate_count": 1330
+    }
+  ],
+  "methodological_boundaries": [
+    "No universal combined quality or trust score.",
+    "Uncertainty is empirical seed variability, not calibrated confidence.",
+    "Computational flags are not expert ground truth.",
+    "Retrieval similarity is not restoration correctness.",
+    "Feature similarity is not historical authenticity.",
+    "SDXL evidence is limited to ten completed cases.",
+    "The dashboard does not provide conservation approval."
+  ],
+  "presentation": {
+    "theme_id": "authored_museum_research_v1",
+    "principal_page_count": 8,
+    "complete_population_filterable": true,
+    "representative_defaults_only": true
+  },
+  "persistence_status": "completed",
+  "roadmap_traceability": [
+    {
+      "responsibility_id": "overview",
+      "responsibility": "Overview and headline findings",
+      "dashboard_evidence": "headline_findings",
+      "observed_count": 8,
+      "passed": true
+    },
+    {
+      "responsibility_id": "dataset_and_bias",
+      "responsibility": "Dataset composition and bias evidence",
+      "dashboard_evidence": "study_design and painting_index",
+      "observed_count": 50,
+      "passed": true
+    },
+    {
+      "responsibility_id": "canonical_damage",
+      "responsibility": "Canonical damage design",
+      "dashboard_evidence": "study_design and case_index",
+      "observed_count": 250,
+      "passed": true
+    },
+    {
+      "responsibility_id": "damage_size_sensitivity",
+      "responsibility": "Damage-size sensitivity",
+      "dashboard_evidence": "sensitivity_summary",
+      "observed_count": 1901,
+      "passed": true
+    },
+    {
+      "responsibility_id": "mask_robustness",
+      "responsibility": "Mask robustness",
+      "dashboard_evidence": "sensitivity_summary",
+      "observed_count": 5373,
+      "passed": true
+    },
+    {
+      "responsibility_id": "synthetic_degradation",
+      "responsibility": "Synthetic-degradation sensitivity",
+      "dashboard_evidence": "sensitivity_summary",
+      "observed_count": 4695,
+      "passed": true
+    },
+    {
+      "responsibility_id": "model_stack",
+      "responsibility": "Complete evaluated model stack",
+      "dashboard_evidence": "compute_summary and report_index",
+      "observed_count": 4,
+      "passed": true
+    },
+    {
+      "responsibility_id": "model_comparison",
+      "responsibility": "Overall and conditional model comparison",
+      "dashboard_evidence": "performance_summary",
+      "observed_count": 1241,
+      "passed": true
+    },
+    {
+      "responsibility_id": "metric_region_policy",
+      "responsibility": "Metric-region policy",
+      "dashboard_evidence": "metric_framework",
+      "observed_count": 143,
+      "passed": true
+    },
+    {
+      "responsibility_id": "metric_ablation",
+      "responsibility": "Metric and region-policy ablation",
+      "dashboard_evidence": "trustworthiness_summary",
+      "observed_count": 7710,
+      "passed": true
+    },
+    {
+      "responsibility_id": "texture_diagnostics",
+      "responsibility": "Texture diagnostics",
+      "dashboard_evidence": "case_index and visual_asset_index",
+      "observed_count": 1090,
+      "passed": true
+    },
+    {
+      "responsibility_id": "colour_diagnostics",
+      "responsibility": "Colour diagnostics",
+      "dashboard_evidence": "case_index and visual_asset_index",
+      "observed_count": 1090,
+      "passed": true
+    },
+    {
+      "responsibility_id": "seam_diagnostics",
+      "responsibility": "Seam and boundary diagnostics",
+      "dashboard_evidence": "case_index and visual_asset_index",
+      "observed_count": 1090,
+      "passed": true
+    },
+    {
+      "responsibility_id": "uncertainty_summaries",
+      "responsibility": "Repeated-seed uncertainty summaries",
+      "dashboard_evidence": "uncertainty_summary",
+      "observed_count": 1723,
+      "passed": true
+    },
+    {
+      "responsibility_id": "uncertainty_heatmaps",
+      "responsibility": "Uncertainty heatmaps",
+      "dashboard_evidence": "visual_asset_index",
+      "observed_count": 1090,
+      "passed": true
+    },
+    {
+      "responsibility_id": "semantic_consistency",
+      "responsibility": "Semantic and structural consistency",
+      "dashboard_evidence": "case_index and visual_asset_index",
+      "observed_count": 9430,
+      "passed": true
+    },
+    {
+      "responsibility_id": "xai_maps",
+      "responsibility": "Difference, local, uncertainty, and semantic maps",
+      "dashboard_evidence": "visual_asset_index",
+      "observed_count": 23829,
+      "passed": true
+    },
+    {
+      "responsibility_id": "trustworthiness_flags",
+      "responsibility": "Separate trustworthiness flags",
+      "dashboard_evidence": "trustworthiness_summary",
+      "observed_count": 104,
+      "passed": true
+    },
+    {
+      "responsibility_id": "failure_taxonomy",
+      "responsibility": "Failure taxonomy and assignments",
+      "dashboard_evidence": "trustworthiness_summary",
+      "observed_count": 139,
+      "passed": true
+    },
+    {
+      "responsibility_id": "grouped_statistical_analysis",
+      "responsibility": "Grouped and statistical analysis",
+      "dashboard_evidence": "sensitivity_summary",
+      "observed_count": 4174,
+      "passed": true
+    },
+    {
+      "responsibility_id": "compute_scalability",
+      "responsibility": "Compute and scalability evidence",
+      "dashboard_evidence": "compute_summary",
+      "observed_count": 35,
+      "passed": true
+    },
+    {
+      "responsibility_id": "model_cards",
+      "responsibility": "Model cards and model reports",
+      "dashboard_evidence": "compute_summary and report_index",
+      "observed_count": 4,
+      "passed": true
+    },
+    {
+      "responsibility_id": "case_and_painting_reports",
+      "responsibility": "Case and painting reports",
+      "dashboard_evidence": "report_index",
+      "observed_count": 80,
+      "passed": true
+    },
+    {
+      "responsibility_id": "reproducibility",
+      "responsibility": "Validation and reproducibility evidence",
+      "dashboard_evidence": "report_index, dashboard_assets, and run_manifest",
+      "observed_count": 33,
+      "passed": true
+    },
+    {
+      "responsibility_id": "final_reports",
+      "responsibility": "Final evaluation and limitations reports",
+      "dashboard_evidence": "report_index",
+      "observed_count": 2,
+      "passed": true
+    }
+  ],
+  "dashboard_asset_count": 15,
+  "physical_output_file_count": 19,
+  "roadmap_responsibility_count": 25
+}

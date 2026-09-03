@@ -1,0 +1,297 @@
+{
+  "schema_version": "dashboard_filter_options.v1",
+  "page_ids": [
+    "overview",
+    "study_design",
+    "metric_framework",
+    "model_performance",
+    "robustness_uncertainty",
+    "trustworthiness_xai",
+    "case_explorer",
+    "reports_reproducibility"
+  ],
+  "pages": [
+    {
+      "page_id": "overview",
+      "display_order": 1,
+      "display_name": "Overview",
+      "question": "What does the complete evaluation support?"
+    },
+    {
+      "page_id": "study_design",
+      "display_order": 2,
+      "display_name": "Study Design",
+      "question": "What was evaluated, and under which controlled conditions?"
+    },
+    {
+      "page_id": "metric_framework",
+      "display_order": 3,
+      "display_name": "Metric Framework",
+      "question": "Why do regions and metric families change the conclusion?"
+    },
+    {
+      "page_id": "model_performance",
+      "display_order": 4,
+      "display_name": "Model Performance",
+      "question": "Which model performs better, under which conditions, and by what evidence?"
+    },
+    {
+      "page_id": "robustness_uncertainty",
+      "display_order": 5,
+      "display_name": "Robustness & Uncertainty",
+      "question": "Where do restoration results become less dependable?"
+    },
+    {
+      "page_id": "trustworthiness_xai",
+      "display_order": 6,
+      "display_name": "Trustworthiness & XAI",
+      "question": "Why was a candidate flagged, and what evidence supports review?"
+    },
+    {
+      "page_id": "case_explorer",
+      "display_order": 7,
+      "display_name": "Case Explorer",
+      "question": "What evidence supports an individual restoration conclusion?"
+    },
+    {
+      "page_id": "reports_reproducibility",
+      "display_order": 8,
+      "display_name": "Reports & Reproducibility",
+      "question": "Can each conclusion be traced to validated evidence?"
+    }
+  ],
+  "painting_ids": [
+    "p001",
+    "p002",
+    "p003",
+    "p004",
+    "p005",
+    "p006",
+    "p007",
+    "p008",
+    "p009",
+    "p010",
+    "p011",
+    "p012",
+    "p013",
+    "p014",
+    "p015",
+    "p016",
+    "p017",
+    "p018",
+    "p019",
+    "p020",
+    "p021",
+    "p022",
+    "p023",
+    "p024",
+    "p025",
+    "p026",
+    "p027",
+    "p028",
+    "p029",
+    "p030",
+    "p031",
+    "p032",
+    "p033",
+    "p034",
+    "p035",
+    "p036",
+    "p037",
+    "p038",
+    "p039",
+    "p040",
+    "p041",
+    "p042",
+    "p043",
+    "p044",
+    "p045",
+    "p046",
+    "p047",
+    "p048",
+    "p049",
+    "p050"
+  ],
+  "models": [
+    {
+      "model_id": "lama",
+      "display_name": "LaMa",
+      "evaluation_status": "fully_evaluated"
+    },
+    {
+      "model_id": "opencv_telea",
+      "display_name": "OpenCV Telea",
+      "evaluation_status": "fully_evaluated"
+    },
+    {
+      "model_id": "sdxl_inpainting",
+      "display_name": "SDXL Inpainting",
+      "evaluation_status": "partial_evaluation"
+    },
+    {
+      "model_id": "stable_diffusion_inpainting",
+      "display_name": "Stable Diffusion Inpainting",
+      "evaluation_status": "fully_evaluated"
+    }
+  ],
+  "experiment_ids": [
+    "canonical_missing_region",
+    "damage_size_sensitivity",
+    "mask_robustness",
+    "synthetic_degradation"
+  ],
+  "categories": [
+    "abstraction_surrealism",
+    "architecture_structured",
+    "high_texture_brushwork",
+    "landscape_natural",
+    "portrait_figure"
+  ],
+  "styles_or_periods": [
+    "18th century portraiture",
+    "19th century French painting",
+    "19th century portraiture",
+    "Baroque",
+    "Impressionism",
+    "Impressionism / modern French painting",
+    "Impressionist outdoor figure painting",
+    "Modern French painting",
+    "Neoclassical",
+    "Neoclassical / early 19th century",
+    "Post-Impressionism",
+    "Realism / early modern French painting",
+    "Spanish portraiture"
+  ],
+  "degradation_families": [
+    "dirt_dust",
+    "loss_large",
+    "loss_small",
+    "mixed_damage",
+    "partial_transparency",
+    "scratch_thin",
+    "water_stain",
+    "water_stain_dirt",
+    "zero_control"
+  ],
+  "severities": [
+    "canonical",
+    "damage_size_level",
+    "mild",
+    "moderate",
+    "placement_variant",
+    "severe"
+  ],
+  "recommendation_categories": [
+    "do_not_rely_automatically",
+    "specialist_review_required",
+    "suitable_for_preliminary_inspection",
+    "unstable_candidate"
+  ],
+  "uncertainty_applicability": [
+    "applicable_complete_repeated_seed_group",
+    "not_applicable_deterministic_method",
+    "not_applicable_insufficient_seed_coverage",
+    "not_available_single_candidate_scope"
+  ],
+  "metric_families": [
+    "classical_pixel",
+    "clip",
+    "colour",
+    "dinov2",
+    "lpips",
+    "seam",
+    "semantic_patch",
+    "spatial_diagnostics",
+    "ssim",
+    "texture_descriptor",
+    "texture_map",
+    "uncertainty_perceptual",
+    "uncertainty_pixelwise"
+  ],
+  "region_ids": [
+    "boundary_ring",
+    "content_region",
+    "degradation_support",
+    "full_image",
+    "inner_boundary_band",
+    "mask_bbox_crop",
+    "masked_region",
+    "outer_boundary_band",
+    "outside_boundary_ring",
+    "outside_mask_content",
+    "patch_window"
+  ],
+  "failure_categories": [
+    {
+      "category_id": "boundary_seam",
+      "display_name": "Boundary seam",
+      "is_proxy": false
+    },
+    {
+      "category_id": "colour_bleeding_proxy",
+      "display_name": "Colour-bleeding proxy",
+      "is_proxy": true
+    },
+    {
+      "category_id": "colour_drift",
+      "display_name": "Colour drift",
+      "is_proxy": false
+    },
+    {
+      "category_id": "composition_change_proxy",
+      "display_name": "Composition-change proxy",
+      "is_proxy": true
+    },
+    {
+      "category_id": "excessive_blur",
+      "display_name": "Excessive blur",
+      "is_proxy": false
+    },
+    {
+      "category_id": "mask_spillover",
+      "display_name": "Mask spillover",
+      "is_proxy": false
+    },
+    {
+      "category_id": "outside_mask_alteration",
+      "display_name": "Outside-mask alteration",
+      "is_proxy": false
+    },
+    {
+      "category_id": "repeated_texture_proxy",
+      "display_name": "Repeated-texture proxy",
+      "is_proxy": true
+    },
+    {
+      "category_id": "residual_masked_error",
+      "display_name": "Residual masked-region error",
+      "is_proxy": false
+    },
+    {
+      "category_id": "semantic_inconsistency_proxy",
+      "display_name": "Semantic-inconsistency proxy",
+      "is_proxy": true
+    },
+    {
+      "category_id": "structural_collapse_proxy",
+      "display_name": "Structural-collapse proxy",
+      "is_proxy": true
+    },
+    {
+      "category_id": "texture_discontinuity",
+      "display_name": "Texture discontinuity",
+      "is_proxy": false
+    },
+    {
+      "category_id": "texture_smoothing",
+      "display_name": "Texture smoothing",
+      "is_proxy": false
+    },
+    {
+      "category_id": "unstable_multi_seed_completion",
+      "display_name": "Unstable multi-seed completion",
+      "is_proxy": false
+    }
+  ],
+  "status": "ok"
+}

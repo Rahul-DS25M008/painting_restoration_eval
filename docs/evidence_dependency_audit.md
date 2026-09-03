@@ -530,6 +530,42 @@ retrieval results, and visual plausibility do not establish expert ground truth,
 historical authenticity, conservation approval, or a physical treatment
 recommendation.
 
+Notebook 34 is complete and passed its completion gate. It consumed 41 validated
+input tables and all 33 completed upstream run manifests without running
+restoration inference, recomputing scientific metrics, creating new statistical
+tests, or constructing a universal combined score. It persisted nine normalized
+dashboard tables, five indexes, one dashboard summary, one dashboard-asset
+manifest, one validation table, one artifact manifest, and one run manifest under
+`outputs/34_final_streamlit_dashboard_assets/`.
+
+The completed package preserves the approved eight-page structure: Overview,
+Study Design, Metric Framework, Model Performance, Robustness & Uncertainty,
+Trustworthiness & XAI, Case Explorer, and Reports & Reproducibility. Its indexes
+retain all 1,785 approved candidates, all 50 paintings, 23,964 visual records, and
+104 reports. Representative cases control initial presentation only; they do not
+limit filtered evidence access. Model, case, painting, method, and final reports
+remain discoverable through validated repository-relative paths.
+
+The normalized table layer contains 8 headline findings, 35 study-design rows,
+178 metric-framework rows, 1,241 performance rows, 18,951 sensitivity and
+statistical rows, 1,723 uncertainty rows, 284 trustworthiness rows, 35 compute
+rows, and four research-question rows. The 18,951-row analysis table explicitly
+includes all Notebook 26 grouped/statistical results, both measures from every
+metric-correlation record, and all recorded ranking-stability measures. This
+closes the preparation-stage packaging gap without modifying frozen Notebooks
+01--33 or recomputing their evidence.
+
+Notebook 34 passed all 410 validation checks and all 25 roadmap responsibilities
+with zero blocking or warning failures. Fifteen dashboard assets and 17 universal
+artifact records were registered across exactly 19 physical files; their
+checksums and the manifest-declared output set were independently reverified.
+Notebook 34 is now the canonical dashboard-data source for Notebook 35.
+Downstream consumers must preserve nested observation units, bounded SDXL
+applicability, separate uncertainty/robustness/prompt-sensitivity terminology,
+and the limits of computational flags and retrieval evidence. The approved
+human-editorial visual language affects presentation only and cannot alter
+scientific evidence.
+
 Notebook 28 is now the canonical source for downstream evaluation-policy
 sensitivity and metric/region ablation evidence. Consumers must distinguish the
 stable model-level winner from policy-sensitive case priorities and flags, retain
@@ -545,7 +581,6 @@ comparison.
 
 | Notebook | Supported evidence contract | Required scope discipline |
 |---|---|---|
-| 34 Dashboard assets | N01–33 canonical outputs | package evidence without recomputation and retain scope labels |
 | 35 Dashboard/deployment validation | N34 assets and application | validate paths, schemas, rendering, and deployment state; do not recompute metrics |
 | 36 Reproducibility package | N01–35 manifests and selected artifacts | reconcile package contents with the controlled evidence and declared projections |
 
