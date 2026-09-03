@@ -64,8 +64,9 @@ N35 and N36 describe the versions they tested or packaged, not this later UI
 addition. Verify this change through the application tests and subsequent manual
 review; do not silently rewrite frozen manifests to claim they tested new code.
 
-The root README remains pending. The user's approved draft is saved separately
-in `docs/readme_approved_draft.md` until the dashboard work is accepted.
+The root README now includes the approved dashboard overview, numerical-metrics
+features, live deployment link, and report navigation. The temporary approved draft
+was removed after promotion.
 
 ## Verification
 
