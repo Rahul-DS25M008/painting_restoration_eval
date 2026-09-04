@@ -20,11 +20,14 @@ original Notebook 01–21 baseline; Sections 5–6 record completed extensions a
 delivery. Section 6.1 records later application delivery separately from those
 execution-time records. Non-blocking warnings are retained, not silently cleared.
 
-This review updates only the three governing Markdown documents. The separate
-`config/evaluation/evidence_coverage.yaml` maintenance step has not yet been
-performed; its N35/N36 `external_deployment_recorded: false` fields still describe
-the original runs, not the later public deployment. No scientific coverage has
-changed in this documentation update.
+The subsequent maintenance batch added a separate
+`post_completion_maintenance` record to `config/evaluation/evidence_coverage.yaml`
+(configuration version 1.0.1). Existing producer records, counts, warnings, and
+N35/N36 `external_deployment_recorded: false` fields remain unchanged: those
+fields describe the original runs, not the later public deployment. No scientific
+coverage changed. The executed N11/N12 contracts now link to their completion
+evidence, and the experimental requirements header distinguishes its legacy
+recipe from the actual saved environments without changing dependency pins.
 
 ## 2. Original frozen baseline and completed-pipeline protection
 
@@ -741,7 +744,9 @@ deployment. These delivery facts do not change any experimental population.
   `.github/workflows/streamlit-availability.yml`,
   `tools/check_streamlit_availability.py`, and
   `tests/test_streamlit_availability.py`. It is configured for a public browser
-  visit every four hours at minute 17 UTC and manual dispatch. The previously
+  visit every four hours and manual dispatch. The original minute-17 schedule
+  was changed to minute 43 in commit `e111bbf3` as a scheduling diagnostic; the
+  workflow file on the default branch is the timing authority. The previously
   verified [manual run 33819253480](https://github.com/Rahul-DS25M008/painting_restoration_eval/actions/runs/33819253480)
   passed both the browser fixtures and live content/image readiness check. This
   is a dated availability observation, not an uptime guarantee or proof that
@@ -757,10 +762,12 @@ deployment. These delivery facts do not change any experimental population.
   environments. Deployment success does not clear the historical N35 dependency
   warnings inherited by N36.
 
-The current deployment record is separate from automated scientific coverage.
-When the YAML maintenance step is approved, record current delivery separately
-from the existing historical N35/N36 flags. Do not flip those flags or rewrite
-their checksummed outputs to imply that the original runs deployed the app.
+The current deployment record is separate from automated scientific coverage
+and is now mirrored in YAML under `post_completion_maintenance`. The prior
+manual run verifies browser-check execution, not automatic scheduling; scheduled
+execution was still unverified at this maintenance review. Historical N35/N36
+flags and their checksummed outputs remain unchanged and must not be rewritten
+to imply that the original runs deployed the app.
 
 ## 7. Removed unsupported promises
 

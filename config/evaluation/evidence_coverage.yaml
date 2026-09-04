@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.0.0"
+config_version: "1.0.1"
 
 evidence_coverage:
   authority:
@@ -8,6 +8,44 @@ evidence_coverage:
     notebook_roadmap: "docs/final_notebook_roadmap.md"
     inventory_path: "outputs/inventory/project_file_inventory.csv"
     project_paths_path: "outputs/inventory/project_paths.json"
+
+  # Administrative delivery metadata, not a replacement for producer run facts.
+  post_completion_maintenance:
+    recorded_on: "2026-09-04"
+    completed_through_notebook_id: "36"
+    all_saved_run_manifests_completed: true
+    all_saved_completion_gates_passed: true
+    completed_notebook_sources_and_outputs: "frozen_read_only"
+    scientific_coverage_changed: false
+    historical_completion_contracts_preserved: true
+    historical_dependency_warnings_preserved: true
+    notebook_35_and_36_deployment_flags_scope: "original_execution_time_not_current_hosting"
+    public_application:
+      url: "https://fhtw-painting-restoration.streamlit.app/"
+      user_approved_deployment_recorded: true
+      principal_pages: 8
+      evidence_note: "docs/evidence_dependency_audit.md"
+      numerical_views_contract: "docs/dashboard_numeric_metrics.md"
+      candidate_allow_list_producer: "34"
+      additional_metric_producers: ["13", "14", "15", "17", "20"]
+      candidate_identity_producers: ["11", "12", "22"]
+      recomputes_scientific_metrics: false
+      changes_frozen_notebook_outputs: false
+    availability_workflow:
+      path: ".github/workflows/streamlit-availability.yml"
+      schedule_source: "workflow_file_on_default_branch"
+      schedule_revision_commit: "e111bbf3"
+      previously_verified_manual_run_url: "https://github.com/Rahul-DS25M008/painting_restoration_eval/actions/runs/33819253480"
+      previously_verified_manual_run_conclusion: "success"
+      scheduled_execution_status: "not_yet_verified_at_this_maintenance_review"
+      uptime_guaranteed: false
+    environments:
+      dashboard_python_series: "3.12"
+      dashboard_requirements: "requirements.txt"
+      saved_notebook_python_version: "3.12.6"
+      experimental_requirements: "requirements_experiments.txt"
+      experimental_requirements_scope: "legacy_recipe_not_exact_executed_environment_lock"
+      clean_experimental_install_verified_by_this_review: false
 
   frozen_baseline:
     through_notebook_id: "21"

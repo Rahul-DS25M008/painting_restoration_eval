@@ -1,5 +1,10 @@
 # Notebook 12 SDXL bounded partial-evaluation contract
 
+**Status:** executed and frozen; documentation reviewed 2026-09-04\
+**Refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes
+
 ## Status and purpose
 
 This document freezes the approved refactor contract for
@@ -14,6 +19,31 @@ The machine-readable authority is `config/experiments/sdxl.yaml`
 (`sdxl_config.v2`). This document explains that contract in human-readable
 form. The final notebook roadmap and refactoring implementation guidelines
 remain controlling repository-wide documents.
+
+This authored design contract remains under `docs/`; the executed report,
+candidates, validation, and manifests belong to the notebook-owned output root.
+The policies and batch plan below describe the completed run. They do not
+authorize a new execution or replacement of its frozen outputs.
+
+## Completion evidence
+
+The saved run `run_1daaf4a3dcb34b5599b0ff89bb7034d3` completed on 2026-08-26.
+All ten predeclared cases produced technically valid saved images: four canonical
+and six synthetic cases across five paintings. The final ledger contains 236
+validation rows with zero blocking failures; the completion gate passed.
+The output root contains 16 canonical files, including the ten images, with no
+temporary work files left at completion.
+
+The executed report records 3,784.7 seconds total runtime and a 294.9-second
+median. All ten completed within the approved bounded execution; the guardrail
+and unstarted-case states below are policy definitions, not observed failures.
+Availability remains `partial_evaluation`, even though the entire ten-case
+selection completed. Technical completion does not mean visual quality approval.
+
+- [Run manifest](../outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json)
+- [Executed partial-evaluation report](../outputs/12_sdxl_feasibility_or_restoration/reports/partial_evaluation_report.md)
+- [Candidate table](../outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv)
+- [Consolidated validation](../outputs/12_sdxl_feasibility_or_restoration/validation/checks.csv)
 
 ## Frozen scope
 
@@ -152,7 +182,7 @@ belong under `work/partial_execution/` and are not canonical artifacts.
 
 ## Downstream eligibility
 
-Notebooks 13-35 must discover SDXL through the final validated manifest and
+Consumers in Notebooks 13–36 must discover SDXL through the final validated manifest and
 candidate table. They may consume only technically valid completed rows. They
 must preserve missingness for unscheduled or failed SDXL cases and compare
 models only on paired identical cases.
@@ -162,9 +192,13 @@ coverage and treat painting as the independent unit. Runtime guardrail failures
 must never be assigned poor image-quality metrics.
 
 Notebook 18 cannot estimate SDXL seed uncertainty because this branch has one
-seed per case. Notebook 21 may compare validated SDXL rows on matched cases.
-Notebook 29 must report the partial coverage and compute limits. Reports and the
+seed per case. Notebook 21 compares validated SDXL rows on matched cases.
+Notebook 30 owns model-card and compute-limit reporting. Reports and the
 dashboard must not imply full SDXL evaluation.
+
+The ten completed candidates are included in downstream metric and reporting
+coverage where the declared metric-region contract applies. Their single seed
+does not support an SDXL uncertainty comparison in N18, N19, or N22.
 
 ## Notebook batches
 

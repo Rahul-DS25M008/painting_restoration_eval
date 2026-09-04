@@ -1,6 +1,9 @@
 # Notebook 11 Supplement — Paired Scratch-Aware Prompt Ablation
 
-**Status:** approved preparation contract  
+**Status:** executed and frozen; documentation reviewed 2026-09-04\
+**Refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
 **Parent notebook:** `11_stable_diffusion_restoration.ipynb`  
 **Parent output root:** `outputs/11_stable_diffusion_restoration/`  
 **Base configuration:** `config/experiments/stable_diffusion.yaml`  
@@ -9,6 +12,33 @@
 This supplement extends, and does not replace, the Notebook 11 contract in
 `docs/final_notebook_roadmap.md`. All general rules in
 `docs/refactoring_implementation_guidelines.md` remain mandatory.
+
+This is the authored experimental contract, so it remains under `docs/`.
+Executed evidence belongs to the notebook-owned output root. The scope and
+expansion wording below describe the approved, completed redesign, not permission
+to regenerate or modify frozen Notebook 11 artifacts.
+
+## Completion evidence
+
+The saved run `run_82ee1e1c09524a5da3e6fe93016d0627` completed on 2026-08-26
+with all 176 consolidated validation checks passed and no blocking or warning
+failures. Its manifest records:
+
+- 1,330 candidate rows and restored images, including 50 identity zero controls;
+- 1,280 model-inference candidates;
+- all 400 formal paired outcomes across 50 paintings and four seeds;
+- six prompt-policy rows and 210 prompt-ablation design rows;
+- 1,340 canonical files, with no temporary work files left at completion.
+
+Authoritative execution records:
+
+- [Run manifest](../outputs/11_stable_diffusion_restoration/manifests/run_manifest.json)
+- [Executed prompt policy](../outputs/11_stable_diffusion_restoration/reports/prompt_policy.md)
+- [Candidate table](../outputs/11_stable_diffusion_restoration/data/candidates.csv)
+- [Consolidated validation](../outputs/11_stable_diffusion_restoration/validation/checks.csv)
+
+The later 105 damage-size seed candidates belong to Notebook 22, not this
+scratch-prompt supplement. They do not increase Notebook 11's historical count.
 
 ## Purpose
 
@@ -119,6 +149,9 @@ texture mismatch as a narrow grey/dark line. The prompt ablation tests semantic
 mitigation; it cannot by itself establish that the underlying spatial-resolution
 limitation has been solved.
 
-Downstream metric notebooks must report the paired generic-minus-treatment
-difference per seed, aggregate the four seeds within each painting, quantify
-painting-level consistency, and relate the result to mask/boundary geometry.
+Downstream metric producers retain candidate-level evidence for both arms;
+analytical consumers own paired contrasts and painting-level summaries. Preserve
+the paired case/seed identity, aggregate repeated seeds within painting where
+required by the analysis contract, and retain metric direction and mask/boundary
+context. This document defines the treatment and its interpretation limits; it
+does not by itself establish that scratch-aware prompting improved restoration.

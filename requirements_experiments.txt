@@ -1,9 +1,23 @@
-# Python: 3.11 recommended
-# Install with:
-#   py -3.11 -m venv .venv
-#   .\.venv\Scripts\Activate.ps1
+# Experimental dependencies: legacy recipe, NOT an exact execution lock.
+# Reviewed 2026-09-04; package specifications below are deliberately unchanged.
+# All 36 saved notebook manifests record Python 3.12.6 and their actual package
+# versions. Some recorded versions fall outside this recipe's ranges (including
+# matplotlib/scipy); installing this list does not reproduce those runs exactly.
+# Consult the target producer's manifests/run_manifest.json and the N36
+# reproducibility appendix before choosing or rebuilding an environment.
+#
+# Original Python 3.11 recipe, in a separate environment (clean installation
+# has NOT been revalidated by the documentation review):
+#   py -3.11 -m venv .venv-experiments
+#   .\.venv-experiments\Scripts\Activate.ps1
 #   python -m pip install --upgrade pip setuptools wheel
-#   pip install -r requirements.txt
+#   python -m pip install -r requirements_experiments.txt
+#
+# Dashboard deployment instead uses Python 3.12 and root requirements.txt.
+# Do not merge the environments: this recipe retains older experimental pins,
+# including Pillow and IOPaint, while the dashboard has its own requirements.
+# Model weights, input data, and compatible CUDA hardware/drivers are separate
+# prerequisites. Installing dependencies does not execute or validate notebooks.
 
 --extra-index-url https://download.pytorch.org/whl/cu121
 
@@ -36,6 +50,7 @@ accelerate
 iopaint==1.6.0
 
 # Reporting / dashboard
+# Retained legacy experimental dependencies; deployment uses requirements.txt.
 streamlit
 plotly
 

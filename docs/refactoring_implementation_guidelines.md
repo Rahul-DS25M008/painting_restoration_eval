@@ -42,7 +42,7 @@ The following decisions are approved:
 7. One canonical region helper defines every evaluation region used throughout the project.
 8. Notebook 35 remains a separate dashboard and deployment validation stage.
 9. Notebooks 01–36 and their canonical outputs are frozen. Any new scientific evidence requires an explicitly approved extension with separate ownership; completed notebooks are not silently revised, appended to, or rerun.
-10. The dashboard setup uses Python 3.12 with `requirements.txt`. All 36 saved run manifests record Python 3.12.6. Full experimental reproduction requires a separate environment and producer-specific version records; the older Python 3.11 recommendation in `requirements_experiments.txt` is not the current dashboard setup or a description of the executed runs. See Section 26.
+10. The dashboard setup uses Python 3.12 with `requirements.txt`. All 36 saved run manifests record Python 3.12.6. Full experimental reproduction requires a separate environment and producer-specific version records; the legacy Python 3.11 recipe documented in `requirements_experiments.txt` is not the current dashboard setup or a description of the executed runs. See Section 26.
 
 ## 3. Scope and interpretation boundaries
 
@@ -1603,8 +1603,10 @@ There are separate dashboard and experimental environments:
   runs; a recommended interpreter in a requirements-file comment does not.
 - `requirements_experiments.txt` is the separate experimental dependency file,
   not the dashboard install target or an exact lock of every executed producer.
-  Its legacy Python 3.11 guidance and installation comment require reconciliation
-  in the separate requirements-maintenance step.
+  Its reviewed header labels the original Python 3.11 recipe, uses a separate
+  `.venv-experiments` environment, and installs the correct experimental file.
+  Dependency specifications are preserved; a fresh install and exact version
+  reconciliation have not been validated by documentation maintenance.
 - Notebook 35 recorded dependency-version differences, inherited by Notebook 36.
   Subsequent public deployment does not establish exact reproduction of those
   historical environments or retroactively remove their warnings.
