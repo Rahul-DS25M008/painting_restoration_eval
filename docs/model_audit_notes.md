@@ -1,11 +1,18 @@
 # Model Audit Notes
 
-This document records the current model roles, evidence boundaries, reproducibility risks, and project decisions used by Notebook 30.
+**Status:** completed-pipeline audit notes; reviewed 2026-09-04.
 
-- Literature justification belongs in `docs/literature_reference_log.md`.
-- General methodology belongs in `docs/methodology_notes.md`.
+This document records model selection, implementation provenance, evidence
+boundaries and reproducibility risks. Notebook 30 consumed an earlier version
+when producing its completed model cards. This maintenance update does not
+rewrite those cards, their source checksums or any historical run manifest.
+
+- Literature justification belongs in [the literature log](literature_reference_log.md).
+- General methodology belongs in [the methodology guide](methodology_notes.md).
 - Executed counts and artifacts belong in notebook-owned manifests and canonical tables.
-- Notebook 30 turns this audit into four portable Markdown model cards and a transparent compute/scalability table.
+- Notebook 30 produced four portable Markdown model cards and a 35-row
+  compute/scalability table: 27 observed summaries and eight projection records.
+  Detailed results belong in those outputs, not duplicated here.
 
 ---
 
@@ -28,16 +35,28 @@ The central risk is domain gap. General-image or web-scale training does not est
 
 ## 2. Evaluated model stack
 
-| Model | Evaluation status | Methodological role | Executed candidates |
+| Model | Evaluation status | Methodological role | N09–N12 completed candidates |
 |---|---|---|---:|
 | OpenCV Telea | Fully evaluated | Classical deterministic baseline | 410 |
 | LaMa | Fully evaluated | Learned deterministic inpainting baseline | 410 |
 | Stable Diffusion Inpainting | Fully evaluated | Prompt-conditioned stochastic baseline | 1,330 |
 | SDXL Inpainting | Partial evaluation | Bounded higher-capacity diffusion candidate | 10 |
 
-OpenCV Telea, LaMa, and Stable Diffusion share the complete controlled 50-painting scope. SDXL is restricted to ten predeclared cases across five paintings and must not be presented as a full-scope comparison.
+OpenCV Telea, LaMa, and Stable Diffusion share all 410 eligible restoration cases
+across 50 paintings, including 50 zero controls per primary branch. They do not
+restore all 525 registered cases. SDXL is restricted to ten predeclared cases
+across five paintings and must not be presented as a full-scope comparison.
 
-DALL-E/OpenAI Image Editing remains outside the reproducible core experiment because its closed, changeable service contract would weaken local reproducibility and training-data transparency.
+Notebook 22 separately owns 105 additional Stable Diffusion damage-size
+candidates. N11 and N22 therefore contain 1,435 Stable Diffusion candidates in
+total, but N30's original generation/runtime basis remains the 1,330 N11 rows.
+The downstream 1,785-candidate reporting population is a selection across models
+and experiments, not the number of Stable Diffusion outputs or all generated
+outputs. Selection approval is not restoration-quality approval.
+
+API-only image-editing services are outside the executed model stack. No
+comparative performance claim about an unexecuted service follows from this
+project's selection decision.
 
 ## 3. OpenCV Telea
 
@@ -54,7 +73,7 @@ DALL-E/OpenAI Image Editing remains outside the reproducible core experiment bec
 - deterministic, fast, and lightweight;
 - transparent classical baseline;
 - useful for local interpolation and thin damage;
-- avoids learned training-data bias.
+- has no learned training-data dependence; locality and interpolation still impose algorithmic assumptions.
 
 ### Limitations
 
@@ -76,6 +95,12 @@ Retain Telea as the reproducible low-compute baseline. Its results define what c
 - project wrapper: `src/restoration_eval/restoration_lama.py`;
 - evaluated execution: CUDA on the recorded RTX 3060 Laptop GPU;
 - zero controls: copied without model inference.
+
+The configured artifact is `big-lama.pt`, identified by the expected MD5
+`e3aa4aaa15225a33ec84f9f4bc47e500` and revision label
+`iopaint_lama_default`. This identifies the configured artifact contract, not an
+independently reconstructed checkpoint-to-training-run history. See
+[the LaMa configuration](../config/experiments/lama.yaml).
 
 ### Strengths
 
@@ -106,7 +131,15 @@ Retain LaMa as the main learned deterministic baseline. Describe its 10/11 ancho
 - prompt-conditioned and seed-controlled;
 - zero controls: copied without model inference.
 
-### Evidence population
+The pinned model revision is `8a4288a76071f7280aedbdb3253bdb9e9d5d84bb`.
+The primary policy uses DDIM, 30 denoising steps, guidance 7.5, strength 1.0,
+float16 CUDA inference and exact-mask compositing. The historical `runwayml`
+identifier records lineage; the configured source is the model identifier above.
+The effective six-variant prompt policy includes the separately configured
+scratch-aware supplement. See the
+[executed N11 prompt contract](notebook_11_scratch_prompt_ablation_contract.md).
+
+### Original N11 and N18 evidence population
 
 - 410 restoration cases;
 - 1,330 persisted candidates;
@@ -115,6 +148,15 @@ Retain LaMa as the main learned deterministic baseline. Describe its 10/11 ancho
 - 130 prompt-specific uncertainty groups;
 - 520 repeated-seed candidates using seeds `2026`, `2027`, `2028`, and `2029`;
 - 50 scratch-aware groups paired with generic-prompt groups for controlled thin-scratch prompt ablation.
+
+The completed N22 extension adds 35 damage-size four-seed groups by combining
+35 N11 seed-2026 candidates with its own 105 additional candidates. Final
+uncertainty coverage is 165 groups: 130 canonical groups from N18 and 35
+damage-size groups from N22. Prompt arms remain separate within each group.
+
+The additional N22 candidates do not inherit individual reference-quality rows
+from their N11 anchors. Their group uncertainty evidence is available separately;
+the frozen N13/N14/N15/N17/N20 tables are not expanded by documentation changes.
 
 ### Strengths
 
@@ -144,11 +186,18 @@ Retain Stable Diffusion as the fully evaluated stochastic baseline and uncertain
 - evaluated size: 768 × 768;
 - execution: bounded partial evaluation on the recorded 6 GB RTX 3060 Laptop GPU.
 
+The pinned revision is `115134f363124c53c7d878647567d04daf26e41e`.
+The execution used a 7,200-second global budget, a 900-second per-case watchdog,
+seed 2026, 30 DDIM steps and exact-mask compositing. All ten selected cases
+completed; timeout and unstarted states in the contract are guardrail policies,
+not observed failures in this run. See the
+[executed N12 contract](notebook_12_partial_evaluation_contract.md).
+
 ### Evidence population
 
 - ten completed candidates;
 - five paintings;
-- canonical and synthetic/degradation cases selected for cross-method comparison;
+- four canonical and six synthetic-degradation cases selected for cross-method comparison;
 - one seed per case, so no seed-based uncertainty estimate.
 
 ### Strengths
@@ -167,35 +216,52 @@ Retain Stable Diffusion as the fully evaluated stochastic baseline and uncertain
 
 ### Project decision
 
-Retain SDXL as `partial_evaluation`, not feasibility-only and not fully evaluated. Notebook 30 may project the common 300-painting canonical-primary scenario from its four executed canonical non-zero cases, but must mark the complete current-design projection not applicable.
+Retain SDXL as `partial_evaluation`, not a no-output feasibility result and not
+fully evaluated. Notebook 30 projected the common 300-painting canonical-primary
+scenario from its four executed canonical nonzero cases and marked the complete
+current-design projection not applicable. The narrow extrapolation basis must
+remain visible; it is not evidence that SDXL would finish a larger experiment.
 
 ## 7. Quality evidence policy
 
-Notebook 30 reuses Notebook 21’s eleven validated anchors:
+Notebook 30 reused the eleven anchors defined in
+[`multi_model_comparison.yaml`](../config/evaluation/multi_model_comparison.yaml):
 
-- classical masked MAE, PSNR, and SSIM;
-- LPIPS;
-- CLIP and DINOv2 feature evidence;
-- semantic CLIP and DINOv2 evidence;
-- structure edge-overlap F1;
-- local colour difference;
-- local seam energy.
+| Anchor | Region |
+|---|---|
+| MAE | Masked region |
+| SSIM | Mask-bounding-box crop |
+| LPIPS | Mask-bounding-box crop |
+| CLIP cosine similarity | Mask-bounding-box crop |
+| DINOv2 cosine similarity | Mask-bounding-box crop |
+| Mean restored error | Masked region |
+| 95th-percentile local texture error | Mask-bounding-box crop |
+| Mean CIEDE2000 colour difference | Masked region |
+| Boundary-gradient mismatch | Boundary ring |
+| Mean local DINOv2 patch similarity | Mask-bounding-box crop |
+| Reference-affinity map correlation | Content region |
+
+PSNR and other valid measurements remain in the wider evidence, but they are not
+additional members of this fixed eleven-anchor set. Sparse masked-pixel SSIM,
+edge-overlap F1 and generic “seam energy” must not replace the actual anchors.
 
 Two populations remain separate:
 
 - `core_three_model`: all 410 shared cases for Telea, LaMa, and Stable Diffusion;
 - `sdxl_four_model_subset`: the bounded 10-case four-model subset.
 
-Anchor wins are descriptive counts across validated evidence views. They are not a weighted score, conservation ranking, or substitute for case-level inspection. Runtime is never added to the quality vote.
+Anchor wins are descriptive counts across validated evidence views. They are not
+a weighted score, conservation ranking, or substitute for case-level inspection.
+Neither runtime nor repeated-seed uncertainty enters cross-model quality voting.
 
 ## 8. Uncertainty and robustness terminology
 
 - Stable Diffusion receives empirical repeated-seed uncertainty because four candidates exist per approved group.
 - SDXL has insufficient repeated-seed coverage and receives no artificial uncertainty value.
 - Telea and LaMa are deterministic under the evaluated contract; later analyses use robustness or sensitivity terminology.
-- Notebook 18 owns scalar and pairwise uncertainty evidence.
-- Notebook 19 owns numeric uncertainty maps, heatmaps, and spatial overlays.
-- Notebook 22 owns the damage-size repeated-seed extension.
+- Notebook 18 owns scalar and pairwise uncertainty for the 130 canonical groups.
+- Notebook 19 owns their numeric uncertainty maps, heatmaps and spatial overlays.
+- Notebook 22 owns the damage-size extension, including its 35-group scalar and spatial uncertainty evidence.
 
 Uncertainty is an empirical variability proxy, not calibrated confidence.
 
@@ -207,12 +273,15 @@ Texture and brushstroke-proxy measures do not authenticate an artist, date a wor
 
 ## 10. Compute and scalability policy
 
-Notebook 30 records observed runtime summaries exactly as produced by Notebooks 09–12. These values describe one workstation, software stack, cache state, and execution policy.
+Notebook 30 records observed runtime summaries from Notebooks 09–12. These values
+describe one workstation, software stack, cache state and execution policy; they
+are not an end-to-end runtime total for all 36 notebooks. The N22 additional-seed
+execution is not included in this N09–N12 runtime basis.
 
-Two transparent 300-painting sensitivity scenarios are allowed:
+Two transparent 300-painting sensitivity scenarios were retained:
 
 1. `projected_300_canonical_primary`: 1,500 candidate outputs per model, consisting of 1,200 inferred non-zero cases and 300 zero controls.
-2. `projected_300_current_design_mix`: six times the executed complete design—2,460 Telea candidates, 2,460 LaMa candidates, and 7,980 Stable Diffusion candidates. SDXL is not applicable because no full-design SDXL basis exists.
+2. `projected_300_current_design_mix`: six times the N09–N12 generation design—2,460 Telea candidates, 2,460 LaMa candidates, and 7,980 Stable Diffusion candidates. Despite the historical scenario name, this does not scale the later N22 extension or the final 1,785-candidate reporting selection. SDXL is not applicable because no full-design SDXL basis exists.
 
 Projection rules:
 
@@ -225,31 +294,47 @@ Projection rules:
 
 ## 11. Model-card reporting policy
 
-Notebook 30 produces four standalone Markdown cards. Each card must:
+Notebook 30 produced four standalone Markdown cards under its approved structure.
+They separate observed measurements from projections, record intended/excluded
+uses and provenance limitations, and remain readable without image dependencies.
+They are historical generated artifacts, not files to regenerate during this
+documentation update.
 
-- follow the approved thirteen-section structure;
-- state scope and evaluation status near the top;
-- separate observed measurements from projections;
-- name intended and excluded uses;
-- disclose training-data transparency, domain gap, licences, and sources;
-- include simple scoped conclusions after key facts;
-- include no image dependency or base64 payload;
-- remain portable when downloaded alone.
+Training-data and licence disclosures in those cards retain the qualifications
+recorded by their producer. In particular, a software licence must not be silently
+treated as a separately verified weight licence. This maintenance pass does not
+perform a new legal or external training-data audit; source verification belongs
+to the separate literature/provenance review.
+
+Canonical cards:
+
+- [OpenCV Telea](../outputs/30_model_cards_compute_and_scalability/reports/model_cards/opencv_telea.md)
+- [LaMa](../outputs/30_model_cards_compute_and_scalability/reports/model_cards/lama.md)
+- [Stable Diffusion](../outputs/30_model_cards_compute_and_scalability/reports/model_cards/stable_diffusion_inpainting.md)
+- [SDXL](../outputs/30_model_cards_compute_and_scalability/reports/model_cards/sdxl_inpainting.md)
+- [Compute/scalability table](../outputs/30_model_cards_compute_and_scalability/metrics/compute_scalability.csv)
 
 Notebook 31 owns image-heavy model reports. Notebook 32 owns case- and painting-level reports. Notebook 34 owns final dashboard assets. Notebook 36 owns the supervisor/publication/reproducibility package.
 
-## 12. Model-risk summary
+## 12. Reproducibility and risk checks
 
-| Risk | Telea | LaMa | Stable Diffusion | SDXL |
-|---|---|---|---|---|
-| Training-data opacity | Not applicable | Medium | High | High |
-| Painting-domain gap | High | Medium–high | High | High |
-| Hallucination risk | Low | Medium | High | High |
-| Large-mask capability | Low | High | Medium | Not fully established here |
-| Texture-faithfulness risk | High | Medium | High | High |
-| Reproducibility | High | High | Medium | Medium |
-| Local compute burden | Low | Medium | High | Very high |
-| Evaluation status | Full | Full | Full | Partial |
+This audit does not assign unvalidated low/medium/high risk scores. The actionable
+cautions are:
+
+- **Telea:** no learned weights, but local interpolation can miss meaningful
+  structures; deterministic output is not proof of appropriate restoration.
+- **LaMa:** record the exact IOPaint runtime and weight artifact; learned context
+  can preserve measured structure while still introducing unsupported content.
+- **Stable Diffusion:** record revision, prompt arm, seed, scheduler, inference
+  size and compositing. Resampling a razor-thin mask can leave residual lines;
+  prompt treatment alone does not establish that the geometry problem is solved.
+- **SDXL:** retain the purposive ten-case scope, hardware and stopping policy.
+  All ten completing does not establish full-dataset feasibility or a universal
+  minimum VRAM requirement.
+- **All methods:** retain per-run package/device records. All 36 saved manifests
+  record Python 3.12.6, but dependency versions differ from the legacy
+  experimental recipe. Determinism under the evaluated contract is not a promise
+  of bitwise identity across different hardware or software stacks.
 
 ## 13. Human and conservation boundary
 
