@@ -2,8 +2,9 @@ name: Streamlit availability check
 
 on:
   schedule:
-    # UTC; avoid the busiest start-of-hour scheduling window.
-    - cron: '17 */4 * * *'
+    # UTC; six visits daily, away from the busiest start-of-hour window.
+    # Explicit hours retain the four-hour interval; minute changed to test scheduling.
+    - cron: '43 0,4,8,12,16,20 * * *'
   workflow_dispatch:
 
 permissions:
