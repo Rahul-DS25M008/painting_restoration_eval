@@ -13,17 +13,34 @@ The machine-readable YAML is authoritative for automated preflight. This file
 explains the scientific meaning of that registry and records the decisions that
 must not be silently reversed during later notebook planning.
 
-## 2. Frozen baseline
+**Maintenance review: 2026-09-04.** All 36 saved run manifests record
+`run_status: completed` and `completion_gate_passed: true`. All completed
+notebooks and their canonical outputs are now frozen. Sections 2–4 preserve the
+original Notebook 01–21 baseline; Sections 5–6 record completed extensions and
+delivery. Section 6.1 records later application delivery separately from those
+execution-time records. Non-blocking warnings are retained, not silently cleared.
+
+This review updates only the three governing Markdown documents. The separate
+`config/evaluation/evidence_coverage.yaml` maintenance step has not yet been
+performed; its N35/N36 `external_deployment_recorded: false` fields still describe
+the original runs, not the later public deployment. No scientific coverage has
+changed in this documentation update.
+
+## 2. Original frozen baseline and completed-pipeline protection
 
 Notebooks 01–21 and their notebook-owned canonical outputs are frozen. Their
 last common validated data-producing baseline is repository commit `0aac25ef`
 (`notebook 21 done`). Later documentation and governing-file commits do not
 change the scientific population recorded by those manifests.
 
+Notebooks 22–36 subsequently completed their own gates and now have the same
+read-only protection. They retain separate provenance rather than being folded
+back into the original baseline commit.
+
 Frozen means:
 
 - no `.ipynb` source changes;
-- no rerunning or appending to Notebook 01–21 output roots;
+- no rerunning or appending to any completed Notebook 01–36 output root;
 - no helper/configuration change may be used to reinterpret a frozen manifest as
   if it described a newly expanded population;
 - later evidence extensions own new candidates and artifacts under their own
@@ -61,7 +78,7 @@ metric validity and coverage passed.
 | 20 Semantic/Structural Consistency | patch-level semantic and structural proxies | 58,980 rows; 9,430 map assets | category-conditioned proxies are not validated face, anatomy, object, iconographic, or conservation detectors; 118 outside-context values are not estimable at the encoder grid |
 | 21 Multi-Model Comparison | comparison, disagreement, representative cases, self-contained report | 86,531 comparison rows; 839 disagreement rows | three-model comparison covers 410 paired cases; four-model comparison covers the 10-case SDXL subset; uncertainty is contextual, not a cross-model quality vote |
 
-## 4. Validated population facts
+## 4. Original Notebook 01–21 population facts
 
 ```text
 dataset scope: controlled_50
@@ -73,7 +90,7 @@ LaMa candidates: 410
 Stable Diffusion primary candidates: 410
 Stable Diffusion total candidates: 1,330
 SDXL candidates: 10
-all evaluated candidates: 2,160
+completed restoration candidates in Notebooks 09–12: 2,160
 frozen complete uncertainty groups: 130
 frozen damage-size uncertainty groups: 0
 ```
@@ -89,6 +106,26 @@ Stable Diffusion complete four-seed groups in the frozen baseline:
 
 Prompt variants at a single seed measure prompt sensitivity and cannot be used as
 a replacement for repeated-seed uncertainty.
+
+### Final delivery population, distinct from the original baseline
+
+| Population | Count | Ownership and interpretation |
+|---|---:|---|
+| Controlled paintings | 50 | Five balanced visual categories; not independently established art-historical style effects |
+| Registered cases | 525 | Notebook 08; includes cases outside restoration eligibility |
+| Restoration-eligible cases | 410 | Includes 50 zero controls and 360 nonzero cases |
+| N09–N12 completed restoration candidates | 2,160 | Original generation scope, not the final reporting denominator |
+| N22 additional candidates | 105 | Three additional seeds for each of 35 damage-size cases; separately owned |
+| Retained reporting/dashboard candidates | 1,785 | Approved downstream selection, not every generated candidate and not expert quality approval |
+| Complete repeated-seed groups | 165 | 130 canonical groups from N18 plus 35 damage-size groups from N22 |
+| Bounded SDXL candidates | 10 | Included in the retained population; one seed per case, not repeated-seed uncertainty |
+
+The additional 105 N22 candidates do not have individual reference-quality rows
+in the frozen N13/N14/N15/N17/N20 tables. Their group uncertainty evidence remains
+available; consumers must not substitute the seed-2026 anchor's quality values.
+Notebook 18 contains no combined uncertainty index, no fitted confidence
+calibration, and no SDXL repeated-seed comparison. N19 owns the original 130-group
+spatial uncertainty archive; N22 owns the damage-size uncertainty maps.
 
 ## 5. Completed post-freeze evidence and analysis stages
 
@@ -108,9 +145,9 @@ It:
 - passed all 234 validation checks and all 12 roadmap traceability requirements;
 - left every Notebook 01–21 source and output untouched.
 
-Notebook 23 may therefore test generative uncertainty against target and realized
-damage size. Notebook 18 remains the canonical uncertainty source for its original
-canonical-case population; Notebook 22 is the canonical source for damage-size
+Notebook 23 used this evidence to test generative uncertainty against target and
+realized damage size. Notebook 18 remains the canonical uncertainty source for
+its original canonical-case population; Notebook 22 is the canonical source for damage-size
 uncertainty. Notebook 22 is now a read-only approved upstream dependency.
 
 Notebook 23, `23_damage_size_sensitivity_analysis.ipynb`, subsequently completed
@@ -577,8 +614,9 @@ The analysis does not establish independent style effects, universal model
 superiority, historical authenticity, conservation approval, or a full SDXL
 comparison.
 
-Notebook 35 is complete against the fixed Notebook 34 dashboard package and the
-versioned contract in `config/evaluation/dashboard_validation.yaml`. The legacy
+The historical Notebook 35 run is complete against the fixed Notebook 34
+dashboard package and the versioned contract in
+`config/evaluation/dashboard_validation.yaml`. The legacy
 Streamlit application was replaced in full by an eight-page, presentation-only
 consumer of the Notebook 34 root. `src/restoration_eval/dashboard_application.py`
 owns shared read-only loading, repository-safe indexed-path resolution, package
@@ -592,8 +630,8 @@ the filter index at their approved counts. It validated all 1,785 candidates,
 eight pages passed Streamlit's in-process application test with zero exceptions
 or visible application errors. The complete 582-check ledger contains zero
 blocking failures, seven dependency-version warnings, and one informational
-not-deployed result. All 14 roadmap responsibilities passed, and the exact four
-canonical Notebook 35 outputs and two registered artifact checksums were
+not-deployed result at execution time. All 14 roadmap responsibilities passed,
+and the exact four canonical Notebook 35 outputs and two registered artifact checksums were
 independently reverified. The external UI reference images remain read-only
 files outside the repository.
 
@@ -601,10 +639,10 @@ The final validation run is
 `run_e04d0dfa163b4a15966c5420b01d74c7`. The tested Python 3.12 environment
 uses Streamlit 1.59.0 while the repository requirements target Streamlit
 1.56.0; Pillow, Plotly, and PyArrow also differ from their declared pins. The
-application passed the full smoke test despite those differences, so the
-evidence supports conditional local demonstration readiness, not exact
-environment reproduction or completed public deployment. No public URL is
-recorded.
+application passed the full smoke test despite those differences, so that run
+supports conditional local demonstration readiness, not exact environment
+reproduction or completed public deployment. No public URL was recorded in the
+run. This historical result is preserved; see Section 6.1 for later delivery.
 
 Manual browser review is complete. All eight pages were approved after the
 final interface pass. The accepted application includes an explicit
@@ -679,10 +717,50 @@ actually consumed by the run, not the later administrative completion state.
 
 The package is ready for supervisor and thesis review. It is not a complete
 executable repository clone; omitted image collections, model weights, and
-the full dashboard assets still require the repository. Dashboard readiness
-remains conditional local demonstration readiness, not completed public
+the full dashboard assets still require the repository. Its dashboard snapshot
+records conditional local demonstration readiness, not the subsequent public
 deployment. No upstream notebook, scientific result, or approved application
 was changed during this final packaging audit.
+
+### 6.1 Post-notebook application delivery — recorded 2026-09-04
+
+The user approved the completed eight-page dashboard, its later numerical
+evidence views, and the public deployment at
+[https://fhtw-painting-restoration.streamlit.app/](https://fhtw-painting-restoration.streamlit.app/).
+The root README and application's Reports & Reproducibility page link to this
+deployment. These delivery facts do not change any experimental population.
+
+- **Read-only numerical views:** Case Explorer displays original source values,
+  applicability, units, and candidate/seed/prompt identity from fixed,
+  checksum-verified producer tables. Model Performance exposes the existing
+  N34 chart estimates and intervals. The input, display, and verification
+  contract is `docs/dashboard_numeric_metrics.md`; its implementation and focused
+  tests are `src/restoration_eval/dashboard_metrics.py` and
+  `tests/test_dashboard_metrics.py`. N34 remains the candidate allow-list.
+- **Availability workflow:** commit `4f285808` adds
+  `.github/workflows/streamlit-availability.yml`,
+  `tools/check_streamlit_availability.py`, and
+  `tests/test_streamlit_availability.py`. It is configured for a public browser
+  visit every four hours at minute 17 UTC and manual dispatch. The previously
+  verified [manual run 33819253480](https://github.com/Rahul-DS25M008/painting_restoration_eval/actions/runs/33819253480)
+  passed both the browser fixtures and live content/image readiness check. This
+  is a dated availability observation, not an uptime guarantee or proof that
+  hibernation can never recur. No additional live service test was performed for
+  this documentation maintenance pass.
+- **Version boundary:** N35 validated the application revision recorded by its
+  manifest. N36 preserved its own checksummed source and environment snapshots.
+  Neither is retroactively claimed to have tested or packaged the later UI,
+  public deployment, or availability workflow.
+- **Environment boundary:** the current dashboard setup uses Python 3.12 and
+  root `requirements.txt`; all 36 saved notebook manifests record Python 3.12.6.
+  Exact experimental reproduction still requires the producer-specific recorded
+  environments. Deployment success does not clear the historical N35 dependency
+  warnings inherited by N36.
+
+The current deployment record is separate from automated scientific coverage.
+When the YAML maintenance step is approved, record current delivery separately
+from the existing historical N35/N36 flags. Do not flip those flags or rewrite
+their checksummed outputs to imply that the original runs deployed the app.
 
 ## 7. Removed unsupported promises
 
@@ -727,7 +805,8 @@ and `outputs/inventory/` remains the sole global output exception.
 
 ## 9. Update protocol
 
-Before Batch 1 of every remaining notebook:
+No notebook remains unimplemented in the approved 36-stage pipeline. Before
+Batch 1 of any explicitly approved extension or reopening:
 
 1. Resolve every responsibility to an entry in
    `config/evaluation/evidence_coverage.yaml`.
@@ -736,10 +815,17 @@ Before Batch 1 of every remaining notebook:
 4. Remove any result or report claim that lacks validated evidence.
 5. Add planned outputs and checks to the consumer contract.
 
-At completion:
+At completion of that approved notebook work:
 
 1. Update the YAML with actual counts and the new manifest path.
-2. Update this document's ledger and remaining-notebook table.
+2. Update this document's completion ledger and affected dependency contracts.
 3. Refresh `outputs/inventory/`.
-4. Commit the notebook, owned outputs, governing-file updates, and inventory
-   together unless an approved staged commit is required.
+4. The user commits the notebook, owned outputs, governing-file updates, and
+   inventory together unless an approved staged commit is required.
+
+For documentation or application-only maintenance, update only the approved
+files and use dated addenda to distinguish current delivery from original run
+facts. Do not rerun notebooks, refresh checksummed packages, clear historical
+warnings, or regenerate the inventory implicitly. Scientific-coverage changes
+require coordinated human-ledger and YAML updates; ordinary wording corrections
+do not manufacture a new scientific validation event.

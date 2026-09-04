@@ -8,7 +8,22 @@ This document is the approved project-wide implementation contract for refactori
 
 It governs notebook design, helper modules, configuration, paths, generated artifacts, validation, manifests, reporting, dashboard preparation, reproducibility, and migration from the current repository layout.
 
-The repository was rebuilt from Notebook 01 onward. Notebooks 01–21 are now frozen only because their approved completion gates, manifests, canonical outputs, and cross-notebook evidence audit have been completed. Later notebooks remain unimplemented until their own gates pass.
+The repository was rebuilt from Notebook 01 onward. As of 2026-09-04, all 36
+notebooks have completed their approved contracts and passed their completion
+gates. Their source files, canonical outputs, and execution-time manifests are
+frozen. Notebooks 01–21 retain their original baseline identity; Notebook 22
+owns the approved damage-size repeated-seed extension, and Notebooks 23–36
+completed the downstream analysis and delivery stages.
+
+The project is now in documentation and application maintenance, not an active
+notebook-refactoring cycle. The approved eight-page dashboard is publicly
+deployed at [the Streamlit application](https://fhtw-painting-restoration.streamlit.app/).
+The dated delivery addendum in `docs/evidence_dependency_audit.md` distinguishes
+this later application state from the historical Notebook 35 validation and
+Notebook 36 package. Completion does not erase recorded non-blocking warnings.
+
+The batch, report, and completion rules below remain binding for explicitly
+approved future work; they do not authorize reopening completed notebooks.
 
 The central methodological boundary remains:
 
@@ -19,15 +34,15 @@ The central methodological boundary remains:
 The following decisions are approved:
 
 1. The final pipeline uses the consolidated 36-notebook architecture documented in `docs/final_notebook_roadmap.md`.
-2. Generated content will migrate from `data/processed/` and legacy global output folders into notebook-owned output folders.
+2. Authoritative generated content belongs to notebook-owned output folders; retired `data/processed/` and legacy global output paths must not be reintroduced.
 3. `outputs/inventory/` is the sole global output exception.
 4. Restoration notebooks remain model-specific.
 5. Metric notebooks are model-agnostic and organized by evidence family.
 6. Handoffs use normalized manifests joined by stable identifiers rather than progressively wider tables.
 7. One canonical region helper defines every evaluation region used throughout the project.
 8. Notebook 35 remains a separate dashboard and deployment validation stage.
-9. Notebooks 01–21 and their canonical outputs are a frozen validated baseline. Missing downstream evidence is added only through explicitly approved post-21 extension notebooks with notebook-owned outputs; frozen notebooks are not silently revised or rerun.
-10. Python 3.11 is the provisional default because it is recommended by `requirements_experiments.txt` and used in the README setup instructions. Python 3.12 may be adopted later only after compatibility is verified during execution.
+9. Notebooks 01–36 and their canonical outputs are frozen. Any new scientific evidence requires an explicitly approved extension with separate ownership; completed notebooks are not silently revised, appended to, or rerun.
+10. The dashboard setup uses Python 3.12 with `requirements.txt`. All 36 saved run manifests record Python 3.12.6. Full experimental reproduction requires a separate environment and producer-specific version records; the older Python 3.11 recommendation in `requirements_experiments.txt` is not the current dashboard setup or a description of the executed runs. See Section 26.
 
 ## 3. Scope and interpretation boundaries
 
@@ -75,6 +90,12 @@ When project sources disagree, use this precedence:
 
 Existing code and outputs provide evidence about prior behavior. They do not override the approved design.
 
+This is a design-decision hierarchy, not permission to override measured facts.
+Claims about completed work must match validated artifacts and execution-time
+manifests. If an older design statement conflicts with the evidence, correct the
+documentation or seek approval for new work; never rewrite the evidence to make
+the original promise appear fulfilled.
+
 ## 5. Notebook lineage and status
 
 `Origin` records lineage only. It does not indicate completion.
@@ -101,7 +122,10 @@ No notebook may be labelled complete until its final completion gate passes unde
 
 ## 6. Standard refactoring workflow
 
-The workflow for every notebook is:
+This workflow applies when a new notebook or a specific reopening is explicitly
+approved. No notebook remains awaiting implementation in the completed cycle.
+
+The workflow for each approved notebook is:
 
 1. Refresh the project inventory.
 2. Inspect `docs/evidence_dependency_audit.md` and `config/evaluation/evidence_coverage.yaml`.
@@ -117,7 +141,7 @@ The workflow for every notebook is:
 10. Inspect the executed final notebook and generated artifacts.
 11. Validate the notebook against the approved truth sources and input/output contract.
 12. Provide targeted replacement cells or helper changes when issues are isolated.
-13. Rerun the required cells and repeat validation.
+13. The user reruns the required cells; the assistant then inspects the saved results and repeats validation.
 14. After the completion gate passes, the user updates the notebook's opening
     metadata to `Refactor status: Finished`, `Validation status: Finished`, and
     `Completion gate passed: Yes`; the assistant verifies that these fields agree
@@ -326,9 +350,11 @@ analysis, comparison, or thesis-level result as a standalone document.
   distinct experiment groups, or other deterministic notebook-appropriate rules.
 - Preserve and explain scientifically relevant disagreement between metrics or
   evidence families instead of forcing agreement through a single ranking or
-  score. A combined score is allowed only when its construction, scaling,
-  weighting, interpretation, and limitations have already been methodologically
-  justified and validated.
+  score. The completed pipeline retains no universal combined quality,
+  uncertainty, or trust score. Existing anchor-win and rank summaries describe
+  performance across separate measures; they are not combined quality scores.
+  Introducing a new combined measure would require a separately approved
+  methodological extension, not a report or dashboard maintenance change.
 - Respect the statistical unit and dependency structure of the experiment.
   Candidate observations, repeated seeds, prompt variants, multiple cases from
   one painting, partial model coverage, and other repeated or nested observations
@@ -673,8 +699,13 @@ Scientific and technical boundaries:
 - Notebook 34 packages validated upstream evidence into normalized dashboard
   tables, indexes, summaries, and manifests. It does not recompute scientific
   metrics or rerun restoration inference.
-- `streamlit_app.py` reads the Notebook 34 asset root and must not scan arbitrary
-  output folders or rely on retired global paths such as `outputs/dashboard/`.
+- Notebook 34 is the dashboard's primary package and candidate allow-list.
+  The approved post-notebook numerical view also reads exact, checksum-verified
+  metric tables from Notebooks 13, 14, 15, 17, and 20, plus candidate identity
+  tables from Notebooks 11, 12, and 22, through
+  `src/restoration_eval/dashboard_metrics.py`. Its fixed input and display
+  contract is `docs/dashboard_numeric_metrics.md`. No arbitrary output scan or
+  retired global path such as `outputs/dashboard/` may select inputs.
 - The application may aggregate, filter, reshape, or format already validated
   dashboard assets for presentation, but it must not import experiment,
   restoration, or metric-computation workflows.
@@ -699,18 +730,19 @@ The inventory refresh is a controlled write operation. During explicitly read-on
 ### 6.4 Frozen baseline and evidence-dependency gate
 
 Notebooks 01–21 and their canonical outputs are frozen at the validated baseline
-recorded by their run manifests and the repository history. They are read-only
-inputs for the remainder of the refactoring cycle.
+recorded by their run manifests and the repository history. Notebook 22 is the
+completed, separately owned extension to that baseline. The same read-only
+protection now applies to all completed Notebooks 01–36 and their output roots.
 
 Rules for the frozen baseline:
 
-- Do not edit, regenerate, append to, or overwrite Notebook 01–21 source files or
+- Do not edit, regenerate, append to, or overwrite Notebook 01–36 source files or
   their notebook-owned outputs merely to satisfy a later notebook.
 - Do not change a frozen notebook's scientific population by altering its helper
   or configuration and then treating its earlier manifest as current.
 - If a later requirement needs evidence absent from the frozen baseline, either
   remove the unsupported requirement before implementation or create an approved
-  post-21 extension notebook that owns every new candidate, metric, map, manifest,
+  extension notebook that owns every new candidate, metric, map, manifest,
   and validation artifact.
 - Extension notebooks may reference validated frozen artifacts but must never
   present their new outputs as if the frozen producer created them.
@@ -724,7 +756,7 @@ docs/evidence_dependency_audit.md
 config/evaluation/evidence_coverage.yaml
 ```
 
-Before approving the contract for any remaining notebook, the assistant must:
+Before approving any new or explicitly reopened notebook contract, the assistant must:
 
 1. Read both governing files together with this guideline and the roadmap.
 2. Map every proposed responsibility, result, figure, report conclusion, and
@@ -790,6 +822,25 @@ The package manifest must allow a reviewer to verify the bundle without the
 notebook. The package README must explain where to begin, what is included, what
 is indexed but absent, how to verify checksums, and what cannot be concluded.
 
+### 6.6 Post-completion maintenance
+
+- Documentation updates and approved application-only fixes do not require a
+  notebook rerun. Keep changes within the explicitly agreed files and scope.
+- Preserve approved dashboard layouts and interactions unless the user requests
+  a change. New read-only views must map to exact validated sources, retain
+  candidate identity and applicability, and receive focused application checks.
+- Record current delivery facts in dated documentation separately from original
+  run facts. A later deployment or successful application test does not clear
+  Notebook 35 dependency warnings or revise Notebook 36's copied snapshots.
+- Never modify a checksummed package, historical manifest, or generated report
+  merely to update a URL, administrative status, or source-document wording.
+- Update both governing evidence files when scientific coverage or a notebook
+  completion state changes. For staged documentation-only updates, identify any
+  corresponding registry work still pending rather than claim it was completed.
+- Inventory refresh is a separate controlled write at the agreed handoff point;
+  a documentation edit does not silently trigger it. The user commits unless
+  explicitly requesting otherwise.
+
 ## 7. Repository layout
 
 The intended high-level structure is:
@@ -846,7 +897,9 @@ outputs/09_opencv_telea_restoration/images/restored/
 outputs/13_classical_metrics/metrics/classical_metrics.csv
 ```
 
-Generated content currently under `data/processed/` is legacy material. It remains read-only during migration until notebook-owned replacements are validated. It may be removed only during an explicitly approved cleanup stage.
+Any generated content found under `data/processed/` is legacy material, not an
+authoritative input. Inspect it read-only and establish ownership before an
+explicitly approved cleanup; do not infer that such a folder must still exist.
 
 ### 7.3 Sole global output exception
 
@@ -1491,7 +1544,9 @@ A final notebook must:
 - avoid excessive embedded image output;
 - end with the completion-gate table.
 
-Notebook status Markdown inherited from older files must be reset. A previous `Status: Complete` label is not accepted for the new refactoring cycle.
+For an explicitly approved new refactoring cycle, inherited completion labels
+must be reset and revalidated. This rule does not authorize resetting the status
+of the already completed and frozen notebooks.
 
 ## 23. Visualization policy
 
@@ -1540,20 +1595,34 @@ artifacts, validation outcomes, or reproducibility.
 
 ## 26. Reproducibility environment
 
-Python 3.11 is the provisional default.
+There are separate dashboard and experimental environments:
 
-Before final model reruns:
+- The root README specifies Python 3.12 and `requirements.txt` for dashboard use.
+- All 36 completed notebook run manifests record Python 3.12.6. Their recorded
+  package, device, CUDA, model, and configuration versions describe the actual
+  runs; a recommended interpreter in a requirements-file comment does not.
+- `requirements_experiments.txt` is the separate experimental dependency file,
+  not the dashboard install target or an exact lock of every executed producer.
+  Its legacy Python 3.11 guidance and installation comment require reconciliation
+  in the separate requirements-maintenance step.
+- Notebook 35 recorded dependency-version differences, inherited by Notebook 36.
+  Subsequent public deployment does not establish exact reproduction of those
+  historical environments or retroactively remove their warnings.
+
+Before any explicitly approved experimental reproduction:
 
 - reconcile conflicting package pins;
 - verify model and CUDA compatibility;
-- separate dashboard-only dependencies if necessary;
+- keep dashboard and experimental dependencies in separate environments;
 - record exact package versions;
 - record Python, operating system, CPU, GPU, CUDA, and VRAM;
 - record Git commit and dirty-state information;
 - record configuration and helper checksums;
 - record all relevant seeds and model revisions.
 
-If Python 3.12 is adopted, the change must be documented with compatibility evidence and environment declarations must be updated consistently.
+Any future interpreter or dependency change requires targeted compatibility
+evidence. Preserve historical version records and document the new environment
+separately; do not rerun models merely to reconcile documentation.
 
 ## 27. Version control and large artifacts
 
@@ -1619,7 +1688,7 @@ Recommended cleanup order:
 4. Present the exact proposed deletion/migration list for approval.
 5. Perform approved cleanup using exact resolved targets.
 6. Refresh the inventory.
-7. Create only foundational folders required before Notebook 01.
+7. For a new approved notebook, create only its required preparation folders.
 8. Let each notebook create its own output subfolders during execution.
 
 ### 30.1 Post-generation output closure audit
