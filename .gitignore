@@ -31,4 +31,6 @@ outputs/logs/
 # outputs/reports/
 # outputs/metrics/
 # Large copied supervisor package reports
-outputs/supervisor_package/reports/*.html
+# outputs/supervisor_package/reports/*.html
+
+docs/proposal/Rahul_Thesis_Proposal_old.docx
