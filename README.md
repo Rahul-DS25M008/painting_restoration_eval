@@ -41,6 +41,8 @@ These findings apply to the tested collection and experimental settings—not to
 
 The contribution is an **evaluation framework**, not a newly trained restoration model or an automated conservation system.
 
+For the study design, evaluation choices, and interpretation boundaries, see the [methodology guide](docs/methodology_notes.md). The [literature reference log](docs/literature_reference_log.md) connects the framework to its research sources and explains what each reference supports and where its relevance is limited.
+
 ## Dataset and experiments
 
 The controlled collection contains **50 paintings**, balanced across five broad visual categories: portrait/figure, landscape/natural, architecture/structured, abstraction/surrealism, and high-texture/brushwork.
