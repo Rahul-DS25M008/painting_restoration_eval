@@ -10,10 +10,16 @@ No notebooks, scientific outputs, application UI or model inference are changed.
 This is best-effort availability maintenance, not a 24/7 uptime guarantee. It
 still depends on Cloudflare, GitHub runners, the token and Streamlit being available.
 
+Status as of 2026-09-04: three dispatched GitHub runs completed successfully
+(33864857726, 33865632846 and 33866417033). These verified the ten-minute test
+schedule. The owner subsequently changed Cloudflare to a 30-minute interval;
+that interval is owner-reported, not independently verified here. The repository
+now removes the canary and native GitHub schedule, retaining the dispatch workflow.
+
 ## Files
 
 - `worker.mjs`: complete Worker code to paste into the Cloudflare editor.
-- `wrangler.toml`: optional CLI configuration, including the permanent schedule.
+- `wrangler.toml`: optional CLI configuration, including the current 30-minute interval.
 - `worker.test.mjs`: offline Node tests with mocked requests; no real token needed.
 - `.gitignore`: excludes local secret files and optional tool caches.
 
@@ -31,7 +37,8 @@ Keep `.github/workflows/streamlit-availability.yml` enabled on `main` with
 public app URL: https://fhtw-painting-restoration.streamlit.app/.
 
 Do not delete or disable the availability workflow after setup. It remains the
-execution engine. The canary and native GitHub cron can be removed later (below).
+execution engine. The canary and native GitHub cron have been removed from the
+working tree after successful verification; commit/push applies that cleanup remotely.
 
 ### 2. Create a narrowly scoped GitHub token
 
@@ -115,37 +122,44 @@ A successful Worker invocation only proves dispatch acceptance, not app readines
 The Worker does not poll the resulting job. Use the GitHub run result for that.
 A manually launched Actions run does not prove that Cloudflare cron works.
 
-### 6. Set the permanent schedule
+### 6. Set the operating schedule
 
 After two successful automatic tests, **replace**, rather than supplement, the
 temporary schedule with:
 
 ```text
-17 */3 * * *
+*/30 * * * *
 ```
 
-Eight checks per day, at 00:17, 03:17, 06:17, 09:17, 12:17, 15:17, 18:17 and
-21:17 UTC. Vienna summer time is UTC+2; winter is UTC+1. No timezone setting needs
-changing when daylight saving changes.
+The current chosen interval is every 30 minutes: 48 checks per day. This checked-in
+expression fires at minutes 00 and 30 UTC. The owner reported the interval, not
+the dashboard's exact minute offset; align that offset before any CLI deployment
+if the dashboard uses a different pair of minutes.
+
+For the planned later change to hourly checks, replace the Cloudflare trigger with
+`0 * * * *` (24 checks per day). No GitHub workflow change or Worker-code redeploy
+is needed for a dashboard-only cron change. Also update `wrangler.toml` and this
+guide for reproducibility before using the CLI again. Vienna summer time is UTC+2;
+winter is UTC+1. All cron times are UTC.
 
 Confirm there is exactly **one** Cloudflare cron trigger, then verify at least one
-automatic run on this permanent schedule before removing the GitHub fallback.
-The checked-in `wrangler.toml` already represents this permanent configuration.
+automatic run after each interval change. The checked-in `wrangler.toml` represents
+the current 30-minute interval, not the original three-hour proposal.
 
-### 7. Cleanup only after successful verification
+### 7. Verified cleanup and retained execution workflow
 
-In a later reviewed repository change:
+After three successful automatic test runs, this cleanup is now prepared locally:
 
-- Delete `.github/workflows/schedule-canary.yml`.
-- Remove only the `schedule:` block from `.github/workflows/streamlit-availability.yml`.
-- Keep `workflow_dispatch`, the job, its tests, permissions and concurrency intact.
-- Adjust the workflow's scheduling comments to describe the Cloudflare trigger.
-- Commit/push and verify a further Cloudflare-triggered successful run.
+- The owner deleted `.github/workflows/schedule-canary.yml`.
+- The native `schedule:` block was removed from `.github/workflows/streamlit-availability.yml`.
+- `workflow_dispatch`, the job, its tests, permissions and concurrency remain intact.
+- The workflow comments now describe the Cloudflare trigger.
+- Commit/push the cleanup, then verify a further Cloudflare-triggered successful run.
 
 **Do not delete or disable `streamlit-availability.yml`.** That would break this
 method. Existing workflow concurrency serializes runs; it does not deduplicate
-visits if both schedulers happen to fire. Neither workflow has been removed by
-the preparation of these files.
+visits if multiple triggers fire. Keep the browser checker, its tests and this
+scheduler directory. Do not recreate the canary for normal operation.
 
 ## Maintenance and troubleshooting
 

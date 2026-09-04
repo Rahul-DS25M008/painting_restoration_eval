@@ -1,10 +1,8 @@
 name: Streamlit availability check
 
 on:
-  schedule:
-    # UTC; six visits daily, away from the busiest start-of-hour window.
-    # Explicit hours retain the four-hour interval; minute changed to test scheduling.
-    - cron: '43 0,4,8,12,16,20 * * *'
+  # Cloudflare Cron dispatches this workflow; manual runs remain available.
+  # Setup and schedule maintenance: tools/streamlit_scheduler/README.md.
   workflow_dispatch:
 
 permissions:
@@ -51,5 +49,5 @@ jobs:
         run: python tools/check_streamlit_availability.py
 
       # No commits, app restarts, credentials, datasets, or stored artifacts.
-      # Schedules can be delayed and disabled after 60 days of repository
-      # inactivity. Check Actions periodically; this is not an uptime SLA.
+      # Scheduling is owned by Cloudflare, not GitHub's schedule event.
+      # Check recent runs and token expiry periodically; this is not an uptime SLA.
