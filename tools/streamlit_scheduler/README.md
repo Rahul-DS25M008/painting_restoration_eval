@@ -19,13 +19,12 @@ now removes the canary and native GitHub schedule, retaining the dispatch workfl
 ## Files
 
 - `worker.mjs`: complete Worker code to paste into the Cloudflare editor.
-- `wrangler.toml`: optional CLI configuration, including the current 30-minute interval.
 - `worker.test.mjs`: offline Node tests with mocked requests; no real token needed.
 - `.gitignore`: excludes local secret files and optional tool caches.
 
 ## Recommended setup: Cloudflare dashboard only
 
-No Node installation, Wrangler installation, custom domain, paid plan or GitHub
+No Node installation, deployment CLI, custom domain, paid plan or GitHub
 repository integration is needed for this route. Do not import the thesis repo
 into Cloudflare Builds; only the Worker code is needed. UI labels may vary slightly.
 
@@ -37,8 +36,8 @@ Keep `.github/workflows/streamlit-availability.yml` enabled on `main` with
 public app URL: https://fhtw-painting-restoration.streamlit.app/.
 
 Do not delete or disable the availability workflow after setup. It remains the
-execution engine. The canary and native GitHub cron have been removed from the
-working tree after successful verification; commit/push applies that cleanup remotely.
+execution engine. The canary and native GitHub cron were removed and committed
+after successful verification. The Cloudflare dashboard owns the live schedule.
 
 ### 2. Create a narrowly scoped GitHub token
 
@@ -67,7 +66,7 @@ not restricted to this one workflow by GitHub, so keep repository access narrow.
 4. Open **Edit code**. Replace the entire starter JavaScript module with the
    contents of `worker.mjs` in this directory. It can remain named `worker.js`
    in the dashboard; the source is standard module JavaScript.
-5. Deploy the updated code. Do not paste `wrangler.toml` into the JavaScript editor.
+5. Deploy the updated code.
 
 An HTTP preview returning **404 with "Scheduled dispatcher only" is intentional**.
 Opening its URL cannot dispatch a workflow. No authenticated HTTP trigger or
@@ -131,30 +130,34 @@ temporary schedule with:
 */30 * * * *
 ```
 
-The current chosen interval is every 30 minutes: 48 checks per day. This checked-in
-expression fires at minutes 00 and 30 UTC. The owner reported the interval, not
-the dashboard's exact minute offset; align that offset before any CLI deployment
-if the dashboard uses a different pair of minutes.
+The current chosen interval is every 30 minutes: 48 checks per day. The example
+above fires at minutes 00 and 30 UTC. The owner reported the interval, not the
+dashboard's exact minute offset. The actual schedule is configured exclusively
+in Cloudflare; this guide does not create or override it.
 
 For the planned later change to hourly checks, replace the Cloudflare trigger with
 `0 * * * *` (24 checks per day). No GitHub workflow change or Worker-code redeploy
-is needed for a dashboard-only cron change. Also update `wrangler.toml` and this
-guide for reproducibility before using the CLI again. Vienna summer time is UTC+2;
+is needed for a dashboard-only cron change. Update this guide when the operating
+interval changes so the documentation stays accurate. Vienna summer time is UTC+2;
 winter is UTC+1. All cron times are UTC.
 
 Confirm there is exactly **one** Cloudflare cron trigger, then verify at least one
-automatic run after each interval change. The checked-in `wrangler.toml` represents
-the current 30-minute interval, not the original three-hour proposal.
+automatic run after each interval change. No local deployment configuration is
+required for this dashboard-managed setup.
 
 ### 7. Verified cleanup and retained execution workflow
 
-After three successful automatic test runs, this cleanup is now prepared locally:
+After three successful automatic test runs, the following cleanup was committed
+in `4e47ef0f` and `7a035468`:
 
 - The owner deleted `.github/workflows/schedule-canary.yml`.
 - The native `schedule:` block was removed from `.github/workflows/streamlit-availability.yml`.
 - `workflow_dispatch`, the job, its tests, permissions and concurrency remain intact.
 - The workflow comments now describe the Cloudflare trigger.
-- Commit/push the cleanup, then verify a further Cloudflare-triggered successful run.
+- The unused local deployment configuration was deleted; scheduling is dashboard-only.
+
+The previously verified runs predate these cleanup commits. A subsequent successful
+Cloudflare-triggered run confirms operation against the cleaned-up workflow.
 
 **Do not delete or disable `streamlit-availability.yml`.** That would break this
 method. Existing workflow concurrency serializes runs; it does not deduplicate
@@ -189,7 +192,7 @@ To stop the schedule, remove the Cloudflare cron trigger; for complete retiremen
 also revoke its GitHub token. Before an important presentation, independently open
 the Streamlit app and confirm it is ready.
 
-## Optional local checks / CLI deployment
+## Optional local checks
 
 The dashboard route above is sufficient. No npm packages are required for the
 offline tests; Node 22+ can run these from this directory:
@@ -199,24 +202,10 @@ node --check worker.mjs
 node --test worker.test.mjs
 ```
 
-For a future CLI-managed deployment using a compatible Node/npm installation:
-
-```powershell
-Set-Location 'D:\Masters\FH\Thesis\painting-restoration-eval\tools\streamlit_scheduler'
-npx wrangler@4 login
-npx wrangler@4 deploy
-npx wrangler@4 secret put GITHUB_TOKEN
-```
-
-The secret command prompts privately; do not put its value on the command line.
-Deploying before setting the secret may produce a harmless missing-secret cron
-failure until the secret is saved. No request is dispatched without the secret.
-If asked to create a paid resource or change plan, stop; neither is needed here.
-
-Choose one configuration owner: once using Wrangler, manage cron in `wrangler.toml`.
-A Wrangler deployment overwrites dashboard cron settings with the file's schedule.
-Dashboard edits do not update this repository automatically; keep source changes
-in sync. Local tests mock GitHub and are not evidence of a live Cloudflare deployment.
+These commands only check local code; they do not deploy or change the schedule.
+Manage deployments, secrets and cron through the Cloudflare dashboard. Dashboard
+code edits do not update this repository automatically; keep `worker.mjs` in sync.
+Local tests mock GitHub and are not evidence of a live Cloudflare deployment.
 Node's request implementation is not a substitute for workerd runtime validation:
 in particular, Node accepts redirect error mode while workerd rejects it. The
 Worker therefore uses manual mode and explicitly rejects redirects.
