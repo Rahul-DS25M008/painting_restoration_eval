@@ -34,3 +34,10 @@ outputs/logs/
 # outputs/supervisor_package/reports/*.html
 
 docs/proposal/Rahul_Thesis_Proposal_Old.docx
+
+# Local supervisor-meeting materials. Keep editable sources and assets local,
+# but version the two approved, self-contained PDF guides.
+docs/local_supervisor/*
+!docs/local_supervisor/Supervisor_Dashboard_Walkthrough_Guide.pdf
+!docs/local_supervisor/300_Painting_Scale_Up_Execution_and_Resource_Plan.pdf
+.codex_tmp/
