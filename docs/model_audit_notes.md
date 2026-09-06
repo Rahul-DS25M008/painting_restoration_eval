@@ -1,6 +1,7 @@
 # Model Audit Notes
 
-**Status:** completed-pipeline audit notes; reviewed 2026-09-04.
+**Status:** completed-pipeline audit notes with completed N37 extension addendum;
+reviewed 2026-09-06.
 
 This document records model selection, implementation provenance, evidence
 boundaries and reproducibility risks. Notebook 30 consumed an earlier version
@@ -357,3 +358,36 @@ The model stack is methodologically coherent:
 4. SDXL supplies a bounded higher-capacity partial comparison.
 
 The thesis contribution is the evaluation framework that shows where these restoration candidates improve, fail, disagree, hallucinate, smooth texture, create seams, alter structure, or vary across seeds—not a claim that any model reconstructs conservation truth.
+
+## 15. Completed HINT/MAT selection extension
+
+Notebook 37 compared HINT and MAT on the same twelve predeclared canonical cases
+and selected HINT for the future expanded run. This is a method-selection pilot,
+not an update to the completed full-benchmark stack above.
+
+| Candidate | Released checkpoint | Observed adapter | Licence consideration | Outcome |
+|---|---|---|---|---|
+| HINT | official Places2 | native 768 × 768 | MIT software; checkpoint terms recorded separately | selected for the future expansion |
+| MAT | official Places-512 FullData | 512 input, returned to exact-mask-composited 768 output | CC BY-NC 4.0, research-only constraint | retained as the pilot comparator; not selected |
+
+Both candidates produced all 12 required outputs and passed all 94 consolidated
+validation checks. HINT led 96 of 108 case-level metric anchors; MAT led 6 and 6
+were ties. Mean inference time was 8.26 seconds per case for HINT and 10.00
+seconds for MAT. Peak GPU memory was 5.06 GiB and 1.23 GiB, respectively.
+Complete visual review found that MAT often retained thin scratches and produced
+pale or fragmented large-loss completions, whereas HINT was more consistent
+across the paired scope.
+
+The comparison addressed a specific missing capability rather than adding a
+near-duplicate model. Telea is classical and deterministic, LaMa is a learned
+deterministic Fourier-convolution method, and Stable Diffusion is stochastic and
+prompt-conditioned. HINT adds a second deterministic learned family with
+mask-aware pixel-shuffle processing and spatially activated channel attention
+for multi-scale, long-range context. MAT supplied a credible transformer
+comparator but required a 512 adapter and carried a noncommercial licence.
+
+HINT and MAT are trained on general image/scene data, not conservation paintings.
+The selection therefore improves architectural coverage for the future
+benchmark without removing the domain gap or establishing conservation
+suitability. See the [complete selection report](../outputs/37_hint_mat_method_selection/reports/method_selection_report.html)
+and [recorded decision](../outputs/37_hint_mat_method_selection/reports/selection_decision.json).

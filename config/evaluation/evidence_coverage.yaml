@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.0.1"
+config_version: "1.1.1"
 
 evidence_coverage:
   authority:
@@ -13,6 +13,7 @@ evidence_coverage:
   post_completion_maintenance:
     recorded_on: "2026-09-04"
     completed_through_notebook_id: "36"
+    completed_post_pipeline_extensions_through_notebook_id: "37"
     all_saved_run_manifests_completed: true
     all_saved_completion_gates_passed: true
     completed_notebook_sources_and_outputs: "frozen_read_only"
@@ -1701,6 +1702,108 @@ evidence_coverage:
         - "computational_flags_or_retrieval_are_expert_ground_truth"
         - "visual_plausibility_establishes_historical_correctness_or_conservation_approval"
         - "a_universal_combined_quality_uncertainty_or_trustworthiness_score_exists"
+
+  post_pipeline_extensions:
+    - notebook_id: "37"
+      stem: "37_hint_mat_method_selection"
+      status: "completed"
+      completion_gate_passed: true
+      output_root: "outputs/37_hint_mat_method_selection"
+      manifest_path: "outputs/37_hint_mat_method_selection/manifests/run_manifest.json"
+      contract_path: "config/experiments/hint_mat_selection.yaml"
+      evidence_kind: "additional_method_selection_pilot"
+      creates_new_scientific_evidence: true
+      frozen_upstream_boundary: "notebooks_01_through_36_read_only"
+      selected_method: "hint_places2"
+      selection_report_path: "outputs/37_hint_mat_method_selection/reports/method_selection_report.html"
+      selection_decision_path: "outputs/37_hint_mat_method_selection/reports/selection_decision.json"
+      required_inputs:
+        - "outputs/01_dataset_verification/data/artworks.csv"
+        - "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+        - "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+        - "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv"
+        - "config/evaluation/metrics.yaml"
+      external_dependencies:
+        - model_id: "hint_places2"
+          repository_url: "https://github.com/ChrisChen1023/HINT"
+          repository_revision: "15e867d8c8689b9d5050383fc3884537ae876145"
+          checkpoint_id: "hint_places2_official"
+          license: "MIT"
+        - model_id: "mat_places_512_fulldata"
+          repository_url: "https://github.com/fenglinglwb/MAT"
+          repository_revision: "d273d891ecdad2e1df106516423a75bc45b2d800"
+          checkpoint_id: "mat_places_512_fulldata_official"
+          license: "CC-BY-NC-4.0"
+      observed_population:
+        paintings: 5
+        canonical_nonzero_cases: 12
+        methods: 2
+        candidates: 24
+        cases_per_damage_family: 3
+        minimum_cases_per_visual_category: 2
+        zero_control_qa_cases_excluded_from_candidate_count: 1
+        metric_rows: 15552
+        case_level_metric_anchors: 108
+        hint_anchor_wins: 96
+        mat_anchor_wins: 6
+        anchor_ties: 6
+        consolidated_validation_checks: 94
+        blocking_failures: 0
+        warning_failures: 0
+      independent_unit: "painting"
+      repeated_unit: "case_nested_within_painting"
+      source_selection_policy: "predeclared_balanced_canonical_non_metric.v1"
+      canonical_artifacts:
+        - "data/selection_scope.csv"
+        - "data/candidates.csv"
+        - "images/restored/hint/"
+        - "images/restored/mat/"
+        - "metrics/metric_values.csv"
+        - "metrics/runtime_summary.csv"
+        - "metrics/decision_scorecard.csv"
+        - "figures/smoke_comparison.png"
+        - "figures/metric_comparison.png"
+        - "figures/selection_atlas.png"
+        - "reports/method_selection_report.html"
+        - "reports/selection_decision.json"
+        - "manifests/run_manifest.json"
+        - "manifests/artifacts.csv"
+        - "validation/checks.csv"
+      supported_claims:
+        - "paired_descriptive_hint_mat_behavior_on_the_predeclared_twelve_cases"
+        - "relative_runtime_memory_and_technical_feasibility_on_recorded_hardware"
+        - "evidence_backed_selection_of_hint_for_future_expansion"
+        - "hint_adds_a_second_deterministic_learned_mask_aware_transformer_family"
+      prohibited_claims:
+        - "notebook_37_is_a_full_fourth_model_benchmark"
+        - "twelve_cases_establish_painting_domain_generality"
+        - "single_metric_or_combined_score_selects_the_method"
+        - "metric_results_establish_conservation_suitability_or_historical_correctness"
+        - "notebook_37_modifies_or_reinterprets_frozen_notebooks_01_through_36"
+      observed_execution:
+        hint_actual_resolution: 768
+        mat_actual_resolution: 512
+        mat_runtime_fallback: "supported_pytorch_fallback_for_optional_cuda_extension"
+        hint_mean_inference_seconds: 8.258333
+        mat_mean_inference_seconds: 10.001250
+        hint_parent_process_seconds_per_case: 10.598833
+        mat_parent_process_seconds_per_case: 13.237250
+        hint_peak_gpu_memory_gib: 5.059851
+        mat_peak_gpu_memory_gib: 1.233452
+      selection_rationale:
+        - "hint_led_96_of_108_case_level_metric_anchors"
+        - "complete_visual_review_favored_hint_across_thin_scratches_and_large_losses"
+        - "hint_preserved_the_native_768_evaluation_canvas"
+        - "hint_mit_license_is_more_suitable_for_later_reuse_than_mat_noncommercial_license"
+        - "hint_adds_mask_aware_transformer_and_long_range_context_evidence_beyond_the_frozen_stack"
+      completion_requirements_met:
+        official_source_and_checkpoint_identity_recorded: true
+        twenty_four_paired_outputs_complete: true
+        actual_adapter_and_fallback_behavior_recorded: true
+        exact_outside_mask_preservation: true
+        finite_required_metrics: true
+        complete_paired_visual_atlas_reviewed_by_user: true
+        human_decision_recorded: "hint"
 
   removed_unsupported_requirements:
     - requirement_id: "focused_experiment_inferential_category_style_interactions"

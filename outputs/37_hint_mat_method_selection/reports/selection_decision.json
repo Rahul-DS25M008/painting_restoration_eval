@@ -1,0 +1,52 @@
+{
+  "schema_version": "hint_mat_selection_decision.v1",
+  "notebook_id": "37",
+  "notebook_stem": "37_hint_mat_method_selection",
+  "experiment_id": "hint_mat_method_selection",
+  "decision_status": "selected",
+  "selected_method": "hint",
+  "selected_model_id": "hint_places2",
+  "selected_model_label": "HINT",
+  "rejected_model_id": "mat_places_512_fulldata",
+  "rejected_model_label": "MAT",
+  "decision_owner": "researcher",
+  "decision_recorded_at_utc": "2026-09-06T02:12:12.204704Z",
+  "pilot_scope": {
+    "paintings": 5,
+    "cases": 12,
+    "candidates": 24,
+    "damage_families": 4,
+    "visual_categories": 5
+  },
+  "paired_evidence": {
+    "separate_anchor_count": 9,
+    "paired_comparison_count": 108,
+    "hint_case_anchor_wins": 96,
+    "mat_case_anchor_wins": 6,
+    "ties": 6,
+    "combined_score_constructed": false
+  },
+  "human_visual_assessment": [
+    "HINT removed thin scratches more cleanly and retained stronger local continuity.",
+    "MAT frequently retained thin lines or introduced pale fragmented structures.",
+    "HINT remained imperfect on some large and mixed losses."
+  ],
+  "selection_rationale": [
+    "HINT won all twelve paired cases on eight of the nine selected anchors.",
+    "Its advantage covered reference, perceptual, feature, colour, texture and boundary evidence.",
+    "HINT completed all cases at native 768 by 768 resolution.",
+    "HINT's MIT software license is simpler for continued research reuse."
+  ],
+  "limitations": [
+    "The purposive twelve-case pilot supports method selection, not a fourth full-benchmark claim.",
+    "Cases are nested within five paintings; painting is the independent unit.",
+    "Both released checkpoints are trained on photographic scene data rather than paintings.",
+    "The HINT 512 fallback and MAT 512 adapter introduce resampling into a 768-pixel benchmark.",
+    "Exact-mask compositing preserves observed pixels but can expose boundary mismatch.",
+    "Metrics are complementary diagnostic evidence; no universal quality or trustworthiness score is constructed.",
+    "Human visual review is required and may select neither method.",
+    "MAT carries a noncommercial research license; deployment or broader reuse requires license review.",
+    "Selection for expansion does not make HINT a conservation-approved method."
+  ],
+  "future_benchmark_role": "Selected additional learned inpainting method for the planned 300-painting expansion."
+}

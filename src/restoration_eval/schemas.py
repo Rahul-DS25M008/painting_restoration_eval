@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.17.0"
+SCHEMAS_MODULE_VERSION = "1.18.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -682,6 +682,45 @@ REPRESENTATIVE_CASES_COLUMNS = (
     "selection_metric_id", "selection_score", "selection_rank",
     "selection_reason", "source_artifact_paths", "embedded_report_role",
     "path_validation_status", "schema_version", "status", "issue",
+)
+
+HINT_MAT_SELECTION_SCOPE_COLUMNS = (
+    "selection_rank", "case_id", "painting_id", "category", "experiment_id",
+    "damage_type", "target_damage_fraction", "realized_damage_fraction",
+    "input_image_path", "clean_image_path", "mask_path", "source_manifest_path",
+    "selection_policy", "status", "issue",
+)
+
+HINT_MAT_CANDIDATE_COLUMNS = (
+    "candidate_id", "candidate_index", "selection_rank", "case_id",
+    "painting_id", "category", "experiment_id", "damage_type",
+    "realized_damage_fraction", "input_image_path", "clean_image_path",
+    "mask_path", "input_sha256", "clean_sha256", "mask_sha256", "model_id",
+    "model_label", "implementation", "repository_url", "repository_revision",
+    "checkpoint_id", "checkpoint_path", "checkpoint_sha256", "license",
+    "configuration_id", "adapter_policy", "seed", "requested_device",
+    "actual_device", "precision", "inference_width", "inference_height",
+    "output_width", "output_height", "compositing_policy", "execution_action",
+    "restored_path", "restored_sha256", "model_load_seconds",
+    "inference_seconds", "runtime_seconds", "gpu_peak_memory_bytes",
+    "output_geometry_valid", "outside_mask_changed_pixels",
+    "technical_validation_passed", "started_at_utc", "completed_at_utc",
+    "generator_name", "generator_version", "status", "failure_type",
+    "worker_return_code", "error_type", "error_message", "issue",
+)
+
+HINT_MAT_METRIC_VALUE_COLUMNS = (
+    "metric_row_id", "candidate_id", "case_id", "painting_id", "category",
+    "model_id", "metric_family", "metric_name", "region_id", "value",
+    "preferred_direction", "metric_version", "region_policy_version",
+    "status", "issue",
+)
+
+HINT_MAT_DECISION_SCORECARD_COLUMNS = (
+    "scorecard_row_id", "model_id", "criterion_family", "criterion_id",
+    "criterion_label", "evidence_value", "evidence_unit",
+    "preferred_direction", "hard_gate", "gate_passed", "evidence_path",
+    "status", "issue",
 )
 
 @dataclass(frozen=True)
@@ -1800,6 +1839,71 @@ REPRESENTATIVE_CASES_SCHEMA = DataFrameSchema(
     },
 )
 
+HINT_MAT_SELECTION_SCOPE_SCHEMA = DataFrameSchema(
+    name="hint_mat_selection_scope",
+    version="hint_mat_selection_scope.v1",
+    required_columns=HINT_MAT_SELECTION_SCOPE_COLUMNS,
+    primary_key=("case_id",),
+    non_nullable=tuple(column for column in HINT_MAT_SELECTION_SCOPE_COLUMNS if column != "issue"),
+    allowed_values={
+        "experiment_id": frozenset({"canonical_missing_region"}),
+        "damage_type": frozenset({"scratch_thin", "loss_small", "loss_large", "mixed_damage"}),
+        "selection_policy": frozenset({"predeclared_balanced_canonical_non_metric.v1"}),
+        "status": frozenset({"passed"}),
+    },
+)
+
+HINT_MAT_CANDIDATES_SCHEMA = DataFrameSchema(
+    name="hint_mat_candidates",
+    version="hint_mat_candidates.v1",
+    required_columns=HINT_MAT_CANDIDATE_COLUMNS,
+    primary_key=("candidate_id",),
+    non_nullable=tuple(
+        column for column in HINT_MAT_CANDIDATE_COLUMNS
+        if column not in {
+            "actual_device", "restored_sha256", "model_load_seconds",
+            "inference_seconds", "runtime_seconds", "gpu_peak_memory_bytes",
+            "outside_mask_changed_pixels", "started_at_utc", "completed_at_utc",
+            "worker_return_code", "error_type", "error_message", "issue",
+        }
+    ),
+    allowed_values={
+        "model_id": frozenset({"hint_places2", "mat_places_512_fulldata"}),
+        "requested_device": frozenset({"cuda"}),
+        "status": frozenset({"planned", "completed", "failed", "not_executed"}),
+        "failure_type": frozenset({
+            "none", "model_unavailable", "model_load_failure", "inference_failure",
+            "cuda_out_of_memory", "runtime_guardrail", "technical_validation",
+        }),
+    },
+)
+
+HINT_MAT_METRIC_VALUES_SCHEMA = DataFrameSchema(
+    name="hint_mat_metric_values",
+    version="hint_mat_metric_values.v1",
+    required_columns=HINT_MAT_METRIC_VALUE_COLUMNS,
+    primary_key=("metric_row_id",),
+    non_nullable=tuple(column for column in HINT_MAT_METRIC_VALUE_COLUMNS if column != "issue"),
+    allowed_values={
+        "model_id": frozenset({"hint_places2", "mat_places_512_fulldata"}),
+        "preferred_direction": frozenset({"higher_is_better", "lower_is_better", "descriptive"}),
+        "status": frozenset({"ok", "not_applicable", "error"}),
+    },
+)
+
+HINT_MAT_DECISION_SCORECARD_SCHEMA = DataFrameSchema(
+    name="hint_mat_decision_scorecard",
+    version="hint_mat_decision_scorecard.v1",
+    required_columns=HINT_MAT_DECISION_SCORECARD_COLUMNS,
+    primary_key=("scorecard_row_id",),
+    non_nullable=tuple(column for column in HINT_MAT_DECISION_SCORECARD_COLUMNS if column != "issue"),
+    allowed_values={
+        "model_id": frozenset({"hint_places2", "mat_places_512_fulldata"}),
+        "preferred_direction": frozenset({"higher_is_better", "lower_is_better", "pass_required", "descriptive"}),
+        "status": frozenset({"ok", "warning", "failed", "not_applicable"}),
+    },
+)
+
 SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     ARTIFACT_MANIFEST_SCHEMA.name: ARTIFACT_MANIFEST_SCHEMA,
     VALIDATION_CHECKS_SCHEMA.name: VALIDATION_CHECKS_SCHEMA,
@@ -1845,6 +1949,10 @@ SCHEMA_REGISTRY: dict[str, DataFrameSchema] = {
     MODEL_COMPARISON_SCHEMA.name: MODEL_COMPARISON_SCHEMA,
     METRIC_DISAGREEMENT_SCHEMA.name: METRIC_DISAGREEMENT_SCHEMA,
     REPRESENTATIVE_CASES_SCHEMA.name: REPRESENTATIVE_CASES_SCHEMA,
+    HINT_MAT_SELECTION_SCOPE_SCHEMA.name: HINT_MAT_SELECTION_SCOPE_SCHEMA,
+    HINT_MAT_CANDIDATES_SCHEMA.name: HINT_MAT_CANDIDATES_SCHEMA,
+    HINT_MAT_METRIC_VALUES_SCHEMA.name: HINT_MAT_METRIC_VALUES_SCHEMA,
+    HINT_MAT_DECISION_SCORECARD_SCHEMA.name: HINT_MAT_DECISION_SCORECARD_SCHEMA,
 }
 
 

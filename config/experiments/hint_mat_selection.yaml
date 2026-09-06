@@ -1,0 +1,208 @@
+config_schema_version: "hint_mat_selection_config.v1"
+config_version: "1.0.0"
+
+dataset:
+  dataset_id: "painting_restoration_eval"
+  dataset_version: "1.0.0"
+  dataset_scope: "controlled_50"
+  experiment_id: "canonical_hint_mat_method_selection"
+
+inputs:
+  inventory_path: "outputs/inventory/project_file_inventory.csv"
+  inventory_run_path: "outputs/inventory/inventory_run.json"
+  project_paths_path: "outputs/inventory/project_paths.json"
+  artworks_path: "outputs/01_dataset_verification/data/artworks.csv"
+  preprocessed_images_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+  case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+  region_policy_path: "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv"
+  upstream_run_manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+  implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+  notebook_roadmap_path: "docs/final_notebook_roadmap.md"
+  evidence_dependency_audit_path: "docs/evidence_dependency_audit.md"
+  evidence_coverage_path: "config/evaluation/evidence_coverage.yaml"
+  metrics_config_path: "config/evaluation/metrics.yaml"
+  adapter_requirements_path: "requirements_n37.txt"
+
+output:
+  notebook_id: "37"
+  notebook_stem: "37_hint_mat_method_selection"
+  output_root: "outputs/37_hint_mat_method_selection"
+  selection_scope_path: "data/selection_scope.csv"
+  candidates_path: "data/candidates.csv"
+  metric_values_path: "metrics/metric_values.csv"
+  runtime_summary_path: "metrics/runtime_summary.csv"
+  decision_scorecard_path: "metrics/decision_scorecard.csv"
+  smoke_figure_path: "figures/smoke_comparison.png"
+  metric_figure_path: "figures/metric_comparison.png"
+  atlas_figure_path: "figures/selection_atlas.png"
+  report_path: "reports/method_selection_report.html"
+  decision_path: "reports/selection_decision.json"
+  run_manifest_path: "manifests/run_manifest.json"
+  artifacts_path: "manifests/artifacts.csv"
+  validation_path: "validation/checks.csv"
+  work_directory: "work"
+  hint_restored_directory: "images/restored/hint"
+  mat_restored_directory: "images/restored/mat"
+
+external_assets:
+  environment_variables:
+    hint_repo_root: "HINT_REPO_ROOT"
+    hint_checkpoint_path: "HINT_CHECKPOINT_PATH"
+    mat_repo_root: "MAT_REPO_ROOT"
+    mat_checkpoint_path: "MAT_CHECKPOINT_PATH"
+  hint:
+    repository_url: "https://github.com/ChrisChen1023/HINT"
+    repository_revision: "15e867d8c8689b9d5050383fc3884537ae876145"
+    checkpoint_id: "hint_places2_official"
+    checkpoint_family: "Places2"
+    expected_checkpoint_filename: "InpaintingModel_gen.pth"
+    default_repo_root: "D:/Models/HINT"
+    default_checkpoint_path: "D:/Models/HINT/checkpoints/places2/InpaintingModel_gen.pth"
+    license: "MIT"
+    license_scope: "permissive_software_license_checkpoint_terms_must_be_checked_at_download"
+  mat:
+    repository_url: "https://github.com/fenglinglwb/MAT"
+    repository_revision: "d273d891ecdad2e1df106516423a75bc45b2d800"
+    checkpoint_id: "mat_places_512_fulldata_official"
+    checkpoint_family: "Places365-Standard FullData"
+    expected_checkpoint_filename: "Places_512_FullData.pkl"
+    default_repo_root: "D:/Models/MAT"
+    default_checkpoint_path: "D:/Models/MAT/pretrained/Places_512_FullData.pkl"
+    license: "CC-BY-NC-4.0"
+    license_scope: "noncommercial_research_only"
+
+models:
+  hint:
+    model_id: "hint_places2"
+    label: "HINT"
+    methodological_role: "candidate_additional_learned_inpainting_method"
+    implementation: "official HINT generator loaded directly"
+    worker_module: "restoration_eval.restoration_hint_worker"
+    seed: 2026
+    requested_device: "cuda"
+    precision: "float32"
+    native_probe_size: 768
+    fallback_size: 512
+    adapter_policy: "native_768_then_512_resize_adapter_if_required.v1"
+    canonical_mask_semantics: "one_is_missing"
+    compositing_policy: "exact_missing_mask_composite_at_768.v1"
+  mat:
+    model_id: "mat_places_512_fulldata"
+    label: "MAT"
+    methodological_role: "candidate_additional_transformer_inpainting_method"
+    implementation: "official MAT Generator with Places-512 FullData checkpoint"
+    worker_module: "restoration_eval.restoration_mat_worker"
+    seed: 2026
+    requested_device: "cuda"
+    precision: "float32"
+    inference_size: 512
+    adapter_policy: "resize_768_to_512_then_restore_and_exact_composite_768.v1"
+    official_mask_semantics: "zero_is_missing_one_is_retained"
+    canonical_mask_semantics: "one_is_missing"
+    compositing_policy: "exact_missing_mask_composite_at_768.v1"
+    truncation_psi: 1.0
+    noise_mode: "const"
+
+selection:
+  policy_id: "predeclared_balanced_canonical_non_metric.v1"
+  prohibit_metric_selection: true
+  independent_unit: "painting"
+  repeated_unit: "case_nested_within_painting"
+  case_count: 12
+  model_count: 2
+  candidate_count: 24
+  damage_family_count: 4
+  cases_per_damage_family: 3
+  minimum_cases_per_category: 2
+  zero_control_qa_case_id: "canonical__p001__zero_control"
+  cases:
+    - {selection_rank: 1, case_id: "canonical__p001__loss_large"}
+    - {selection_rank: 2, case_id: "canonical__p001__mixed_damage"}
+    - {selection_rank: 3, case_id: "canonical__p018__loss_small"}
+    - {selection_rank: 4, case_id: "canonical__p018__mixed_damage"}
+    - {selection_rank: 5, case_id: "canonical__p026__scratch_thin"}
+    - {selection_rank: 6, case_id: "canonical__p026__loss_large"}
+    - {selection_rank: 7, case_id: "canonical__p039__scratch_thin"}
+    - {selection_rank: 8, case_id: "canonical__p039__loss_small"}
+    - {selection_rank: 9, case_id: "canonical__p039__mixed_damage"}
+    - {selection_rank: 10, case_id: "canonical__p043__scratch_thin"}
+    - {selection_rank: 11, case_id: "canonical__p043__loss_small"}
+    - {selection_rank: 12, case_id: "canonical__p043__loss_large"}
+
+execution:
+  progress_interval_cases: 1
+  checkpoint_interval_cases: 1
+  resume_enabled: true
+  overwrite_existing: false
+  retry_failed_attempts: false
+  model_load_timeout_seconds: 900
+  per_case_timeout_seconds: 900
+  smoke_case_count: 2
+  full_model_budget_seconds: 7200
+  stop_after_cuda_oom: true
+  stop_after_model_failure: true
+  output_mode: "RGB"
+  output_format: "PNG"
+  png_compress_level: 6
+
+evaluation:
+  reference_regions:
+    - "full_image"
+    - "content_region"
+    - "masked_region"
+    - "mask_bbox_crop"
+    - "boundary_ring_5px"
+    - "outside_mask_content"
+  metric_families:
+    - "classical_reference"
+    - "lpips"
+    - "clip_dinov2"
+    - "texture_directional"
+    - "colour_ciede2000"
+    - "boundary_seam"
+    - "semantic_structural"
+    - "spatial_diagnostics"
+  construct_combined_score: false
+  inferential_testing: false
+  comparison_scope: "paired_descriptive_twelve_case_selection"
+
+decision:
+  decision_owner: "human_review_after_batch_8"
+  eligible_outcomes: ["hint", "mat", "neither"]
+  hard_gates:
+    - "official_checkpoint_loaded"
+    - "all_12_outputs_complete"
+    - "output_geometry_768_rgb"
+    - "outside_mask_unchanged"
+    - "finite_required_metrics"
+    - "no_unresolved_runtime_or_license_blocker"
+  comparison_dimensions:
+    - "technical_reliability"
+    - "reference_fidelity"
+    - "perceptual_and_feature_fidelity"
+    - "texture_colour_and_seam_quality"
+    - "semantic_structural_consistency"
+    - "runtime_and_memory"
+    - "visual_failure_modes"
+  tie_break_policy: "prefer_hint_only_when_hard_gates_pass_and_quality_is_practically_comparable"
+  prohibit_automatic_winner: true
+
+schema_versions:
+  selection_scope: "hint_mat_selection_scope.v1"
+  candidates: "hint_mat_candidates.v1"
+  metric_values: "hint_mat_metric_values.v1"
+  decision_scorecard: "hint_mat_decision_scorecard.v1"
+  selection_decision: "hint_mat_selection_decision.v1"
+  run_manifest: "run_manifest.v1"
+  artifact_manifest: "artifact_manifest.v1"
+  validation_checks: "validation_checks.v1"
+
+known_limitations:
+  - "The purposive twelve-case pilot supports method selection, not a fourth full-benchmark claim."
+  - "Cases are nested within five paintings; painting is the independent unit."
+  - "Both released checkpoints are trained on photographic scene data rather than paintings."
+  - "The HINT 512 fallback and MAT 512 adapter introduce resampling into a 768-pixel benchmark."
+  - "Exact-mask compositing preserves observed pixels but can expose boundary mismatch."
+  - "Metrics are complementary diagnostic evidence; no universal quality or trustworthiness score is constructed."
+  - "Human visual review is required and may select neither method."
+  - "MAT carries a noncommercial research license; deployment or broader reuse requires license review."

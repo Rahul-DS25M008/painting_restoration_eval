@@ -29,6 +29,12 @@ coverage changed. The executed N11/N12 contracts now link to their completion
 evidence, and the experimental requirements header distinguishes its legacy
 recipe from the actual saved environments without changing dependency pins.
 
+**Completed extension review: 2026-09-06.** Notebook 37 completed as a separate
+HINT-versus-MAT method-selection experiment and selected HINT for the planned
+expanded benchmark. This changes no frozen Notebook 01–36 evidence. Its exact
+inputs, outputs, population, source/checkpoint requirements, observed results,
+and decision boundaries are recorded in Section 6.2 and the YAML registry.
+
 ## 2. Original frozen baseline and completed-pipeline protection
 
 Notebooks 01–21 and their notebook-owned canonical outputs are frozen. Their
@@ -769,6 +775,77 @@ execution was still unverified at this maintenance review. Historical N35/N36
 flags and their checksummed outputs remain unchanged and must not be rewritten
 to imply that the original runs deployed the app.
 
+### 6.2 Completed Notebook 37 HINT/MAT method-selection extension
+
+Notebook 37 is a completed, separately owned scientific extension. It compared
+HINT and MAT and selected HINT as the additional method for the planned expanded
+benchmark. It must not be merged into the completed three-method
+leaderboard or described as a fourth full-model benchmark.
+
+| Contract element | Approved value |
+|---|---|
+| Output owner | `outputs/37_hint_mat_method_selection/` |
+| Source population | frozen N08 canonical case registry |
+| Independent unit | painting |
+| Repeated/nested unit | case nested within painting |
+| Paintings | `p001`, `p018`, `p026`, `p039`, `p043` |
+| Comparison cases | 12 predeclared nonzero canonical cases |
+| Candidates | 24 = 12 HINT + 12 MAT |
+| Damage coverage | 3 each of `scratch_thin`, `loss_small`, `loss_large`, `mixed_damage` |
+| Category coverage | all five categories; at least two cases per category |
+| Identity QA | `canonical__p001__zero_control`, excluded from comparison counts |
+| Statistical scope | paired descriptive evidence; no inferential p-values |
+| Decision owner | user after complete visual and numerical review |
+| Recorded decision | HINT |
+| Metric-anchor result | HINT 96, MAT 6, ties 6 of 108 |
+| Validation | 94 of 94 checks pass; no blocking or warning failures |
+
+Evidence dependencies are limited to fixed paths declared in
+`config/experiments/hint_mat_selection.yaml`. Notebook 37 may read frozen clean,
+damaged, mask, content-geometry, region-policy, metric-definition, model-report,
+and compute evidence, but all HINT/MAT outputs and metrics are newly computed and
+owned by Notebook 37.
+
+The integration boundary is explicit:
+
+- official repositories and checkpoints remain outside the project tree;
+- HINT uses its official Places2 checkpoint and completed at native 768 × 768;
+- MAT uses its official Places-512 FullData checkpoint and a declared 512
+  adapter;
+- MAT's retained-pixel mask convention is converted from the repository's
+  canonical missing-pixel convention;
+- both methods return exact-mask-composited 768 × 768 RGB outputs;
+- source revision, checkpoint checksum, adapter, runtime, GPU memory, license,
+  failures, and fallback behavior remain visible.
+
+Supported claims are limited to relative technical feasibility, paired metric
+behavior, visible restoration strengths/failures, runtime/memory suitability,
+and the evidence-backed choice of HINT for the later expanded run. Prohibited
+claims include full-benchmark superiority,
+painting-domain generalization, conservation suitability, human plausibility,
+calibrated uncertainty, and any universal combined score.
+
+The selection gate passed: both methods produced all twelve outputs, preserved
+outside-mask pixels exactly, returned valid geometry and finite required
+metrics, and resolved their runtime, dependency, and licence records. HINT ran
+at native 768 × 768; MAT used the declared 512 adapter and supported PyTorch
+fallback. Mean inference time was 8.26 seconds per case for HINT and 10.00
+seconds for MAT; peak GPU memory was 5.06 GiB and 1.23 GiB, respectively.
+
+HINT led 96 of 108 case-level anchors, MAT led 6, and 6 were ties. Complete
+visual review also found MAT more likely to retain thin scratches or produce
+pale, fragmented large-loss completions. HINT was therefore selected on the
+combined technical, metric, and visual record. Its MIT licence supports later
+reuse, while MAT's noncommercial licence remains a deployment constraint rather
+than a hidden numerical penalty.
+
+The reason for testing these methods was architectural coverage. The frozen
+benchmark contains a classical deterministic method, one learned deterministic
+method, and one stochastic prompt-conditioned method. HINT adds a second
+deterministic learned family with mask-aware transformer processing and
+long-range context modelling. This extends the future design without claiming
+that the 12-case pilot resolves painting-domain generalization.
+
 ## 7. Removed unsupported promises
 
 The following items were removed from the future roadmap and must not be silently
@@ -812,8 +889,9 @@ and `outputs/inventory/` remains the sole global output exception.
 
 ## 9. Update protocol
 
-No notebook remains unimplemented in the approved 36-stage pipeline. Before
-Batch 1 of any explicitly approved extension or reopening:
+No notebook remains unimplemented in the approved 36-stage pipeline or the
+completed Notebook 37 extension. Before Batch 1 of any further explicitly
+approved extension or reopening:
 
 1. Resolve every responsibility to an entry in
    `config/evaluation/evidence_coverage.yaml`.

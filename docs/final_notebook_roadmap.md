@@ -8,12 +8,13 @@ This roadmap defines the final dependency order and detailed responsibility of e
 
 It consolidates the previously planned roadmap into 36 stages while preserving the supported methodological, experimental, engineering, reporting, explainability, and deployment scope.
 
-**Status as of 2026-09-04:** all 36 notebooks are complete and their saved run
-manifests record passed completion gates. Notebook sources and canonical outputs
-are frozen. This document is now the responsibility and dependency map of the
-completed pipeline, not a queue of unimplemented notebooks. `Origin` records
-lineage only; the completion ledger and producer manifests record actual scope
-and any non-blocking warnings.
+**Status as of 2026-09-06:** all 36 core notebooks and the separate Notebook 37
+method-selection extension are complete and their saved run manifests record
+passed completion gates. Notebook 01–36 sources and canonical outputs remain
+frozen; Notebook 37 owns its new pilot evidence separately. This document is now
+the responsibility and dependency map of the completed work, not a queue of
+unimplemented notebooks. `Origin` records lineage only; the completion ledger
+and producer manifests record actual scope and any non-blocking warnings.
 
 The approved eight-page dashboard is publicly deployed at
 [the Streamlit application](https://fhtw-painting-restoration.streamlit.app/).
@@ -2403,6 +2404,179 @@ integrity checks live in `src/restoration_eval/supervisor_package.py`.
 
 ---
 
+# Completed post-pipeline method-selection extension
+
+## 37 — HINT and MAT Method Selection
+
+**Origin:** Explicit post-pipeline extension; Notebooks 01–36 remain frozen\
+**Refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
+**Output root:** `outputs/37_hint_mat_method_selection/`\
+**Depends on:** Notebooks 01, 02, 03, 04, 08, 13–17, 19–21, 27–30, and the
+governing evidence-coverage registry
+
+### Purpose
+
+Run a small, controlled head-to-head pilot of two candidate additions to the
+expanded benchmark: HINT and MAT. The notebook selected HINT as the method most
+suitable for a later full 300-painting execution. It does not append either
+method to the completed three-method benchmark, change any frozen result, or
+claim that twelve cases constitute a full evaluation.
+
+### Approved evidence population
+
+The comparison contains exactly twelve predeclared, nonzero canonical cases and
+twenty-four outputs: one HINT and one MAT result for every case. The cases span
+all five broad visual categories and contain exactly three examples of each
+canonical damage family:
+
+| Painting | Visual category | Approved cases |
+|---|---|---|
+| `p001` | portrait/figure | `loss_large`, `mixed_damage` |
+| `p018` | landscape/natural | `loss_small`, `mixed_damage` |
+| `p026` | architecture/structured | `scratch_thin`, `loss_large` |
+| `p039` | abstraction/surrealism | `scratch_thin`, `loss_small`, `mixed_damage` |
+| `p043` | high-texture/brushwork | `scratch_thin`, `loss_small`, `loss_large` |
+
+The exact IDs and order are frozen in
+`config/experiments/hint_mat_selection.yaml`. Selection is based on design
+coverage and never on downstream metric values. The declared `p001` zero-control
+case is used only to verify identity/no-op handling and is not part of the
+twelve-case comparison.
+
+### Model and adapter contract
+
+- HINT uses the official repository revision and released Places2 checkpoint.
+  It completed the pilot at the native 768 × 768 canvas; its declared 512 × 512
+  fallback was not required.
+- MAT uses the official repository revision and Places-512 FullData checkpoint.
+  Its input is adapted from 768 × 768 to 512 × 512. The canonical mask is
+  inverted because MAT's official interface uses zero for missing pixels and
+  one for retained pixels.
+- Both methods use seed `2026` wherever stochastic operations exist, return an
+  RGB image to the 768 × 768 evaluation canvas, and replace only the canonical
+  missing pixels. Every output must therefore preserve all outside-mask input
+  pixels exactly.
+- Released code and checkpoints remain external dependencies. Repository URLs,
+  revisions, checkpoint checksums, adapters, environment, GPU, peak memory, and
+  observed load/inference times must be recorded.
+- Both methods passed the technical hard gates. HINT was selected from the full
+  metric and visual evidence, not through the operational tie-break. MAT's
+  noncommercial research license remains an additional deployment constraint.
+
+### Evaluation responsibilities
+
+Compute paired descriptive evidence for every completed output, reusing the
+approved metric definitions and canonical region policy:
+
+- pixel error, PSNR, and SSIM;
+- LPIPS;
+- CLIP and DINOv2 feature similarity;
+- texture and directional/brushstroke proxies;
+- colour differences including CIEDE2000;
+- boundary and seam evidence;
+- semantic and structural feature proxies;
+- difference, error, improvement, colour, seam, and semantic/structural maps
+  where applicable;
+- runtime, model-load time, inference time, peak GPU memory, and failures.
+
+No combined quality score, inferential p-value, calibrated confidence, or
+conservation-suitability label may be constructed. Cases are nested within five
+paintings, so the independent unit is the painting. The compact sample supports
+paired descriptive method selection, not population-level inference.
+
+### Completed human selection gate
+
+The final choice remained explicitly human-owned. HINT was selected only after
+both methods completed the required gate:
+
+- load the official declared checkpoint;
+- complete all twelve outputs;
+- produce valid 768 × 768 RGB files;
+- preserve every outside-mask pixel exactly;
+- produce finite required metrics;
+- have no unresolved runtime, memory, dependency, or license blocker; and
+- pass visual inspection for missing content, blur, seams, colour shift,
+  texture failure, structural drift, and implausible additions.
+
+The final report shows the complete paired visual scope, retains separate metric
+families, states why HINT is better suited to the expanded run, and explains the
+important metric/visual disagreements. Batch 9 recorded the decision after the
+user completed the visual review.
+
+### Observed outcome
+
+- All 24 candidates completed: 12 HINT and 12 MAT outputs across the exact
+  predeclared cases.
+- All 94 consolidated validation checks passed with no blocking or warning
+  failures; every output was 768 × 768 RGB and preserved outside-mask pixels.
+- HINT ran natively at 768 × 768. MAT used its declared 512 × 512 adapter and a
+  supported PyTorch fallback for the optional CUDA extension.
+- HINT led 96 of 108 case-level metric anchors, MAT led 6, and 6 were ties.
+- Mean inference time was 8.26 seconds per case for HINT and 10.00 seconds for
+  MAT. Recorded peak GPU memory was 5.06 GiB and 1.23 GiB, respectively.
+- Complete visual review found that MAT often retained thin scratches and
+  produced pale or fragmented large-loss completions. HINT was selected.
+
+HINT fills a capability missing from the frozen benchmark: a second
+deterministic learned method with mask-aware transformer processing and
+long-range context modelling, complementing classical Telea, Fourier-convolution
+LaMa, and stochastic prompt-conditioned Stable Diffusion. The selection is for
+future expansion only; it does not make HINT a fourth evaluated method in the
+existing leaderboard.
+
+### Approved batches
+
+1. Contract, environment, dependency, license, and external-asset preflight.
+2. Exact population construction and 768/512 adapter validation.
+3. Two-case paired smoke test covering thin and larger/mixed geometry.
+4. Guarded full HINT execution with checkpointing and progress per case.
+5. Guarded full MAT execution with checkpointing and progress per case.
+6. Reference, perceptual, and feature metrics.
+7. Texture, colour, seam, semantic/structural, and spatial diagnostics.
+8. Paired descriptive analysis, complete visual atlas, and selection report.
+9. Human decision record, persistence, manifests, validation, and completion.
+
+### Canonical outputs
+
+```text
+data/selection_scope.csv
+data/candidates.csv
+images/restored/hint/
+images/restored/mat/
+metrics/metric_values.csv
+metrics/runtime_summary.csv
+metrics/decision_scorecard.csv
+figures/smoke_comparison.png
+figures/metric_comparison.png
+figures/selection_atlas.png
+reports/method_selection_report.html
+reports/selection_decision.json
+manifests/run_manifest.json
+manifests/artifacts.csv
+validation/checks.csv
+```
+
+The output root is created by the notebook. External repositories, checkpoints,
+temporary model caches, and downloaded weights are not notebook artifacts and
+must not be copied into the project repository.
+
+### Completion gate
+
+- Exact 12-case scope and 24 paired candidates are persisted and reload.
+- All four damage families have three cases and every visual category has at
+  least two cases.
+- HINT and MAT use the pinned official source/checkpoint identities.
+- Actual adapter resolution and all fallback behavior are recorded.
+- All required files, metrics, checksums, and visual comparisons exist.
+- The recorded decision is `HINT` and is supported by separate technical,
+  quality, runtime, license, and human-review evidence.
+- No result modifies or retroactively reinterprets Notebooks 01–36.
+- Governing audits and inventory are updated after completion.
+
+---
+
 # 4. Cross-cutting requirements matrix
 
 | Requirement | Primary notebook(s) |
@@ -2438,10 +2612,12 @@ integrity checks live in `src/restoration_eval/supervisor_package.py`.
 | Dashboard assets | 34 |
 | Dashboard/deployment validation | 35 |
 | Supervisor/publication/reproducibility package | 36 |
+| Post-pipeline HINT/MAT method selection pilot and HINT decision | 37 |
 
 ## 5. Completed sequence and maintenance boundary
 
-The approved sequence is complete:
+The approved 36-notebook sequence and the separate Notebook 37 method-selection
+extension are complete:
 
 1. Notebooks 01–21 established the frozen baseline.
 2. Notebook 22 added and validated the 35 complete damage-size uncertainty groups
@@ -2450,11 +2626,12 @@ The approved sequence is complete:
 4. Notebooks 31–36 completed reporting, dashboard preparation/validation, and packaging.
 5. The approved application subsequently gained exact numerical views and public
    deployment without rerunning notebooks or recomputing scientific results.
+6. Notebook 37 compared HINT and MAT on 12 paired canonical cases and selected
+   HINT for the planned expansion without modifying the core benchmark.
 
-Current work is targeted documentation maintenance. All 36 completed notebooks,
-canonical outputs, historical manifests, and packaged snapshots remain frozen.
-Any new scientific responsibility requires an explicit evidence-dependency audit
-and approved extension contract; the manual batch workflow remains mandatory
-for such work. Documentation cleanup is not permission to redesign the dashboard
-or create evidence that the completed pipeline did not produce.
+All 36 completed notebooks, canonical outputs, historical manifests, and packaged
+snapshots remain frozen. Notebook 37 owns all HINT/MAT pilot evidence under its
+output root and may not append to those frozen artifacts. Any additional
+scientific responsibility still requires an explicit evidence-dependency audit
+and approved extension contract; the manual batch workflow remains mandatory.
 

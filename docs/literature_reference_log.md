@@ -1,8 +1,8 @@
 # Literature Reference Log
 
 **Status:** completed-pipeline literature audit and expanded reading log\
-**Reviewed:** 2026-09-04\
-**Scope:** 36 completed notebooks; controlled 50-painting study and approved dashboard\
+**Reviewed:** 2026-09-06\
+**Scope:** 36 completed core notebooks, completed Notebook 37 method-selection extension, controlled 50-painting study, and approved dashboard\
 **Search priority:** 2020–2026, with explicitly identified foundational exceptions
 
 This is an annotated source catalog for thesis writing, not a list of methods
@@ -10,9 +10,9 @@ that the project promises to implement. It replaces the repeated legacy
 notebook notes with verified bibliographic identities, usable source links,
 current notebook mappings, and explicit limits on what each citation supports.
 
-The catalog contains **47 scholarly sources**: **33 dated 2020 onward** and
+The catalog contains **49 scholarly sources**: **35 dated 2020 onward** and
 **14 foundational pre-2020 exceptions**, plus **7 technical-source groups**.
-It retains/corrects 22 identifiable legacy scholarly references and adds 25
+It retains/corrects 22 identifiable legacy scholarly references and adds 27
 new or newly identified sources, including the formerly unnamed self-consistency work.
 
 Read alongside the [methodology guide](methodology_notes.md),
@@ -109,6 +109,7 @@ notebooks without pretending that every engineering choice comes from a paper.
 | N31–N33 | Model, case, painting and final evaluation reports | [H01](#h01), [E06](#e06), [E08](#e08)–[E11](#e11) |
 | N34–N35 | Normalized assets, eight-page dashboard and validation | [E08](#e08)–[E11](#e11), [T07](#t07) |
 | N36 | Supervisor/publication/reproducibility package | [E06](#e06), [E07](#e07), [E11](#e11) |
+| N37 | Paired HINT/MAT method selection and HINT expansion decision | [M11](#m11), [M12](#m12), [M09](#m09), [E02](#e02); the 12-case pilot does not establish full-benchmark superiority |
 
 ### Research-question use
 
@@ -117,9 +118,9 @@ notebooks without pretending that every engineering choice comes from a paper.
    metrics?** Use Q01–Q11, U07 and E01–E05 to motivate complementary evidence,
    explicit regions, disagreement and inspectable explanations. The specific
    eleven-anchor design is this project's operational choice.
-2. **How do selected pretrained inpainting models differ in restoration quality
-   across artistic styles and artificial damage types?** Use H01–H05 and
-   M01–M10 for context, then cite the project's own paired results. The five
+2. **How do selected inpainting methods differ in restoration quality across
+   broad visual categories and controlled artificial damage conditions?** Use
+   H01–H05 and M01–M12 for context, then cite the project's own paired results. The five
    balanced visual categories are not independently established art-historical
    styles; sparse style metadata limits that part of the question.
 3. **To what extent can uncertainty estimation from multiple restoration
@@ -439,6 +440,50 @@ Enhancement: A Comprehensive Survey.* arXiv:2308.09388.
 - **Boundary:** Do not turn all degradation into binary inpainting, or cite this
   survey as evidence that our hardware timings or uncertainty values are
   generally calibrated.
+
+<a id="m11"></a>
+
+### M11 — Chen, Atapour-Abarghouei and Shum (2024)
+
+**Citation:** Shuang Chen, Amir Atapour-Abarghouei and Hubert P. H. Shum.
+*HINT: High-quality INpainting Transformer with Mask-Aware Encoding and Enhanced
+Attention.* IEEE Transactions on Multimedia.
+[Publisher DOI](https://doi.org/10.1109/TMM.2024.3369897) ·
+[Official implementation](https://github.com/ChrisChen1023/HINT).
+**Fit:** Direct method for the Notebook 37 pilot; journal article and official
+implementation.
+
+- **Supports:** HINT's mask-aware pixel-shuffle downsampling and
+  spatially-activated channel attention, which preserve visible information and
+  model multi-scale, long-range context.
+- **Use here:** Explain why HINT was a credible second deterministic learned
+  family beyond Telea, LaMa, and stochastic Stable Diffusion, and why it was
+  selected for the planned expanded benchmark after the paired pilot.
+- **Boundary:** The released method was trained and evaluated on general-image
+  datasets, including Places2. The paper does not establish conservation
+  suitability, painting-domain generality, or superiority on the full thesis
+  benchmark. Those claims remain limited to Notebook 37's own 12-case evidence.
+
+<a id="m12"></a>
+
+### M12 — Li et al. (2022)
+
+**Citation:** Wenbo Li, Zhe Lin, Kun Zhou, Lu Qi, Yi Wang and Jiaya Jia.
+*MAT: Mask-Aware Transformer for Large Hole Image Inpainting.* CVPR, 10758–10768.
+[CVF paper record](https://openaccess.thecvf.com/content/CVPR2022/html/Li_MAT_Mask-Aware_Transformer_for_Large_Hole_Image_Inpainting_CVPR_2022_paper.html) ·
+[Official implementation](https://github.com/fenglinglwb/MAT).
+**Fit:** Direct comparator for the Notebook 37 pilot; conference paper and
+official implementation.
+
+- **Supports:** Mask-aware transformer attention and partial-valid-token
+  reasoning for large-hole image inpainting.
+- **Use here:** Explain why MAT was a technically credible transformer
+  comparator and why the selection pilot tested architectural capability rather
+  than comparing two minor variants of the same model.
+- **Boundary:** MAT was not selected for the future expansion. Notebook 37
+  required a declared 512 adapter and found weaker paired visual and metric
+  results. Its noncommercial implementation licence is a reuse constraint, not
+  a numerical quality penalty.
 
 ## 6. Metrics, texture, colour and structural evidence
 
@@ -1041,12 +1086,18 @@ the repository, not prescriptions found in the papers:
 - the eleven separate quality anchors and their directional ranking summaries;
 - rule-derived review flags, thresholds and report-example selection policies;
 - SDXL's ten-case scope and bounded execution budgets.
+- Notebook 37's 12 paired cases, 24 candidates, native-768 HINT run, 512-adapted
+  MAT run, and the recorded HINT selection.
 
 The full case registry has 525 rows; 410 cases are eligible per principal
 restoration method. The downstream reporting population contains 1,785
 candidates, not every generated output. N11 contains 1,330 SD candidates and N22
 adds 105. These counts and their exclusions are explained in the methodology
 guide and producer records, not justified by a citation.
+
+Notebook 37 adds 24 separately owned pilot candidates. They are not appended to
+the frozen 1,785-candidate reporting catalog or treated as a completed fourth
+full-model benchmark.
 
 In particular:
 
@@ -1071,7 +1122,7 @@ Bayesian estimation, re-inpainting or prompt-distribution machinery.
 
 ### Second pass: methods actually used
 
-Use M01, M04–M07, Q01, Q03–Q07, Q10–Q11 and T01–T06 when writing the methods.
+Use M01, M04–M07, M11–M12, Q01, Q03–Q07, Q10–Q11 and T01–T06 when writing the methods.
 Keep the mathematical method, package implementation and project configuration
 separate. This is especially important for colour space, local regions, model
 revisions and seed arithmetic.

@@ -1,0 +1,286 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_6583cb070ead425b91e0bf738f1822ea",
+  "notebook_id": "37",
+  "notebook_name": "37_hint_mat_method_selection",
+  "origin": "Explicit post-pipeline scientific extension; Notebooks 01-36 remain frozen",
+  "run_status": "completed",
+  "started_at_utc": "2026-09-06T01:16:15.622007Z",
+  "completed_at_utc": "2026-09-06T02:12:42.218364Z",
+  "git_commit": "cf546ed0712d85e85afddd5ec48a507e6cc0392d",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260906T002259Z_af70df54",
+  "dataset_versions": {
+    "dataset_id": "painting_restoration_controlled_50",
+    "dataset_scope": "controlled_50_method_selection_pilot",
+    "selection_scope_schema": "hint_mat_selection_scope.v1"
+  },
+  "configuration_paths": [
+    "config/evaluation/evidence_coverage.yaml",
+    "config/evaluation/metrics.yaml",
+    "config/experiments/hint_mat_selection.yaml",
+    "requirements_n37.txt"
+  ],
+  "configuration_checksums": {
+    "config/experiments/hint_mat_selection.yaml": "50189e1208ebd358c5d61fa993421d1c3ec1017554ffe8adbb6d99409b026c7a",
+    "requirements_n37.txt": "d5ec8e690629122d41aca21a3de49b21fa3080e0e21a0b5c25c742c0b8852e24",
+    "config/evaluation/metrics.yaml": "c3abb2675aac79563c47d98e7b55b1a6b611cd7af772da5c45891305a919d624",
+    "config/evaluation/evidence_coverage.yaml": "be5d0f3eb50b2b21d65c4352c3a7c5714b1bd7de752896fee82e8ce55068fe0e"
+  },
+  "helper_versions": {
+    "hint_mat_selection": "1.0.1",
+    "hint_worker": "1.0.2",
+    "mat_worker": "1.0.2",
+    "schemas": "1.18.0",
+    "manifests": "1.0.0",
+    "validation": "1.0.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "lpips": "0.1.4",
+    "numpy": "1.26.4",
+    "open_clip_torch": "not_installed",
+    "pandas": "2.3.3",
+    "torch": "2.5.1+cu121",
+    "torchvision": "0.20.1+cu121"
+  },
+  "hardware": {
+    "device": "cuda",
+    "gpu_name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "gpu_memory_bytes": 6441926656,
+    "hint_inference_resolution": 768,
+    "mat_inference_resolution": 512,
+    "output_resolution": 768
+  },
+  "inputs": [
+    {
+      "input_key": "input_001",
+      "relative_path": "config/evaluation/evidence_coverage.yaml",
+      "checksum": "be5d0f3eb50b2b21d65c4352c3a7c5714b1bd7de752896fee82e8ce55068fe0e"
+    },
+    {
+      "input_key": "input_002",
+      "relative_path": "config/evaluation/metrics.yaml",
+      "checksum": "c3abb2675aac79563c47d98e7b55b1a6b611cd7af772da5c45891305a919d624"
+    },
+    {
+      "input_key": "input_003",
+      "relative_path": "docs/evidence_dependency_audit.md",
+      "checksum": "8f55b2b3630fcaf3390199c1d4f45ce5cf9e99ff982d3ef96dbbec9cb8048d65"
+    },
+    {
+      "input_key": "input_004",
+      "relative_path": "docs/final_notebook_roadmap.md",
+      "checksum": "c141d0752fa5b3d4c17a0a2f977b62f38778339e7c1addeb0afa54cc558a94ca"
+    },
+    {
+      "input_key": "input_005",
+      "relative_path": "docs/refactoring_implementation_guidelines.md",
+      "checksum": "31866807926300f20a54235201ac69b6ae857d2e6d279dc217fe739235053acb"
+    },
+    {
+      "input_key": "input_006",
+      "relative_path": "outputs/01_dataset_verification/data/artworks.csv",
+      "checksum": "e6b9ed016a433edc227f5fe96422106956677138774001aa772d951dc401a5dd"
+    },
+    {
+      "input_key": "input_007",
+      "relative_path": "outputs/02_image_preprocessing/data/preprocessed_images.csv",
+      "checksum": "b6f29c2c71450403042b1bb6c522ea6e50942a940428918b89dac466e0b7152f"
+    },
+    {
+      "input_key": "input_008",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
+      "checksum": "cd560b6599e85c63bd7e81e80de6292fe7fd5f6f17c32b0ac9faadee51da5d75"
+    },
+    {
+      "input_key": "input_009",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv",
+      "checksum": "17f30040897fb72900abb6f2aa1b5559f80b38d0b52b0ccc0857be70b7286710"
+    },
+    {
+      "input_key": "input_010",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+      "checksum": "d1b62caa720194e666894afd276d0c6a8c973343b4a378bd787467273bbceb8a"
+    },
+    {
+      "input_key": "input_011",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "checksum": "230ee00c50d9a9f39580e1c5342bbee608c3ab5eb6dae81d4d8255536224bc28"
+    },
+    {
+      "input_key": "input_012",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "checksum": "3e7abc0b3ce1139004914fb52f0650256c42a9862e8065a67fd0254e2b280808"
+    },
+    {
+      "input_key": "input_013",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "checksum": "3d363e69ae3d5a512a1642e4d4dfa75ef59b42704c6a9d64b8a449030d4766f6"
+    },
+    {
+      "input_key": "input_014",
+      "relative_path": "requirements_n37.txt",
+      "checksum": "d5ec8e690629122d41aca21a3de49b21fa3080e0e21a0b5c25c742c0b8852e24"
+    },
+    {
+      "input_key": "input_015",
+      "relative_path": "D:\\Models\\HINT\\checkpoints\\places2\\InpaintingModel_gen.pth",
+      "checksum": "f7c78feac68aa06ff10d6efbb2f8e2cc040720d2ce5ebbfaf8a3247acda3934b"
+    },
+    {
+      "input_key": "input_016",
+      "relative_path": "D:\\Models\\MAT\\pretrained\\Places_512_FullData.pkl",
+      "checksum": "d960c4e6b3266b6b9fa74ee4458a9482160d54c06d7738696bc9a9e2b34c66dc"
+    }
+  ],
+  "outputs": [
+    {
+      "artifact_key": "hint_mat_selection.selection_scope",
+      "relative_path": "outputs/37_hint_mat_method_selection/data/selection_scope.csv",
+      "artifact_type": "table",
+      "checksum": "fcae20d0b731338b3aa987cda3629f94646ef0c81c550a2000a4182968e96380"
+    },
+    {
+      "artifact_key": "hint_mat_selection.candidates",
+      "relative_path": "outputs/37_hint_mat_method_selection/data/candidates.csv",
+      "artifact_type": "table",
+      "checksum": "cca2e1025b761fd57f775a6d7b3a4ce572095404e112a319d3775fa2b0b77bf0"
+    },
+    {
+      "artifact_key": "hint_mat_selection.metric_values",
+      "relative_path": "outputs/37_hint_mat_method_selection/metrics/metric_values.csv",
+      "artifact_type": "table",
+      "checksum": "70587f1788c47cc227d6a97712f31137208b6d8cdcb38d9aa5f4dcae281c5a5a"
+    },
+    {
+      "artifact_key": "hint_mat_selection.runtime_summary",
+      "relative_path": "outputs/37_hint_mat_method_selection/metrics/runtime_summary.csv",
+      "artifact_type": "table",
+      "checksum": "7e67cad26ef624bbcbe83147a56ac2f51c7256dd4d6b3d51c8af547803442f61"
+    },
+    {
+      "artifact_key": "hint_mat_selection.decision_scorecard",
+      "relative_path": "outputs/37_hint_mat_method_selection/metrics/decision_scorecard.csv",
+      "artifact_type": "table",
+      "checksum": "6317600a8be19d95ed44373daa04d4ce9adb3e91e7236759ebfda2f713f7fe1d"
+    },
+    {
+      "artifact_key": "hint_mat_selection.hint_restorations",
+      "relative_path": "outputs/37_hint_mat_method_selection/images/restored/hint",
+      "artifact_type": "image_collection",
+      "checksum": "dc943097fcea1a9ae78bb5b41e276315f864102336e6f37fa339c4c0dd95ecef"
+    },
+    {
+      "artifact_key": "hint_mat_selection.mat_restorations",
+      "relative_path": "outputs/37_hint_mat_method_selection/images/restored/mat",
+      "artifact_type": "image_collection",
+      "checksum": "50c261cddc599b19b323ffef3f321956883f60a9d36a8af8e02cedd33a458ac6"
+    },
+    {
+      "artifact_key": "hint_mat_selection.diagnostic_maps",
+      "relative_path": "outputs/37_hint_mat_method_selection/images/maps",
+      "artifact_type": "image_collection",
+      "checksum": "4044ab7ab5376e8c8f47342a5e62ddab8a9e9d0914b6351dc0c655d3f8c2171e"
+    },
+    {
+      "artifact_key": "hint_mat_selection.smoke_figure",
+      "relative_path": "outputs/37_hint_mat_method_selection/figures/smoke_comparison.png",
+      "artifact_type": "figure",
+      "checksum": "a65ce1ed0e6885d5d57a3b88dec24a6e93cba350a395022ebcb6fb8984376a0a"
+    },
+    {
+      "artifact_key": "hint_mat_selection.metric_figure",
+      "relative_path": "outputs/37_hint_mat_method_selection/figures/metric_comparison.png",
+      "artifact_type": "figure",
+      "checksum": "f836fae28ea608a35b81d794bac652dcc7a761ee52655ac0d88edb392baa0c2f"
+    },
+    {
+      "artifact_key": "hint_mat_selection.selection_atlas",
+      "relative_path": "outputs/37_hint_mat_method_selection/figures/selection_atlas.png",
+      "artifact_type": "figure",
+      "checksum": "36844a6f66ea637fa697648956e9e7fbeec93cede29c2d5eca3c1f81c7bba9b9"
+    },
+    {
+      "artifact_key": "hint_mat_selection.selection_report",
+      "relative_path": "outputs/37_hint_mat_method_selection/reports/method_selection_report.html",
+      "artifact_type": "report",
+      "checksum": "f81394ffea18cac890937278a7fe92767ae15b9b9cfa6701be4b4fddca8e9e13"
+    },
+    {
+      "artifact_key": "hint_mat_selection.selection_decision",
+      "relative_path": "outputs/37_hint_mat_method_selection/reports/selection_decision.json",
+      "artifact_type": "metadata",
+      "checksum": "610f17f0fd86d5b648b361a036548f8dca032b7010ee94b7b48aacc1c7a19bdf"
+    },
+    {
+      "artifact_key": "hint_mat_selection.validation_checks",
+      "relative_path": "outputs/37_hint_mat_method_selection/validation/checks.csv",
+      "artifact_type": "table",
+      "checksum": "3e425aa0a14512452e8467d678958f182faacabf917eea5a07abc5222e1002a7"
+    },
+    {
+      "artifact_key": "hint_mat_selection.artifact_manifest",
+      "relative_path": "outputs/37_hint_mat_method_selection/manifests/artifacts.csv",
+      "artifact_type": "table",
+      "checksum": "89129aa83e2a180b0e6d19914f31cda433a65c35fbc3ebc4eaf93e5017933fcd"
+    },
+    {
+      "artifact_key": "hint_mat_selection.run_manifest",
+      "relative_path": "outputs/37_hint_mat_method_selection/manifests/run_manifest.json",
+      "artifact_type": "metadata"
+    }
+  ],
+  "expected_counts": {
+    "selection_cases": 12,
+    "restoration_candidates": 24,
+    "models": 2,
+    "paired_anchor_comparisons": 108,
+    "decision_scorecard_rows": 30,
+    "roadmap_responsibilities": 12
+  },
+  "observed_counts": {
+    "selection_cases": 12,
+    "restoration_candidates": 24,
+    "models": 2,
+    "metric_rows": 15552,
+    "paired_anchor_comparisons": 108,
+    "decision_scorecard_rows": 30,
+    "artifact_records": 14,
+    "validation_rows": 94,
+    "roadmap_responsibilities": 12
+  },
+  "validation_summary": {
+    "check_count": 94,
+    "passed_count": 94,
+    "failed_count": 0,
+    "blocking_failure_count": 0,
+    "overall_passed": true,
+    "failed_check_ids": []
+  },
+  "known_limitations": [
+    "The purposive twelve-case pilot supports method selection, not a fourth full-benchmark claim.",
+    "Cases are nested within five paintings; painting is the independent unit.",
+    "Both released checkpoints are trained on photographic scene data rather than paintings.",
+    "The HINT 512 fallback and MAT 512 adapter introduce resampling into a 768-pixel benchmark.",
+    "Exact-mask compositing preserves observed pixels but can expose boundary mismatch.",
+    "Metrics are complementary diagnostic evidence; no universal quality or trustworthiness score is constructed.",
+    "Human visual review is required and may select neither method.",
+    "MAT carries a noncommercial research license; deployment or broader reuse requires license review.",
+    "Selection for expansion does not make HINT a conservation-approved method."
+  ],
+  "validation_status": "passed",
+  "refactor_status": "refactored",
+  "completion_gate_passed": true,
+  "selected_method": "hint",
+  "selected_model_id": "hint_places2",
+  "selected_method_role": "additional learned method for the planned expanded benchmark",
+  "pilot_is_full_benchmark": false,
+  "combined_score_constructed": false,
+  "artifact_manifest_checksum": "89129aa83e2a180b0e6d19914f31cda433a65c35fbc3ebc4eaf93e5017933fcd"
+}

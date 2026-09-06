@@ -15,6 +15,10 @@ frozen. Notebooks 01–21 retain their original baseline identity; Notebook 22
 owns the approved damage-size repeated-seed extension, and Notebooks 23–36
 completed the downstream analysis and delivery stages.
 
+Notebook 37 subsequently completed a separately owned HINT-versus-MAT
+method-selection pilot and selected HINT for the planned expanded benchmark. It
+does not modify the frozen Notebook 01–36 benchmark or dashboard evidence.
+
 The project is now in documentation and application maintenance, not an active
 notebook-refactoring cycle. The approved eight-page dashboard is publicly
 deployed at [the Streamlit application](https://fhtw-painting-restoration.streamlit.app/).
@@ -33,7 +37,7 @@ The central methodological boundary remains:
 
 The following decisions are approved:
 
-1. The final pipeline uses the consolidated 36-notebook architecture documented in `docs/final_notebook_roadmap.md`.
+1. The core pipeline uses the consolidated 36-notebook architecture documented in `docs/final_notebook_roadmap.md`; Notebook 37 is a separately owned, completed post-pipeline method-selection extension.
 2. Authoritative generated content belongs to notebook-owned output folders; retired `data/processed/` and legacy global output paths must not be reintroduced.
 3. `outputs/inventory/` is the sole global output exception.
 4. Restoration notebooks remain model-specific.
@@ -1716,3 +1720,75 @@ The audit is read-only by default. Do not delete legacy or temporary material
 automatically merely because the pipeline has moved past its producing notebook.
 
 Broad pre-creation of all 36 output trees is discouraged because it creates empty and misleading folders.
+
+## 31. Completed Notebook 37 method-selection extension
+
+Notebook 37 is the first explicitly approved scientific extension after the
+completed 36-notebook pipeline. These rules supplement, and do not replace, the
+general implementation contract:
+
+- Notebooks 01–36 and all of their outputs remain frozen and read-only.
+- Notebook 37 owns every new HINT/MAT candidate, metric, figure, report,
+  manifest, validation record, checkpoint, and temporary file under
+  `outputs/37_hint_mat_method_selection/`.
+- The exact twelve-case population, two methods, adapters, source revisions,
+  checkpoint identities, runtime guards, metrics, and decision rules are frozen
+  in `config/experiments/hint_mat_selection.yaml` before Batch 1.
+- Official HINT and MAT repositories and checkpoints remain external assets.
+  Resolve them through the declared environment variables or configured local
+  defaults; never vendor them, their caches, or their weights into this repo.
+- External asset preflight must inspect paths, required source files, declared
+  revision, checkpoint existence and checksum, and license. It must not import
+  the models or allocate GPU memory.
+- HINT must call the released generator directly rather than the repository's
+  dataset/W&B test wrapper. MAT must invert the canonical missing-region mask to
+  its official retained-pixel convention before inference.
+- HINT attempts 768 × 768 first and may use only the declared 512 adapter after
+  a recorded technical failure. MAT uses its declared 512 adapter. Both return
+  to the 768 canvas and use exact canonical-mask compositing.
+- Run model code in isolated workers. Record load time, inference time, total
+  runtime, actual resolution, CUDA device, peak GPU memory, status, and failure.
+  Persist progress after every case using the bounded Windows-safe atomic-write
+  retry helper.
+- The zero-control case is identity/no-op QA only; it must not be counted among
+  the twelve comparison cases or twenty-four restoration candidates.
+- Retain separate evidence families. Do not construct a combined score, run
+  inferential tests on the small nested sample, or select a winner by a single
+  metric.
+- Batch 8 must show the complete paired visual scope, not only favorable
+  representatives. Batch 9 must not write the final selection until the user has
+  inspected the atlas and explicitly chosen HINT, MAT, or neither.
+- HINT's operational preference is only a tie-break after both methods pass all
+  technical, quality, runtime, and license gates. MAT's noncommercial license is
+  a decision constraint, not a quality penalty hidden inside a numeric score.
+- Notebook cells remain user-pasted and user-executed. Preparation work may edit
+  configs, helpers, tests, and governing documentation, but must never insert or
+  execute notebook cells directly.
+
+After completion, update both evidence ledgers with observed counts, selected
+method and limitations, set the notebook header to `Finished`, `Finished`, and
+`Yes`, refresh `outputs/inventory/`, and commit the notebook, owned outputs,
+governing files, and inventory together.
+
+### 31.1 Completion record
+
+Notebook 37 completed the exact 12-case, 24-candidate paired comparison. Both
+methods passed the hard technical gates and all 94 consolidated validation
+checks. HINT ran natively at 768 × 768; MAT used the declared 512 adapter and a
+supported PyTorch fallback for its optional CUDA extension. HINT led 96 of 108
+case-level metric anchors, MAT led 6, and 6 were ties. Complete visual review
+favoured HINT, particularly because MAT often retained thin scratches and
+produced pale or fragmented large-loss completions. HINT was selected.
+
+The extension existed to add a missing capability, not simply another model
+name. HINT provides a second deterministic learned architecture with mask-aware
+transformer processing and multi-scale, long-range context. It complements the
+frozen classical Telea, Fourier-convolution LaMa, and stochastic
+prompt-conditioned Stable Diffusion families. MAT remains an auditable pilot
+comparator; its 512 adapter and noncommercial licence also reduce its suitability
+for the planned expanded benchmark.
+
+This result does not alter the frozen Notebook 01–36 leaderboard or dashboard.
+Future documentation may identify HINT as the selected expansion method only
+when it also states that the evidence comes from a 12-case method-selection
+pilot, not a completed fourth full-model benchmark.
