@@ -21,7 +21,7 @@ inputs:
   evidence_dependency_audit_path: "docs/evidence_dependency_audit.md"
   evidence_coverage_path: "config/evaluation/evidence_coverage.yaml"
   metrics_config_path: "config/evaluation/metrics.yaml"
-  adapter_requirements_path: "requirements_n37.txt"
+  adapter_requirements_path: "requirements_d01.txt"
 
 output:
   notebook_id: "37"
