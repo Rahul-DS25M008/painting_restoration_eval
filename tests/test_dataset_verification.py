@@ -31,8 +31,8 @@ from restoration_eval.schemas import (
 
 
 PROJECT_ROOT = find_project_root(Path(__file__))
-CONFIG_PATH = PROJECT_ROOT / "config" / "datasets" / "controlled_50.yaml"
-METADATA_PATH = PROJECT_ROOT / "data" / "raw" / "metadata" / "metadata_50.csv"
+CONFIG_PATH = PROJECT_ROOT / "config" / "datasets" / "controlled_300.yaml"
+METADATA_PATH = PROJECT_ROOT / "data" / "raw" / "metadata" / "metadata_300.csv"
 
 
 class DatasetVerificationTests(unittest.TestCase):
@@ -43,13 +43,16 @@ class DatasetVerificationTests(unittest.TestCase):
 
     def test_controlled_configuration_contract(self) -> None:
         self.assertEqual(validate_dataset_config(self.config), [])
-        self.assertEqual(self.config["expected"]["total_paintings"], 50)
-        self.assertEqual(self.config["expected"]["audit_row_count"], 101)
+        self.assertEqual(self.config["dataset"]["dataset_scope"], "controlled_300")
+        self.assertEqual(self.config["expected"]["total_paintings"], 300)
+        self.assertEqual(self.config["expected"]["audit_row_count"], 448)
+        self.assertEqual(self.config["validation"]["minimum_short_side"], 640)
+        self.assertEqual(self.config["validation"]["minimum_long_side"], 768)
 
     def test_metadata_contract_matches_controlled_scope(self) -> None:
         report = metadata_contract_report(self.metadata, self.config)
         self.assertTrue(report["schema"]["passed"])
-        self.assertEqual(report["row_count"], 50)
+        self.assertEqual(report["row_count"], 300)
         self.assertEqual(report["duplicate_painting_id_rows"], 0)
         self.assertEqual(report["duplicate_filename_rows"], 0)
         self.assertEqual(report["duplicate_full_rows"], 0)
@@ -119,7 +122,7 @@ class DatasetVerificationTests(unittest.TestCase):
         )
         self.assertTrue(validate_dataframe(artworks, ARTWORKS_SCHEMA).passed)
         self.assertTrue(validate_dataframe(audit, DATASET_AUDIT_SCHEMA).passed)
-        self.assertEqual(len(artworks), 50)
+        self.assertEqual(len(artworks), 300)
         self.assertEqual(len(audit), self.config["expected"]["audit_row_count"])
         self.assertEqual(set(artworks["acceptance_status"]), {"accepted"})
         first = dataset_content_fingerprint(self.metadata, image_audit, self.config)

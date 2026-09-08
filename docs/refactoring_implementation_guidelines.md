@@ -8,26 +8,24 @@ This document is the approved project-wide implementation contract for refactori
 
 It governs notebook design, helper modules, configuration, paths, generated artifacts, validation, manifests, reporting, dashboard preparation, reproducibility, and migration from the current repository layout.
 
-The repository was rebuilt from Notebook 01 onward. As of 2026-09-04, all 36
-notebooks have completed their approved contracts and passed their completion
-gates. Their source files, canonical outputs, and execution-time manifests are
-frozen. Notebooks 01–21 retain their original baseline identity; Notebook 22
-owns the approved damage-size repeated-seed extension, and Notebooks 23–36
-completed the downstream analysis and delivery stages.
+The repository's validated 50-painting implementation is preserved at Git tag
+`pilot-50-complete`. As of 2026-09-09, the working tree contains the approved
+balanced 300-painting raw collection and has entered a controlled minimal-delta
+rerun of Notebooks 01–36. Existing notebook structure, helper APIs, schemas,
+stable identifiers, output roots, evidence separation, and interpretation
+boundaries remain binding unless a notebook-specific contract explicitly
+justifies a change.
 
-Notebook 37 subsequently completed a separately owned HINT-versus-MAT
-method-selection pilot and selected HINT for the planned expanded benchmark. It
-does not modify the frozen Notebook 01–36 benchmark or dashboard evidence.
+The completed HINT-versus-MAT method-selection study is identified as Decision
+Notebook D01. It remains frozen 12-case decision evidence. HINT is introduced to
+the full benchmark only through the new production Notebook 12A; D01 is not
+rerun or relabelled as a full evaluation.
 
-The project is now in documentation and application maintenance, not an active
-notebook-refactoring cycle. The approved eight-page dashboard is publicly
-deployed at [the Streamlit application](https://fhtw-painting-restoration.streamlit.app/).
-The dated delivery addendum in `docs/evidence_dependency_audit.md` distinguishes
-this later application state from the historical Notebook 35 validation and
-Notebook 36 package. Completion does not erase recorded non-blocking warnings.
-
-The batch, report, and completion rules below remain binding for explicitly
-approved future work; they do not authorize reopening completed notebooks.
+The approved eight-page dashboard remains publicly deployed at
+[the Streamlit application](https://fhtw-painting-restoration.streamlit.app/),
+but it continues to represent the tagged 50-painting evidence until the entire
+controlled-300 dependency chain, dashboard validation, and package rerun pass.
+Mixed 50/300 claims must never be shown as one completed study.
 
 The central methodological boundary remains:
 
@@ -37,7 +35,9 @@ The central methodological boundary remains:
 
 The following decisions are approved:
 
-1. The core pipeline uses the consolidated 36-notebook architecture documented in `docs/final_notebook_roadmap.md`; Notebook 37 is a separately owned, completed post-pipeline method-selection extension.
+1. The production pipeline retains Notebooks 01–36 and adds only Notebook 12A
+   for full HINT restoration. Decision Notebook D01 remains a separately owned,
+   completed method-selection study and is outside the production numbering.
 2. Authoritative generated content belongs to notebook-owned output folders; retired `data/processed/` and legacy global output paths must not be reintroduced.
 3. `outputs/inventory/` is the sole global output exception.
 4. Restoration notebooks remain model-specific.
@@ -45,7 +45,9 @@ The following decisions are approved:
 6. Handoffs use normalized manifests joined by stable identifiers rather than progressively wider tables.
 7. One canonical region helper defines every evaluation region used throughout the project.
 8. Notebook 35 remains a separate dashboard and deployment validation stage.
-9. Notebooks 01–36 and their canonical outputs are frozen. Any new scientific evidence requires an explicitly approved extension with separate ownership; completed notebooks are not silently revised, appended to, or rerun.
+9. The 50-painting sources and outputs are immutable at `pilot-50-complete`.
+   Working-tree notebooks may be reopened one at a time only for the approved
+   controlled-300 minimal-delta rerun and only after an explicit contract.
 10. The dashboard setup uses Python 3.12 with `requirements.txt`. All 36 saved run manifests record Python 3.12.6. Full experimental reproduction requires a separate environment and producer-specific version records; the legacy Python 3.11 recipe documented in `requirements_experiments.txt` is not the current dashboard setup or a description of the executed runs. See Section 26.
 
 ## 3. Scope and interpretation boundaries
@@ -731,27 +733,47 @@ checks.
 
 The inventory refresh is a controlled write operation. During explicitly read-only phases, the existing inventory may be inspected but must not be regenerated.
 
-### 6.4 Frozen baseline and evidence-dependency gate
+### 6.4 Tagged baseline and controlled-300 evidence-dependency gate
 
-Notebooks 01–21 and their canonical outputs are frozen at the validated baseline
-recorded by their run manifests and the repository history. Notebook 22 is the
-completed, separately owned extension to that baseline. The same read-only
-protection now applies to all completed Notebooks 01–36 and their output roots.
+The complete 50-painting study is immutable at Git tag `pilot-50-complete`.
+Notebooks 01–36 may now be adapted in dependency order for `controlled_300`, but
+this permission is narrow: scale population, add the approved HINT dependency,
+and update exact validations while preserving the validated scientific design.
+D01 and its 12-case outputs remain frozen.
 
-Rules for the frozen baseline:
+Rules for the active rerun:
 
-- Do not edit, regenerate, append to, or overwrite Notebook 01–36 source files or
-  their notebook-owned outputs merely to satisfy a later notebook.
-- Do not change a frozen notebook's scientific population by altering its helper
-  or configuration and then treating its earlier manifest as current.
-- If a later requirement needs evidence absent from the frozen baseline, either
-  remove the unsupported requirement before implementation or create an approved
-  extension notebook that owns every new candidate, metric, map, manifest,
-  and validation artifact.
-- Extension notebooks may reference validated frozen artifacts but must never
-  present their new outputs as if the frozen producer created them.
-- Existing frozen manifests remain historical provenance and are not rewritten to
-  include extension artifacts.
+- Maintain one active raw dataset, dataset configuration, notebook sequence, and
+  set of output roots. Do not create `controlled_50`/`controlled_300` notebook,
+  helper, YAML, or output variants side by side.
+- Treat the tagged commit—not duplicate working-tree files—as the recovery point
+  and comparison baseline for the 50-painting study.
+- Reopen only the next notebook whose direct producers have passed their
+  controlled-300 gates. Never run a downstream notebook against a silent mixture
+  of old and new upstream artifacts.
+- Before editing a notebook, approve a minimal-change contract that enumerates
+  every changed input path, cardinality, dependency, validation assertion,
+  output expectation, and unavoidable new cell.
+- Preserve notebook cell order and cell contents wherever behavior remains valid.
+  Edit existing cells in place; add cells only when the approved responsibility
+  cannot be expressed safely in the existing structure.
+- Notebook cells are supplied in chat, pasted by the user, and executed by the
+  user. The assistant must never edit or execute an `.ipynb` directly.
+- Clear only the current notebook's output root immediately before its full
+  controlled-300 rerun. Upstream roots are read-only inputs; downstream roots
+  remain untouched until their turn.
+- Preserve normalized schemas and artifact roles. Derive expected row counts
+  from configuration and validated upstream registries, not global replacement
+  of the number 50 and not filesystem scans.
+- Compare the new notebook with its tagged counterpart for cell responsibility,
+  schema, artifact roles, figures/reports, validation coverage, and exclusions.
+  Changed row counts are expected; silently missing evidence families are not.
+- A committed output remains historical 50-painting evidence until its producer
+  has a controlled-300 run manifest and passed completion gate. Do not rewrite a
+  historical manifest to pretend that later files were part of its run.
+- Notebook 12A is the only approved new production notebook. It owns full HINT
+  outputs under `outputs/12a_hint_restoration/`. D01 remains the selection source
+  and must not be rerun as production.
 
 Two governing files make downstream evidence availability explicit:
 
@@ -772,8 +794,8 @@ Before approving any new or explicitly reopened notebook contract, the assistant
    placeholder analyses or repeatedly advertising evidence that was never
    collected.
 5. Block Batch 1 when a required responsibility has no valid evidence mapping.
-6. Update both governing files whenever a notebook completes, an extension is
-   approved, or a future responsibility is materially changed.
+6. Update both governing files whenever a controlled-300 notebook completes, an
+   extension is approved, or a future responsibility is materially changed.
 
 Completion checks inside a producer notebook are necessary but not sufficient.
 The preparation layer for each consumer must also validate that the producer's
@@ -976,7 +998,7 @@ The monolithic configuration should be migrated gradually toward:
 config/
   project.yaml
   datasets/
-    controlled_50.yaml
+    controlled_300.yaml
   experiments/
     canonical_damage.yaml
     damage_size.yaml
@@ -987,6 +1009,7 @@ config/
     lama.yaml
     stable_diffusion.yaml
     sdxl.yaml
+    hint.yaml
   evaluation/
     regions.yaml
     metrics.yaml
@@ -1007,10 +1030,43 @@ Supported execution profiles:
 
 ```text
 smoke
-controlled_50
+controlled_300
 ```
 
-Any later dataset expansion requires a separately approved configuration and evidence audit. Projected scaling may be reported as a projection but must not be presented as an executed dataset result.
+`controlled_300` is the sole active full profile. The old 50-painting
+configuration is recoverable from `pilot-50-complete` and must not be retained as
+a parallel active file. Until a producer notebook completes its controlled-300
+rerun, its working-tree outputs and dashboard claims remain historical
+50-painting evidence.
+
+### 9.1 Controlled-300 population constants
+
+These are the approved top-level contracts; lower-level metric and artifact row
+counts must still be derived from the corresponding registries and policies:
+
+| Contract | Expected count |
+|---|---:|
+| Paintings | 300 |
+| Paintings per broad visual category | 60 |
+| Shared focused-experiment paintings | 35, seven per category |
+| Canonical cases | 1,500 |
+| Damage-size cases | 245 |
+| Mask-robustness cases | 525 |
+| Procedural degradation cases | 1,155 |
+| Registered cases | 3,425 |
+| Restoration-eligible cases per full method | 2,620 |
+| Bounded SDXL cases | 35 |
+| Full methods | Telea, LaMa, Stable Diffusion primary coverage, and HINT |
+| Four-seed uncertainty groups | 1,025 |
+| Approved retained candidate records | 13,890 |
+| Total restoration executions | 17,150 |
+
+Stable Diffusion retains seeds `2026`, `2027`, `2028`, and `2029`, the generic
+and scratch-aware prompt separation, 780 canonical prompt-specific uncertainty
+groups, and 245 damage-size uncertainty groups. HINT is deterministic and must
+use robustness/sensitivity terminology rather than repeated-seed uncertainty.
+SDXL remains a one-seed bounded feasibility branch and must not appear as a
+full-coverage method.
 
 ## 10. Project inventory contract
 
@@ -1549,8 +1605,9 @@ A final notebook must:
 - end with the completion-gate table.
 
 For an explicitly approved new refactoring cycle, inherited completion labels
-must be reset and revalidated. This rule does not authorize resetting the status
-of the already completed and frozen notebooks.
+must be reset and revalidated. During the controlled-300 rerun, reset only the
+current notebook after its contract is approved; do not bulk-change downstream
+headers or imply that their historical 50-painting outputs are current.
 
 ## 23. Visualization policy
 
@@ -1721,14 +1778,14 @@ automatically merely because the pipeline has moved past its producing notebook.
 
 Broad pre-creation of all 36 output trees is discouraged because it creates empty and misleading folders.
 
-## 31. Completed Notebook 37 method-selection extension
+## 31. Completed Decision Notebook D01 and production HINT boundary
 
-Notebook 37 is the first explicitly approved scientific extension after the
-completed 36-notebook pipeline. These rules supplement, and do not replace, the
-general implementation contract:
+Decision Notebook D01 is the completed HINT-versus-MAT selection study that
+preceded the controlled-300 rerun. These rules supplement, and do not replace,
+the general implementation contract:
 
-- Notebooks 01–36 and all of their outputs remain frozen and read-only.
-- Notebook 37 owns every new HINT/MAT candidate, metric, figure, report,
+- D01 and its outputs remain frozen and read-only.
+- D01 owns every HINT/MAT pilot candidate, metric, figure, report,
   manifest, validation record, checkpoint, and temporary file under
   `outputs/37_hint_mat_method_selection/`.
 - The exact twelve-case population, two methods, adapters, source revisions,
@@ -1765,14 +1822,21 @@ general implementation contract:
   configs, helpers, tests, and governing documentation, but must never insert or
   execute notebook cells directly.
 
+Notebook 12A is the only production consumer of the D01 decision. It must use
+the validated HINT source/checkpoint/adapter contract, generate one primary
+candidate for every controlled-300 eligible case, and write only to
+`outputs/12a_hint_restoration/`. It may cite D01's selection rationale but must
+not copy pilot candidates into the production population or report the pilot's
+12-case metrics as full-benchmark evidence.
+
 After completion, update both evidence ledgers with observed counts, selected
 method and limitations, set the notebook header to `Finished`, `Finished`, and
 `Yes`, refresh `outputs/inventory/`, and commit the notebook, owned outputs,
 governing files, and inventory together.
 
-### 31.1 Completion record
+### 31.1 D01 completion record
 
-Notebook 37 completed the exact 12-case, 24-candidate paired comparison. Both
+D01 completed the exact 12-case, 24-candidate paired comparison. Both
 methods passed the hard technical gates and all 94 consolidated validation
 checks. HINT ran natively at 768 × 768; MAT used the declared 512 adapter and a
 supported PyTorch fallback for its optional CUDA extension. HINT led 96 of 108
@@ -1783,12 +1847,12 @@ produced pale or fragmented large-loss completions. HINT was selected.
 The extension existed to add a missing capability, not simply another model
 name. HINT provides a second deterministic learned architecture with mask-aware
 transformer processing and multi-scale, long-range context. It complements the
-frozen classical Telea, Fourier-convolution LaMa, and stochastic
+tagged baseline's classical Telea, Fourier-convolution LaMa, and stochastic
 prompt-conditioned Stable Diffusion families. MAT remains an auditable pilot
 comparator; its 512 adapter and noncommercial licence also reduce its suitability
 for the planned expanded benchmark.
 
-This result does not alter the frozen Notebook 01–36 leaderboard or dashboard.
+This result does not alter the tagged 50-painting leaderboard or dashboard.
 Future documentation may identify HINT as the selected expansion method only
 when it also states that the evidence comes from a 12-case method-selection
 pilot, not a completed fourth full-model benchmark.

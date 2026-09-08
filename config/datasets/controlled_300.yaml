@@ -1,0 +1,282 @@
+config_schema_version: "dataset_config.v2"
+
+dataset:
+  dataset_id: "painting_restoration_eval"
+  dataset_version: "2.0.0"
+  dataset_scope: "controlled_300"
+  execution_profile: "controlled_300"
+  metadata_schema_version: "raw_artwork_metadata.v1"
+  artworks_schema_version: "artworks.v1"
+  audit_schema_version: "dataset_audit.v1"
+
+paths:
+  metadata_path: "data/raw/metadata/metadata_300.csv"
+  raw_image_dir: "data/raw/images"
+
+expected:
+  total_paintings: 300
+  referenced_image_count: 300
+  audit_row_count: 448
+  categories:
+    portrait_figure: 60
+    landscape_natural: 60
+    architecture_structured: 60
+    abstraction_surrealism: 60
+    high_texture_brushwork: 60
+  sources:
+    Alte Nationalgalerie: 2
+    Art Institute of Chicago: 12
+    British Museum: 1
+    Cleveland Museum of Art: 109
+    Crystal Bridges Museum of American Art: 2
+    Glenstone: 1
+    Hilma af Klint Foundation: 4
+    KODE Art museums and composer homes: 1
+    Kröller-Müller Museum: 2
+    Kunstmuseum Basel: 3
+    Kunstmuseum Den Haag: 2
+    M. K. Čiurlionis National Art Museum: 2
+    Museum Folkwang: 1
+    Museum Ludwig: 1
+    Museum of Fine Arts Boston: 1
+    Museum of Fine Arts of Nancy; Musée National d'Art Moderne: 1
+    Museum of Modern Art: 3
+    Musée National d'Art Moderne: 6
+    National Gallery of Art: 26
+    Philadelphia Museum of Art: 1
+    Princeton Art Museum: 1
+    Private collection; image via Wikimedia Commons: 1
+    Rijksmuseum: 10
+    Sidney Janis Gallery; Solomon R. Guggenheim Museum: 1
+    Solomon R. Guggenheim Museum: 1
+    Statens Museum for Kunst: 44
+    Stedelijk Museum Amsterdam: 1
+    Tate: 2
+    Terra Foundation for American Art: 1
+    The Metropolitan Museum of Art: 55
+    Toledo Museum of Art: 1
+    Tretyakov Gallery: 1
+
+metadata:
+  required_columns:
+    - painting_id
+    - category
+    - title
+    - artist
+    - date
+    - style_or_period
+    - medium
+    - source
+    - source_url
+    - license
+    - filename
+    - original_width
+    - original_height
+    - selection_reason
+    - visual_complexity_note
+    - status
+    - notes
+  required_nonblank_columns:
+    - painting_id
+    - category
+    - title
+    - artist
+    - source
+    - source_url
+    - license
+    - filename
+    - original_width
+    - original_height
+    - selection_reason
+    - visual_complexity_note
+    - status
+  descriptive_completeness_fields:
+    - title
+    - artist
+    - date
+    - style_or_period
+    - medium
+    - source
+    - source_url
+    - license
+  optional_descriptive_fields:
+    - date
+    - style_or_period
+    - medium
+  prompt_metadata_fields:
+    - artist
+    - date
+    - style_or_period
+    - medium
+
+validation:
+  painting_id_regex: '^p\d{3}$'
+  filename_must_match_painting_id: true
+  accepted_selection_statuses:
+    - selected
+  accepted_source_license_pairs:
+    - source: "Alte Nationalgalerie"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Art Institute of Chicago"
+      license: "CC0 Public Domain Designation"
+      rights_status: "cc0_public_domain"
+    - source: "Art Institute of Chicago"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "British Museum"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Cleveland Museum of Art"
+      license: "CC0"
+      rights_status: "cc0"
+    - source: "Cleveland Museum of Art"
+      license: "CC0; Creative Commons Zero, Public Domain Dedication"
+      rights_status: "cc0_public_domain_dedication"
+    - source: "Crystal Bridges Museum of American Art"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Glenstone"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Hilma af Klint Foundation"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "KODE Art museums and composer homes"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Kröller-Müller Museum"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Kunstmuseum Basel"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Kunstmuseum Den Haag"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "M. K. Čiurlionis National Art Museum"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Museum Folkwang"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Museum Ludwig"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Museum of Fine Arts Boston"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Museum of Fine Arts of Nancy; Musée National d'Art Moderne"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Museum of Modern Art"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Musée National d'Art Moderne"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "National Gallery of Art"
+      license: "CC0 / Open Access"
+      rights_status: "cc0_open_access"
+    - source: "National Gallery of Art"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Philadelphia Museum of Art"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Princeton Art Museum"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Private collection; image via Wikimedia Commons"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Rijksmuseum"
+      license: "Public domain"
+      rights_status: "public_domain"
+    - source: "Sidney Janis Gallery; Solomon R. Guggenheim Museum"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Solomon R. Guggenheim Museum"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Statens Museum for Kunst"
+      license: "Public Domain Mark 1.0"
+      rights_status: "public_domain_mark_1_0"
+    - source: "Stedelijk Museum Amsterdam"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Tate"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Terra Foundation for American Art"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "The Metropolitan Museum of Art"
+      license: "CC0"
+      rights_status: "cc0"
+    - source: "The Metropolitan Museum of Art"
+      license: "CC0 / Open Access"
+      rights_status: "cc0_open_access"
+    - source: "The Metropolitan Museum of Art"
+      license: "CC0; Creative Commons Zero, Public Domain Dedication"
+      rights_status: "cc0_public_domain_dedication"
+    - source: "The Metropolitan Museum of Art"
+      license: "Public Domain / Open Access"
+      rights_status: "public_domain_open_access"
+    - source: "The Metropolitan Museum of Art"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Toledo Museum of Art"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+    - source: "Tretyakov Gallery"
+      license: "Public domain; Public domain"
+      rights_status: "public_domain"
+  source_url_schemes:
+    - http
+    - https
+  allowed_extensions:
+    - .jpg
+    - .jpeg
+  allowed_image_formats:
+    - JPEG
+  allowed_image_modes:
+    - RGB
+  minimum_short_side: 640
+  minimum_long_side: 768
+  exact_duplicate_algorithm: "sha256"
+  near_duplicate:
+    method: "dhash64"
+    method_version: "dhash64.v1"
+    hash_size: 8
+    hamming_distance_threshold: 5
+    apply_exif_orientation: true
+
+preview:
+  group_by: "category"
+  items_per_group: 2
+  sort_by:
+    - category
+    - painting_id
+
+bias_notes:
+  - bias_id: "institutional_source_concentration"
+    bias_category: "source_representation"
+    statement: "The controlled collection includes 32 recorded source labels, but the largest source contributes 109 of 300 paintings; source coverage is therefore broader but still concentrated."
+    evidence_basis: "Configured and observed source counts."
+  - bias_id: "open_access_selection_bias"
+    bias_category: "acquisition"
+    statement: "Restricting acquisition to public-domain or open-access material favors institutions and works with suitable digitization and rights metadata."
+    evidence_basis: "Dataset selection rule and accepted licence mappings."
+  - bias_id: "purposeful_visual_category_sampling"
+    bias_category: "sampling"
+    statement: "The five balanced visual categories are a purposive evaluation design and are not independently validated art-historical styles or a population-representative sample of painting history."
+    evidence_basis: "Configured category quotas and selection reasons."
+  - bias_id: "metadata_availability_imbalance"
+    bias_category: "metadata"
+    statement: "Date or period, style or period, and medium are recorded for 268 of 300 paintings; visual category remains the complete grouping variable."
+    evidence_basis: "Observed optional-field completeness in metadata_300.csv."
+  - bias_id: "historical_geographic_representation_unresolved"
+    bias_category: "historical_geographic_representation"
+    statement: "Historical and geographic representation cannot be quantified reliably from the current fields and requires explicit enrichment before population-level claims."
+    evidence_basis: "Incomplete optional period metadata and absence of a normalized geographic field."

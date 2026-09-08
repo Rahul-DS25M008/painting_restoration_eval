@@ -28,8 +28,8 @@ from .schemas import (
 )
 
 
-DATASET_VERIFICATION_MODULE_VERSION = "1.0.0"
-DATASET_CONFIG_SCHEMA_VERSION = "dataset_config.v1"
+DATASET_VERIFICATION_MODULE_VERSION = "2.0.0"
+DATASET_CONFIG_SCHEMA_VERSION = "dataset_config.v2"
 DATASET_FINGERPRINT_VERSION = "dataset_fingerprint.v1"
 DHASH_METHOD_VERSION = "dhash64.v1"
 
@@ -103,7 +103,9 @@ def validate_dataset_config(config: Mapping[str, Any]) -> list[str]:
     """Return configuration-contract errors without resolving filesystem paths."""
     errors: list[str] = []
     if config.get("config_schema_version") != DATASET_CONFIG_SCHEMA_VERSION:
-        errors.append("config_schema_version must equal dataset_config.v1")
+        errors.append(
+            f"config_schema_version must equal {DATASET_CONFIG_SCHEMA_VERSION}"
+        )
 
     try:
         dataset = _require_mapping(config, "dataset")
@@ -143,6 +145,10 @@ def validate_dataset_config(config: Mapping[str, Any]) -> list[str]:
     total = expected.get("total_paintings")
     if not isinstance(total, int) or total <= 0:
         errors.append("expected.total_paintings must be a positive integer")
+    for key in ("referenced_image_count", "audit_row_count"):
+        value = expected.get(key)
+        if not isinstance(value, int) or value <= 0:
+            errors.append(f"expected.{key} must be a positive integer")
     for group_key in ("categories", "sources"):
         counts = expected.get(group_key)
         if not isinstance(counts, Mapping) or not counts:
@@ -169,6 +175,21 @@ def validate_dataset_config(config: Mapping[str, Any]) -> list[str]:
         re.compile(identifier_pattern)
     except re.error:
         errors.append("validation.painting_id_regex is invalid")
+
+    minimum_short_side = validation.get("minimum_short_side")
+    minimum_long_side = validation.get("minimum_long_side")
+    if not isinstance(minimum_short_side, int) or minimum_short_side <= 0:
+        errors.append("validation.minimum_short_side must be a positive integer")
+    if not isinstance(minimum_long_side, int) or minimum_long_side <= 0:
+        errors.append("validation.minimum_long_side must be a positive integer")
+    if (
+        isinstance(minimum_short_side, int)
+        and isinstance(minimum_long_side, int)
+        and minimum_short_side > minimum_long_side
+    ):
+        errors.append(
+            "validation.minimum_short_side must not exceed minimum_long_side"
+        )
 
     near_duplicate = validation.get("near_duplicate")
     if not isinstance(near_duplicate, Mapping):
@@ -428,8 +449,8 @@ def audit_image_collection(
     allowed_extensions = {str(value).lower() for value in validation["allowed_extensions"]}
     allowed_formats = {str(value) for value in validation["allowed_image_formats"]}
     allowed_modes = {str(value) for value in validation["allowed_image_modes"]}
-    minimum_width = int(validation["minimum_width"])
-    minimum_height = int(validation["minimum_height"])
+    minimum_short_side = int(validation["minimum_short_side"])
+    minimum_long_side = int(validation["minimum_long_side"])
     records: list[dict[str, Any]] = []
 
     ordered = metadata.sort_values("painting_id", kind="stable").reset_index(drop=True)
@@ -511,9 +532,11 @@ def audit_image_collection(
             record["height_matches_metadata"] = int(record["raw_height"]) == int(
                 row.original_height
             )
+            raw_width = int(record["raw_width"])
+            raw_height = int(record["raw_height"])
             record["minimum_resolution_passed"] = (
-                int(record["raw_width"]) >= minimum_width
-                and int(record["raw_height"]) >= minimum_height
+                min(raw_width, raw_height) >= minimum_short_side
+                and max(raw_width, raw_height) >= minimum_long_side
             )
             record["format_allowed"] = record["raw_format"] in allowed_formats
             record["mode_allowed"] = record["raw_mode"] in allowed_modes
