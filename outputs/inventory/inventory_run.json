@@ -1,15 +1,15 @@
 {
   "run_schema_version": "inventory_run.v1",
   "inventory_schema_version": "project_file_inventory.v1",
-  "inventory_run_id": "inventory_20260909T201133Z_d3b69228",
+  "inventory_run_id": "inventory_20260909T223233Z_42d2ef3f",
   "status": "completed",
-  "generated_at_utc": "2026-09-09T20:11:33.739227Z",
-  "completed_at_utc": "2026-09-09T20:11:43.515790Z",
-  "duration_seconds": 9.806,
+  "generated_at_utc": "2026-09-09T22:32:33.373979Z",
+  "completed_at_utc": "2026-09-09T22:32:41.239424Z",
+  "duration_seconds": 7.896,
   "repository_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
   "inventory_relative_path": "outputs/inventory/project_file_inventory.csv",
-  "inventory_sha256": "95fe06506cba8178c44b79ee9d44085cf9d1b2200b340f82867033d4f31dba70",
-  "inventory_size_bytes": 10431646,
+  "inventory_sha256": "79f407465d026246d251f891ab37bd0af90bf4ca9a95c35a46222c84723b5d9a",
+  "inventory_size_bytes": 10950397,
   "hash_configuration": {
     "mode": "partial",
     "algorithm": "sha256_first_n_bytes",
@@ -18,9 +18,9 @@
   "incremental_reuse": {
     "enabled": true,
     "cache_status": "verified",
-    "source_run_id": "inventory_20260909T164825Z_88b1d5a4",
-    "reused_file_count": 19539,
-    "inspected_file_count": 311
+    "source_run_id": "inventory_20260909T221944Z_af6f78a9",
+    "reused_file_count": 21099,
+    "inspected_file_count": 1
   },
   "scan_configuration": {
     "skipped_directory_names": [
@@ -42,13 +42,13 @@
     ]
   },
   "environment": {
-    "python_version": "3.12.6",
+    "python_version": "3.12.14",
     "python_implementation": "CPython",
     "platform": "Windows-11-10.0.26200-SP0"
   },
   "summary": {
-    "file_count": 19850,
-    "total_size_bytes": 6735605277,
+    "file_count": 21100,
+    "total_size_bytes": 6742561913,
     "read_error_file_count": 0,
     "read_error_count": 0,
     "counts_by_format": {
@@ -63,7 +63,7 @@
       "notebook": 37,
       "npz": 4,
       "pdf": 2,
-      "png": 18937,
+      "png": 20187,
       "python": 97,
       "text": 5,
       "yaml": 65
@@ -77,7 +77,7 @@
       "json": 82,
       "manifest_table": 44,
       "markdown": 40,
-      "mask_image": 3105,
+      "mask_image": 4355,
       "metric_table": 39,
       "notebook": 37,
       "other": 15,
@@ -100,7 +100,7 @@
       ".mjs": 2,
       ".npz": 4,
       ".pdf": 2,
-      ".png": 18937,
+      ".png": 20187,
       ".py": 97,
       ".txt": 5,
       ".yaml": 64,

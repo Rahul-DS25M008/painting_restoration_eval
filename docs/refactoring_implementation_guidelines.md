@@ -793,6 +793,22 @@ Rules for the active rerun:
   outputs under `outputs/12a_hint_restoration/`. D01 remains the selection source
   and must not be rerun as production.
 
+#### Active Controlled-300 completion status
+
+Updated 2026-09-10. This compact status is a navigation aid; the human evidence
+audit and machine-readable coverage registry remain authoritative for counts,
+checksums, limitations, and downstream eligibility.
+
+| Notebook | Refactor | Validation | Gate | Validated active population | Pilot continuity |
+|---|---|---|---|---|---|
+| 01 Dataset Verification | Finished | Finished | Yes | 300 artworks; 448 audit rows | All pilot artifact paths and schemas retained |
+| 02 Image Preprocessing | Finished | Finished | Yes | 300 clean images and preprocessing rows | First 50 PNGs and preview byte-identical |
+| 03 Canonical Mask Generation | Finished | Finished | Yes | 1,500 masks across 300 paintings and five families | All 250 pilot masks byte-identical; schema unchanged |
+
+Notebook 04 is the next eligible Controlled-300 producer. No later notebook may
+consume the active Notebook 03 evidence as part of a Controlled-300 chain until
+Notebook 04 and each intervening direct producer complete their own gates.
+
 Two governing files make downstream evidence availability explicit:
 
 ```text

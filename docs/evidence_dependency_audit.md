@@ -35,10 +35,10 @@ expanded benchmark. This changes no frozen Notebook 01–36 evidence. Its exact
 inputs, outputs, population, source/checkpoint requirements, observed results,
 and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
-**Controlled-300 transition review: 2026-09-09.** The pilot remains recoverable
+**Controlled-300 transition review: 2026-09-10.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebooks 01 and 02 are
-completed Controlled-300 producers. Notebooks 03–36 remain historical
+dependency order for the approved 300-painting study. Notebooks 01–03 are
+completed Controlled-300 producers. Notebooks 04–36 remain historical
 Controlled-50 evidence until each producer is explicitly reopened, rerun,
 validated, baseline-compared, and committed.
 
@@ -80,6 +80,7 @@ metric validity and coverage passed.
 |---|---|---:|---|---|
 | 01 Dataset Verification | `artworks.v1`, `dataset_audit.v1`, two canonical figures, validation and manifests | 300 artworks; 60 in each of 5 categories; 448 audit rows; 50/50 checks | All 7 pilot artifact paths retained; table schemas and artifact roles unchanged; population-dependent rows increased for the expanded dataset | Approved Controlled-300 producer for Notebook 02 |
 | 02 Image Preprocessing | `preprocessed_images.v1`, 768 × 768 clean PNG collection, preprocessing audit, canonical preview, validation and manifests | 300 clean images; 60 in each of 5 categories; 45 audit rows; 50/50 consolidated checks; 27/27 completion requirements | All 7 pilot artifact paths retained; all table schemas and artifact roles unchanged; clean-image and preprocessing-table counts increased from 50 to 300; the original 50 clean PNGs and canonical preview are byte-identical | Approved Controlled-300 geometry and clean-image producer for Notebooks 03–08 and later consumers |
+| 03 Canonical Mask Generation | `canonical_masks.v1`, 1,500 binary mask PNGs, normalized morphology audit, two canonical figures, protocol, validation and manifests | 300 paintings × 5 families = 1,500 masks; 300 masks per family; 105 audit rows; 50/50 consolidated checks; 24/24 completion requirements | All 258 pilot output paths retained; the 89-column canonical schema and all artifact roles are unchanged; all 250 pilot mask PNGs are byte-identical and their key scientific rows reconcile; the 1,250 additional PNGs are exactly the five configured masks for p051–p300 | Approved Controlled-300 canonical-mask producer for Notebooks 04–06, 08, and later region-aware consumers |
 
 Notebook 01's final manifest records `controlled_300`, dataset version `2.0.0`,
 300 expected and observed artwork/image rows, 448 expected and observed audit
@@ -107,6 +108,24 @@ approved colour policy: 261 missing profiles use the documented sRGB assumption,
 19 embedded sRGB profiles preserve pixels, 20 embedded non-sRGB profiles are
 converted to sRGB, and no output PNG retains an ICC profile. Recorded content
 bounds remain the authoritative way for downstream notebooks to exclude padding.
+
+Notebook 03's final manifest records `controlled_300`, dataset version `2.0.0`,
+mask configuration version `1.1.0`, mask helper version `3.1.0`, and stable mask
+generator version `3.0.0`. Expected and observed counts reconcile at 300 paintings,
+five mask families, 1,500 canonical rows and PNGs, 105 audit rows, 50 consolidated
+validation rows, seven artifact records, two figures, and one methodology report.
+The output root contains exactly 1,508 files, compared with 258 in the pilot; the
+1,250-file increase is wholly the added p051–p300 mask population. All 1,500 masks
+passed saved-file validation and deterministic replay, with no missing, stale,
+orphaned, duplicate, cross-family-equivalent, non-binary, padding-overlap, area,
+or morphology failures. The read-only comparison copy is
+`E:/outputs/03_canonical_mask_generation/`.
+
+Seed-scheme continuity was intentionally preserved: the first 250 mask PNGs are
+byte-identical to the pilot, and all compared pilot rows retain their mask IDs,
+paths, checksums, damaged-pixel evidence, seeds, retries, and generation attempts.
+The larger morphology figure now summarizes 300 masks per family, while the
+deterministic representative example is selected from the expanded population.
 
 ## 3. Frozen notebook evidence ledger
 

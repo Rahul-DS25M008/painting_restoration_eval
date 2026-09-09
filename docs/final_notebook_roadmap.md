@@ -166,6 +166,11 @@ be obtained by multiplying a stale 50-painting literal.
 
 **Notebook:** `01_dataset_verification.ipynb`  
 **Origin:** Existing Notebook 01  
+**Controlled-300 refactor status:** Finished  
+**Validation status:** Finished  
+**Completion gate passed:** Yes  
+**Active validated coverage:** 300 artworks; 60 per visual category; 448 audit rows; 50 validation rows  
+**Pilot comparison:** All seven pilot output paths and table schemas retained; population-dependent evidence expanded without unexplained loss  
 **Output root:** `outputs/01_dataset_verification/`  
 **Depends on:** raw metadata, raw images, dataset configuration, current inventory
 
@@ -235,6 +240,11 @@ Notebooks 02, 26, 30, 33, 34, and 36.
 
 **Notebook:** `02_image_preprocessing.ipynb`  
 **Origin:** Existing Notebook 02  
+**Controlled-300 refactor status:** Finished  
+**Validation status:** Finished  
+**Completion gate passed:** Yes  
+**Active validated coverage:** 300 clean 768 × 768 RGB PNGs; 300 preprocessing rows; 45 audit rows; 50 validation rows  
+**Pilot comparison:** All 50 pilot clean PNGs and the canonical preview are byte-identical; output count increased from 56 to 306 only through the expanded clean-image population  
 **Output root:** `outputs/02_image_preprocessing/`  
 **Depends on:** Notebook 01
 
@@ -294,6 +304,11 @@ Notebooks 03–08 and all later visual/reporting stages through manifests.
 
 **Notebook:** `03_canonical_mask_generation.ipynb`  
 **Origin:** Existing Notebook 03  
+**Controlled-300 refactor status:** Finished  
+**Validation status:** Finished  
+**Completion gate passed:** Yes  
+**Active validated coverage:** 300 paintings × 5 families = 1,500 canonical masks; 105 audit rows; 50 validation rows; 24 completion requirements  
+**Pilot comparison:** All 250 pilot mask PNGs are byte-identical, the 89-column schema is unchanged, and output count increased from 258 to 1,508 only through 1,250 additional masks  
 **Output root:** `outputs/03_canonical_mask_generation/`  
 **Depends on:** Notebook 02
 

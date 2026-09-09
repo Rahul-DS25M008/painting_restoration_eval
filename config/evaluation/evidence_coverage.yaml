@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.2"
+config_version: "1.1.3"
 
 evidence_coverage:
   authority:
@@ -48,14 +48,16 @@ evidence_coverage:
       experimental_requirements_scope: "legacy_recipe_not_exact_executed_environment_lock"
       clean_experimental_install_verified_by_this_review: false
 
+  # Incremental transition ledger; update only after each notebook passes its
+  # completion gate and read-only pilot-output comparison.
   controlled_300_rerun:
-    recorded_on: "2026-09-09"
+    recorded_on: "2026-09-10"
     recovery_tag: "pilot-50-complete"
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "02"
-    next_eligible_notebook_id: "03"
+    completed_through_notebook_id: "03"
+    next_eligible_notebook_id: "04"
     completed_notebooks:
       - notebook_id: "01"
         stem: "01_dataset_verification"
@@ -108,6 +110,44 @@ evidence_coverage:
         baseline_table_schemas_preserved: true
         baseline_first_50_clean_images_byte_identical: true
         baseline_preview_byte_identical: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "03"
+        stem: "03_canonical_mask_generation"
+        output_root: "outputs/03_canonical_mask_generation"
+        manifest_path: "outputs/03_canonical_mask_generation/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        mask_configuration_version: "1.1.0"
+        mask_helper_version: "3.1.0"
+        mask_generator_version: "3.0.0"
+        painting_rows: 300
+        mask_families: 5
+        canonical_mask_rows: 1500
+        mask_image_files: 1500
+        masks_per_family: 300
+        mask_audit_rows: 105
+        validation_rows: 50
+        artifact_records: 7
+        canonical_figures: 2
+        methodology_reports: 1
+        completion_requirements: 24
+        output_file_count: 1508
+        baseline_output_root: "E:/outputs/03_canonical_mask_generation"
+        baseline_painting_rows: 50
+        baseline_canonical_mask_rows: 250
+        baseline_mask_image_files: 250
+        baseline_mask_audit_rows: 105
+        baseline_validation_rows: 50
+        baseline_artifact_records: 7
+        baseline_canonical_figures: 2
+        baseline_methodology_reports: 1
+        baseline_output_file_count: 258
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_first_250_mask_images_byte_identical: true
+        baseline_key_scientific_rows_identical: true
         unexplained_missing_or_reduced_evidence: false
 
   frozen_baseline:
@@ -164,6 +204,9 @@ evidence_coverage:
 
     - notebook_id: "03"
       stem: "03_canonical_mask_generation"
+      record_scope: "pilot_50_historical_at_git_tag"
+      recovery_tag: "pilot-50-complete"
+      active_working_tree_replaced_by_controlled_300: true
       output_root: "outputs/03_canonical_mask_generation"
       manifest_path: "outputs/03_canonical_mask_generation/manifests/run_manifest.json"
       status: "frozen_supported"
