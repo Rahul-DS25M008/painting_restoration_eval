@@ -1,41 +1,41 @@
 {
   "manifest_schema_version": "run_manifest.v1",
-  "run_id": "run_424a69cf0c2c4a228d0919dc2d66258a",
+  "run_id": "run_49a7e3c485394878ab4323ce661f3ef5",
   "notebook_id": "01",
   "notebook_name": "Dataset Verification",
   "origin": "Existing Notebook 01",
   "run_status": "completed",
-  "started_at_utc": "2026-08-17T11:04:21.869331Z",
-  "completed_at_utc": "2026-08-17T12:14:45.143752Z",
-  "git_commit": "4148e151e712f5bca81813f65c090c1b5b07e651",
+  "started_at_utc": "2026-09-09T13:24:31.358029Z",
+  "completed_at_utc": "2026-09-09T13:53:39.055613Z",
+  "git_commit": "3659243655dcdda8cef97f7522ed4999f12b893d",
   "git_dirty": true,
   "git_branch": "main",
   "git_error": "",
-  "inventory_run_id": "inventory_20260817T101135Z_7fdc3514",
+  "inventory_run_id": "inventory_20260909T113928Z_adc18e36",
   "dataset_versions": {
     "dataset_id": "painting_restoration_eval",
-    "dataset_version": "1.0.0",
-    "dataset_scope": "controlled_50",
-    "execution_profile": "controlled_50",
-    "content_fingerprint": "9c1717b89d6adc4182736c7c879c2d941ebfbf4999870abc14249bb1869c0d47",
+    "dataset_version": "2.0.0",
+    "dataset_scope": "controlled_300",
+    "execution_profile": "controlled_300",
+    "content_fingerprint": "5c8797aebe0c5aced37a274854a8f2584bb7d4fd9babff1fc6ba37f316b2f6b1",
     "fingerprint_version": "dataset_fingerprint.v1",
     "metadata_schema": "raw_artwork_metadata.v1",
     "artworks_schema": "artworks.v1",
     "dataset_audit_schema": "dataset_audit.v1"
   },
   "configuration_paths": [
-    "config/datasets/controlled_50.yaml"
+    "config/datasets/controlled_300.yaml"
   ],
   "configuration_checksums": {
-    "config/datasets/controlled_50.yaml": "5568dd93bf606d627e791ff52c2c6c2af3b8a06bfd94f0a78e2a8d245fc86345"
+    "config/datasets/controlled_300.yaml": "1bf29bacd04b367f92f20ee3a8e8c421fa4d53cd3c7cd629942abb0455ba53c9"
   },
   "helper_versions": {
     "restoration_eval": "0.1.0",
     "paths": "1.0.0",
-    "schemas": "1.0.0",
+    "schemas": "1.18.0",
     "manifests": "1.0.0",
     "validation": "1.0.0",
-    "dataset_verification": "1.0.0",
+    "dataset_verification": "2.0.0",
     "dataset_fingerprint": "dataset_fingerprint.v1",
     "near_duplicate_method": "dhash64.v1"
   },
@@ -56,20 +56,20 @@
     {
       "input_key": "dataset_config",
       "producer": "project configuration",
-      "relative_path": "config/datasets/controlled_50.yaml",
+      "relative_path": "config/datasets/controlled_300.yaml",
       "required": true,
       "format": "yaml",
-      "schema_version": "dataset_config.v1",
+      "schema_version": "dataset_config.v2",
       "expected_cardinality": 1
     },
     {
       "input_key": "raw_metadata",
       "producer": "source dataset",
-      "relative_path": "data/raw/metadata/metadata_50.csv",
+      "relative_path": "data/raw/metadata/metadata_300.csv",
       "required": true,
       "format": "csv",
       "schema_version": "raw_artwork_metadata.v1",
-      "expected_cardinality": 50
+      "expected_cardinality": 300
     },
     {
       "input_key": "raw_images",
@@ -78,7 +78,7 @@
       "required": true,
       "format": "jpeg_collection",
       "schema_version": "raw_image_collection.v1",
-      "expected_cardinality": 50
+      "expected_cardinality": 300
     },
     {
       "input_key": "project_inventory",
@@ -87,7 +87,7 @@
       "required": true,
       "format": "csv",
       "schema_version": "project_file_inventory.v1",
-      "expected_cardinality": 10966
+      "expected_cardinality": 19593
     },
     {
       "input_key": "inventory_run",
@@ -114,7 +114,7 @@
       "relative_path": "outputs/01_dataset_verification/data/artworks.csv",
       "format": "csv",
       "schema_version": "artworks.v1",
-      "expected_cardinality": 50,
+      "expected_cardinality": 300,
       "artifact_role": "primary_downstream"
     },
     {
@@ -122,7 +122,7 @@
       "relative_path": "outputs/01_dataset_verification/metrics/dataset_audit.csv",
       "format": "csv",
       "schema_version": "dataset_audit.v1",
-      "expected_cardinality": 101,
+      "expected_cardinality": 448,
       "artifact_role": "audit_reporting"
     },
     {
@@ -167,21 +167,21 @@
     }
   ],
   "expected_counts": {
-    "metadata_rows": 50,
-    "referenced_images": 50,
-    "artwork_rows": 50,
-    "dataset_audit_rows": 101,
+    "metadata_rows": 300,
+    "referenced_images": 300,
+    "artwork_rows": 300,
+    "dataset_audit_rows": 448,
     "validation_rows": 50,
     "artifact_records": 5,
     "canonical_figures": 2
   },
   "observed_counts": {
-    "metadata_rows": 50,
-    "referenced_images": 50,
-    "accepted_artworks": 50,
+    "metadata_rows": 300,
+    "referenced_images": 300,
+    "accepted_artworks": 300,
     "excluded_artworks": 0,
-    "artwork_rows": 50,
-    "dataset_audit_rows": 101,
+    "artwork_rows": 300,
+    "dataset_audit_rows": 448,
     "validation_rows": 50,
     "artifact_records": 5,
     "canonical_figures": 2,
@@ -254,10 +254,10 @@
     }
   },
   "known_limitations": [
-    "The controlled subset contains works from only three institutions, with 60 percent sourced from The Metropolitan Museum of Art.",
+    "The controlled collection includes 32 recorded source labels, but the largest source contributes 109 of 300 paintings; source coverage is therefore broader but still concentrated.",
     "Restricting acquisition to public-domain or open-access material favors institutions and works with suitable digitization and rights metadata.",
-    "The five balanced visual categories are a purposive evaluation design and are not a population-representative sample of painting history.",
-    "Optional date, style, and medium metadata is concentrated in portrait and high-texture records and is absent from three categories.",
+    "The five balanced visual categories are a purposive evaluation design and are not independently validated art-historical styles or a population-representative sample of painting history.",
+    "Date or period, style or period, and medium are recorded for 268 of 300 paintings; visual category remains the complete grouping variable.",
     "Historical and geographic representation cannot be quantified reliably from the current fields and requires explicit enrichment before population-level claims.",
     "Dataset verification establishes technical and metadata suitability; it does not certify historical representativeness or conservation suitability."
   ],
@@ -270,7 +270,7 @@
     "current inventory"
   ],
   "applicable_dataset_scopes": [
-    "controlled_50"
+    "controlled_300"
   ],
   "applicable_experiment_scopes": [],
   "expensive_execution": false,

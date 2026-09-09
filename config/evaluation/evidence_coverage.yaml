@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.1"
+config_version: "1.1.2"
 
 evidence_coverage:
   authority:
@@ -48,6 +48,39 @@ evidence_coverage:
       experimental_requirements_scope: "legacy_recipe_not_exact_executed_environment_lock"
       clean_experimental_install_verified_by_this_review: false
 
+  controlled_300_rerun:
+    recorded_on: "2026-09-09"
+    recovery_tag: "pilot-50-complete"
+    authoritative_recovery_source: "git_tag"
+    external_read_only_output_comparison_root: "E:/outputs"
+    active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
+    completed_through_notebook_id: "01"
+    next_eligible_notebook_id: "02"
+    completed_notebooks:
+      - notebook_id: "01"
+        stem: "01_dataset_verification"
+        output_root: "outputs/01_dataset_verification"
+        manifest_path: "outputs/01_dataset_verification/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        artwork_rows: 300
+        referenced_image_rows: 300
+        dataset_audit_rows: 448
+        validation_rows: 50
+        artifact_records: 5
+        canonical_figures: 2
+        baseline_output_root: "E:/outputs/01_dataset_verification"
+        baseline_artwork_rows: 50
+        baseline_dataset_audit_rows: 101
+        baseline_validation_rows: 50
+        baseline_artifact_records: 5
+        baseline_canonical_figures: 2
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        unexplained_missing_or_reduced_evidence: false
+
   frozen_baseline:
     through_notebook_id: "21"
     data_producing_commit: "0aac25ef"
@@ -72,6 +105,9 @@ evidence_coverage:
   frozen_notebooks:
     - notebook_id: "01"
       stem: "01_dataset_verification"
+      record_scope: "pilot_50_historical_at_git_tag"
+      recovery_tag: "pilot-50-complete"
+      active_working_tree_replaced_by_controlled_300: true
       output_root: "outputs/01_dataset_verification"
       manifest_path: "outputs/01_dataset_verification/manifests/run_manifest.json"
       status: "frozen_supported"

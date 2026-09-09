@@ -752,6 +752,12 @@ Rules for the active rerun:
   helper, YAML, or output variants side by side.
 - Treat the tagged commit—not duplicate working-tree files—as the recovery point
   and comparison baseline for the 50-painting study.
+- A read-only copy of the pre-scale notebook outputs is retained outside the
+  repository at `E:/outputs/`. For Notebook `NN_name`, compare the completed
+  controlled-300 output tree with `E:/outputs/NN_name/` after the notebook gate
+  passes and before the final inventory refresh. The Git tag remains the
+  authoritative recovery baseline; the external copy is the convenient
+  artifact-level comparison source and must never be modified by the pipeline.
 - Reopen only the next notebook whose direct producers have passed their
   controlled-300 gates. Never run a downstream notebook against a silent mixture
   of old and new upstream artifacts.
@@ -772,6 +778,14 @@ Rules for the active rerun:
 - Compare the new notebook with its tagged counterpart for cell responsibility,
   schema, artifact roles, figures/reports, validation coverage, and exclusions.
   Changed row counts are expected; silently missing evidence families are not.
+- Present an end-of-notebook baseline-comparison table that covers every
+  pre-scale output and every new output. At minimum, record the relative path or
+  artifact family, pre-scale existence and count, controlled-300 existence and
+  count, status, and the reason for every changed count. Count rows for canonical
+  tables, files for collections, records for manifests, and applicable rendered
+  units for figures or reports. Mark unchanged structural counts explicitly and
+  distinguish expected scale growth from schema drift, missing evidence, and
+  deliberately retired artifacts.
 - A committed output remains historical 50-painting evidence until its producer
   has a controlled-300 run manifest and passed completion gate. Do not rewrite a
   historical manifest to pretend that later files were part of its run.
@@ -1737,6 +1751,9 @@ A notebook is complete only when all applicable checks pass:
 - the human evidence dependency audit and machine-readable evidence-coverage
   registry record the completed notebook's validated evidence and limitations;
 - project paths registry was updated;
+- the completed output tree was compared with the read-only pre-scale copy at
+  `E:/outputs/<notebook_stem>/`, and the artifact/count comparison table contains
+  no unexplained missing or reduced evidence;
 - inventory was refreshed after completion;
 - limitations and deviations are documented;
 - the notebook runs linearly from a clean kernel.

@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-03T21:17:42.175924Z",
+  "updated_at_utc": "2026-09-09T13:53:19.317678Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -723,12 +723,12 @@
       "artifact_type": "dataset_table",
       "artifact_role": "primary_downstream",
       "schema_version": "artworks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "",
       "validation_status": "passed",
-      "row_count": 50,
+      "row_count": 300,
       "file_count": 1,
-      "checksum": "e6b9ed016a433edc227f5fe96422106956677138774001aa772d951dc401a5dd"
+      "checksum": "be5c78657a7b6cdefb432024131b61586c275edf139ce963bc2169a518ca4469"
     },
     {
       "artifact_key": "dataset.audit",
@@ -737,12 +737,12 @@
       "artifact_type": "audit_table",
       "artifact_role": "audit_reporting",
       "schema_version": "dataset_audit.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "",
       "validation_status": "passed",
-      "row_count": 101,
+      "row_count": 448,
       "file_count": 1,
-      "checksum": "8051e7e58cd7777f6e740ba14e39723ad97cb94d47d991de8f98cd113d4a2ac1"
+      "checksum": "68fba080332d021c2f153721cde76cfea9cb7dfe5fb95a5359ce5ca9f34f795b"
     },
     {
       "artifact_key": "dataset.figure_distribution",
@@ -751,12 +751,12 @@
       "artifact_type": "figure",
       "artifact_role": "reporting",
       "schema_version": "figure.dataset_distribution.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "fd733c61ca27b5ce7acc49189f07d8c3c84e58a60396d7681ecb11f214f93d01"
+      "checksum": "71175fab126c364068ecb3bbc8481662c8d11f226754299dcf139d5f691149d5"
     },
     {
       "artifact_key": "dataset.figure_preview",
@@ -765,12 +765,12 @@
       "artifact_type": "figure",
       "artifact_role": "qa_reporting",
       "schema_version": "figure.dataset_preview.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "a477a1dfd3df7d109889356bc32df0c97c64d350264419977157af5a26072e2a"
+      "checksum": "86b3150ae2aea13b8e663d4a175ea3886c58273590268020661621a4e3355342"
     },
     {
       "artifact_key": "diffusion_uncertainty.calibration_inputs",
@@ -2795,12 +2795,12 @@
       "artifact_type": "validation_table",
       "artifact_role": "validation",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "",
       "validation_status": "passed",
       "row_count": 50,
       "file_count": 1,
-      "checksum": "64f185a96efdbc9694d054aa05d6abca6536e5955805a37a1b1c29a93f905e86"
+      "checksum": "16b51dc3d1ecedec10047829c3eb85a05aa5f1d1dc53b8d186cd4ecc31a80996"
     },
     {
       "artifact_key": "validation.02_image_preprocessing",

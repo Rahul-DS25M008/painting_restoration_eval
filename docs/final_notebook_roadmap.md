@@ -2772,10 +2772,22 @@ For each numbered notebook:
 4. preserve existing cells and scientific behavior except for approved
    cardinality, path, dependency, HINT, and validation changes;
 5. have the user paste and execute all notebook cells;
-6. compare schemas, artifact roles, figures, reports, and validation coverage
-   with the tagged baseline;
-7. update governing audits and inventory only after the new gate passes; and
-8. commit the notebook and its newly owned evidence before moving downstream.
+6. compare schemas, artifact roles, figures, reports, validation coverage, and
+   artifact counts with both the tagged baseline and the read-only pre-scale
+   output copy at `E:/outputs/<notebook_stem>/`;
+7. present a before/after status table covering every old and new output, with
+   row, file, manifest-record, figure, or report counts as appropriate and a
+   reason for every changed count; unexplained missing or reduced evidence
+   blocks completion;
+8. update governing audits and inventory only after the new gate and baseline
+   comparison pass; and
+9. commit the notebook and its newly owned evidence before moving downstream.
+
+`E:/outputs/` is an external read-only comparison snapshot, not a pipeline input
+or a second active output root. The `pilot-50-complete` Git tag remains the
+authoritative recovery point. The external snapshot exists so each refactored
+notebook can demonstrate that controlled-300 preserved the approved artifact
+families while increasing population-dependent counts for an explained reason.
 
 The committed 50-painting outputs in the working tree are historical until
 replaced notebook by notebook. A mixed state is therefore expected during the

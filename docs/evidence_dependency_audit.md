@@ -35,18 +35,26 @@ expanded benchmark. This changes no frozen Notebook 01–36 evidence. Its exact
 inputs, outputs, population, source/checkpoint requirements, observed results,
 and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
+**Controlled-300 transition review: 2026-09-09.** The pilot remains recoverable
+at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
+dependency order for the approved 300-painting study. Notebook 01 is the first
+completed Controlled-300 producer. Notebooks 02–36 remain historical
+Controlled-50 evidence until each producer is explicitly reopened, rerun,
+validated, baseline-compared, and committed.
+
 ## 2. Original frozen baseline and completed-pipeline protection
 
-Notebooks 01–21 and their notebook-owned canonical outputs are frozen. Their
-last common validated data-producing baseline is repository commit `0aac25ef`
-(`notebook 21 done`). Later documentation and governing-file commits do not
-change the scientific population recorded by those manifests.
+The completed Notebook 01–36 pilot sequence and its notebook-owned evidence are
+immutable at Git tag `pilot-50-complete`. The original Notebook 01–21 common
+validated data-producing baseline is repository commit `0aac25ef` (`notebook 21
+done`). Later documentation and active Controlled-300 reruns do not alter the
+scientific population recoverable from the tag.
 
 Notebooks 22–36 subsequently completed their own gates and now have the same
 read-only protection. They retain separate provenance rather than being folded
 back into the original baseline commit.
 
-Frozen means:
+For the tagged baseline, frozen means:
 
 - no `.ipynb` source changes;
 - no rerunning or appending to any completed Notebook 01–36 output root;
@@ -57,11 +65,38 @@ Frozen means:
 - consumers join frozen and extension evidence through stable identifiers and
   explicit ownership fields.
 
+The active working tree is an approved exception to the old blanket freeze: one
+numbered notebook at a time may replace its working-tree Controlled-50 outputs
+with Controlled-300 evidence under the minimal-delta rules in the implementation
+guidelines and roadmap. This does not modify the tagged baseline.
+
 The frozen validation state contains no blocking validation failure. Notebook 15
 retains one declared non-blocking CUDA/CuBLAS bitwise-repeatability warning;
 metric validity and coverage passed.
 
+### 2.1 Active Controlled-300 producer ledger
+
+| Notebook | Current working-tree evidence | Validated coverage | Pilot comparison | Downstream status |
+|---|---|---:|---|---|
+| 01 Dataset Verification | `artworks.v1`, `dataset_audit.v1`, two canonical figures, validation and manifests | 300 artworks; 60 in each of 5 categories; 448 audit rows; 50/50 checks | All 7 pilot artifact paths retained; table schemas and artifact roles unchanged; population-dependent rows increased for the expanded dataset | Approved Controlled-300 producer for Notebook 02 |
+
+Notebook 01's final manifest records `controlled_300`, dataset version `2.0.0`,
+300 expected and observed artwork/image rows, 448 expected and observed audit
+rows, five artifact records, two figures, and a passed completion gate. The
+read-only artifact comparison copy is `E:/outputs/01_dataset_verification/`;
+the authoritative recovery source remains Git tag `pilot-50-complete`.
+
+The audit increase from 101 to 448 rows is wholly in distribution evidence:
+the expanded registry contains more recorded dates/periods, styles/periods,
+media, licences, and institutional sources. Validation remains 50 rows because
+that table counts invariant checks rather than paintings.
+
 ## 3. Frozen notebook evidence ledger
+
+This table preserves the historical Controlled-50 evidence at
+`pilot-50-complete`. Where a producer has completed its Controlled-300 rerun,
+Section 2.1 and the machine-readable transition ledger describe the active
+working-tree artifact instead.
 
 | Notebook | Frozen evidence | Validated coverage | Downstream interpretation boundary |
 |---|---|---:|---|
