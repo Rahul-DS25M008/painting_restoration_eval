@@ -2,7 +2,7 @@
 // No token values belong in this file. Set GITHUB_TOKEN as a Worker secret.
 const REPOSITORY = "Rahul-DS25M008/painting_restoration_eval";
 const WORKFLOW = "streamlit-availability.yml";
-const REF = "main";
+const REF = "pilot-50-dashboard";
 const API_URL = `https://api.github.com/repos/${REPOSITORY}` +
   `/actions/workflows/${WORKFLOW}/dispatches`;
 

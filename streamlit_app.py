@@ -465,9 +465,9 @@ METRIC_FAMILY_GUIDANCE = {
 
 
 PROPOSAL_RESEARCH_QUESTIONS = {
-    "rq1": "How can a multi-metric evaluation framework be designed to assess AI-generated painting restorations beyond traditional image similarity metrics?",
-    "rq2": "How do selected pretrained inpainting models differ in restoration quality across artistic styles and artificial damage types?",
-    "rq3": "To what extent can uncertainty estimation from multiple restoration candidates identify speculative or unreliable restored regions?",
+    "rq1": "What additional evidence does a region-aware, multi-metric evaluation framework provide beyond traditional image-similarity metrics when evaluating AI-assisted painting restoration?",
+    "rq2": "How do selected inpainting methods differ in restoration quality across controlled artificial damage conditions, and how consistent are these differences across the evaluated paintings?",
+    "rq3": "How can repeated-candidate disagreement be used to characterize the stability of stochastic painting restorations, and how does it relate to other restoration-quality diagnostics?",
 }
 
 
@@ -1432,7 +1432,7 @@ def render_model_performance(bundle: DashboardBundle) -> None:
 
 
 def render_robustness_uncertainty(bundle: DashboardBundle) -> None:
-    page_header("Dependability under change", "Robustness & Uncertainty", "Where do restoration results become less dependable?")
+    page_header("Sensitivity and stochastic stability", "Robustness & Uncertainty", "Where do restoration results become more sensitive or less stable?")
     sensitivity = bundle.tables["sensitivity_summary"].copy()
     uncertainty = bundle.tables["uncertainty_summary"].copy()
     columns = st.columns(4)
@@ -1760,13 +1760,13 @@ def render_reports(bundle: DashboardBundle) -> None:
         "rq2": [
             "Across the <strong>three fully evaluated models</strong> and <strong>410 controlled restoration cases</strong>, <strong><em>LaMa</em> is the strongest general baseline</strong> with 10 of 11 anchor wins.",
             "<strong><em>OpenCV Telea</em></strong> is the fast deterministic baseline and leads crop SSIM; <strong><em>Stable Diffusion</em></strong> is more variable and can look plausible while drifting from the reference.",
-            "The conditional tables expose differences by visual category, artificial damage, severity, experiment, and damage fraction. These are controlled subgroup results, <em>not</em> proof of universal performance across all artistic styles or real conservation damage.",
+            "The paired tables show where relative performance remains consistent or changes across evaluated paintings, artificial damage, severity, experiment, and damage fraction. Visual-category results remain descriptive subgroups, <em>not</em> independently estimated style effects.",
             "<strong><em>SDXL</em></strong> remains a bounded ten-case feasibility study and is not treated as a fourth full benchmark.",
         ],
         "rq3": [
             "Repeated-seed analysis covers <strong>130 canonical groups</strong> and <strong>35 damage-size groups</strong> for Stable Diffusion, with exactly four candidates per eligible group.",
             "Scalar variability shows <em>how much</em> candidates disagree; heatmaps and overlays show <em>where</em> disagreement concentrates, including repair interiors and boundaries.",
-            "This evidence can prioritize speculative or unreliable regions for closer review. It is an <strong>empirical variability proxy</strong>, not calibrated confidence, and low variability does not prove correctness.",
+            "This evidence characterizes where stochastic restorations are less stable and can prioritize closer review. It is <strong>empirical repeated-candidate disagreement</strong>, not a validated error detector or calibrated confidence, and low variability does not prove correctness.",
         ],
     }
     formal_rows = rq[rq["research_question_id"].isin(PROPOSAL_RESEARCH_QUESTIONS)].copy()
