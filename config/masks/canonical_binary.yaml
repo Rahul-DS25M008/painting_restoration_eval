@@ -1,11 +1,11 @@
 config_schema_version: "canonical_mask_config.v1"
-config_version: "1.0.0"
+config_version: "1.1.0"
 
 dataset:
   dataset_id: "painting_restoration_eval"
-  dataset_version: "1.0.0"
-  dataset_scope: "controlled_50"
-  execution_profile: "controlled_50"
+  dataset_version: "2.0.0"
+  dataset_scope: "controlled_300"
+  execution_profile: "controlled_300"
   input_schema_version: "preprocessed_images.v1"
   output_schema_version: "canonical_masks.v1"
   audit_schema_version: "mask_audit.v1"
@@ -38,6 +38,7 @@ generator:
   name: "canonical_synthetic_damage_masks"
   version: "3.0.0"
   seed_scheme_version: "canonical_mask_seed.v1"
+  seed_config_version: "1.0.0"
   global_seed: 20260630
   maximum_generation_attempts: 30
   retry_policy: "closed_range_then_nearest_range_and_target"
@@ -198,9 +199,9 @@ family_validation:
     maximum_pixel_equivalent_pairs_per_painting: 0
 
 expected:
-  painting_count: 50
+  painting_count: 300
   family_count: 5
-  mask_count: 250
+  mask_count: 1500
   audit_row_count: 105
   validation_row_count: 50
   artifact_record_count: 7

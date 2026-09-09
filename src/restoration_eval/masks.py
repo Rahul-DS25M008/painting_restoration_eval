@@ -36,10 +36,12 @@ from .schemas import (
 )
 
 
-MASKS_MODULE_VERSION = "3.0.0"
+MASKS_MODULE_VERSION = "3.1.0"
 CANONICAL_MASK_CONFIG_SCHEMA_VERSION = "canonical_mask_config.v1"
 GENERATOR_NAME = "canonical_synthetic_damage_masks"
-GENERATOR_VERSION = MASKS_MODULE_VERSION
+# The mask-pixel algorithm and its deterministic seed scheme are unchanged.
+# Only configuration validation and progress reporting changed in module 3.1.0.
+GENERATOR_VERSION = "3.0.0"
 SUPPORTED_MASK_TYPES = (
     "zero_control",
     "scratch_thin",
@@ -208,6 +210,7 @@ def validate_mask_config(config: Mapping[str, Any]) -> list[str]:
         "name": GENERATOR_NAME,
         "version": GENERATOR_VERSION,
         "seed_scheme_version": "canonical_mask_seed.v1",
+        "seed_config_version": "1.0.0",
         "retry_policy": "closed_range_then_nearest_range_and_target",
         "retry_failure_action": "block",
         "target_width": 768,
@@ -234,10 +237,17 @@ def validate_mask_config(config: Mapping[str, Any]) -> list[str]:
     expected_types = list(expected.get("mask_types", []))
     if expected_types != list(SUPPORTED_MASK_TYPES):
         errors.append(f"expected.mask_types must equal {list(SUPPORTED_MASK_TYPES)}")
+    try:
+        expected_painting_count = int(expected.get("painting_count", 0))
+    except (TypeError, ValueError):
+        expected_painting_count = 0
+    if expected_painting_count < 1:
+        errors.append("expected.painting_count must be a positive integer")
+
     expected_counts = {
-        "painting_count": 50,
+        "painting_count": expected_painting_count,
         "family_count": len(SUPPORTED_MASK_TYPES),
-        "mask_count": 250,
+        "mask_count": expected_painting_count * len(SUPPORTED_MASK_TYPES),
         "audit_row_count": (
             GLOBAL_AUDIT_METRIC_COUNT
             + len(SUPPORTED_MASK_TYPES) * len(FAMILY_AUDIT_METRICS)
@@ -879,7 +889,10 @@ def generate_mask_case(
     target_size = int(config["generator"]["target_width"])
     global_seed = int(config["generator"]["global_seed"])
     painting_seed = stable_seed(
-        global_seed, config["dataset"]["experiment_id"], config["config_version"], painting_id
+        global_seed,
+        config["dataset"]["experiment_id"],
+        config["generator"]["seed_config_version"],
+        painting_id,
     )
     mask_seed = stable_seed(painting_seed, mask_type, int(family["index"]))
     image, retry = _generate_with_retry(
@@ -1013,8 +1026,10 @@ def generate_masks_for_dataset(
     preprocessed: pd.DataFrame,
     config: Mapping[str, Any],
     project_root: str | Path | None = None,
+    *,
+    progress_every_paintings: int | None = 10,
 ) -> MaskGenerationResult:
-    """Generate and atomically persist the complete controlled-50 mask set."""
+    """Generate and atomically persist the configured canonical mask set."""
     config_errors = validate_mask_config(config)
     handoff_errors = validate_preprocessed_handoff(preprocessed, config)
     if config_errors or handoff_errors:
@@ -1028,7 +1043,12 @@ def generate_masks_for_dataset(
     records: list[dict[str, Any]] = []
     runtimes: list[dict[str, Any]] = []
     ordered = preprocessed.sort_values(["dataset_sort_index", "painting_id"], kind="stable")
-    for row in ordered.to_dict(orient="records"):
+    ordered_records = ordered.to_dict(orient="records")
+    total_paintings = len(ordered_records)
+    if progress_every_paintings is not None and progress_every_paintings < 1:
+        raise ValueError("progress_every_paintings must be positive or None")
+    generation_started = time.perf_counter()
+    for painting_number, row in enumerate(ordered_records, start=1):
         for mask_type in SUPPORTED_MASK_TYPES:
             started = time.perf_counter()
             case = generate_mask_case(row, mask_type, config)
@@ -1071,6 +1091,20 @@ def generate_masks_for_dataset(
             }
             records.append(record)
             runtimes.append({"mask_id": record["mask_id"], "runtime_seconds": time.perf_counter() - started})
+        if (
+            progress_every_paintings is not None
+            and (
+                painting_number % progress_every_paintings == 0
+                or painting_number == total_paintings
+            )
+        ):
+            elapsed_seconds = time.perf_counter() - generation_started
+            print(
+                "Canonical-mask progress: "
+                f"{painting_number}/{total_paintings} paintings; "
+                f"{len(records)}/{int(config['expected']['mask_count'])} masks; "
+                f"elapsed={elapsed_seconds:.1f}s"
+            )
     masks = pd.DataFrame(records)
     family_validation = evaluate_family_morphology(masks, config)
     if not family_validation["passed"].all():
@@ -1230,12 +1264,25 @@ def validate_deterministic_replay(
     preprocessed: pd.DataFrame,
     config: Mapping[str, Any],
     project_root: str | Path | None = None,
+    *,
+    progress_every_paintings: int | None = 10,
 ) -> pd.DataFrame:
     """Regenerate all masks in memory and compare saved pixels and seed evidence."""
     root = find_project_root(project_root)
     upstream = preprocessed.set_index("painting_id", drop=False)
     rows: list[dict[str, Any]] = []
-    for stored in masks.to_dict(orient="records"):
+    stored_records = masks.to_dict(orient="records")
+    total_masks = len(stored_records)
+    family_count = len(SUPPORTED_MASK_TYPES)
+    if progress_every_paintings is not None and progress_every_paintings < 1:
+        raise ValueError("progress_every_paintings must be positive or None")
+    progress_every_masks = (
+        None
+        if progress_every_paintings is None
+        else progress_every_paintings * family_count
+    )
+    replay_started = time.perf_counter()
+    for mask_number, stored in enumerate(stored_records, start=1):
         source = upstream.loc[str(stored["painting_id"])]
         replay = generate_mask_case(source, str(stored["mask_type"]), config)
         with Image.open(resolve_repo_path(stored["mask_path"], root, must_exist=True)) as saved:
@@ -1255,6 +1302,25 @@ def validate_deterministic_replay(
             "replay_pixel_sha256": _pixel_sha256(replay_array),
             "replay_passed": bool(pixels_equal and metadata_equal),
         })
+        if (
+            progress_every_masks is not None
+            and (
+                mask_number % progress_every_masks == 0
+                or mask_number == total_masks
+            )
+        ):
+            completed_paintings = min(
+                math.ceil(mask_number / family_count),
+                int(config["expected"]["painting_count"]),
+            )
+            elapsed_seconds = time.perf_counter() - replay_started
+            print(
+                "Deterministic-replay progress: "
+                f"{completed_paintings}/"
+                f"{int(config['expected']['painting_count'])} paintings; "
+                f"{mask_number}/{total_masks} masks; "
+                f"elapsed={elapsed_seconds:.1f}s"
+            )
     return pd.DataFrame(rows)
 
 
