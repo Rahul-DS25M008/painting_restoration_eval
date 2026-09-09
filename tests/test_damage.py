@@ -12,6 +12,7 @@ from PIL import Image
 
 from restoration_eval.damage import (
     DAMAGE_MODULE_VERSION,
+    GENERATOR_VERSION,
     _copy_file_atomic,
     _expected_output_path,
     _remove_stale_files,
@@ -57,8 +58,9 @@ class CanonicalDamageTests(unittest.TestCase):
             ),
             [],
         )
-        self.assertEqual(self.config["generator"]["version"], DAMAGE_MODULE_VERSION)
-        self.assertEqual(self.config["expected"]["case_count"], 250)
+        self.assertEqual(self.config["generator"]["version"], GENERATOR_VERSION)
+        self.assertEqual(DAMAGE_MODULE_VERSION, "3.1.0")
+        self.assertEqual(self.config["expected"]["case_count"], 1500)
 
     def test_damage_schemas_are_registered(self) -> None:
         self.assertIs(
@@ -74,7 +76,19 @@ class CanonicalDamageTests(unittest.TestCase):
         )
         self.assertEqual(len(selected), 5)
         self.assertEqual(selected["painting_id"].nunique(), 1)
-        self.assertEqual(selected.iloc[0]["painting_id"], "p050")
+        geometry = self.preprocessed[
+            ["painting_id", "dataset_sort_index", "content_area_fraction"]
+        ].copy()
+        median = float(geometry["content_area_fraction"].astype(float).median())
+        geometry["_distance"] = (
+            geometry["content_area_fraction"].astype(float) - median
+        ).abs()
+        expected_painting_id = str(
+            geometry.sort_values(
+                ["_distance", "dataset_sort_index", "painting_id"], kind="stable"
+            ).iloc[0]["painting_id"]
+        )
+        self.assertEqual(selected.iloc[0]["painting_id"], expected_painting_id)
         self.assertEqual(
             selected["mask_type"].tolist(), self.config["expected"]["mask_types"]
         )

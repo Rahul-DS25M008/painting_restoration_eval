@@ -33,10 +33,12 @@ from .schemas import (
     validate_dataframe,
 )
 
-DAMAGE_MODULE_VERSION = "3.0.0"
+DAMAGE_MODULE_VERSION = "3.1.0"
 CANONICAL_DAMAGE_CONFIG_SCHEMA_VERSION = "canonical_damage_config.v1"
 GENERATOR_NAME = "canonical_damage_generator"
-GENERATOR_VERSION = DAMAGE_MODULE_VERSION
+# The corruption algorithm and PNG contract are unchanged. Module 3.1.0 only
+# adds scale-independent progress reporting for generation and validation.
+GENERATOR_VERSION = "3.0.0"
 SUPPORTED_FILL_STRATEGIES = ("constant_rgb",)
 SUPPORTED_MASK_TYPES = (
     "zero_control",
@@ -520,6 +522,8 @@ def generate_canonical_damage_dataset(
     masks: pd.DataFrame,
     config: Mapping[str, Any],
     project_root: str | Path | None = None,
+    *,
+    progress_every_paintings: int | None = 10,
 ) -> DamageGenerationResult:
     """Generate the complete normalized canonical damaged-image collection."""
     root = find_project_root(project_root)
@@ -554,8 +558,19 @@ def generate_canonical_damage_dataset(
     ordered = ordered.sort_values(
         ["painting_id", "_mask_order", "case_id"], kind="stable"
     )
+    ordered_records = list(ordered.itertuples(index=False))
+    total_cases = len(ordered_records)
+    family_count = len(SUPPORTED_MASK_TYPES)
+    if progress_every_paintings is not None and progress_every_paintings < 1:
+        raise ValueError("progress_every_paintings must be positive or None")
+    progress_every_cases = (
+        None
+        if progress_every_paintings is None
+        else progress_every_paintings * family_count
+    )
+    generation_started = time.perf_counter()
 
-    for row in ordered.itertuples(index=False):
+    for case_number, row in enumerate(ordered_records, start=1):
         started = time.perf_counter()
         clean_path = resolve_repo_path(
             str(row.processed_image_path), root, must_exist=True
@@ -635,6 +650,25 @@ def generate_canonical_damage_dataset(
                 "runtime_seconds": float(time.perf_counter() - started),
             }
         )
+        if (
+            progress_every_cases is not None
+            and (
+                case_number % progress_every_cases == 0
+                or case_number == total_cases
+            )
+        ):
+            completed_paintings = min(
+                (case_number + family_count - 1) // family_count,
+                int(config["expected"]["painting_count"]),
+            )
+            elapsed_seconds = time.perf_counter() - generation_started
+            print(
+                "Canonical-damage progress: "
+                f"{completed_paintings}/"
+                f"{int(config['expected']['painting_count'])} paintings; "
+                f"{case_number}/{total_cases} cases; "
+                f"elapsed={elapsed_seconds:.1f}s"
+            )
 
     cases = pd.DataFrame(records, columns=CANONICAL_DAMAGE_CASES_COLUMNS)
     schema_result = validate_dataframe(
@@ -653,6 +687,8 @@ def validate_saved_damage_dataset(
     cases: pd.DataFrame,
     config: Mapping[str, Any],
     project_root: str | Path | None = None,
+    *,
+    progress_every_paintings: int | None = 10,
 ) -> DamageValidationResult:
     """Reload all sources and outputs and verify exact corruption semantics."""
     root = find_project_root(project_root)
@@ -676,8 +712,19 @@ def validate_saved_damage_dataset(
         int(generator["target_height"]),
     )
     rows: list[dict[str, Any]] = []
+    case_records = list(cases.itertuples(index=False))
+    total_cases = len(case_records)
+    family_count = len(SUPPORTED_MASK_TYPES)
+    if progress_every_paintings is not None and progress_every_paintings < 1:
+        raise ValueError("progress_every_paintings must be positive or None")
+    progress_every_cases = (
+        None
+        if progress_every_paintings is None
+        else progress_every_paintings * family_count
+    )
+    validation_started = time.perf_counter()
 
-    for row in cases.itertuples(index=False):
+    for case_number, row in enumerate(case_records, start=1):
         clean_path = resolve_repo_path(str(row.clean_image_path), root)
         mask_path = resolve_repo_path(str(row.mask_path), root)
         damaged_path = resolve_repo_path(str(row.damaged_image_path), root)
@@ -880,6 +927,25 @@ def validate_saved_damage_dataset(
                 "issue": ";".join(issues),
             }
         )
+        if (
+            progress_every_cases is not None
+            and (
+                case_number % progress_every_cases == 0
+                or case_number == total_cases
+            )
+        ):
+            completed_paintings = min(
+                (case_number + family_count - 1) // family_count,
+                int(config["expected"]["painting_count"]),
+            )
+            elapsed_seconds = time.perf_counter() - validation_started
+            print(
+                "Damage-validation progress: "
+                f"{completed_paintings}/"
+                f"{int(config['expected']['painting_count'])} paintings; "
+                f"{case_number}/{total_cases} cases; "
+                f"elapsed={elapsed_seconds:.1f}s"
+            )
 
     checks = pd.DataFrame(rows, columns=CANONICAL_DAMAGE_AUDIT_COLUMNS)
     output_root = notebook_output_root(str(config["output"]["notebook_stem"]), root)

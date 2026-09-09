@@ -1,11 +1,11 @@
 config_schema_version: "canonical_damage_config.v1"
-config_version: "1.0.0"
+config_version: "1.1.0"
 
 dataset:
   dataset_id: "painting_restoration_eval"
-  dataset_version: "1.0.0"
-  dataset_scope: "controlled_50"
-  execution_profile: "controlled_50"
+  dataset_version: "2.0.0"
+  dataset_scope: "controlled_300"
+  execution_profile: "controlled_300"
   geometry_schema_version: "preprocessed_images.v1"
   mask_schema_version: "canonical_masks.v1"
   output_schema_version: "canonical_damage_cases.v1"
@@ -66,10 +66,10 @@ generator:
   stale_file_action: "remove"
 
 expected:
-  painting_count: 50
+  painting_count: 300
   mask_type_count: 5
-  case_count: 250
-  audit_row_count: 250
+  case_count: 1500
+  audit_row_count: 1500
   artifact_record_count: 5
   mask_types:
     - "zero_control"

@@ -737,6 +737,29 @@ checks.
 
 The inventory refresh is a controlled write operation. During explicitly read-only phases, the existing inventory may be inspected but must not be regenerated.
 
+Before every inventory refresh, run it from the same project environment used by
+the notebooks and confirm that `import yaml` succeeds. The inventory treats YAML
+metadata inspection as optional at runtime: if PyYAML is unavailable, the scan can
+finish while recording `PyYAML is not installed; YAML metadata is unavailable` as
+a per-file read error. A printed `status: completed` is therefore not sufficient.
+
+Required inventory sequence:
+
+```powershell
+python -c "import yaml; print(yaml.__version__)"
+python .\tools\build_project_inventory.py --root . --out-dir .\outputs\inventory
+```
+
+After the refresh, inspect `outputs/inventory/inventory_run.json` and require both
+`summary.read_error_file_count` and `summary.read_error_count` to equal zero. Also
+confirm that the current notebook and governing YAML records have zero
+`read_error_count` in `project_file_inventory.csv`. Do not use
+`--no-reuse-existing` merely to correct a missing-PyYAML runtime: a full scan must
+reopen more than 20,000 files and several gigabytes of generated evidence. First
+restore PyYAML in the execution environment, then rerun incrementally; use a full
+no-reuse scan only when the verified reuse cache itself is invalid or a complete
+reinspection is explicitly required.
+
 ### 6.4 Tagged baseline and controlled-300 evidence-dependency gate
 
 The complete 50-painting study is immutable at Git tag `pilot-50-complete`.
