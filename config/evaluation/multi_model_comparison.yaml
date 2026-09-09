@@ -317,9 +317,9 @@ multi_model_comparison:
   report:
     self_contained_html: true
     required_research_questions:
-      - "RQ1_multi_metric_evaluation_beyond_traditional_similarity"
-      - "RQ2_model_differences_across_styles_and_damage_types"
-      - "RQ3_uncertainty_and_speculative_regions"
+      - "RQ1_region_aware_evidence_beyond_traditional_similarity"
+      - "RQ2_method_differences_across_damage_and_paintings"
+      - "RQ3_repeated_candidate_stability_and_diagnostics"
       - "practical_conservation_oriented_reporting"
     thesis_theme: "trustworthy_museum_oriented_decision_support_not_conservation_approval"
     separately_persisted_canonical_figures: 2

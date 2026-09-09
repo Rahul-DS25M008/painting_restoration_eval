@@ -80,9 +80,9 @@ expected_population:
   painting_report_records: 50
 
 research_questions:
-  rq1: "How can a multi-metric evaluation framework be designed to assess AI-generated painting restorations beyond traditional image similarity metrics?"
-  rq2: "How do selected pretrained inpainting models differ in restoration quality across artistic styles and artificial damage types?"
-  rq3: "To what extent can uncertainty estimation from multiple restoration candidates identify speculative or unreliable restored regions?"
+  rq1: "What additional evidence does a region-aware, multi-metric evaluation framework provide beyond traditional image-similarity metrics when evaluating AI-assisted painting restoration?"
+  rq2: "How do selected inpainting methods differ in restoration quality across controlled artificial damage conditions, and how consistent are these differences across the evaluated paintings?"
+  rq3: "How can repeated-candidate disagreement be used to characterize the stability of stochastic painting restorations, and how does it relate to other restoration-quality diagnostics?"
 
 package_policy:
   self_contained_html: true

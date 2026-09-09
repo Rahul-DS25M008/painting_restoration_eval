@@ -846,6 +846,25 @@ deterministic learned family with mask-aware transformer processing and
 long-range context modelling. This extends the future design without claiming
 that the 12-case pilot resolves painting-domain generalization.
 
+### 6.3 Controlled-300 research-question alignment
+
+Before the controlled-300 rerun, the proposal questions were refined to match
+the evidence contract without adding a new experiment. RQ1 now asks what
+region-aware, multi-metric evidence adds beyond traditional image similarity.
+RQ2 asks about method differences across controlled artificial damage and the
+consistency of those differences across evaluated paintings. RQ3 asks how
+repeated-candidate disagreement characterizes stochastic stability and relates
+to other restoration-quality diagnostics.
+
+This is a framing correction, not a retroactive scientific result. The
+50-painting notebooks, manifests, validation records, generated reports, and
+N36 package remain historical artifacts. Their wording must not be edited by
+hand. During the normal controlled-300 rerun, affected report and dashboard
+producers must regenerate their research-question tables and narrative from the
+current proposal, roadmap, and evaluation configuration. Broad visual
+categories remain descriptive subgroups, and repeated-candidate disagreement
+must not be reported as a validated error detector or calibrated confidence.
+
 ## 7. Removed unsupported promises
 
 The following items were removed from the future roadmap and must not be silently

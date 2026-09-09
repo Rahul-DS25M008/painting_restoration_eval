@@ -2,7 +2,7 @@
 
 A master's thesis project investigating how to evaluate painting restorations beyond visual appearance or a single image-similarity score.
 
-The framework combines controlled artificial damage, pretrained inpainting models, region-aware metrics, uncertainty maps, robustness experiments, and explainable case-level evidence.
+The framework combines controlled artificial damage, complementary inpainting methods, region-aware metrics, repeated-candidate disagreement maps, robustness experiments, and explainable case-level evidence.
 
 > **Visual plausibility is not the same as restoration trustworthiness.**
 
@@ -51,9 +51,9 @@ HINT is therefore the selected additional method for the future expanded benchma
 
 ## Research questions
 
-1. How can a multi-metric evaluation framework be designed to assess AI-generated painting restorations beyond traditional image similarity metrics?
-2. How do selected inpainting methods differ in restoration quality across broad visual categories and controlled artificial damage conditions?
-3. To what extent can uncertainty estimation from multiple restoration candidates identify speculative or unreliable restored regions?
+1. What additional evidence does a region-aware, multi-metric evaluation framework provide beyond traditional image-similarity metrics when evaluating AI-assisted painting restoration?
+2. How do selected inpainting methods differ in restoration quality across controlled artificial damage conditions, and how consistent are these differences across the evaluated paintings?
+3. How can repeated-candidate disagreement be used to characterize the stability of stochastic painting restorations, and how does it relate to other restoration-quality diagnostics?
 
 The contribution is an **evaluation framework**, not a newly trained restoration model or an automated conservation system.
 
@@ -86,7 +86,7 @@ The framework keeps complementary evidence separate:
 - **Perceptual and feature similarity:** LPIPS, CLIP, and DINOv2.
 - **Local consistency:** texture, brushstroke-direction proxies, colour differences, and boundary/seam diagnostics.
 - **Spatial and structural evidence:** difference maps, semantic/structural affinity, overlays, and crops.
-- **Uncertainty and explainability:** repeated-seed variability, heatmaps, computational flags, counterfactual evidence, and similar-case retrieval.
+- **Stability and explainability:** repeated-candidate variability, heatmaps, computational flags, counterfactual evidence, and similar-case retrieval.
 
 Metrics use regions appropriate to their definitions, including the damaged region, bounding-box crop, boundary ring, and surrounding content. This prevents unchanged background pixels from obscuring local restoration errors.
 
@@ -94,13 +94,13 @@ Metrics use regions appropriate to their definitions, including the damaged regi
 
 [Evaluation contract](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/08_experiment_contracts_and_region_policy/reports/evaluation_contract.md) · [Metric and region ablation](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/28_metric_and_region_policy_ablation/reports/ablation_study.html) · [Grouped statistical analysis](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/26_grouped_and_statistical_analysis/reports/statistical_analysis.html)
 
-## Uncertainty, prompts, and human review
+## Repeated-candidate stability, prompts, and human review
 
-Stable Diffusion uncertainty covers **165 four-seed groups**: 130 original prompt-specific groups and 35 damage-size groups. Spatial maps reveal where repeated candidates disagree.
+Stable Diffusion stability analysis covers **165 four-seed groups**: 130 original prompt-specific groups and 35 damage-size groups. Spatial maps reveal where repeated candidates disagree.
 
 A controlled thin-scratch prompt ablation compares generic and damage-aware prompting. Prompt variants remain separate within uncertainty groups so prompt changes are not mistaken for seed variation.
 
-**Higher variability identifies areas deserving closer inspection; lower variability does not establish correctness.** Deterministic methods are assessed through robustness and sensitivity rather than artificial seed-based uncertainty.
+**Higher variability identifies less stable areas that deserve closer inspection; lower variability does not establish correctness.** Deterministic methods are assessed through robustness and sensitivity rather than artificial seed-based uncertainty.
 
 Conservative computational rules flag **1,703 of 1,785 candidates** for review. This is **not a 95.4% objective failure rate**: the flags organize inspection and do not replace expert judgement.
 

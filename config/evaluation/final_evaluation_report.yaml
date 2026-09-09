@@ -165,11 +165,11 @@ final_evaluation_report:
 
   research_questions:
     - id: "rq1"
-      title: "Multi-metric evaluation beyond traditional image similarity"
+      title: "Region-aware evidence beyond traditional image similarity"
     - id: "rq2"
-      title: "Conditional model differences across paintings and damage conditions"
+      title: "Method differences across damage conditions and consistency across paintings"
     - id: "rq3"
-      title: "Repeated-candidate uncertainty and speculative restored regions"
+      title: "Repeated-candidate disagreement and stochastic stability"
     - id: "practical_output"
       title: "Interpretable museum-oriented decision-support reporting"
 
@@ -253,14 +253,14 @@ final_evaluation_report:
       - {section_id: "mask-robustness", title: "Mask-placement robustness", claim_count: 3, source_keys: [mask_robustness_analysis_path]}
       - {section_id: "synthetic-degradation", title: "Synthetic degradations", claim_count: 3, source_keys: [degradation_analysis_path]}
       - {section_id: "grouped-statistics", title: "Grouped statistics, correlations, and ranking stability", claim_count: 4, source_keys: [statistical_results_path, metric_correlations_path, ranking_stability_path]}
-      - {section_id: "diffusion-uncertainty", title: "Diffusion uncertainty and speculative regions", claim_count: 4, source_keys: [damage_size_uncertainty_path, explanation_cases_path]}
+      - {section_id: "diffusion-uncertainty", title: "Repeated-candidate disagreement and stochastic stability", claim_count: 4, source_keys: [damage_size_uncertainty_path, explanation_cases_path]}
       - {section_id: "failure-flags", title: "Failure taxonomy and trustworthiness flags", claim_count: 3, source_keys: [failure_taxonomy_path, failure_assignments_path, trustworthiness_flags_path]}
       - {section_id: "policy-ablation", title: "Metric and region-policy ablation", claim_count: 3, source_keys: [ablation_results_path, flag_stability_path]}
       - {section_id: "explainability", title: "Explainability and case retrieval", claim_count: 3, source_keys: [explanation_cases_path, case_neighbors_path]}
       - {section_id: "compute-scalability", title: "Compute, scalability, and model cards", claim_count: 2, source_keys: [model_cards_path, compute_scalability_path]}
       - {section_id: "case-painting-atlas", title: "Case and painting evidence atlas", claim_count: 1, source_keys: [selected_cases_path, case_report_index_path, painting_report_index_path]}
       - {section_id: "limitations", title: "Limitations, deviations, and exclusions", claim_count: 1, source_keys: [evidence_dependency_audit_path]}
-      - {section_id: "research-question-answers", title: "Direct answers to the research questions", claim_count: 2, source_keys: [model_comparison_path, statistical_results_path, explanation_cases_path]}
+      - {section_id: "research-question-answers", title: "Direct answers to the research questions", claim_count: 3, source_keys: [model_comparison_path, statistical_results_path, explanation_cases_path]}
       - {section_id: "provenance", title: "Reproducibility and provenance", claim_count: 0, source_keys: [inventory_run_path, project_paths_path]}
 
   visual_selection:

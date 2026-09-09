@@ -113,21 +113,24 @@ notebooks without pretending that every engineering choice comes from a paper.
 
 ### Research-question use
 
-1. **How can a multi-metric evaluation framework be designed to assess
-   AI-generated painting restorations beyond traditional image similarity
-   metrics?** Use Q01–Q11, U07 and E01–E05 to motivate complementary evidence,
-   explicit regions, disagreement and inspectable explanations. The specific
-   eleven-anchor design is this project's operational choice.
+1. **What additional evidence does a region-aware, multi-metric evaluation
+   framework provide beyond traditional image-similarity metrics when
+   evaluating AI-assisted painting restoration?** Use Q01–Q11, U07 and E01–E05
+   to motivate complementary evidence, explicit regions, disagreement and
+   inspectable explanations. The specific eleven-anchor design is this
+   project's operational choice.
 2. **How do selected inpainting methods differ in restoration quality across
-   broad visual categories and controlled artificial damage conditions?** Use
-   H01–H05 and M01–M12 for context, then cite the project's own paired results. The five
-   balanced visual categories are not independently established art-historical
-   styles; sparse style metadata limits that part of the question.
-3. **To what extent can uncertainty estimation from multiple restoration
-   candidates identify speculative or unreliable restored regions?** Use
-   U01–U07 to distinguish variability, calibration, realism and correctness.
-   Our evidence concerns empirical disagreement and its measured associations,
-   not a validated detector of historical error.
+   controlled artificial damage conditions, and how consistent are these
+   differences across the evaluated paintings?** Use H01–H05 and M01–M12 for
+   context, then cite the project's own paired and painting-level results. The
+   five balanced visual categories remain descriptive subgroups rather than
+   independently established art-historical effects.
+3. **How can repeated-candidate disagreement be used to characterize the
+   stability of stochastic painting restorations, and how does it relate to
+   other restoration-quality diagnostics?** Use U01–U07 to distinguish
+   variability, stability, calibration, realism and correctness. Our evidence
+   concerns empirical disagreement and its measured associations, not a
+   validated detector of historical error.
 
 ## 4. Heritage and painting-specific sources
 
@@ -669,7 +672,7 @@ Local Binary Patterns.* IEEE TPAMI 24(7), 971–987.
   not the complete paper's multiresolution classification experiment.
   Descriptor agreement is not authentication.
 
-## 7. Uncertainty, self-consistency and reliability
+## 7. Repeated-candidate stability, uncertainty and self-consistency
 
 <a id="u01"></a>
 

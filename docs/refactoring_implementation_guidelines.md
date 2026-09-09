@@ -284,12 +284,16 @@ analysis, comparison, or thesis-level result as a standalone document.
   synthesis. Do not force unrelated evidence into a research question merely to
   complete a template.
 - The recurring thesis themes are trustworthy and museum-oriented evaluation;
-  evidence beyond traditional image similarity; conditional model behaviour
-  across paintings, styles, damage geometries, and degradations; uncertainty and
-  speculative restoration regions; transparent metric disagreement; and support
-  for human conservation judgement rather than replacement of that judgement.
-  Report emphasis must be adapted to the producing notebook while remaining
-  visibly connected to these themes.
+  the additional evidence provided by region-aware metrics beyond traditional
+  image similarity; conditional method behaviour across controlled damage
+  conditions and its consistency across evaluated paintings; repeated-candidate
+  disagreement as evidence of stochastic stability and its relationship with
+  other restoration-quality diagnostics; transparent metric disagreement; and
+  support for human conservation judgement rather than replacement of that
+  judgement. Broad visual categories remain descriptive subgroup information,
+  not independently estimated art-historical effects. Report emphasis must be
+  adapted to the producing notebook while remaining visibly connected to these
+  themes.
 - Reports should draw as many defensible conclusions as the validated evidence
   supports. Do not stop at listing metric values or repeatedly defer all
   interpretation to a later notebook. A conclusion should normally state the

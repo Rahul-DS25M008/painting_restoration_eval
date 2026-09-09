@@ -31,6 +31,28 @@ views are documented in `docs/dashboard_numeric_metrics.md`.
 
 All notebooks follow `docs/refactoring_implementation_guidelines.md`.
 
+### 1.1 Authoritative research-question framing
+
+The controlled-300 rerun and every regenerated report, dashboard asset, and
+delivery package use these questions:
+
+1. **RQ1:** What additional evidence does a region-aware, multi-metric
+   evaluation framework provide beyond traditional image-similarity metrics
+   when evaluating AI-assisted painting restoration?
+2. **RQ2:** How do selected inpainting methods differ in restoration quality
+   across controlled artificial damage conditions, and how consistent are
+   these differences across the evaluated paintings?
+3. **RQ3:** How can repeated-candidate disagreement be used to characterize the
+   stability of stochastic painting restorations, and how does it relate to
+   other restoration-quality diagnostics?
+
+Visual categories remain balanced descriptive subgroups; they are not an
+independently estimated art-historical effect. Repeated-candidate disagreement
+is evidence about stochastic stability, not a validated detector of error,
+historical unreliability, or calibrated confidence. Existing 50-painting
+notebooks and outputs retain their historical wording until their normal
+controlled-300 rerun; they are not hand-edited retroactively.
+
 ## 2. Global execution model
 
 The pipeline supports these configuration-driven scopes:

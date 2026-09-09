@@ -28,13 +28,15 @@ The framework evaluates restoration candidates under controlled synthetic
 damage where a clean reference is available. It addresses three proposal
 questions:
 
-1. How can a multi-metric evaluation framework be designed to assess
-   AI-generated painting restorations beyond traditional image similarity
-   metrics?
-2. How do selected pretrained inpainting models differ in restoration quality
-   across artistic styles and artificial damage types?
-3. To what extent can uncertainty estimation from multiple restoration
-   candidates identify speculative or unreliable restored regions?
+1. What additional evidence does a region-aware, multi-metric evaluation
+   framework provide beyond traditional image-similarity metrics when
+   evaluating AI-assisted painting restoration?
+2. How do selected inpainting methods differ in restoration quality across
+   controlled artificial damage conditions, and how consistent are these
+   differences across the evaluated paintings?
+3. How can repeated-candidate disagreement be used to characterize the
+   stability of stochastic painting restorations, and how does it relate to
+   other restoration-quality diagnostics?
 
 The implemented study extends those questions with region selection, colour,
 texture, seams, spatial diagnostics, robustness, prompt sensitivity, failure
@@ -203,10 +205,10 @@ Runtime and uncertainty are excluded from quality voting. The core paired
 comparison covers 410 cases and three models; a separate matched four-model view
 covers only the ten SDXL cases.
 
-## 8. Uncertainty and spatial explanation
+## 8. Repeated-candidate stability and spatial explanation
 
-Repeated-seed uncertainty requires exactly seeds 2026–2029 within a fixed case,
-prompt and configuration:
+Repeated-candidate stability analysis requires exactly seeds 2026–2029 within
+a fixed case, prompt and configuration:
 
 - N18: 130 canonical prompt-specific groups—80 generic and 50 scratch-aware—
   containing 520 candidates and 780 unordered seed pairs;
@@ -214,16 +216,18 @@ prompt and configuration:
   candidates, with 210 unordered seed pairs;
 - final coverage: 165 complete groups.
 
-The transparent components include per-pixel RGB standard deviation, pairwise
+The transparent disagreement components include per-pixel RGB standard deviation, pairwise
 RGB MAE/RMSE, LPIPS distance and CLIP/DINOv2 cosine distance. N18 also joins
 reference, perceptual, feature, texture, colour and seam evidence into a
 130-row association-ready table. It does not fit confidence calibration, compute
 a combined uncertainty index, or use later computational flags as ground truth.
 
 N19 stores raw numeric maps and visual overlays for N18's 130 groups; N22 owns
-the 35 damage-size maps. High variability identifies areas where repeated
-candidates disagree and closer inspection may be useful. Low variability shows
-consistency, not correctness. Telea and LaMa are deterministic, so their later
+the 35 damage-size maps. High variability identifies less stable areas where
+repeated candidates disagree and closer inspection may be useful. Low
+variability shows consistency, not correctness. Associations with other
+restoration-quality diagnostics describe complementary evidence rather than a
+validated error detector. Telea and LaMa are deterministic, so their later
 analyses use robustness or sensitivity terminology instead of artificial
 uncertainty values. SDXL has insufficient seed coverage.
 

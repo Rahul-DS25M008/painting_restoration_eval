@@ -1781,7 +1781,7 @@ def generate_final_figures(
         range(1, len(uncertainty_names) + 1),
         [value.replace("pairwise_", "").replace("_distance", "") for value in uncertainty_names],
     )
-    style_axis(axis, "Damage-size repeated-seed uncertainty", "Metric", "Observed variability")
+    style_axis(axis, "Damage-size repeated-candidate disagreement", "Metric", "Observed variability")
     save("f12_uncertainty_summary", figure)
 
     # F13: deterministic montage of canonical uncertainty panels.
@@ -1795,7 +1795,7 @@ def generate_final_figures(
         axis.imshow(plt.imread(path))
         axis.set_title(path.stem.replace("_", " "), fontsize=9)
         axis.axis("off")
-    figure.suptitle("Selected spatial uncertainty explanations", fontweight="bold")
+    figure.suptitle("Selected spatial disagreement explanations", fontweight="bold")
     save("f13_spatial_uncertainty", figure, len(panel_paths))
 
     # F14: triggered flag rate by model and flag.
@@ -2243,11 +2243,11 @@ def build_final_report_sections(
         "executive-findings": [
             f"{leader_label} ranks first on {leader_wins} of 11 canonical quality anchors. It is the better overall core-model result under this metric set, not a universal conservation verdict.",
             "Damage size, mask placement, and degradation family change model behaviour. A single average therefore hides conditions where restoration becomes worse.",
-            "Uncertainty, metric disagreement, and failure flags identify candidates needing human review; none of them establishes historical correctness.",
+            "Repeated-candidate disagreement, metric disagreement, and failure flags identify candidates needing human review; none of them establishes historical correctness.",
         ],
         "research-questions": [
             "The evaluation answers model comparison with complementary metric families rather than one combined score.",
-            "The approved extensions test conditional behaviour, uncertainty, explanation, and practical reporting beyond the original proposal scope.",
+            "The approved extensions test conditional method behaviour, cross-painting consistency, stochastic stability, explanation, and practical reporting.",
         ],
         "dataset-design": [
             "The controlled design contains 50 paintings, 525 cases, and 1,785 approved candidates, enabling paired computational comparisons.",
@@ -2290,10 +2290,10 @@ def build_final_report_sections(
             "Statistical significance is interpreted with effect size, multiplicity control, and scope rather than as automatic practical importance.",
         ],
         "diffusion-uncertainty": [
-            "Stable Diffusion repeated seeds provide 165 supported uncertainty groups across canonical and damage-size experiments.",
+            "Stable Diffusion repeated seeds provide 165 supported disagreement groups across canonical and damage-size experiments.",
             "Higher seed variability marks less stable generation, but lower variability does not prove a correct restoration.",
             "Spatial maps show where variability, error, colour drift, texture change, and seam evidence occur.",
-            "Telea and LaMa are deterministic; their analyses use robustness rather than artificial diffusion uncertainty.",
+            "Telea and LaMa are deterministic; their analyses use robustness rather than artificial repeated-seed variability.",
         ],
         "failure-flags": [
             "Flags convert metric evidence into transparent review triggers rather than a hidden combined score.",
@@ -2321,8 +2321,9 @@ def build_final_report_sections(
             "The 18 declared limitations bound every conclusion and prevent computational evidence from being presented as conservation approval.",
         ],
         "research-question-answers": [
-            f"RQ1: {leader_label} is better overall on the approved canonical anchors, but metric disagreement rules out a universal best method.",
-            "RQ2-RQ3: condition-specific tests, uncertainty maps, flags, and retrieval improve auditability, while historical trustworthiness remains inconclusive without expert evidence.",
+            "RQ1: Region-aware classical, perceptual, feature, texture, colour, seam, spatial, and structural evidence exposes differences that traditional image similarity alone would hide.",
+            f"RQ2: {leader_label} is better overall on the approved anchors, while paired condition-specific and painting-level results show where relative method performance remains consistent or changes.",
+            "RQ3: Repeated-candidate disagreement maps characterize where stochastic restorations are less stable and relate that stability to other diagnostics without treating it as correctness or calibrated confidence.",
         ],
         "provenance": [],
     }
