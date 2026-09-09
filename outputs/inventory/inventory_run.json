@@ -1,15 +1,15 @@
 {
   "run_schema_version": "inventory_run.v1",
   "inventory_schema_version": "project_file_inventory.v1",
-  "inventory_run_id": "inventory_20260909T141055Z_6ae48d9e",
+  "inventory_run_id": "inventory_20260909T201133Z_d3b69228",
   "status": "completed",
-  "generated_at_utc": "2026-09-09T14:10:55.098169Z",
-  "completed_at_utc": "2026-09-09T14:11:05.470567Z",
-  "duration_seconds": 10.404,
+  "generated_at_utc": "2026-09-09T20:11:33.739227Z",
+  "completed_at_utc": "2026-09-09T20:11:43.515790Z",
+  "duration_seconds": 9.806,
   "repository_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
   "inventory_relative_path": "outputs/inventory/project_file_inventory.csv",
-  "inventory_sha256": "2bf50c066c3deddc53b1954105b1e36b4c894abe3b14b74cda1c7f445714cd50",
-  "inventory_size_bytes": 10335099,
+  "inventory_sha256": "95fe06506cba8178c44b79ee9d44085cf9d1b2200b340f82867033d4f31dba70",
+  "inventory_size_bytes": 10431646,
   "hash_configuration": {
     "mode": "partial",
     "algorithm": "sha256_first_n_bytes",
@@ -18,9 +18,9 @@
   "incremental_reuse": {
     "enabled": true,
     "cache_status": "verified",
-    "source_run_id": "inventory_20260909T113928Z_adc18e36",
-    "reused_file_count": 19586,
-    "inspected_file_count": 14
+    "source_run_id": "inventory_20260909T164825Z_88b1d5a4",
+    "reused_file_count": 19539,
+    "inspected_file_count": 311
   },
   "scan_configuration": {
     "skipped_directory_names": [
@@ -47,8 +47,8 @@
     "platform": "Windows-11-10.0.26200-SP0"
   },
   "summary": {
-    "file_count": 19600,
-    "total_size_bytes": 6553887502,
+    "file_count": 19850,
+    "total_size_bytes": 6735605277,
     "read_error_file_count": 0,
     "read_error_count": 0,
     "counts_by_format": {
@@ -63,13 +63,13 @@
       "notebook": 37,
       "npz": 4,
       "pdf": 2,
-      "png": 18687,
+      "png": 18937,
       "python": 97,
       "text": 5,
       "yaml": 65
     },
     "counts_by_file_kind": {
-      "clean_image": 50,
+      "clean_image": 300,
       "damaged_image": 2952,
       "figure_image": 159,
       "html": 100,
@@ -100,7 +100,7 @@
       ".mjs": 2,
       ".npz": 4,
       ".pdf": 2,
-      ".png": 18687,
+      ".png": 18937,
       ".py": 97,
       ".txt": 5,
       ".yaml": 64,

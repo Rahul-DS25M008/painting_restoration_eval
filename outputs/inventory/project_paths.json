@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-09T13:53:19.317678Z",
+  "updated_at_utc": "2026-09-09T19:58:41.673492Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -2039,12 +2039,12 @@
       "artifact_type": "audit_table",
       "artifact_role": "audit_reporting",
       "schema_version": "preprocessing_audit.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "",
       "validation_status": "passed",
       "row_count": 45,
       "file_count": 1,
-      "checksum": "7da20017f1e456c6cdcccc2776c552cadad15d30b4734480cefb1cc8ad72c249"
+      "checksum": "d9daffd827d2eab5a46710629c3ce95caf89c72bb46e67b6888e0275d7e8740c"
     },
     {
       "artifact_key": "preprocessing.clean_images",
@@ -2053,12 +2053,12 @@
       "artifact_type": "image_collection",
       "artifact_role": "primary_downstream",
       "schema_version": "clean_image_collection.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "",
       "validation_status": "passed",
-      "row_count": 50,
-      "file_count": 50,
-      "checksum": "287a4a24bcbc1ff6c2aca29e0900cf592ac67ceed920bd997a8dcf531bad347a"
+      "row_count": 300,
+      "file_count": 300,
+      "checksum": "b370b81e0e3b5121fe6e0617fb157a6df1d2bec05a9bd7aa45eea2ee826690b9"
     },
     {
       "artifact_key": "preprocessing.figure_preview",
@@ -2067,7 +2067,7 @@
       "artifact_type": "figure",
       "artifact_role": "qa_reporting",
       "schema_version": "figure.preprocessing_preview.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "",
       "validation_status": "passed",
       "row_count": "",
@@ -2081,12 +2081,12 @@
       "artifact_type": "dataset_table",
       "artifact_role": "primary_downstream",
       "schema_version": "preprocessed_images.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "",
       "validation_status": "passed",
-      "row_count": 50,
+      "row_count": 300,
       "file_count": 1,
-      "checksum": "b6f29c2c71450403042b1bb6c522ea6e50942a940428918b89dac466e0b7152f"
+      "checksum": "a2e769ae44facfec955642a0e4ab8825b4468a2e68d70d6c9a968b7b131cc934"
     },
     {
       "artifact_key": "sdxl.candidates",
@@ -2809,12 +2809,12 @@
       "artifact_type": "validation_table",
       "artifact_role": "validation",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "",
       "validation_status": "passed",
       "row_count": 50,
       "file_count": 1,
-      "checksum": "bce1145d62d392e3bbdaee4ffb4855cfc503acbd2a115a9ddd2ca7ed48737513"
+      "checksum": "920c3b4170d3bd1f0cb1baf7b6a7c0354a3b381dbd9b4a07b72a3c021f778666"
     },
     {
       "artifact_key": "validation.03_canonical_mask_generation",

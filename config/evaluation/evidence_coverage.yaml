@@ -54,8 +54,8 @@ evidence_coverage:
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "01"
-    next_eligible_notebook_id: "02"
+    completed_through_notebook_id: "02"
+    next_eligible_notebook_id: "03"
     completed_notebooks:
       - notebook_id: "01"
         stem: "01_dataset_verification"
@@ -79,6 +79,35 @@ evidence_coverage:
         baseline_canonical_figures: 2
         baseline_artifact_paths_preserved: true
         baseline_table_schemas_preserved: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "02"
+        stem: "02_image_preprocessing"
+        output_root: "outputs/02_image_preprocessing"
+        manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        preprocessing_version: "2.1.0"
+        preprocessed_image_rows: 300
+        clean_image_files: 300
+        preprocessing_audit_rows: 45
+        validation_rows: 50
+        artifact_records: 5
+        canonical_figures: 1
+        output_file_count: 306
+        baseline_output_root: "E:/outputs/02_image_preprocessing"
+        baseline_preprocessed_image_rows: 50
+        baseline_clean_image_files: 50
+        baseline_preprocessing_audit_rows: 45
+        baseline_validation_rows: 50
+        baseline_artifact_records: 5
+        baseline_canonical_figures: 1
+        baseline_output_file_count: 56
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_first_50_clean_images_byte_identical: true
+        baseline_preview_byte_identical: true
         unexplained_missing_or_reduced_evidence: false
 
   frozen_baseline:
@@ -124,6 +153,9 @@ evidence_coverage:
 
     - notebook_id: "02"
       stem: "02_image_preprocessing"
+      record_scope: "pilot_50_historical_at_git_tag"
+      recovery_tag: "pilot-50-complete"
+      active_working_tree_replaced_by_controlled_300: true
       output_root: "outputs/02_image_preprocessing"
       manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
       status: "frozen_supported"

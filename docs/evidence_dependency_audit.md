@@ -37,8 +37,8 @@ and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
 **Controlled-300 transition review: 2026-09-09.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebook 01 is the first
-completed Controlled-300 producer. Notebooks 02–36 remain historical
+dependency order for the approved 300-painting study. Notebooks 01 and 02 are
+completed Controlled-300 producers. Notebooks 03–36 remain historical
 Controlled-50 evidence until each producer is explicitly reopened, rerun,
 validated, baseline-compared, and committed.
 
@@ -79,6 +79,7 @@ metric validity and coverage passed.
 | Notebook | Current working-tree evidence | Validated coverage | Pilot comparison | Downstream status |
 |---|---|---:|---|---|
 | 01 Dataset Verification | `artworks.v1`, `dataset_audit.v1`, two canonical figures, validation and manifests | 300 artworks; 60 in each of 5 categories; 448 audit rows; 50/50 checks | All 7 pilot artifact paths retained; table schemas and artifact roles unchanged; population-dependent rows increased for the expanded dataset | Approved Controlled-300 producer for Notebook 02 |
+| 02 Image Preprocessing | `preprocessed_images.v1`, 768 × 768 clean PNG collection, preprocessing audit, canonical preview, validation and manifests | 300 clean images; 60 in each of 5 categories; 45 audit rows; 50/50 consolidated checks; 27/27 completion requirements | All 7 pilot artifact paths retained; all table schemas and artifact roles unchanged; clean-image and preprocessing-table counts increased from 50 to 300; the original 50 clean PNGs and canonical preview are byte-identical | Approved Controlled-300 geometry and clean-image producer for Notebooks 03–08 and later consumers |
 
 Notebook 01's final manifest records `controlled_300`, dataset version `2.0.0`,
 300 expected and observed artwork/image rows, 448 expected and observed audit
@@ -90,6 +91,22 @@ The audit increase from 101 to 448 rows is wholly in distribution evidence:
 the expanded registry contains more recorded dates/periods, styles/periods,
 media, licences, and institutional sources. Validation remains 50 rows because
 that table counts invariant checks rather than paintings.
+
+Notebook 02's final manifest records `controlled_300`, dataset version `2.0.0`,
+preprocessing version `2.1.0`, 300 expected and observed preprocessing rows and
+clean PNGs, 45 audit rows, 50 consolidated validation rows, five artifact
+records, one canonical preview, and a passed completion gate. Its output root
+contains exactly 306 files, compared with 56 in the pilot. The 250-file increase
+is entirely the additional clean-image population; audit, validation, manifest,
+and figure cardinalities remain invariant. The read-only artifact comparison
+copy is `E:/outputs/02_image_preprocessing/`.
+
+All 50 pilot clean PNGs match the active outputs byte for byte, and the canonical
+preview is also byte-identical. The additional ICC evidence is handled by the
+approved colour policy: 261 missing profiles use the documented sRGB assumption,
+19 embedded sRGB profiles preserve pixels, 20 embedded non-sRGB profiles are
+converted to sRGB, and no output PNG retains an ICC profile. Recorded content
+bounds remain the authoritative way for downstream notebooks to exclude padding.
 
 ## 3. Frozen notebook evidence ledger
 
