@@ -3,17 +3,18 @@
 from __future__ import annotations
 
 import hashlib
+import io
 import math
 import os
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Mapping, Sequence
+from typing import Any, Callable, Mapping, Sequence
 
 import numpy as np
 import pandas as pd
 import yaml
-from PIL import Image, UnidentifiedImageError
+from PIL import Image, ImageCms, UnidentifiedImageError
 
 from .paths import (
     find_project_root,
@@ -33,8 +34,8 @@ from .schemas import (
 )
 
 
-PREPROCESSING_MODULE_VERSION = "2.0.0"
-PREPROCESSING_CONFIG_SCHEMA_VERSION = "preprocessing_config.v1"
+PREPROCESSING_MODULE_VERSION = "2.1.0"
+PREPROCESSING_CONFIG_SCHEMA_VERSION = "preprocessing_config.v2"
 GLOBAL_AUDIT_METRIC_COUNT = 25
 GROUPED_AUDIT_METRICS = (
     "processed_count",
@@ -117,6 +118,7 @@ def validate_preprocessing_config(config: Mapping[str, Any]) -> list[str]:
         inputs = _require_mapping(config, "inputs")
         output = _require_mapping(config, "output")
         processing = _require_mapping(config, "processing")
+        execution = _require_mapping(config, "execution")
         orientation = _require_mapping(config, "orientation")
         color = _require_mapping(config, "color")
         expected = _require_mapping(config, "expected")
@@ -186,6 +188,10 @@ def validate_preprocessing_config(config: Mapping[str, Any]) -> list[str]:
     if not isinstance(processing.get("png_optimize"), bool):
         errors.append("processing.png_optimize must be boolean")
 
+    progress_interval = execution.get("progress_interval")
+    if not isinstance(progress_interval, int) or progress_interval <= 0:
+        errors.append("execution.progress_interval must be a positive integer")
+
     if orientation.get("expected_exif_orientation") != 1:
         errors.append("orientation.expected_exif_orientation must equal 1")
     if orientation.get("non_default_action") != "block":
@@ -196,7 +202,9 @@ def validate_preprocessing_config(config: Mapping[str, Any]) -> list[str]:
     exact_color = {
         "missing_icc_action": "assume_srgb_no_pixel_conversion",
         "embedded_srgb_action": "preserve_pixels_strip_profile",
-        "non_srgb_action": "block",
+        "non_srgb_action": "convert_embedded_profile_to_srgb",
+        "conversion_target_profile": "sRGB",
+        "conversion_rendering_intent": "perceptual",
     }
     for key, value in exact_color.items():
         if color.get(key) != value:
@@ -368,11 +376,12 @@ def compute_median_rgb(image: Image.Image) -> tuple[int, int, int]:
     return tuple(round_half_up(float(value)) for value in medians)
 
 
-def _source_policy_labels(
+def _prepare_source_rgb(
     image: Image.Image,
     source_record: Mapping[str, Any],
     config: Mapping[str, Any],
-) -> tuple[int, str, str, str]:
+) -> tuple[Image.Image, int, str, str, str]:
+    """Apply the declared orientation and embedded-profile policy."""
     orientation = int(image.getexif().get(274, 1))
     declared_orientation = int(source_record["raw_exif_orientation"])
     expected_orientation = int(config["orientation"]["expected_exif_orientation"])
@@ -391,20 +400,42 @@ def _source_policy_labels(
     if not actual_icc_present:
         icc_status = "missing_assumed_srgb"
         color_policy = str(config["color"]["missing_icc_action"])
+        working_image = image
     else:
         description = str(source_record["raw_icc_profile_description"]).lower()
         tokens = [
             str(token).strip().lower()
             for token in config["color"]["accepted_profile_description_tokens"]
         ]
-        if not any(token in description for token in tokens):
-            raise ValueError(
-                "Embedded ICC profile is not an accepted sRGB profile: "
-                f"{source_record['raw_icc_profile_description']!r}"
-            )
-        icc_status = "embedded_srgb"
-        color_policy = str(config["color"]["embedded_srgb_action"])
+        if any(token in description for token in tokens):
+            icc_status = "embedded_srgb"
+            color_policy = str(config["color"]["embedded_srgb_action"])
+            working_image = image
+        else:
+            color_policy = str(config["color"]["non_srgb_action"])
+            try:
+                source_profile = ImageCms.ImageCmsProfile(
+                    io.BytesIO(image.info["icc_profile"])
+                )
+                target_profile = ImageCms.createProfile(
+                    str(config["color"]["conversion_target_profile"])
+                )
+                working_image = ImageCms.profileToProfile(
+                    image,
+                    source_profile,
+                    target_profile,
+                    renderingIntent=ImageCms.Intent.PERCEPTUAL,
+                    outputMode="RGB",
+                )
+                working_image.load()
+            except Exception as exc:
+                raise ValueError(
+                    "Embedded ICC profile could not be converted to sRGB: "
+                    f"{source_record['raw_icc_profile_description']!r}; {exc}"
+                ) from exc
+            icc_status = "embedded_non_srgb_converted"
     return (
+        working_image,
         orientation,
         str(config["orientation"]["policy_label"]),
         icc_status,
@@ -506,13 +537,19 @@ def build_preprocessed_image(
     config: Mapping[str, Any],
 ) -> tuple[Image.Image, dict[str, Any]]:
     """Create one in-memory output and complete deterministic geometry metadata."""
-    orientation, orientation_policy, icc_status, color_policy = _source_policy_labels(
+    (
+        working_image,
+        orientation,
+        orientation_policy,
+        icc_status,
+        color_policy,
+    ) = _prepare_source_rgb(
         source_image,
         source_record,
         config,
     )
     canvas, metadata = resize_with_aspect_ratio_and_pad(
-        source_image,
+        working_image,
         config,
         source_record=source_record,
     )
@@ -560,6 +597,8 @@ def preprocess_artworks(
     artworks: pd.DataFrame,
     config: Mapping[str, Any],
     project_root: str | Path | None = None,
+    *,
+    progress_callback: Callable[[Mapping[str, Any]], None] | None = None,
 ) -> PreprocessingRunResult:
     """Preprocess every accepted artwork into the exact Notebook 02 image root."""
     handoff_errors = validate_artworks_handoff(artworks, config)
@@ -580,7 +619,13 @@ def preprocess_artworks(
     )
     records: list[dict[str, Any]] = []
     runtime_records: list[dict[str, Any]] = []
-    for row in accepted.to_dict(orient="records"):
+    progress_interval = int(config["execution"]["progress_interval"])
+    total = len(accepted)
+    execution_started = time.perf_counter()
+    for number, row in enumerate(
+        accepted.to_dict(orient="records"),
+        start=1,
+    ):
         started = time.perf_counter()
         painting_id = str(row["painting_id"])
         source_path = resolve_repo_path(row["raw_image_path"], root, must_exist=True)
@@ -637,6 +682,24 @@ def preprocess_artworks(
                 "runtime_seconds": time.perf_counter() - started,
             }
         )
+        if progress_callback and (
+            number % progress_interval == 0 or number == total
+        ):
+            elapsed_seconds = time.perf_counter() - execution_started
+            progress_callback(
+                {
+                    "completed": number,
+                    "total": total,
+                    "percentage": 100.0 * number / total,
+                    "elapsed_seconds": elapsed_seconds,
+                    "throughput_per_second": (
+                        number / elapsed_seconds
+                        if elapsed_seconds > 0
+                        else float("inf")
+                    ),
+                    "latest_painting_id": painting_id,
+                }
+            )
     images = pd.DataFrame(records, columns=PREPROCESSED_IMAGES_COLUMNS)
     schema_result = validate_dataframe(
         images,
@@ -928,8 +991,19 @@ def build_preprocessing_audit(
         (artworks["acceptance_status"] == "accepted").sum()
     )
     orientation_failures = int((images["source_orientation"] != 1).sum())
+    accepted_icc_statuses = {
+        "missing_assumed_srgb",
+        "embedded_srgb",
+        "embedded_non_srgb_converted",
+    }
+    invalid_color_policy_count = int(
+        (~images["input_icc_profile_status"].isin(accepted_icc_statuses)).sum()
+    )
     nonsrgb_count = int(
-        (~images["input_icc_profile_status"].isin(["missing_assumed_srgb", "embedded_srgb"])).sum()
+        (
+            images["input_icc_profile_status"]
+            == "embedded_non_srgb_converted"
+        ).sum()
     )
     global_metrics: Sequence[tuple[str, int | float, str, bool]] = (
         (
@@ -956,7 +1030,12 @@ def build_preprocessing_audit(
         ("source_orientation_nonconforming_count", orientation_failures, "count", orientation_failures == 0),
         ("source_icc_missing_count", int((images["input_icc_profile_status"] == "missing_assumed_srgb").sum()), "count", True),
         ("source_icc_srgb_count", int((images["input_icc_profile_status"] == "embedded_srgb").sum()), "count", True),
-        ("source_icc_nonsrgb_count", nonsrgb_count, "count", nonsrgb_count == 0),
+        (
+            "source_icc_nonsrgb_count",
+            nonsrgb_count,
+            "count",
+            invalid_color_policy_count == 0,
+        ),
         ("output_icc_present_count", summary["output_icc_present_count"], "count", summary["output_icc_present_count"] == 0),
         ("total_runtime_seconds", float(runtime_values.sum()), "seconds", True),
         ("mean_runtime_seconds", float(runtime_values.mean()), "seconds", True),

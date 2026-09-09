@@ -1,10 +1,10 @@
-config_schema_version: "preprocessing_config.v1"
+config_schema_version: "preprocessing_config.v2"
 
 dataset:
   dataset_id: "painting_restoration_eval"
-  dataset_version: "1.0.0"
-  dataset_scope: "controlled_50"
-  execution_profile: "controlled_50"
+  dataset_version: "2.0.0"
+  dataset_scope: "controlled_300"
+  execution_profile: "controlled_300"
   input_schema_version: "artworks.v1"
   output_schema_version: "preprocessed_images.v1"
   audit_schema_version: "preprocessing_audit.v1"
@@ -27,7 +27,7 @@ output:
 
 processing:
   method: "aspect_ratio_resize_median_rgb_pad"
-  version: "2.0.0"
+  version: "2.1.0"
   target_width: 768
   target_height: 768
   output_mode: "RGB"
@@ -44,6 +44,9 @@ processing:
   png_optimize: false
   strip_output_metadata: true
 
+execution:
+  progress_interval: 10
+
 orientation:
   expected_exif_orientation: 1
   non_default_action: "block"
@@ -52,13 +55,15 @@ orientation:
 color:
   missing_icc_action: "assume_srgb_no_pixel_conversion"
   embedded_srgb_action: "preserve_pixels_strip_profile"
-  non_srgb_action: "block"
+  non_srgb_action: "convert_embedded_profile_to_srgb"
+  conversion_target_profile: "sRGB"
+  conversion_rendering_intent: "perceptual"
   accepted_profile_description_tokens:
     - "srgb"
 
 expected:
-  accepted_input_count: 50
-  processed_output_count: 50
+  accepted_input_count: 300
+  processed_output_count: 300
   audit_row_count: 45
   categories:
     - "portrait_figure"

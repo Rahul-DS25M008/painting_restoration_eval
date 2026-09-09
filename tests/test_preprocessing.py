@@ -11,6 +11,7 @@ from restoration_eval.paths import find_project_root
 from restoration_eval.preprocessing import (
     GLOBAL_AUDIT_METRIC_COUNT,
     GROUPED_AUDIT_METRICS,
+    PREPROCESSING_MODULE_VERSION,
     PreprocessingValidationResult,
     build_preprocessed_image,
     build_preprocessing_audit,
@@ -53,7 +54,22 @@ class PreprocessingTests(unittest.TestCase):
             self.config["inputs"]["required_registry_key"],
             "dataset.artworks",
         )
-        self.assertEqual(self.config["expected"]["accepted_input_count"], 50)
+        self.assertEqual(
+            self.config["expected"]["accepted_input_count"],
+            len(self.artworks),
+        )
+        self.assertEqual(
+            self.config["dataset"]["dataset_scope"],
+            "controlled_300",
+        )
+        self.assertEqual(
+            self.config["execution"]["progress_interval"],
+            10,
+        )
+        self.assertEqual(
+            self.config["color"]["non_srgb_action"],
+            "convert_embedded_profile_to_srgb",
+        )
         self.assertEqual(
             self.config["expected"]["audit_row_count"],
             GLOBAL_AUDIT_METRIC_COUNT
@@ -66,6 +82,14 @@ class PreprocessingTests(unittest.TestCase):
         changed["processing"]["target_width"] = 512
         self.assertIn(
             "processing.target_width must equal 768",
+            validate_preprocessing_config(changed),
+        )
+
+    def test_configuration_rejects_invalid_progress_interval(self) -> None:
+        changed = copy.deepcopy(self.config)
+        changed["execution"]["progress_interval"] = 0
+        self.assertIn(
+            "execution.progress_interval must be a positive integer",
             validate_preprocessing_config(changed),
         )
 
@@ -138,6 +162,37 @@ class PreprocessingTests(unittest.TestCase):
         )
         self.assertFalse(metadata["output_icc_profile_present"])
 
+    def test_embedded_non_srgb_profile_is_converted(self) -> None:
+        descriptions = (
+            self.artworks["raw_icc_profile_description"]
+            .astype("string")
+            .str.lower()
+        )
+        candidates = self.artworks.loc[
+            self.artworks["raw_icc_profile_present"].astype(bool)
+            & ~descriptions.str.contains("srgb", na=False)
+        ]
+        self.assertFalse(candidates.empty)
+        source_record = candidates.iloc[0].to_dict()
+        source_path = PROJECT_ROOT / Path(source_record["raw_image_path"])
+        with Image.open(source_path) as source:
+            source.load()
+            canvas, metadata = build_preprocessed_image(
+                source,
+                source_record,
+                self.config,
+            )
+        self.assertEqual(canvas.mode, "RGB")
+        self.assertEqual(canvas.size, (768, 768))
+        self.assertEqual(
+            metadata["input_icc_profile_status"],
+            "embedded_non_srgb_converted",
+        )
+        self.assertEqual(
+            metadata["color_space_policy"],
+            "convert_embedded_profile_to_srgb",
+        )
+
     def test_smoke_and_preview_selection_are_one_per_category(self) -> None:
         smoke = select_smoke_rows(self.artworks, self.config)
         preview = select_preview_rows(self.artworks, self.config)
@@ -202,7 +257,7 @@ class PreprocessingTests(unittest.TestCase):
                 "output_icc_profile_present": False,
                 "coordinate_convention": "xyxy_exclusive_zero_based",
                 "preprocessing_method": "aspect_ratio_resize_median_rgb_pad",
-                "preprocessing_version": "2.0.0",
+                "preprocessing_version": PREPROCESSING_MODULE_VERSION,
                 "status": "passed",
             }
             rows.append({column: record[column] for column in PREPROCESSED_IMAGES_COLUMNS})
