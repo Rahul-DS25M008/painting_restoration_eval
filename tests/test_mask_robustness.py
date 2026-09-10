@@ -7,15 +7,20 @@ import unittest
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 
 from restoration_eval.mask_robustness import (
+    _candidate_family_shape_passed,
     _group_stats,
     _pixel_sha,
     load_canonical_mask_config,
     load_mask_robustness_config,
+    resolve_mask_robustness_inputs,
     robustness_group_id,
+    select_robustness_cohort,
     stable_case_seed,
     validate_mask_robustness_config,
+    validate_mask_robustness_handoff,
 )
 from restoration_eval.damage_sensitivity import scale_mask_to_target_area
 from restoration_eval.schemas import get_schema
@@ -33,12 +38,16 @@ class MaskRobustnessPreparationTests(unittest.TestCase):
         cls.canonical = load_canonical_mask_config(
             PROJECT_ROOT / "config" / "masks" / "canonical_binary.yaml"
         )
+        cls.inputs = resolve_mask_robustness_inputs(cls.config, PROJECT_ROOT)
+        cls.preprocessed = pd.read_csv(cls.inputs["geometry_path"])
+        cls.canonical_masks = pd.read_csv(cls.inputs["masks_path"])
+        cls.matched_policy_cases = pd.read_csv(cls.inputs["matched_policy_cases_path"])
 
     def test_contract_counts_and_schema_registry(self) -> None:
         expected = self.config["expected"]
-        self.assertEqual(expected["robustness_group_count"], 15)
-        self.assertEqual(expected["case_count"], 75)
-        self.assertEqual(expected["total_output_file_count"], 156)
+        self.assertEqual(expected["robustness_group_count"], 105)
+        self.assertEqual(expected["case_count"], 525)
+        self.assertEqual(expected["total_output_file_count"], 1056)
         self.assertEqual(
             get_schema("mask_robustness_cases").version,
             "mask_robustness_cases.v1",
@@ -48,6 +57,34 @@ class MaskRobustnessPreparationTests(unittest.TestCase):
             "mask_robustness_generation_audit.v1",
         )
 
+    def test_controlled_300_handoff_and_exact_balanced_cohort(self) -> None:
+        self.assertEqual(
+            validate_mask_robustness_handoff(
+                self.preprocessed,
+                self.canonical_masks,
+                self.matched_policy_cases,
+                self.config,
+                self.canonical,
+                PROJECT_ROOT,
+                verify_files=False,
+            ),
+            [],
+        )
+        selected = select_robustness_cohort(
+            self.preprocessed,
+            self.matched_policy_cases,
+            self.config,
+        )
+        self.assertEqual(len(selected), 35)
+        self.assertEqual(selected["painting_id"].nunique(), 35)
+        self.assertEqual(selected.groupby("category", observed=True).size().to_dict(), {
+            "abstraction_surrealism": 7,
+            "architecture_structured": 7,
+            "high_texture_brushwork": 7,
+            "landscape_natural": 7,
+            "portrait_figure": 7,
+        })
+
     def test_identifiers_and_seeds_are_stable(self) -> None:
         self.assertEqual(
             robustness_group_id("p001", "loss_small", "target_04p5pct"),
@@ -56,6 +93,26 @@ class MaskRobustnessPreparationTests(unittest.TestCase):
         first = stable_case_seed("mask_robustness_seed.v1", 20260606, "p001")
         self.assertEqual(first, stable_case_seed("mask_robustness_seed.v1", 20260606, "p001"))
         self.assertNotEqual(first, stable_case_seed("mask_robustness_seed.v1", 20260606, "p018"))
+
+    def test_loss_small_candidates_retain_multicomponent_shape(self) -> None:
+        threshold = int(
+            self.canonical["family_validation"]["loss_small"]
+            ["minimum_median_connected_component_count"]
+        )
+        self.assertFalse(
+            _candidate_family_shape_passed(
+                "loss_small",
+                {"connected_component_count": threshold - 1},
+                self.canonical,
+            )
+        )
+        self.assertTrue(
+            _candidate_family_shape_passed(
+                "loss_small",
+                {"connected_component_count": threshold},
+                self.canonical,
+            )
+        )
 
     def test_group_statistics_detect_distinct_location_and_morphology(self) -> None:
         arrays: list[np.ndarray] = []
@@ -123,9 +180,9 @@ class MaskRobustnessPreparationTests(unittest.TestCase):
         changed["families"][1]["target_percentage_content"] = 5.0
         self.assertTrue(validate_mask_robustness_config(changed))
         changed = copy.deepcopy(self.config)
-        changed["expected"]["case_count"] = 74
+        changed["expected"]["case_count"] = 524
         self.assertIn(
-            "expected.case_count must equal 75",
+            "expected.case_count must equal 525",
             validate_mask_robustness_config(changed),
         )
 

@@ -1,15 +1,15 @@
 {
   "run_schema_version": "inventory_run.v1",
   "inventory_schema_version": "project_file_inventory.v1",
-  "inventory_run_id": "inventory_20260910T123146Z_01058f0b",
+  "inventory_run_id": "inventory_20260910T223321Z_e8386076",
   "status": "completed",
-  "generated_at_utc": "2026-09-10T12:31:46.939786Z",
-  "completed_at_utc": "2026-09-10T12:32:00.221316Z",
-  "duration_seconds": 13.313,
+  "generated_at_utc": "2026-09-10T22:33:21.528329Z",
+  "completed_at_utc": "2026-09-10T22:33:37.330175Z",
+  "duration_seconds": 15.841,
   "repository_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
   "inventory_relative_path": "outputs/inventory/project_file_inventory.csv",
-  "inventory_sha256": "d5e039b51772c5770cfebc46e6556e291df0aefcaf13a8aa4db96ccd66f0682d",
-  "inventory_size_bytes": 11699725,
+  "inventory_sha256": "f6778e7dfdf0117dccdec9ef0bbfa17c4b86b5aad18b8e9cce733320d96d1ceb",
+  "inventory_size_bytes": 12164141,
   "hash_configuration": {
     "mode": "partial",
     "algorithm": "sha256_first_n_bytes",
@@ -18,9 +18,9 @@
   "incremental_reuse": {
     "enabled": true,
     "cache_status": "verified",
-    "source_run_id": "inventory_20260910T070710Z_b83c4aa3",
-    "reused_file_count": 22264,
-    "inspected_file_count": 508
+    "source_run_id": "inventory_20260910T124826Z_44727b55",
+    "reused_file_count": 22606,
+    "inspected_file_count": 1066
   },
   "scan_configuration": {
     "skipped_directory_names": [
@@ -47,8 +47,8 @@
     "platform": "Windows-11-10.0.26200-SP0"
   },
   "summary": {
-    "file_count": 22772,
-    "total_size_bytes": 7757289295,
+    "file_count": 23672,
+    "total_size_bytes": 8065289275,
     "read_error_file_count": 0,
     "read_error_count": 0,
     "counts_by_format": {
@@ -63,7 +63,7 @@
       "notebook": 37,
       "npz": 4,
       "pdf": 3,
-      "png": 21857,
+      "png": 22757,
       "pptx": 1,
       "python": 97,
       "text": 5,
@@ -78,7 +78,7 @@
       "json": 82,
       "manifest_table": 44,
       "markdown": 40,
-      "mask_image": 4565,
+      "mask_image": 5465,
       "metric_table": 39,
       "notebook": 37,
       "other": 17,
@@ -101,7 +101,7 @@
       ".mjs": 2,
       ".npz": 4,
       ".pdf": 3,
-      ".png": 21857,
+      ".png": 22757,
       ".pptx": 1,
       ".py": 97,
       ".txt": 5,

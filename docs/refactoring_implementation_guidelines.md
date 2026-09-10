@@ -818,7 +818,7 @@ Rules for the active rerun:
 
 #### Active Controlled-300 completion status
 
-Updated 2026-09-10. This compact status is a navigation aid; the human evidence
+Updated 2026-09-11. This compact status is a navigation aid; the human evidence
 audit and machine-readable coverage registry remain authoritative for counts,
 checksums, limitations, and downstream eligibility.
 
@@ -829,10 +829,11 @@ checksums, limitations, and downstream eligibility.
 | 03 Canonical Mask Generation | Finished | Finished | Yes | 1,500 masks across 300 paintings and five families | All 250 pilot masks byte-identical; schema unchanged |
 | 04 Canonical Damaged Images | Finished | Finished | Yes | 1,500 cases and damaged PNGs across 300 paintings and five families | All 250 pilot damaged PNGs byte-identical; case and audit schemas unchanged |
 | 05 Damage-Size Sensitivity Dataset | Finished | Finished | Yes | 35 paintings × 7 nested levels = 245 matched cases, masks, damaged images, and audit rows | All 70 shared pilot images byte-identical; schemas and artifact paths unchanged; figure updated for expanded representatives |
+| 06 Mask Robustness Dataset | Finished | Finished | Yes | 35 paintings × 3 families × 5 variants = 525 cases; 105 groups; 525 masks, damaged images, and audit rows | All pilot paths and schemas retained; 148/151 shared PNGs byte-identical; one `p039` `loss_small` variant and the figure updated for helper v3.1.1 morphology enforcement |
 
-Notebook 06 is the next eligible Controlled-300 producer. No later notebook may
-consume the active Notebook 05 evidence as part of a Controlled-300 chain until
-Notebook 06 and each intervening direct producer complete their own gates.
+Notebook 07 is the next eligible Controlled-300 producer. No later notebook may
+consume the active Notebook 06 evidence as part of a Controlled-300 chain until
+Notebook 07 and each intervening direct producer complete their own gates.
 
 Two governing files make downstream evidence availability explicit:
 

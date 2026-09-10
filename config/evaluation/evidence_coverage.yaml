@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.5"
+config_version: "1.1.6"
 
 evidence_coverage:
   authority:
@@ -51,13 +51,13 @@ evidence_coverage:
   # Incremental transition ledger; update only after each notebook passes its
   # completion gate and read-only pilot-output comparison.
   controlled_300_rerun:
-    recorded_on: "2026-09-10"
+    recorded_on: "2026-09-11"
     recovery_tag: "pilot-50-complete"
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "05"
-    next_eligible_notebook_id: "06"
+    completed_through_notebook_id: "06"
+    next_eligible_notebook_id: "07"
     completed_notebooks:
       - notebook_id: "01"
         stem: "01_dataset_verification"
@@ -224,6 +224,53 @@ evidence_coverage:
         baseline_table_schemas_preserved: true
         baseline_shared_mask_and_damaged_images_byte_identical: true
         canonical_figure_updated_for_expanded_representatives: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "06"
+        stem: "06_mask_robustness_dataset_generation"
+        output_root: "outputs/06_mask_robustness_dataset_generation"
+        manifest_path: "outputs/06_mask_robustness_dataset_generation/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        mask_robustness_config_schema: "mask_robustness_config.v2"
+        mask_robustness_config_version: "2.0.1"
+        mask_robustness_generator_version: "3.1.1"
+        mask_robustness_helper_version: "3.1.1"
+        painting_rows: 35
+        paintings_per_visual_category: 7
+        mask_families: 3
+        robustness_groups: 105
+        variants_per_group: 5
+        robustness_case_rows: 525
+        mask_image_files: 525
+        damaged_image_files: 525
+        generation_audit_rows: 525
+        validation_rows: 102
+        artifact_records: 6
+        canonical_figures: 1
+        completion_requirements: 21
+        output_file_count: 1056
+        baseline_output_root: "E:/outputs/06_mask_robustness_dataset_generation"
+        baseline_painting_rows: 5
+        baseline_mask_families: 3
+        baseline_robustness_groups: 15
+        baseline_variants_per_group: 5
+        baseline_robustness_case_rows: 75
+        baseline_mask_image_files: 75
+        baseline_damaged_image_files: 75
+        baseline_generation_audit_rows: 75
+        baseline_validation_rows: 102
+        baseline_artifact_records: 6
+        baseline_canonical_figures: 1
+        baseline_completion_requirements: 21
+        baseline_output_file_count: 156
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_shared_png_files: 151
+        baseline_shared_png_files_byte_identical: 148
+        loss_small_variant_updated_for_family_morphology_enforcement: true
+        canonical_figure_updated_for_corrected_variant: true
         unexplained_missing_or_reduced_evidence: false
 
   frozen_baseline:

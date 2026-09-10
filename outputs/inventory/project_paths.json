@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-10T12:30:04.480239Z",
+  "updated_at_utc": "2026-09-10T22:25:06.495752Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -1479,12 +1479,12 @@
       "artifact_type": "dataset_table",
       "artifact_role": "primary_case_manifest",
       "schema_version": "mask_robustness_cases.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "mask_robustness",
       "validation_status": "passed",
-      "row_count": 75,
+      "row_count": 525,
       "file_count": 1,
-      "checksum": "300f5740822428e94dea47263f76af798d255c203eba38c960aee3be31e3de7f"
+      "checksum": "d1110c43c8009f6964e08b5ba7f0f16694f5154924447c0d4fcc9665f29552c2"
     },
     {
       "artifact_key": "mask_robustness.damaged_images",
@@ -1493,12 +1493,12 @@
       "artifact_type": "image_collection",
       "artifact_role": "damaged_image_collection",
       "schema_version": "mask_robustness_damaged_images.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "mask_robustness",
       "validation_status": "passed",
-      "row_count": 75,
-      "file_count": 75,
-      "checksum": "58ca98e2cf04bed20cc85f9a43921f4b1380947c2f9a865b566585e63bc338dd"
+      "row_count": 525,
+      "file_count": 525,
+      "checksum": "3313634b7687ea1624eac11b09784d403f763f5b7d82f18f06963e11bd174a6c"
     },
     {
       "artifact_key": "mask_robustness.figure_examples",
@@ -1507,12 +1507,12 @@
       "artifact_type": "figure",
       "artifact_role": "representative_visual_evidence",
       "schema_version": "mask_robustness_examples.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "mask_robustness",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "781ad154746f7ca976b08bc2fed46d3c41322d746e356701811777bf76868c18"
+      "checksum": "1945c554be8597814f62820b670502c924abff980c075e9c4558084e83046572"
     },
     {
       "artifact_key": "mask_robustness.generation_audit",
@@ -1521,12 +1521,12 @@
       "artifact_type": "audit_table",
       "artifact_role": "generation_audit",
       "schema_version": "mask_robustness_generation_audit.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "mask_robustness",
       "validation_status": "passed",
-      "row_count": 75,
+      "row_count": 525,
       "file_count": 1,
-      "checksum": "73c300cad5ff23e3ec16d83291ab34ca53dc09c409a452f22be6debc0eb67524"
+      "checksum": "280a9fdf0390f5440fb5c8949549e559833b93588aa9664cdb133be7560d2ef7"
     },
     {
       "artifact_key": "mask_robustness.masks",
@@ -1535,12 +1535,12 @@
       "artifact_type": "image_collection",
       "artifact_role": "mask_collection",
       "schema_version": "mask_robustness_masks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "mask_robustness",
       "validation_status": "passed",
-      "row_count": 75,
-      "file_count": 75,
-      "checksum": "e2242917842a02adf6b7feb1d25840d03aa356ee94d8d89a40f01c11b518b02b"
+      "row_count": 525,
+      "file_count": 525,
+      "checksum": "0798ae18bd7cf858ce598a0a207cbd0fbbded901b37ff56657aea721c793f60c"
     },
     {
       "artifact_key": "mask_robustness_analysis.metrics",
@@ -2865,12 +2865,12 @@
       "artifact_type": "validation_table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "mask_robustness",
       "validation_status": "passed",
       "row_count": 102,
       "file_count": 1,
-      "checksum": "7f97f9ad633f8ad624904482d36693190aa75aa42c0ebb19a3011bf038aa5646"
+      "checksum": "67a48adc12cc97d91bc98c95f7a9e2a2a133242625669ba57db9edd679059325"
     },
     {
       "artifact_key": "validation.07_synthetic_degradation_dataset_generation",

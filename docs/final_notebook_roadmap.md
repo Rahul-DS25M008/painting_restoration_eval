@@ -501,8 +501,24 @@ Notebooks 08–12, 22, 25, 28, 32, and 33.
 
 **Notebook:** `06_mask_robustness_dataset_generation.ipynb`  
 **Origin:** Existing Notebook 06  
+**Controlled-300 refactor status:** Finished  
+**Validation status:** Finished  
+**Completion gate passed:** Yes  
 **Output root:** `outputs/06_mask_robustness_dataset_generation/`  
 **Depends on:** Notebooks 02, 03, and the matched-painting policy from 05
+
+**Validated active coverage:** 35 paintings balanced at seven per visual
+category; three mask families; five variants per painting-family group; 105
+robustness groups; 525 case rows, masks, damaged images, and audit rows; 102
+validation rows; 21 passed completion requirements.
+
+**Pilot comparison:** All 156 pilot artifact paths, table schemas, and artifact
+roles are retained. Of 151 shared PNG paths, 148 are byte-identical. The active
+run deliberately regenerates the `p039` `loss_small` fourth mask variant and its
+damaged image because helper v3.1.1 enforces the configured multi-component
+morphology for every candidate; the representative figure consequently changes.
+The output count increases from 156 to 1,056 through exactly 450 additional
+masks and 450 corresponding damaged images.
 
 ### Purpose
 
@@ -545,7 +561,7 @@ validation/checks.csv
 
 ### Downstream consumers
 
-Notebooks 08–12, 23, 25, 28, 32, and 33.
+Notebooks 08–12, 24, 25, 28, 32, and 33.
 
 ---
 

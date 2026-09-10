@@ -32,8 +32,8 @@ from .schemas import (
 )
 
 
-MASK_ROBUSTNESS_MODULE_VERSION = "3.0.0"
-MASK_ROBUSTNESS_CONFIG_SCHEMA_VERSION = "mask_robustness_config.v1"
+MASK_ROBUSTNESS_MODULE_VERSION = "3.1.1"
+MASK_ROBUSTNESS_CONFIG_SCHEMA_VERSION = "mask_robustness_config.v2"
 GENERATOR_NAME = "mask_robustness_generator"
 GENERATOR_VERSION = MASK_ROBUSTNESS_MODULE_VERSION
 SUPPORTED_ROBUSTNESS_FAMILIES = ("scratch_thin", "loss_small", "loss_large")
@@ -130,13 +130,18 @@ def validate_mask_robustness_config(config: Mapping[str, Any]) -> list[str]:
     for key, value in output_values.items():
         if output.get(key) != value:
             errors.append(f"output.{key} must equal {value!r}")
+    if cohort.get("selection_policy") != "inherit_pinned_balanced_35_from_notebook_05":
+        errors.append("cohort.selection_policy is unsupported")
+    if cohort.get("selection_version") != "focused_35_balanced.v1":
+        errors.append("cohort.selection_version must equal focused_35_balanced.v1")
     paintings = cohort.get("paintings") if isinstance(cohort.get("paintings"), list) else []
     ids = [str(item.get("painting_id", "")) for item in paintings if isinstance(item, Mapping)]
     categories = [str(item.get("category", "")) for item in paintings if isinstance(item, Mapping)]
-    if ids != ["p001", "p018", "p026", "p039", "p043"]:
-        errors.append("cohort painting identifiers differ from the approved Notebook 05 cohort")
-    if len(set(categories)) != 5 or any(not value for value in categories):
-        errors.append("cohort must contain five unique non-empty categories")
+    if len(ids) != 35 or len(set(ids)) != 35 or any(not value for value in ids):
+        errors.append("cohort must contain 35 unique non-empty painting identifiers")
+    category_counts = pd.Series(categories, dtype="string").value_counts().to_dict()
+    if len(category_counts) != 5 or set(category_counts.values()) != {7}:
+        errors.append("cohort must contain seven paintings in each of five categories")
     families = config.get("families") if isinstance(config.get("families"), list) else []
     names = [str(item.get("mask_type", "")) for item in families if isinstance(item, Mapping)]
     percentages = [float(item.get("target_percentage_content", -1)) for item in families if isinstance(item, Mapping)]
@@ -174,10 +179,10 @@ def validate_mask_robustness_config(config: Mapping[str, Any]) -> list[str]:
     if distinctness.get("require_unique_pixel_sha256_within_group") is not True:
         errors.append("distinctness requires unique pixel checksums")
     count_values = {
-        "painting_count": 5, "category_count": 5, "family_count": 3,
-        "robustness_group_count": 15, "variants_per_group": 5, "case_count": 75,
-        "audit_row_count": 75, "mask_file_count": 75, "damaged_file_count": 75,
-        "artifact_record_count": 6, "total_output_file_count": 156,
+        "painting_count": 35, "category_count": 5, "family_count": 3,
+        "robustness_group_count": 105, "variants_per_group": 5, "case_count": 525,
+        "audit_row_count": 525, "mask_file_count": 525, "damaged_file_count": 525,
+        "artifact_record_count": 6, "total_output_file_count": 1056,
     }
     for key, value in count_values.items():
         if expected.get(key) != value:
@@ -245,14 +250,18 @@ def validate_mask_robustness_handoff(preprocessed: pd.DataFrame, canonical_masks
             if set(frame[key].astype(str)) != wanted:
                 errors.append(f"{label} {key} does not match configuration")
     ids = set(cohort_painting_ids(config))
-    if len(preprocessed) != 50 or preprocessed["painting_id"].duplicated().any():
-        errors.append("preprocessed handoff must contain 50 unique paintings")
-    if len(canonical_masks) != 250:
-        errors.append("canonical mask handoff must contain 250 rows")
-    if len(matched_policy_cases) != 35 or set(matched_policy_cases["painting_id"].astype(str)) != ids:
-        errors.append("Notebook 05 must contain 35 cases for the exact pinned cohort")
+    if len(preprocessed) != 300 or preprocessed["painting_id"].duplicated().any():
+        errors.append("preprocessed handoff must contain 300 unique paintings")
+    if len(canonical_masks) != 1500:
+        errors.append("canonical mask handoff must contain 1,500 rows")
+    if (
+        len(matched_policy_cases) != 245
+        or set(matched_policy_cases["painting_id"].astype(str)) != ids
+        or not matched_policy_cases.groupby("painting_id", observed=True).size().eq(7).all()
+    ):
+        errors.append("Notebook 05 must contain seven cases for every painting in the exact pinned cohort")
     selected = canonical_masks.loc[canonical_masks["painting_id"].astype(str).isin(ids) & canonical_masks["mask_type"].astype(str).isin(SUPPORTED_ROBUSTNESS_FAMILIES)]
-    if len(selected) != 15 or selected.duplicated(["painting_id", "mask_type"]).any():
+    if len(selected) != 105 or selected.duplicated(["painting_id", "mask_type"]).any():
         errors.append("Notebook 03 must contain one canonical reference per pinned painting/family")
     canonical_families = canonical_mask_config.get("families", {})
     for family in configured_families(config):
@@ -260,7 +269,7 @@ def validate_mask_robustness_handoff(preprocessed: pd.DataFrame, canonical_masks
         if name not in canonical_families or not math.isclose(100 * float(canonical_families[name]["target_damaged_content_fraction"]), float(family["target_percentage_content"]), abs_tol=1e-12):
             errors.append(f"canonical target percentage differs for {name}")
     geometry = preprocessed.loc[preprocessed["painting_id"].astype(str).isin(ids)]
-    if len(geometry) != 5 or not geometry["status"].astype(str).eq("passed").all():
+    if len(geometry) != 35 or not geometry["status"].astype(str).eq("passed").all():
         errors.append("Notebook 02 pinned cohort is incomplete or failed")
     if verify_files:
         root = find_project_root(project_root)
@@ -281,7 +290,7 @@ def select_robustness_cohort(preprocessed: pd.DataFrame, matched_policy_cases: p
     order = {painting_id: index for index, painting_id in enumerate(ids)}
     columns = ("painting_id", "processed_image_id", "processed_path", "sha256", "width", "height", "content_x_min", "content_y_min", "content_x_max", "content_y_max", "content_width", "content_height", "content_area_pixels", "dataset_sort_index")
     result = preprocessed.loc[preprocessed["painting_id"].astype(str).isin(ids), list(columns)].copy()
-    if len(result) != 5 or result["painting_id"].duplicated().any():
+    if len(result) != 35 or result["painting_id"].duplicated().any():
         raise ValueError("Notebook 02 does not contain one row per pinned painting")
     result["category"] = result["painting_id"].astype(str).map(categories)
     result["_order"] = result["painting_id"].astype(str).map(order)
@@ -325,16 +334,21 @@ def _candidate_family_shape_passed(
     candidate: Mapping[str, Any],
     canonical_mask_config: Mapping[str, Any],
 ) -> bool:
-    """Reject only per-case shapes whose canonical rule is individually meaningful."""
-    if mask_type != "scratch_thin":
-        return True
-    rules = canonical_mask_config["family_validation"]["scratch_thin"]
-    return bool(
-        float(candidate["bbox_fill_ratio"])
-        <= float(rules["maximum_median_bbox_fill_ratio"])
-        and float(candidate["maximum_component_aspect_ratio"])
-        >= float(rules["minimum_median_maximum_component_aspect_ratio"])
-    )
+    """Reject candidates that do not retain their family's defining shape."""
+    rules = canonical_mask_config["family_validation"][mask_type]
+    if mask_type == "scratch_thin":
+        return bool(
+            float(candidate["bbox_fill_ratio"])
+            <= float(rules["maximum_median_bbox_fill_ratio"])
+            and float(candidate["maximum_component_aspect_ratio"])
+            >= float(rules["minimum_median_maximum_component_aspect_ratio"])
+        )
+    if mask_type == "loss_small":
+        return bool(
+            int(candidate["connected_component_count"])
+            >= int(rules["minimum_median_connected_component_count"])
+        )
+    return True
 
 
 def _group_stats(records: Sequence[Mapping[str, Any]], arrays: Sequence[np.ndarray], config: Mapping[str, Any], canonical: Mapping[str, Any]) -> dict[str, Any]:
@@ -420,7 +434,7 @@ def generate_mask_robustness_dataset(cohort: pd.DataFrame, config: Mapping[str, 
             group_id = robustness_group_id(str(row.painting_id), mask_type, token); group_seed = stable_case_seed(painting_seed, group_id)
             target_pixels = target_pixels_from_percentage(int(row.content_area_pixels), float(family["target_percentage_content"]))
             records, arrays = [], []
-            for index in range(1, 6):
+            for index in range(1, int(generator["variants_per_group"]) + 1):
                 variant_id, variant_seed = f"variant_{index:02d}", stable_case_seed(group_seed, index)
                 selected = None
                 for attempt in range(1, int(generator["maximum_generation_attempts_per_variant"]) + 1):

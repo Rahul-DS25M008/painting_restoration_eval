@@ -1,11 +1,11 @@
-config_schema_version: "mask_robustness_config.v1"
-config_version: "1.0.0"
+config_schema_version: "mask_robustness_config.v2"
+config_version: "2.0.1"
 
 dataset:
   dataset_id: "painting_restoration_eval"
-  dataset_version: "1.0.0"
-  dataset_scope: "controlled_50"
-  execution_profile: "controlled_50"
+  dataset_version: "2.0.0"
+  dataset_scope: "controlled_300"
+  execution_profile: "controlled_300"
   geometry_schema_version: "preprocessed_images.v1"
   canonical_mask_schema_version: "canonical_masks.v1"
   matched_policy_schema_version: "damage_size_cases.v1"
@@ -50,17 +50,78 @@ output:
   examples_figure_path: "figures/robustness_examples.png"
 
 cohort:
-  selection_policy: "inherit_pinned_one_per_controlled_visual_category_from_notebook_05"
+  selection_policy: "inherit_pinned_balanced_35_from_notebook_05"
+  selection_version: "focused_35_balanced.v1"
   paintings:
     - painting_id: "p001"
       category: "portrait_figure"
+    - painting_id: "p267"
+      category: "portrait_figure"
+    - painting_id: "p294"
+      category: "portrait_figure"
+    - painting_id: "p259"
+      category: "portrait_figure"
+    - painting_id: "p009"
+      category: "portrait_figure"
+    - painting_id: "p284"
+      category: "portrait_figure"
+    - painting_id: "p256"
+      category: "portrait_figure"
     - painting_id: "p018"
+      category: "landscape_natural"
+    - painting_id: "p157"
+      category: "landscape_natural"
+    - painting_id: "p178"
+      category: "landscape_natural"
+    - painting_id: "p198"
+      category: "landscape_natural"
+    - painting_id: "p181"
+      category: "landscape_natural"
+    - painting_id: "p173"
+      category: "landscape_natural"
+    - painting_id: "p199"
       category: "landscape_natural"
     - painting_id: "p026"
       category: "architecture_structured"
+    - painting_id: "p124"
+      category: "architecture_structured"
+    - painting_id: "p139"
+      category: "architecture_structured"
+    - painting_id: "p123"
+      category: "architecture_structured"
+    - painting_id: "p115"
+      category: "architecture_structured"
+    - painting_id: "p140"
+      category: "architecture_structured"
+    - painting_id: "p107"
+      category: "architecture_structured"
     - painting_id: "p039"
       category: "abstraction_surrealism"
+    - painting_id: "p100"
+      category: "abstraction_surrealism"
+    - painting_id: "p089"
+      category: "abstraction_surrealism"
+    - painting_id: "p077"
+      category: "abstraction_surrealism"
+    - painting_id: "p093"
+      category: "abstraction_surrealism"
+    - painting_id: "p052"
+      category: "abstraction_surrealism"
+    - painting_id: "p073"
+      category: "abstraction_surrealism"
     - painting_id: "p043"
+      category: "high_texture_brushwork"
+    - painting_id: "p208"
+      category: "high_texture_brushwork"
+    - painting_id: "p223"
+      category: "high_texture_brushwork"
+    - painting_id: "p235"
+      category: "high_texture_brushwork"
+    - painting_id: "p246"
+      category: "high_texture_brushwork"
+    - painting_id: "p220"
+      category: "high_texture_brushwork"
+    - painting_id: "p210"
       category: "high_texture_brushwork"
 
 families:
@@ -79,7 +140,7 @@ families:
 
 generator:
   name: "mask_robustness_generator"
-  version: "3.0.0"
+  version: "3.1.1"
   seed_scheme_version: "mask_robustness_seed.v1"
   global_seed: 20260606
   variants_per_group: 5
@@ -132,17 +193,17 @@ distinctness:
   require_family_morphology_passed: true
 
 expected:
-  painting_count: 5
+  painting_count: 35
   category_count: 5
   family_count: 3
-  robustness_group_count: 15
+  robustness_group_count: 105
   variants_per_group: 5
-  case_count: 75
-  audit_row_count: 75
-  mask_file_count: 75
-  damaged_file_count: 75
+  case_count: 525
+  audit_row_count: 525
+  mask_file_count: 525
+  damaged_file_count: 525
   artifact_record_count: 6
-  total_output_file_count: 156
+  total_output_file_count: 1056
 
 smoke:
   painting_id: "p039"
@@ -150,7 +211,7 @@ smoke:
   variant_count: 5
   repeat_count: 2
   persist_outputs: false
-  selection_reason: "median_content_area_within_pinned_cohort_and_moderate_damage_family"
+  selection_reason: "preserved_pilot_anchor_and_moderate_damage_family"
 
 examples:
   painting_id: "p039"
