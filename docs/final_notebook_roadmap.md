@@ -2835,3 +2835,94 @@ replaced notebook by notebook. A mixed state is therefore expected during the
 transition, but no downstream notebook may treat an upstream stage as
 controlled-300 until that producer's new manifest and validation gate pass.
 
+## 6. Unnumbered post-pipeline study consideration
+
+The following supervisor suggestions are worth assessing after the
+controlled-300 rerun of Notebooks 01-36 is complete. They are planning ideas,
+not approved pipeline commitments, and no notebook number is assigned yet.
+They must not alter or delay the existing numbered sequence.
+
+### Shared feasibility audit
+
+Use the completed portrait/figure population and its saved masks, damaged
+images, restorations, metrics, manifests, and validation records to determine
+whether the existing evidence supports either study. The audit should:
+
+- screen all 60 portrait/figure paintings rather than starting from a small
+  convenience sample;
+- define subject and anatomical regions independently from the restoration
+  masks;
+- measure the intersection between each relevant region and the actual damage
+  mask;
+- retain only cases with enough damaged-region overlap for a meaningful local
+  comparison;
+- match or adjust comparisons for damage family, damaged fraction, mask
+  geometry, painting characteristics, and repeated outputs;
+- treat paintings as the independent unit and seeds as nested repeated
+  observations; and
+- decide whether the existing evidence is sufficient before generating any new
+  masks or restorations.
+
+The current random-mask populations do not guarantee adequate coverage of
+faces, skin, hands, or other body parts. Repeated Stable Diffusion seeds vary
+the completion for a fixed mask; they do not create new anatomical mask
+locations. Existing case counts therefore cannot be used as evidence that
+either proposed analysis is feasible.
+
+### Depicted-skin-tone subgroup comparison
+
+The defensible question is whether restoration performance differs between
+predefined depicted-skin-tone groups within the controlled portrait subset.
+The study must not infer race or ethnicity from an image or describe a result
+as inherent model bias without supporting annotations and a design that
+addresses confounding.
+
+If pursued, the study should:
+
+- prefer catalog descriptions when they contain relevant subject information;
+- otherwise record a manually reviewed `depicted_skin_tone_group`, including an
+  ambiguous or unclassifiable category;
+- annotate visible face and skin regions independently of the damage masks;
+- compare Telea, LaMa, HINT, and Stable Diffusion on identical eligible cases,
+  with SDXL included only as descriptive evidence when matching cases exist;
+- report local masked-region and skin-intersection PSNR, SSIM, LPIPS, DINOv2,
+  CIEDE2000, and seam evidence alongside representative visual panels; and
+- limit any conclusion to subgroup disparity in this controlled sample.
+
+Painting period, palette, lighting, style, pose, exposed-skin area, source
+collection, and mask placement can all confound the comparison. A small or
+poorly matched result must remain descriptive.
+
+### Hand and body-part restoration comparison
+
+This study would test whether damaged hands are harder to restore than matched
+non-hand regions. It should screen the portrait/figure collection for visible
+hands, annotate hand regions, and optionally retain face, clothing, and
+background regions as comparison controls.
+
+If pursued, the study should:
+
+- require a declared minimum intersection between the damage mask and the hand
+  region;
+- match hand and non-hand cases by damage family, damaged fraction, and mask
+  geometry;
+- compare the same four full-run methods on the same eligible cases;
+- compute reference, perceptual, structural, edge or directional, colour, and
+  seam evidence inside the hand-region intersection; and
+- add blinded manual review for fused fingers, missing digits, implausible
+  contours, and pose discontinuity because generic similarity metrics can miss
+  anatomical failures.
+
+### Decision after Notebook 36
+
+If the saved evidence provides adequate, balanced coverage, the two questions
+may share one later analysis-only extension because they use the same portrait
+screening, region annotations, matching policy, model outputs, and validation
+framework. Their statistical analyses and conclusions must remain separate.
+
+If coverage is inadequate, one self-contained extension may instead own the
+targeted anatomical masks, damaged images, four-model restorations, metrics,
+figures, report, manifests, and validation. The scope and notebook number must
+be approved only after the feasibility audit. No existing Notebook 01-36
+responsibility should be reopened merely to accommodate these optional studies.
+
