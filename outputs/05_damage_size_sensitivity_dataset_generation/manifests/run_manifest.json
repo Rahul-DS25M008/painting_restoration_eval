@@ -1,38 +1,38 @@
 {
   "manifest_schema_version": "run_manifest.v1",
-  "run_id": "run_519fd38cca4c45d69dc8f43e90cae621",
+  "run_id": "run_fb717ad978394227944ef6bf99919f08",
   "notebook_id": "05",
   "notebook_name": "Damage-Size Sensitivity Dataset Generation",
   "origin": "Existing Notebook 05",
   "run_status": "completed",
-  "started_at_utc": "2026-08-19T17:48:48.070631Z",
-  "completed_at_utc": "2026-08-19T18:34:06.256241Z",
-  "git_commit": "d4533d00a8b8de8a2354552b1c8abe1bd77abf9a",
+  "started_at_utc": "2026-09-10T12:18:55.032268Z",
+  "completed_at_utc": "2026-09-10T12:30:04.603724Z",
+  "git_commit": "0440adf23f6c7f337cb64c6ab76f8968a926dd66",
   "git_dirty": true,
   "git_branch": "main",
   "git_error": "",
-  "inventory_run_id": "inventory_20260819T172830Z_5fa3bfd0",
+  "inventory_run_id": "inventory_20260910T070710Z_b83c4aa3",
   "dataset_versions": {
     "dataset_id": "painting_restoration_eval",
-    "dataset_version": "1.0.0",
-    "dataset_scope": "controlled_50",
-    "execution_profile": "controlled_50",
+    "dataset_version": "2.0.0",
+    "dataset_scope": "controlled_300",
+    "execution_profile": "controlled_300",
     "experiment_id": "damage_size_sensitivity",
-    "content_fingerprint": "9c1717b89d6adc4182736c7c879c2d941ebfbf4999870abc14249bb1869c0d47",
+    "content_fingerprint": "5c8797aebe0c5aced37a274854a8f2584bb7d4fd9babff1fc6ba37f316b2f6b1",
     "fingerprint_version": "dataset_fingerprint.v1",
-    "preprocessing_run_id": "run_5e54b2de32934e1c9303e7250b932404",
-    "mask_run_id": "run_16536d2f39c54081b0dd58a00b5e9f01",
-    "preprocessed_images_sha256": "b6f29c2c71450403042b1bb6c522ea6e50942a940428918b89dac466e0b7152f",
-    "clean_images_sha256": "287a4a24bcbc1ff6c2aca29e0900cf592ac67ceed920bd997a8dcf531bad347a",
-    "canonical_masks_sha256": "b517853358812f8f378a7d6bbaba8ffa0582ff5083a9eb6afc4f9ba9701461b3",
-    "canonical_mask_images_sha256": "71c39b7de5fb530c39188d3fd00d6a37c1954a960ec6bc2b3846685dd07498aa",
+    "preprocessing_run_id": "run_ca94012bb1e54bf5bf57c1fdabb01480",
+    "mask_run_id": "run_dd51e1b1ca374f3aad16d22b0cd12c99",
+    "preprocessed_images_sha256": "a2e769ae44facfec955642a0e4ab8825b4468a2e68d70d6c9a968b7b131cc934",
+    "clean_images_sha256": "b370b81e0e3b5121fe6e0617fb157a6df1d2bec05a9bd7aa45eea2ee826690b9",
+    "canonical_masks_sha256": "3cd0fd3d9aa06d4a1553f67ad6ff8c3490f26d58e1d05bffeeca9123f9c4fd4f",
+    "canonical_mask_images_sha256": "0a690089ce1b1720b189c9374d614404acab791f50665ef6448b5d1978d44ea7",
     "damage_size_cases_schema": "damage_size_cases.v1",
     "damage_size_generation_audit_schema": "damage_size_generation_audit.v1",
-    "damage_size_config_schema": "damage_size_sensitivity_config.v1",
+    "damage_size_config_schema": "damage_size_sensitivity_config.v2",
     "damage_size_mask_collection_schema": "damage_size_mask_collection.v1",
     "damage_size_damaged_collection_schema": "damage_size_damaged_collection.v1",
     "generator_name": "damage_size_sensitivity_generator",
-    "generator_version": "3.0.0",
+    "generator_version": "3.1.0",
     "seed_scheme_version": "damage_size_nested_seed.v1",
     "scaling_method": "isotropic_nearest_neighbor_about_base_centroid",
     "nesting_policy": "strict_previous_level_subset",
@@ -44,10 +44,40 @@
     ],
     "cohort_painting_ids": [
       "p001",
+      "p267",
+      "p294",
+      "p259",
+      "p009",
+      "p284",
+      "p256",
       "p018",
+      "p157",
+      "p178",
+      "p198",
+      "p181",
+      "p173",
+      "p199",
       "p026",
+      "p124",
+      "p139",
+      "p123",
+      "p115",
+      "p140",
+      "p107",
       "p039",
-      "p043"
+      "p100",
+      "p089",
+      "p077",
+      "p093",
+      "p052",
+      "p073",
+      "p043",
+      "p208",
+      "p223",
+      "p235",
+      "p246",
+      "p220",
+      "p210"
     ],
     "target_level_ids": [
       "size_02pct",
@@ -72,15 +102,15 @@
     "config/experiments/damage_size_sensitivity.yaml"
   ],
   "configuration_checksums": {
-    "config/experiments/damage_size_sensitivity.yaml": "5d16c0f17108a61f5eec1f776284ca3dae5108bd90a939eba1e9fb8d1f1bc025"
+    "config/experiments/damage_size_sensitivity.yaml": "d5e1c18b48816f76e534eaab59168b35be1dc925509a9b1547b681a445809575"
   },
   "helper_versions": {
     "restoration_eval": "0.1.0",
     "paths": "1.0.0",
-    "schemas": "1.3.0",
+    "schemas": "1.18.0",
     "manifests": "1.0.0",
     "validation": "1.0.0",
-    "damage_size": "3.0.0"
+    "damage_size": "3.1.0"
   },
   "python_version": "3.12.6",
   "python_implementation": "CPython",
@@ -103,10 +133,10 @@
       "relative_path": "config/experiments/damage_size_sensitivity.yaml",
       "required": true,
       "format": "yaml",
-      "schema_version": "damage_size_sensitivity_config.v1",
+      "schema_version": "damage_size_sensitivity_config.v2",
       "required_contract": "complete versioned Notebook 05 configuration",
       "expected_cardinality": 1,
-      "applicability": "controlled_50; damage_size_sensitivity"
+      "applicability": "controlled_300; damage_size_sensitivity"
     },
     {
       "input_key": "project_inventory",
@@ -116,7 +146,7 @@
       "format": "csv",
       "schema_version": "project_file_inventory.v1",
       "required_contract": "completed current inventory without read errors",
-      "expected_cardinality": 10948,
+      "expected_cardinality": 22350,
       "applicability": "repository"
     },
     {
@@ -205,8 +235,8 @@
         "preprocessing_version",
         "status"
       ],
-      "expected_cardinality": 50,
-      "applicability": "controlled_50"
+      "expected_cardinality": 300,
+      "applicability": "controlled_300"
     },
     {
       "input_key": "clean_images",
@@ -216,8 +246,8 @@
       "format": "png_collection",
       "schema_version": "clean_image_collection.v1",
       "required_contract": "one validated RGB PNG per painting",
-      "expected_cardinality": 50,
-      "applicability": "controlled_50"
+      "expected_cardinality": 300,
+      "applicability": "controlled_300"
     },
     {
       "input_key": "preprocessing_artifacts",
@@ -244,7 +274,7 @@
         "validation_status"
       ],
       "expected_cardinality": 5,
-      "applicability": "controlled_50"
+      "applicability": "controlled_300"
     },
     {
       "input_key": "preprocessing_run_manifest",
@@ -255,7 +285,7 @@
       "schema_version": "run_manifest.v1",
       "required_contract": "run_status=completed",
       "expected_cardinality": 1,
-      "applicability": "controlled_50"
+      "applicability": "controlled_300"
     },
     {
       "input_key": "canonical_masks",
@@ -355,8 +385,8 @@
         "status",
         "issue"
       ],
-      "expected_cardinality": 250,
-      "applicability": "controlled_50; canonical_missing_region"
+      "expected_cardinality": 1500,
+      "applicability": "controlled_300; canonical_missing_region"
     },
     {
       "input_key": "canonical_mask_images",
@@ -366,8 +396,8 @@
       "format": "png_collection",
       "schema_version": "canonical_mask_collection.v1",
       "required_contract": "one validated binary PNG per canonical mask row",
-      "expected_cardinality": 250,
-      "applicability": "controlled_50; canonical_missing_region"
+      "expected_cardinality": 1500,
+      "applicability": "controlled_300; canonical_missing_region"
     },
     {
       "input_key": "mask_artifacts",
@@ -394,7 +424,7 @@
         "validation_status"
       ],
       "expected_cardinality": 7,
-      "applicability": "controlled_50; canonical_missing_region"
+      "applicability": "controlled_300; canonical_missing_region"
     },
     {
       "input_key": "mask_run_manifest",
@@ -405,7 +435,7 @@
       "schema_version": "run_manifest.v1",
       "required_contract": "run_status=completed",
       "expected_cardinality": 1,
-      "applicability": "controlled_50; canonical_missing_region"
+      "applicability": "controlled_300; canonical_missing_region"
     }
   ],
   "outputs": [
@@ -414,7 +444,7 @@
       "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv",
       "format": "csv",
       "schema_version": "damage_size_cases.v1",
-      "expected_cardinality": 35,
+      "expected_cardinality": 245,
       "artifact_role": "primary_downstream",
       "downstream_consumers": "08-12, 22, 25, 28, 32, and 33"
     },
@@ -423,7 +453,7 @@
       "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/images/masks",
       "format": "png_collection",
       "schema_version": "damage_size_mask_collection.v1",
-      "expected_cardinality": 35,
+      "expected_cardinality": 245,
       "artifact_role": "primary_downstream",
       "downstream_consumers": "08-12, 22, 25, 28, 32, and 33"
     },
@@ -432,7 +462,7 @@
       "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/images/damaged",
       "format": "png_collection",
       "schema_version": "damage_size_damaged_collection.v1",
-      "expected_cardinality": 35,
+      "expected_cardinality": 245,
       "artifact_role": "primary_downstream",
       "downstream_consumers": "08-12, 22, 25, 28, 32, and 33"
     },
@@ -441,7 +471,7 @@
       "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/metrics/generation_audit.csv",
       "format": "csv",
       "schema_version": "damage_size_generation_audit.v1",
-      "expected_cardinality": 35,
+      "expected_cardinality": 245,
       "artifact_role": "audit_reporting",
       "downstream_consumers": "Notebook 08 and completion audit"
     },
@@ -483,48 +513,78 @@
     }
   ],
   "expected_counts": {
-    "painting_rows": 5,
+    "painting_rows": 35,
     "visual_categories": 5,
     "target_levels": 7,
-    "damage_size_rows": 35,
-    "mask_files": 35,
-    "damaged_image_files": 35,
-    "generation_audit_rows": 35,
+    "damage_size_rows": 245,
+    "mask_files": 245,
+    "damaged_image_files": 245,
+    "generation_audit_rows": 245,
     "validation_rows": 96,
     "artifact_records": 6,
     "canonical_figures": 1
   },
   "observed_counts": {
-    "painting_rows": 5,
+    "painting_rows": 35,
     "visual_categories": 5,
     "target_levels": 7,
-    "damage_size_rows": 35,
-    "mask_files": 35,
-    "damaged_image_files": 35,
-    "generation_audit_rows": 35,
+    "damage_size_rows": 245,
+    "mask_files": 245,
+    "damaged_image_files": 245,
+    "generation_audit_rows": 245,
     "validation_rows": 96,
     "artifact_records": 6,
     "canonical_figures": 1,
     "level_case_counts": {
-      "size_02pct": 5,
-      "size_04pct": 5,
-      "size_06pct": 5,
-      "size_08pct": 5,
-      "size_10pct": 5,
-      "size_15pct": 5,
-      "size_20pct": 5
+      "size_02pct": 35,
+      "size_04pct": 35,
+      "size_06pct": 35,
+      "size_08pct": 35,
+      "size_10pct": 35,
+      "size_15pct": 35,
+      "size_20pct": 35
     },
     "painting_case_counts": {
       "p001": 7,
+      "p267": 7,
+      "p294": 7,
+      "p259": 7,
+      "p009": 7,
+      "p284": 7,
+      "p256": 7,
       "p018": 7,
+      "p157": 7,
+      "p178": 7,
+      "p198": 7,
+      "p181": 7,
+      "p173": 7,
+      "p199": 7,
       "p026": 7,
+      "p124": 7,
+      "p139": 7,
+      "p123": 7,
+      "p115": 7,
+      "p140": 7,
+      "p107": 7,
       "p039": 7,
-      "p043": 7
+      "p100": 7,
+      "p089": 7,
+      "p077": 7,
+      "p093": 7,
+      "p052": 7,
+      "p073": 7,
+      "p043": 7,
+      "p208": 7,
+      "p223": 7,
+      "p235": 7,
+      "p246": 7,
+      "p220": 7,
+      "p210": 7
     },
-    "total_target_pixels": 1434701,
-    "total_realized_pixels": 1434701,
-    "maximum_area_error_pp": 0.000123274,
-    "maximum_centroid_shift_pixels": 0.955960722,
+    "total_target_pixels": 10108296,
+    "total_realized_pixels": 10108296,
+    "maximum_area_error_pp": 0.00017507,
+    "maximum_centroid_shift_pixels": 1.957518881,
     "content_boundary_contacts": 0,
     "removed_previous_pixels": 0,
     "outside_mask_changes": 0,
@@ -532,11 +592,11 @@
     "failed_cases": 0,
     "missing_outputs": 0,
     "orphan_outputs": 0,
-    "total_generation_runtime_seconds": 14.7973844,
-    "mean_generation_runtime_seconds": 0.4227824114285714,
+    "total_generation_runtime_seconds": 79.997437,
+    "mean_generation_runtime_seconds": 0.3265201510204082,
     "completion_requirements": 27,
     "registered_project_artifacts": 6,
-    "total_project_registry_artifacts": 28
+    "total_project_registry_artifacts": 230
   },
   "validation_summary": {
     "consolidated": {
@@ -579,10 +639,10 @@
     }
   },
   "known_limitations": [
-    "The controlled subset contains works from only three institutions, with 60 percent sourced from The Metropolitan Museum of Art.",
+    "The controlled collection includes 32 recorded source labels, but the largest source contributes 109 of 300 paintings; source coverage is therefore broader but still concentrated.",
     "Restricting acquisition to public-domain or open-access material favors institutions and works with suitable digitization and rights metadata.",
-    "The five balanced visual categories are a purposive evaluation design and are not a population-representative sample of painting history.",
-    "Optional date, style, and medium metadata is concentrated in portrait and high-texture records and is absent from three categories.",
+    "The five balanced visual categories are a purposive evaluation design and are not independently validated art-historical styles or a population-representative sample of painting history.",
+    "Date or period, style or period, and medium are recorded for 268 of 300 paintings; visual category remains the complete grouping variable.",
     "Historical and geographic representation cannot be quantified reliably from the current fields and requires explicit enrichment before population-level claims.",
     "Dataset verification establishes technical and metadata suitability; it does not certify historical representativeness or conservation suitability.",
     "Images without embedded ICC profiles are processed under the configured sRGB assumption without pixel conversion.",
@@ -594,7 +654,7 @@
     "Technical preprocessing padding is never eligible for damage; all generated regions are restricted to the authoritative Notebook 02 content boundary.",
     "Configured family morphology supports controlled comparisons and must not be interpreted as an empirical prior for the distribution of real painting damage.",
     "Recorded mask-generation runtimes are specific to the current CPU, storage, Python environment, and system load.",
-    "The damage-size cohort contains five explicitly pinned paintings, one per controlled visual category; it is a matched sensitivity design rather than a population-representative artwork sample.",
+    "The damage-size cohort contains 35 explicitly pinned paintings, seven per controlled visual category; it is a focused matched sensitivity design rather than the complete 300-painting population.",
     "The experiment scales only the canonical loss_large mask family. Results cannot be interpreted as damage-family robustness.",
     "Constant white fill is a controlled synthetic corruption baseline and is not a claim about the appearance of historical paint loss or a conservation treatment recommendation.",
     "Morphology preservation is evaluated through operational geometric diagnostics and does not establish conservation realism.",
@@ -613,7 +673,7 @@
     "project paths registry"
   ],
   "applicable_dataset_scopes": [
-    "controlled_50"
+    "controlled_300"
   ],
   "applicable_experiment_scopes": [
     "damage_size_sensitivity"

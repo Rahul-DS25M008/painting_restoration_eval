@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.4"
+config_version: "1.1.5"
 
 evidence_coverage:
   authority:
@@ -56,8 +56,8 @@ evidence_coverage:
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "04"
-    next_eligible_notebook_id: "05"
+    completed_through_notebook_id: "05"
+    next_eligible_notebook_id: "06"
     completed_notebooks:
       - notebook_id: "01"
         stem: "01_dataset_verification"
@@ -185,6 +185,45 @@ evidence_coverage:
         baseline_first_250_damaged_images_byte_identical: true
         baseline_stable_scientific_fields_identical: true
         canonical_figure_updated_for_expanded_representative: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "05"
+        stem: "05_damage_size_sensitivity_dataset_generation"
+        output_root: "outputs/05_damage_size_sensitivity_dataset_generation"
+        manifest_path: "outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        damage_size_config_schema: "damage_size_sensitivity_config.v2"
+        damage_size_generator_version: "3.1.0"
+        damage_size_helper_version: "3.1.0"
+        painting_rows: 35
+        paintings_per_visual_category: 7
+        target_levels: 7
+        damage_size_case_rows: 245
+        mask_image_files: 245
+        damaged_image_files: 245
+        generation_audit_rows: 245
+        validation_rows: 96
+        artifact_records: 6
+        canonical_figures: 1
+        completion_requirements: 27
+        output_file_count: 496
+        baseline_output_root: "E:/outputs/05_damage_size_sensitivity_dataset_generation"
+        baseline_painting_rows: 5
+        baseline_damage_size_case_rows: 35
+        baseline_mask_image_files: 35
+        baseline_damaged_image_files: 35
+        baseline_generation_audit_rows: 35
+        baseline_validation_rows: 96
+        baseline_artifact_records: 6
+        baseline_canonical_figures: 1
+        baseline_completion_requirements: 27
+        baseline_output_file_count: 76
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_shared_mask_and_damaged_images_byte_identical: true
+        canonical_figure_updated_for_expanded_representatives: true
         unexplained_missing_or_reduced_evidence: false
 
   frozen_baseline:

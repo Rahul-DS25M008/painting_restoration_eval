@@ -442,6 +442,11 @@ Notebook 08 and later model/evidence stages.
 
 **Notebook:** `05_damage_size_sensitivity_dataset_generation.ipynb`  
 **Origin:** Existing Notebook 05  
+**Controlled-300 refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
+**Active validated coverage:** 35 paintings × 7 nested levels = 245 matched cases, mask PNGs, damaged PNGs, and audit rows; 96 validation rows; 27 pre-registry completion requirements\
+**Pilot comparison:** All 76 pilot artifact paths are retained; all 70 shared mask and damaged PNGs are byte-identical; the 55-column case and 67-column audit schemas are unchanged; output count increased from 76 to 496 through 420 additional generated images; the canonical figure changed only because its rule-selected representatives now use the expanded cohort\
 **Output root:** `outputs/05_damage_size_sensitivity_dataset_generation/`  
 **Depends on:** Notebooks 02 and 03
 

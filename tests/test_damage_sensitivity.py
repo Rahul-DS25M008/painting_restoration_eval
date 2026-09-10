@@ -61,7 +61,7 @@ class DamageSizeSensitivityTests(unittest.TestCase):
             [],
         )
         self.assertEqual(self.config["generator"]["version"], DAMAGE_SIZE_MODULE_VERSION)
-        self.assertEqual(self.config["expected"]["case_count"], 35)
+        self.assertEqual(self.config["expected"]["case_count"], 245)
 
     def test_damage_size_schemas_are_registered(self) -> None:
         self.assertIs(get_schema("damage_size_cases"), DAMAGE_SIZE_CASES_SCHEMA)
@@ -71,15 +71,21 @@ class DamageSizeSensitivityTests(unittest.TestCase):
         )
 
     def test_pinned_balanced_cohort_is_stable(self) -> None:
-        expected = ("p001", "p018", "p026", "p039", "p043")
+        expected = (
+            "p001", "p267", "p294", "p259", "p009", "p284", "p256",
+            "p018", "p157", "p178", "p198", "p181", "p173", "p199",
+            "p026", "p124", "p139", "p123", "p115", "p140", "p107",
+            "p039", "p100", "p089", "p077", "p093", "p052", "p073",
+            "p043", "p208", "p223", "p235", "p246", "p220", "p210",
+        )
         self.assertEqual(cohort_painting_ids(self.config), expected)
         selected = select_sensitivity_cohort(
             self.preprocessed, self.masks, self.config
         )
         self.assertEqual(tuple(selected["painting_id"]), expected)
-        self.assertEqual(len(selected), 5)
+        self.assertEqual(len(selected), 35)
         self.assertTrue(selected["base_mask_type"].eq("loss_large").all())
-        self.assertEqual(selected["base_mask_id"].nunique(), 5)
+        self.assertEqual(selected["base_mask_id"].nunique(), 35)
 
     def test_target_rounding_is_explicit_half_up(self) -> None:
         self.assertEqual(target_pixels_from_percentage(25, 2.0), 1)
@@ -129,11 +135,11 @@ class DamageSizeSensitivityTests(unittest.TestCase):
         self.assertEqual(result["absolute_pixel_error"], 0)
         self.assertTrue(result["nested_with_previous"])
 
-    def test_real_p039_smoke_series_meets_exact_area_and_nesting(self) -> None:
+    def test_real_p259_smoke_series_meets_exact_area_and_nesting(self) -> None:
         selected = select_sensitivity_cohort(
             self.preprocessed, self.masks, self.config
         ).set_index("painting_id")
-        row = selected.loc["p039"]
+        row = selected.loc["p259"]
         base_path = PROJECT_ROOT / str(row["base_mask_path"])
         with Image.open(base_path) as base:
             series = generate_nested_mask_series(
@@ -146,7 +152,7 @@ class DamageSizeSensitivityTests(unittest.TestCase):
                 levels=configured_levels(self.config),
                 global_seed=int(self.config["generator"]["global_seed"]),
                 seed_scheme_version=str(self.config["generator"]["seed_scheme_version"]),
-                painting_id="p039",
+                painting_id="p259",
                 base_mask_sha256=sha256_file(base_path),
                 maximum_iterations=int(self.config["generator"]["maximum_scale_iterations"]),
             )
@@ -239,8 +245,11 @@ class DamageSizeSensitivityTests(unittest.TestCase):
         changed["levels"][0]["target_percentage_content"] = 3.0
         self.assertTrue(validate_damage_size_config(changed))
         changed = copy.deepcopy(self.config)
-        changed["cohort"]["paintings"][1]["category"] = changed["cohort"]["paintings"][0]["category"]
-        self.assertIn("cohort categories must be unique", validate_damage_size_config(changed))
+        changed["cohort"]["paintings"][7]["category"] = changed["cohort"]["paintings"][0]["category"]
+        self.assertIn(
+            "every cohort category must match expected.paintings_per_category",
+            validate_damage_size_config(changed),
+        )
 
 
 if __name__ == "__main__":

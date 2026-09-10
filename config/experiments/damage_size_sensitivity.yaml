@@ -1,11 +1,11 @@
-config_schema_version: "damage_size_sensitivity_config.v1"
-config_version: "1.0.0"
+config_schema_version: "damage_size_sensitivity_config.v2"
+config_version: "2.0.0"
 
 dataset:
   dataset_id: "painting_restoration_eval"
-  dataset_version: "1.0.0"
-  dataset_scope: "controlled_50"
-  execution_profile: "controlled_50"
+  dataset_version: "2.0.0"
+  dataset_scope: "controlled_300"
+  execution_profile: "controlled_300"
   geometry_schema_version: "preprocessed_images.v1"
   mask_schema_version: "canonical_masks.v1"
   output_schema_version: "damage_size_cases.v1"
@@ -44,18 +44,84 @@ output:
   progression_figure_path: "figures/damage_size_progression.png"
 
 cohort:
-  selection_policy: "pinned_one_per_controlled_visual_category"
+  selection_policy: "pinned_balanced_seven_per_controlled_visual_category"
+  selection_version: "focused_35_balanced.v1"
+  selection_basis:
+    - "retain_one_pilot_anchor_per_category"
+    - "add_six_metadata_complete_paintings_per_category"
+    - "span_observed_content_area_fraction_with_deterministic_quantiles"
+    - "require_complete_notebook_02_and_notebook_03_handoff"
   base_mask_type: "loss_large"
   paintings:
     - painting_id: "p001"
       category: "portrait_figure"
+    - painting_id: "p267"
+      category: "portrait_figure"
+    - painting_id: "p294"
+      category: "portrait_figure"
+    - painting_id: "p259"
+      category: "portrait_figure"
+    - painting_id: "p009"
+      category: "portrait_figure"
+    - painting_id: "p284"
+      category: "portrait_figure"
+    - painting_id: "p256"
+      category: "portrait_figure"
     - painting_id: "p018"
+      category: "landscape_natural"
+    - painting_id: "p157"
+      category: "landscape_natural"
+    - painting_id: "p178"
+      category: "landscape_natural"
+    - painting_id: "p198"
+      category: "landscape_natural"
+    - painting_id: "p181"
+      category: "landscape_natural"
+    - painting_id: "p173"
+      category: "landscape_natural"
+    - painting_id: "p199"
       category: "landscape_natural"
     - painting_id: "p026"
       category: "architecture_structured"
+    - painting_id: "p124"
+      category: "architecture_structured"
+    - painting_id: "p139"
+      category: "architecture_structured"
+    - painting_id: "p123"
+      category: "architecture_structured"
+    - painting_id: "p115"
+      category: "architecture_structured"
+    - painting_id: "p140"
+      category: "architecture_structured"
+    - painting_id: "p107"
+      category: "architecture_structured"
     - painting_id: "p039"
       category: "abstraction_surrealism"
+    - painting_id: "p100"
+      category: "abstraction_surrealism"
+    - painting_id: "p089"
+      category: "abstraction_surrealism"
+    - painting_id: "p077"
+      category: "abstraction_surrealism"
+    - painting_id: "p093"
+      category: "abstraction_surrealism"
+    - painting_id: "p052"
+      category: "abstraction_surrealism"
+    - painting_id: "p073"
+      category: "abstraction_surrealism"
     - painting_id: "p043"
+      category: "high_texture_brushwork"
+    - painting_id: "p208"
+      category: "high_texture_brushwork"
+    - painting_id: "p223"
+      category: "high_texture_brushwork"
+    - painting_id: "p235"
+      category: "high_texture_brushwork"
+    - painting_id: "p246"
+      category: "high_texture_brushwork"
+    - painting_id: "p220"
+      category: "high_texture_brushwork"
+    - painting_id: "p210"
       category: "high_texture_brushwork"
 
 levels:
@@ -76,7 +142,7 @@ levels:
 
 generator:
   name: "damage_size_sensitivity_generator"
-  version: "3.0.0"
+  version: "3.1.0"
   seed_scheme_version: "damage_size_nested_seed.v1"
   global_seed: 20260505
   scaling_method: "isotropic_nearest_neighbor_about_base_centroid"
@@ -118,19 +184,22 @@ morphology:
   require_strict_nesting: true
 
 expected:
-  painting_count: 5
+  upstream_painting_count: 300
+  upstream_mask_count: 1500
+  painting_count: 35
   category_count: 5
+  paintings_per_category: 7
   base_mask_type_count: 1
   target_level_count: 7
-  case_count: 35
-  audit_row_count: 35
-  mask_file_count: 35
-  damaged_file_count: 35
+  case_count: 245
+  audit_row_count: 245
+  mask_file_count: 245
+  damaged_file_count: 245
   artifact_record_count: 6
-  total_output_file_count: 76
+  total_output_file_count: 496
 
 smoke:
-  painting_id: "p039"
+  painting_id: "p259"
   selection_reason: "median_content_area_within_pinned_cohort"
   target_level_count: 7
   repeat_count: 2
@@ -139,9 +208,9 @@ smoke:
 examples:
   selection_rule: "minimum_median_maximum_content_area_within_pinned_cohort"
   painting_ids:
-    - "p018"
-    - "p039"
-    - "p001"
+    - "p157"
+    - "p259"
+    - "p073"
   figure_dpi: 160
   columns:
     - "clean"

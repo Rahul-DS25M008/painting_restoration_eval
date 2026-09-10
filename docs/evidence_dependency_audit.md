@@ -37,8 +37,8 @@ and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
 **Controlled-300 transition review: 2026-09-10.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebooks 01–03 are
-completed Controlled-300 producers. Notebooks 04–36 remain historical
+dependency order for the approved 300-painting study. Notebooks 01–05 are
+completed Controlled-300 producers. Notebooks 06–36 remain historical
 Controlled-50 evidence until each producer is explicitly reopened, rerun,
 validated, baseline-compared, and committed.
 
@@ -82,6 +82,7 @@ metric validity and coverage passed.
 | 02 Image Preprocessing | `preprocessed_images.v1`, 768 × 768 clean PNG collection, preprocessing audit, canonical preview, validation and manifests | 300 clean images; 60 in each of 5 categories; 45 audit rows; 50/50 consolidated checks; 27/27 completion requirements | All 7 pilot artifact paths retained; all table schemas and artifact roles unchanged; clean-image and preprocessing-table counts increased from 50 to 300; the original 50 clean PNGs and canonical preview are byte-identical | Approved Controlled-300 geometry and clean-image producer for Notebooks 03–08 and later consumers |
 | 03 Canonical Mask Generation | `canonical_masks.v1`, 1,500 binary mask PNGs, normalized morphology audit, two canonical figures, protocol, validation and manifests | 300 paintings × 5 families = 1,500 masks; 300 masks per family; 105 audit rows; 50/50 consolidated checks; 24/24 completion requirements | All 258 pilot output paths retained; the 89-column canonical schema and all artifact roles are unchanged; all 250 pilot mask PNGs are byte-identical and their key scientific rows reconcile; the 1,250 additional PNGs are exactly the five configured masks for p051–p300 | Approved Controlled-300 canonical-mask producer for Notebooks 04–06, 08, and later region-aware consumers |
 | 04 Canonical Damaged Images | `canonical_damage_cases.v1`, 1,500 damaged RGB PNGs, normalized damage-integrity audit, canonical figure, validation and manifests | 300 paintings × 5 families = 1,500 cases; 300 cases per family; 1,500 audit rows; 60/60 consolidated checks; 28/28 final completion requirements | All 256 pilot output paths retained; the 34-column case and 40-column audit schemas are unchanged; all 250 pilot damaged PNGs are byte-identical; the 1,250 additional PNGs are exactly the five configured cases for p051–p300 | Approved Controlled-300 damaged-image producer for Notebook 08 and later restoration/evidence consumers |
+| 05 Damage-Size Sensitivity Dataset | `damage_size_cases.v1`, 245 nested mask PNGs, 245 damaged RGB PNGs, normalized generation audit, canonical progression figure, validation and manifests | 35 paintings × 7 levels = 245 matched cases; 35 cases per level; 245 audit rows; 96/96 consolidated checks; 27/27 pre-registry completion requirements | All 76 pilot artifact paths retained; the 55-column case and 67-column audit schemas and all artifact roles are unchanged; all 70 shared pilot mask/damaged PNGs are byte-identical; output count increased from 76 to 496 through 420 additional generated images; the canonical figure changed for expanded rule-selected representatives | Approved Controlled-300 damage-size producer for Notebooks 06, 08–12, 22, 25, 28, 32, and 33 |
 
 Notebook 01's final manifest records `controlled_300`, dataset version `2.0.0`,
 300 expected and observed artwork/image rows, 448 expected and observed audit
@@ -148,6 +149,28 @@ checksums, geometry, fill policy, pixel counts, and validation evidence remain
 unchanged. The canonical figure retains its path and role but now uses p085 as a
 deterministic representative from the expanded population, so figure-byte
 identity is neither expected nor claimed.
+
+Notebook 05's final manifest records `controlled_300`, dataset version `2.0.0`,
+damage-size configuration schema `damage_size_sensitivity_config.v2`, and
+generator/helper version `3.1.0`. Expected and observed counts reconcile at 35
+explicitly pinned paintings, seven balanced paintings per visual category,
+seven nested levels, 245 case rows, 245 mask PNGs, 245 damaged PNGs, 245 audit
+rows, 96 consolidated validation rows, six artifact records, one canonical
+figure, and 27 passed pre-registry completion requirements. The output root
+contains exactly 496 files, compared with 76 in the pilot. The 420-file increase
+is exactly 210 additional masks plus 210 corresponding damaged images. The
+read-only comparison copy is
+`E:/outputs/05_damage_size_sensitivity_dataset_generation/`.
+
+All 70 pilot-generated PNGs shared by the two runs are byte-identical. The
+55-column case schema, 67-column audit schema, 8-column validation schema,
+15-column artifact schema, all six artifact paths, seven target levels, and five
+original pilot anchors are preserved. For the 35 shared case rows, differences
+are confined to the intended dataset version/scope and declared generator or
+configuration versions. The progression figure retains its path and reporting
+role but now uses p157, p259, and p073 as the independently derived minimum,
+median, and maximum content-area representatives within the 35-painting cohort;
+therefore figure-byte identity is neither expected nor claimed.
 
 ## 3. Frozen notebook evidence ledger
 

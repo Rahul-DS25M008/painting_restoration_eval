@@ -9,7 +9,7 @@ import time
 from dataclasses import dataclass
 from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
-from typing import Any, Iterable, Mapping, Sequence
+from typing import Any, Callable, Iterable, Mapping, Sequence
 
 import numpy as np
 import pandas as pd
@@ -37,8 +37,8 @@ from .schemas import (
 )
 
 
-DAMAGE_SIZE_MODULE_VERSION = "3.0.0"
-DAMAGE_SIZE_CONFIG_SCHEMA_VERSION = "damage_size_sensitivity_config.v1"
+DAMAGE_SIZE_MODULE_VERSION = "3.1.0"
+DAMAGE_SIZE_CONFIG_SCHEMA_VERSION = "damage_size_sensitivity_config.v2"
 GENERATOR_NAME = "damage_size_sensitivity_generator"
 GENERATOR_VERSION = DAMAGE_SIZE_MODULE_VERSION
 DEFAULT_TARGET_PERCENTAGES = (2.0, 4.0, 6.0, 8.0, 10.0, 15.0, 20.0)
@@ -188,7 +188,7 @@ def validate_damage_size_config(config: Mapping[str, Any]) -> list[str]:
         if output.get(key) != expected_value:
             errors.append(f"output.{key} must equal {expected_value!r}")
 
-    if cohort.get("selection_policy") != "pinned_one_per_controlled_visual_category":
+    if cohort.get("selection_policy") != "pinned_balanced_seven_per_controlled_visual_category":
         errors.append("cohort.selection_policy is unsupported")
     if cohort.get("base_mask_type") != "loss_large":
         errors.append("cohort.base_mask_type must equal loss_large")
@@ -210,8 +210,7 @@ def validate_damage_size_config(config: Mapping[str, Any]) -> list[str]:
         categories.append(category)
     if len(set(painting_ids)) != len(painting_ids):
         errors.append("cohort painting identifiers must be unique")
-    if len(set(categories)) != len(categories):
-        errors.append("cohort categories must be unique")
+    category_counts = pd.Series(categories, dtype="string").value_counts().to_dict()
 
     levels = config.get("levels")
     if not isinstance(levels, list) or not levels:
@@ -305,12 +304,21 @@ def validate_damage_size_config(config: Mapping[str, Any]) -> list[str]:
             errors.append(f"morphology.{key} must be non-negative")
 
     painting_count = expected.get("painting_count")
+    paintings_per_category = expected.get("paintings_per_category")
     level_count = expected.get("target_level_count")
     case_count = expected.get("case_count")
+    if expected.get("upstream_painting_count") != 300:
+        errors.append("expected.upstream_painting_count must equal 300")
+    if expected.get("upstream_mask_count") != 1500:
+        errors.append("expected.upstream_mask_count must equal 1500")
     if painting_count != len(painting_ids):
         errors.append("expected.painting_count must match the pinned cohort")
     if expected.get("category_count") != len(set(categories)):
         errors.append("expected.category_count must match unique cohort categories")
+    if not isinstance(paintings_per_category, int) or paintings_per_category <= 0:
+        errors.append("expected.paintings_per_category must be a positive integer")
+    elif set(category_counts.values()) != {paintings_per_category}:
+        errors.append("every cohort category must match expected.paintings_per_category")
     if expected.get("base_mask_type_count") != 1:
         errors.append("expected.base_mask_type_count must equal 1")
     if level_count != len(level_ids):
@@ -322,19 +330,23 @@ def validate_damage_size_config(config: Mapping[str, Any]) -> list[str]:
             errors.append(f"expected.{key} must equal expected.case_count")
     if expected.get("artifact_record_count") != 6:
         errors.append("expected.artifact_record_count must equal 6")
-    if expected.get("total_output_file_count") != 76:
-        errors.append("expected.total_output_file_count must equal 76")
+    expected_total_files = 2 * int(case_count or 0) + int(expected.get("artifact_record_count") or 0)
+    if expected.get("total_output_file_count") != expected_total_files:
+        errors.append(
+            "expected.total_output_file_count must equal twice the case count "
+            "plus expected.artifact_record_count"
+        )
 
-    if smoke.get("painting_id") != "p039" or smoke.get("target_level_count") != len(level_ids):
-        errors.append("smoke contract must use p039 and all configured levels")
+    if smoke.get("painting_id") != "p259" or smoke.get("target_level_count") != len(level_ids):
+        errors.append("smoke contract must use p259 and all configured levels")
     if smoke.get("repeat_count") != 2 or smoke.get("persist_outputs") is not False:
         errors.append("smoke must repeat twice without persisting outputs")
     if examples.get("selection_rule") != (
         "minimum_median_maximum_content_area_within_pinned_cohort"
     ):
         errors.append("examples.selection_rule is unsupported")
-    if examples.get("painting_ids") != ["p018", "p039", "p001"]:
-        errors.append("examples.painting_ids must equal [p018, p039, p001]")
+    if examples.get("painting_ids") != ["p157", "p259", "p073"]:
+        errors.append("examples.painting_ids must equal [p157, p259, p073]")
     if examples.get("columns") != ["clean", *level_ids]:
         errors.append("examples.columns must contain clean followed by all levels")
     if not isinstance(examples.get("figure_dpi"), int) or examples["figure_dpi"] <= 0:
@@ -429,10 +441,14 @@ def validate_damage_size_handoff(
             errors.append(f"preprocessed {key} does not match configuration")
         if set(masks[key].astype(str)) != wanted:
             errors.append(f"masks {key} does not match configuration")
-    if len(preprocessed) != 50 or preprocessed["painting_id"].duplicated().any():
-        errors.append("preprocessed handoff must contain 50 unique paintings")
-    if len(masks) != 250:
-        errors.append("mask handoff must contain 250 rows")
+    upstream_painting_count = int(expected["upstream_painting_count"])
+    upstream_mask_count = int(expected["upstream_mask_count"])
+    if len(preprocessed) != upstream_painting_count or preprocessed["painting_id"].duplicated().any():
+        errors.append(
+            f"preprocessed handoff must contain {upstream_painting_count} unique paintings"
+        )
+    if len(masks) != upstream_mask_count:
+        errors.append(f"mask handoff must contain {upstream_mask_count} rows")
     if masks["case_id"].duplicated().any() or masks["mask_id"].duplicated().any():
         errors.append("mask handoff contains duplicate case_id or mask_id values")
 
@@ -905,8 +921,10 @@ def generate_damage_size_dataset(
     config: Mapping[str, Any],
     output_root: str | Path,
     project_root: str | Path | None = None,
+    progress_callback: Callable[[Mapping[str, Any]], None] | None = None,
+    progress_interval: int = 10,
 ) -> DamageSizeGenerationResult:
-    """Generate the complete 35-case Notebook 05 image handoff."""
+    """Generate the configured complete Notebook 05 image handoff."""
     errors = validate_damage_size_config(config)
     if errors:
         raise ValueError("Invalid damage-size configuration: " + "; ".join(errors))
@@ -925,9 +943,13 @@ def generate_damage_size_dataset(
         raise ValueError(f"Cohort table lacks required columns: {missing}")
     if len(cohort) != int(config["expected"]["painting_count"]):
         raise ValueError("Cohort row count does not match configuration")
+    if not isinstance(progress_interval, int) or progress_interval <= 0:
+        raise ValueError("progress_interval must be a positive integer")
 
     fill_color = _normalize_fill_color(config["generator"]["fill_color_rgb"])
     levels = configured_levels(config)
+    total_cases = len(cohort) * len(levels)
+    completed_cases = 0
     expected_paths: set[Path] = set()
     case_records: list[dict[str, Any]] = []
     generation_records: list[dict[str, Any]] = []
@@ -1040,6 +1062,19 @@ def generate_damage_size_dataset(
                     "pixels_added_from_previous": int(item["pixels_added_from_previous"]),
                 }
             )
+            completed_cases += 1
+            if progress_callback is not None and (
+                completed_cases % progress_interval == 0
+                or completed_cases == total_cases
+            ):
+                progress_callback(
+                    {
+                        "completed": completed_cases,
+                        "total": total_cases,
+                        "painting_id": str(row.painting_id),
+                        "level_id": level_id,
+                    }
+                )
     cases = pd.DataFrame(case_records, columns=DAMAGE_SIZE_CASES_COLUMNS)
     schema_result = validate_dataframe(cases, DAMAGE_SIZE_CASES_SCHEMA)
     if not schema_result.passed or schema_result.unexpected_columns:
