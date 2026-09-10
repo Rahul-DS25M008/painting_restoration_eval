@@ -384,6 +384,11 @@ Notebooks 04, 05, 06, 08, and all region-aware evidence stages.
 
 **Notebook:** `04_canonical_damaged_image_generation.ipynb`  
 **Origin:** Existing Notebook 04  
+**Controlled-300 refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
+**Active validated coverage:** 300 paintings × 5 families = 1,500 canonical cases and damaged PNGs; 1,500 audit rows; 60 validation rows; 28 final completion requirements\
+**Pilot comparison:** All 250 pilot damaged PNGs are byte-identical, the 34-column case and 40-column audit schemas are unchanged, and output count increased from 256 to 1,506 only through 1,250 additional damaged images\
 **Output root:** `outputs/04_canonical_damaged_image_generation/`  
 **Depends on:** Notebooks 02 and 03
 

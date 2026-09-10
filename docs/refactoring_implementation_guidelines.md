@@ -827,10 +827,11 @@ checksums, limitations, and downstream eligibility.
 | 01 Dataset Verification | Finished | Finished | Yes | 300 artworks; 448 audit rows | All pilot artifact paths and schemas retained |
 | 02 Image Preprocessing | Finished | Finished | Yes | 300 clean images and preprocessing rows | First 50 PNGs and preview byte-identical |
 | 03 Canonical Mask Generation | Finished | Finished | Yes | 1,500 masks across 300 paintings and five families | All 250 pilot masks byte-identical; schema unchanged |
+| 04 Canonical Damaged Images | Finished | Finished | Yes | 1,500 cases and damaged PNGs across 300 paintings and five families | All 250 pilot damaged PNGs byte-identical; case and audit schemas unchanged |
 
-Notebook 04 is the next eligible Controlled-300 producer. No later notebook may
-consume the active Notebook 03 evidence as part of a Controlled-300 chain until
-Notebook 04 and each intervening direct producer complete their own gates.
+Notebook 05 is the next eligible Controlled-300 producer. No later notebook may
+consume the active Notebook 04 evidence as part of a Controlled-300 chain until
+Notebook 05 and each intervening direct producer complete their own gates.
 
 Two governing files make downstream evidence availability explicit:
 

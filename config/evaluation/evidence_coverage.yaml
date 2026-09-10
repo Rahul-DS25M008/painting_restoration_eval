@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.3"
+config_version: "1.1.4"
 
 evidence_coverage:
   authority:
@@ -56,8 +56,8 @@ evidence_coverage:
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "03"
-    next_eligible_notebook_id: "04"
+    completed_through_notebook_id: "04"
+    next_eligible_notebook_id: "05"
     completed_notebooks:
       - notebook_id: "01"
         stem: "01_dataset_verification"
@@ -149,6 +149,43 @@ evidence_coverage:
         baseline_first_250_mask_images_byte_identical: true
         baseline_key_scientific_rows_identical: true
         unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "04"
+        stem: "04_canonical_damaged_image_generation"
+        output_root: "outputs/04_canonical_damaged_image_generation"
+        manifest_path: "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        canonical_damage_configuration_version: "1.1.0"
+        damage_helper_version: "3.1.0"
+        damage_generator_version: "3.0.0"
+        painting_rows: 300
+        mask_families: 5
+        canonical_case_rows: 1500
+        damaged_image_files: 1500
+        cases_per_family: 300
+        damage_audit_rows: 1500
+        validation_rows: 60
+        artifact_records: 5
+        canonical_figures: 1
+        final_completion_requirements: 28
+        output_file_count: 1506
+        baseline_output_root: "E:/outputs/04_canonical_damaged_image_generation"
+        baseline_painting_rows: 50
+        baseline_canonical_case_rows: 250
+        baseline_damaged_image_files: 250
+        baseline_damage_audit_rows: 250
+        baseline_validation_rows: 60
+        baseline_artifact_records: 5
+        baseline_canonical_figures: 1
+        baseline_output_file_count: 256
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_first_250_damaged_images_byte_identical: true
+        baseline_stable_scientific_fields_identical: true
+        canonical_figure_updated_for_expanded_representative: true
+        unexplained_missing_or_reduced_evidence: false
 
   frozen_baseline:
     through_notebook_id: "21"
@@ -215,6 +252,9 @@ evidence_coverage:
 
     - notebook_id: "04"
       stem: "04_canonical_damaged_image_generation"
+      record_scope: "pilot_50_historical_at_git_tag"
+      recovery_tag: "pilot-50-complete"
+      active_working_tree_replaced_by_controlled_300: true
       output_root: "outputs/04_canonical_damaged_image_generation"
       manifest_path: "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json"
       status: "frozen_supported"

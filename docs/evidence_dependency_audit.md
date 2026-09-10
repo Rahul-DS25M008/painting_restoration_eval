@@ -81,6 +81,7 @@ metric validity and coverage passed.
 | 01 Dataset Verification | `artworks.v1`, `dataset_audit.v1`, two canonical figures, validation and manifests | 300 artworks; 60 in each of 5 categories; 448 audit rows; 50/50 checks | All 7 pilot artifact paths retained; table schemas and artifact roles unchanged; population-dependent rows increased for the expanded dataset | Approved Controlled-300 producer for Notebook 02 |
 | 02 Image Preprocessing | `preprocessed_images.v1`, 768 × 768 clean PNG collection, preprocessing audit, canonical preview, validation and manifests | 300 clean images; 60 in each of 5 categories; 45 audit rows; 50/50 consolidated checks; 27/27 completion requirements | All 7 pilot artifact paths retained; all table schemas and artifact roles unchanged; clean-image and preprocessing-table counts increased from 50 to 300; the original 50 clean PNGs and canonical preview are byte-identical | Approved Controlled-300 geometry and clean-image producer for Notebooks 03–08 and later consumers |
 | 03 Canonical Mask Generation | `canonical_masks.v1`, 1,500 binary mask PNGs, normalized morphology audit, two canonical figures, protocol, validation and manifests | 300 paintings × 5 families = 1,500 masks; 300 masks per family; 105 audit rows; 50/50 consolidated checks; 24/24 completion requirements | All 258 pilot output paths retained; the 89-column canonical schema and all artifact roles are unchanged; all 250 pilot mask PNGs are byte-identical and their key scientific rows reconcile; the 1,250 additional PNGs are exactly the five configured masks for p051–p300 | Approved Controlled-300 canonical-mask producer for Notebooks 04–06, 08, and later region-aware consumers |
+| 04 Canonical Damaged Images | `canonical_damage_cases.v1`, 1,500 damaged RGB PNGs, normalized damage-integrity audit, canonical figure, validation and manifests | 300 paintings × 5 families = 1,500 cases; 300 cases per family; 1,500 audit rows; 60/60 consolidated checks; 28/28 final completion requirements | All 256 pilot output paths retained; the 34-column case and 40-column audit schemas are unchanged; all 250 pilot damaged PNGs are byte-identical; the 1,250 additional PNGs are exactly the five configured cases for p051–p300 | Approved Controlled-300 damaged-image producer for Notebook 08 and later restoration/evidence consumers |
 
 Notebook 01's final manifest records `controlled_300`, dataset version `2.0.0`,
 300 expected and observed artwork/image rows, 448 expected and observed audit
@@ -126,6 +127,27 @@ byte-identical to the pilot, and all compared pilot rows retain their mask IDs,
 paths, checksums, damaged-pixel evidence, seeds, retries, and generation attempts.
 The larger morphology figure now summarizes 300 masks per family, while the
 deterministic representative example is selected from the expanded population.
+
+Notebook 04's final manifest records `controlled_300`, dataset version `2.0.0`,
+canonical-damage configuration version `1.1.0`, damage helper version `3.1.0`,
+and stable pixel-generator version `3.0.0`. Expected and observed counts
+reconcile at 300 paintings, five mask families, 1,500 canonical case rows and
+damaged PNGs, 1,500 damage-audit rows, 60 consolidated validation rows, five
+artifact records, one canonical figure, and a passed completion gate. The output
+root contains exactly 1,506 files, compared with 256 in the pilot; the 1,250-file
+increase is wholly the added p051–p300 damaged-image population. All 1,500 saved
+images passed reload, format, geometry, checksum, outside-mask preservation,
+inside-mask fill, and changed-pixel reconciliation checks, with no missing,
+stale, orphaned, duplicate, temporary, or undeclared outputs. The read-only
+comparison copy is `E:/outputs/04_canonical_damaged_image_generation/`.
+
+All 250 pilot damaged PNGs are byte-identical to the active outputs. The pilot
+case and audit rows differ only in the intended dataset version/scope and, for
+the case table, configuration version; their stable identifiers, paths,
+checksums, geometry, fill policy, pixel counts, and validation evidence remain
+unchanged. The canonical figure retains its path and role but now uses p085 as a
+deterministic representative from the expanded population, so figure-byte
+identity is neither expected nor claimed.
 
 ## 3. Frozen notebook evidence ledger
 

@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-09T22:03:46.705921Z",
+  "updated_at_utc": "2026-09-10T06:43:14.901827Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -163,12 +163,12 @@
       "artifact_type": "audit_table",
       "artifact_role": "audit_reporting",
       "schema_version": "canonical_damage_audit.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "canonical_missing_region",
       "validation_status": "passed",
-      "row_count": 250,
+      "row_count": 1500,
       "file_count": 1,
-      "checksum": "cdbf8a9c8398aab1ebf9c33b3ea4124a0cc5e52adb97dc7d15d4e56605920529"
+      "checksum": "660970874dacded0b26bc04478933f1c256b4a858cdfbfa8beed56c647a6257b"
     },
     {
       "artifact_key": "damage.canonical_cases",
@@ -177,12 +177,12 @@
       "artifact_type": "dataset_table",
       "artifact_role": "primary_downstream",
       "schema_version": "canonical_damage_cases.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "canonical_missing_region",
       "validation_status": "passed",
-      "row_count": 250,
+      "row_count": 1500,
       "file_count": 1,
-      "checksum": "55111dcc874ae83c198e80da216bd634a5e1a54133c3c1da1213a3ff6f9a1755"
+      "checksum": "07fe2d7f28d89e95d947dcaf62f48208bf5dadd2b38d7ae4fe9698c8b9f8b496"
     },
     {
       "artifact_key": "damage.canonical_images",
@@ -191,12 +191,12 @@
       "artifact_type": "image_collection",
       "artifact_role": "primary_downstream",
       "schema_version": "canonical_damaged_image_collection.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "canonical_missing_region",
       "validation_status": "passed",
-      "row_count": 250,
-      "file_count": 250,
-      "checksum": "c691aea74932abf4ab7686d03ab3f553828ddc049844c20356ec9c6d1f293b88"
+      "row_count": 1500,
+      "file_count": 1500,
+      "checksum": "766a0852c9fb7123ff8ade8b7b41206791a47c1ae7ca0cabeea185baf9f991ae"
     },
     {
       "artifact_key": "damage.figure_examples",
@@ -205,12 +205,12 @@
       "artifact_type": "figure",
       "artifact_role": "qa_reporting",
       "schema_version": "figure.damage_examples.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "canonical_missing_region",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "d8d2ce87ec741f453d9c19481bb90dd8ab64594577e96d7fa06a89db1f8fff23"
+      "checksum": "f92d4ecc3f08a52825e098d47d13c709db3dfeef00d79c4998e800c0f85b1391"
     },
     {
       "artifact_key": "damage_size.cases",
@@ -2837,12 +2837,12 @@
       "artifact_type": "validation_table",
       "artifact_role": "validation",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "canonical_missing_region",
       "validation_status": "passed",
       "row_count": 60,
       "file_count": 1,
-      "checksum": "c85598dc73b55e2e4eaf3f4d0e339860564465dbe9d8104dee2d76176be0bf22"
+      "checksum": "1c8b497f43547b5822cdeb8eece97521e180783172a9030941287f4541c0be00"
     },
     {
       "artifact_key": "validation.05_damage_size_sensitivity_dataset_generation",

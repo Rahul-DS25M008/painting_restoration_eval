@@ -1,15 +1,15 @@
 {
   "run_schema_version": "inventory_run.v1",
   "inventory_schema_version": "project_file_inventory.v1",
-  "inventory_run_id": "inventory_20260909T225110Z_72bff7cf",
+  "inventory_run_id": "inventory_20260910T070710Z_b83c4aa3",
   "status": "completed",
-  "generated_at_utc": "2026-09-09T22:51:10.553133Z",
-  "completed_at_utc": "2026-09-09T22:51:17.621280Z",
-  "duration_seconds": 7.099,
+  "generated_at_utc": "2026-09-10T07:07:10.967822Z",
+  "completed_at_utc": "2026-09-10T07:07:18.236361Z",
+  "duration_seconds": 7.306,
   "repository_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
   "inventory_relative_path": "outputs/inventory/project_file_inventory.csv",
-  "inventory_sha256": "28fdd153ffaaa1e57c19bd45cb8f9f87f8d9947b6a81b2d3f942d93aacbcb657",
-  "inventory_size_bytes": 10950397,
+  "inventory_sha256": "c20c097fe5a4a4a9f21a88c1e1ad68832118c51c4c7b0a22c21a4763a03517d6",
+  "inventory_size_bytes": 11508505,
   "hash_configuration": {
     "mode": "partial",
     "algorithm": "sha256_first_n_bytes",
@@ -18,9 +18,9 @@
   "incremental_reuse": {
     "enabled": true,
     "cache_status": "verified",
-    "source_run_id": "inventory_20260909T223233Z_42d2ef3f",
-    "reused_file_count": 21096,
-    "inspected_file_count": 4
+    "source_run_id": "inventory_20260910T065744Z_c2bbd1ef",
+    "reused_file_count": 22349,
+    "inspected_file_count": 1
   },
   "scan_configuration": {
     "skipped_directory_names": [
@@ -42,13 +42,13 @@
     ]
   },
   "environment": {
-    "python_version": "3.12.14",
+    "python_version": "3.12.6",
     "python_implementation": "CPython",
     "platform": "Windows-11-10.0.26200-SP0"
   },
   "summary": {
-    "file_count": 21100,
-    "total_size_bytes": 6742566550,
+    "file_count": 22350,
+    "total_size_bytes": 7611001277,
     "read_error_file_count": 0,
     "read_error_count": 0,
     "counts_by_format": {
@@ -63,14 +63,14 @@
       "notebook": 37,
       "npz": 4,
       "pdf": 2,
-      "png": 20187,
+      "png": 21437,
       "python": 97,
       "text": 5,
       "yaml": 65
     },
     "counts_by_file_kind": {
       "clean_image": 300,
-      "damaged_image": 2952,
+      "damaged_image": 4202,
       "figure_image": 159,
       "html": 100,
       "image": 511,
@@ -100,7 +100,7 @@
       ".mjs": 2,
       ".npz": 4,
       ".pdf": 2,
-      ".png": 20187,
+      ".png": 21437,
       ".py": 97,
       ".txt": 5,
       ".yaml": 64,

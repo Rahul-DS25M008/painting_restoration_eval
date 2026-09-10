@@ -1,7 +1,7 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-09-09T22:03:46.705921Z`
+- Updated: `2026-09-10T06:43:14.901827Z`
 - Registered artifacts: 230
 
 | Artifact key | Producer | Relative path | Role | Validation |
