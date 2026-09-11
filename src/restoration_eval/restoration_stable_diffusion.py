@@ -33,7 +33,7 @@ from .schemas import (
 
 MODEL_NAME = "stable_diffusion_inpainting"
 RESTORATION_GENERATOR_NAME = "restoration_eval.restoration_stable_diffusion"
-RESTORATION_GENERATOR_VERSION = "5.1.0"
+RESTORATION_GENERATOR_VERSION = "5.2.0"
 CONFIG_SCHEMA_VERSION = "stable_diffusion_config.v1"
 ProgressCallback = Callable[[str], None]
 
@@ -333,7 +333,7 @@ def select_prompt_ablation_cases(worklist: pd.DataFrame, config: Mapping[str, An
 
 
 def select_uncertainty_cases(worklist: pd.DataFrame, config: Mapping[str, Any]) -> pd.DataFrame:
-    """Select two paintings per category and four canonical nonzero masks each."""
+    """Select the configured paintings per category and canonical mask families."""
     design = config["candidate_design"]
     mask_types = tuple(str(value) for value in design["uncertainty_mask_types"])
     canonical = worklist.loc[
@@ -406,7 +406,7 @@ def build_candidate_plan(
     uncertainty_cases: pd.DataFrame,
     config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Build the exact 1,010-row union of primary, prompt, and seed candidates."""
+    """Build the configured union of primary, prompt, and repeated-seed candidates."""
     prompt_ids = set(prompt_cases["case_id"])
     uncertainty_ids = set(uncertainty_cases["case_id"])
     primary_seed = int(config["candidate_design"]["primary_seed"])

@@ -854,6 +854,9 @@ restoration PNGs account for the complete scale-up difference.
 
 **Notebook:** `11_stable_diffusion_restoration.ipynb`  
 **Origin:** Existing Notebook 21; incorporates candidate generation required by uncertainty analysis  
+**Controlled-300 refactor status:** In progress; preparation layer validated\
+**Validation status:** Pending controlled-300 execution\
+**Completion gate passed:** No\
 **Output root:** `outputs/11_stable_diffusion_restoration/`  
 **Depends on:** Notebook 08
 **Supplemental contract:** `docs/notebook_11_scratch_prompt_ablation_contract.md`
@@ -872,7 +875,7 @@ Generate Stable Diffusion restoration candidates under fixed reproducible polici
 - Run the generic restoration prompt on the approved primary scope.
 - Run style/context-specific prompt variants only as a controlled prompt-ablation experiment.
 - Compare generic and style-specific prompts without selecting candidates using evaluation metrics.
-- Run a paired scratch-aware prompt ablation on all 50 canonical paintings using the four frozen uncertainty seeds.
+- Run a paired scratch-aware prompt ablation on all 300 canonical paintings using the four frozen uncertainty seeds.
 - Preserve both prompt arms for every painting-seed pair and reuse existing generic candidates rather than duplicate inference.
 - Treat paintings as the independent units and seeds as repeated observations in downstream inference.
 - Document thin-mask downsampling and exact-compositing residual lines as a Stable Diffusion limitation that prompting may mitigate but cannot be assumed to solve.
@@ -909,10 +912,25 @@ validation/checks.csv
 - Prompts/settings recorded.
 - Outputs reload and match expected geometry.
 - Failures and omissions are explicit.
-- Exactly 50 canonical scratch cases, four declared seeds, and two matched prompt arms.
-- Exactly 400 formal scratch outcomes with both prompts present for every painting-seed pair.
-- Exactly 1,330 total candidates, including 120 added generic seed controls and 200 scratch-aware candidates.
+- Exactly 300 canonical scratch cases, four declared seeds, and two matched prompt arms.
+- Exactly 2,400 formal scratch outcomes with both prompts present for every painting-seed pair.
+- Exactly 8,520 total candidate records: 2,620 primary, 4,460 prompt-context, and 1,440 uncertainty-extension rows.
+- Exactly 8,220 model-inference candidates after the 300 identity zero controls.
+- Exactly 720 added generic scratch seed controls and 1,200 scratch-aware candidates.
 - Both the frozen base configuration and supplementary scratch-prompt configuration are checksummed.
+
+### Approved controlled-300 target
+
+Preserve the six prompt variants, primary seed `2026`, uncertainty seeds
+`2026`–`2029`, fixed model settings, exact compositing, checkpoint/resume policy,
+and metric-independent selection rules. Build 2,620 primary records, select 815
+non-zero cases for the four existing metadata-context arms, select 12 paintings
+per visual category across the four canonical non-zero masks for 240 base
+uncertainty cases, and complete the two-arm scratch experiment for all 300
+paintings. This yields 8,520 records and 8,220 actual model inferences in N11.
+The 5,260 approved downstream analysis records exclude the 3,260 exploratory
+metadata-context candidates. Notebook 22 remains responsible for the separate
+735-candidate damage-size seed extension.
 
 ### Downstream consumers
 

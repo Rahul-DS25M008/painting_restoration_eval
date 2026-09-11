@@ -1,5 +1,5 @@
 config_schema_version: "stable_diffusion_scratch_prompt_ablation_config.v1"
-config_version: "1.0.0"
+config_version: "2.0.0"
 base_config_path: "config/experiments/stable_diffusion.yaml"
 
 effective_prompt_policy:
@@ -15,7 +15,7 @@ candidate_design:
   experiment_id: "canonical_missing_region"
   canonical_damage_type: "scratch_thin"
   case_id_suffix: "__scratch_thin"
-  painting_count: 50
+  painting_count: 300
   prompt_variant_ids:
     - "p00_generic"
     - "p05_scratch_aware"
@@ -31,22 +31,22 @@ candidate_design:
   prohibit_metric_selection: true
 
 expected:
-  scratch_case_count: 50
+  scratch_case_count: 300
   paintings_per_scratch_case: 1
   prompt_arm_count: 2
   seed_count: 4
-  paired_outcome_count: 400
-  existing_generic_outcome_count: 80
-  generic_extension_candidate_count: 120
-  damage_prompt_candidate_count: 200
-  additional_candidate_count: 320
-  effective_candidate_count: 1330
-  effective_model_inference_candidate_count: 1280
-  effective_restored_file_count: 1330
+  paired_outcome_count: 2400
+  existing_generic_outcome_count: 480
+  generic_extension_candidate_count: 720
+  damage_prompt_candidate_count: 1200
+  additional_candidate_count: 1920
+  effective_candidate_count: 8520
+  effective_model_inference_candidate_count: 8220
+  effective_restored_file_count: 8520
   effective_prompt_policy_row_count: 6
-  effective_prompt_ablation_design_row_count: 210
+  effective_prompt_ablation_design_row_count: 1355
   effective_artifact_record_count: 9
-  effective_total_output_file_count_without_failure_logs: 1340
+  effective_total_output_file_count_without_failure_logs: 8530
 
 smoke:
   paired_case_id: "canonical__p039__scratch_thin"
@@ -56,4 +56,4 @@ known_limitations:
   - "The scratch-aware prompt is a controlled semantic-conditioning treatment and does not change the model, mask, seed, scheduler, inference resolution, compositing policy, or any other generation setting."
   - "Thin scratch masks can lose or fragment spatial support during 512-pixel and latent-grid downsampling; prompting cannot be assumed to resolve that geometric limitation."
   - "Literal scratch terminology is concentrated in the negative prompt because text encoders may not reliably interpret negation in positive prompts."
-  - "The 200 painting-seed pairs are repeated observations nested within 50 paintings; downstream inference must not treat all seed-level pairs as independent paintings."
+  - "The 1,200 painting-seed pairs are repeated observations nested within 300 paintings; downstream inference must not treat all seed-level pairs as independent paintings."

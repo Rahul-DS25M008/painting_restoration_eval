@@ -1,8 +1,8 @@
 """Paired all-painting scratch-prompt extension for Notebook 11.
 
-This module deliberately wraps the frozen Stable Diffusion 1.5 preparation
-layer.  It preserves the existing 1,010 candidates and adds only the missing
-members of a 50-painting x 4-seed x 2-prompt paired scratch experiment.
+This module wraps the Stable Diffusion 1.5 preparation layer and adds only the
+missing members of the configured all-painting x four-seed x two-prompt paired
+scratch experiment.
 """
 
 from __future__ import annotations
@@ -37,7 +37,7 @@ from .schemas import (
 SCRATCH_PROMPT_EXTENSION_NAME = (
     "restoration_eval.restoration_stable_diffusion_scratch_prompt"
 )
-SCRATCH_PROMPT_EXTENSION_VERSION = "1.0.0"
+SCRATCH_PROMPT_EXTENSION_VERSION = "1.1.0"
 SCRATCH_PROMPT_CONFIG_SCHEMA_VERSION = (
     "stable_diffusion_scratch_prompt_ablation_config.v1"
 )
@@ -258,7 +258,7 @@ def build_effective_prompt_ablation_design(
     base_config: Mapping[str, Any],
     scratch_config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Extend the existing design table with 50 predeclared paired scratch rows."""
+    """Extend the existing design table with the declared paired scratch rows."""
     result = build_prompt_ablation_design(
         prompt_cases, uncertainty_cases, base_config
     ).copy()
@@ -312,7 +312,7 @@ def build_effective_candidate_plan(
     base_config: Mapping[str, Any],
     scratch_config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Preserve 1,010 candidates and add the 320 missing paired outcomes."""
+    """Preserve the base plan and add the missing paired scratch outcomes."""
     result = build_candidate_plan(
         worklist, prompt_cases, uncertainty_cases, base_config
     ).copy()
@@ -431,7 +431,7 @@ def build_effective_candidate_plan(
 def select_paired_scratch_matrix(
     candidates: pd.DataFrame, scratch_config: Mapping[str, Any]
 ) -> pd.DataFrame:
-    """Return and strictly validate the formal 400-outcome analysis matrix."""
+    """Return and strictly validate the configured paired analysis matrix."""
     design = scratch_config["candidate_design"]
     result = candidates.loc[
         candidates["experiment_id"].eq(str(design["experiment_id"]))

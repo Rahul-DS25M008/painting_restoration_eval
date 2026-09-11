@@ -1,9 +1,9 @@
 # Notebook 11 Supplement — Paired Scratch-Aware Prompt Ablation
 
-**Status:** executed and frozen; documentation reviewed 2026-09-04\
-**Refactor status:** Finished\
-**Validation status:** Finished\
-**Completion gate passed:** Yes\
+**Status:** controlled-300 preparation complete; execution pending\
+**Controlled-300 refactor status:** In progress\
+**Validation status:** Pending controlled-300 execution\
+**Completion gate passed:** No\
 **Parent notebook:** `11_stable_diffusion_restoration.ipynb`  
 **Parent output root:** `outputs/11_stable_diffusion_restoration/`  
 **Base configuration:** `config/experiments/stable_diffusion.yaml`  
@@ -15,10 +15,10 @@ This supplement extends, and does not replace, the Notebook 11 contract in
 
 This is the authored experimental contract, so it remains under `docs/`.
 Executed evidence belongs to the notebook-owned output root. The scope and
-expansion wording below describe the approved, completed redesign, not permission
-to regenerate or modify frozen Notebook 11 artifacts.
+expansion wording below defines the approved controlled-300 rerun. The completed
+50-painting evidence remains recoverable from Git tag `pilot-50-complete`.
 
-## Completion evidence
+## Pilot completion evidence
 
 The saved run `run_82ee1e1c09524a5da3e6fe93016d0627` completed on 2026-08-26
 with all 176 consolidated validation checks passed and no blocking or warning
@@ -37,8 +37,8 @@ Authoritative execution records:
 - [Candidate table](../outputs/11_stable_diffusion_restoration/data/candidates.csv)
 - [Consolidated validation](../outputs/11_stable_diffusion_restoration/validation/checks.csv)
 
-The later 105 damage-size seed candidates belong to Notebook 22, not this
-scratch-prompt supplement. They do not increase Notebook 11's historical count.
+The controlled-300 rerun does not absorb Notebook 22. Notebook 22 will own the
+735 additional seeds required to complete the 245 damage-size uncertainty groups.
 
 ## Purpose
 
@@ -62,30 +62,30 @@ report, validation, and manifest responsibilities remain intact.
 
 | Factor | Approved level |
 |---|---|
-| Paintings | all 50 controlled canonical paintings |
+| Paintings | all 300 controlled canonical paintings |
 | Damage | `scratch_thin` |
 | Prompt arms | `p00_generic`, `p05_scratch_aware` |
 | Seeds | `2026`, `2027`, `2028`, `2029` |
 | Outcomes per painting | 8 |
-| Painting-seed pairs | 200 |
-| Formal paired outcomes | 400 |
+| Painting-seed pairs | 1,200 |
+| Formal paired outcomes | 2,400 |
 
 The painting is the main independent experimental unit. Seed-level outcomes
 are repeated observations nested within paintings and must not be presented as
-200 independent paintings.
+1,200 independent paintings.
 
-The existing plan already supplies 80 members of the formal matrix: all 50
-primary generic candidates plus three generic extension seeds for the 10
-predeclared scratch cases in the uncertainty subset. The extension adds:
+The base controlled-300 plan supplies 480 members of the formal matrix: all 300
+primary generic candidates plus three generic extension seeds for the 60
+predeclared scratch cases in the canonical uncertainty subset. The extension adds:
 
-- 120 missing generic seed controls;
-- 200 scratch-aware candidates;
-- 320 candidates in total.
+- 720 missing generic seed controls;
+- 1,200 scratch-aware candidates;
+- 1,920 candidates in total.
 
-Notebook 11 therefore expands from 1,010 to 1,330 candidate rows and from 960
-to 1,280 model inferences. The 50 zero controls remain identity no-ops. The
+Notebook 11 therefore expands the 6,600-row base plan to 8,520 candidate rows
+and 8,220 model inferences. The 300 zero controls remain identity no-ops. The
 canonical artifact set remains unchanged and the expected output-file count is
-1,340 excluding retained failure logs.
+8,530 excluding retained failure logs.
 
 ## Prompt treatment
 
@@ -107,17 +107,17 @@ context and are not part of the formal two-arm contrast.
 The existing canonical outputs and artifact keys remain unchanged. The same
 tables are expanded as follows:
 
-- `data/candidates.csv`: 1,330 rows and prompt policy `sd15_prompt_policy.v3`;
+- `data/candidates.csv`: 8,520 rows and prompt policy `sd15_prompt_policy.v3`;
 - `data/prompt_policy.csv`: six rows, including `p05_scratch_aware`;
-- `metrics/prompt_ablation_design.csv`: 210 rows, including 50 predeclared
+- `metrics/prompt_ablation_design.csv`: 1,355 rows, including 300 predeclared
   all-painting scratch rows;
-- `images/restored/`: 1,330 candidate images;
+- `images/restored/`: 8,520 candidate images;
 - existing runtime, figure, report, manifest, artifact, and validation outputs
   updated in place.
 
 `stable_diffusion_candidates.v1` retains its canonical execution-role enum.
-The 120 additional generic repeated seeds are represented as
-`uncertainty_extension`; the 200 damage-aware prompt candidates are represented
+The 720 additional generic repeated seeds are represented as
+`uncertainty_extension`; the 1,200 damage-aware prompt candidates are represented
 as `prompt_context`. Their exact experimental identities are unambiguous through
 `prompt_variant_id` and
 `candidate_selection_policy=all_canonical_paintings_paired_non_metric.v1`.
@@ -127,11 +127,11 @@ The formal paired matrix is reconstructed using the stable key
 
 ## Validation gates
 
-- Exactly 50 canonical `scratch_thin` cases and 50 unique paintings.
+- Exactly 300 canonical `scratch_thin` cases and 300 unique paintings.
 - Exactly four declared seeds and two declared prompt arms per painting.
-- Exactly 400 unique `(case_id, seed, prompt_variant_id)` matrix rows.
-- Both prompt arms present for every one of the 200 painting-seed pairs.
-- Exactly 120 added generic controls and 200 added scratch-aware candidates.
+- Exactly 2,400 unique `(case_id, seed, prompt_variant_id)` matrix rows.
+- Both prompt arms present for every one of the 1,200 painting-seed pairs.
+- Exactly 720 added generic controls and 1,200 added scratch-aware candidates.
 - No zero controls, robustness masks, synthetic degradations, or other damage
   categories in the formal matrix.
 - Same input, mask, seed, model settings, and compositing policy inside each pair.

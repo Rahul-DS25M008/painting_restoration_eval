@@ -1,10 +1,10 @@
 config_schema_version: "stable_diffusion_config.v1"
-config_version: "1.1.0"
+config_version: "2.0.0"
 
 dataset:
   dataset_id: "painting_restoration_eval"
-  dataset_version: "1.0.0"
-  dataset_scope: "controlled_50"
+  dataset_version: "2.0.0"
+  dataset_scope: "controlled_300"
   experiment_id: "cross_experiment_stable_diffusion"
 
 inputs:
@@ -93,10 +93,10 @@ prompt_policy:
 candidate_design:
   primary_seed: 2026
   uncertainty_seeds: [2026, 2027, 2028, 2029]
-  prompt_ablation_case_count: 120
+  prompt_ablation_case_count: 815
   prompt_ablation_required_metadata: ["title", "artist", "category"]
   prompt_ablation_excluded_values: ["", "unknown", "nan"]
-  uncertainty_paintings_per_category: 2
+  uncertainty_paintings_per_category: 12
   uncertainty_mask_types:
     - "loss_large"
     - "loss_small"
@@ -118,24 +118,24 @@ execution:
   clear_cuda_cache_between_candidates: false
 
 expected:
-  artwork_count: 50
-  case_registry_rows: 525
-  model_eligibility_rows: 2100
-  eligible_case_count: 410
-  eligible_nonzero_case_count: 360
-  zero_control_case_count: 50
-  prompt_ablation_case_count: 120
-  prompt_context_candidate_count: 480
-  uncertainty_case_count: 40
-  uncertainty_extension_candidate_count: 120
-  primary_candidate_count: 410
-  candidate_count: 1010
-  model_inference_candidate_count: 960
-  restored_file_count: 1010
+  artwork_count: 300
+  case_registry_rows: 3425
+  model_eligibility_rows: 17125
+  eligible_case_count: 2620
+  eligible_nonzero_case_count: 2320
+  zero_control_case_count: 300
+  prompt_ablation_case_count: 815
+  prompt_context_candidate_count: 3260
+  uncertainty_case_count: 240
+  uncertainty_extension_candidate_count: 720
+  primary_candidate_count: 2620
+  candidate_count: 6600
+  model_inference_candidate_count: 6300
+  restored_file_count: 6600
   prompt_policy_row_count: 5
-  prompt_ablation_design_row_count: 160
+  prompt_ablation_design_row_count: 1055
   artifact_record_count: 9
-  total_output_file_count_without_failure_logs: 1020
+  total_output_file_count_without_failure_logs: 6610
 
 smoke:
   deterministic_case_id: "canonical__p039__loss_large"

@@ -55,18 +55,18 @@ class StableDiffusionRestorationTests(unittest.TestCase):
         self.assertEqual(model["retry_seed_policy"], "preserve_exact_seed")
         self.assertFalse(model["allow_cpu_fallback"])
         self.assertEqual(self.config["execution"]["progress_interval_candidates"], 10)
-        self.assertEqual(RESTORATION_GENERATOR_VERSION, "5.1.0")
+        self.assertEqual(RESTORATION_GENERATOR_VERSION, "5.2.0")
 
     def test_real_upstream_contract_builds_exact_worklist(self) -> None:
-        self.assertEqual(len(self.worklist), 410)
-        self.assertEqual(int(self.worklist["is_zero_control"].sum()), 50)
+        self.assertEqual(len(self.worklist), 2620)
+        self.assertEqual(int(self.worklist["is_zero_control"].sum()), 300)
         self.assertEqual(
             self.worklist.groupby("experiment_id").size().to_dict(),
             {
-                "canonical_missing_region": 250,
-                "damage_size_sensitivity": 35,
-                "mask_robustness": 75,
-                "synthetic_degradation": 50,
+                "canonical_missing_region": 1500,
+                "damage_size_sensitivity": 245,
+                "mask_robustness": 525,
+                "synthetic_degradation": 350,
             },
         )
 
@@ -76,18 +76,18 @@ class StableDiffusionRestorationTests(unittest.TestCase):
         uncertainty_cases = select_uncertainty_cases(self.worklist, self.config)
         design = build_prompt_ablation_design(prompt_cases, uncertainty_cases, self.config)
         self.assertEqual(len(policy), 5)
-        self.assertEqual(len(prompt_cases), 120)
+        self.assertEqual(len(prompt_cases), 815)
         self.assertFalse(prompt_cases["is_zero_control"].any())
         self.assertFalse(
             prompt_cases["artist"].astype(str).str.strip().str.lower().eq("unknown").any()
         )
-        self.assertEqual(len(uncertainty_cases), 40)
+        self.assertEqual(len(uncertainty_cases), 240)
         self.assertEqual(uncertainty_cases.groupby("category")["painting_id"].nunique().to_dict(), {
-            category: 2 for category in sorted(self.artworks["category"].unique())
+            category: 12 for category in sorted(self.artworks["category"].unique())
         })
-        self.assertEqual(len(design), 160)
+        self.assertEqual(len(design), 1055)
         self.assertEqual(design.groupby("design_component").size().to_dict(), {
-            "prompt_ablation": 120, "uncertainty": 40
+            "prompt_ablation": 815, "uncertainty": 240
         })
 
     def test_candidate_plan_is_exact_and_primary_is_never_metric_selected(self) -> None:
@@ -96,20 +96,20 @@ class StableDiffusionRestorationTests(unittest.TestCase):
         candidates = build_candidate_plan(
             self.worklist, prompt_cases, uncertainty_cases, self.config
         )
-        self.assertEqual(len(candidates), 1010)
+        self.assertEqual(len(candidates), 6600)
         self.assertTrue(candidates["candidate_id"].is_unique)
         self.assertEqual(candidates.groupby("execution_role").size().to_dict(), {
-            "primary": 410,
-            "prompt_context": 480,
-            "uncertainty_extension": 120,
+            "primary": 2620,
+            "prompt_context": 3260,
+            "uncertainty_extension": 720,
         })
         primary = candidates.loc[candidates["is_primary_candidate"]]
         self.assertEqual(set(primary["seed"]), {2026})
         self.assertEqual(set(primary["prompt_variant_id"]), {"p00_generic"})
         self.assertEqual(primary.groupby("case_id").size().max(), 1)
-        self.assertEqual(int(primary["case_id"].str.contains("zero_control").sum()), 50)
+        self.assertEqual(int(primary["case_id"].str.contains("zero_control").sum()), 300)
         inference_count = int((~primary["case_id"].str.contains("zero_control")).sum())
-        self.assertEqual(inference_count, 360)
+        self.assertEqual(inference_count, 2320)
         self.assertEqual(
             set(candidates["candidate_selection_policy"]),
             {"deterministic_hash_stratified_non_metric.v1"},

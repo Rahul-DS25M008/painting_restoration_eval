@@ -55,11 +55,11 @@ class StableDiffusionScratchPromptTests(unittest.TestCase):
         cls.scratch_cases = select_scratch_prompt_cases(cls.worklist, cls.scratch)
 
     def test_base_contract_remains_frozen_and_effective_counts_are_explicit(self) -> None:
-        self.assertEqual(self.base["expected"]["candidate_count"], 1010)
+        self.assertEqual(self.base["expected"]["candidate_count"], 6600)
         self.assertNotIn("scratch_prompt_ablation", self.base)
-        self.assertEqual(self.effective["expected"]["candidate_count"], 1330)
+        self.assertEqual(self.effective["expected"]["candidate_count"], 8520)
         self.assertEqual(
-            self.effective["expected"]["model_inference_candidate_count"], 1280
+            self.effective["expected"]["model_inference_candidate_count"], 8220
         )
         self.assertEqual(self.effective["prompt_policy"]["policy_id"], "sd15_prompt_policy.v3")
         self.assertEqual(
@@ -71,8 +71,8 @@ class StableDiffusionScratchPromptTests(unittest.TestCase):
         )
 
     def test_every_painting_has_one_canonical_scratch_case(self) -> None:
-        self.assertEqual(len(self.scratch_cases), 50)
-        self.assertEqual(self.scratch_cases["painting_id"].nunique(), 50)
+        self.assertEqual(len(self.scratch_cases), 300)
+        self.assertEqual(self.scratch_cases["painting_id"].nunique(), 300)
         self.assertTrue(
             self.scratch_cases["case_id"].str.endswith("__scratch_thin").all()
         )
@@ -92,7 +92,7 @@ class StableDiffusionScratchPromptTests(unittest.TestCase):
         self.assertIn("scratch", treatment["negative_prompt"].lower())
         self.assertEqual(treatment["metadata_fields"], '["damage_or_degradation_type"]')
 
-    def test_effective_design_adds_fifty_predeclared_paired_rows(self) -> None:
+    def test_effective_design_adds_all_predeclared_paired_rows(self) -> None:
         design = build_effective_prompt_ablation_design(
             self.prompt_cases,
             self.uncertainty_cases,
@@ -100,13 +100,13 @@ class StableDiffusionScratchPromptTests(unittest.TestCase):
             self.base,
             self.scratch,
         )
-        self.assertEqual(len(design), 210)
+        self.assertEqual(len(design), 1355)
         added = design.loc[
             design["selection_policy"].eq(
                 "all_canonical_paintings_paired_non_metric.v1"
             )
         ]
-        self.assertEqual(len(added), 50)
+        self.assertEqual(len(added), 300)
         self.assertTrue(added["prompt_variant_count"].eq(2).all())
         self.assertTrue(added["seed_count"].eq(4).all())
 
@@ -119,14 +119,14 @@ class StableDiffusionScratchPromptTests(unittest.TestCase):
             self.base,
             self.scratch,
         )
-        self.assertEqual(len(candidates), 1330)
+        self.assertEqual(len(candidates), 8520)
         self.assertTrue(candidates["candidate_id"].is_unique)
         self.assertEqual(
             candidates.groupby("execution_role").size().to_dict(),
             {
-                "primary": 410,
-                "prompt_context": 680,
-                "uncertainty_extension": 240,
+                "primary": 2620,
+                "prompt_context": 4460,
+                "uncertainty_extension": 1440,
             },
         )
         self.assertEqual(set(candidates["prompt_policy_id"]), {"sd15_prompt_policy.v3"})
@@ -134,10 +134,10 @@ class StableDiffusionScratchPromptTests(unittest.TestCase):
             set(candidates["generator_version"]), {SCRATCH_PROMPT_EXTENSION_VERSION}
         )
         matrix = select_paired_scratch_matrix(candidates, self.scratch)
-        self.assertEqual(len(matrix), 400)
+        self.assertEqual(len(matrix), 2400)
         self.assertEqual(
             matrix.groupby("prompt_variant_id").size().to_dict(),
-            {"p00_generic": 200, "p05_scratch_aware": 200},
+            {"p00_generic": 1200, "p05_scratch_aware": 1200},
         )
         self.assertTrue(matrix.groupby("case_id").size().eq(8).all())
         self.assertTrue(
@@ -151,10 +151,10 @@ class StableDiffusionScratchPromptTests(unittest.TestCase):
                 "all_canonical_paintings_paired_non_metric.v1"
             )
         ]
-        self.assertEqual(len(extension), 320)
+        self.assertEqual(len(extension), 1920)
         self.assertEqual(
             extension.groupby("prompt_variant_id").size().to_dict(),
-            {"p00_generic": 120, "p05_scratch_aware": 200},
+            {"p00_generic": 720, "p05_scratch_aware": 1200},
         )
 
 
