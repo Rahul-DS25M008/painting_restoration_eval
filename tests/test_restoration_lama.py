@@ -46,7 +46,7 @@ class LamaRestorationTests(unittest.TestCase):
     def test_configuration_freezes_approved_methodological_policies(self) -> None:
         model = self.config["model"]
         execution = self.config["execution"]
-        self.assertEqual(self.config["config_version"], "1.1.0")
+        self.assertEqual(self.config["config_version"], "2.0.0")
         self.assertEqual(model["model_id"], "lama")
         self.assertEqual(model["requested_device"], "cuda")
         self.assertFalse(model["allow_cpu_fallback"])
@@ -169,11 +169,11 @@ class LamaRestorationTests(unittest.TestCase):
         self.assertEqual(environment["NO_COLOR"], "1")
         self.assertEqual(environment["RICH_NO_COLOR"], "1")
 
-    def test_real_upstream_contract_builds_exact_410_case_worklist(self) -> None:
+    def test_real_upstream_contract_builds_exact_2620_case_worklist(self) -> None:
         cases = pd.read_csv(CASE_REGISTRY_PATH)
         eligibility = pd.read_csv(MODEL_ELIGIBILITY_PATH)
         worklist = build_eligible_case_worklist(cases, eligibility, self.config)
-        self.assertEqual(len(worklist), 410)
+        self.assertEqual(len(worklist), 2620)
         self.assertTrue(worklist["case_id"].is_unique)
         self.assertEqual(
             worklist.groupby("experiment_id").size().to_dict(),

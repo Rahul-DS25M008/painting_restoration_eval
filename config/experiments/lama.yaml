@@ -1,10 +1,10 @@
 config_schema_version: "lama_config.v1"
-config_version: "1.1.0"
+config_version: "2.0.0"
 
 dataset:
   dataset_id: "painting_restoration_eval"
-  dataset_version: "1.0.0"
-  dataset_scope: "controlled_50"
+  dataset_version: "2.0.0"
+  dataset_scope: "controlled_300"
   experiment_id: "cross_experiment_lama"
 
 inputs:
@@ -88,23 +88,23 @@ execution:
   retain_failure_logs: true
 
 expected:
-  case_registry_rows: 525
-  model_eligibility_rows: 2100
-  eligible_case_count: 410
+  case_registry_rows: 3425
+  model_eligibility_rows: 17125
+  eligible_case_count: 2620
   eligible_case_count_by_experiment:
-    canonical_missing_region: 250
-    damage_size_sensitivity: 35
-    mask_robustness: 75
-    synthetic_degradation: 50
-  model_inference_case_count: 360
-  zero_control_case_count: 50
-  unique_clean_image_count: 50
-  restored_file_count: 410
-  restorations_row_count: 410
+    canonical_missing_region: 1500
+    damage_size_sensitivity: 245
+    mask_robustness: 525
+    synthetic_degradation: 350
+  model_inference_case_count: 2320
+  zero_control_case_count: 300
+  unique_clean_image_count: 300
+  restored_file_count: 2620
+  restorations_row_count: 2620
   runtime_summary_row_count: 5
   representative_case_count: 8
   artifact_record_count: 5
-  total_output_file_count_without_failure_logs: 416
+  total_output_file_count_without_failure_logs: 2626
 
 smoke:
   deterministic_case_id: "canonical__p039__loss_large"
