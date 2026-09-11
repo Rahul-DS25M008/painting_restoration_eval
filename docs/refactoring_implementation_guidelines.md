@@ -830,12 +830,12 @@ checksums, limitations, and downstream eligibility.
 | 04 Canonical Damaged Images | Finished | Finished | Yes | 1,500 cases and damaged PNGs across 300 paintings and five families | All 250 pilot damaged PNGs byte-identical; case and audit schemas unchanged |
 | 05 Damage-Size Sensitivity Dataset | Finished | Finished | Yes | 35 paintings × 7 nested levels = 245 matched cases, masks, damaged images, and audit rows | All 70 shared pilot images byte-identical; schemas and artifact paths unchanged; figure updated for expanded representatives |
 | 06 Mask Robustness Dataset | Finished | Finished | Yes | 35 paintings × 3 families × 5 variants = 525 cases; 105 groups; 525 masks, damaged images, and audit rows | All pilot paths and schemas retained; 148/151 shared PNGs byte-identical; one `p039` `loss_small` variant and the figure updated for helper v3.1.1 morphology enforcement |
-| 07 Synthetic Degradation Dataset | Preparation complete; execution pending | Pending | No | Approved target: balanced 35-painting cohort; 1,050 single plus 105 combined cases = 1,155 cases, effect-support masks, degraded images, and audit rows | Operators, severity parameters, seed scheme, schemas, output paths, and the `p039` smoke/example scope are frozen for direct pilot comparison |
+| 07 Synthetic Degradation Dataset | Finished | Finished | Yes | Balanced 35-painting cohort; 1,050 single plus 105 combined cases = 1,155 cases, effect-support masks, degraded images, and audit rows | All 337 pilot paths retained; all 330 shared generated PNGs byte-identical; table schemas and 165 pilot case/audit IDs retained; output count increased from 337 to 2,317 through the expanded cohort |
 
-Notebook 07 is the active Controlled-300 producer. Its preparation layer is
-validated, but its notebook, outputs, and completion gate remain pending. No
-later notebook may consume Notebook 07 evidence as part of a Controlled-300
-chain until the notebook completes its own gate.
+Notebook 07 is a completed Controlled-300 producer. Notebook 08 is the next
+eligible notebook in dependency order. No later notebook may describe its
+historical Controlled-50 outputs as Controlled-300 evidence until that notebook
+has been explicitly reopened, rerun, validated, baseline-compared, and committed.
 
 Two governing files make downstream evidence availability explicit:
 

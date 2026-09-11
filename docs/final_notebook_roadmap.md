@@ -166,9 +166,9 @@ be obtained by multiplying a stale 50-painting literal.
 
 **Notebook:** `01_dataset_verification.ipynb`  
 **Origin:** Existing Notebook 01  
-**Controlled-300 refactor status:** Finished  
-**Validation status:** Finished  
-**Completion gate passed:** Yes  
+**Controlled-300 refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
 **Active validated coverage:** 300 artworks; 60 per visual category; 448 audit rows; 50 validation rows  
 **Pilot comparison:** All seven pilot output paths and table schemas retained; population-dependent evidence expanded without unexplained loss  
 **Output root:** `outputs/01_dataset_verification/`  
@@ -240,9 +240,9 @@ Notebooks 02, 26, 30, 33, 34, and 36.
 
 **Notebook:** `02_image_preprocessing.ipynb`  
 **Origin:** Existing Notebook 02  
-**Controlled-300 refactor status:** Finished  
-**Validation status:** Finished  
-**Completion gate passed:** Yes  
+**Controlled-300 refactor status:** Finished
+**Validation status:** Finished
+**Completion gate passed:** Yes
 **Active validated coverage:** 300 clean 768 × 768 RGB PNGs; 300 preprocessing rows; 45 audit rows; 50 validation rows  
 **Pilot comparison:** All 50 pilot clean PNGs and the canonical preview are byte-identical; output count increased from 56 to 306 only through the expanded clean-image population  
 **Output root:** `outputs/02_image_preprocessing/`  
@@ -568,20 +568,22 @@ Notebooks 08–12, 24, 25, 28, 32, and 33.
 ## 07 — Synthetic Degradation Dataset Generation
 
 **Notebook:** `07_synthetic_degradation_dataset_generation.ipynb`  
-**Origin:** Existing Notebook 07  
-**Controlled-300 refactor status:** Preparation complete; execution pending  
-**Validation status:** Pending  
-**Completion gate passed:** No  
-**Output root:** `outputs/07_synthetic_degradation_dataset_generation/`  
+**Origin:** Existing Notebook 07
+**Controlled-300 refactor status:** Finished
+**Validation status:** Finished
+**Completion gate passed:** Yes
+**Output root:** `outputs/07_synthetic_degradation_dataset_generation/`
 **Depends on:** Notebook 02
 
-**Approved Controlled-300 target:** Reuse the frozen balanced 35-painting cohort
+**Validated Controlled-300 result:** Reused the frozen balanced 35-painting cohort
 from Notebooks 05 and 06, with seven paintings per controlled visual category.
-Generate 1,050 single-degradation cases and 105 combined-degradation cases, for
+Generated 1,050 single-degradation cases and 105 combined-degradation cases, for
 1,155 normalized cases, effect-support masks, degraded images, and audit rows.
 The ten operator definitions, three ordered combinations, severity parameters,
 seed scheme, and representative `p039` smoke/example scope remain unchanged so
-the five pilot anchors stay directly comparable.
+the five pilot anchors stay directly comparable. All 337 pilot artifact paths
+remain present, all 330 shared generated PNGs are byte-identical, and the active
+output root contains exactly 2,317 validated files.
 
 ### Purpose
 

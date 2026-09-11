@@ -56,8 +56,8 @@ evidence_coverage:
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "06"
-    next_eligible_notebook_id: "07"
+    completed_through_notebook_id: "07"
+    next_eligible_notebook_id: "08"
     completed_notebooks:
       - notebook_id: "01"
         stem: "01_dataset_verification"
@@ -272,6 +272,57 @@ evidence_coverage:
         loss_small_variant_updated_for_family_morphology_enforcement: true
         canonical_figure_updated_for_corrected_variant: true
         unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "07"
+        stem: "07_synthetic_degradation_dataset_generation"
+        output_root: "outputs/07_synthetic_degradation_dataset_generation"
+        manifest_path: "outputs/07_synthetic_degradation_dataset_generation/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        synthetic_degradation_config_schema: "synthetic_degradation_config.v2"
+        synthetic_degradation_generator_version: "2.1.0"
+        synthetic_degradation_helper_version: "2.1.0"
+        painting_rows: 35
+        paintings_per_visual_category: 7
+        single_families: 10
+        combined_families: 3
+        severity_levels: 3
+        single_case_rows: 1050
+        combined_case_rows: 105
+        total_case_rows: 1155
+        effect_mask_files: 1155
+        degraded_image_files: 1155
+        generation_audit_rows: 1155
+        validation_rows: 66
+        artifact_records: 7
+        canonical_figures: 1
+        protocol_reports: 1
+        completion_requirements: 20
+        output_file_count: 2317
+        baseline_output_root: "E:/outputs/07_synthetic_degradation_dataset_generation"
+        baseline_painting_rows: 5
+        baseline_single_case_rows: 150
+        baseline_combined_case_rows: 15
+        baseline_total_case_rows: 165
+        baseline_effect_mask_files: 165
+        baseline_degraded_image_files: 165
+        baseline_generation_audit_rows: 165
+        baseline_validation_rows: 66
+        baseline_artifact_records: 7
+        baseline_canonical_figures: 1
+        baseline_protocol_reports: 1
+        baseline_completion_requirements: 20
+        baseline_output_file_count: 337
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_case_ids_retained: 165
+        baseline_audit_case_ids_retained: 165
+        baseline_shared_generated_png_files: 330
+        baseline_shared_generated_png_files_byte_identical: 330
+        canonical_figure_updated_for_expanded_representatives: true
+        protocol_updated_for_expanded_cohort: true
+        unexplained_missing_or_reduced_evidence: false
 
   frozen_baseline:
     through_notebook_id: "21"
@@ -379,6 +430,9 @@ evidence_coverage:
 
     - notebook_id: "07"
       stem: "07_synthetic_degradation_dataset_generation"
+      record_scope: "pilot_50_historical_at_git_tag"
+      recovery_tag: "pilot-50-complete"
+      active_working_tree_replaced_by_controlled_300: true
       output_root: "outputs/07_synthetic_degradation_dataset_generation"
       manifest_path: "outputs/07_synthetic_degradation_dataset_generation/manifests/run_manifest.json"
       status: "frozen_supported"
