@@ -1,15 +1,15 @@
 {
   "run_schema_version": "inventory_run.v1",
   "inventory_schema_version": "project_file_inventory.v1",
-  "inventory_run_id": "inventory_20260910T223321Z_e8386076",
+  "inventory_run_id": "inventory_20260911T000656Z_724d981b",
   "status": "completed",
-  "generated_at_utc": "2026-09-10T22:33:21.528329Z",
-  "completed_at_utc": "2026-09-10T22:33:37.330175Z",
-  "duration_seconds": 15.841,
+  "generated_at_utc": "2026-09-11T00:06:56.421594Z",
+  "completed_at_utc": "2026-09-11T00:07:04.058993Z",
+  "duration_seconds": 7.676,
   "repository_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
   "inventory_relative_path": "outputs/inventory/project_file_inventory.csv",
-  "inventory_sha256": "f6778e7dfdf0117dccdec9ef0bbfa17c4b86b5aad18b8e9cce733320d96d1ceb",
-  "inventory_size_bytes": 12164141,
+  "inventory_sha256": "e624ca56d856043a826fcfba08b9581e43abcb262bb455136847ce1dac9712fc",
+  "inventory_size_bytes": 12164483,
   "hash_configuration": {
     "mode": "partial",
     "algorithm": "sha256_first_n_bytes",
@@ -18,9 +18,9 @@
   "incremental_reuse": {
     "enabled": true,
     "cache_status": "verified",
-    "source_run_id": "inventory_20260910T124826Z_44727b55",
-    "reused_file_count": 22606,
-    "inspected_file_count": 1066
+    "source_run_id": "inventory_20260911T000347Z_bf3c8216",
+    "reused_file_count": 23672,
+    "inspected_file_count": 1
   },
   "scan_configuration": {
     "skipped_directory_names": [
@@ -42,18 +42,18 @@
     ]
   },
   "environment": {
-    "python_version": "3.12.6",
+    "python_version": "3.12.14",
     "python_implementation": "CPython",
     "platform": "Windows-11-10.0.26200-SP0"
   },
   "summary": {
-    "file_count": 23672,
-    "total_size_bytes": 8065289275,
+    "file_count": 23673,
+    "total_size_bytes": 8065299858,
     "read_error_file_count": 0,
     "read_error_count": 0,
     "counts_by_format": {
       "csv": 172,
-      "docx": 4,
+      "docx": 5,
       "html": 100,
       "jpeg": 300,
       "json": 82,
@@ -81,7 +81,7 @@
       "mask_image": 5465,
       "metric_table": 39,
       "notebook": 37,
-      "other": 17,
+      "other": 18,
       "python": 97,
       "restored_image": 12210,
       "summary_table": 5,
@@ -92,7 +92,7 @@
     },
     "counts_by_extension": {
       ".csv": 172,
-      ".docx": 4,
+      ".docx": 5,
       ".html": 100,
       ".ipynb": 37,
       ".jpg": 300,

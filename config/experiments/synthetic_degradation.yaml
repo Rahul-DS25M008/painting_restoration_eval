@@ -1,11 +1,11 @@
-config_schema_version: "synthetic_degradation_config.v1"
-config_version: "2.0.0"
+config_schema_version: "synthetic_degradation_config.v2"
+config_version: "2.1.0"
 
 dataset:
   dataset_id: "painting_restoration_eval"
-  dataset_version: "1.0.0"
-  dataset_scope: "controlled_50"
-  execution_profile: "controlled_50"
+  dataset_version: "2.0.0"
+  dataset_scope: "controlled_300"
+  execution_profile: "controlled_300"
   geometry_schema_version: "preprocessed_images.v1"
   output_schema_version: "synthetic_degradation_cases.v1"
   audit_schema_version: "synthetic_degradation_generation_audit.v1"
@@ -35,17 +35,82 @@ output:
   protocol_path: "reports/degradation_protocol.md"
 
 cohort:
-  selection_policy: "pinned_one_per_controlled_visual_category"
+  selection_policy: "pinned_balanced_seven_per_controlled_visual_category"
+  selection_version: "focused_35_balanced.v1"
+  selection_basis:
+    - "retain_one_pilot_anchor_per_category"
+    - "reuse_the_validated_notebook_05_and_06_balanced_cohort"
+    - "require_complete_notebook_02_handoff"
   paintings:
     - painting_id: "p001"
       category: "portrait_figure"
+    - painting_id: "p267"
+      category: "portrait_figure"
+    - painting_id: "p294"
+      category: "portrait_figure"
+    - painting_id: "p259"
+      category: "portrait_figure"
+    - painting_id: "p009"
+      category: "portrait_figure"
+    - painting_id: "p284"
+      category: "portrait_figure"
+    - painting_id: "p256"
+      category: "portrait_figure"
     - painting_id: "p018"
+      category: "landscape_natural"
+    - painting_id: "p157"
+      category: "landscape_natural"
+    - painting_id: "p178"
+      category: "landscape_natural"
+    - painting_id: "p198"
+      category: "landscape_natural"
+    - painting_id: "p181"
+      category: "landscape_natural"
+    - painting_id: "p173"
+      category: "landscape_natural"
+    - painting_id: "p199"
       category: "landscape_natural"
     - painting_id: "p026"
       category: "architecture_structured"
+    - painting_id: "p124"
+      category: "architecture_structured"
+    - painting_id: "p139"
+      category: "architecture_structured"
+    - painting_id: "p123"
+      category: "architecture_structured"
+    - painting_id: "p115"
+      category: "architecture_structured"
+    - painting_id: "p140"
+      category: "architecture_structured"
+    - painting_id: "p107"
+      category: "architecture_structured"
     - painting_id: "p039"
       category: "abstraction_surrealism"
+    - painting_id: "p100"
+      category: "abstraction_surrealism"
+    - painting_id: "p089"
+      category: "abstraction_surrealism"
+    - painting_id: "p077"
+      category: "abstraction_surrealism"
+    - painting_id: "p093"
+      category: "abstraction_surrealism"
+    - painting_id: "p052"
+      category: "abstraction_surrealism"
+    - painting_id: "p073"
+      category: "abstraction_surrealism"
     - painting_id: "p043"
+      category: "high_texture_brushwork"
+    - painting_id: "p208"
+      category: "high_texture_brushwork"
+    - painting_id: "p223"
+      category: "high_texture_brushwork"
+    - painting_id: "p235"
+      category: "high_texture_brushwork"
+    - painting_id: "p246"
+      category: "high_texture_brushwork"
+    - painting_id: "p220"
+      category: "high_texture_brushwork"
+    - painting_id: "p210"
       category: "high_texture_brushwork"
 
 severity_levels:
@@ -141,7 +206,7 @@ combined_degradations:
 
 generator:
   name: "synthetic_degradation_generator"
-  version: "2.0.0"
+  version: "2.1.0"
   seed_scheme_version: "synthetic_degradation_seed.v2"
   global_seed: 20260707
   target_width: 768
@@ -161,19 +226,21 @@ generator:
   stale_file_action: "remove"
 
 expected:
-  painting_count: 5
+  upstream_painting_count: 300
+  painting_count: 35
   category_count: 5
+  paintings_per_category: 7
   single_family_count: 10
   severity_count: 3
-  single_case_count: 150
+  single_case_count: 1050
   combined_family_count: 3
-  combined_case_count: 15
-  case_count: 165
-  audit_row_count: 165
-  effect_mask_file_count: 165
-  degraded_file_count: 165
+  combined_case_count: 105
+  case_count: 1155
+  audit_row_count: 1155
+  effect_mask_file_count: 1155
+  degraded_file_count: 1155
   artifact_record_count: 7
-  total_output_file_count: 337
+  total_output_file_count: 2317
 
 smoke:
   painting_id: "p039"

@@ -31,8 +31,8 @@ from .schemas import (
 )
 
 
-SYNTHETIC_DEGRADATION_MODULE_VERSION = "2.0.0"
-SYNTHETIC_DEGRADATION_CONFIG_SCHEMA_VERSION = "synthetic_degradation_config.v1"
+SYNTHETIC_DEGRADATION_MODULE_VERSION = "2.1.0"
+SYNTHETIC_DEGRADATION_CONFIG_SCHEMA_VERSION = "synthetic_degradation_config.v2"
 GENERATOR_NAME = "synthetic_degradation_generator"
 GENERATOR_VERSION = SYNTHETIC_DEGRADATION_MODULE_VERSION
 SEED_SCHEME_VERSION = "synthetic_degradation_seed.v2"
@@ -56,6 +56,21 @@ SUPPORTED_COMBINED_FAMILIES = (
 )
 SUPPORTED_SEVERITIES = ("mild", "moderate", "severe")
 SEVERITY_RANK = {name: index for index, name in enumerate(SUPPORTED_SEVERITIES, 1)}
+
+CONTROLLED_VISUAL_CATEGORIES = (
+    "portrait_figure",
+    "landscape_natural",
+    "architecture_structured",
+    "abstraction_surrealism",
+    "high_texture_brushwork",
+)
+CONTROLLED_300_COHORT = (
+    "p001", "p267", "p294", "p259", "p009", "p284", "p256",
+    "p018", "p157", "p178", "p198", "p181", "p173", "p199",
+    "p026", "p124", "p139", "p123", "p115", "p140", "p107",
+    "p039", "p100", "p089", "p077", "p093", "p052", "p073",
+    "p043", "p208", "p223", "p235", "p246", "p220", "p210",
+)
 
 
 @dataclass(frozen=True)
@@ -158,6 +173,10 @@ def validate_synthetic_degradation_config(config: Mapping[str, Any]) -> list[str
         errors.append(
             f"config_schema_version must equal {SYNTHETIC_DEGRADATION_CONFIG_SCHEMA_VERSION}"
         )
+    if config.get("config_version") != SYNTHETIC_DEGRADATION_MODULE_VERSION:
+        errors.append(
+            f"config_version must equal {SYNTHETIC_DEGRADATION_MODULE_VERSION}"
+        )
     try:
         dataset = _mapping(config, "dataset")
         inputs = _mapping(config, "inputs")
@@ -185,6 +204,16 @@ def validate_synthetic_degradation_config(config: Mapping[str, Any]) -> list[str
     ):
         if not str(dataset.get(key, "")).strip():
             errors.append(f"dataset.{key} must be non-empty")
+    dataset_contract = {
+        "dataset_id": "painting_restoration_eval",
+        "dataset_version": "2.0.0",
+        "dataset_scope": "controlled_300",
+        "execution_profile": "controlled_300",
+        "experiment_id": "synthetic_degradation",
+    }
+    for key, value in dataset_contract.items():
+        if dataset.get(key) != value:
+            errors.append(f"dataset.{key} must equal {value!r}")
 
     for key in (
         "geometry_path", "clean_images_path", "preprocessing_artifacts_path",
@@ -210,10 +239,17 @@ def validate_synthetic_degradation_config(config: Mapping[str, Any]) -> list[str
     paintings = cohort.get("paintings") if isinstance(cohort.get("paintings"), list) else []
     ids = [str(item.get("painting_id", "")) for item in paintings if isinstance(item, Mapping)]
     categories = [str(item.get("category", "")) for item in paintings if isinstance(item, Mapping)]
-    if ids != ["p001", "p018", "p026", "p039", "p043"]:
-        errors.append("cohort painting identifiers differ from the approved balanced-five cohort")
-    if len(set(categories)) != 5 or any(not value for value in categories):
-        errors.append("cohort must contain five unique non-empty categories")
+    if cohort.get("selection_policy") != "pinned_balanced_seven_per_controlled_visual_category":
+        errors.append(
+            "cohort.selection_policy must identify the approved balanced-35 policy"
+        )
+    if cohort.get("selection_version") != "focused_35_balanced.v1":
+        errors.append("cohort.selection_version must equal 'focused_35_balanced.v1'")
+    if tuple(ids) != CONTROLLED_300_COHORT:
+        errors.append("cohort painting identifiers differ from the approved balanced-35 cohort")
+    category_counts = pd.Series(categories, dtype="string").value_counts().to_dict()
+    if category_counts != {category: 7 for category in CONTROLLED_VISUAL_CATEGORIES}:
+        errors.append("cohort must contain exactly seven paintings in each controlled category")
 
     severities = config.get("severity_levels")
     severity_names = [
@@ -275,13 +311,15 @@ def validate_synthetic_degradation_config(config: Mapping[str, Any]) -> list[str
             errors.append(f"generator.{key} must equal {value!r}")
 
     count_contract = {
-        "painting_count": 5, "category_count": 5,
+        "upstream_painting_count": 300,
+        "painting_count": 35, "category_count": 5,
+        "paintings_per_category": 7,
         "single_family_count": 10, "severity_count": 3,
-        "single_case_count": 150, "combined_family_count": 3,
-        "combined_case_count": 15, "case_count": 165,
-        "audit_row_count": 165, "effect_mask_file_count": 165,
-        "degraded_file_count": 165, "artifact_record_count": 7,
-        "total_output_file_count": 337,
+        "single_case_count": 1050, "combined_family_count": 3,
+        "combined_case_count": 105, "case_count": 1155,
+        "audit_row_count": 1155, "effect_mask_file_count": 1155,
+        "degraded_file_count": 1155, "artifact_record_count": 7,
+        "total_output_file_count": 2317,
     }
     for key, value in count_contract.items():
         if expected.get(key) != value:
@@ -354,8 +392,15 @@ def validate_synthetic_degradation_handoff(
     for key in ("dataset_id", "dataset_version", "dataset_scope"):
         if set(preprocessed[key].astype(str)) != {str(dataset[key])}:
             errors.append(f"preprocessed {key} does not match configuration")
-    if len(preprocessed) != 50 or preprocessed["painting_id"].duplicated().any():
-        errors.append("preprocessed handoff must contain 50 unique paintings")
+    upstream_painting_count = int(config["expected"]["upstream_painting_count"])
+    if (
+        len(preprocessed) != upstream_painting_count
+        or preprocessed["painting_id"].duplicated().any()
+    ):
+        errors.append(
+            "preprocessed handoff must contain "
+            f"{upstream_painting_count} unique paintings"
+        )
     wanted = set(cohort_painting_ids(config))
     available = set(preprocessed["painting_id"].astype(str))
     if not wanted.issubset(available):
@@ -394,7 +439,7 @@ def select_synthetic_degradation_cohort(
 
 
 def build_degradation_design(config: Mapping[str, Any]) -> pd.DataFrame:
-    """Build the normalized deterministic 165-case design without touching files."""
+    """Build the normalized deterministic 1,155-case design without touching files."""
     errors = validate_synthetic_degradation_config(config)
     if errors:
         raise ValueError("Invalid synthetic-degradation configuration: " + "; ".join(errors))

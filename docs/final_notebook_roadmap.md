@@ -569,8 +569,19 @@ Notebooks 08–12, 24, 25, 28, 32, and 33.
 
 **Notebook:** `07_synthetic_degradation_dataset_generation.ipynb`  
 **Origin:** Existing Notebook 07  
+**Controlled-300 refactor status:** Preparation complete; execution pending  
+**Validation status:** Pending  
+**Completion gate passed:** No  
 **Output root:** `outputs/07_synthetic_degradation_dataset_generation/`  
 **Depends on:** Notebook 02
+
+**Approved Controlled-300 target:** Reuse the frozen balanced 35-painting cohort
+from Notebooks 05 and 06, with seven paintings per controlled visual category.
+Generate 1,050 single-degradation cases and 105 combined-degradation cases, for
+1,155 normalized cases, effect-support masks, degraded images, and audit rows.
+The ten operator definitions, three ordered combinations, severity parameters,
+seed scheme, and representative `p039` smoke/example scope remain unchanged so
+the five pilot anchors stay directly comparable.
 
 ### Purpose
 

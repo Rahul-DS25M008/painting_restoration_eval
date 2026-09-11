@@ -22,6 +22,7 @@ outputs/logs/
 *.log
 *.tmp
 *.bak
+~$*
 
 # Optional: ignore generated heavy outputs if the repo becomes too large.
 # For the current reproducible pilot checkpoint, these are intentionally tracked unless file size becomes annoying.

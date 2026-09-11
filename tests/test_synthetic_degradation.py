@@ -46,10 +46,13 @@ class SyntheticDegradationPreparationTests(unittest.TestCase):
     def test_configuration_counts_and_schema_registry(self) -> None:
         self.assertEqual(validate_synthetic_degradation_config(self.config), [])
         expected = self.config["expected"]
-        self.assertEqual(expected["single_case_count"], 150)
-        self.assertEqual(expected["combined_case_count"], 15)
-        self.assertEqual(expected["case_count"], 165)
-        self.assertEqual(expected["total_output_file_count"], 337)
+        self.assertEqual(expected["upstream_painting_count"], 300)
+        self.assertEqual(expected["painting_count"], 35)
+        self.assertEqual(expected["paintings_per_category"], 7)
+        self.assertEqual(expected["single_case_count"], 1050)
+        self.assertEqual(expected["combined_case_count"], 105)
+        self.assertEqual(expected["case_count"], 1155)
+        self.assertEqual(expected["total_output_file_count"], 2317)
         self.assertEqual(
             get_schema("synthetic_degradation_cases").version,
             "synthetic_degradation_cases.v1",
@@ -75,13 +78,20 @@ class SyntheticDegradationPreparationTests(unittest.TestCase):
         )
         self.assertEqual(
             tuple(selected["painting_id"]),
-            ("p001", "p018", "p026", "p039", "p043"),
+            (
+                "p001", "p267", "p294", "p259", "p009", "p284", "p256",
+                "p018", "p157", "p178", "p198", "p181", "p173", "p199",
+                "p026", "p124", "p139", "p123", "p115", "p140", "p107",
+                "p039", "p100", "p089", "p077", "p093", "p052", "p073",
+                "p043", "p208", "p223", "p235", "p246", "p220", "p210",
+            ),
         )
         self.assertEqual(selected["category"].nunique(), 5)
+        self.assertTrue(selected.groupby("category").size().eq(7).all())
 
     def test_design_is_complete_normalized_and_unique(self) -> None:
         design = build_degradation_design(self.config)
-        self.assertEqual(len(design), 165)
+        self.assertEqual(len(design), 1155)
         self.assertFalse(design["case_id"].duplicated().any())
         self.assertEqual(
             tuple(design.loc[~design["is_combined"], "degradation_family"].drop_duplicates()),
@@ -93,8 +103,8 @@ class SyntheticDegradationPreparationTests(unittest.TestCase):
         )
         singles = design.loc[~design["is_combined"]]
         combinations = design.loc[design["is_combined"]]
-        self.assertEqual(len(singles), 150)
-        self.assertEqual(len(combinations), 15)
+        self.assertEqual(len(singles), 1050)
+        self.assertEqual(len(combinations), 105)
         self.assertTrue(combinations["severity"].eq("moderate").all())
         self.assertTrue(
             singles.groupby(["painting_id", "degradation_family"])["severity"].nunique().eq(3).all()
@@ -172,9 +182,9 @@ class SyntheticDegradationPreparationTests(unittest.TestCase):
 
     def test_invalid_contract_changes_are_rejected(self) -> None:
         changed = copy.deepcopy(self.config)
-        changed["expected"]["case_count"] = 164
+        changed["expected"]["case_count"] = 1154
         self.assertIn(
-            "expected.case_count must equal 165",
+            "expected.case_count must equal 1155",
             validate_synthetic_degradation_config(changed),
         )
         changed = copy.deepcopy(self.config)
