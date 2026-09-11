@@ -37,8 +37,8 @@ and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
 **Controlled-300 transition review: 2026-09-11.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebooks 01–07 are
-completed Controlled-300 producers. Notebooks 08–36 remain historical
+dependency order for the approved 300-painting study. Notebooks 01–10 are
+completed Controlled-300 producers. Notebooks 11–36 remain historical
 Controlled-50 evidence until each producer is explicitly reopened, rerun,
 validated, baseline-compared, and committed.
 
@@ -87,6 +87,7 @@ metric validity and coverage passed.
 | 07 Synthetic Degradation Dataset | `synthetic_degradation_cases.v1`, 1,155 grayscale effect-support PNGs, 1,155 degraded RGB PNGs, normalized generation audit, canonical figure, protocol, validation and manifests | 35 paintings × 33 degradations = 1,155 cases; 1,050 single and 105 combined cases; 66/66 consolidated checks; 20/20 completion requirements | All 337 pilot paths retained; the 65-column case, 34-column audit, 8-column validation, and 15-column artifact schemas are unchanged; all 330 shared generated PNGs are byte-identical; all 165 pilot case and audit IDs are retained; output count increased from 337 to 2,317 through 1,980 additional generated images | Approved Controlled-300 procedural-degradation producer for Notebooks 08–12, 17, 20, 24, 25, 28, 32, and 33 |
 | 08 Experiment Contracts and Region Policy | `case_registry.v1`, `model_eligibility.v1`, `region_policy.v1`, five-schema registry, canonical region figure, methodology report, validation and manifests | 3,425 cases; 17,125 case-model decisions across 5 methods; 2,620 eligible cases per method; 143 policy rows; 101/101 scientific checks; 20/20 completion requirements | All 9 pilot paths and table schemas retained; all 525 pilot case rows retained with only `dataset_scope` intentionally changed; all 2,100 shared eligibility rows unchanged; region policy byte-identical; schema definitions unchanged while producer version advances to 1.1.0 | Approved Controlled-300 contract, routing, and region-policy producer for Notebooks 09–36 and 12A |
 | 09 OpenCV Telea Restoration | `restorations.v1`, 2,620 restored RGB PNGs, five-row runtime summary, eight-case representative figure, validation and manifests | 2,620 eligible cases: 1,500 canonical, 245 damage-size, 525 mask-robustness, and 350 eligible synthetic-degradation cases; 300 zero controls; 2,320 nonzero cases; 72/72 scientific checks; 15/15 roadmap requirements; 2,626 canonical files | All 416 pilot paths and CSV schemas retained; 409/410 shared restoration PNGs byte-identical; sole changed shared PNG is the inherited Notebook 06 `p039` `loss_small` fourth-variant morphology correction; representative figure byte-identical; 2,210 additional restored images explain the full file-count increase | Approved Controlled-300 deterministic Telea producer for Notebooks 13–17 and later comparison, reporting, and dashboard stages |
+| 10 LaMa Restoration | `restorations.v1`, 2,620 restored RGB PNGs, five-row runtime summary, eight-case representative figure, validation and manifests | 2,620 eligible cases: 1,500 canonical, 245 damage-size, 525 mask-robustness, and 350 eligible synthetic-degradation cases; 300 zero controls; 2,320 nonzero cases; 80/80 scientific checks; 16/16 roadmap requirements; 2,626 canonical files | All 416 pilot paths and CSV schemas retained; 409/410 shared restoration PNGs byte-identical; sole changed shared PNG is the inherited Notebook 06 `p039` `loss_small` fourth-variant morphology correction; representative figure byte-identical; 2,210 additional restored images explain the full file-count increase | Approved Controlled-300 deterministic learned baseline for Notebooks 13–17 and later comparison, reporting, and dashboard stages; no generative uncertainty |
 
 Notebook 01's final manifest records `controlled_300`, dataset version `2.0.0`,
 300 expected and observed artwork/image rows, 448 expected and observed audit
@@ -263,6 +264,30 @@ that difference is inherited from Notebook 06 helper v3.1.1's documented
 morphology correction. The remaining 2,210 added files are exactly the
 additional Controlled-300 restoration images, so there is no unexplained loss
 or reduction of pilot evidence.
+
+Notebook 10's final manifest records `controlled_300`, dataset version `2.0.0`,
+LaMa configuration version `2.0.0`, restoration helper version `3.1.0`, and
+IOPaint version `1.6.0`. Expected and observed counts reconcile at 2,620 eligible
+and completed restorations: 1,500 canonical, 245 damage-size, 525 mask-robustness,
+and 350 eligible synthetic-degradation cases. The population contains 300 exact
+identity/no-op controls and 2,320 nonzero masks. All 80 consolidated scientific
+checks, seven persistence checks, five manifest-handoff checks, four registry
+checks, eight final checks, and 16 roadmap requirements passed. The output root
+contains 2,620 restored images and six canonical non-image artifacts, for 2,626
+non-empty canonical files and no remaining work files. Full execution took
+4,594.223 seconds (about 76.6 minutes); the normalized allocated runtime evidence
+totals 3,570.487 seconds. Both are environment-specific rather than universal
+speed benchmarks. The read-only comparison copy is
+`E:/outputs/10_lama_restoration/`.
+
+All 416 pilot paths are retained, all four CSV schemas are unchanged, and the
+representative figure is byte-identical. Of the 410 shared restoration PNGs, 409
+are byte-identical. The sole changed path is
+`images/restored/mask_robustness/mask_robustness__p039__loss_small__target_04p5pct__variant_04.png`;
+that difference is inherited from Notebook 06 helper v3.1.1's documented
+morphology correction. The remaining 2,210 added files are exactly the additional
+Controlled-300 restoration images, so there is no unexplained loss or reduction
+of pilot evidence.
 
 ## 3. Frozen notebook evidence ledger
 

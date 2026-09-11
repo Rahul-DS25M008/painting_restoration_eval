@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-11T12:29:01.156593Z",
+  "updated_at_utc": "2026-09-11T18:12:16.586688Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -1325,7 +1325,7 @@
       "artifact_type": "figure",
       "artifact_role": "representative_visual_evidence",
       "schema_version": "figure.restoration_examples.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_lama",
       "validation_status": "passed",
       "row_count": 8,
@@ -1339,12 +1339,12 @@
       "artifact_type": "table",
       "artifact_role": "primary_restoration_records",
       "schema_version": "restorations.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_lama",
       "validation_status": "passed",
-      "row_count": 410,
+      "row_count": 2620,
       "file_count": 1,
-      "checksum": "327ea28eedfb5ba7056b032ae76a5ee08252a365562576dd59775e17e23b5cfc"
+      "checksum": "dbdae52bf025fd57da6c25bdd52fb0e62439a01dfdc3eecb27d11164ece0d62c"
     },
     {
       "artifact_key": "lama.restored_images",
@@ -1353,12 +1353,12 @@
       "artifact_type": "image_directory",
       "artifact_role": "primary_restored_images",
       "schema_version": "restored_images.lama.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_lama",
       "validation_status": "passed",
-      "row_count": 410,
-      "file_count": 410,
-      "checksum": "5b49e40c4ab3fb93ea547ace6adf24da09283d1d2d11892d2a8392ec14673205"
+      "row_count": 2620,
+      "file_count": 2620,
+      "checksum": "7cc4cb0255603871cbae410f664250cc4f4cc96742760dfc5ea4eb37abb789d9"
     },
     {
       "artifact_key": "lama.runtime_summary",
@@ -1367,12 +1367,12 @@
       "artifact_type": "table",
       "artifact_role": "runtime_evidence",
       "schema_version": "restoration_runtime_summary.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_lama",
       "validation_status": "passed",
       "row_count": 5,
       "file_count": 1,
-      "checksum": "dcbf17cca2e1ffceb18637dba75c884f789e1aa2dbe4d51ef83023a516c69197"
+      "checksum": "e4ff2c7273671691e4a8dfaecf7d9c64008d8d61d6946d5e2bfecd9775485142"
     },
     {
       "artifact_key": "local_consistency.candidate_maps",
@@ -2921,12 +2921,12 @@
       "artifact_type": "table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_lama",
       "validation_status": "passed",
       "row_count": 80,
       "file_count": 1,
-      "checksum": "b02928fe7c3e566a1f19310614ec365304e9ca201c9a8336a5c394e6bfeadf7e"
+      "checksum": "fc721a2fc7fcccd5fe1b6e9991abc8067acef83981ec4e1e59d7a2843bd6e83d"
     },
     {
       "artifact_key": "validation.11_stable_diffusion_restoration",

@@ -829,6 +829,25 @@ logs/<retained failure logs>
 
 Notebooks 13–17 and all later comparison/reporting stages.
 
+### Controlled-300 completion record
+
+Notebook 10 is complete for `controlled_300`. It produced 2,620 normalized LaMa
+records and restored RGB PNGs across 1,500 canonical, 245 damage-size, 525
+mask-robustness, and 350 eligible synthetic-degradation cases. The population
+contains 300 exact identity/no-op controls and 2,320 learned-inference cases.
+All 80 scientific checks, seven persistence checks, five manifest-handoff checks,
+four registry checks, eight final checks, and 16 roadmap requirements passed.
+The five-row runtime table, eight-case representative figure, five artifact
+records, completed run manifest, and exact 2,626-file canonical output set were
+validated; `work/` is empty. Full execution took 4,594.223 seconds on the recorded
+environment.
+
+The read-only pilot comparison at `E:/outputs/10_lama_restoration/` confirms that
+all 416 pilot paths and all CSV schemas remain present. The representative figure
+and 409 of 410 shared restoration PNGs are byte-identical. The sole changed shared
+PNG is the inherited Notebook 06 `p039` mask-morphology correction; 2,210 added
+restoration PNGs account for the complete scale-up difference.
+
 ---
 
 ## 11 — Stable Diffusion Restoration

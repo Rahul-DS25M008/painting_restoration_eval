@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.6"
+config_version: "1.1.7"
 
 evidence_coverage:
   authority:
@@ -56,8 +56,8 @@ evidence_coverage:
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "09"
-    next_eligible_notebook_id: "10"
+    completed_through_notebook_id: "10"
+    next_eligible_notebook_id: "11"
     completed_notebooks:
       - notebook_id: "01"
         stem: "01_dataset_verification"
@@ -400,6 +400,55 @@ evidence_coverage:
         baseline_restored_image_files: 410
         baseline_runtime_summary_rows: 5
         baseline_validation_rows: 72
+        baseline_artifact_records: 5
+        baseline_output_file_count: 416
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_shared_restored_images: 410
+        baseline_shared_restored_images_byte_identical: 409
+        baseline_changed_shared_image: "images/restored/mask_robustness/mask_robustness__p039__loss_small__target_04p5pct__variant_04.png"
+        baseline_changed_image_reason: "inherited_notebook_06_helper_v3_1_1_morphology_correction"
+        baseline_representative_figure_byte_identical: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "10"
+        stem: "10_lama_restoration"
+        output_root: "outputs/10_lama_restoration"
+        manifest_path: "outputs/10_lama_restoration/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        lama_config_version: "2.0.0"
+        restoration_helper_version: "3.1.0"
+        iopaint_version: "1.6.0"
+        eligible_case_rows: 2620
+        eligible_case_rows_by_experiment:
+          canonical_missing_region: 1500
+          damage_size_sensitivity: 245
+          mask_robustness: 525
+          synthetic_degradation: 350
+        zero_control_rows: 300
+        nonzero_case_rows: 2320
+        restored_image_files: 2620
+        restoration_rows: 2620
+        runtime_summary_rows: 5
+        representative_cases: 8
+        validation_rows: 80
+        persistence_checks: 7
+        manifest_handoff_checks: 5
+        registry_update_checks: 4
+        final_completion_checks: 8
+        artifact_records: 5
+        completion_requirements: 16
+        canonical_output_file_count: 2626
+        work_file_count_after_completion: 0
+        full_execution_wall_clock_seconds: 4594.223
+        runtime_summary_total_seconds: 3570.4867356999603
+        baseline_output_root: "E:/outputs/10_lama_restoration"
+        baseline_restoration_rows: 410
+        baseline_restored_image_files: 410
+        baseline_runtime_summary_rows: 5
+        baseline_validation_rows: 80
         baseline_artifact_records: 5
         baseline_output_file_count: 416
         baseline_artifact_paths_preserved: true

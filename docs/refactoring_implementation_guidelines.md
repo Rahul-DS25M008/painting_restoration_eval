@@ -844,8 +844,9 @@ checksums, limitations, and downstream eligibility.
 | 07 Synthetic Degradation Dataset | Finished | Finished | Yes | Balanced 35-painting cohort; 1,050 single plus 105 combined cases = 1,155 cases, effect-support masks, degraded images, and audit rows | All 337 pilot paths retained; all 330 shared generated PNGs byte-identical; table schemas and 165 pilot case/audit IDs retained; output count increased from 337 to 2,317 through the expanded cohort |
 | 08 Experiment Contracts and Region Policy | Finished | Finished | Yes | 3,425 registered cases; 17,125 decisions across 5 models including `hint_places2`; 2,620 eligible cases per model; 143 policy rows; 101/101 scientific checks; 20/20 completion requirements | All 9 pilot paths and schemas retained; 525 pilot cases retained with only intentional scope change; 2,100 shared eligibility rows unchanged; region policy byte-identical; schema definitions unchanged |
 | 09 OpenCV Telea Restoration | Finished | Finished | Yes | 2,620 eligible cases and restored PNGs; 300 zero controls; 2,320 nonzero cases; 72/72 scientific checks; 15/15 roadmap requirements; 2,626 canonical files | All 416 pilot paths and CSV schemas retained; 409/410 shared restoration PNGs byte-identical; sole changed shared PNG inherits Notebook 06's documented `p039` morphology correction; representative figure byte-identical |
+| 10 LaMa Restoration | Finished | Finished | Yes | 2,620 eligible cases and restored PNGs; 300 zero controls; 2,320 nonzero cases; 80/80 scientific checks; 16/16 roadmap requirements; 2,626 canonical files; 4,594.223-second full execution | All 416 pilot paths and CSV schemas retained; 409/410 shared restoration PNGs byte-identical; sole changed shared PNG inherits Notebook 06's documented `p039` morphology correction; representative figure byte-identical |
 
-Notebook 09 is a completed Controlled-300 producer. Notebook 10 is the next
+Notebook 10 is a completed Controlled-300 producer. Notebook 11 is the next
 eligible minimal-delta rerun. No later notebook may describe its
 historical Controlled-50 outputs as Controlled-300 evidence until that notebook
 has been explicitly reopened, rerun, validated, baseline-compared, and committed.
@@ -1454,6 +1455,34 @@ details
 ```
 
 Batch-level validation may exist in memory. Only the consolidated final table is persisted unless a separate failure table is required downstream.
+
+Every cell that registers validation checks must be safe to rerun in the same
+kernel. Before adding checks for its own `validation_stage`, the cell must rebuild
+the `ValidationCollector` while retaining checks from every other stage and
+removing any existing checks from the stage it is about to recompute. It must
+then register the complete stage again. This stage-replacement pattern prevents
+duplicate-key failures without hiding accidental duplicates within one execution
+of the cell. It applies to all notebooks and all validation stages, including
+preflight, loading, smoke-test, execution, scientific-validation, persistence,
+analysis, manifest, and completion-gate cells.
+
+The approved pattern is:
+
+```python
+validation_stage = "batch_n_stage_name"
+retained_checks = [
+    check
+    for check in VALIDATION.checks
+    if check.validation_stage != validation_stage
+]
+VALIDATION = ValidationCollector()
+VALIDATION.extend(retained_checks)
+```
+
+After this reset, the cell adds all checks for `validation_stage` normally. A
+rerun must produce the same stage keys, check count, and outcomes as the first
+run. Do not suppress `ValueError` from `ValidationCollector.add`, use
+`drop_duplicates` as a substitute, or retain partially rebuilt stage checks.
 
 ## 16. Output minimization
 

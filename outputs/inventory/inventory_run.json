@@ -1,15 +1,15 @@
 {
   "run_schema_version": "inventory_run.v1",
   "inventory_schema_version": "project_file_inventory.v1",
-  "inventory_run_id": "inventory_20260911T125847Z_52627c02",
+  "inventory_run_id": "inventory_20260911T182631Z_8956db95",
   "status": "completed",
-  "generated_at_utc": "2026-09-11T12:58:47.490028Z",
-  "completed_at_utc": "2026-09-11T12:58:57.229436Z",
-  "duration_seconds": 9.778,
+  "generated_at_utc": "2026-09-11T18:26:31.998029Z",
+  "completed_at_utc": "2026-09-11T18:28:19.435750Z",
+  "duration_seconds": 107.503,
   "repository_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
   "inventory_relative_path": "outputs/inventory/project_file_inventory.csv",
-  "inventory_sha256": "7000902aafc4c84c681cedd937828609e167d7333adfb7de0bf2bbd4c1b547c8",
-  "inventory_size_bytes": 14265978,
+  "inventory_sha256": "9c1bc956cc6fb3e5ff6d18c08d683fb0c32f07819f27f1887c17a0c9fbe65604",
+  "inventory_size_bytes": 15379383,
   "hash_configuration": {
     "mode": "partial",
     "algorithm": "sha256_first_n_bytes",
@@ -18,9 +18,9 @@
   "incremental_reuse": {
     "enabled": true,
     "cache_status": "verified",
-    "source_run_id": "inventory_20260911T124212Z_4c8e6142",
-    "reused_file_count": 27860,
-    "inspected_file_count": 2
+    "source_run_id": "inventory_20260911T125847Z_52627c02",
+    "reused_file_count": 27439,
+    "inspected_file_count": 2633
   },
   "scan_configuration": {
     "skipped_directory_names": [
@@ -47,8 +47,8 @@
     "platform": "Windows-11-10.0.26200-SP0"
   },
   "summary": {
-    "file_count": 27862,
-    "total_size_bytes": 10313718631,
+    "file_count": 30072,
+    "total_size_bytes": 11910338846,
     "read_error_file_count": 0,
     "read_error_count": 0,
     "counts_by_format": {
@@ -63,7 +63,7 @@
       "notebook": 37,
       "npz": 4,
       "pdf": 3,
-      "png": 26947,
+      "png": 29157,
       "pptx": 1,
       "python": 97,
       "text": 5,
@@ -71,19 +71,19 @@
     },
     "counts_by_file_kind": {
       "clean_image": 300,
-      "damaged_image": 5702,
+      "damaged_image": 6002,
       "figure_image": 159,
       "html": 100,
       "image": 511,
       "json": 82,
       "manifest_table": 44,
       "markdown": 40,
-      "mask_image": 6905,
+      "mask_image": 7355,
       "metric_table": 39,
       "notebook": 37,
       "other": 17,
       "python": 97,
-      "restored_image": 13670,
+      "restored_image": 15130,
       "summary_table": 5,
       "table": 47,
       "text": 5,
@@ -101,7 +101,7 @@
       ".mjs": 2,
       ".npz": 4,
       ".pdf": 3,
-      ".png": 26947,
+      ".png": 29157,
       ".pptx": 1,
       ".py": 97,
       ".txt": 5,
