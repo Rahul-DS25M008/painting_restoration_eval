@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-11T01:39:21.504774Z",
+  "updated_at_utc": "2026-09-11T03:37:07.738744Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -835,12 +835,12 @@
       "artifact_type": "dataset_table",
       "artifact_role": "primary_cross_experiment_registry",
       "schema_version": "case_registry.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_evaluation",
       "validation_status": "passed",
-      "row_count": 525,
+      "row_count": 3425,
       "file_count": 1,
-      "checksum": "cd560b6599e85c63bd7e81e80de6292fe7fd5f6f17c32b0ac9faadee51da5d75"
+      "checksum": "d57a7be1afb23d935c8c809fb0e6744c7ccb73dd2231c685aa137fab82efb039"
     },
     {
       "artifact_key": "experiment_contracts.figure_region_definitions",
@@ -849,12 +849,12 @@
       "artifact_type": "figure",
       "artifact_role": "methodology_visualization",
       "schema_version": "figure.region_definitions.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_evaluation",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "bb5e1565ca89ed3cb47c7b60140d96e6c2c8f31c59d5e4e7c4aba2eed1444da1"
+      "checksum": "0380ebcab7b9b8d528a08e980ec4ba8e52b4ed46c4a22789f3677cd39ae562e7"
     },
     {
       "artifact_key": "experiment_contracts.model_eligibility",
@@ -863,12 +863,12 @@
       "artifact_type": "routing_table",
       "artifact_role": "authoritative_model_routing",
       "schema_version": "model_eligibility.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_evaluation",
       "validation_status": "passed",
-      "row_count": 2100,
+      "row_count": 17125,
       "file_count": 1,
-      "checksum": "46f16b05337bb5d29b6c5d4bb23cbdc72817d66b7c69956688401cdf1ef88b76"
+      "checksum": "21b407af7199c51ddc1ca8ba9d6dbcdd4faf02bbfeaa602b3931eccd3ab53aa4"
     },
     {
       "artifact_key": "experiment_contracts.region_policy",
@@ -877,7 +877,7 @@
       "artifact_type": "policy_table",
       "artifact_role": "authoritative_metric_region_policy",
       "schema_version": "region_policy.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_evaluation",
       "validation_status": "passed",
       "row_count": 143,
@@ -891,12 +891,12 @@
       "artifact_type": "methodology_report",
       "artifact_role": "evaluation_contract",
       "schema_version": "evaluation_contract.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_evaluation",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "fc9fb7960f622c796890ff3f19398e1ba67d77c7f1c1218199d23b15f525a614"
+      "checksum": "6f67e721f25af7c8fbd1af31bcebba6ac8d84e5c41494f3f3473bca52e3fc3d1"
     },
     {
       "artifact_key": "experiment_contracts.schema_registry",
@@ -905,12 +905,12 @@
       "artifact_type": "schema_registry",
       "artifact_role": "machine_readable_schema_handoff",
       "schema_version": "schema_registry.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_evaluation",
       "validation_status": "passed",
       "row_count": 5,
       "file_count": 1,
-      "checksum": "0a75cb8fb1d7762d1ded04944a895dda65d417d771624cb286359c4d1942018a"
+      "checksum": "82a4ff7b37c91c1aabc58a070f39e6996379103b549e13e1298cf95942bc25c9"
     },
     {
       "artifact_key": "explainable_case_retrieval.case_neighbors",
@@ -2893,12 +2893,12 @@
       "artifact_type": "validation_table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_evaluation",
       "validation_status": "passed",
       "row_count": 101,
       "file_count": 1,
-      "checksum": "5b8afd44b419003c79768a7fa0bfd73c4e81fcb42892adffac24f84a89611095"
+      "checksum": "9946f703f15060ac3889a2bdea58fa5c029edabc7ec58f80a4532b76cf1c264d"
     },
     {
       "artifact_key": "validation.09_opencv_telea_restoration",

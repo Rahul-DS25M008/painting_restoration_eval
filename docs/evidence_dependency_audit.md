@@ -85,6 +85,7 @@ metric validity and coverage passed.
 | 05 Damage-Size Sensitivity Dataset | `damage_size_cases.v1`, 245 nested mask PNGs, 245 damaged RGB PNGs, normalized generation audit, canonical progression figure, validation and manifests | 35 paintings × 7 levels = 245 matched cases; 35 cases per level; 245 audit rows; 96/96 consolidated checks; 27/27 pre-registry completion requirements | All 76 pilot artifact paths retained; the 55-column case and 67-column audit schemas and all artifact roles are unchanged; all 70 shared pilot mask/damaged PNGs are byte-identical; output count increased from 76 to 496 through 420 additional generated images; the canonical figure changed for expanded rule-selected representatives | Approved Controlled-300 damage-size producer for Notebooks 06, 08–12, 22, 25, 28, 32, and 33 |
 | 06 Mask Robustness Dataset | `mask_robustness_cases.v1`, 525 binary mask PNGs, 525 damaged RGB PNGs, normalized generation audit, canonical figure, validation and manifests | 35 paintings × 3 families × 5 variants = 525 cases; 105 groups; 525 audit rows; 102/102 consolidated checks; 21/21 completion requirements | All 156 pilot artifact paths retained; the 86-column case and 63-column audit schemas and all artifact roles are unchanged; 148/151 shared PNGs are byte-identical; the `p039` `loss_small` fourth mask/damaged variant and figure changed under helper v3.1.1 morphology enforcement; output count increased from 156 to 1,056 through 900 additional generated images | Approved Controlled-300 robustness producer for Notebooks 08–12, 24, 25, 28, 32, and 33 |
 | 07 Synthetic Degradation Dataset | `synthetic_degradation_cases.v1`, 1,155 grayscale effect-support PNGs, 1,155 degraded RGB PNGs, normalized generation audit, canonical figure, protocol, validation and manifests | 35 paintings × 33 degradations = 1,155 cases; 1,050 single and 105 combined cases; 66/66 consolidated checks; 20/20 completion requirements | All 337 pilot paths retained; the 65-column case, 34-column audit, 8-column validation, and 15-column artifact schemas are unchanged; all 330 shared generated PNGs are byte-identical; all 165 pilot case and audit IDs are retained; output count increased from 337 to 2,317 through 1,980 additional generated images | Approved Controlled-300 procedural-degradation producer for Notebooks 08–12, 17, 20, 24, 25, 28, 32, and 33 |
+| 08 Experiment Contracts and Region Policy | `case_registry.v1`, `model_eligibility.v1`, `region_policy.v1`, five-schema registry, canonical region figure, methodology report, validation and manifests | 3,425 cases; 17,125 case-model decisions across 5 methods; 2,620 eligible cases per method; 143 policy rows; 101/101 scientific checks; 20/20 completion requirements | All 9 pilot paths and table schemas retained; all 525 pilot case rows retained with only `dataset_scope` intentionally changed; all 2,100 shared eligibility rows unchanged; region policy byte-identical; schema definitions unchanged while producer version advances to 1.1.0 | Approved Controlled-300 contract, routing, and region-policy producer for Notebooks 09–36 and 12A |
 
 Notebook 01's final manifest records `controlled_300`, dataset version `2.0.0`,
 300 expected and observed artwork/image rows, 448 expected and observed audit
@@ -218,6 +219,26 @@ describe the larger cohort without changing the scientific boundary: these are
 controlled RGB-domain proxies, effect masks encode operator influence rather
 than missing pixels, severity is ordinal rather than a conservation-condition
 grade, and model eligibility remains owned by Notebook 08.
+
+Notebook 08's final manifest records `controlled_300`, dataset version `2.0.0`,
+evaluation-contract configuration version `2.0.0`, contract-helper version
+`1.1.0`, and canonical-region helper version `1.1.0`. Expected and observed
+counts reconcile at 3,425 registered cases, 17,125 explicit case-model routing
+decisions, 13,100 eligible decisions, 4,025 ineligible decisions, five models,
+143 metric-region policy rows, five schema records, 101 consolidated scientific
+checks, seven artifacts, and nine output files. All 20 roadmap requirements and
+the final completion gate passed. The read-only comparison copy is
+`E:/outputs/08_experiment_contracts_and_region_policy/`.
+
+All nine pilot artifact paths and all CSV schemas are retained. The 525 shared
+case rows preserve every stable field; only `dataset_scope` changes intentionally
+from `controlled_50` to `controlled_300`. All 2,100 shared eligibility rows are
+identical, the 143-row region policy is byte-identical, and the five schema
+definitions are unchanged apart from the registry producer version. The larger
+case and eligibility tables therefore represent explained population growth,
+not a change to the approved routing or spatial methodology. SDXL remains a
+bounded 35-case execution despite full methodological eligibility, while HINT is
+the selected additional learned method for the complete eligible population.
 
 ## 3. Frozen notebook evidence ledger
 

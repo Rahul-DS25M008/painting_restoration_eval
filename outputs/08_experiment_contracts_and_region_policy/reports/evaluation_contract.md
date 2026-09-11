@@ -4,20 +4,20 @@
 
 - Notebook: `08_experiment_contracts_and_region_policy`
 - Dataset: `painting_restoration_eval`
-- Dataset version: `1.0.0`
-- Dataset scope: `controlled_50`
+- Dataset version: `2.0.0`
+- Dataset scope: `controlled_300`
 - Contract configuration: `evaluation_contract_config.v1`
-- Contract version: `1.0.0`
+- Contract version: `2.0.0`
 - Eligibility policy: `model_eligibility_policy.v1`
 - Region policy: `evaluation_region_policy.v1`
-- Experiment-contract helper: `1.0.0`
+- Experiment-contract helper: `1.1.0`
 - Canonical-region helper: `1.1.0`
-- Normalized cases: `525`
-- Model decisions: `2100`
+- Normalized cases: `3425`
+- Model decisions: `17125`
 - Metric-region decisions: `143`
 
 This report defines the authoritative experimental routing and spatial
-evaluation contract for Notebooks 09-35.
+evaluation contract for Notebooks 09-36, including Notebook 12A.
 
 ## Interpretation boundary
 
@@ -45,17 +45,17 @@ Every accepted case traces to exactly one immediate source run manifest.
 
 | experiment_id            |   case_count |   painting_count |   input_file_count |   mask_or_effect_file_count |
 |:-------------------------|-------------:|-----------------:|-------------------:|----------------------------:|
-| canonical_missing_region |          250 |               50 |                250 |                         250 |
-| damage_size_sensitivity  |           35 |                5 |                 35 |                          35 |
-| mask_robustness          |           75 |                5 |                 75 |                          75 |
-| synthetic_degradation    |          165 |                5 |                165 |                         165 |
+| canonical_missing_region |         1500 |              300 |               1500 |                        1500 |
+| damage_size_sensitivity  |          245 |               35 |                245 |                         245 |
+| mask_robustness          |          525 |               35 |                525 |                         525 |
+| synthetic_degradation    |         1155 |               35 |               1155 |                        1155 |
 
 The normalized registry contains:
 
-- 360 binary missing-region cases;
-- 165 synthetic-degradation cases;
-- 50 canonical zero controls;
-- 525 unique case identifiers;
+- 2,270 binary missing-region cases;
+- 1,155 synthetic-degradation cases;
+- 300 canonical zero controls;
+- 3,425 unique case identifiers;
 - repository-relative clean, input, and mask/effect paths.
 
 Zero controls are explicit identity/no-op controls. Empty target,
@@ -71,20 +71,27 @@ feasibility are separate from methodological eligibility.
 
 | model_id                    |   decision_count |   eligible_count |   painting_count |   experiment_count |   ineligible_count |
 |:----------------------------|-----------------:|-----------------:|-----------------:|-------------------:|-------------------:|
-| lama                        |              525 |              410 |               50 |                  4 |                115 |
-| opencv_telea                |              525 |              410 |               50 |                  4 |                115 |
-| sdxl_inpainting             |              525 |              410 |               50 |                  4 |                115 |
-| stable_diffusion_inpainting |              525 |              410 |               50 |                  4 |                115 |
+| hint_places2                |             3425 |             2620 |              300 |                  4 |                805 |
+| lama                        |             3425 |             2620 |              300 |                  4 |                805 |
+| opencv_telea                |             3425 |             2620 |              300 |                  4 |                805 |
+| sdxl_inpainting             |             3425 |             2620 |              300 |                  4 |                805 |
+| stable_diffusion_inpainting |             3425 |             2620 |              300 |                  4 |                805 |
 
-The eligibility table contains one explicit decision for each of four
-model identities and each of 525 cases.
+The eligibility table contains one explicit decision for each of
+5 model identities and each of
+3,425 cases.
+
+SDXL remains a bounded 35-case feasibility study even though its
+methodological eligibility is recorded across the complete registry.
+HINT is the selected additional learned method intended for full
+eligible-population execution.
 
 | eligible   | input_semantics                                 | mask_semantics                                                            | restoration_objective                                                          |   decision_count |   model_count |
 |:-----------|:------------------------------------------------|:--------------------------------------------------------------------------|:-------------------------------------------------------------------------------|-----------------:|--------------:|
-| True       | rgb_image_with_synthetic_missing_content        | binary_missing_region_mask; foreground >= 128                             | reconstruct deliberately removed painting content                              |             1240 |             4 |
-| True       | rgb_image_with_controlled_synthetic_degradation | grayscale_effect_intensity; restoration target >= source active_threshold | supplementary masked-removal diagnostic; not a physical conservation treatment |              200 |             4 |
-| True       | rgb_image_with_synthetic_missing_content        | binary_missing_region_mask; foreground >= 128                             | identity/no-op control; preserve the input exactly                             |              200 |             4 |
-| False      | rgb_image_with_controlled_synthetic_degradation | grayscale_effect_intensity; restoration target >= source active_threshold | supplementary masked-removal diagnostic; not a physical conservation treatment |              460 |             4 |
+| True       | rgb_image_with_synthetic_missing_content        | binary_missing_region_mask; foreground >= 128                             | reconstruct deliberately removed painting content                              |             9850 |             5 |
+| True       | rgb_image_with_controlled_synthetic_degradation | grayscale_effect_intensity; restoration target >= source active_threshold | supplementary masked-removal diagnostic; not a physical conservation treatment |             1750 |             5 |
+| True       | rgb_image_with_synthetic_missing_content        | binary_missing_region_mask; foreground >= 128                             | identity/no-op control; preserve the input exactly                             |             1500 |             5 |
+| False      | rgb_image_with_controlled_synthetic_degradation | grayscale_effect_intensity; restoration target >= source active_threshold | supplementary masked-removal diagnostic; not a physical conservation treatment |             4025 |             5 |
 
 All binary missing-region cases are eligible for inpainting evaluation.
 For non-binary synthetic degradations, only localized water stain, dirt
@@ -96,19 +103,19 @@ and must not be presented as one.
 
 | degradation_family    |   source_case_count | expected_eligible   | policy_group                      | configured_reason                                                                                |
 |:----------------------|--------------------:|:--------------------|:----------------------------------|:-------------------------------------------------------------------------------------------------|
-| dirt_dust             |                  15 | True                | eligible_supplementary_inpainting | Approved supplementary localized degradation diagnostic.                                         |
-| discolouration        |                  15 | False               | colour_or_tonal_change            | Tonal or colour change is not a missing-region inpainting problem.                               |
-| fading                |                  15 | False               | colour_or_tonal_change            | Tonal or colour change is not a missing-region inpainting problem.                               |
-| fading_discolouration |                   5 | False               | colour_or_tonal_change            | Tonal or colour change is not a missing-region inpainting problem.                               |
-| gaussian_blur         |                  15 | False               | blur_or_defocus                   | Blur or defocus is not missing content and requires a degradation-specific correction objective. |
-| gaussian_blur_fading  |                   5 | False               | blur_or_defocus                   | Blur or defocus is not missing content and requires a degradation-specific correction objective. |
-| local_darkening       |                  15 | False               | colour_or_tonal_change            | Tonal or colour change is not a missing-region inpainting problem.                               |
-| local_defocus         |                  15 | False               | blur_or_defocus                   | Blur or defocus is not missing content and requires a degradation-specific correction objective. |
-| motion_blur           |                  15 | False               | blur_or_defocus                   | Blur or defocus is not missing content and requires a degradation-specific correction objective. |
-| partial_transparency  |                  15 | True                | eligible_supplementary_inpainting | Approved supplementary localized degradation diagnostic.                                         |
-| pigment_bleeding      |                  15 | False               | pigment_transport                 | Pigment bleeding is a colour/structure transport effect, not removable missing content.          |
-| water_stain           |                  15 | True                | eligible_supplementary_inpainting | Approved supplementary localized degradation diagnostic.                                         |
-| water_stain_dirt      |                   5 | True                | eligible_supplementary_inpainting | Approved supplementary localized degradation diagnostic.                                         |
+| dirt_dust             |                 105 | True                | eligible_supplementary_inpainting | Approved supplementary localized degradation diagnostic.                                         |
+| discolouration        |                 105 | False               | colour_or_tonal_change            | Tonal or colour change is not a missing-region inpainting problem.                               |
+| fading                |                 105 | False               | colour_or_tonal_change            | Tonal or colour change is not a missing-region inpainting problem.                               |
+| fading_discolouration |                  35 | False               | colour_or_tonal_change            | Tonal or colour change is not a missing-region inpainting problem.                               |
+| gaussian_blur         |                 105 | False               | blur_or_defocus                   | Blur or defocus is not missing content and requires a degradation-specific correction objective. |
+| gaussian_blur_fading  |                  35 | False               | blur_or_defocus                   | Blur or defocus is not missing content and requires a degradation-specific correction objective. |
+| local_darkening       |                 105 | False               | colour_or_tonal_change            | Tonal or colour change is not a missing-region inpainting problem.                               |
+| local_defocus         |                 105 | False               | blur_or_defocus                   | Blur or defocus is not missing content and requires a degradation-specific correction objective. |
+| motion_blur           |                 105 | False               | blur_or_defocus                   | Blur or defocus is not missing content and requires a degradation-specific correction objective. |
+| partial_transparency  |                 105 | True                | eligible_supplementary_inpainting | Approved supplementary localized degradation diagnostic.                                         |
+| pigment_bleeding      |                 105 | False               | pigment_transport                 | Pigment bleeding is a colour/structure transport effect, not removable missing content.          |
+| water_stain           |                 105 | True                | eligible_supplementary_inpainting | Approved supplementary localized degradation diagnostic.                                         |
+| water_stain_dirt      |                  35 | True                | eligible_supplementary_inpainting | Approved supplementary localized degradation diagnostic.                                         |
 
 Ineligible cases remain in the eligibility table with explicit reasons;
 they are not silently discarded.
@@ -163,15 +170,16 @@ distinct:
 
 ## Representative validation
 
-The region helper was applied to all 525 normalized cases. This created
-4,890 applicable case-region records:
+The region helper was applied to all 3,425
+normalized cases. This created 31,980 applicable
+case-region records:
 
 - nine standard regions for every case;
-- one additional degradation-support region for each of the 165
-  synthetic-degradation cases.
+- one additional degradation-support region for each of the
+  1,155 synthetic-degradation cases.
 
 The patch-window contract was additionally validated on the balanced
-five-painting synthetic cohort.
+35-painting focused-experiment cohort.
 
 The methodology figure uses the following cases selected before
 rendering:
@@ -259,9 +267,9 @@ The same image-like restriction applies to LPIPS, CLIP, DINOv2,
 texture descriptors, perceptual uncertainty, and semantic patch
 metrics where configured.
 
-## Notebook 27 region-policy alternatives
+## Notebook 28 region-policy alternatives
 
-Notebook 27 receives seven declared alternatives for region ablation.
+Notebook 28 receives seven declared alternatives for region ablation.
 An ablation never makes a mathematically incompatible metric-region
 combination valid.
 
@@ -284,33 +292,33 @@ without creating a universal trust score.
 | input_key                             | producer                                      | relative_path                                                                     | required   | format   | schema_version                 |   expected_cardinality | applicability            |
 |:--------------------------------------|:----------------------------------------------|:----------------------------------------------------------------------------------|:-----------|:---------|:-------------------------------|-----------------------:|:-------------------------|
 | evaluation_contract_config            | project configuration                         | config/experiments/evaluation_contract.yaml                                       | True       | yaml     | evaluation_contract_config.v1  |                      1 | all_cases                |
-| project_inventory                     | tools/build_project_inventory.py              | outputs/inventory/project_file_inventory.csv                                      | True       | csv      | project_file_inventory.v1      |                  11129 | repository               |
+| project_inventory                     | tools/build_project_inventory.py              | outputs/inventory/project_file_inventory.csv                                      | True       | csv      | project_file_inventory.v1      |                  25652 | repository               |
 | inventory_run                         | tools/build_project_inventory.py              | outputs/inventory/inventory_run.json                                              | True       | json     | inventory_run.v1               |                      1 | repository               |
 | project_paths_registry                | validated notebook handoffs                   | outputs/inventory/project_paths.json                                              | True       | json     | project_paths.v1               |                      1 | repository               |
-| preprocessed_geometry                 | 02_image_preprocessing                        | outputs/02_image_preprocessing/data/preprocessed_images.csv                       | True       | csv      | preprocessed_images.v1         |                     50 | all_cases                |
-| canonical_masks                       | 03_canonical_mask_generation                  | outputs/03_canonical_mask_generation/data/masks.csv                               | True       | csv      | canonical_masks.v1             |                    250 | canonical_missing_region |
-| canonical_missing_region_cases        | 04_canonical_damaged_image_generation         | outputs/04_canonical_damaged_image_generation/data/cases.csv                      | True       | csv      | canonical_damage_cases.v1      |                    250 | canonical_missing_region |
+| preprocessed_geometry                 | 02_image_preprocessing                        | outputs/02_image_preprocessing/data/preprocessed_images.csv                       | True       | csv      | preprocessed_images.v1         |                    300 | all_cases                |
+| canonical_masks                       | 03_canonical_mask_generation                  | outputs/03_canonical_mask_generation/data/masks.csv                               | True       | csv      | canonical_masks.v1             |                   1500 | canonical_missing_region |
+| canonical_missing_region_cases        | 04_canonical_damaged_image_generation         | outputs/04_canonical_damaged_image_generation/data/cases.csv                      | True       | csv      | canonical_damage_cases.v1      |                   1500 | canonical_missing_region |
 | canonical_missing_region_run_manifest | 04_canonical_damaged_image_generation         | outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json         | True       | json     | run_manifest.v1                |                      1 | canonical_missing_region |
-| damage_size_sensitivity_cases         | 05_damage_size_sensitivity_dataset_generation | outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv              | True       | csv      | damage_size_cases.v1           |                     35 | damage_size_sensitivity  |
+| damage_size_sensitivity_cases         | 05_damage_size_sensitivity_dataset_generation | outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv              | True       | csv      | damage_size_cases.v1           |                    245 | damage_size_sensitivity  |
 | damage_size_sensitivity_run_manifest  | 05_damage_size_sensitivity_dataset_generation | outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json | True       | json     | run_manifest.v1                |                      1 | damage_size_sensitivity  |
-| mask_robustness_cases                 | 06_mask_robustness_dataset_generation         | outputs/06_mask_robustness_dataset_generation/data/cases.csv                      | True       | csv      | mask_robustness_cases.v1       |                     75 | mask_robustness          |
+| mask_robustness_cases                 | 06_mask_robustness_dataset_generation         | outputs/06_mask_robustness_dataset_generation/data/cases.csv                      | True       | csv      | mask_robustness_cases.v1       |                    525 | mask_robustness          |
 | mask_robustness_run_manifest          | 06_mask_robustness_dataset_generation         | outputs/06_mask_robustness_dataset_generation/manifests/run_manifest.json         | True       | json     | run_manifest.v1                |                      1 | mask_robustness          |
-| synthetic_degradation_cases           | 07_synthetic_degradation_dataset_generation   | outputs/07_synthetic_degradation_dataset_generation/data/cases.csv                | True       | csv      | synthetic_degradation_cases.v1 |                    165 | synthetic_degradation    |
+| synthetic_degradation_cases           | 07_synthetic_degradation_dataset_generation   | outputs/07_synthetic_degradation_dataset_generation/data/cases.csv                | True       | csv      | synthetic_degradation_cases.v1 |                   1155 | synthetic_degradation    |
 | synthetic_degradation_run_manifest    | 07_synthetic_degradation_dataset_generation   | outputs/07_synthetic_degradation_dataset_generation/manifests/run_manifest.json   | True       | json     | run_manifest.v1                |                      1 | synthetic_degradation    |
 
 ## Output and downstream contract
 
-| output_key          | relative_path                                                                    | format   | schema_version               |   expected_cardinality | downstream_consumers                        |
-|:--------------------|:---------------------------------------------------------------------------------|:---------|:-----------------------------|-----------------------:|:--------------------------------------------|
-| case_registry       | outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv         | csv      | case_registry.v1             |                    525 | Notebooks 09-35                             |
-| model_eligibility   | outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv     | csv      | model_eligibility.v1         |                   2100 | Notebooks 09-12 and all later analyses      |
-| region_policy       | outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv         | csv      | region_policy.v1             |                    143 | Notebooks 13-35                             |
-| schema_registry     | outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json      | json     | schema_registry.v1           |                      1 | Notebooks 09-35                             |
-| region_definitions  | outputs/08_experiment_contracts_and_region_policy/figures/region_definitions.png | png      | figure.region_definitions.v1 |                      1 | thesis and dashboard                        |
-| evaluation_contract | outputs/08_experiment_contracts_and_region_policy/reports/evaluation_contract.md | markdown | evaluation_contract.v1       |                      1 | thesis, dashboard, and downstream notebooks |
-| validation_checks   | outputs/08_experiment_contracts_and_region_policy/validation/checks.csv          | csv      | validation_checks.v1         |                      1 | all downstream consumers                    |
-| artifact_manifest   | outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv        | csv      | artifact_manifest.v1         |                      7 | inventory and downstream notebooks          |
-| run_manifest        | outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json    | json     | run_manifest.v1              |                      1 | inventory and downstream notebooks          |
+| output_key          | relative_path                                                                    | format   | schema_version               |   expected_cardinality | downstream_consumers                         |
+|:--------------------|:---------------------------------------------------------------------------------|:---------|:-----------------------------|-----------------------:|:---------------------------------------------|
+| case_registry       | outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv         | csv      | case_registry.v1             |                   3425 | Notebooks 09-36, including 12A               |
+| model_eligibility   | outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv     | csv      | model_eligibility.v1         |                  17125 | Notebooks 09-12, 12A, and all later analyses |
+| region_policy       | outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv         | csv      | region_policy.v1             |                    143 | Notebooks 13-36                              |
+| schema_registry     | outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json      | json     | schema_registry.v1           |                      1 | Notebooks 09-36                              |
+| region_definitions  | outputs/08_experiment_contracts_and_region_policy/figures/region_definitions.png | png      | figure.region_definitions.v1 |                      1 | thesis and dashboard                         |
+| evaluation_contract | outputs/08_experiment_contracts_and_region_policy/reports/evaluation_contract.md | markdown | evaluation_contract.v1       |                      1 | thesis, dashboard, and downstream notebooks  |
+| validation_checks   | outputs/08_experiment_contracts_and_region_policy/validation/checks.csv          | csv      | validation_checks.v1         |                      1 | all downstream consumers                     |
+| artifact_manifest   | outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv        | csv      | artifact_manifest.v1         |                      7 | inventory and downstream notebooks           |
+| run_manifest        | outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json    | json     | run_manifest.v1              |                      1 | inventory and downstream notebooks           |
 
 Downstream notebooks must consume the declared normalized artifacts
 rather than scanning folders for plausible files.
@@ -338,16 +346,21 @@ Metric notebooks must:
 
 Before this report was written:
 
-- 525 cases passed registry and path validation;
-- 2,100 model decisions passed schema and routing validation;
-- 143 metric-region decisions passed compatibility validation;
-- all 525 mask/effect files reloaded with canonical geometry;
+- 3,425 cases passed registry and path validation;
+- 17,125 model decisions passed schema and
+  routing validation;
+- 143 metric-region decisions passed
+  compatibility validation;
+- all 3,425 mask/effect files were reloaded
+  with canonical geometry;
 - all exact support remained inside painting content;
 - all mask crops remained inside content and contained their masks;
 - all inner, outer, symmetric, and spillover relationships passed;
-- all five patch-cohort paintings produced valid deterministic windows;
+- all 35 patch-cohort paintings produced valid
+  deterministic windows;
 - all seven rule-selected representative payloads were available;
-- 91 cumulative blocking checks had passed.
+- 91 cumulative blocking
+  checks had passed.
 
 The normalized tables and consolidated validation evidence are
 persisted and independently reloaded in Batch 7.
@@ -370,9 +383,9 @@ persisted and independently reloaded in Batch 7.
 7. Metric agreement does not establish historical correctness.
 8. Metric disagreement must remain visible rather than being hidden by
    a universal aggregate score.
-9. The controlled-50 dataset and balanced five-painting subsets do not
-   represent the full distribution of artists, periods, materials,
-   techniques, or conservation conditions.
+9. The controlled-300 dataset and balanced 35-painting focused subsets
+   do not represent the full distribution of artists, periods,
+   materials, techniques, or conservation conditions.
 10. Human conservation review remains necessary for real-world
     interpretation.
 

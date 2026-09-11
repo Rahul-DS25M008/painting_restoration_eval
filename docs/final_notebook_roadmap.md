@@ -652,8 +652,21 @@ Notebooks 08–12, 17, 20, 24, 25, 28, 32, and 33.
 
 **Notebook:** `08_experiment_contracts_and_region_policy.ipynb`  
 **Origin:** New Notebook; incorporates the methodological responsibility of Previous Notebook 26  
+**Controlled-300 refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
+**Active validated coverage:** 3,425 registered cases; 17,125 explicit routing decisions across five methods; 2,620 eligible cases per method; 143 metric-region policy rows; 101/101 scientific checks; 20/20 final completion requirements\
+**Pilot comparison:** All nine pilot artifact paths and table schemas retained; all 525 pilot case rows retained with only the intentional dataset-scope transition; all 2,100 shared case-model decisions unchanged; 143-row region policy byte-identical; five schema definitions unchanged; output-file count remains nine
 **Output root:** `outputs/08_experiment_contracts_and_region_policy/`  
 **Depends on:** Notebooks 01–07
+
+**Approved Controlled-300 target:** Combine 1,500 canonical cases, 245
+damage-size cases, 525 mask-robustness cases, and 1,155 procedural-degradation
+cases into a 3,425-row registry. Register five methods—OpenCV Telea, LaMa,
+Stable Diffusion Inpainting, bounded SDXL Inpainting, and selected full-coverage
+HINT—yielding 17,125 explicit case-model decisions and 2,620 methodologically
+eligible cases per model. Preserve the 11-region, 13-metric-family, 143-row
+region policy and all existing schemas and artifact paths.
 
 ### Purpose
 

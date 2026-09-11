@@ -22,7 +22,7 @@ from .schemas import (
 )
 
 
-EXPERIMENT_CONTRACTS_MODULE_VERSION = "1.0.0"
+EXPERIMENT_CONTRACTS_MODULE_VERSION = "1.1.0"
 ACCEPTED_STATUSES = frozenset({"ok", "passed", "success", "valid"})
 BINARY_EXPERIMENTS = frozenset(
     {
@@ -54,6 +54,44 @@ def load_evaluation_contract_config(path: str | Path) -> dict[str, Any]:
     missing = sorted(required - set(config))
     if missing:
         raise ValueError(f"Evaluation-contract configuration is missing: {missing}")
+
+    sources = config["inputs"].get("sources", [])
+    if not isinstance(sources, list) or not sources:
+        raise ValueError("Evaluation-contract sources must be a non-empty list")
+    source_ids = [str(row.get("experiment_id", "")).strip() for row in sources]
+    if any(not value for value in source_ids) or len(source_ids) != len(set(source_ids)):
+        raise ValueError("Configured source experiment IDs must be non-empty and unique")
+
+    models = config["models"]
+    if not isinstance(models, list) or not models:
+        raise ValueError("Evaluation-contract models must be a non-empty list")
+    model_ids = [str(row.get("model_id", "")).strip() for row in models]
+    if any(not value for value in model_ids) or len(model_ids) != len(set(model_ids)):
+        raise ValueError("Configured model IDs must be non-empty and unique")
+
+    expected = config["expected_counts"]
+    source_rows = sum(int(row["expected_rows"]) for row in sources)
+    case_rows = int(expected["case_registry_rows"])
+    model_count = int(expected["model_count"])
+    eligibility_rows = int(expected["model_eligibility_rows"])
+    eligible_per_model = int(expected["eligible_cases_per_model"])
+    if source_rows != case_rows:
+        raise ValueError(
+            "Configured source rows do not reconcile with case_registry_rows: "
+            f"{source_rows} != {case_rows}"
+        )
+    if model_count != len(model_ids):
+        raise ValueError(
+            "Configured model_count does not match the models list: "
+            f"{model_count} != {len(model_ids)}"
+        )
+    if eligibility_rows != case_rows * model_count:
+        raise ValueError(
+            "Configured model_eligibility_rows do not equal cases multiplied "
+            f"by models: {eligibility_rows} != {case_rows * model_count}"
+        )
+    if not 0 <= eligible_per_model <= case_rows:
+        raise ValueError("eligible_cases_per_model is outside the case population")
     return config
 
 

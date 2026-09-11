@@ -25,7 +25,7 @@ class ExperimentContractTests(unittest.TestCase):
     def _source_frames(self) -> tuple[dict[str, pd.DataFrame], pd.DataFrame]:
         common = {
             "dataset_id": "painting_restoration_eval",
-            "dataset_scope": "controlled_50",
+            "dataset_scope": "controlled_300",
             "painting_id": "p001",
             "clean_image_path": "outputs/02_image_preprocessing/images/clean/p001.png",
             "status": "passed",
@@ -129,8 +129,8 @@ class ExperimentContractTests(unittest.TestCase):
         self.assertTrue(registry["case_id"].is_unique)
         self.assertEqual(registry["source_manifest_path"].nunique(), 4)
         eligibility = build_model_eligibility(registry, self.config)
-        self.assertEqual(len(eligibility), 20)
-        self.assertEqual(int(eligibility["eligible"].sum()), 16)
+        self.assertEqual(len(eligibility), 25)
+        self.assertEqual(int(eligibility["eligible"].sum()), 20)
         blur = eligibility[
             eligibility["case_id"] == "synthetic__p001__gaussian_blur__mild"
         ]

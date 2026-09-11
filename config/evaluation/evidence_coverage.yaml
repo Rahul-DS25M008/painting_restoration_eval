@@ -56,8 +56,8 @@ evidence_coverage:
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "07"
-    next_eligible_notebook_id: "08"
+    completed_through_notebook_id: "08"
+    next_eligible_notebook_id: "09"
     completed_notebooks:
       - notebook_id: "01"
         stem: "01_dataset_verification"
@@ -322,6 +322,50 @@ evidence_coverage:
         baseline_shared_generated_png_files_byte_identical: 330
         canonical_figure_updated_for_expanded_representatives: true
         protocol_updated_for_expanded_cohort: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "08"
+        stem: "08_experiment_contracts_and_region_policy"
+        output_root: "outputs/08_experiment_contracts_and_region_policy"
+        manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        evaluation_contract_config_version: "2.0.0"
+        experiment_contract_helper_version: "1.1.0"
+        canonical_region_helper_version: "1.1.0"
+        source_experiments: 4
+        case_registry_rows: 3425
+        model_count: 5
+        model_eligibility_rows: 17125
+        eligible_cases_per_model: 2620
+        eligible_decisions: 13100
+        ineligible_decisions: 4025
+        region_policy_rows: 143
+        compatible_policy_rows: 86
+        prohibited_policy_rows: 57
+        schema_records: 5
+        validation_rows: 101
+        artifact_records: 7
+        canonical_figures: 1
+        methodology_reports: 1
+        completion_requirements: 20
+        output_file_count: 9
+        baseline_output_root: "E:/outputs/08_experiment_contracts_and_region_policy"
+        baseline_case_registry_rows: 525
+        baseline_model_eligibility_rows: 2100
+        baseline_region_policy_rows: 143
+        baseline_schema_records: 5
+        baseline_validation_rows: 101
+        baseline_artifact_records: 7
+        baseline_output_file_count: 9
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_case_rows_retained: 525
+        baseline_case_stable_fields_identical_except_dataset_scope: true
+        baseline_shared_model_eligibility_rows_identical: 2100
+        baseline_region_policy_byte_identical: true
+        baseline_schema_definitions_identical: true
         unexplained_missing_or_reduced_evidence: false
 
   frozen_baseline:
