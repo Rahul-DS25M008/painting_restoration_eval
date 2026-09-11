@@ -36,8 +36,11 @@ The central methodological boundary remains:
 The following decisions are approved:
 
 1. The production pipeline retains Notebooks 01–36 and adds only Notebook 12A
-   for full HINT restoration. Decision Notebook D01 remains a separately owned,
-   completed method-selection study and is outside the production numbering.
+   to the numbered production dependency chain for full HINT restoration.
+   Decision Notebook D01 remains a separately owned, completed method-selection
+   study. The approved supplemental Decision/Analysis Notebook D02 is likewise
+   outside the production numbering and executes after Notebook 21 under its
+   roadmap contract; it does not renumber or reopen Notebooks 01–36.
 2. Authoritative generated content belongs to notebook-owned output folders; retired `data/processed/` and legacy global output paths must not be reintroduced.
 3. `outputs/inventory/` is the sole global output exception.
 4. Restoration notebooks remain model-specific.
@@ -815,6 +818,14 @@ Rules for the active rerun:
 - Notebook 12A is the only approved new production notebook. It owns full HINT
   outputs under `outputs/12a_hint_restoration/`. D01 remains the selection source
   and must not be rerun as production.
+- After Notebook 21 completes its Controlled-300 gate and is committed, pause the
+  numbered rerun and implement
+  `d02_portrait_skin_tone_and_hand_restoration_audit.ipynb` before beginning
+  Notebook 22. D02 must first apply its annotation-overlap feasibility gate to
+  existing evidence. It may finish with a documented feasibility-only result,
+  but it must not generate new targeted masks or restorations without a separate
+  explicit approval. After D02 passes its applicable completion gate, resume the
+  unchanged numbered sequence at Notebook 22.
 
 #### Active Controlled-300 completion status
 

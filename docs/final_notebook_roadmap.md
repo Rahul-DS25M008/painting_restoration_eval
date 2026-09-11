@@ -1519,6 +1519,317 @@ validation/checks.csv
 
 ---
 
+## D02 — Portrait Skin-Tone and Hand Restoration Audit
+
+**Notebook:** `d02_portrait_skin_tone_and_hand_restoration_audit.ipynb`\
+**Origin:** New approved supplemental analysis arising from supervisor feedback\
+**Refactor status:** Not started\
+**Validation status:** Not started\
+**Completion gate passed:** No\
+**Output root:** `outputs/d02_portrait_skin_tone_and_hand_restoration_audit/`\
+**Depends on:** Notebooks 01–21, including the full-benchmark HINT producer in Notebook 12A
+
+### Placement and execution boundary
+
+D02 is an approved decision/analysis notebook outside the numbered production
+sequence. It preserves the Notebook 01–36 numbering in the same way that D01
+preserves the completed HINT-versus-MAT selection evidence. Its contract is
+frozen during the Controlled-300 rerun, but it must not execute until Notebook
+21 has completed, passed its gate, and been committed. The execution order is:
+
+```text
+Notebooks 01–21
+D02 portrait audit
+Notebooks 22–36
+```
+
+D02 must not reopen or alter the registered populations, masks, damaged images,
+restorations, metrics, or outputs owned by Notebooks 01–21. Its default design
+is analysis-only: first determine whether saved evidence provides adequate
+anatomical overlap, then analyze only eligible existing cases. New targeted
+masks or restoration inference are a fallback that requires a separate explicit
+approval after the feasibility gate fails.
+
+### Purpose and study priority
+
+D02 addresses two related supervisor suggestions through one shared portrait
+screening and anatomical-annotation layer while keeping their analyses and
+conclusions separate:
+
+1. **Primary study — hand-restoration difficulty:** test whether the evaluated
+   methods reconstruct damaged hands less faithfully than closely matched
+   damaged non-hand regions from the same painting and case.
+2. **Secondary study — depicted-skin-tone audit:** explore whether local
+   restoration evidence changes with the rendered lightness of annotated skin
+   regions in this controlled portrait collection.
+
+The hand study is the stronger and more defensible planned contribution. The
+skin-tone study is exploratory because the available paintings differ in
+collection source, period, medium, palette, scale, pose, lighting, and stylistic
+convention. It is not a racial-bias benchmark.
+
+### Approved evidence population and existing assets
+
+- Screen all 60 `portrait_figure` paintings: the original `p001`–`p010` cohort
+  and the added `p251`–`p300` cohort.
+- Load normalized clean references from
+  `outputs/02_image_preprocessing/images/clean/`.
+- Load canonical masks from
+  `outputs/03_canonical_mask_generation/images/masks/<painting_id>/` and
+  canonical damaged images from
+  `outputs/04_canonical_damaged_image_generation/images/damaged/<painting_id>/`.
+- Consider Notebook 05 damage-size cases and Notebook 06 mask-robustness
+  variants only after the canonical audit and only when they add relevant,
+  adequately intersecting anatomical evidence.
+- Treat Notebook 07 degradation cases as supplementary diagnostics rather than
+  the primary anatomy-restoration population. Global or non-removal effects do
+  not become inpainting tasks merely because a person is visible.
+- Join eligible cases to the completed candidates and evidence owned by
+  Notebooks 09–21. The primary common-method comparison covers OpenCV Telea,
+  LaMa, HINT, and Stable Diffusion. Stable Diffusion seeds remain nested repeated
+  observations. SDXL may appear only as descriptive evidence when an exact
+  eligible case already belongs to its bounded declared population.
+
+The focused Notebook 05–07 cohort contains seven portraits:
+`p001`, `p009`, `p256`, `p259`, `p267`, `p284`, and `p294`. All show people and
+visible hands, although hand scale, visibility, and damage overlap differ.
+
+### Preliminary visually shortlisted canonical cases
+
+The following cases were visually screened after Notebook 08. They establish
+that matching damaged images already exist, but they are not final analytical
+eligibility decisions. D02 must confirm exact pixel intersection against
+reviewed anatomical annotations before retaining any case.
+
+| Painting | Preliminary matching canonical cases | Why shortlisted |
+|---|---|---|
+| `p001` | `scratch_thin`, `loss_large`, `mixed_damage` | Damage visibly crosses the face or other exposed skin; a key darker rendered-skin example, but not a standalone subgroup. |
+| `p006` | `scratch_thin`, `loss_small`, `mixed_damage` | Existing masks visibly intersect the face and hands. |
+| `p007` | `scratch_thin`, `mixed_damage` | Damage visibly intersects both face and hand areas. |
+| `p008` | `loss_small` | Local missing region visibly intersects a hand. |
+| `p009` | `scratch_thin`, `loss_small`, `loss_large`, `mixed_damage` | Strong candidate with face damage and several large, clearly visible hands; supports both anatomy and damage-size screening. |
+| `p251` | `scratch_thin`, `mixed_damage` | Damage visibly intersects face and hand regions in a non-European portrait tradition. |
+| `p252` | `scratch_thin`, `mixed_damage` | Scratch evidence intersects a hand and mixed damage crosses the face. |
+| `p254` | `scratch_thin`, `loss_large` | Existing masks visibly intersect hand and face areas. |
+| `p255` | `scratch_thin`, `loss_large` | Existing masks visibly intersect exposed face or hand pixels. |
+| `p256` | `mixed_damage` | Damage appears to intersect the extended hand or arm area; exact overlap requires annotation. |
+| `p259` | `scratch_thin`, `loss_small`, `loss_large`, `mixed_damage` | Multiple existing masks visibly affect the face and hands; strong focused-cohort candidate. |
+| `p267` | `scratch_thin`, possibly `mixed_damage` | Clear face intersection; possible hand intersection remains provisional. |
+| `p284` | `scratch_thin`, `loss_large` | Damage visibly affects the face and hand; useful focused-cohort candidate. |
+| `p294` | `loss_small`, `mixed_damage` | Local loss visibly affects a hand and mixed damage covers part of the face. |
+
+For each listed family, the exact existing inputs follow these paths:
+
+```text
+outputs/03_canonical_mask_generation/images/masks/<painting_id>/<damage_family>.png
+outputs/04_canonical_damaged_image_generation/images/damaged/<painting_id>/<damage_family>.png
+```
+
+Notebook 06 is expected to provide additional accidental hand or face overlap
+because each focused painting has three mask families with five controlled
+variants. That expectation is not evidence of adequacy until the overlap audit
+has measured it.
+
+### Shared anatomical annotation contract
+
+Damage masks cannot define the anatomical target. D02 must load a separate,
+manually reviewed annotation layer covering, where visible:
+
+```text
+face
+visible_skin
+left_hand
+right_hand
+other_exposed_body_part
+```
+
+Each annotation record must include at least:
+
+- `painting_id` and stable annotation identifier;
+- `region_type`;
+- polygon, RLE, or binary-mask path;
+- visible pixel area on the normalized 768 × 768 content canvas;
+- ambiguity and occlusion fields;
+- annotator, optional second reviewer, and review status; and
+- a concise note for stylized, tiny, cropped, or otherwise uncertain regions.
+
+Annotations must respect recorded content bounds and must never be inferred
+silently from a photographic face, hand, race, or ethnicity detector. Any
+assisted proposal mechanism requires human correction and explicit provenance.
+
+### Hard feasibility gate
+
+Before reading model-performance outcomes, D02 must compute the intersection of
+every candidate damage mask with each reviewed anatomical region. Initial
+contract thresholds are:
+
+- at least 256 damaged anatomical pixels;
+- at least 5% of the annotated anatomical region affected;
+- adequate contiguous coverage for any crop-level metric; and
+- valid reference, damaged image, mask, restoration, and required evidence for
+  every compared method.
+
+The preparation layer may refine these exact thresholds only before outcome
+inspection and with the change recorded in the notebook contract. The
+analysis-only hand study proceeds when the audit finds approximately:
+
+- at least 12 independent paintings with usable hand intersections;
+- at least 20–30 usable hand-hit cases;
+- coverage from more than one damage family; and
+- viable within-case non-hand controls.
+
+If this gate fails, D02 must stop after publishing a feasibility result. A later
+self-contained targeted extension may be proposed to own anatomy-constrained
+masks, damaged images, four-model restorations, metrics, figures, reports,
+manifests, and validation, but it is not authorized by this contract.
+
+### Primary hand-restoration design
+
+For each eligible damaged hand region, construct a non-hand control from the
+same painting and damaged case. Match as closely as the saved mask allows on:
+
+- damaged pixel count and damaged fraction;
+- damage family and mask geometry;
+- local gradient or edge density;
+- texture complexity;
+- boundary distance; and
+- contiguous crop size where crop-based metrics are used.
+
+Measure sparse intersection evidence only with metrics that support sparse
+pixels, including MAE, RMSE, PSNR, CIEDE2000, lightness/chroma error, and
+applicable boundary or seam evidence. Use SSIM, LPIPS, CLIP, DINOv2, and other
+patch or feature metrics only on declared contiguous hand and matched-control
+crops. Never pass disconnected pixels to a metric whose assumptions require a
+spatial image patch.
+
+Add a blinded manual anatomical review covering:
+
+- correct visible digit count;
+- missing, duplicated, or fused digits;
+- broken hand contour;
+- implausible articulation or pose;
+- discontinuity at the wrist or arm; and
+- obvious non-anatomical texture substitution.
+
+The primary estimand is the within-case hand-minus-control performance
+difference for each method. Painting is the independent unit. Stable Diffusion
+seeds are collapsed within the fixed case/prompt/configuration group before
+painting-level inference. Report paired effect sizes and painting-clustered
+intervals; apply multiple-testing correction to a small predeclared primary
+outcome family. Candidate rows, seeds, masks, and metric rows must not be treated
+as independent paintings.
+
+### Secondary depicted-skin-tone design
+
+The approved name is **exploratory depicted-skin-tone restoration disparity
+audit**. D02 must not classify race or ethnicity from appearance or describe an
+observed difference as inherent model bias.
+
+- Annotate visible face and exposed-skin regions independently of damage masks.
+- Derive a continuous rendered-pixel measure, primarily median CIELAB `L*`, from
+  the clean annotated skin region; retain chroma and local contrast as context.
+- Use bins only for presentation and freeze their thresholds before examining
+  restoration outcomes.
+- Preserve explicit museum-catalog subject context where available, but do not
+  infer missing identity metadata from the image.
+- Analyze model-specific local errors against continuous rendered lightness and
+  show individual paintings rather than relying only on group averages.
+- Match or adjust descriptively for damaged fraction, visible face/skin area,
+  texture, palette, source, period, medium, pose, and image scale where the data
+  permit.
+
+The visually screened collection contains only a small and heterogeneous set of
+plausible darker-rendered or non-European subject examples, notably `p001` and
+Mughal/Indian works `p251`, `p252`, `p254`, and `p255`. The focused seven-painting
+cohort contains only `p001` as a clear darker-rendered example. Source, period,
+medium, composition, and style are therefore strongly confounded with rendered
+skin tone.
+
+If fewer than roughly six sufficiently matched paintings occupy a comparison
+range, or confounding cannot be reduced, D02 must retain a feasibility-only or
+case-descriptive conclusion and omit a between-group bias claim. Agreement does
+not establish correctness, and a local metric difference does not establish
+historical, social, or conservation meaning.
+
+### Approved batches
+
+1. **Contract, preflight, and ethical boundaries** — freeze questions,
+   exclusions, evidence sources, primary outcomes, thresholds, independent unit,
+   model scope, and stop conditions.
+2. **Portrait population and case loading** — load all 60 portraits, normalized
+   content bounds, N03–N07 cases, masks, damaged images, and validated manifests;
+   construct a complete screening table without reading model outcomes.
+3. **Anatomical annotation validation** — load and validate the reviewed face,
+   skin, hand, and optional exposed-body-region annotations, including visual QA.
+4. **Overlap audit and hard feasibility decision** — measure exact anatomical
+   intersections, apply predeclared thresholds, report coverage by painting and
+   damage family, and stop cleanly when a study is unsupported.
+5. **Candidate and evidence joins** — join only eligible cases to matched Telea,
+   LaMa, HINT, and Stable Diffusion candidates and existing N13–N21 evidence;
+   retain seed nesting and bounded SDXL status.
+6. **Hand-versus-control construction and measurement** — create matched
+   within-case controls, compute compatible sparse and contiguous-region
+   evidence, and prepare blinded review units.
+7. **Depicted-skin-tone audit** — compute the continuous rendered-lightness
+   description, qualified matching/context fields, local evidence, and hard
+   claim-eligibility result.
+8. **Painting-level analysis and robustness checks** — estimate paired effects,
+   clustered intervals, model contrasts, sensitivity to matching and thresholds,
+   and corrected tests where supported.
+9. **Visual evidence and report** — show all eligible-case coverage through
+   canonical tables and select representative visual units by explicit rules;
+   keep hand and skin-tone conclusions separate and state every limitation.
+10. **Persistence, validation, and traceability** — reload canonical outputs,
+    reconcile every row and file, write manifests and checks, map the approved
+    contract to evidence, and clean temporary material.
+
+### Planned canonical outputs
+
+The final preparation layer must minimize duplication and may refine filenames,
+but the owned artifact families are expected to include:
+
+```text
+data/anatomical_annotations.csv
+data/anatomical_overlap_audit.csv
+data/eligible_cases.csv
+data/manual_anatomy_review.csv
+metrics/hand_region_comparison.csv
+metrics/skin_tone_audit.csv
+figures/hand_vs_control.png
+figures/anatomical_failure_atlas.png
+figures/skin_tone_audit.png
+reports/portrait_skin_tone_and_hand_audit.html
+manifests/run_manifest.json
+manifests/artifacts.csv
+validation/checks.csv
+```
+
+The HTML report must be self-contained, provide the complete numerical coverage
+through owned tables, and use selected embedded panels to explain—not replace—the
+complete evidence. A missing or unsupported secondary skin-tone claim does not
+invalidate a properly completed hand study, but each study requires its own
+applicability and completion status.
+
+### Final completion gate
+
+- Notebook 21 and every direct producer have passed under Controlled-300.
+- All 60 portraits were screened; exclusions have explicit reasons.
+- Anatomical annotations are independent from damage masks and visibly reviewed.
+- Every retained case passes the frozen intersection and evidence-completeness
+  thresholds.
+- Hand and matched-control construction is reproducible and auditable.
+- Painting-level independence and Stable Diffusion seed nesting are preserved.
+- Sparse and contiguous-region metrics are used only where valid.
+- The manual anatomical rubric is complete for the retained visual-review scope.
+- The depicted-skin-tone result remains exploratory and passes its separate
+  claim-eligibility gate before any comparative statement is made.
+- No race, ethnicity, inherent-bias, historical-correctness, or conservation-
+  approval claim is inferred from computational evidence.
+- All outputs remain inside the D02 root, reload successfully, reconcile with
+  the artifact manifest, and pass consolidated validation.
+
+---
+
 ## 22 — Damage-Size Diffusion Uncertainty Extension
 
 **Notebook:** `22_damage_size_diffusion_uncertainty_extension.ipynb`\
@@ -2860,95 +3171,4 @@ The committed 50-painting outputs in the working tree are historical until
 replaced notebook by notebook. A mixed state is therefore expected during the
 transition, but no downstream notebook may treat an upstream stage as
 controlled-300 until that producer's new manifest and validation gate pass.
-
-## 6. Unnumbered post-pipeline study consideration
-
-The following supervisor suggestions are worth assessing after the
-controlled-300 rerun of Notebooks 01-36 is complete. They are planning ideas,
-not approved pipeline commitments, and no notebook number is assigned yet.
-They must not alter or delay the existing numbered sequence.
-
-### Shared feasibility audit
-
-Use the completed portrait/figure population and its saved masks, damaged
-images, restorations, metrics, manifests, and validation records to determine
-whether the existing evidence supports either study. The audit should:
-
-- screen all 60 portrait/figure paintings rather than starting from a small
-  convenience sample;
-- define subject and anatomical regions independently from the restoration
-  masks;
-- measure the intersection between each relevant region and the actual damage
-  mask;
-- retain only cases with enough damaged-region overlap for a meaningful local
-  comparison;
-- match or adjust comparisons for damage family, damaged fraction, mask
-  geometry, painting characteristics, and repeated outputs;
-- treat paintings as the independent unit and seeds as nested repeated
-  observations; and
-- decide whether the existing evidence is sufficient before generating any new
-  masks or restorations.
-
-The current random-mask populations do not guarantee adequate coverage of
-faces, skin, hands, or other body parts. Repeated Stable Diffusion seeds vary
-the completion for a fixed mask; they do not create new anatomical mask
-locations. Existing case counts therefore cannot be used as evidence that
-either proposed analysis is feasible.
-
-### Depicted-skin-tone subgroup comparison
-
-The defensible question is whether restoration performance differs between
-predefined depicted-skin-tone groups within the controlled portrait subset.
-The study must not infer race or ethnicity from an image or describe a result
-as inherent model bias without supporting annotations and a design that
-addresses confounding.
-
-If pursued, the study should:
-
-- prefer catalog descriptions when they contain relevant subject information;
-- otherwise record a manually reviewed `depicted_skin_tone_group`, including an
-  ambiguous or unclassifiable category;
-- annotate visible face and skin regions independently of the damage masks;
-- compare Telea, LaMa, HINT, and Stable Diffusion on identical eligible cases,
-  with SDXL included only as descriptive evidence when matching cases exist;
-- report local masked-region and skin-intersection PSNR, SSIM, LPIPS, DINOv2,
-  CIEDE2000, and seam evidence alongside representative visual panels; and
-- limit any conclusion to subgroup disparity in this controlled sample.
-
-Painting period, palette, lighting, style, pose, exposed-skin area, source
-collection, and mask placement can all confound the comparison. A small or
-poorly matched result must remain descriptive.
-
-### Hand and body-part restoration comparison
-
-This study would test whether damaged hands are harder to restore than matched
-non-hand regions. It should screen the portrait/figure collection for visible
-hands, annotate hand regions, and optionally retain face, clothing, and
-background regions as comparison controls.
-
-If pursued, the study should:
-
-- require a declared minimum intersection between the damage mask and the hand
-  region;
-- match hand and non-hand cases by damage family, damaged fraction, and mask
-  geometry;
-- compare the same four full-run methods on the same eligible cases;
-- compute reference, perceptual, structural, edge or directional, colour, and
-  seam evidence inside the hand-region intersection; and
-- add blinded manual review for fused fingers, missing digits, implausible
-  contours, and pose discontinuity because generic similarity metrics can miss
-  anatomical failures.
-
-### Decision after Notebook 36
-
-If the saved evidence provides adequate, balanced coverage, the two questions
-may share one later analysis-only extension because they use the same portrait
-screening, region annotations, matching policy, model outputs, and validation
-framework. Their statistical analyses and conclusions must remain separate.
-
-If coverage is inadequate, one self-contained extension may instead own the
-targeted anatomical masks, damaged images, four-model restorations, metrics,
-figures, report, manifests, and validation. The scope and notebook number must
-be approved only after the feasibility audit. No existing Notebook 01-36
-responsibility should be reopened merely to accommodate these optional studies.
 
