@@ -736,6 +736,18 @@ All notebooks 09–36.
 **Output root:** `outputs/09_opencv_telea_restoration/`  
 **Depends on:** Notebook 08
 
+**Approved Controlled-300 target:** Preserve the fixed-radius, deterministic
+Telea method, threshold policies, schemas, identifiers, artifact paths, and
+eight-batch notebook structure while expanding the validated worklist from 410
+to 2,620 eligible cases: 1,500 canonical, 245 damage-size, 525 mask-robustness,
+and 350 localized synthetic-degradation cases. Produce 2,620 restored PNGs and
+2,620 normalized restoration records across 300 unique clean paintings. Keep
+the five-row runtime summary, eight rule-pinned representative cases, five
+artifact records, and six canonical non-image outputs unchanged in structure,
+for 2,626 physical output files. The original 410 candidate identities and
+paths remain continuity evidence; changed image bytes are not expected because
+the Telea algorithm and its source inputs remain unchanged.
+
 ### Purpose
 
 Produce the deterministic classical inpainting baseline for all eligible cases.

@@ -39,6 +39,11 @@ class OpenCvTeleaRestorationTests(unittest.TestCase):
 
     def test_configuration_freezes_approved_thresholds_and_progress(self) -> None:
         policies = self.config["model"]["mask_threshold_policy"]
+        self.assertEqual(
+            self.config["dataset"]["dataset_scope"],
+            "controlled_300",
+        )
+        self.assertEqual(self.config["expected"]["eligible_case_count"], 2620)
         self.assertEqual(policies["binary_missing_region"]["threshold"], 128)
         self.assertEqual(policies["synthetic_degradation"]["threshold"], 13)
         self.assertEqual(
@@ -49,11 +54,11 @@ class OpenCvTeleaRestorationTests(unittest.TestCase):
         self.assertEqual(self.config["model"]["zero_control_policy"], "identity_noop")
         self.assertEqual(RESTORATION_GENERATOR_VERSION, "3.0.0")
 
-    def test_real_upstream_contract_builds_exact_410_case_worklist(self) -> None:
+    def test_real_upstream_contract_builds_exact_2620_case_worklist(self) -> None:
         cases = pd.read_csv(CASE_REGISTRY_PATH)
         eligibility = pd.read_csv(MODEL_ELIGIBILITY_PATH)
         worklist = build_eligible_case_worklist(cases, eligibility, self.config)
-        self.assertEqual(len(worklist), 410)
+        self.assertEqual(len(worklist), 2620)
         self.assertTrue(worklist["case_id"].is_unique)
         self.assertEqual(
             worklist.groupby("experiment_id").size().to_dict(),
