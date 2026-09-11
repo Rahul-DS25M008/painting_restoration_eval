@@ -733,6 +733,11 @@ All notebooks 09–36.
 
 **Notebook:** `09_opencv_telea_restoration.ipynb`  
 **Origin:** Existing Notebook 08  
+**Controlled-300 refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
+**Active validated coverage:** 2,620 eligible cases and restored PNGs across 300 paintings; 1,500 canonical, 245 damage-size, 525 mask-robustness, and 350 eligible synthetic-degradation cases; 300 zero controls and 2,320 nonzero cases; 72/72 scientific checks; 15/15 roadmap requirements; 2,626 canonical files\
+**Pilot comparison:** All 416 pilot paths and all CSV schemas are retained; 409/410 shared restoration PNGs are byte-identical; the sole changed shared PNG is the already-documented `p039` `loss_small` fourth robustness variant inherited from Notebook 06 helper v3.1.1 morphology enforcement; the representative figure is byte-identical; output count increased from 416 to 2,626 through 2,210 additional restored images\
 **Output root:** `outputs/09_opencv_telea_restoration/`  
 **Depends on:** Notebook 08
 

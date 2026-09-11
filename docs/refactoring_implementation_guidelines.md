@@ -843,8 +843,9 @@ checksums, limitations, and downstream eligibility.
 | 06 Mask Robustness Dataset | Finished | Finished | Yes | 35 paintings × 3 families × 5 variants = 525 cases; 105 groups; 525 masks, damaged images, and audit rows | All pilot paths and schemas retained; 148/151 shared PNGs byte-identical; one `p039` `loss_small` variant and the figure updated for helper v3.1.1 morphology enforcement |
 | 07 Synthetic Degradation Dataset | Finished | Finished | Yes | Balanced 35-painting cohort; 1,050 single plus 105 combined cases = 1,155 cases, effect-support masks, degraded images, and audit rows | All 337 pilot paths retained; all 330 shared generated PNGs byte-identical; table schemas and 165 pilot case/audit IDs retained; output count increased from 337 to 2,317 through the expanded cohort |
 | 08 Experiment Contracts and Region Policy | Finished | Finished | Yes | 3,425 registered cases; 17,125 decisions across 5 models including `hint_places2`; 2,620 eligible cases per model; 143 policy rows; 101/101 scientific checks; 20/20 completion requirements | All 9 pilot paths and schemas retained; 525 pilot cases retained with only intentional scope change; 2,100 shared eligibility rows unchanged; region policy byte-identical; schema definitions unchanged |
+| 09 OpenCV Telea Restoration | Finished | Finished | Yes | 2,620 eligible cases and restored PNGs; 300 zero controls; 2,320 nonzero cases; 72/72 scientific checks; 15/15 roadmap requirements; 2,626 canonical files | All 416 pilot paths and CSV schemas retained; 409/410 shared restoration PNGs byte-identical; sole changed shared PNG inherits Notebook 06's documented `p039` morphology correction; representative figure byte-identical |
 
-Notebook 08 is a completed Controlled-300 producer. Notebook 09 is the next
+Notebook 09 is a completed Controlled-300 producer. Notebook 10 is the next
 eligible minimal-delta rerun. No later notebook may describe its
 historical Controlled-50 outputs as Controlled-300 evidence until that notebook
 has been explicitly reopened, rerun, validated, baseline-compared, and committed.

@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-11T03:37:07.738744Z",
+  "updated_at_utc": "2026-09-11T12:29:01.156593Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -1983,7 +1983,7 @@
       "artifact_type": "figure",
       "artifact_role": "representative_visual_evidence",
       "schema_version": "figure.restoration_examples.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_opencv_telea",
       "validation_status": "passed",
       "row_count": 8,
@@ -1997,12 +1997,12 @@
       "artifact_type": "table",
       "artifact_role": "primary_restoration_records",
       "schema_version": "restorations.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_opencv_telea",
       "validation_status": "passed",
-      "row_count": 410,
+      "row_count": 2620,
       "file_count": 1,
-      "checksum": "c5e464f849d892cabbbbc0b4ee06022e09363541c765e940ebcf24c6a3f5182e"
+      "checksum": "5174a428ea8dfa742d4e9e9687360342fb88d8b19b2697b2540782bc70112442"
     },
     {
       "artifact_key": "opencv_telea.restored_images",
@@ -2011,12 +2011,12 @@
       "artifact_type": "image_directory",
       "artifact_role": "primary_restored_images",
       "schema_version": "restored_images.opencv_telea.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_opencv_telea",
       "validation_status": "passed",
-      "row_count": 410,
-      "file_count": 410,
-      "checksum": "ffe29eac266f9376d5bda284c55d35e51119327e7afe3b5b450e42951e099446"
+      "row_count": 2620,
+      "file_count": 2620,
+      "checksum": "c42d544bb20c56a31faf9a2a454ea37e76eedaffaa856974b538f9b0d9395175"
     },
     {
       "artifact_key": "opencv_telea.runtime_summary",
@@ -2025,12 +2025,12 @@
       "artifact_type": "table",
       "artifact_role": "runtime_evidence",
       "schema_version": "restoration_runtime_summary.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_opencv_telea",
       "validation_status": "passed",
       "row_count": 5,
       "file_count": 1,
-      "checksum": "9bd52af44354e12276f4dec9b92e0b2487c4db1aba37a54fa5155122379cd7c4"
+      "checksum": "33301930586ecb40511a6b1aab3d33db7ae501b0425c95f6c8f2545de8bd2265"
     },
     {
       "artifact_key": "preprocessing.audit",
@@ -2907,12 +2907,12 @@
       "artifact_type": "table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_opencv_telea",
       "validation_status": "passed",
       "row_count": 72,
       "file_count": 1,
-      "checksum": "72383a5b124ea2f58ffc73a62ebf273a8f06a66aa8d366b515081ce92feb98ea"
+      "checksum": "1e2d37bbc44b0db4ab7717be184dbc91e8b896399a961bb22f356b2b2cf2b7ac"
     },
     {
       "artifact_key": "validation.10_lama_restoration",
