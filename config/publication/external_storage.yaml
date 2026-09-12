@@ -13,7 +13,7 @@ interactive_store:
   provider: huggingface_dataset
   visibility: public
   revision: main
-  status: candidate_repository_smoke_test_verified
+  status: notebook_scoped_bulk_publication_enabled
   smoke_test:
     verified_at_utc: "2026-09-12T22:40:44Z"
     verified_file_count: 2
@@ -25,7 +25,7 @@ interactive_store:
       repo_id: RahulMaddineni264/painting-restoration-eval-candidates
       repository_url: https://huggingface.co/datasets/RahulMaddineni264/painting-restoration-eval-candidates
       resolve_base_url: https://huggingface.co/datasets/RahulMaddineni264/painting-restoration-eval-candidates/resolve/main
-      status: write_read_sha256_verified
+      status: write_read_sha256_verified_bulk_ready
     diagnostics:
       repo_id: RahulMaddineni264/painting-restoration-eval-diagnostics
       repository_url: https://huggingface.co/datasets/RahulMaddineni264/painting-restoration-eval-diagnostics
@@ -40,7 +40,7 @@ archive_store:
   publish_only_after_pipeline_freeze: true
 
 deployment:
-  current_pilot_branch: pilot-50
+  current_pilot_branch: pilot-50-dashboard
   controlled_300_repository_status: deferred_until_dashboard_rebuild
   lazy_remote_assets_required: true
 

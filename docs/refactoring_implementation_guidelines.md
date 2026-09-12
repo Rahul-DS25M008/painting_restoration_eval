@@ -1867,10 +1867,11 @@ uploads never authorize local deletion.
 
 The machine-readable provider and classification contract is
 `config/publication/external_storage.yaml`. The guarded planning, smoke-upload,
-and verification entry point is `tools/external_artifact_publication.py`, with
-its isolated dependencies declared in `requirements_publication.txt`. Bulk
-publication remains disabled until the smoke-tested workflow is deliberately
-extended and approved.
+notebook-scoped chunked upload, and verification entry point is
+`tools/external_artifact_publication.py`, with its isolated dependencies
+declared in `requirements_publication.txt`. Notebook-scoped bulk publication is
+enabled after the successful two-file remote-read and SHA-256 smoke test and the
+approved N12–N36 Git tracking boundary.
 
 The local project inventory and the publication registry have different
 responsibilities. The inventory describes what exists in the executing local
@@ -1878,11 +1879,21 @@ repository. The publication registry describes where approved evidence is
 available outside that working tree. Neither file may silently stand in for
 the other.
 
-The machine-readable provider and classification contract is
-`config/publication/external_storage.yaml`. Guarded planning, maximum-ten-file
-test upload, and remote byte/SHA-256 verification are implemented by
-`tools/external_artifact_publication.py`. Bulk publication must not be added to
-that tool until its test registry contains zero verification failures.
+After each applicable notebook passes its local completion gate, run the
+publication sequence for that producer only:
+
+```text
+python tools/external_artifact_publication.py plan --notebook <N> --limit-per-tier 0 --full-hash --merge-existing --manifest outputs/inventory/external_artifact_publication.csv
+python tools/external_artifact_publication.py upload --manifest outputs/inventory/external_artifact_publication.csv --producer-notebook <exact_output_stem> --chunk-size 50 --confirm UPLOAD_VERIFIED_NOTEBOOK_ARTIFACTS
+python tools/external_artifact_publication.py verify --manifest outputs/inventory/external_artifact_publication.csv --producer-notebook <exact_output_stem>
+```
+
+Planning replaces only the named producer's rows and preserves previously
+published producers. Upload checkpoints the registry after every bounded remote
+commit. A resumed upload skips both verified rows and rows already accepted but
+awaiting verification. The final verification command must report zero failures
+before the publication registry is committed. None of these commands deletes,
+moves, untracks, stages, or commits local evidence.
 
 Until the external repositories and upload tooling are configured and tested,
 all Controlled-300 outputs remain intact locally. The assistant must not run

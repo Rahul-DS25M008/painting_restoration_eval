@@ -1,10 +1,10 @@
-config_schema_version: "sdxl_config.v2"
-config_version: "2.0.0"
+config_schema_version: "sdxl_config.v3"
+config_version: "3.0.0"
 
 dataset:
   dataset_id: "painting_restoration_eval"
-  dataset_version: "1.0.0"
-  dataset_scope: "controlled_50"
+  dataset_version: "2.0.0"
+  dataset_scope: "controlled_300"
   experiment_id: "cross_experiment_sdxl_partial_evaluation"
 
 inputs:
@@ -52,7 +52,7 @@ output:
   worker_result_path: "work/partial_execution/batch_result.json"
   artifact_record_count: 5
   fixed_canonical_file_count: 6
-  maximum_canonical_file_count: 16
+  maximum_canonical_file_count: 41
 
 model:
   model_id: "sdxl_inpainting"
@@ -107,14 +107,15 @@ memory_strategy:
   allow_tf32: false
   persistent_pipeline: true
   rationale:
-    - "One isolated batch worker loads the pinned pipeline once and executes the bounded ten-case scope."
+    - "One isolated batch worker loads the pinned pipeline once and executes the bounded 35-case scope."
     - "Model CPU offload is required for the available 6 GB GPU and is faster than sequential CPU offload."
     - "PyTorch scaled-dot-product attention is used without attention slicing."
     - "VAE slicing and tiling reduce decoder memory without reducing resolution or denoising steps."
 
 execution:
   mode: "partial_evaluation"
-  global_budget_seconds: 7200
+  global_budget_seconds: 25200
+  budget_seconds_per_scheduled_case: 720
   per_case_timeout_seconds: 900
   minimum_seconds_to_start_case: 660
   stop_after_timeout: true
@@ -130,14 +131,22 @@ execution:
   checkpoint_policy_id: "atomic_candidate_checkpoint_after_each_case.v1"
 
 selection:
-  policy_id: "predeclared_cross_method_partial_scope_non_metric.v1"
+  policy_id: "predeclared_balanced_35_case_partial_scope_non_metric.v2"
   prohibit_metric_selection: true
   independent_unit: "painting"
   repeated_unit: "case_nested_within_painting"
-  scheduled_case_count: 10
-  painting_count: 5
-  canonical_case_count: 4
-  synthetic_case_count: 6
+  scheduled_case_count: 35
+  painting_count: 30
+  category_count: 5
+  cases_per_category: 7
+  canonical_case_count: 20
+  synthetic_case_count: 15
+  nested_pilot_paintings:
+    - "p001"
+    - "p018"
+    - "p026"
+    - "p039"
+    - "p043"
   cases:
     - selection_rank: 1
       execution_order: 7
@@ -169,11 +178,87 @@ selection:
     - selection_rank: 10
       execution_order: 4
       case_id: "synthetic_degradation__p026__water_stain_dirt__moderate"
+    - selection_rank: 11
+      execution_order: 11
+      case_id: "canonical__p251__loss_small"
+    - selection_rank: 12
+      execution_order: 21
+      case_id: "canonical__p261__scratch_thin"
+    - selection_rank: 13
+      execution_order: 31
+      case_id: "canonical__p271__mixed_damage"
+    - selection_rank: 14
+      execution_order: 16
+      case_id: "synthetic_degradation__p267__partial_transparency__moderate"
+    - selection_rank: 15
+      execution_order: 26
+      case_id: "synthetic_degradation__p284__water_stain_dirt__moderate"
+    - selection_rank: 16
+      execution_order: 12
+      case_id: "canonical__p151__loss_small"
+    - selection_rank: 17
+      execution_order: 22
+      case_id: "canonical__p161__scratch_thin"
+    - selection_rank: 18
+      execution_order: 32
+      case_id: "canonical__p171__loss_large"
+    - selection_rank: 19
+      execution_order: 17
+      case_id: "synthetic_degradation__p181__water_stain__moderate"
+    - selection_rank: 20
+      execution_order: 27
+      case_id: "synthetic_degradation__p198__partial_transparency__severe"
+    - selection_rank: 21
+      execution_order: 13
+      case_id: "canonical__p101__loss_small"
+    - selection_rank: 22
+      execution_order: 23
+      case_id: "canonical__p111__scratch_thin"
+    - selection_rank: 23
+      execution_order: 28
+      case_id: "canonical__p121__loss_large"
+    - selection_rank: 24
+      execution_order: 33
+      case_id: "canonical__p131__mixed_damage"
+    - selection_rank: 25
+      execution_order: 18
+      case_id: "synthetic_degradation__p107__water_stain_dirt__moderate"
+    - selection_rank: 26
+      execution_order: 14
+      case_id: "canonical__p051__loss_small"
+    - selection_rank: 27
+      execution_order: 24
+      case_id: "canonical__p061__scratch_thin"
+    - selection_rank: 28
+      execution_order: 34
+      case_id: "canonical__p071__mixed_damage"
+    - selection_rank: 29
+      execution_order: 19
+      case_id: "synthetic_degradation__p052__dirt_dust__moderate"
+    - selection_rank: 30
+      execution_order: 29
+      case_id: "synthetic_degradation__p073__partial_transparency__moderate"
+    - selection_rank: 31
+      execution_order: 15
+      case_id: "canonical__p201__loss_small"
+    - selection_rank: 32
+      execution_order: 25
+      case_id: "canonical__p211__scratch_thin"
+    - selection_rank: 33
+      execution_order: 35
+      case_id: "canonical__p221__loss_large"
+    - selection_rank: 34
+      execution_order: 20
+      case_id: "synthetic_degradation__p208__water_stain__moderate"
+    - selection_rank: 35
+      execution_order: 30
+      case_id: "synthetic_degradation__p210__dirt_dust__moderate"
 
 scope:
-  eligible_primary_case_count: 410
-  comparable_candidate_count: 1010
-  scheduled_candidate_count: 10
+  eligible_primary_case_count: 2620
+  zero_control_case_count: 300
+  comparable_candidate_count: 7860
+  scheduled_candidate_count: 35
   full_execution_authorized: false
   partial_execution_authorized: true
 
@@ -220,9 +305,9 @@ schema_versions:
   validation_checks: "validation_checks.v1"
 
 known_limitations:
-  - "The ten cases are a predeclared purposive partial scope and do not represent a full SDXL evaluation."
-  - "The ten case observations are nested within five paintings; downstream inference must treat painting as the independent unit."
+  - "The 35 cases are a predeclared balanced purposive scope and do not represent a full SDXL evaluation."
+  - "The 35 case observations span 30 paintings; repeated cases from five retained pilot anchors are nested observations."
   - "A timeout or CUDA out-of-memory failure is hardware/runtime evidence and must not be interpreted as poor restoration quality."
   - "Only technically validated completed candidates may enter downstream metric computation."
-  - "The global two-hour budget can leave later scheduled cases explicitly unexecuted."
+  - "The global seven-hour budget can leave later scheduled cases explicitly unexecuted."
   - "SDXL outputs are plausible prompt-conditioned inpaintings, not historically verified reconstructions or conservation recommendations."

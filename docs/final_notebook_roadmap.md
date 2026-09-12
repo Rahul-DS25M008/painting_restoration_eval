@@ -997,8 +997,12 @@ Notebooks 13–21 and all later analysis/reporting stages.
 
 **Notebook:** `12_sdxl_feasibility_or_restoration.ipynb`  
 **Origin:** Existing Previous Version of Notebook 25, Pre-refactor  
+**Controlled-300 refactor status:** In progress\
+**Validation status:** Pending\
+**Completion gate passed:** No\
+**Approved target:** 35 predeclared single-seed cases across 30 paintings; seven cases per visual category, with 20 canonical and 15 eligible synthetic cases\
 **Output root:** `outputs/12_sdxl_feasibility_or_restoration/`  
-**Depends on:** Notebook 08
+**Depends on:** Notebooks 08–11
 
 ### Purpose
 
@@ -1035,12 +1039,22 @@ category. The exact mix must preserve meaningful canonical and eligible
 synthetic-degradation coverage and be frozen before execution without using
 downstream metrics for selection.
 
+The frozen scope retains all ten pilot cases and adds 25 metric-independent
+cases. It spans 30 paintings: the five pilot anchors retain two nested cases
+each and 25 additional paintings contribute one case each. Every category has
+four canonical and three synthetic cases. Canonical coverage is exactly five
+cases per mask family; synthetic coverage is four water-stain, four dirt/dust,
+four partial-transparency, and three water-stain-plus-dirt cases. The exact IDs
+and diversity-first execution order are recorded in
+`docs/notebook_12_partial_evaluation_contract.md` and
+`config/experiments/sdxl.yaml`.
+
 - Use one primary generic prompt, seed 2026, 768 × 768 inference, and the
   validated generation-quality settings.
 - Load the pinned SDXL pipeline once in an isolated persistent batch worker.
-- Recalculate the global budget, per-case watchdog, and minimum-start reserve
-  from observed 50-painting runtime evidence before execution; do not silently
-  reuse the historical ten-case budget.
+- Use the recalculated 25,200-second global budget, 900-second per-case
+  watchdog, and 660-second minimum-start reserve derived from the pilot runtime
+  evidence and the previous 720-seconds-per-scheduled-case allowance.
 - Never retry automatically, fall back to CPU, reduce resolution, or reduce steps.
 - Execute in diversity-first order while retaining the original selection rank.
 - Threshold canonical missing-region masks at 128 and synthetic effect masks at 13.

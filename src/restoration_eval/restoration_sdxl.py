@@ -33,8 +33,8 @@ from restoration_eval.schemas import (
 
 
 SDXL_HELPER_NAME = "restoration_eval.restoration_sdxl"
-SDXL_HELPER_VERSION = "3.0.0"
-SDXL_CONFIG_SCHEMA_VERSION = "sdxl_config.v2"
+SDXL_HELPER_VERSION = "3.1.0"
+SDXL_CONFIG_SCHEMA_VERSION = "sdxl_config.v3"
 
 
 def utc_now_iso() -> str:
@@ -197,12 +197,12 @@ def build_sdxl_eligible_worklist(
     artworks: pd.DataFrame,
     config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Build the same 410-case eligible worklist used by Notebook 11."""
+    """Build the same eligible primary-case worklist used by Notebook 11."""
     stable_config = {
         "model": {"model_id": "stable_diffusion_inpainting"},
         "expected": {
             "eligible_case_count": int(config["scope"]["eligible_primary_case_count"]),
-            "zero_control_case_count": 50,
+            "zero_control_case_count": int(config["scope"]["zero_control_case_count"]),
         },
     }
     worklist = build_eligible_case_worklist(
@@ -755,7 +755,7 @@ either under-filled the region or introduced visible unrelated changes.
 # ---------------------------------------------------------------------------
 
 def load_sdxl_config(path: str | Path) -> dict[str, Any]:
-    """Load and strictly validate the approved bounded SDXL v2 contract."""
+    """Load and strictly validate the approved bounded SDXL v3 contract."""
     config_path = Path(path)
     with config_path.open("r", encoding="utf-8-sig") as handle:
         config = yaml.safe_load(handle)
@@ -795,9 +795,14 @@ def load_sdxl_config(path: str | Path) -> dict[str, Any]:
         label="execution",
     )
     if execution["mode"] != "partial_evaluation":
-        raise ValueError("Notebook 12 v2 authorizes partial_evaluation mode only")
-    if int(execution["global_budget_seconds"]) != 7200:
-        raise ValueError("The approved global SDXL budget is exactly 7200 seconds")
+        raise ValueError("Notebook 12 v3 authorizes partial_evaluation mode only")
+    scheduled_count = int(selection["scheduled_case_count"])
+    budget_per_case = int(execution["budget_seconds_per_scheduled_case"])
+    if int(execution["global_budget_seconds"]) != scheduled_count * budget_per_case:
+        raise ValueError(
+            "The global SDXL budget must equal scheduled cases multiplied by "
+            "budget_seconds_per_scheduled_case"
+        )
     if int(execution["per_case_timeout_seconds"]) != 900:
         raise ValueError("The approved per-case watchdog is exactly 900 seconds")
     if int(execution["minimum_seconds_to_start_case"]) <= 0:
@@ -822,18 +827,25 @@ def load_sdxl_config(path: str | Path) -> dict[str, Any]:
     case_ids = [str(item["case_id"]) for item in cases]
     selection_ranks = [int(item["selection_rank"]) for item in cases]
     execution_orders = [int(item["execution_order"]) for item in cases]
-    if len(cases) != 10 or len(set(case_ids)) != 10:
-        raise ValueError("The approved partial scope contains ten unique cases")
-    if sorted(selection_ranks) != list(range(1, 11)):
-        raise ValueError("selection_rank must be the integers 1 through 10")
-    if sorted(execution_orders) != list(range(1, 11)):
-        raise ValueError("execution_order must be the integers 1 through 10")
-    if int(selection["painting_count"]) != 5:
-        raise ValueError("The approved independent-unit count is five paintings")
+    if len(cases) != scheduled_count or len(set(case_ids)) != scheduled_count:
+        raise ValueError(
+            f"The approved partial scope must contain {scheduled_count} unique cases"
+        )
+    expected_order = list(range(1, scheduled_count + 1))
+    if sorted(selection_ranks) != expected_order:
+        raise ValueError("selection_rank must be contiguous from one to the case count")
+    if sorted(execution_orders) != expected_order:
+        raise ValueError("execution_order must be contiguous from one to the case count")
+    if int(selection["painting_count"]) <= 0:
+        raise ValueError("painting_count must be positive")
+    if int(selection["category_count"]) != 5:
+        raise ValueError("The controlled design requires five visual categories")
+    if int(selection["cases_per_category"]) != 7:
+        raise ValueError("The bounded SDXL design requires seven cases per category")
     if bool(scope["full_execution_authorized"]) or not bool(scope["partial_execution_authorized"]):
         raise ValueError("Scope authorization must be partial-only")
-    if int(scope["scheduled_candidate_count"]) != 10:
-        raise ValueError("scheduled_candidate_count must equal ten")
+    if int(scope["scheduled_candidate_count"]) != scheduled_count:
+        raise ValueError("Scope and selection scheduled-candidate counts disagree")
     return config
 
 
@@ -841,23 +853,37 @@ def select_partial_evaluation_scope(
     worklist: pd.DataFrame,
     config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Select the predeclared ten cases and preserve both declared orders."""
+    """Select the predeclared bounded cases and preserve both declared orders."""
     declarations = pd.DataFrame(config["selection"]["cases"])
     selected = declarations.merge(worklist, on="case_id", how="left", validate="one_to_one")
     if selected["painting_id"].isna().any():
         missing = selected.loc[selected["painting_id"].isna(), "case_id"].tolist()
         raise ValueError(f"Predeclared SDXL cases are absent from the worklist: {missing}")
     if selected["painting_id"].nunique() != int(config["selection"]["painting_count"]):
-        raise ValueError("Selected cases do not span the approved five paintings")
+        raise ValueError("Selected cases do not span the approved painting count")
     canonical = selected["experiment_id"].astype(str).eq("canonical_missing_region")
     if int(canonical.sum()) != int(config["selection"]["canonical_case_count"]):
         raise ValueError("Canonical-case count disagrees with the contract")
     if int((~canonical).sum()) != int(config["selection"]["synthetic_case_count"]):
         raise ValueError("Synthetic-case count disagrees with the contract")
-    if selected.groupby("painting_id").size().to_dict() != {
-        "p001": 2, "p018": 2, "p026": 2, "p039": 2, "p043": 2,
+    category_counts = selected["category"].astype(str).value_counts().to_dict()
+    expected_categories = int(config["selection"]["category_count"])
+    expected_per_category = int(config["selection"]["cases_per_category"])
+    if len(category_counts) != expected_categories or set(category_counts.values()) != {
+        expected_per_category
     }:
-        raise ValueError("Each approved painting must contribute exactly two nested cases")
+        raise ValueError(
+            "Selected cases must contain exactly seven cases in each controlled category"
+        )
+    painting_counts = selected.groupby("painting_id").size().to_dict()
+    nested_pilot = set(config["selection"]["nested_pilot_paintings"])
+    if any(painting_counts.get(painting_id) != 2 for painting_id in nested_pilot):
+        raise ValueError("Each retained pilot anchor must contribute two nested cases")
+    if any(
+        count != (2 if painting_id in nested_pilot else 1)
+        for painting_id, count in painting_counts.items()
+    ):
+        raise ValueError("Only the retained pilot anchors may contribute two cases")
     return selected.sort_values("execution_order", kind="stable").reset_index(drop=True)
 
 
@@ -910,7 +936,7 @@ def build_partial_candidate_plan(
     selected_scope: pd.DataFrame,
     config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Build the normalized ten-row candidate plan in execution order."""
+    """Build the normalized bounded candidate plan in execution order."""
     model = config["model"]
     prompt = config["prompt_policy"]
     execution = config["execution"]
@@ -1070,7 +1096,7 @@ def _atomic_write_csv_with_retries(
 
 
 def write_partial_checkpoint(frame: pd.DataFrame, path: str | Path) -> Path:
-    """Validate and atomically checkpoint the full ten-row candidate state."""
+    """Validate and atomically checkpoint the complete candidate state."""
     normalized = frame.reindex(columns=SDXL_PARTIAL_CANDIDATE_COLUMNS)
     validation = validate_dataframe(normalized, SDXL_PARTIAL_CANDIDATES_SCHEMA)
     if not validation.passed:
@@ -1117,8 +1143,9 @@ def build_batch_worker_job(
     checkpoint_path = output_root / str(output["checkpoint_path"])
     progress_path = output_root / str(output["progress_path"])
     payload = {
-        "job_schema_version": "sdxl_batch_worker_job.v1",
+        "job_schema_version": "sdxl_batch_worker_job.v2",
         "helper_version": SDXL_HELPER_VERSION,
+        "expected_candidate_count": len(candidates),
         "project_root": str(root),
         "notebook_output_root": str(output_root),
         "result_path": str(result_path),
@@ -1198,9 +1225,11 @@ def run_batch_worker_process(
                 else max(0.0, time.time() - float(case_started))
             )
             active = current_candidate or "none"
+            total = int(progress.get("total_count", 0) or 0)
+            total_display = str(total) if total else "?"
             print(
                 "SDXL watchdog: "
-                f"status={status}; resolved={resolved}/10; active={active}; "
+                f"status={status}; resolved={resolved}/{total_display}; active={active}; "
                 f"batch_elapsed={elapsed:.1f}s; case_elapsed={case_elapsed:.1f}s",
                 flush=True,
             )
@@ -1359,15 +1388,20 @@ def render_partial_evaluation_report(
     limitations = "\n".join(f"- {item}" for item in config["known_limitations"])
     packages = ", ".join(f"{key} {value}" for key, value in sorted(package_versions.items()))
     device = ", ".join(f"{key}={value}" for key, value in sorted(hardware.items()))
+    painting_count = int(candidates["painting_id"].astype(str).nunique())
+    scheduled_count = int(config["selection"]["scheduled_case_count"])
+    global_budget = int(config["execution"]["global_budget_seconds"])
+    per_case_timeout = int(config["execution"]["per_case_timeout_seconds"])
     return f"""# SDXL bounded partial-evaluation report
 
 ## Decision
 
 Validated availability state: **`{state}`**.
 
-The notebook predeclared ten cases nested within five paintings, used one generic
-prompt and seed 2026, and enforced a 7,200-second global budget plus a 900-second
-per-case watchdog. This is a purposive partial evaluation, not a full SDXL branch.
+The notebook predeclared {scheduled_count} balanced cases across {painting_count}
+paintings, used one generic prompt and seed 2026, and enforced a
+{global_budget:,}-second global budget plus a {per_case_timeout}-second per-case
+watchdog. This is a purposive partial evaluation, not a full SDXL branch.
 
 ## Execution result
 
@@ -1386,9 +1420,10 @@ and budget omissions are runtime evidence, never restoration-quality failures.
 
 ## Statistical boundary
 
-The independent unit is the painting (n=5). The two cases per painting are
-nested observations and must not be presented as ten independent paintings.
-No population-level SDXL claim is supported by this purposive scope.
+The independent unit is the painting (n={painting_count}). Repeated cases from
+the retained pilot anchors are nested observations and must not be treated as
+independent paintings. No population-level SDXL claim is supported by this
+purposive scope.
 
 ## Limitations
 

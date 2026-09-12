@@ -271,10 +271,10 @@ def execute_job(job: Mapping[str, Any]) -> dict[str, Any]:
 
 
 # ---------------------------------------------------------------------------
-# Persistent batch worker used by the v2 partial-evaluation contract.
+# Persistent batch worker used by the v3 partial-evaluation contract.
 # ---------------------------------------------------------------------------
 
-BATCH_WORKER_VERSION = "2.0.0"
+BATCH_WORKER_VERSION = "2.1.0"
 
 
 def _atomic_write_json(path: Path, payload: Mapping[str, Any]) -> None:
@@ -306,18 +306,21 @@ def _atomic_write_json(path: Path, payload: Mapping[str, Any]) -> None:
 def _load_batch_job(path: Path) -> dict[str, Any]:
     with path.open("r", encoding="utf-8-sig") as handle:
         job = json.load(handle)
-    if job.get("job_schema_version") != "sdxl_batch_worker_job.v1":
+    if job.get("job_schema_version") != "sdxl_batch_worker_job.v2":
         raise ValueError("Unsupported or missing SDXL batch-worker job schema")
     required = {
         "project_root", "notebook_output_root", "result_path",
         "checkpoint_path", "progress_path", "model", "memory_strategy",
-        "execution", "candidates",
+        "execution", "candidates", "expected_candidate_count",
     }
     missing = sorted(required - set(job))
     if missing:
         raise ValueError(f"SDXL batch-worker job is missing keys: {missing}")
-    if len(job["candidates"]) != 10:
-        raise ValueError("The bounded SDXL worker requires exactly ten candidate rows")
+    expected = int(job["expected_candidate_count"])
+    if expected <= 0 or len(job["candidates"]) != expected:
+        raise ValueError(
+            "The bounded SDXL worker candidate count disagrees with its job contract"
+        )
     return job
 
 
@@ -770,14 +773,14 @@ def main(argv: list[str] | None = None) -> int:
     try:
         with Path(args.job).open("r", encoding="utf-8-sig") as handle:
             schema_version = json.load(handle).get("job_schema_version")
-        if schema_version == "sdxl_batch_worker_job.v1":
+        if schema_version == "sdxl_batch_worker_job.v2":
             job = _load_batch_job(Path(args.job))
             result = execute_batch_job(job)
         else:
             job = _load_job(Path(args.job))
             result = execute_job(job)
     except Exception as exc:
-        if "schema_version" in locals() and schema_version == "sdxl_batch_worker_job.v1":
+        if "schema_version" in locals() and schema_version == "sdxl_batch_worker_job.v2":
             result = {
                 "result_schema_version": "sdxl_batch_worker_result.v1",
                 "worker_version": BATCH_WORKER_VERSION,

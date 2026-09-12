@@ -190,7 +190,8 @@ class SDXLPartialEvaluationTests(unittest.TestCase):
         model = self.config["model"]
         memory = self.config["memory_strategy"]
         self.assertEqual(execution["mode"], "partial_evaluation")
-        self.assertEqual(execution["global_budget_seconds"], 7200)
+        self.assertEqual(execution["global_budget_seconds"], 25200)
+        self.assertEqual(execution["budget_seconds_per_scheduled_case"], 720)
         self.assertEqual(execution["per_case_timeout_seconds"], 900)
         self.assertEqual(execution["minimum_seconds_to_start_case"], 660)
         self.assertFalse(execution["retry_failed_attempts"])
@@ -200,10 +201,10 @@ class SDXLPartialEvaluationTests(unittest.TestCase):
         self.assertEqual((model["inference_width"], model["inference_height"]), (768, 768))
         self.assertEqual(model["num_inference_steps"], 30)
         self.assertEqual(model["seed"], 2026)
-        self.assertEqual(SDXL_HELPER_VERSION, "3.0.0")
+        self.assertEqual(SDXL_HELPER_VERSION, "3.1.0")
 
     def test_exact_scope_and_diversity_first_order(self) -> None:
-        expected = [
+        expected_first_ten = [
             "canonical__p039__loss_large",
             "canonical__p018__mixed_damage",
             "synthetic_degradation__p043__partial_transparency__severe",
@@ -215,11 +216,19 @@ class SDXLPartialEvaluationTests(unittest.TestCase):
             "synthetic_degradation__p039__water_stain__severe",
             "synthetic_degradation__p026__dirt_dust__severe",
         ]
-        self.assertEqual(len(self.worklist), 410)
-        self.assertEqual(int(self.worklist["is_zero_control"].sum()), 50)
-        self.assertEqual(self.scope["case_id"].tolist(), expected)
-        self.assertEqual(self.scope["painting_id"].nunique(), 5)
-        self.assertEqual(self.scope.groupby("painting_id").size().unique().tolist(), [2])
+        self.assertEqual(len(self.worklist), 2620)
+        self.assertEqual(int(self.worklist["is_zero_control"].sum()), 300)
+        self.assertEqual(self.scope["case_id"].tolist()[:10], expected_first_ten)
+        self.assertEqual(len(self.scope), 35)
+        self.assertEqual(self.scope["painting_id"].nunique(), 30)
+        self.assertEqual(set(self.scope["category"].value_counts()), {7})
+        multiplicity = self.scope.groupby("painting_id").size()
+        self.assertEqual(int(multiplicity.eq(2).sum()), 5)
+        self.assertEqual(int(multiplicity.eq(1).sum()), 25)
+        self.assertEqual(
+            set(multiplicity.loc[multiplicity.eq(2)].index),
+            {"p001", "p018", "p026", "p039", "p043"},
+        )
 
     def test_real_cross_method_coverage_is_exact(self) -> None:
         audit = validate_cross_method_comparability(
@@ -228,12 +237,12 @@ class SDXLPartialEvaluationTests(unittest.TestCase):
             pd.read_csv(self.config["inputs"]["lama_restorations_path"]),
             pd.read_csv(self.config["inputs"]["stable_diffusion_candidates_path"]),
         )
-        self.assertEqual(len(audit), 30)
+        self.assertEqual(len(audit), 105)
         self.assertTrue(audit["coverage_passed"].all())
         self.assertEqual(set(audit["matching_completed_rows"]), {1})
 
     def test_candidate_plan_schema_thresholds_and_paths(self) -> None:
-        self.assertEqual(len(self.plan), 10)
+        self.assertEqual(len(self.plan), 35)
         self.assertEqual(list(self.plan.columns), list(SDXL_PARTIAL_CANDIDATE_COLUMNS))
         validation = validate_dataframe(self.plan, SDXL_PARTIAL_CANDIDATES_SCHEMA)
         self.assertTrue(validation.passed, validation.to_dict())
@@ -241,7 +250,7 @@ class SDXLPartialEvaluationTests(unittest.TestCase):
         self.assertEqual(set(self.plan.loc[canonical, "mask_threshold"]), {128})
         self.assertEqual(set(self.plan.loc[~canonical, "mask_threshold"]), {13})
         self.assertTrue(self.plan["restored_path"].str.endswith(".png").all())
-        self.assertEqual(self.plan["candidate_id"].nunique(), 10)
+        self.assertEqual(self.plan["candidate_id"].nunique(), 35)
 
     def test_materialized_checksums_and_batch_job(self) -> None:
         checked = materialize_partial_input_checksums(
@@ -259,8 +268,9 @@ class SDXLPartialEvaluationTests(unittest.TestCase):
                     notebook_output_root=output,
                 )
             )
-            self.assertEqual(payload["job_schema_version"], "sdxl_batch_worker_job.v1")
-            self.assertEqual(len(payload["candidates"]), 10)
+            self.assertEqual(payload["job_schema_version"], "sdxl_batch_worker_job.v2")
+            self.assertEqual(payload["expected_candidate_count"], 35)
+            self.assertEqual(len(payload["candidates"]), 35)
             self.assertTrue(payload["memory_strategy"]["persistent_pipeline"])
             self.assertEqual(job_path, output.resolve() / self.config["output"]["worker_job_path"])
             self.assertEqual(result_path, output.resolve() / self.config["output"]["worker_result_path"])
@@ -336,9 +346,9 @@ class SDXLPartialEvaluationTests(unittest.TestCase):
                 checkpoint_path=checkpoint,
                 progress_path=progress,
             )
-        self.assertEqual(len(final), 10)
+        self.assertEqual(len(final), 35)
         self.assertEqual((final["status"] == "timed_out").sum(), 1)
-        self.assertEqual((final["status"] == "skipped").sum(), 9)
+        self.assertEqual((final["status"] == "skipped").sum(), 34)
         self.assertEqual(set(final["availability_state"]), {"feasibility_only"})
         self.assertEqual(
             derive_partial_availability_state(final), "feasibility_only"

@@ -54,10 +54,14 @@ application will use a separate lightweight deployment repository. The two
 public Hugging Face dataset repositories are configured, and the candidates
 repository passed a two-file public remote-read, byte-count, and SHA-256 smoke
 test on 2026-09-12. The diagnostics repository is publicly reachable but awaits
-its first applicable write test; bulk publication and the Zenodo record remain
-incomplete. No tracked evidence has been removed, no Git/LFS history has been
-rewritten, and all current local outputs remain intact pending verified bulk
-upload and checksum gates.
+its first applicable write test; the Zenodo record remains incomplete. Commit
+`c4f1650c` applied the approved forward-only tracking boundary: exactly 14,970
+historical N12–N36 image artifacts were removed from the current `main` index,
+with zero unrelated deletions. Every file remains present locally, and all
+14,970 remain recoverable from `pilot-50-dashboard` and the frozen pilot tag.
+No Git/LFS history was rewritten. Notebook-scoped bulk publication is now
+enabled; each producer still requires a successful remote read, byte-count, and
+SHA-256 gate before its external record is accepted.
 
 ## 2. Original frozen baseline and completed-pipeline protection
 

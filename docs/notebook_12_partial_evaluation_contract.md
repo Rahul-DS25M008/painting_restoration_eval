@@ -1,9 +1,9 @@
 # Notebook 12 SDXL bounded partial-evaluation contract
 
-**Status:** executed and frozen; documentation reviewed 2026-09-04\
-**Refactor status:** Finished\
-**Validation status:** Finished\
-**Completion gate passed:** Yes
+**Status:** Controlled-300 execution contract approved 2026-09-13\
+**Refactor status:** In progress\
+**Validation status:** Pending\
+**Completion gate passed:** No
 
 ## Status and purpose
 
@@ -16,40 +16,35 @@ failed restoration. Its scientific contribution is a transparent comparison
 asset under strict runtime limits.
 
 The machine-readable authority is `config/experiments/sdxl.yaml`
-(`sdxl_config.v2`). This document explains that contract in human-readable
+(`sdxl_config.v3`). This document explains that contract in human-readable
 form. The final notebook roadmap and refactoring implementation guidelines
 remain controlling repository-wide documents.
 
 This authored design contract remains under `docs/`; the executed report,
 candidates, validation, and manifests belong to the notebook-owned output root.
-The policies and batch plan below describe the completed run. They do not
-authorize a new execution or replacement of its frozen outputs.
+The policy and batch plan below authorize the bounded Controlled-300 rerun. The
+tagged `pilot-50-complete` evidence remains frozen and independently recoverable.
 
-## Completion evidence
+## Pilot evidence used to size the rerun
 
-The saved run `run_1daaf4a3dcb34b5599b0ff89bb7034d3` completed on 2026-08-26.
-All ten predeclared cases produced technically valid saved images: four canonical
-and six synthetic cases across five paintings. The final ledger contains 236
-validation rows with zero blocking failures; the completion gate passed.
-The output root contains 16 canonical files, including the ten images, with no
-temporary work files left at completion.
+The frozen pilot run completed all ten predeclared cases: four canonical and six
+synthetic cases across five paintings. It recorded 3,784.7 seconds total runtime,
+a 378.5-second mean, a 294.9-second median, and no technical failure. Those ten
+cases remain inside the expanded scope so the new execution retains a direct
+bridge to the pilot.
 
-The executed report records 3,784.7 seconds total runtime and a 294.9-second
-median. All ten completed within the approved bounded execution; the guardrail
-and unstarted-case states below are policy definitions, not observed failures.
-Availability remains `partial_evaluation`, even though the entire ten-case
-selection completed. Technical completion does not mean visual quality approval.
+The Controlled-300 budget is not a result claim. It scales the previous
+720-seconds-per-scheduled-case allowance to 35 cases, producing a 25,200-second
+global limit. The observed pilot mean projects about 3.7 hours of execution;
+the seven-hour ceiling provides conservative headroom without permitting an
+unbounded run.
 
-- [Run manifest](../outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json)
-- [Executed partial-evaluation report](../outputs/12_sdxl_feasibility_or_restoration/reports/partial_evaluation_report.md)
-- [Candidate table](../outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv)
-- [Consolidated validation](../outputs/12_sdxl_feasibility_or_restoration/validation/checks.csv)
+## Frozen Controlled-300 scope
 
-## Frozen scope
-
-The independent unit is the painting. Five paintings are represented, each by
-two nested cases. The ten case rows must not be analyzed as ten independent
-paintings.
+The independent unit is the painting. The 35 cases span 30 paintings and exactly
+seven cases per controlled visual category. The five retained pilot anchors each
+contribute two nested cases; the other 25 paintings contribute one case each.
+Case rows must therefore not be interpreted as 35 independent paintings.
 
 | Selection rank | Execution order | Case ID | Family |
 |---:|---:|---|---|
@@ -63,10 +58,41 @@ paintings.
 | 8 | 10 | `synthetic_degradation__p026__dirt_dust__severe` | synthetic |
 | 9 | 3 | `synthetic_degradation__p043__partial_transparency__severe` | synthetic |
 | 10 | 4 | `synthetic_degradation__p026__water_stain_dirt__moderate` | synthetic |
+| 11 | 11 | `canonical__p251__loss_small` | canonical |
+| 12 | 21 | `canonical__p261__scratch_thin` | canonical |
+| 13 | 31 | `canonical__p271__mixed_damage` | canonical |
+| 14 | 16 | `synthetic_degradation__p267__partial_transparency__moderate` | synthetic |
+| 15 | 26 | `synthetic_degradation__p284__water_stain_dirt__moderate` | synthetic |
+| 16 | 12 | `canonical__p151__loss_small` | canonical |
+| 17 | 22 | `canonical__p161__scratch_thin` | canonical |
+| 18 | 32 | `canonical__p171__loss_large` | canonical |
+| 19 | 17 | `synthetic_degradation__p181__water_stain__moderate` | synthetic |
+| 20 | 27 | `synthetic_degradation__p198__partial_transparency__severe` | synthetic |
+| 21 | 13 | `canonical__p101__loss_small` | canonical |
+| 22 | 23 | `canonical__p111__scratch_thin` | canonical |
+| 23 | 28 | `canonical__p121__loss_large` | canonical |
+| 24 | 33 | `canonical__p131__mixed_damage` | canonical |
+| 25 | 18 | `synthetic_degradation__p107__water_stain_dirt__moderate` | synthetic |
+| 26 | 14 | `canonical__p051__loss_small` | canonical |
+| 27 | 24 | `canonical__p061__scratch_thin` | canonical |
+| 28 | 34 | `canonical__p071__mixed_damage` | canonical |
+| 29 | 19 | `synthetic_degradation__p052__dirt_dust__moderate` | synthetic |
+| 30 | 29 | `synthetic_degradation__p073__partial_transparency__moderate` | synthetic |
+| 31 | 15 | `canonical__p201__loss_small` | canonical |
+| 32 | 25 | `canonical__p211__scratch_thin` | canonical |
+| 33 | 35 | `canonical__p221__loss_large` | canonical |
+| 34 | 20 | `synthetic_degradation__p208__water_stain__moderate` | synthetic |
+| 35 | 30 | `synthetic_degradation__p210__dirt_dust__moderate` | synthetic |
 
-Selection rank preserves the originally approved scientific list. Execution
-order is diversity-first so a prematurely bounded run is less concentrated in
-one damage family or painting.
+Selection ranks 1–10 preserve the original scientific list, and ranks 11–35 are
+the metric-independent expansion. Execution order retains the first ten pilot
+orders and then cycles across categories, damage families, and experiment types
+so an early bounded stop is not concentrated in one category.
+
+The 20 canonical cases contain exactly five examples of each canonical mask
+family. The 15 synthetic cases contain four water-stain, four dirt/dust, four
+partial-transparency, and three water-stain-plus-dirt cases. Every visual
+category contains four canonical and three synthetic cases.
 
 Every case must have exactly one completed comparable row in the canonical
 OpenCV Telea, LaMa, and Stable Diffusion primary branches before SDXL execution
@@ -116,7 +142,7 @@ valid result therefore has:
 
 The parent notebook starts one isolated persistent worker.
 
-- Global wall-clock budget: 7,200 seconds.
+- Global wall-clock budget: 25,200 seconds (seven hours).
 - Per-case heartbeat watchdog: 900 seconds.
 - Minimum remaining budget required to start a case: 660 seconds.
 - Progress polling: every second.
@@ -135,7 +161,7 @@ losing completed cases or aborting inference because a CSV was briefly locked.
 
 ## Candidate-state semantics
 
-All ten predeclared rows persist in `data/candidates.csv`.
+All 35 predeclared rows persist in `data/candidates.csv`.
 
 Allowed terminal states include:
 
@@ -177,7 +203,7 @@ validation/checks.csv
 ```
 
 The fixed canonical file count is six excluding restored images. The maximum
-canonical count is sixteen when all ten scheduled images complete. Work files
+canonical count is 41 when all 35 scheduled images complete. Work files
 belong under `work/partial_execution/` and are not canonical artifacts.
 
 ## Downstream eligibility
@@ -196,8 +222,8 @@ seed per case. Notebook 21 compares validated SDXL rows on matched cases.
 Notebook 30 owns model-card and compute-limit reporting. Reports and the
 dashboard must not imply full SDXL evaluation.
 
-The ten completed candidates are included in downstream metric and reporting
-coverage where the declared metric-region contract applies. Their single seed
+Technically valid completed candidates are included in downstream metric and
+reporting coverage where the declared metric-region contract applies. Their single seed
 does not support an SDXL uncertainty comparison in N18, N19, or N22.
 
 ## Notebook batches

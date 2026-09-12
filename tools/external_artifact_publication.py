@@ -1,14 +1,12 @@
-"""Plan, test-publish, and verify externally hosted notebook artifacts.
+"""Plan, publish, and verify externally hosted notebook artifacts.
 
 The tool is deliberately conservative:
 
 * ``plan`` only reads notebook output files and writes a publication registry.
 * ``upload-test`` refuses more than ten rows and requires an explicit phrase.
+* ``upload`` publishes one explicitly named notebook in bounded commits.
 * ``verify`` performs a remote read and checks both byte count and SHA-256.
 * no command deletes, moves, untracks, stages, or commits local files.
-
-Bulk publication is intentionally not implemented until the guarded test has
-passed against the configured repositories.
 """
 
 from __future__ import annotations
@@ -144,7 +142,8 @@ def configured_targets(config: dict[str, Any]) -> dict[str, PublicationTarget]:
 def discover_rows(
     root: Path,
     config: dict[str, Any],
-    through_notebook: int,
+    through_notebook: int | None,
+    exact_notebook: int | None = None,
 ) -> list[dict[str, str]]:
     rules = config["classification"]
     extensions = {str(value).lower() for value in rules["media_extensions"]}
@@ -158,7 +157,11 @@ def discover_rows(
     output_roots = sorted(path for path in (root / "outputs").iterdir() if path.is_dir())
     for output_root in output_roots:
         number = parse_notebook_number(output_root)
-        if number is None or number > through_notebook:
+        if number is None:
+            continue
+        if exact_notebook is not None and number != exact_notebook:
+            continue
+        if exact_notebook is None and through_notebook is not None and number > through_notebook:
             continue
         for path in sorted(output_root.rglob("*")):
             if not path.is_file() or path.suffix.lower() not in extensions:
@@ -258,7 +261,12 @@ def command_plan(args: argparse.Namespace) -> int:
     root = find_project_root(Path.cwd())
     config_path = (root / args.config).resolve()
     config = load_yaml(config_path)
-    rows = discover_rows(root, config, args.through_notebook)
+    rows = discover_rows(
+        root,
+        config,
+        args.through_notebook,
+        exact_notebook=args.notebook,
+    )
     rows = deterministic_test_subset(rows, args.limit_per_tier)
     if args.require_test_limit and len(rows) > 10:
         raise RuntimeError(f"Test manifest contains {len(rows)} rows; maximum is 10.")
@@ -266,6 +274,20 @@ def command_plan(args: argparse.Namespace) -> int:
         for row in rows:
             row["sha256"] = sha256_file(root / row["local_relative_path"])
     manifest_path = (root / args.manifest).resolve()
+    if args.merge_existing and manifest_path.is_file():
+        existing = read_manifest(manifest_path)
+        replaced_producers = {row["producer_notebook"] for row in rows}
+        rows = [
+            row
+            for row in existing
+            if row["producer_notebook"] not in replaced_producers
+        ] + rows
+        rows.sort(
+            key=lambda row: (
+                row["producer_notebook"],
+                row["local_relative_path"],
+            )
+        )
     write_manifest(manifest_path, rows)
     total_bytes = sum(int(row["size_bytes"]) for row in rows)
     print(f"Publication plan: {manifest_path}")
@@ -328,6 +350,126 @@ def command_upload_test(args: argparse.Namespace) -> int:
     return 0
 
 
+def _selected_manifest_rows(
+    rows: list[dict[str, str]],
+    producer_notebook: str | None,
+) -> list[dict[str, str]]:
+    selected = (
+        rows
+        if producer_notebook is None
+        else [
+            row
+            for row in rows
+            if row["producer_notebook"] == producer_notebook
+        ]
+    )
+    if not selected:
+        label = producer_notebook or "the requested selection"
+        raise RuntimeError(f"No publication rows found for {label!r}.")
+    return selected
+
+
+def command_upload(args: argparse.Namespace) -> int:
+    """Publish one notebook's fully hashed rows in bounded resumable commits."""
+    if args.confirm != "UPLOAD_VERIFIED_NOTEBOOK_ARTIFACTS":
+        raise RuntimeError(
+            "Refusing bulk upload. Pass --confirm "
+            "UPLOAD_VERIFIED_NOTEBOOK_ARTIFACTS exactly."
+        )
+    chunk_size = int(args.chunk_size)
+    if not 1 <= chunk_size <= 100:
+        raise ValueError("chunk-size must be between 1 and 100")
+
+    root = find_project_root(Path.cwd())
+    manifest_path = (root / args.manifest).resolve()
+    rows = read_manifest(manifest_path)
+    selected = _selected_manifest_rows(rows, args.producer_notebook)
+    producers = {row["producer_notebook"] for row in selected}
+    if len(producers) != 1:
+        raise RuntimeError("Bulk upload requires exactly one producer notebook.")
+    if any(not row["sha256"] for row in selected):
+        raise RuntimeError("Every selected row must contain a full SHA-256.")
+
+    for row in selected:
+        local = root / row["local_relative_path"]
+        if not local.is_file():
+            raise FileNotFoundError(local)
+        if local.stat().st_size != int(row["size_bytes"]):
+            raise RuntimeError(f"Local byte count changed after planning: {local}")
+        if sha256_file(local) != row["sha256"]:
+            raise RuntimeError(f"Local SHA-256 changed after planning: {local}")
+
+    pending = [
+        row
+        for row in selected
+        if row["publication_status"] not in {
+            "uploaded_unverified",
+            "published_verified",
+        }
+    ]
+    if not pending:
+        verified = sum(
+            row["publication_status"] == "published_verified"
+            for row in selected
+        )
+        print(
+            f"No upload-pending rows remain: {verified} verified and "
+            f"{len(selected) - verified} awaiting remote verification."
+        )
+        return 0
+
+    try:
+        from huggingface_hub import CommitOperationAdd, HfApi
+    except ImportError as exc:  # pragma: no cover - environment-specific message
+        raise RuntimeError(
+            "huggingface_hub is required. Install requirements_publication.txt first."
+        ) from exc
+
+    api = HfApi()
+    grouped: dict[str, list[dict[str, str]]] = defaultdict(list)
+    for row in pending:
+        grouped[row["repository_id"]].append(row)
+
+    completed = 0
+    producer = next(iter(producers))
+    for repo_id, repo_rows in sorted(grouped.items()):
+        repo_rows.sort(key=lambda row: row["local_relative_path"])
+        for start in range(0, len(repo_rows), chunk_size):
+            chunk = repo_rows[start : start + chunk_size]
+            operations = [
+                CommitOperationAdd(
+                    path_in_repo=row["path_in_repository"],
+                    path_or_fileobj=str(root / row["local_relative_path"]),
+                )
+                for row in chunk
+            ]
+            info = api.create_commit(
+                repo_id=repo_id,
+                repo_type="dataset",
+                operations=operations,
+                commit_message=(
+                    f"Publish {producer} artifacts "
+                    f"{start + 1}-{start + len(chunk)}"
+                ),
+            )
+            commit_url = str(getattr(info, "commit_url", ""))
+            published_at = utc_now()
+            for row in chunk:
+                row["publication_status"] = "uploaded_unverified"
+                row["publication_commit_url"] = commit_url
+                row["published_at_utc"] = published_at
+                row["verification_status"] = "not_verified"
+                row["verified_at_utc"] = ""
+                row["verification_error"] = ""
+            write_manifest(manifest_path, rows)
+            completed += len(chunk)
+            print(
+                f"Uploaded {completed}/{len(pending)} pending rows to {repo_id}; "
+                "remote verification remains required."
+            )
+    return 0
+
+
 def remote_sha256(uri: str, chunk_size: int = 4 * 1024 * 1024) -> tuple[str, int]:
     digest = hashlib.sha256()
     size = 0
@@ -343,8 +485,9 @@ def command_verify(args: argparse.Namespace) -> int:
     root = find_project_root(Path.cwd())
     manifest_path = (root / args.manifest).resolve()
     rows = read_manifest(manifest_path)
+    selected = _selected_manifest_rows(rows, args.producer_notebook)
     failures = 0
-    for index, row in enumerate(rows, start=1):
+    for index, row in enumerate(selected, start=1):
         try:
             remote_hash, remote_size = remote_sha256(row["remote_uri"])
             expected_size = int(row["size_bytes"])
@@ -360,13 +503,16 @@ def command_verify(args: argparse.Namespace) -> int:
             row["verification_status"] = "verified"
             row["verified_at_utc"] = utc_now()
             row["verification_error"] = ""
-            print(f"[{index}/{len(rows)}] verified {row['local_relative_path']}")
+            print(f"[{index}/{len(selected)}] verified {row['local_relative_path']}")
         except Exception as exc:  # preserve every row and report the exact failure
             failures += 1
             row["verification_status"] = "failed"
             row["verified_at_utc"] = utc_now()
             row["verification_error"] = f"{type(exc).__name__}: {exc}"
-            print(f"[{index}/{len(rows)}] FAILED {row['local_relative_path']}: {exc}")
+            print(
+                f"[{index}/{len(selected)}] FAILED "
+                f"{row['local_relative_path']}: {exc}"
+            )
     write_manifest(manifest_path, rows)
     print(f"Verification failures: {failures}")
     return 1 if failures else 0
@@ -383,12 +529,22 @@ def build_parser() -> argparse.ArgumentParser:
     )
     plan.add_argument("--through-notebook", type=int, default=11)
     plan.add_argument(
+        "--notebook",
+        type=int,
+        help="Plan only one numbered notebook output root.",
+    )
+    plan.add_argument(
         "--manifest",
         default="outputs/inventory/external_artifact_publication_test.csv",
     )
     plan.add_argument("--limit-per-tier", type=int, default=2)
     plan.add_argument("--full-hash", action="store_true")
     plan.add_argument("--require-test-limit", action="store_true")
+    plan.add_argument(
+        "--merge-existing",
+        action="store_true",
+        help="Preserve rows for other producer notebooks in the target manifest.",
+    )
     plan.set_defaults(function=command_plan)
 
     upload = subparsers.add_parser(
@@ -401,6 +557,19 @@ def build_parser() -> argparse.ArgumentParser:
     upload.add_argument("--confirm", required=True)
     upload.set_defaults(function=command_upload_test)
 
+    bulk = subparsers.add_parser(
+        "upload",
+        help="Upload one fully hashed producer notebook in bounded commits.",
+    )
+    bulk.add_argument(
+        "--manifest",
+        default="outputs/inventory/external_artifact_publication.csv",
+    )
+    bulk.add_argument("--producer-notebook", required=True)
+    bulk.add_argument("--chunk-size", type=int, default=50)
+    bulk.add_argument("--confirm", required=True)
+    bulk.set_defaults(function=command_upload)
+
     verify = subparsers.add_parser(
         "verify", help="Download test files and verify size and SHA-256."
     )
@@ -408,6 +577,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--manifest",
         default="outputs/inventory/external_artifact_publication_test.csv",
     )
+    verify.add_argument("--producer-notebook")
     verify.set_defaults(function=command_verify)
     return parser
 
