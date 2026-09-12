@@ -43,3 +43,13 @@ docs/supervisor/Next_Steps.docx
 !docs/supervisor/Supervisor_Dashboard_Walkthrough_Guide.pdf
 !docs/supervisor/Next_Steps.pdf
 .codex_tmp/
+
+# Controlled-300 storage boundary (Notebook 12 onward).
+# Full notebook-owned image collections remain local and are published to the
+# configured Hugging Face dataset repositories after checksum verification.
+# GitHub retains notebooks, compact evidence tables, validation, manifests,
+# reports, remote indexes, and selected figures. Notebooks 01-11 remain the
+# final full-output Git/LFS checkpoint.
+/outputs/1[2-9]_*/images/
+/outputs/2[0-9]_*/images/
+/outputs/3[0-6]_*/images/
