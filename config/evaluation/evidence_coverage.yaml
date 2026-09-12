@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.7"
+config_version: "1.1.8"
 
 evidence_coverage:
   authority:
@@ -51,13 +51,13 @@ evidence_coverage:
   # Incremental transition ledger; update only after each notebook passes its
   # completion gate and read-only pilot-output comparison.
   controlled_300_rerun:
-    recorded_on: "2026-09-11"
+    recorded_on: "2026-09-12"
     recovery_tag: "pilot-50-complete"
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "10"
-    next_eligible_notebook_id: "11"
+    completed_through_notebook_id: "11"
+    next_eligible_notebook_id: "12"
     completed_notebooks:
       - notebook_id: "01"
         stem: "01_dataset_verification"
@@ -458,6 +458,57 @@ evidence_coverage:
         baseline_changed_shared_image: "images/restored/mask_robustness/mask_robustness__p039__loss_small__target_04p5pct__variant_04.png"
         baseline_changed_image_reason: "inherited_notebook_06_helper_v3_1_1_morphology_correction"
         baseline_representative_figure_byte_identical: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "11"
+        stem: "11_stable_diffusion_restoration"
+        output_root: "outputs/11_stable_diffusion_restoration"
+        manifest_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        candidate_rows: 8520
+        candidate_rows_by_role:
+          primary: 2620
+          prompt_context: 4460
+          uncertainty_extension: 1440
+        model_inference_rows: 8220
+        zero_control_rows: 300
+        restored_image_files: 8520
+        prompt_policy_rows: 6
+        prompt_ablation_design_rows: 1355
+        formal_scratch_cases: 300
+        formal_scratch_painting_seed_pairs: 1200
+        formal_scratch_outcomes: 2400
+        runtime_summary_rows: 14
+        runtime_summary_total_seconds: 71737.585875
+        validation_rows: 176
+        persistence_checks: 9
+        manifest_handoff_checks: 5
+        registry_update_checks: 4
+        final_completion_checks: 7
+        artifact_records: 9
+        completion_requirements: 23
+        canonical_output_file_count: 8530
+        work_file_count_after_completion: 0
+        baseline_output_root: "E:/outputs/11_stable_diffusion_restoration"
+        baseline_candidate_rows: 1330
+        baseline_restored_image_files: 1330
+        baseline_prompt_policy_rows: 6
+        baseline_prompt_ablation_design_rows: 210
+        baseline_runtime_summary_rows: 14
+        baseline_validation_rows: 176
+        baseline_artifact_records: 9
+        baseline_output_file_count: 1340
+        baseline_nonimage_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_candidate_identities_retained: 1298
+        baseline_shared_restored_images_byte_identical: 1297
+        baseline_changed_shared_image: "images/restored/mask_robustness/mask_robustness__p039__loss_small__target_04p5pct__variant_04/sd15__p00__s2026__56164773356e.png"
+        baseline_changed_image_reason: "inherited_notebook_06_helper_v3_1_1_morphology_correction"
+        baseline_exploratory_prompt_context_rows_displaced: 32
+        baseline_displacement_reason: "approved_nonmetric_hash_stratified_selection_recomputed_over_controlled_300"
+        primary_formal_scratch_and_base_uncertainty_responsibilities_preserved: true
         unexplained_missing_or_reduced_evidence: false
 
   frozen_baseline:

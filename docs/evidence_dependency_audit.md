@@ -37,8 +37,8 @@ and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
 **Controlled-300 transition review: 2026-09-11.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebooks 01–10 are
-completed Controlled-300 producers. Notebooks 11–36 remain historical
+dependency order for the approved 300-painting study. Notebooks 01–11 are
+completed Controlled-300 producers. Notebooks 12–36 remain historical
 Controlled-50 evidence until each producer is explicitly reopened, rerun,
 validated, baseline-compared, and committed.
 
@@ -88,6 +88,7 @@ metric validity and coverage passed.
 | 08 Experiment Contracts and Region Policy | `case_registry.v1`, `model_eligibility.v1`, `region_policy.v1`, five-schema registry, canonical region figure, methodology report, validation and manifests | 3,425 cases; 17,125 case-model decisions across 5 methods; 2,620 eligible cases per method; 143 policy rows; 101/101 scientific checks; 20/20 completion requirements | All 9 pilot paths and table schemas retained; all 525 pilot case rows retained with only `dataset_scope` intentionally changed; all 2,100 shared eligibility rows unchanged; region policy byte-identical; schema definitions unchanged while producer version advances to 1.1.0 | Approved Controlled-300 contract, routing, and region-policy producer for Notebooks 09–36 and 12A |
 | 09 OpenCV Telea Restoration | `restorations.v1`, 2,620 restored RGB PNGs, five-row runtime summary, eight-case representative figure, validation and manifests | 2,620 eligible cases: 1,500 canonical, 245 damage-size, 525 mask-robustness, and 350 eligible synthetic-degradation cases; 300 zero controls; 2,320 nonzero cases; 72/72 scientific checks; 15/15 roadmap requirements; 2,626 canonical files | All 416 pilot paths and CSV schemas retained; 409/410 shared restoration PNGs byte-identical; sole changed shared PNG is the inherited Notebook 06 `p039` `loss_small` fourth-variant morphology correction; representative figure byte-identical; 2,210 additional restored images explain the full file-count increase | Approved Controlled-300 deterministic Telea producer for Notebooks 13–17 and later comparison, reporting, and dashboard stages |
 | 10 LaMa Restoration | `restorations.v1`, 2,620 restored RGB PNGs, five-row runtime summary, eight-case representative figure, validation and manifests | 2,620 eligible cases: 1,500 canonical, 245 damage-size, 525 mask-robustness, and 350 eligible synthetic-degradation cases; 300 zero controls; 2,320 nonzero cases; 80/80 scientific checks; 16/16 roadmap requirements; 2,626 canonical files | All 416 pilot paths and CSV schemas retained; 409/410 shared restoration PNGs byte-identical; sole changed shared PNG is the inherited Notebook 06 `p039` `loss_small` fourth-variant morphology correction; representative figure byte-identical; 2,210 additional restored images explain the full file-count increase | Approved Controlled-300 deterministic learned baseline for Notebooks 13–17 and later comparison, reporting, and dashboard stages; no generative uncertainty |
+| 11 Stable Diffusion Restoration | `stable_diffusion_candidates.v1`, 8,520 restored RGB PNGs, six-row prompt policy, 14-row runtime summary, 1,355-row design table, two canonical figures, method report, validation and manifests | 8,520 completed candidates: 2,620 primary, 4,460 prompt-context, and 1,440 uncertainty-extension rows; 8,220 inferences; 300 identity controls; 300 formal scratch cases and 2,400 paired outcomes; 176/176 scientific checks; 23/23 completion requirements; 8,530 canonical files | All 10 pilot non-image paths and CSV schemas retained; 1,298/1,330 pilot candidate identities retained; 1,297/1,298 shared PNGs byte-identical; one inherited Notebook 06 morphology correction; 32 exploratory p01-p04 rows transparently displaced by expanded non-metric hash-stratified selection; both figures regenerated for expanded evidence | Approved Controlled-300 Stable Diffusion producer for Notebooks 13–21, 22, and later comparison, uncertainty, reporting, and dashboard stages; 3,260 metadata-context candidates remain exploratory |
 
 Notebook 01's final manifest records `controlled_300`, dataset version `2.0.0`,
 300 expected and observed artwork/image rows, 448 expected and observed audit
@@ -288,6 +289,30 @@ that difference is inherited from Notebook 06 helper v3.1.1's documented
 morphology correction. The remaining 2,210 added files are exactly the additional
 Controlled-300 restoration images, so there is no unexplained loss or reduction
 of pilot evidence.
+
+Notebook 11's final manifest records `controlled_300`, dataset version `2.0.0`,
+8,520 completed candidate records and restored RGB PNGs, 8,220 Stable Diffusion
+inferences, and 300 identity controls. The execution roles reconcile at 2,620
+primary, 4,460 prompt-context, and 1,440 uncertainty-extension rows. The formal
+scratch experiment covers all 300 paintings, four seeds, two prompt arms, 1,200
+painting-seed pairs, and 2,400 outcomes. All 176 consolidated scientific checks,
+nine persistence checks, five manifest-handoff checks, four registry checks,
+seven final checks, and 23 completion requirements passed. The output root
+contains 8,520 restored images and ten canonical non-image artifacts, for 8,530
+canonical files and no remaining work files. The normalized runtime evidence
+totals 71,737.586 seconds (about 19.93 hours); it is environment-specific rather
+than a universal speed benchmark.
+
+The read-only comparison copy is
+`E:/outputs/11_stable_diffusion_restoration/`. All ten pilot non-image paths and
+all CSV schemas remain present. The expanded deterministic design retains 1,298
+of 1,330 pilot candidate identities, with 1,297 of the shared restored PNGs
+byte-identical. The sole changed shared PNG is the inherited Notebook 06 `p039`
+`loss_small` fourth-variant morphology correction. The 32 non-retained pilot
+rows are exclusively exploratory p01-p04 prompt-context candidates displaced by
+the approved non-metric hash-stratified selection over the expanded population.
+No primary, formal scratch-pair, or base uncertainty responsibility was lost.
+Both canonical figures were regenerated from expanded rule-selected evidence.
 
 ## 3. Frozen notebook evidence ledger
 

@@ -854,9 +854,11 @@ restoration PNGs account for the complete scale-up difference.
 
 **Notebook:** `11_stable_diffusion_restoration.ipynb`  
 **Origin:** Existing Notebook 21; incorporates candidate generation required by uncertainty analysis  
-**Controlled-300 refactor status:** In progress; preparation layer validated\
-**Validation status:** Pending controlled-300 execution\
-**Completion gate passed:** No\
+**Controlled-300 refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
+**Active validated coverage:** 8,520 completed candidate records and restored RGB PNGs across 300 paintings; 2,620 primary, 4,460 prompt-context, and 1,440 uncertainty-extension rows; 8,220 model inferences and 300 identity controls; 1,355 design rows; 176/176 scientific checks; 23/23 completion requirements; 8,530 canonical files\
+**Pilot comparison:** All ten pilot non-image output paths and all CSV schemas retained; 1,298/1,330 pilot candidate identities remain in the expanded deterministic design and 1,297/1,298 shared images are byte-identical; the sole changed shared image inherits Notebook 06's documented `p039` morphology correction; 32 exploratory p01-p04 prompt-context candidates were transparently displaced when the approved non-metric hash-stratified selection was recomputed over the 300-painting population; both figures were regenerated from expanded rule-selected evidence
 **Output root:** `outputs/11_stable_diffusion_restoration/`  
 **Depends on:** Notebook 08
 **Supplemental contract:** `docs/notebook_11_scratch_prompt_ablation_contract.md`
@@ -931,6 +933,32 @@ paintings. This yields 8,520 records and 8,220 actual model inferences in N11.
 The 5,260 approved downstream analysis records exclude the 3,260 exploratory
 metadata-context candidates. Notebook 22 remains responsible for the separate
 735-candidate damage-size seed extension.
+
+### Controlled-300 completion record
+
+Notebook 11 is complete for `controlled_300`. It produced 8,520 normalized
+candidate records and restored RGB PNGs: 2,620 primary candidates, 4,460
+prompt-context candidates, and 1,440 uncertainty-extension candidates. The
+population contains 8,220 Stable Diffusion inferences and 300 exact identity
+controls. All 176 consolidated scientific checks, nine persistence checks, five
+manifest-handoff checks, four registry checks, seven final checks, and 23
+roadmap and supplemental requirements passed. The output root contains 8,520
+restored images and ten canonical non-image artifacts, for 8,530 canonical
+files with no remaining work files. The normalized candidate runtime totals
+71,737.586 seconds (about 19.93 hours); this is environment-specific evidence,
+not a universal speed benchmark.
+
+The read-only pilot comparison root is
+`E:/outputs/11_stable_diffusion_restoration/`. All ten pilot non-image paths and
+all CSV schemas are retained. Of 1,330 pilot candidate identities, 1,298 remain
+in the expanded deterministic design; 1,297 of their restored PNGs are
+byte-identical. The sole changed shared PNG is the inherited Notebook 06
+`p039` `loss_small` fourth-variant morphology correction. The 32 intentionally
+non-retained rows are exploratory p01-p04 prompt-context candidates displaced
+when the approved non-metric hash-stratified selection was recomputed over the
+full 300-painting population. No primary, formal scratch-pair, or base
+uncertainty responsibility was lost. The candidate and prompt-comparison
+figures were regenerated from expanded rule-selected evidence.
 
 ### Downstream consumers
 

@@ -829,7 +829,7 @@ Rules for the active rerun:
 
 #### Active Controlled-300 completion status
 
-Updated 2026-09-11. This compact status is a navigation aid; the human evidence
+Updated 2026-09-12. This compact status is a navigation aid; the human evidence
 audit and machine-readable coverage registry remain authoritative for counts,
 checksums, limitations, and downstream eligibility.
 
@@ -845,8 +845,9 @@ checksums, limitations, and downstream eligibility.
 | 08 Experiment Contracts and Region Policy | Finished | Finished | Yes | 3,425 registered cases; 17,125 decisions across 5 models including `hint_places2`; 2,620 eligible cases per model; 143 policy rows; 101/101 scientific checks; 20/20 completion requirements | All 9 pilot paths and schemas retained; 525 pilot cases retained with only intentional scope change; 2,100 shared eligibility rows unchanged; region policy byte-identical; schema definitions unchanged |
 | 09 OpenCV Telea Restoration | Finished | Finished | Yes | 2,620 eligible cases and restored PNGs; 300 zero controls; 2,320 nonzero cases; 72/72 scientific checks; 15/15 roadmap requirements; 2,626 canonical files | All 416 pilot paths and CSV schemas retained; 409/410 shared restoration PNGs byte-identical; sole changed shared PNG inherits Notebook 06's documented `p039` morphology correction; representative figure byte-identical |
 | 10 LaMa Restoration | Finished | Finished | Yes | 2,620 eligible cases and restored PNGs; 300 zero controls; 2,320 nonzero cases; 80/80 scientific checks; 16/16 roadmap requirements; 2,626 canonical files; 4,594.223-second full execution | All 416 pilot paths and CSV schemas retained; 409/410 shared restoration PNGs byte-identical; sole changed shared PNG inherits Notebook 06's documented `p039` morphology correction; representative figure byte-identical |
+| 11 Stable Diffusion Restoration | Finished | Finished | Yes | 8,520 completed candidate rows and restored PNGs; 2,620 primary, 4,460 prompt-context, and 1,440 uncertainty-extension rows; 8,220 inferences; 300 identity controls; 176/176 scientific checks; 23/23 completion requirements; 8,530 canonical files | All 10 pilot non-image paths and CSV schemas retained; 1,298/1,330 candidate identities retained; 1,297/1,298 shared PNGs byte-identical; one inherited Notebook 06 morphology correction; 32 exploratory contextual rows displaced by the approved expanded hash-stratified selection |
 
-Notebook 10 is a completed Controlled-300 producer. Notebook 11 is the next
+Notebooks 01–11 are completed Controlled-300 producers. Notebook 12 is the next
 eligible minimal-delta rerun. No later notebook may describe its
 historical Controlled-50 outputs as Controlled-300 evidence until that notebook
 has been explicitly reopened, rerun, validated, baseline-compared, and committed.

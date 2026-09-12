@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-11T18:12:16.586688Z",
+  "updated_at_utc": "2026-09-12T20:47:01.544284Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -2375,12 +2375,12 @@
       "artifact_type": "figure",
       "artifact_role": "candidate_and_seed_visual_evidence",
       "schema_version": "figure.stable_diffusion_candidates.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_stable_diffusion",
       "validation_status": "passed",
       "row_count": 6,
       "file_count": 1,
-      "checksum": "9dff32e58c093e3d58c4650350a59eaca0842ae2891df7631bffa8bcd6f3cc2f"
+      "checksum": "d221140d12f9f153afe981966ab613bba0e83126395c3d8a6b4a07c9df585374"
     },
     {
       "artifact_key": "stable_diffusion.candidates",
@@ -2389,12 +2389,12 @@
       "artifact_type": "table",
       "artifact_role": "primary_candidate_records",
       "schema_version": "stable_diffusion_candidates.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_stable_diffusion",
       "validation_status": "passed",
-      "row_count": 1330,
+      "row_count": 8520,
       "file_count": 1,
-      "checksum": "d3df38e2c68d64d30694a6a114d115478c220dfb6ab7f265d15342aa6ccebdef"
+      "checksum": "9806293b1e5fc888315e453c628aa21b04bc62bb08c0dd9e0b5e0f8acd4a0633"
     },
     {
       "artifact_key": "stable_diffusion.prompt_ablation_design",
@@ -2403,12 +2403,12 @@
       "artifact_type": "table",
       "artifact_role": "controlled_experimental_design",
       "schema_version": "prompt_ablation_design.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_stable_diffusion",
       "validation_status": "passed",
-      "row_count": 210,
+      "row_count": 1355,
       "file_count": 1,
-      "checksum": "11ead25435526aa3edb81ce270fc53f13289e0687d57cb8cf82e323ad04ab682"
+      "checksum": "e5057e7d0c72d3ec75eb528e9bb27dd792bb51088f43faf7f9901ab98a7a8624"
     },
     {
       "artifact_key": "stable_diffusion.prompt_comparison_examples",
@@ -2417,12 +2417,12 @@
       "artifact_type": "figure",
       "artifact_role": "contextual_and_paired_prompt_visual_evidence",
       "schema_version": "figure.prompt_comparison.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_stable_diffusion",
       "validation_status": "passed",
       "row_count": 6,
       "file_count": 1,
-      "checksum": "7d0bc16c8ddceac330f78ad50b06704f1a87baa3f1095137baaf8261506dab6e"
+      "checksum": "4f435b5c6b00907514f9a367d1532c8e3387c9b3f123002eb344584b3741f80b"
     },
     {
       "artifact_key": "stable_diffusion.prompt_policy",
@@ -2431,7 +2431,7 @@
       "artifact_type": "table",
       "artifact_role": "prompt_policy",
       "schema_version": "prompt_policy.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_stable_diffusion",
       "validation_status": "passed",
       "row_count": 6,
@@ -2445,12 +2445,12 @@
       "artifact_type": "report",
       "artifact_role": "prompt_method_documentation",
       "schema_version": "report.prompt_policy.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_stable_diffusion",
       "validation_status": "passed",
       "row_count": 1,
       "file_count": 1,
-      "checksum": "5316a98809dc69704758da28804dc030c6a084f6a5d43dac2350085c6a0d36bc"
+      "checksum": "1b8b773b626dae9310d8a146cff867420869a30c0dc594cd6c9ae98325c1b737"
     },
     {
       "artifact_key": "stable_diffusion.restored_images",
@@ -2459,12 +2459,12 @@
       "artifact_type": "image_directory",
       "artifact_role": "candidate_images",
       "schema_version": "restored_images.stable_diffusion.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_stable_diffusion",
       "validation_status": "passed",
-      "row_count": 1330,
-      "file_count": 1330,
-      "checksum": "3fff39be0a15aebf138300708f8dabcd649109136dd9989b54d4ff177a05b2cd"
+      "row_count": 8520,
+      "file_count": 8520,
+      "checksum": "c03cabd026720553a78db75b2716d981ff0d8e976f4deca0f3ceb23b76cdd0a6"
     },
     {
       "artifact_key": "stable_diffusion.runtime_summary",
@@ -2473,12 +2473,12 @@
       "artifact_type": "table",
       "artifact_role": "runtime_evidence",
       "schema_version": "restoration_runtime_summary.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_stable_diffusion",
       "validation_status": "passed",
       "row_count": 14,
       "file_count": 1,
-      "checksum": "8459e169454ab33e5850df648284475070faac0a8817c56b34a445439fe61841"
+      "checksum": "cdb993125c85dc06520ae54f7bc6a1d823bb07faffbdaa230f52ca363dc61519"
     },
     {
       "artifact_key": "supervisor_package.artifact_index",
@@ -2935,12 +2935,12 @@
       "artifact_type": "table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_stable_diffusion",
       "validation_status": "passed",
       "row_count": 176,
       "file_count": 1,
-      "checksum": "9b1e0bd4a2ce59db648c7052ea4cef42fc9786f07ba40f587ff80753999458c9"
+      "checksum": "e346ede580fb93a69e48cec49dd73012943b155dc4f001e7464fc446f50be2e4"
     },
     {
       "artifact_key": "validation.12_sdxl_feasibility_or_restoration",
