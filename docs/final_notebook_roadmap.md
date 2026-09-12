@@ -83,6 +83,33 @@ validation/checks.csv
 
 `outputs/inventory/` is the only global-output exception.
 
+### 2.1 Controlled-300 storage and publication overlay
+
+The scientific output contract and the Git publication contract are now
+separate. Every notebook still generates, validates, reloads, visually inspects,
+and inventories its complete canonical output tree locally. GitHub retains the
+compact scientific record; bulk generated media is published through verified
+external locations after the external publication layer is configured.
+
+Notebooks 01--11 are the final approved full-output Git/LFS checkpoint for the
+Controlled-300 rerun. Beginning with Notebook 12:
+
+- GitHub retains notebook source, helpers, configuration, compact evidence
+  tables, validation, manifests, selected figures, and external-asset indexes;
+- a public interactive evidence store provides lazy, case-level access to bulk
+  restorations and diagnostic media;
+- the final full-resolution evidence corpus is packaged into a versioned Zenodo
+  archival release after Notebook 36 and all extension gates are frozen; and
+- the final Controlled-300 Streamlit application is delivered from a separate
+  lightweight deployment repository rather than from the complete scientific
+  output tree.
+
+The current `pilot-50` deployment remains unchanged while the scale-up is in
+progress. No already committed history is rewritten during the active rerun.
+External publication is not complete merely because an upload returns success:
+remote readability, checksum, byte count, stable identity, and recorded URI
+must all pass before any local or tracked artifact is removed.
+
 For every notebook that produces a standalone report, an explicitly approved
 chat mock is the binding report blueprint. The implemented report must retain the
 mock's section order, question flow, table and visual roles, deterministic case
@@ -3241,7 +3268,10 @@ For each numbered notebook:
    blocks completion;
 8. update governing audits and inventory only after the new gate and baseline
    comparison pass; and
-9. commit the notebook and its newly owned evidence before moving downstream.
+9. commit the notebook, compact scientific evidence, and verified publication
+   records before moving downstream; beginning with Notebook 12, complete bulk
+   media remains locally canonical and may be externally published instead of
+   being added as another Git/LFS population.
 
 `E:/outputs/` is an external read-only comparison snapshot, not a pipeline input
 or a second active output root. The `pilot-50-complete` Git tag remains the

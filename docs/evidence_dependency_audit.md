@@ -42,6 +42,23 @@ completed Controlled-300 producers. Notebooks 12–36 remain historical
 Controlled-50 evidence until each producer is explicitly reopened, rerun,
 validated, baseline-compared, and committed.
 
+**Controlled-300 storage transition review: 2026-09-13.** Commit `694dad45`
+(`n11 scaled up`) is the final approved full-output Git/LFS checkpoint for the
+active rerun. Its push completed with local `HEAD` and `origin/main` aligned and
+no pending LFS objects. Beginning with Notebook 12, complete canonical outputs
+remain local and notebook-owned, while GitHub is restricted to the compact
+scientific record and verified external publication records. The approved live
+asset target is a public, structured evidence store; the final full-resolution
+target is a versioned Zenodo release; and the final Controlled-300 Streamlit
+application will use a separate lightweight deployment repository. The two
+public Hugging Face dataset repositories are configured, and the candidates
+repository passed a two-file public remote-read, byte-count, and SHA-256 smoke
+test on 2026-09-12. The diagnostics repository is publicly reachable but awaits
+its first applicable write test; bulk publication and the Zenodo record remain
+incomplete. No tracked evidence has been removed, no Git/LFS history has been
+rewritten, and all current local outputs remain intact pending verified bulk
+upload and checksum gates.
+
 ## 2. Original frozen baseline and completed-pipeline protection
 
 The completed Notebook 01–36 pilot sequence and its notebook-owned evidence are

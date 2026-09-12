@@ -1,0 +1,4 @@
+# Dedicated external-publication tooling; not a notebook or dashboard runtime.
+huggingface_hub>=1.5,<2
+PyYAML>=6,<7
+

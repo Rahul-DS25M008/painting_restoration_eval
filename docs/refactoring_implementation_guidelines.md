@@ -1796,7 +1796,14 @@ separately; do not rerun models merely to reconcile documentation.
 
 - Preserve existing user changes unless explicitly instructed otherwise.
 - Do not commit environments, caches, notebook checkpoints, replaceable temporary files, or unnecessary logs.
-- Generated images under notebook-owned `outputs/` are covered by existing Git LFS patterns.
+- Notebooks 01--11 of the Controlled-300 rerun form the final approved
+  full-output Git/LFS checkpoint. Their committed evidence is not rewritten or
+  removed during the active rerun.
+- Beginning with Notebook 12, the complete canonical output tree remains local
+  and notebook-owned, but bulk generated evidence is not automatically a Git
+  publication requirement. GitHub is the compact scientific repository; an
+  external evidence store and final archival release own bulk media after their
+  publication checks pass.
 - After migration, no authoritative generated images should remain under `data/processed/`.
 - Standalone HTML reports may embed declared web-sized figures and
   representative images so the report remains usable when downloaded alone.
@@ -1804,6 +1811,83 @@ separately; do not rerun models merely to reconcile documentation.
   canonical source artifacts and checksums used to construct each embedded
   display image.
 - Notebook sizes should remain reviewable; very large embedded outputs must be reduced.
+
+### 27.1 Controlled-300 storage and publication boundary
+
+The storage change does not alter notebook science, output ownership, schemas,
+validation, or the requirement to generate and inspect every approved canonical
+artifact locally. Every notebook continues to write its complete evidence to
+`outputs/<exact_notebook_stem>/`, and the project inventory continues to index
+the complete local tree.
+
+The approved publication tiers are:
+
+1. **GitHub scientific repository:** notebooks, helpers, configuration,
+   documentation, compact canonical tables, validation, manifests, selected
+   figures, and remote-asset indexes.
+2. **Interactive evidence store:** web-addressable restoration candidates,
+   damaged/degraded images, masks, maps, heatmaps, overlays, and other bulk
+   media required for case-level dashboard inspection. Public Hugging Face
+   dataset repositories are the default zero-cost target, subject to verified
+   account, file-count, path, provenance, and licensing constraints.
+3. **Archival release:** full-resolution evidence packages, checksums,
+   manifests, and reproducibility metadata published as a versioned Zenodo
+   record after the Controlled-300 pipeline is frozen.
+4. **Deployment repository:** the final Controlled-300 Streamlit application,
+   compact indexes, styles, and small static assets. It must load bulk evidence
+   lazily from recorded remote locations rather than clone the complete output
+   corpus.
+
+The currently deployed `pilot-50` application remains unchanged during the
+Controlled-300 rerun. No history rewrite, branch deletion, Git/LFS purge, or
+bulk-output untracking is permitted during the active transition without a
+separate exact-target review and explicit user approval.
+
+Before a local bulk artifact may be removed, untracked, or excluded from the
+working-tree publication set, its external copy must be verified against a
+publication record containing at least:
+
+```text
+artifact_id
+producer_notebook
+local_relative_path
+storage_tier
+remote_uri
+sha256
+size_bytes
+media_role
+publication_status
+published_at_utc
+```
+
+The publication gate requires a successful remote read, matching checksum and
+byte count, stable case/candidate identity, and a resolvable dashboard or
+archive location. A URL alone is not verification. Failed or incomplete
+uploads never authorize local deletion.
+
+The machine-readable provider and classification contract is
+`config/publication/external_storage.yaml`. The guarded planning, smoke-upload,
+and verification entry point is `tools/external_artifact_publication.py`, with
+its isolated dependencies declared in `requirements_publication.txt`. Bulk
+publication remains disabled until the smoke-tested workflow is deliberately
+extended and approved.
+
+The local project inventory and the publication registry have different
+responsibilities. The inventory describes what exists in the executing local
+repository. The publication registry describes where approved evidence is
+available outside that working tree. Neither file may silently stand in for
+the other.
+
+The machine-readable provider and classification contract is
+`config/publication/external_storage.yaml`. Guarded planning, maximum-ten-file
+test upload, and remote byte/SHA-256 verification are implemented by
+`tools/external_artifact_publication.py`. Bulk publication must not be added to
+that tool until its test registry contains zero verification failures.
+
+Until the external repositories and upload tooling are configured and tested,
+all Controlled-300 outputs remain intact locally. The assistant must not run
+`git add`, create commits, push, rewrite history, or remove tracked evidence;
+the user retains all Git staging and publication authority.
 
 ## 28. Error correction workflow
 

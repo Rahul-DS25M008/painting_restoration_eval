@@ -1,0 +1,76 @@
+schema_version: external_storage.v1
+configured_at_utc: "2026-09-13T00:00:00Z"
+
+policy:
+  full_output_git_checkpoint_notebook: 11
+  full_output_git_checkpoint_commit: 694dad45
+  bulk_external_from_notebook: 12
+  local_outputs_remain_canonical: true
+  rewrite_existing_git_history: false
+  remove_local_after_upload: false
+
+interactive_store:
+  provider: huggingface_dataset
+  visibility: public
+  revision: main
+  status: candidate_repository_smoke_test_verified
+  smoke_test:
+    verified_at_utc: "2026-09-12T22:40:44Z"
+    verified_file_count: 2
+    verified_total_bytes: 1397553
+    verification: public_remote_read_size_and_sha256
+    manifest: outputs/inventory/external_artifact_publication_test.csv
+  repositories:
+    candidates:
+      repo_id: RahulMaddineni264/painting-restoration-eval-candidates
+      repository_url: https://huggingface.co/datasets/RahulMaddineni264/painting-restoration-eval-candidates
+      resolve_base_url: https://huggingface.co/datasets/RahulMaddineni264/painting-restoration-eval-candidates/resolve/main
+      status: write_read_sha256_verified
+    diagnostics:
+      repo_id: RahulMaddineni264/painting-restoration-eval-diagnostics
+      repository_url: https://huggingface.co/datasets/RahulMaddineni264/painting-restoration-eval-diagnostics
+      resolve_base_url: https://huggingface.co/datasets/RahulMaddineni264/painting-restoration-eval-diagnostics/resolve/main
+      status: public_reachable_write_test_pending
+
+archive_store:
+  provider: zenodo
+  status: account_ready_record_not_created
+  record_id: null
+  doi: null
+  publish_only_after_pipeline_freeze: true
+
+deployment:
+  current_pilot_branch: pilot-50
+  controlled_300_repository_status: deferred_until_dashboard_rebuild
+  lazy_remote_assets_required: true
+
+classification:
+  media_extensions:
+    - .png
+    - .jpg
+    - .jpeg
+    - .webp
+    - .tif
+    - .tiff
+  candidate_image_groups:
+    - clean
+    - damaged
+    - degraded
+    - effect_masks
+    - masks
+    - restored
+  diagnostic_image_groups:
+    - diagnostics
+    - explanations
+    - heatmaps
+    - integrated_local
+    - maps
+    - overlays
+    - uncertainty
+  unclassified_image_policy: block
+
+publication_registry:
+  canonical_csv: outputs/inventory/external_artifact_publication.csv
+  run_json: outputs/inventory/external_artifact_publication_run.json
+  hash_algorithm: sha256
+  verification_requires_remote_read: true
