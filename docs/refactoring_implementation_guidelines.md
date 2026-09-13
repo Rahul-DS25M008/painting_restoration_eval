@@ -143,6 +143,9 @@ The workflow for each approved notebook is:
 5. Determine whether helpers require no change, targeted changes, or complete replacement.
 6. Define every planned cell batch before generating notebook code.
 7. Define and approve the exact input/output contract before Batch 1 is generated.
+   The same preparation contract must include an expected execution-time range,
+   the evidence used to estimate it, the dominant expensive stage, and the
+   checkpoint/resume boundary for any notebook expected to exceed one hour.
 8. The user creates the correctly numbered, named, and otherwise blank notebook.
 9. Provide Batch 1 and every later batch as complete, separately labelled
    Markdown and code cells in chat for manual insertion, execution, and testing
@@ -164,7 +167,26 @@ The workflow for each approved notebook is:
     updates occur only after the notebook passes its completion gate.
 16. Refresh the project inventory again so the next notebook receives the validated state.
 
-### 6.1 Manual notebook editing policy
+### 6.1 Execution-time planning and closure
+
+- Before Batch 1, state an upper operational runtime range for the complete
+  notebook on the current hardware. Base it on validated upstream cardinality,
+  observed pilot or 50-painting timings, per-case measurements where available,
+  expected image/map writes, and known model-loading overhead.
+- Separate active notebook computation from user review, debugging, inventory,
+  remote uploads, and pauses between manually executed batches.
+- Identify the likely longest cell before it is supplied. Any run expected to
+  exceed one hour must provide visible progress, bounded checkpointing, safe
+  resume, and an explicit stall or total-runtime guard where technically
+  applicable.
+- Prefer a defensible range over a falsely precise duration. Revise the estimate
+  during preparation whenever preceding controlled-300 notebooks provide better
+  throughput evidence.
+- At the completion sweep, record observed active runtime where the notebook
+  measures it, explain material divergence from the estimate, and use that
+  observation to refine the remaining roadmap ranges.
+
+### 6.2 Manual notebook editing policy
 
 - The assistant must not create, replace, patch, or otherwise edit an `.ipynb`
   file directly.
@@ -181,7 +203,7 @@ The workflow for each approved notebook is:
   and project-path registries may still be edited when explicitly within the
   approved preparation or completion workflow.
 
-#### 6.1.1 Mandatory opening Markdown contract cell
+#### 6.2.1 Mandatory opening Markdown contract cell
 
 Every refactored notebook must begin with one standalone Markdown cell that
 identifies the notebook and summarizes its scientific and artifact contract.
@@ -236,7 +258,7 @@ The opening cell must be understandable without reading Batch 1. Batch 1 then
 starts in a separate Markdown cell and owns executable contract, dependency,
 path, configuration, schema, and preflight details.
 
-### 6.2 Notebooks that generate important reports
+### 6.3 Notebooks that generate important reports
 
 For any notebook that generates an important end-to-end or standalone report,
 the assistant must design and present the proposed report structure during batch
@@ -528,7 +550,7 @@ narrative structure.
 - The user may add, remove, reorder, merge, or redefine sections during approval.
 - Structure approval is design approval only. It does not authorize notebook
   modification or execution and does not override the manual notebook editing
-  policy in Section 6.1.
+  policy in Section 6.2.
 - Only after approval may the assistant generate report-implementation cells.
 - If implementation later reveals that an approved section lacks validated
   evidence, or that a materially different structure is scientifically preferable,
@@ -641,7 +663,7 @@ The illustrative LaMa model-performance mock-up in
 reference for narrative quality and information density. It is not a mandatory
 section template for model reports or for other report categories.
 
-### 6.3 Dashboard design, mock fidelity, and implementation boundary
+### 6.4 Dashboard design, mock fidelity, and implementation boundary
 
 Notebook 34 and `streamlit_app.py` follow the same approval discipline used for
 important reports, adapted for an interactive application. Before dashboard
@@ -726,7 +748,7 @@ Scientific and technical boundaries:
   repository-relative paths recorded by Notebook 34. Default selections do not
   restrict complete evidence access.
 - Standalone HTML reports offered by the application remain individually
-  downloadable and self-contained according to Section 6.2.
+  downloadable and self-contained according to Section 6.3.
 - The dashboard is an inspection and decision-support interface, not an
   experiment runner, restoration tool, authenticity assessment, historical-truth
   claim, or conservation approval system.
@@ -763,7 +785,7 @@ restore PyYAML in the execution environment, then rerun incrementally; use a ful
 no-reuse scan only when the verified reuse cache itself is invalid or a complete
 reinspection is explicitly required.
 
-### 6.4 Tagged baseline and controlled-300 evidence-dependency gate
+### 6.5 Tagged baseline and controlled-300 evidence-dependency gate
 
 The complete 50-painting study is immutable at Git tag `pilot-50-complete`.
 Notebooks 01–36 may now be adapted in dependency order for `controlled_300`, but
@@ -887,7 +909,7 @@ Availability terminology must remain construct-specific:
 - feature or semantic affinity is not a human visual-plausibility rating;
 - rule-derived flags are not independent human or conservation ground truth.
 
-### 6.5 Final supervisor and reproducibility package
+### 6.6 Final supervisor and reproducibility package
 
 Notebook 36 owns the only final delivery package. It is a packaging and
 traceability notebook, not a new experiment. Its preparation layer must freeze a
@@ -926,7 +948,7 @@ The package manifest must allow a reviewer to verify the bundle without the
 notebook. The package README must explain where to begin, what is included, what
 is indexed but absent, how to verify checksums, and what cannot be concluded.
 
-### 6.6 Post-completion maintenance
+### 6.7 Post-completion maintenance
 
 - Documentation updates and approved application-only fixes do not require a
   notebook rerun. Keep changes within the explicitly agreed files and scope.

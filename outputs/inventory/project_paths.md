@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-09-13T13:38:02.196234Z`
-- Registered artifacts: 230
+- Updated: `2026-09-13T22:42:49.055473Z`
+- Registered artifacts: 235
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -100,6 +100,10 @@
 | grouped_statistics.ranking_stability | 26_grouped_and_statistical_analysis | `outputs/26_grouped_and_statistical_analysis/metrics/ranking_stability.csv` | ranking_stability_and_sensitivity | passed |
 | grouped_statistics.report | 26_grouped_and_statistical_analysis | `outputs/26_grouped_and_statistical_analysis/reports/statistical_analysis.html` | thesis_aligned_grouped_statistical_report | passed |
 | grouped_statistics.statistical_results | 26_grouped_and_statistical_analysis | `outputs/26_grouped_and_statistical_analysis/metrics/statistical_results.csv` | cross_experiment_statistical_evidence | passed |
+| hint.restoration_examples | 12a_hint_restoration | `outputs/12a_hint_restoration/figures/restoration_examples.png` | representative | passed |
+| hint.restorations | 12a_hint_restoration | `outputs/12a_hint_restoration/data/restorations.csv` | canonical | passed |
+| hint.restored_images | 12a_hint_restoration | `outputs/12a_hint_restoration/images/restored` | canonical | passed |
+| hint.runtime_summary | 12a_hint_restoration | `outputs/12a_hint_restoration/metrics/runtime_summary.csv` | canonical | passed |
 | lama.restoration_examples | 10_lama_restoration | `outputs/10_lama_restoration/figures/restoration_examples.png` | representative_visual_evidence | passed |
 | lama.restorations | 10_lama_restoration | `outputs/10_lama_restoration/data/restorations.csv` | primary_restoration_records | passed |
 | lama.restored_images | 10_lama_restoration | `outputs/10_lama_restoration/images/restored` | primary_restored_images | passed |
@@ -217,6 +221,7 @@
 | validation.10_lama_restoration | 10_lama_restoration | `outputs/10_lama_restoration/validation/checks.csv` | validation_evidence | passed |
 | validation.11_stable_diffusion_restoration | 11_stable_diffusion_restoration | `outputs/11_stable_diffusion_restoration/validation/checks.csv` | validation_evidence | passed |
 | validation.12_sdxl_feasibility_or_restoration | 12_sdxl_feasibility_or_restoration | `outputs/12_sdxl_feasibility_or_restoration/validation/checks.csv` | validation_evidence | passed |
+| validation.12a_hint_restoration | 12a_hint_restoration | `outputs/12a_hint_restoration/validation/checks.csv` | canonical | passed |
 | validation.13_classical_metrics | 13_classical_metrics | `outputs/13_classical_metrics/validation/checks.csv` | validation_evidence | passed |
 | validation.14_lpips_metrics | 14_lpips_metrics | `outputs/14_lpips_metrics/validation/checks.csv` | validation_evidence | passed |
 | validation.15_feature_similarity | 15_feature_similarity | `outputs/15_feature_similarity/validation/checks.csv` | validation_evidence | passed |

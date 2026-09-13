@@ -44,6 +44,10 @@ class PathsTests(unittest.TestCase):
             validate_notebook_stem("01_dataset_verification"),
             "01_dataset_verification",
         )
+        self.assertEqual(
+            validate_notebook_stem("12a_hint_restoration"),
+            "12a_hint_restoration",
+        )
         with self.assertRaises(ValueError):
             validate_notebook_stem("1 Dataset Verification")
         allowed = require_notebook_output_path(

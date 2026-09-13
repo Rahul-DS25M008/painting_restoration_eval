@@ -10,9 +10,11 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping
 
 
-PATHS_MODULE_VERSION = "1.0.0"
+PATHS_MODULE_VERSION = "1.1.0"
 PROJECT_PATHS_SCHEMA_VERSION = "project_paths.v1"
-NOTEBOOK_STEM_PATTERN = re.compile(r"^[0-9]{2}_[a-z0-9]+(?:_[a-z0-9]+)*$")
+NOTEBOOK_STEM_PATTERN = re.compile(
+    r"^[0-9]{2}[a-z]?_[a-z0-9]+(?:_[a-z0-9]+)*$"
+)
 ALLOWED_OUTPUT_SUBDIRS = frozenset(
     {
         "data",
@@ -110,11 +112,11 @@ def to_repo_relative(
 
 
 def validate_notebook_stem(notebook_stem: str) -> str:
-    """Validate the exact numbered snake-case notebook stem."""
+    """Validate a numbered snake-case stem with an optional stage suffix."""
     normalized = str(notebook_stem).strip()
     if not NOTEBOOK_STEM_PATTERN.fullmatch(normalized):
         raise ValueError(
-            "Notebook stem must match NN_lowercase_snake_case; received "
+            "Notebook stem must match 01_name or 12a_name form; received "
             f"{notebook_stem!r}"
         )
     return normalized

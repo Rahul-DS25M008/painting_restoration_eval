@@ -185,6 +185,52 @@ be obtained by multiplying a stale 50-painting literal.
 | 31–36 | Regenerate reports, dashboard assets, deployment validation, and packages only after all expanded upstream gates pass. |
 | D01 | Preserve unchanged as the completed HINT/MAT selection decision; it is not part of the numbered production rerun. |
 
+### 3.3 Controlled-300 execution-time planning ranges
+
+The following ranges are operational planning estimates for the remaining
+controlled-300 rerun on the current RTX 3060 laptop and local SSD. They are not
+scientific results or runtime guarantees. They use the observed 50-painting
+work, current 300-painting cardinalities, retained checkpoint policies, and the
+dominant computation in each notebook. They include notebook computation and
+artifact writing, but exclude user review, debugging, inventory refresh,
+external upload time, and deliberate pauses between batches. Thermal throttling,
+Windows background load, file-cache state, and library changes can move an
+individual run outside its range.
+
+| Notebook | Upper planning range | Dominant work and execution note |
+|---|---:|---|
+| 12A — HINT restoration | 4–6 hours | 2,320 GPU inferences plus 300 identity controls; ten-case resumable checkpoints. |
+| 13 — Classical metrics | 18–30 hours | Region-aware full-reference metrics over the expanded multi-model candidate population; checkpoint by bounded candidate blocks. |
+| 14 — LPIPS metrics | 3–7 hours | Batched GPU perceptual inference over compatible contiguous regions. |
+| 15 — Feature similarity | 4–9 hours | CLIP and DINOv2 feature extraction, similarity computation, and embedding persistence. |
+| 16 — Difference maps and spatial diagnostics | 36–72 hours | Dense numeric maps, rendered spatial panels, compression, and high-volume disk writes; expect a multi-session resumable run. |
+| 17 — Local consistency metrics | 24–48 hours | Texture, colour, seam, boundary, and directional evidence across compatible candidates and regions. |
+| 18 — Diffusion uncertainty | 1–3 hours | Vectorized seed-group and pairwise scalar analysis using saved candidates and embeddings. |
+| 19 — Uncertainty and spatial explanation maps | 12–24 hours | Dense repeated-seed variability maps, overlays, and rendered heatmaps. |
+| 20 — Semantic and structural consistency | 18–30 hours | Local CLIP/DINOv2 grids, structural proxies, map archives, and selected rendered panels. |
+| 21 — Multi-model comparison | 8–16 hours | Large evidence joins, direction-aware comparisons, ranking stability, figures, and a self-contained report. |
+| D02 — Portrait audit | 2–5 compute hours, plus 3–6 review hours | Existing-evidence screening, anatomical annotation review, matched analysis, and report generation; no new inference unless separately approved. |
+| 22 — Damage-size diffusion extension | 6–12 hours | 735 new Stable Diffusion candidates with resumable generation and validation. |
+| 23 — Damage-size sensitivity analysis | 8–16 hours | Expanded trajectories, multi-model metric joins, statistical summaries, figures, and report generation. |
+| 24 — Mask robustness analysis | 3–8 hours | Matched robustness joins, effect summaries, statistical evidence, figures, and report generation. |
+| 25 — Synthetic degradation analysis | 8–16 hours | Eligible degradation comparisons across full methods, diagnostic summaries, figures, and report generation. |
+| 26 — Grouped and statistical analysis | 4–10 hours | Painting-level aggregation, paired effects, intervals, corrected tests, and sensitivity analyses. |
+| 27 — Failure taxonomy and trustworthiness flags | 4–10 hours | Rule application over expanded evidence, case catalogs, explanations, figures, and report generation. |
+| 28 — Metric and region-policy ablation | 24–48 hours | Repeated metric-policy and region-policy evaluations; checkpoint every bounded ablation block. |
+| 29 — Explainable AI and case retrieval | 6–14 hours | Full explanation catalog, counterfactual evidence, embedding retrieval, visual units, and report generation. |
+| 30 — Model cards, compute, and scalability | 2–5 hours | Evidence aggregation, runtime/compute summaries, model cards, figures, and report generation. |
+| 31 — Model report generation | 3–8 hours | Self-contained model reports with embedded web-sized figures and selected examples. |
+| 32 — Case and painting report generation | 8–18 hours | Report generation across 300 paintings and the expanded case catalog; heavy HTML/image encoding. |
+| 33 — Final evaluation report | 3–8 hours | Thesis-level evidence aggregation, final figures, embedded visual evidence, and report validation. |
+| 34 — Streamlit dashboard assets | 2–6 hours | Dashboard table/materialized-view construction, asset selection, figures, and package checks. |
+| 35 — Dashboard and deployment validation | 10–30 minutes | Static/package validation and local application checks; no metric or restoration recomputation. |
+| 36 — Supervisor/publication package | 1–4 hours locally | Checksums, manifests, compact packaging, and publication records; remote Hugging Face or Zenodo upload time is additional. |
+
+Every notebook preparation contract must refine its row using the latest
+upstream cardinalities and measured runtimes. After completion, the observed
+active-compute runtime and any material difference from this planning range
+must be recorded in the notebook manifest or governing evidence audit.
+
 ---
 
 # Foundation and Experimental Datasets
@@ -1122,6 +1168,10 @@ Notebooks 13–36, conditional on validated availability state.
 
 **Notebook:** `12a_hint_restoration.ipynb`\
 **Origin:** New production notebook selected by Decision Notebook D01\
+**Controlled-300 refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
+**Active validated coverage:** 2,620 completed candidates; 2,320 HINT inferences plus 300 identity controls; 82 validation checks; 2,626 canonical files\
 **Output root:** `outputs/12a_hint_restoration/`\
 **Depends on:** Notebooks 02 and 08, D01, the pinned official HINT source and
 checkpoint, and the controlled-300 HINT configuration
@@ -1163,8 +1213,8 @@ long-range context; it is not a continuation of D01's 12-case pilot.
 5. Canonical restoration-table assembly and experiment-level runtime summary.
 6. Scientific and technical validation plus the representative restoration
    figure.
-7. Canonical persistence, reload validation, manifests, cleanup and final
-   roadmap traceability.
+7. Canonical persistence and strict reload validation.
+8. Manifests, cleanup, final completion gate and roadmap traceability.
 
 ### Canonical outputs
 
@@ -1188,6 +1238,21 @@ validation/checks.csv
 - All 300 zero controls are identity-preserving.
 - Runtime/checkpoint records reconcile with candidates and files on disk.
 
+### Observed controlled-300 completion
+
+- All 2,620 eligible cases completed: 1,500 canonical, 245 damage-size, 525
+  mask-robustness and 350 eligible synthetic-degradation candidates.
+- The run contains 2,320 HINT inferences and 300 exact identity controls.
+- All 82 consolidated checks passed; five artifacts were registered, all 2,620
+  restored PNGs exist, and the completed output tree contains 2,626 files with
+  no remaining work files.
+- The normalized runtime table records 16,025.750 seconds of allocated work
+  (about 4.45 hours), within the approved 4–6 hour planning range.
+- N12A is a new production stage, so no historical N12A output counterpart
+  exists at `E:/outputs/`. D01 is the method-selection baseline: the official
+  HINT revision, Places2 checkpoint, native 768 × 768 adapter, compositing
+  policy and technical invariants were preserved without unexplained loss.
+
 ### Downstream consumers
 
 Notebooks 13–21 and 23–36.
@@ -1200,8 +1265,11 @@ Notebooks 13–21 and 23–36.
 
 **Notebook:** `13_classical_metrics.ipynb`  
 **Origin:** Consolidates Existing Notebooks 09, 15, and 22  
+**Controlled-300 refactor status:** In progress  
+**Validation status:** Pending  
+**Completion gate passed:** No  
 **Output root:** `outputs/13_classical_metrics/`  
-**Depends on:** Notebook 02 geometry handoff and Notebooks 08–12
+**Depends on:** Notebook 02 geometry handoff and Notebooks 08–12A
 
 ### Purpose
 

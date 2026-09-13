@@ -1,0 +1,326 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_f6c9353c31ce4ed9be5e5502571d635d",
+  "notebook_id": "12A",
+  "notebook_name": "HINT Restoration",
+  "origin": "New full-production notebook selected by Decision Notebook D01",
+  "run_status": "completed",
+  "started_at_utc": "2026-09-13T16:48:31.401289Z",
+  "completed_at_utc": "2026-09-13T22:42:47.240212Z",
+  "git_commit": "3030d628378bc552beff8857120d0abe75109f8d",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260913T163108Z_8549d11c",
+  "dataset_versions": {
+    "dataset_id": "painting_restoration_eval",
+    "dataset_version": "2.0.0",
+    "dataset_scope": "controlled_300"
+  },
+  "configuration_paths": [
+    "config/experiments/hint.yaml",
+    "config/experiments/evaluation_contract.yaml",
+    "config/experiments/hint_mat_selection.yaml"
+  ],
+  "configuration_checksums": {
+    "config/experiments/hint.yaml": "3a4ac3844491ffce7ad784e6ad454ecac5fa6dbf5089b5bc8e91fb329bcf7aed",
+    "config/experiments/evaluation_contract.yaml": "4db2fc27ba02559799b39ecdce73b1e828b812cb3972eaec970f53f34a385761",
+    "config/experiments/hint_mat_selection.yaml": "4d922b892537b0b9a2fd90f96455bdd22e5337b374af0d544d37b7900708e02f"
+  },
+  "helper_versions": {
+    "restoration_eval": "0.1.0",
+    "paths": "1.1.0",
+    "schemas": "1.19.0",
+    "manifests": "1.0.0",
+    "validation": "1.0.0",
+    "restoration_hint": "1.0.1"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "einops": "0.8.2",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3",
+    "timm": "1.0.27",
+    "torch": "2.5.1+cu121"
+  },
+  "hardware": {
+    "torch_imported": true,
+    "torch_version": "2.5.1+cu121",
+    "cuda_available": true,
+    "cuda_device_count": 1,
+    "cuda_device_name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "import_error": ""
+  },
+  "inputs": [
+    {
+      "input_key": "project_inventory",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "required": true,
+      "exists": true
+    },
+    {
+      "input_key": "inventory_run",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "required": true,
+      "exists": true
+    },
+    {
+      "input_key": "project_paths_registry",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "required": true,
+      "exists": true
+    },
+    {
+      "input_key": "hint_config",
+      "relative_path": "config/experiments/hint.yaml",
+      "required": true,
+      "exists": true
+    },
+    {
+      "input_key": "adapter_requirements",
+      "relative_path": "requirements_12a.txt",
+      "required": true,
+      "exists": true
+    },
+    {
+      "input_key": "case_registry",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
+      "required": true,
+      "exists": true
+    },
+    {
+      "input_key": "model_eligibility",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
+      "required": true,
+      "exists": true
+    },
+    {
+      "input_key": "schema_registry",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json",
+      "required": true,
+      "exists": true
+    },
+    {
+      "input_key": "upstream_run_manifest",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+      "required": true,
+      "exists": true
+    },
+    {
+      "input_key": "upstream_artifacts",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv",
+      "required": true,
+      "exists": true
+    },
+    {
+      "input_key": "decision_manifest",
+      "relative_path": "outputs/37_hint_mat_method_selection/manifests/run_manifest.json",
+      "required": true,
+      "exists": true
+    },
+    {
+      "input_key": "decision",
+      "relative_path": "outputs/37_hint_mat_method_selection/reports/selection_decision.json",
+      "required": true,
+      "exists": true
+    },
+    {
+      "input_key": "decision_candidates",
+      "relative_path": "outputs/37_hint_mat_method_selection/data/candidates.csv",
+      "required": true,
+      "exists": true
+    },
+    {
+      "input_key": "evaluation_contract_config",
+      "relative_path": "config/experiments/evaluation_contract.yaml",
+      "required": true,
+      "exists": true
+    },
+    {
+      "input_key": "decision_config",
+      "relative_path": "config/experiments/hint_mat_selection.yaml",
+      "required": true,
+      "exists": true
+    }
+  ],
+  "outputs": [
+    {
+      "output_key": "hint.restorations",
+      "relative_path": "outputs/12a_hint_restoration/data/restorations.csv",
+      "schema_version": "restorations.v1",
+      "expected_cardinality": 2620
+    },
+    {
+      "output_key": "hint.restored_images",
+      "relative_path": "outputs/12a_hint_restoration/images/restored",
+      "schema_version": "restored_images.hint.v1",
+      "expected_cardinality": 2620
+    },
+    {
+      "output_key": "hint.runtime_summary",
+      "relative_path": "outputs/12a_hint_restoration/metrics/runtime_summary.csv",
+      "schema_version": "restoration_runtime_summary.v1",
+      "expected_cardinality": 5
+    },
+    {
+      "output_key": "hint.restoration_examples",
+      "relative_path": "outputs/12a_hint_restoration/figures/restoration_examples.png",
+      "schema_version": "figure.restoration_examples.v1",
+      "expected_cardinality": 1
+    },
+    {
+      "output_key": "hint.artifact_manifest",
+      "relative_path": "outputs/12a_hint_restoration/manifests/artifacts.csv",
+      "schema_version": "artifact_manifest.v1",
+      "expected_cardinality": 5
+    },
+    {
+      "output_key": "hint.run_manifest",
+      "relative_path": "outputs/12a_hint_restoration/manifests/run_manifest.json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1
+    },
+    {
+      "output_key": "hint.validation_checks",
+      "relative_path": "outputs/12a_hint_restoration/validation/checks.csv",
+      "schema_version": "validation_checks.v1",
+      "expected_cardinality": "one consolidated table"
+    }
+  ],
+  "expected_counts": {
+    "case_registry_rows": 3425,
+    "model_eligibility_rows": 17125,
+    "eligible_case_count": 2620,
+    "eligible_case_count_by_experiment": {
+      "canonical_missing_region": 1500,
+      "damage_size_sensitivity": 245,
+      "mask_robustness": 525,
+      "synthetic_degradation": 350
+    },
+    "model_inference_case_count": 2320,
+    "zero_control_case_count": 300,
+    "restored_file_count": 2620,
+    "restorations_row_count": 2620,
+    "runtime_summary_row_count": 5,
+    "representative_case_count": 8,
+    "artifact_record_count": 5
+  },
+  "observed_counts": {
+    "restoration_rows": 2620,
+    "restored_image_files": 2620,
+    "runtime_summary_rows": 5,
+    "representative_cases": 8,
+    "artifact_records": 5,
+    "validation_checks": 82,
+    "model_inference_cases": 2320,
+    "zero_control_cases": 300,
+    "temporary_work_files": 0,
+    "canonical_output_files": 2626
+  },
+  "validation_summary": {
+    "check_count": 82,
+    "passed_count": 82,
+    "failed_count": 0,
+    "blocking_failure_count": 0,
+    "overall_passed": true,
+    "failed_check_ids": []
+  },
+  "known_limitations": [
+    "HINT was trained on Places2 rather than conservation-restoration paintings.",
+    "A plausible completion is not evidence of historical authenticity or conservation suitability.",
+    "The deterministic run measures one fixed checkpoint and configuration, not model-family uncertainty.",
+    "Eligible synthetic-degradation cases are supplementary masked-removal diagnostics.",
+    "Runtime measurements describe the recorded local hardware and are not universal benchmarks."
+  ],
+  "refactor_status": "complete",
+  "validation_status": "passed",
+  "completion_gate_passed": true,
+  "configuration_fingerprint": "375201d42dbe082307dd10d88687db53296fd9893868e0317810fe0ca9b1b1a8",
+  "execution_evidence": {
+    "worker_status": "completed",
+    "worker_runtime_seconds": 16067.14,
+    "parent_runtime_seconds": 16082.091,
+    "worker_return_code": 0,
+    "worker_launched": true,
+    "execution_skipped_as_complete": false,
+    "timed_out": false,
+    "timeout_reason": "",
+    "resolved_rows": 2620,
+    "completed_rows": 2620,
+    "failed_rows": 0,
+    "model_load_seconds": null,
+    "checkpoint_revision": "f7c78feac68aa06ff10d6efbb2f8e2cc040720d2ce5ebbfaf8a3247acda3934b",
+    "repository_revision": "15e867d8c8689b9d5050383fc3884537ae876145"
+  },
+  "roadmap_traceability": [
+    {
+      "requirement_id": "hint_selection",
+      "responsibility": "Use the HINT method selected by D01.",
+      "status": "complete",
+      "evidence": "D01 decision and pinned HINT revision validated in Batch 1."
+    },
+    {
+      "requirement_id": "eligible_population",
+      "responsibility": "Consume every Notebook 08 case marked HINT-eligible.",
+      "status": "complete",
+      "evidence": "2,620 exact eligible cases validated in Batches 1-4."
+    },
+    {
+      "requirement_id": "candidate_identity",
+      "responsibility": "Produce one deterministic primary candidate per eligible case.",
+      "status": "complete",
+      "evidence": "2,620 unique candidate, restoration, and case identities."
+    },
+    {
+      "requirement_id": "guarded_execution",
+      "responsibility": "Use progress, checkpointing, resume, stall protection, and an upper budget.",
+      "status": "complete",
+      "evidence": "Guarded worker completed with ten-case progress and checkpoints."
+    },
+    {
+      "requirement_id": "fixed_adapter",
+      "responsibility": "Preserve native 768x768 processing, mask policy, and exact compositing.",
+      "status": "complete",
+      "evidence": "Fixed configuration and all image audits passed."
+    },
+    {
+      "requirement_id": "zero_controls",
+      "responsibility": "Preserve all 300 zero controls as exact identity outputs.",
+      "status": "complete",
+      "evidence": "Independent pixel comparison passed for all zero controls."
+    },
+    {
+      "requirement_id": "outside_invariance",
+      "responsibility": "Change no pixel outside each approved mask.",
+      "status": "complete",
+      "evidence": "Zero outside-mask changed pixels across all 2,620 cases."
+    },
+    {
+      "requirement_id": "normalized_handoff",
+      "responsibility": "Preserve normalized restoration and runtime schemas for downstream use.",
+      "status": "complete",
+      "evidence": "Canonical tables passed schema and independent reload validation."
+    },
+    {
+      "requirement_id": "representative_figure",
+      "responsibility": "Render the predeclared eight-case restoration figure.",
+      "status": "complete",
+      "evidence": "Readable canonical PNG generated from all four experiment families."
+    },
+    {
+      "requirement_id": "interpretation_boundary",
+      "responsibility": "Retain the method's scientific interpretation limits.",
+      "status": "complete",
+      "evidence": "Known limitations retained in the notebook and final run manifest."
+    }
+  ],
+  "storage_policy": {
+    "local_canonical_output_complete": true,
+    "bulk_media_git_policy": "external_publication_after_validation",
+    "pilot_50_tag": "pilot-50-complete"
+  }
+}

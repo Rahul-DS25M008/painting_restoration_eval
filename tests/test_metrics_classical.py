@@ -151,15 +151,15 @@ class ClassicalMetricsTests(unittest.TestCase):
             + int(worklist["is_zero_control"].sum()) * 11
             + len(synthetic) * 3
         )
-        self.assertEqual(analytical_rows, 63018)
+        self.assertEqual(analytical_rows, 477753)
         self.assertEqual(
             analytical_rows,
             self.config["classical_metrics"]["expected_counts"]["total_metric_rows"],
         )
         sdxl = worklist.loc[worklist["model_id"].eq("sdxl_inpainting")]
-        self.assertEqual(len(sdxl), 10)
-        self.assertEqual(len(sdxl.query("experiment_id == 'synthetic_degradation'")), 6)
-        self.assertEqual(len(sdxl) * 30 + 6 * 3, 318)
+        self.assertEqual(len(sdxl), 24)
+        self.assertEqual(len(sdxl.query("experiment_id == 'synthetic_degradation'")), 11)
+        self.assertEqual(len(sdxl) * 30 + 11 * 3, 753)
 
 
 if __name__ == "__main__":

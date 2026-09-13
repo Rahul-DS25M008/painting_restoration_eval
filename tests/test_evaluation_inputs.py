@@ -46,23 +46,24 @@ class EvaluationInputsTests(unittest.TestCase):
         worklist = bundle.worklist
         validation = validate_evaluation_worklist(worklist)
         self.assertTrue(validation["passed"], validation)
-        self.assertEqual(len(worklist), 2160)
-        self.assertEqual(int(worklist["is_zero_control"].sum()), 150)
-        self.assertEqual(len(bundle.exclusions), 0)
+        self.assertEqual(len(worklist), 16404)
+        self.assertEqual(int(worklist["is_zero_control"].sum()), 1200)
+        self.assertEqual(len(bundle.exclusions), 11)
         self.assertEqual(
             worklist["model_id"].value_counts().to_dict(),
             {
-                "stable_diffusion_inpainting": 1330,
-                "opencv_telea": 410,
-                "lama": 410,
-                "sdxl_inpainting": 10,
+                "stable_diffusion_inpainting": 8520,
+                "opencv_telea": 2620,
+                "lama": 2620,
+                "hint_places2": 2620,
+                "sdxl_inpainting": 24,
             },
         )
         sdxl = worklist.loc[worklist["model_id"].eq("sdxl_inpainting")]
-        self.assertEqual(len(sdxl), 10)
+        self.assertEqual(len(sdxl), 24)
         self.assertEqual(sdxl["experiment_id"].value_counts().to_dict(), {
-            "synthetic_degradation": 6,
-            "canonical_missing_region": 4,
+            "canonical_missing_region": 13,
+            "synthetic_degradation": 11,
         })
         self.assertTrue(sdxl["technical_validation_passed"].all())
         self.assertTrue(

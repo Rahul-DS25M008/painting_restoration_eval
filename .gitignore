@@ -51,5 +51,6 @@ docs/supervisor/Next_Steps.docx
 # reports, remote indexes, and selected figures. Notebooks 01-11 remain the
 # final full-output Git/LFS checkpoint.
 /outputs/1[2-9]_*/images/
+/outputs/12a_*/images/
 /outputs/2[0-9]_*/images/
 /outputs/3[0-6]_*/images/
