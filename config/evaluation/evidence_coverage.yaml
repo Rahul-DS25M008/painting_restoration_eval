@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.8"
+config_version: "1.1.9"
 
 evidence_coverage:
   authority:
@@ -51,13 +51,13 @@ evidence_coverage:
   # Incremental transition ledger; update only after each notebook passes its
   # completion gate and read-only pilot-output comparison.
   controlled_300_rerun:
-    recorded_on: "2026-09-12"
+    recorded_on: "2026-09-13"
     recovery_tag: "pilot-50-complete"
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "11"
-    next_eligible_notebook_id: "12"
+    completed_through_notebook_id: "12"
+    next_eligible_notebook_id: "12A"
     completed_notebooks:
       - notebook_id: "01"
         stem: "01_dataset_verification"
@@ -509,6 +509,48 @@ evidence_coverage:
         baseline_exploratory_prompt_context_rows_displaced: 32
         baseline_displacement_reason: "approved_nonmetric_hash_stratified_selection_recomputed_over_controlled_300"
         primary_formal_scratch_and_base_uncertainty_responsibilities_preserved: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "12"
+        stem: "12_sdxl_feasibility_or_restoration"
+        output_root: "outputs/12_sdxl_feasibility_or_restoration"
+        manifest_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        availability_state: "partial_evaluation"
+        scheduled_candidate_rows: 35
+        painting_rows: 30
+        canonical_case_rows: 20
+        synthetic_case_rows: 15
+        completed_candidate_rows: 24
+        timed_out_rows: 1
+        skipped_rows: 10
+        technically_valid_candidate_rows: 24
+        restored_image_files: 24
+        runtime_summary_rows: 3
+        validation_rows: 241
+        artifact_records: 5
+        completion_requirements: 19
+        canonical_output_file_count: 30
+        work_file_count_after_completion: 0
+        parent_execution_seconds: 5741.061
+        global_budget_seconds: 25200
+        per_case_timeout_seconds: 900
+        baseline_output_root: "E:/outputs/12_sdxl_feasibility_or_restoration"
+        baseline_candidate_rows: 10
+        baseline_painting_rows: 5
+        baseline_restored_image_files: 10
+        baseline_runtime_summary_rows: 3
+        baseline_validation_rows: 236
+        baseline_artifact_records: 5
+        baseline_output_file_count: 16
+        baseline_candidate_ids_retained: 10
+        baseline_output_paths_retained: 10
+        baseline_candidate_statuses_retained: 10
+        baseline_shared_restored_images_byte_identical: 10
+        baseline_table_schema_preserved: true
+        runtime_omissions_excluded_from_quality_evidence: true
         unexplained_missing_or_reduced_evidence: false
 
   frozen_baseline:

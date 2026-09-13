@@ -1,0 +1,8 @@
+# Notebook 12A production-HINT adapter dependencies.
+#
+# Install into the existing experimental environment only after its recorded
+# torch/CUDA stack has been verified. The official HINT source tree and released
+# Places2 checkpoint remain external assets and are not downloaded by this file.
+
+einops>=0.7,<0.9
+timm>=0.9,<2

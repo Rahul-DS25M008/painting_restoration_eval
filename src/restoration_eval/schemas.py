@@ -8,7 +8,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import pandas as pd
 
 
-SCHEMAS_MODULE_VERSION = "1.18.0"
+SCHEMAS_MODULE_VERSION = "1.19.0"
 SCHEMA_REGISTRY_VERSION = "schema_registry.v1"
 
 RUN_MANIFEST_REQUIRED_KEYS = (
@@ -1246,6 +1246,7 @@ RESTORATIONS_SCHEMA = DataFrameSchema(
             {
                 "telea_inpaint",
                 "lama_inpaint",
+                "hint_inpaint",
                 "identity_noop",
                 "reused_validated",
                 "failed",

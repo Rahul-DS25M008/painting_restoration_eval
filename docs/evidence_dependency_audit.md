@@ -37,10 +37,11 @@ and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
 **Controlled-300 transition review: 2026-09-11.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebooks 01–11 are
-completed Controlled-300 producers. Notebooks 12–36 remain historical
-Controlled-50 evidence until each producer is explicitly reopened, rerun,
-validated, baseline-compared, and committed.
+dependency order for the approved 300-painting study. Notebooks 01–12 are
+completed Controlled-300 producers. Notebook 12A is the next approved
+production stage; Notebooks 13–36 remain historical Controlled-50 evidence
+until each producer is explicitly reopened, rerun, validated,
+baseline-compared, and committed.
 
 **Controlled-300 storage transition review: 2026-09-13.** Commit `694dad45`
 (`n11 scaled up`) is the final approved full-output Git/LFS checkpoint for the
@@ -62,6 +63,18 @@ with zero unrelated deletions. Every file remains present locally, and all
 No Git/LFS history was rewritten. Notebook-scoped bulk publication is now
 enabled; each producer still requires a successful remote read, byte-count, and
 SHA-256 gate before its external record is accepted.
+
+**Controlled-300 Notebook 12 closure review: 2026-09-13.** The bounded SDXL
+scope resolved all 35 predeclared rows across 30 paintings. Twenty-four
+candidates completed and passed technical validation, one timed out, and ten
+were explicitly skipped after the execution guard stopped further starts. The
+result remains `partial_evaluation`; runtime omissions are not quality failures.
+All 241 persisted validation checks pass, all five artifact checksums match, the
+30-file canonical output set is exact, and no temporary work file remains. The
+ten pilot candidates retain identical IDs, paths, schema, completed status, and
+restored-image bytes. Complete images remain local under the Notebook 12 output
+root and enter the external publication workflow before the compact GitHub
+record is committed.
 
 ## 2. Original frozen baseline and completed-pipeline protection
 

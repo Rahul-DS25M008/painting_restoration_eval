@@ -1,0 +1,477 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_1f7af9d329354a56b4275c4af3cd3f75",
+  "notebook_id": "12",
+  "notebook_name": "SDXL Bounded Partial Evaluation",
+  "origin": "Existing Previous Version of Notebook 25, rebuilt from scratch as a bounded and reusable SDXL partial-evaluation branch",
+  "run_status": "completed",
+  "started_at_utc": "2026-09-13T00:01:33.528043Z",
+  "completed_at_utc": "2026-09-13T13:38:12.114759Z",
+  "git_commit": "9bee164e55fac83d1705f2f5c6cbfc434ae8e5a9",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260912T232736Z_7f7700d2",
+  "dataset_versions": {
+    "dataset_id": "painting_restoration_eval",
+    "dataset_version": "2.0.0",
+    "dataset_scope": "controlled_300",
+    "experiment_id": "cross_experiment_sdxl_partial_evaluation",
+    "configuration_schema": "sdxl_config.v3",
+    "configuration_version": "3.0.0",
+    "configuration_fingerprint": "17d3d18ea0094fd72ba9f833c405747657ce4b8abbda208f6f9d0303a39e6502",
+    "candidate_schema": "sdxl_partial_candidates.v1",
+    "runtime_summary_schema": "restoration_runtime_summary.v1",
+    "model_id": "sdxl_inpainting",
+    "hf_model_id": "diffusers/stable-diffusion-xl-1.0-inpainting-0.1",
+    "model_revision": "115134f363124c53c7d878647567d04daf26e41e",
+    "configuration_id": "sdxl_quality_preserving_partial_evaluation_v1",
+    "methodological_role": "prompt_conditioned_sdxl_partial_evaluation",
+    "requested_device": "cuda",
+    "effective_device": "cuda",
+    "precision": "float16",
+    "inference_width": 768,
+    "inference_height": 768,
+    "num_inference_steps": 30,
+    "seed": 2026,
+    "prompt_policy_id": "sdxl_partial_evaluation_prompt_policy.v1",
+    "candidate_selection_policy": "predeclared_balanced_35_case_partial_scope_non_metric.v2",
+    "independent_unit": "painting",
+    "repeated_unit": "case_nested_within_painting",
+    "availability_state": "partial_evaluation",
+    "restoration_quality_metric_authority": "downstream_notebooks_13_onward",
+    "inventory_checksum": "055ad1f3e58e1b7cdb037ca7f0290b69c4a3d0c8216c22863bd5c5aa27c99f45",
+    "restoration_helper_sha256": "989b14d01ffd75f429215e60c856c29d74dd8f10a999c7e91f16c53977515a27",
+    "worker_helper_sha256": "7b7b7dc822d792b9bb5ea6e3ad9f22eded73f7b18813f049feca9d4fa72369f9",
+    "schemas_helper_sha256": "7d509262b3497f62054e8ed8ad3a658704d5e521c0bacd5c788280b4e336e7fa"
+  },
+  "configuration_paths": [
+    "config/experiments/sdxl.yaml",
+    "config/experiments/evaluation_contract.yaml",
+    "config/experiments/stable_diffusion.yaml",
+    "config/experiments/synthetic_degradation.yaml"
+  ],
+  "configuration_checksums": {
+    "config/experiments/sdxl.yaml": "73beb5eaaabf61599c206d22d5b6c31eb6775a7e8c9f5c5a2dca79d2f55260bd",
+    "config/experiments/evaluation_contract.yaml": "4db2fc27ba02559799b39ecdce73b1e828b812cb3972eaec970f53f34a385761",
+    "config/experiments/stable_diffusion.yaml": "e04296fb5c9af1349f64b5adb38a78004e477bab80e412c88e4564a07581bfdb",
+    "config/experiments/synthetic_degradation.yaml": "371349f4346a5b5dc69234bf3692e0c4407ddf3f5197af2d522f82a7eb6327d5"
+  },
+  "helper_versions": {
+    "restoration_eval": "0.1.0",
+    "manifests": "1.0.0",
+    "paths": "1.0.0",
+    "schemas": "1.18.0",
+    "validation": "1.0.0",
+    "restoration_sdxl": "3.1.0",
+    "restoration_sdxl_worker": "2.1.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "accelerate": "1.14.0",
+    "diffusers": "0.27.2",
+    "matplotlib": "3.11.0",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3",
+    "safetensors": "0.8.0",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.48.3"
+  },
+  "hardware": {
+    "execution_device": "cuda",
+    "gpu_required": true,
+    "cuda_available": true,
+    "cuda_device_name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "cuda_runtime_version": "12.1",
+    "torch_version": "2.5.1+cu121",
+    "maximum_gpu_peak_bytes": 5632166912,
+    "parent_runtime_seconds": 5741.061
+  },
+  "inputs": [
+    {
+      "input_key": "project_inventory",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "project_file_inventory.v1",
+      "required_columns_or_keys": "inventory_schema_version, inventory_run_id, relative_path, file_kind, size_bytes, hash_value",
+      "expected_cardinality": 37266,
+      "applicability": "repository discovery"
+    },
+    {
+      "input_key": "inventory_run",
+      "producer": "tools/build_project_inventory.py",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "inventory_run.v1",
+      "required_columns_or_keys": "inventory_run_id, status, inventory_sha256, summary, incremental_reuse",
+      "expected_cardinality": 1,
+      "applicability": "repository discovery"
+    },
+    {
+      "input_key": "project_paths_registry",
+      "producer": "validated notebook handoffs",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "project_paths.v1",
+      "required_columns_or_keys": "registry_schema_version, artifacts",
+      "expected_cardinality": 230,
+      "applicability": "artifact discovery"
+    },
+    {
+      "input_key": "artworks",
+      "producer": "Notebook 01",
+      "relative_path": "outputs/01_dataset_verification/data/artworks.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "artworks.v1",
+      "required_columns_or_keys": "painting_id, category, dataset_scope, acceptance_status",
+      "expected_cardinality": 300,
+      "applicability": "painting metadata"
+    },
+    {
+      "input_key": "case_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "case_registry.v1",
+      "required_columns_or_keys": "case_id, dataset_id, dataset_scope, experiment_id, painting_id, input_image_path, clean_image_path, mask_or_effect_id, mask_or_effect_path, damage_or_degradation_type, target_damage_fraction, realized_damage_fraction, source_manifest_path, status",
+      "expected_cardinality": 3425,
+      "applicability": "eligible restoration cases"
+    },
+    {
+      "input_key": "model_eligibility",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "model_eligibility.v1",
+      "required_columns_or_keys": "case_id, model_id, eligible, eligibility_reason, input_semantics, mask_semantics, restoration_objective",
+      "expected_cardinality": 17125,
+      "applicability": "SDXL eligibility"
+    },
+    {
+      "input_key": "schema_registry",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "schema_registry.v1",
+      "required_columns_or_keys": "registry_schema_version, schemas",
+      "expected_cardinality": 1,
+      "applicability": "schema discovery"
+    },
+    {
+      "input_key": "upstream_run_manifest",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "required_columns_or_keys": "manifest_schema_version, run_status, completion_gate_passed, validation_status",
+      "expected_cardinality": 1,
+      "applicability": "experiment contracts"
+    },
+    {
+      "input_key": "upstream_artifacts",
+      "producer": "Notebook 08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "artifact_manifest.v1",
+      "required_columns_or_keys": "artifact_key, relative_path, artifact_type, schema_version, validation_status",
+      "expected_cardinality": "one or more",
+      "applicability": "experiment contracts"
+    },
+    {
+      "input_key": "evaluation_contract_config",
+      "producer": "Repository configuration",
+      "relative_path": "config/experiments/evaluation_contract.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "evaluation_contract_config.v1",
+      "required_columns_or_keys": "dataset, experiments, region policies",
+      "expected_cardinality": 1,
+      "applicability": "methodological contract"
+    },
+    {
+      "input_key": "stable_diffusion_config",
+      "producer": "Repository configuration",
+      "relative_path": "config/experiments/stable_diffusion.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "stable_diffusion_config.v1",
+      "required_columns_or_keys": "model, prompt policy, execution policy",
+      "expected_cardinality": 1,
+      "applicability": "cross-model comparability"
+    },
+    {
+      "input_key": "synthetic_degradation_config",
+      "producer": "Repository configuration",
+      "relative_path": "config/experiments/synthetic_degradation.yaml",
+      "required": true,
+      "format": "yaml",
+      "schema_version": "synthetic_degradation_config.v2",
+      "required_columns_or_keys": "generator, active threshold, degradation families",
+      "expected_cardinality": 1,
+      "applicability": "synthetic mask semantics"
+    },
+    {
+      "input_key": "telea_restorations",
+      "producer": "Notebook 09",
+      "relative_path": "outputs/09_opencv_telea_restoration/data/restorations.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "restorations.v1",
+      "required_columns_or_keys": "case_id, candidate_id, restored_path, runtime_seconds, status",
+      "expected_cardinality": 2620,
+      "applicability": "matched-case comparability"
+    },
+    {
+      "input_key": "telea_run_manifest",
+      "producer": "Notebook 09",
+      "relative_path": "outputs/09_opencv_telea_restoration/manifests/run_manifest.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "required_columns_or_keys": "manifest_schema_version, run_status, completion_gate_passed, validation_status",
+      "expected_cardinality": 1,
+      "applicability": "matched-case comparability"
+    },
+    {
+      "input_key": "lama_restorations",
+      "producer": "Notebook 10",
+      "relative_path": "outputs/10_lama_restoration/data/restorations.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "restorations.v1",
+      "required_columns_or_keys": "case_id, candidate_id, restored_path, runtime_seconds, status",
+      "expected_cardinality": 2620,
+      "applicability": "matched-case comparability"
+    },
+    {
+      "input_key": "lama_run_manifest",
+      "producer": "Notebook 10",
+      "relative_path": "outputs/10_lama_restoration/manifests/run_manifest.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "required_columns_or_keys": "manifest_schema_version, run_status, completion_gate_passed, validation_status",
+      "expected_cardinality": 1,
+      "applicability": "matched-case comparability"
+    },
+    {
+      "input_key": "stable_diffusion_candidates",
+      "producer": "Notebook 11",
+      "relative_path": "outputs/11_stable_diffusion_restoration/data/candidates.csv",
+      "required": true,
+      "format": "csv",
+      "schema_version": "stable_diffusion_candidates.v1",
+      "required_columns_or_keys": "candidate_id, case_id, prompt_variant_id, seed, restored_path, status",
+      "expected_cardinality": 8520,
+      "applicability": "matched primary-candidate comparability"
+    },
+    {
+      "input_key": "stable_diffusion_run_manifest",
+      "producer": "Notebook 11",
+      "relative_path": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json",
+      "required": true,
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "required_columns_or_keys": "manifest_schema_version, run_status, completion_gate_passed, validation_status",
+      "expected_cardinality": 1,
+      "applicability": "matched primary-candidate comparability"
+    }
+  ],
+  "outputs": [
+    {
+      "artifact_key": "sdxl.candidates",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv",
+      "artifact_type": "table",
+      "artifact_role": "partial_evaluation_candidates",
+      "schema_version": "sdxl_partial_candidates.v1",
+      "expected_row_count": 35,
+      "canonical": true
+    },
+    {
+      "artifact_key": "sdxl.restored_images",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/images/restored",
+      "artifact_type": "image_directory",
+      "artifact_role": "technically_valid_partial_restorations",
+      "schema_version": "restored_images.sdxl_partial.v1",
+      "expected_row_count": 24,
+      "canonical": true
+    },
+    {
+      "artifact_key": "sdxl.runtime_summary",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/metrics/runtime_summary.csv",
+      "artifact_type": "table",
+      "artifact_role": "bounded_runtime_evidence",
+      "schema_version": "restoration_runtime_summary.v1",
+      "expected_row_count": 3,
+      "canonical": true
+    },
+    {
+      "artifact_key": "sdxl.partial_evaluation_report",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/reports/partial_evaluation_report.md",
+      "artifact_type": "report",
+      "artifact_role": "partial_scope_and_limitations",
+      "schema_version": "report.sdxl_partial_evaluation.v1",
+      "expected_row_count": 1,
+      "canonical": true
+    },
+    {
+      "artifact_key": "validation.12_sdxl_feasibility_or_restoration",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/validation/checks.csv",
+      "artifact_type": "table",
+      "artifact_role": "validation_evidence",
+      "schema_version": "validation_checks.v1",
+      "expected_row_count": 217,
+      "canonical": true
+    },
+    {
+      "artifact_key": "sdxl.artifact_manifest",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/artifacts.csv",
+      "artifact_type": "manifest",
+      "artifact_role": "artifact_discovery",
+      "schema_version": "artifact_manifest.v1",
+      "expected_row_count": 5,
+      "canonical": true
+    },
+    {
+      "artifact_key": "sdxl.run_manifest",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json",
+      "artifact_type": "manifest",
+      "artifact_role": "run_provenance",
+      "schema_version": "run_manifest.v1",
+      "expected_row_count": 1,
+      "canonical": true
+    }
+  ],
+  "expected_counts": {
+    "scheduled_candidate_count": 35,
+    "painting_count": 30,
+    "canonical_case_count": 20,
+    "synthetic_case_count": 15,
+    "completed_candidate_count": 24,
+    "technically_valid_candidate_count": 24,
+    "restored_file_count": 24,
+    "runtime_summary_row_count": 3,
+    "validation_row_count": 241,
+    "artifact_record_count": 5,
+    "canonical_output_file_count": 30,
+    "temporary_work_file_count": 0,
+    "blocking_validation_failures": 0
+  },
+  "observed_counts": {
+    "scheduled_candidate_count": 35,
+    "painting_count": 30,
+    "canonical_case_count": 20,
+    "synthetic_case_count": 15,
+    "completed_candidate_count": 24,
+    "technically_valid_candidate_count": 24,
+    "restored_file_count": 24,
+    "runtime_summary_row_count": 3,
+    "validation_row_count": 241,
+    "artifact_record_count": 5,
+    "canonical_output_file_count": 30,
+    "temporary_work_file_count": 0,
+    "blocking_validation_failures": 0
+  },
+  "validation_summary": {
+    "scientific_validation": {
+      "check_count": 203,
+      "passed_count": 203,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "canonical_persistence": {
+      "check_count": 14,
+      "passed_count": 14,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "manifest_handoff": {
+      "check_count": 5,
+      "passed_count": 5,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "completion_gate": {
+      "check_count": 7,
+      "passed_count": 7,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "roadmap_completion": {
+      "check_count": 19,
+      "passed_count": 19,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "registry_update": {
+      "check_count": 5,
+      "passed_count": 5,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    },
+    "work_cleanup": {
+      "check_count": 2,
+      "passed_count": 2,
+      "failed_count": 0,
+      "blocking_failure_count": 0,
+      "overall_passed": true,
+      "failed_check_ids": []
+    }
+  },
+  "known_limitations": [
+    "The 35 cases are a predeclared balanced purposive scope and do not represent a full SDXL evaluation.",
+    "The 35 case observations span 30 paintings; repeated cases from five retained pilot anchors are nested observations.",
+    "A timeout or CUDA out-of-memory failure is hardware/runtime evidence and must not be interpreted as poor restoration quality.",
+    "Only technically validated completed candidates may enter downstream metric computation.",
+    "The global seven-hour budget can leave later scheduled cases explicitly unexecuted.",
+    "SDXL outputs are plausible prompt-conditioned inpaintings, not historically verified reconstructions or conservation recommendations."
+  ],
+  "refactor_status": "refactored",
+  "validation_status": "passed",
+  "depends_on": [
+    "dataset.artworks",
+    "experiment_contracts.case_registry",
+    "experiment_contracts.model_eligibility",
+    "opencv_telea.restorations",
+    "lama.restorations",
+    "stable_diffusion.candidates",
+    "current_inventory",
+    "project_paths_registry"
+  ],
+  "applicable_dataset_scopes": [
+    "controlled_300"
+  ],
+  "applicable_experiment_scopes": [
+    "canonical_missing_region",
+    "synthetic_degradation",
+    "cross_experiment_sdxl_partial_evaluation"
+  ],
+  "expensive_execution": true,
+  "completion_gate_passed": true
+}

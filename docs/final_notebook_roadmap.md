@@ -997,9 +997,9 @@ Notebooks 13–21 and all later analysis/reporting stages.
 
 **Notebook:** `12_sdxl_feasibility_or_restoration.ipynb`  
 **Origin:** Existing Previous Version of Notebook 25, Pre-refactor  
-**Controlled-300 refactor status:** In progress\
-**Validation status:** Pending\
-**Completion gate passed:** No\
+**Controlled-300 refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
 **Approved target:** 35 predeclared single-seed cases across 30 paintings; seven cases per visual category, with 20 canonical and 15 eligible synthetic cases\
 **Output root:** `outputs/12_sdxl_feasibility_or_restoration/`  
 **Depends on:** Notebooks 08–11
@@ -1073,6 +1073,20 @@ The exact case registry, execution order, mask policy, output contract, and
 interpretation limits are frozen in
 `docs/notebook_12_partial_evaluation_contract.md`.
 
+### Controlled-300 observed result
+
+- All 35 predeclared candidates were resolved across 30 paintings: 24 completed,
+  one timed out, and ten were explicitly skipped after the bounded execution
+  guard stopped further starts.
+- All 24 completed outputs passed RGB 768 x 768 geometry, checksum, exact
+  outside-mask preservation, and independent technical validation.
+- The ten historical pilot candidates were retained with identical candidate
+  IDs, output paths, table schema, completed status, and restored-image bytes.
+- The final local output root contains 30 canonical files, 241 passing
+  validation rows, five artifact records, and no temporary work files.
+- The availability state is `partial_evaluation`; only technically validated
+  completed rows are eligible for downstream metric computation.
+
 ### Canonical outputs
 
 Full mode:
@@ -1136,11 +1150,27 @@ long-range context; it is not a continuation of D01's 12-case pilot.
 - Preserve normalized candidate and runtime schemas compatible with N13–N21 and
   the downstream reports/dashboard.
 
+### Approved batch structure
+
+1. Contract, initialization, dependency and external-asset preflight.
+2. Normalized input loading, exact 2,620-case worklist construction, path
+   validation and checksum materialization.
+3. One inference case plus one zero-control smoke test, including deterministic
+   repeatability and exact outside-mask preservation.
+4. Guarded full execution in an isolated worker, with ten-case progress,
+   ten-case atomic checkpoints, checksum-aware resume and an eight-hour upper
+   process budget.
+5. Canonical restoration-table assembly and experiment-level runtime summary.
+6. Scientific and technical validation plus the representative restoration
+   figure.
+7. Canonical persistence, reload validation, manifests, cleanup and final
+   roadmap traceability.
+
 ### Canonical outputs
 
 ```text
-data/candidates.csv
-images/restored/<experiment_id>/<case_id>/<candidate_id>.png
+data/restorations.csv
+images/restored/<experiment_id>/<case_id>.png
 metrics/runtime_summary.csv
 figures/restoration_examples.png
 manifests/run_manifest.json

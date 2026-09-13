@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-12T20:47:01.544284Z",
+  "updated_at_utc": "2026-09-13T13:38:02.196234Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -2095,12 +2095,12 @@
       "artifact_type": "table",
       "artifact_role": "partial_evaluation_candidates",
       "schema_version": "sdxl_partial_candidates.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_sdxl_partial_evaluation",
       "validation_status": "passed",
-      "row_count": 10,
+      "row_count": 35,
       "file_count": 1,
-      "checksum": "987f13a42a1fbd59eefae630e6e74614d36a410cadb94e97440754f9a0d363ee"
+      "checksum": "2ca1e5effd579a7748f12e35f804fdf1d2e4f859465454fc2ef9c280947c7253"
     },
     {
       "artifact_key": "sdxl.partial_evaluation_report",
@@ -2109,12 +2109,12 @@
       "artifact_type": "report",
       "artifact_role": "partial_scope_and_limitations",
       "schema_version": "report.sdxl_partial_evaluation.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_sdxl_partial_evaluation",
       "validation_status": "passed",
       "row_count": 1,
       "file_count": 1,
-      "checksum": "155b1181fe38a41622528bf2a52c44eedd6657da1e3f37c0c10174ec385c5023"
+      "checksum": "1425be812e4448de9f00a280f37c33c76c258bdce895947031fe50705c47b65b"
     },
     {
       "artifact_key": "sdxl.restored_images",
@@ -2123,12 +2123,12 @@
       "artifact_type": "image_directory",
       "artifact_role": "technically_valid_partial_restorations",
       "schema_version": "restored_images.sdxl_partial.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_sdxl_partial_evaluation",
       "validation_status": "passed",
-      "row_count": 10,
-      "file_count": 10,
-      "checksum": "d64ad227f49f93d8801f82742c3b5864cb2a3adf9b56bb8a43b958e12d8ddfdc"
+      "row_count": 24,
+      "file_count": 24,
+      "checksum": "dfccd314dced5471b84f03b2021bd0742c805a93698545a7df765a7a422aff09"
     },
     {
       "artifact_key": "sdxl.runtime_summary",
@@ -2137,12 +2137,12 @@
       "artifact_type": "table",
       "artifact_role": "bounded_runtime_evidence",
       "schema_version": "restoration_runtime_summary.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_sdxl_partial_evaluation",
       "validation_status": "passed",
       "row_count": 3,
       "file_count": 1,
-      "checksum": "7dcba00801acc11c809dc89f7e20615bc02467fe56f101db55320fc4f385a4c4"
+      "checksum": "ec68aec998f1b09b2b8c92199f06ada4f048a91101e8db5d6ef9537f1c77aab2"
     },
     {
       "artifact_key": "semantic_structural.examples",
@@ -2949,12 +2949,12 @@
       "artifact_type": "table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_sdxl_partial_evaluation",
       "validation_status": "passed",
-      "row_count": 236,
+      "row_count": 241,
       "file_count": 1,
-      "checksum": "e66e86c844aa9721811bb3c00abc183d27340faa2d76046110a507ab10c46dd7"
+      "checksum": "11cd8902412f57771ff2c0b2d130275a35bcd92a3d0970cd4a8fc6847691d468"
     },
     {
       "artifact_key": "validation.13_classical_metrics",

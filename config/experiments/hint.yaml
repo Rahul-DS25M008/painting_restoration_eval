@@ -1,0 +1,152 @@
+config_schema_version: "hint_config.v1"
+config_version: "1.0.0"
+
+dataset:
+  dataset_id: "painting_restoration_eval"
+  dataset_version: "2.0.0"
+  dataset_scope: "controlled_300"
+  experiment_id: "cross_experiment_hint"
+
+inputs:
+  inventory_path: "outputs/inventory/project_file_inventory.csv"
+  inventory_run_path: "outputs/inventory/inventory_run.json"
+  project_paths_path: "outputs/inventory/project_paths.json"
+  case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+  model_eligibility_path: "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv"
+  schema_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/schema_registry.json"
+  upstream_run_manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+  upstream_artifacts_path: "outputs/08_experiment_contracts_and_region_policy/manifests/artifacts.csv"
+  decision_manifest_path: "outputs/37_hint_mat_method_selection/manifests/run_manifest.json"
+  decision_path: "outputs/37_hint_mat_method_selection/reports/selection_decision.json"
+  decision_candidates_path: "outputs/37_hint_mat_method_selection/data/candidates.csv"
+  evaluation_contract_config_path: "config/experiments/evaluation_contract.yaml"
+  decision_config_path: "config/experiments/hint_mat_selection.yaml"
+  adapter_requirements_path: "requirements_12a.txt"
+  required_upstream_run_status: "completed"
+  required_decision: "hint"
+
+output:
+  notebook_stem: "12a_hint_restoration"
+  restorations_path: "data/restorations.csv"
+  restored_directory: "images/restored"
+  runtime_summary_path: "metrics/runtime_summary.csv"
+  examples_figure_path: "figures/restoration_examples.png"
+  run_manifest_path: "manifests/run_manifest.json"
+  artifacts_path: "manifests/artifacts.csv"
+  validation_path: "validation/checks.csv"
+  checkpoint_path: "work/restoration_checkpoint.csv"
+  progress_path: "work/progress.json"
+  worker_job_path: "work/job.json"
+  worker_result_path: "work/result.json"
+  artifact_record_count: 5
+  fixed_canonical_file_count: 6
+
+external_asset:
+  repository_url: "https://github.com/ChrisChen1023/HINT"
+  repository_revision: "15e867d8c8689b9d5050383fc3884537ae876145"
+  repository_environment_variable: "HINT_REPO_ROOT"
+  default_repository_path: "D:/Models/HINT"
+  required_repository_files:
+    - "src/networks.py"
+    - "src/models.py"
+    - "LICENSE"
+  checkpoint_id: "hint_places2_official"
+  checkpoint_family: "Places2"
+  checkpoint_environment_variable: "HINT_CHECKPOINT_PATH"
+  default_checkpoint_path: "D:/Models/HINT/checkpoints/places2/InpaintingModel_gen.pth"
+  expected_checkpoint_filename: "InpaintingModel_gen.pth"
+  software_license: "MIT"
+  checkpoint_terms: "recorded_separately_from_software_license"
+
+model:
+  model_id: "hint_places2"
+  methodological_role: "learned_deterministic_mask_aware_transformer"
+  configuration_id: "hint_places2_native_768_exact_composite_v1"
+  implementation: "official HINT generator loaded directly"
+  seed: 2026
+  requested_device: "cuda"
+  allow_cpu_fallback: false
+  precision: "float32"
+  inference_width: 768
+  inference_height: 768
+  output_width: 768
+  output_height: 768
+  adapter_policy: "native_768_validated_by_d01.v1"
+  canonical_mask_semantics: "one_is_missing"
+  compositing_policy: "exact_missing_mask_composite_at_768.v1"
+  zero_control_policy: "identity_noop"
+  mask_threshold_policy:
+    binary_missing_region:
+      threshold: 128
+      comparison: "greater_than_or_equal"
+    synthetic_degradation:
+      threshold: 13
+      comparison: "greater_than_or_equal"
+
+execution:
+  worker_module: "restoration_eval.restoration_hint_production_worker"
+  resume_enabled: true
+  overwrite_existing: false
+  retry_failed_attempts: false
+  progress_interval_cases: 10
+  checkpoint_interval_cases: 10
+  progress_poll_seconds: 1.0
+  model_load_timeout_seconds: 900
+  per_case_timeout_seconds: 900
+  full_run_budget_seconds: 28800
+  stop_after_cuda_oom: true
+  stop_after_model_failure: true
+  output_mode: "RGB"
+  output_format: "PNG"
+  png_compress_level: 6
+
+expected:
+  case_registry_rows: 3425
+  model_eligibility_rows: 17125
+  eligible_case_count: 2620
+  eligible_case_count_by_experiment:
+    canonical_missing_region: 1500
+    damage_size_sensitivity: 245
+    mask_robustness: 525
+    synthetic_degradation: 350
+  model_inference_case_count: 2320
+  zero_control_case_count: 300
+  restored_file_count: 2620
+  restorations_row_count: 2620
+  runtime_summary_row_count: 5
+  representative_case_count: 8
+  artifact_record_count: 5
+
+smoke:
+  inference_case_id: "canonical__p039__loss_large"
+  zero_control_case_id: "canonical__p001__zero_control"
+  deterministic_repeat_count: 2
+  require_sha256_equality: true
+
+representative_case_ids:
+  - "canonical__p039__loss_large"
+  - "canonical__p001__zero_control"
+  - "damage_size__p001__loss_large__size_02pct"
+  - "mask_robustness__p001__loss_large__target_12p5pct__variant_01"
+  - "synthetic_degradation__p001__dirt_dust__mild"
+  - "synthetic_degradation__p001__partial_transparency__moderate"
+  - "synthetic_degradation__p001__water_stain__severe"
+  - "synthetic_degradation__p001__water_stain_dirt__moderate"
+
+schema_versions:
+  case_registry: "case_registry.v1"
+  model_eligibility: "model_eligibility.v1"
+  restorations: "restorations.v1"
+  runtime_summary: "restoration_runtime_summary.v1"
+  restored_images: "restored_images.hint.v1"
+  examples_figure: "figure.restoration_examples.v1"
+  run_manifest: "run_manifest.v1"
+  artifact_manifest: "artifact_manifest.v1"
+  validation_checks: "validation_checks.v1"
+
+known_limitations:
+  - "HINT was trained on Places2 rather than conservation-restoration paintings."
+  - "A plausible completion is not evidence of historical authenticity or conservation suitability."
+  - "The deterministic run measures one fixed checkpoint and configuration, not model-family uncertainty."
+  - "Eligible synthetic-degradation cases are supplementary masked-removal diagnostics."
+  - "Runtime measurements describe the recorded local hardware and are not universal benchmarks."
