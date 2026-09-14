@@ -1906,7 +1906,7 @@ After each applicable notebook passes its local completion gate, run the
 publication sequence for that producer only:
 
 ```text
-python tools/external_artifact_publication.py plan --notebook <N> --limit-per-tier 0 --full-hash --merge-existing --manifest outputs/inventory/external_artifact_publication.csv
+python tools/external_artifact_publication.py plan --producer-notebook <exact_output_stem> --limit-per-tier 0 --full-hash --merge-existing --manifest outputs/inventory/external_artifact_publication.csv
 python tools/external_artifact_publication.py upload --manifest outputs/inventory/external_artifact_publication.csv --producer-notebook <exact_output_stem> --chunk-size 50 --confirm UPLOAD_VERIFIED_NOTEBOOK_ARTIFACTS
 python tools/external_artifact_publication.py verify --manifest outputs/inventory/external_artifact_publication.csv --producer-notebook <exact_output_stem>
 ```

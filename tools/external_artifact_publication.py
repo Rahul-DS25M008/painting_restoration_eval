@@ -144,6 +144,7 @@ def discover_rows(
     config: dict[str, Any],
     through_notebook: int | None,
     exact_notebook: int | None = None,
+    exact_producer_notebook: str | None = None,
 ) -> list[dict[str, str]]:
     rules = config["classification"]
     extensions = {str(value).lower() for value in rules["media_extensions"]}
@@ -156,12 +157,22 @@ def discover_rows(
 
     output_roots = sorted(path for path in (root / "outputs").iterdir() if path.is_dir())
     for output_root in output_roots:
+        if (
+            exact_producer_notebook is not None
+            and output_root.name != exact_producer_notebook
+        ):
+            continue
         number = parse_notebook_number(output_root)
-        if number is None:
+        if number is None and exact_producer_notebook is None:
             continue
         if exact_notebook is not None and number != exact_notebook:
             continue
-        if exact_notebook is None and through_notebook is not None and number > through_notebook:
+        if (
+            exact_notebook is None
+            and exact_producer_notebook is None
+            and through_notebook is not None
+            and number > through_notebook
+        ):
             continue
         for path in sorted(output_root.rglob("*")):
             if not path.is_file() or path.suffix.lower() not in extensions:
@@ -266,6 +277,7 @@ def command_plan(args: argparse.Namespace) -> int:
         config,
         args.through_notebook,
         exact_notebook=args.notebook,
+        exact_producer_notebook=args.producer_notebook,
     )
     rows = deterministic_test_subset(rows, args.limit_per_tier)
     if args.require_test_limit and len(rows) > 10:
@@ -528,10 +540,18 @@ def build_parser() -> argparse.ArgumentParser:
         default="config/publication/external_storage.yaml",
     )
     plan.add_argument("--through-notebook", type=int, default=11)
-    plan.add_argument(
+    selection = plan.add_mutually_exclusive_group()
+    selection.add_argument(
         "--notebook",
         type=int,
         help="Plan only one numbered notebook output root.",
+    )
+    selection.add_argument(
+        "--producer-notebook",
+        help=(
+            "Plan one exact output-root stem, including alphanumeric stages "
+            "such as 12a_hint_restoration."
+        ),
     )
     plan.add_argument(
         "--manifest",
