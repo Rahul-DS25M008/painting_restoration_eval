@@ -148,6 +148,20 @@ def discover_rows(
 ) -> list[dict[str, str]]:
     rules = config["classification"]
     extensions = {str(value).lower() for value in rules["media_extensions"]}
+    bulk_diagnostic_extensions = {
+        str(value).lower()
+        for value in rules.get("bulk_diagnostic_extensions", [])
+    }
+    bulk_diagnostic_min_bytes = int(
+        rules.get("bulk_diagnostic_min_bytes", 0)
+    )
+    bulk_role_by_extension = {
+        str(extension).lower(): str(role)
+        for extension, role in rules.get(
+            "bulk_diagnostic_role_by_extension",
+            {},
+        ).items()
+    }
     candidate_groups = {str(value) for value in rules["candidate_image_groups"]}
     diagnostic_groups = {str(value) for value in rules["diagnostic_image_groups"]}
     targets = configured_targets(config)
@@ -175,20 +189,37 @@ def discover_rows(
         ):
             continue
         for path in sorted(output_root.rglob("*")):
-            if not path.is_file() or path.suffix.lower() not in extensions:
+            if not path.is_file():
                 continue
+            suffix = path.suffix.lower()
+            size_bytes = path.stat().st_size
             relative = path.relative_to(root).as_posix()
-            group = image_group(relative)
-            if group is None:
-                # Canonical figures remain part of the compact Git publication.
-                continue
-            if group in candidate_groups:
-                tier = "candidates"
-            elif group in diagnostic_groups:
+
+            if suffix in extensions:
+                group = image_group(relative)
+                if group is None:
+                    # Canonical figures remain part of the compact Git publication.
+                    continue
+                if group in candidate_groups:
+                    tier = "candidates"
+                elif group in diagnostic_groups:
+                    tier = "diagnostics"
+                else:
+                    unclassified.append(relative)
+                    continue
+                media_role = group
+            elif (
+                suffix in bulk_diagnostic_extensions
+                and size_bytes >= bulk_diagnostic_min_bytes
+            ):
                 tier = "diagnostics"
+                media_role = bulk_role_by_extension.get(
+                    suffix,
+                    "bulk_diagnostic",
+                )
             else:
-                unclassified.append(relative)
                 continue
+
             target = targets[tier]
             rows.append(
                 {
@@ -204,8 +235,8 @@ def discover_rows(
                     "path_in_repository": relative,
                     "remote_uri": encoded_remote_uri(target.resolve_base_url, relative),
                     "sha256": "",
-                    "size_bytes": str(path.stat().st_size),
-                    "media_role": group,
+                    "size_bytes": str(size_bytes),
+                    "media_role": media_role,
                     "publication_status": "planned",
                     "publication_commit_url": "",
                     "published_at_utc": "",

@@ -200,7 +200,7 @@ individual run outside its range.
 | Notebook | Upper planning range | Dominant work and execution note |
 |---|---:|---|
 | 12A — HINT restoration | 4–6 hours | 2,320 GPU inferences plus 300 identity controls; ten-case resumable checkpoints. |
-| 13 — Classical metrics | 18–30 hours | Region-aware full-reference metrics over the expanded multi-model candidate population; checkpoint by bounded candidate blocks. |
+| 13 — Classical metrics | Observed 7 h 58 m; planning range was 18–30 hours | Region-aware full-reference metrics over the expanded multi-model candidate population; checkpointed every ten cases. The observed run finished materially below the conservative planning range. |
 | 14 — LPIPS metrics | 3–7 hours | Batched GPU perceptual inference over compatible contiguous regions. |
 | 15 — Feature similarity | 4–9 hours | CLIP and DINOv2 feature extraction, similarity computation, and embedding persistence. |
 | 16 — Difference maps and spatial diagnostics | 36–72 hours | Dense numeric maps, rendered spatial panels, compression, and high-volume disk writes; expect a multi-session resumable run. |
@@ -1265,9 +1265,15 @@ Notebooks 13–21 and 23–36.
 
 **Notebook:** `13_classical_metrics.ipynb`  
 **Origin:** Consolidates Existing Notebooks 09, 15, and 22  
-**Controlled-300 refactor status:** In progress  
-**Validation status:** Pending  
-**Completion gate passed:** No  
+**Controlled-300 refactor status:** Finished
+
+**Validation status:** Finished
+
+**Completion gate passed:** Yes
+
+**Active validated coverage:** 2,620 cases; 16,404 candidates across five methods; 477,753 metric rows; 262 validation checks
+
+**Pilot comparison:** All six pilot output paths and schemas retained; candidate coverage increased from 2,160 to 16,404 and metric rows from 63,018 to 477,753 without unexplained loss
 **Output root:** `outputs/13_classical_metrics/`  
 **Depends on:** Notebook 02 geometry handoff and Notebooks 08–12A
 
@@ -1292,6 +1298,28 @@ Compute one standardized classical full-reference evidence table for all availab
 - Support all experiment and dataset scopes.
 - Generate compact model/region QA plots without persisting every grouping.
 
+### Observed controlled-300 completion
+
+- The canonical table contains 477,753 validated rows: 143,247 each for MSE,
+  MAE, and PSNR, plus 48,012 SSIM rows.
+- Evidence covers 16,404 candidates across 2,620 cases: 2,620 each for Telea,
+  LaMa, and HINT; 8,520 Stable Diffusion candidates; and 24 technically valid
+  SDXL candidates from the bounded 35-case attempt.
+- All 1,200 zero-control candidates and their 13,200 metric rows are retained.
+  Intentional exact-match PSNR infinities remain explicit, while no negative
+  infinity or unexpected numerical missingness is present.
+- All 262 consolidated checks passed, the two canonical figures are valid and
+  nonblank, four downstream artifacts are registered, and no temporary work
+  file remains.
+- Batch 4 completed in 28,705.153 seconds (about 7 h 58 m), below the
+  conservative 18–30 hour planning range. This remains machine- and
+  environment-specific runtime evidence.
+- The read-only pilot comparison root is `E:/outputs/13_classical_metrics/`.
+  Both runs contain the same six canonical relative paths and preserve
+  `classical_metrics.v1`, the two figure schemas, and
+  `validation_checks.v1`. Population growth fully explains the increased row
+  counts; no pilot artifact class or responsibility was lost.
+
 ### Canonical outputs
 
 ```text
@@ -1302,6 +1330,11 @@ manifests/run_manifest.json
 manifests/artifacts.csv
 validation/checks.csv
 ```
+
+### Downstream consumers
+
+Notebooks 14, 16, 17, 21, 23–36, D02, and other explicitly registered
+metric-consuming stages.
 
 ---
 

@@ -37,9 +37,9 @@ and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
 **Controlled-300 transition review: 2026-09-11.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebooks 01–12 are
-completed Controlled-300 producers. Notebook 12A is the next approved
-production stage; Notebooks 13–36 remain historical Controlled-50 evidence
+dependency order for the approved 300-painting study. Notebooks 01–13,
+including Notebook 12A, are completed Controlled-300 producers. Notebook 14 is
+the next approved production stage; Notebooks 14–36 remain historical Controlled-50 evidence
 until each producer is explicitly reopened, rerun, validated,
 baseline-compared, and committed.
 
@@ -123,7 +123,9 @@ metric validity and coverage passed.
 | 09 OpenCV Telea Restoration | `restorations.v1`, 2,620 restored RGB PNGs, five-row runtime summary, eight-case representative figure, validation and manifests | 2,620 eligible cases: 1,500 canonical, 245 damage-size, 525 mask-robustness, and 350 eligible synthetic-degradation cases; 300 zero controls; 2,320 nonzero cases; 72/72 scientific checks; 15/15 roadmap requirements; 2,626 canonical files | All 416 pilot paths and CSV schemas retained; 409/410 shared restoration PNGs byte-identical; sole changed shared PNG is the inherited Notebook 06 `p039` `loss_small` fourth-variant morphology correction; representative figure byte-identical; 2,210 additional restored images explain the full file-count increase | Approved Controlled-300 deterministic Telea producer for Notebooks 13–17 and later comparison, reporting, and dashboard stages |
 | 10 LaMa Restoration | `restorations.v1`, 2,620 restored RGB PNGs, five-row runtime summary, eight-case representative figure, validation and manifests | 2,620 eligible cases: 1,500 canonical, 245 damage-size, 525 mask-robustness, and 350 eligible synthetic-degradation cases; 300 zero controls; 2,320 nonzero cases; 80/80 scientific checks; 16/16 roadmap requirements; 2,626 canonical files | All 416 pilot paths and CSV schemas retained; 409/410 shared restoration PNGs byte-identical; sole changed shared PNG is the inherited Notebook 06 `p039` `loss_small` fourth-variant morphology correction; representative figure byte-identical; 2,210 additional restored images explain the full file-count increase | Approved Controlled-300 deterministic learned baseline for Notebooks 13–17 and later comparison, reporting, and dashboard stages; no generative uncertainty |
 | 11 Stable Diffusion Restoration | `stable_diffusion_candidates.v1`, 8,520 restored RGB PNGs, six-row prompt policy, 14-row runtime summary, 1,355-row design table, two canonical figures, method report, validation and manifests | 8,520 completed candidates: 2,620 primary, 4,460 prompt-context, and 1,440 uncertainty-extension rows; 8,220 inferences; 300 identity controls; 300 formal scratch cases and 2,400 paired outcomes; 176/176 scientific checks; 23/23 completion requirements; 8,530 canonical files | All 10 pilot non-image paths and CSV schemas retained; 1,298/1,330 pilot candidate identities retained; 1,297/1,298 shared PNGs byte-identical; one inherited Notebook 06 morphology correction; 32 exploratory p01-p04 rows transparently displaced by expanded non-metric hash-stratified selection; both figures regenerated for expanded evidence | Approved Controlled-300 Stable Diffusion producer for Notebooks 13–21, 22, and later comparison, uncertainty, reporting, and dashboard stages; 3,260 metadata-context candidates remain exploratory |
+| 12 SDXL Feasibility or Restoration | `sdxl_partial_candidates.v1`, 24 technically valid restored RGB PNGs, runtime summary, feasibility report, validation and manifests | 35 predeclared cases across 30 paintings: 24 completed and technically valid, 1 timed out, and 10 explicitly skipped; 241/241 checks; 30 canonical files | All 10 pilot candidate IDs, output paths, statuses, table schema, and restored-image bytes retained; 25 cases were added under the predeclared balanced scope; runtime omissions remain exclusions rather than quality failures | Approved bounded partial-evaluation producer for compatible downstream metrics; not a full-model benchmark and not repeated-seed uncertainty evidence |
 | 12A HINT Restoration | `restorations.v1`, 2,620 restored RGB PNGs, five-row runtime summary, eight-case representative figure, validation and manifests | 2,620 completed candidates: 1,500 canonical, 245 damage-size, 525 mask-robustness and 350 eligible synthetic-degradation cases; 2,320 HINT inferences; 300 identity controls; 82/82 checks; 2,626 canonical files | New production stage with no pilot output analogue; D01 is the decision baseline and its official source revision, Places2 checkpoint, native 768 × 768 adapter, mask convention, exact compositing and outside-mask invariance contract are preserved | Approved Controlled-300 deterministic learned producer for Notebooks 13–21 and later comparison, reporting and dashboard stages; candidate evidence only, not a metric conclusion |
+| 13 Classical Metrics | `classical_metrics.v1`, two canonical figures, validation and manifests | 477,753 rows across 16,404 candidates, 2,620 cases and 5 methods; 262/262 checks; 6 canonical files | All 6 pilot paths and schemas retained; rows increased from 63,018 to 477,753 and candidates from 2,160 to 16,404; no artifact class or responsibility was lost | Approved Controlled-300 classical full-reference producer for downstream metric synthesis, spatial analysis, comparison, reporting and dashboard stages |
 
 Notebook 01's final manifest records `controlled_300`, dataset version `2.0.0`,
 300 expected and observed artwork/image rows, 448 expected and observed audit
@@ -348,6 +350,39 @@ rows are exclusively exploratory p01-p04 prompt-context candidates displaced by
 the approved non-metric hash-stratified selection over the expanded population.
 No primary, formal scratch-pair, or base uncertainty responsibility was lost.
 Both canonical figures were regenerated from expanded rule-selected evidence.
+
+Notebook 12A's final manifest records `controlled_300`, dataset version `2.0.0`,
+HINT configuration version `1.0.0`, and helper version `1.0.1`. All 2,620
+eligible cases completed: 1,500 canonical, 245 damage-size, 525 mask-robustness,
+and 350 eligible synthetic-degradation candidates. The run contains 2,320 HINT
+inferences and 300 exact identity controls, 82 passing validation checks, five
+artifact records, 2,620 restored PNGs, and exactly 2,626 canonical files with no
+remaining work files. Its normalized allocated runtime is 16,025.750 seconds
+(about 4.45 hours). N12A has no pilot output counterpart; D01 is the decision
+baseline, and the official revision, Places2 checkpoint, native 768 x 768
+adapter, exact-mask compositing, and outside-mask invariance contract were
+preserved.
+
+Notebook 13's final manifest records `controlled_300`, 16,404 evaluated
+candidates, 2,620 cases, and 477,753 `classical_metrics.v1` rows. Metric counts
+reconcile at 143,247 rows each for MSE, MAE, and PSNR and 48,012 SSIM rows.
+Coverage is 2,620 candidates each for Telea, LaMa, and HINT, 8,520 Stable
+Diffusion candidates, and 24 technically valid SDXL candidates. All 1,200 zero
+controls and their 13,200 metric rows are retained. All 262 validation checks
+passed, four downstream artifacts were registered, the two figures are valid,
+the six-file output contract is exact, and no work file remains. Batch 4 took
+28,705.153 seconds (about 7 h 58 m), below its conservative 18–30 hour planning
+range.
+
+The read-only comparison copy is `E:/outputs/13_classical_metrics/`. Both runs
+contain the same six canonical relative paths and preserve the metric,
+validation, artifact, and figure schemas. Candidate coverage increased from
+2,160 to 16,404, metric rows from 63,018 to 477,753, and validation rows from
+251 to 262. These increases are fully explained by the controlled-300
+population, HINT inclusion, and expanded SDXL evidence; no pilot artifact class
+or scientific responsibility is missing or reduced.
+
+The canonical `classical_metrics.csv` table is approximately 144 MB and therefore crosses the approved 50 MiB bulk-diagnostic threshold. It remains the local Notebook 13 source of truth and must be published to the Hugging Face diagnostics repository. After remote verification it is excluded from the compact GitHub scientific record. The Notebook 13 manifest, validation evidence, figures, notebook, and inventory/publication registries remain on GitHub.
 
 ## 3. Frozen notebook evidence ledger
 

@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-13T22:42:49.055473Z",
+  "updated_at_utc": "2026-09-14T09:14:20.570515Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -121,12 +121,12 @@
       "artifact_type": "figure",
       "artifact_role": "reporting_visualization",
       "schema_version": "figure.classical_metric_distributions.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_classical_metrics",
       "validation_status": "passed",
       "row_count": 1,
       "file_count": 1,
-      "checksum": "2fc23f22dab5c8d393aa6aa715b12cb44e04ab9c068815861899a994fa367046"
+      "checksum": "9a4cdb6820755760d3a8ac41ee7a7c31856f0ad051668bc8f7f2a7c237801201"
     },
     {
       "artifact_key": "classical_metrics.improvement_by_region",
@@ -135,12 +135,12 @@
       "artifact_type": "figure",
       "artifact_role": "reporting_visualization",
       "schema_version": "figure.classical_improvement_by_region.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_classical_metrics",
       "validation_status": "passed",
       "row_count": 1,
       "file_count": 1,
-      "checksum": "c0476471341b35114f66a247206a1b7be4fc2ad2635f6265f4f064a9edbe57eb"
+      "checksum": "a4a89bcc0b6eef25488e42552af5048fcec8ed9259ede41511693d663ecfb74c"
     },
     {
       "artifact_key": "classical_metrics.metrics",
@@ -149,12 +149,12 @@
       "artifact_type": "table",
       "artifact_role": "primary_downstream_evidence",
       "schema_version": "classical_metrics.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_classical_metrics",
       "validation_status": "passed",
-      "row_count": 63018,
+      "row_count": 477753,
       "file_count": 1,
-      "checksum": "bbb98fc5ea65cb5c2bb93a7b51cca66e6bcbd1a77952859e65460899fa7f12c1"
+      "checksum": "a9a1250c7ecd1339dbb4150d8f42336ea3d1b0567648f6f03cf7f7e6f23e337c"
     },
     {
       "artifact_key": "damage.audit",
@@ -3033,12 +3033,12 @@
       "artifact_type": "table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_classical_metrics",
       "validation_status": "passed",
-      "row_count": 251,
+      "row_count": 262,
       "file_count": 1,
-      "checksum": "62a4af1caf47b7f13de61ab484a2fe52a2e02dbb87fb72176fca45ad76096183"
+      "checksum": "29ba65e57b914f01328c9644dd7184867e23b75402527628678f79a0c4c4e18d"
     },
     {
       "artifact_key": "validation.14_lpips_metrics",

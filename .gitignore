@@ -54,3 +54,7 @@ docs/supervisor/Next_Steps.docx
 /outputs/12a_*/images/
 /outputs/2[0-9]_*/images/
 /outputs/3[0-6]_*/images/
+
+# Canonical bulk metric tables published through the verified diagnostics tier.
+# The local file remains notebook-owned and authoritative.
+/outputs/13_classical_metrics/metrics/classical_metrics.csv

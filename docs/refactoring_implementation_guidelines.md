@@ -1850,7 +1850,9 @@ The approved publication tiers are:
    figures, and remote-asset indexes.
 2. **Interactive evidence store:** web-addressable restoration candidates,
    damaged/degraded images, masks, maps, heatmaps, overlays, and other bulk
-   media required for case-level dashboard inspection. Public Hugging Face
+   media required for case-level dashboard inspection. Canonical CSV or NPZ
+   evidence at least 50 MiB is also treated as bulk diagnostic evidence rather
+   than a compact GitHub table. Public Hugging Face
    dataset repositories are the default zero-cost target, subject to verified
    account, file-count, path, provenance, and licensing constraints.
 3. **Archival release:** full-resolution evidence packages, checksums,
@@ -1917,6 +1919,17 @@ commit. A resumed upload skips both verified rows and rows already accepted but
 awaiting verification. The final verification command must report zero failures
 before the publication registry is committed. None of these commands deletes,
 moves, untracks, stages, or commits local evidence.
+
+For every completed notebook, the assistant must explicitly separate the
+handoff commands into two blocks: **GitHub scientific-record commands** and,
+when the publication plan contains applicable rows, **Hugging Face publication
+commands**. The Hugging Face block must name the exact producer, repository
+tier, plan/upload/verify sequence, and expected successful verification result;
+it must not be omitted merely because the notebook itself has finished. The
+GitHub block must exclude bulk artifacts classified for external storage and
+must stage the verified external-publication registry only after remote
+checksum and byte-count verification succeeds. The assistant never executes
+`git add`, commit, or push on the user's behalf.
 
 Until the external repositories and upload tooling are configured and tested,
 all Controlled-300 outputs remain intact locally. The assistant must not run

@@ -56,8 +56,8 @@ evidence_coverage:
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "12A"
-    next_eligible_notebook_id: "13"
+    completed_through_notebook_id: "13"
+    next_eligible_notebook_id: "14"
     completed_notebooks:
       - notebook_id: "01"
         stem: "01_dataset_verification"
@@ -582,6 +582,50 @@ evidence_coverage:
         decision_baseline_notebook_id: "D01"
         historical_output_counterpart: false
         selected_method_adapter_contract_preserved: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "13"
+        stem: "13_classical_metrics"
+        output_root: "outputs/13_classical_metrics"
+        manifest_path: "outputs/13_classical_metrics/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        metric_schema_version: "classical_metrics.v1"
+        evaluated_case_rows: 2620
+        evaluated_candidate_rows: 16404
+        candidates_by_model:
+          opencv_telea: 2620
+          lama: 2620
+          hint_places2: 2620
+          stable_diffusion_inpainting: 8520
+          sdxl_inpainting: 24
+        metric_rows: 477753
+        metric_rows_by_metric:
+          mse: 143247
+          mae: 143247
+          psnr: 143247
+          ssim: 48012
+        zero_control_candidates: 1200
+        zero_control_metric_rows: 13200
+        positive_infinity_values: 85564
+        negative_infinity_values: 0
+        unexpected_numeric_missing_values: 0
+        validation_rows: 262
+        artifact_records: 4
+        canonical_figures: 2
+        canonical_output_file_count: 6
+        work_file_count_after_completion: 0
+        full_execution_seconds: 28705.153
+        baseline_output_root: "E:/outputs/13_classical_metrics"
+        baseline_evaluated_case_rows: 410
+        baseline_evaluated_candidate_rows: 2160
+        baseline_metric_rows: 63018
+        baseline_validation_rows: 251
+        baseline_artifact_records: 4
+        baseline_canonical_figures: 2
+        baseline_output_file_count: 6
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
         unexplained_missing_or_reduced_evidence: false
 
   frozen_baseline:

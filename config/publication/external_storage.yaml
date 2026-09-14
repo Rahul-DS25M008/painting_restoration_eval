@@ -52,6 +52,13 @@ classification:
     - .webp
     - .tif
     - .tiff
+  bulk_diagnostic_extensions:
+    - .csv
+    - .npz
+  bulk_diagnostic_min_bytes: 52428800
+  bulk_diagnostic_role_by_extension:
+    .csv: bulk_table
+    .npz: bulk_array
   candidate_image_groups:
     - clean
     - damaged
