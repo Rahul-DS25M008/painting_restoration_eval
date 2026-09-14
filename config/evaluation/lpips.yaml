@@ -1,5 +1,5 @@
 config_schema_version: "lpips_metrics_config.v1"
-config_version: "1.0.0"
+config_version: "2.0.0"
 
 lpips_metrics:
   notebook_id: "14"
@@ -42,6 +42,11 @@ lpips_metrics:
         path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
         run_manifest_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
         schema_version: "sdxl_partial_candidates.v1"
+      - source_table_id: "notebook_12a_hint"
+        model_id: "hint_places2"
+        path: "outputs/12a_hint_restoration/data/restorations.csv"
+        run_manifest_path: "outputs/12a_hint_restoration/manifests/run_manifest.json"
+        schema_version: "restorations.v1"
 
   output:
     root: "outputs/14_lpips_metrics"
@@ -104,29 +109,42 @@ lpips_metrics:
     zero_control_tolerance: 0.000001
 
   expected_counts:
-    case_registry_rows: 525
-    evaluated_unique_cases: 410
-    evaluated_candidates: 2160
-    zero_control_cases: 50
-    zero_control_candidates: 150
-    damaged_baseline_pairs: 770
-    content_region_rows: 2160
-    mask_bbox_crop_rows: 2010
-    total_metric_rows: 4170
+    preprocessing_geometry_rows: 300
+    case_registry_rows: 3425
+    model_eligibility_rows: 17125
+    eligible_case_model_pairs: 13100
+    evaluated_unique_cases: 2620
+    evaluated_candidates: 16404
+    zero_control_cases: 300
+    zero_control_candidates: 1200
+    excluded_candidates: 11
+    damaged_baseline_pairs: 4940
+    content_region_rows: 16404
+    mask_bbox_crop_rows: 15204
+    total_metric_rows: 31608
+    source_rows_by_model:
+      opencv_telea: 2620
+      lama: 2620
+      stable_diffusion_inpainting: 8520
+      sdxl_inpainting: 35
+      hint_places2: 2620
     candidates_by_model:
-      opencv_telea: 410
-      lama: 410
-      stable_diffusion_inpainting: 1330
-      sdxl_inpainting: 10
+      opencv_telea: 2620
+      lama: 2620
+      stable_diffusion_inpainting: 8520
+      sdxl_inpainting: 24
+      hint_places2: 2620
     metric_rows_by_model:
-      opencv_telea: 770
-      lama: 770
-      stable_diffusion_inpainting: 2610
-      sdxl_inpainting: 20
+      opencv_telea: 4940
+      lama: 4940
+      stable_diffusion_inpainting: 16740
+      sdxl_inpainting: 48
+      hint_places2: 4940
 
   known_limitations:
     - "LPIPS is a learned perceptual similarity proxy and is not conservation-specific."
-    - "SDXL evidence is a predeclared technically validated ten-case partial scope, not full 410-case coverage."
+    - "SDXL evidence contains 24 technically validated completions from the predeclared 35-case bounded feasibility attempt; ten skipped and one timed-out case are omitted without placeholders."
+    - "HINT contributes one deterministic primary candidate for every one of the 2,620 restoration-eligible controlled-300 cases."
     - "Stable Diffusion contributes repeated prompt and seed candidates; Notebook 14 reports candidate-level evidence without metric-based selection."
     - "Aspect-preserving resizing standardizes maximum resolution; minimal neutral padding may still influence very elongated crops."
     - "Candidate-level forward runtimes are batch-time allocations and must not be summed to reconstruct wall-clock runtime."

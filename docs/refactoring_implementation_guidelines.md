@@ -851,7 +851,7 @@ Rules for the active rerun:
 
 #### Active Controlled-300 completion status
 
-Updated 2026-09-13. This compact status is a navigation aid; the human evidence
+Updated 2026-09-14. This compact status is a navigation aid; the human evidence
 audit and machine-readable coverage registry remain authoritative for counts,
 checksums, limitations, and downstream eligibility.
 
@@ -869,9 +869,12 @@ checksums, limitations, and downstream eligibility.
 | 10 LaMa Restoration | Finished | Finished | Yes | 2,620 eligible cases and restored PNGs; 300 zero controls; 2,320 nonzero cases; 80/80 scientific checks; 16/16 roadmap requirements; 2,626 canonical files; 4,594.223-second full execution | All 416 pilot paths and CSV schemas retained; 409/410 shared restoration PNGs byte-identical; sole changed shared PNG inherits Notebook 06's documented `p039` morphology correction; representative figure byte-identical |
 | 11 Stable Diffusion Restoration | Finished | Finished | Yes | 8,520 completed candidate rows and restored PNGs; 2,620 primary, 4,460 prompt-context, and 1,440 uncertainty-extension rows; 8,220 inferences; 300 identity controls; 176/176 scientific checks; 23/23 completion requirements; 8,530 canonical files | All 10 pilot non-image paths and CSV schemas retained; 1,298/1,330 candidate identities retained; 1,297/1,298 shared PNGs byte-identical; one inherited Notebook 06 morphology correction; 32 exploratory contextual rows displaced by the approved expanded hash-stratified selection |
 | 12 SDXL Bounded Partial Evaluation | Finished | Finished | Yes | 35 scheduled rows across 30 paintings; 24 technically valid completed candidates, 1 timed-out row, and 10 explicit budget skips; 241/241 validation checks; 19/19 roadmap requirements; 30 canonical files; 0 work files | All 10 pilot candidates retained with identical IDs, paths, completed status, schema, and restored-image bytes; bounded scope expanded from 10 to 35 without converting runtime omissions into quality failures |
+| 12A HINT Restoration | Finished | Finished | Yes | 2,620 candidates across all eligible cases; 2,320 HINT inferences and 300 identity controls; 82/82 validation checks; 2,626 canonical files; 0 work files | New production method selected by D01; no historical pilot output counterpart; decision, adapter, checkpoint, and exact-compositing contracts preserved |
+| 13 Classical Metrics | Finished | Finished | Yes | 477,753 rows for 16,404 candidates across five methods and 2,620 cases; 262/262 validation checks; 6 canonical files; 28,705.153-second execution | All 6 pilot paths and CSV schemas retained; rows increased from 63,018 to 477,753 without unexplained missing evidence; bulk metric table externally published and verified |
+| 14 LPIPS Metrics | Finished | Finished | Yes | 31,608 rows for 16,404 candidates across five methods and 2,620 cases; 2,400 matched scratch-prompt regional pairs; 261/261 validation checks; 5 canonical files; 3,341.795-second execution | All 5 pilot paths and CSV schemas retained; rows increased from 4,170 to 31,608; 64 pilot rows map exactly to the 32 approved N11 contextual-candidate displacements; no unexplained loss |
 
-Notebooks 01–12 are completed Controlled-300 producers. Notebook 12A is the next
-eligible production run. No later notebook may describe its
+Notebooks 01–14, including Notebook 12A, are completed Controlled-300
+producers. Notebook 15 is the next eligible production run. No later notebook may describe its
 historical Controlled-50 outputs as Controlled-300 evidence until that notebook
 has been explicitly reopened, rerun, validated, baseline-compared, and committed.
 

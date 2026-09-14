@@ -35,11 +35,11 @@ expanded benchmark. This changes no frozen Notebook 01–36 evidence. Its exact
 inputs, outputs, population, source/checkpoint requirements, observed results,
 and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
-**Controlled-300 transition review: 2026-09-11.** The pilot remains recoverable
+**Controlled-300 transition review: 2026-09-14.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebooks 01–13,
-including Notebook 12A, are completed Controlled-300 producers. Notebook 14 is
-the next approved production stage; Notebooks 14–36 remain historical Controlled-50 evidence
+dependency order for the approved 300-painting study. Notebooks 01–14,
+including Notebook 12A, are completed Controlled-300 producers. Notebook 15 is
+the next approved production stage; Notebooks 15–36 remain historical Controlled-50 evidence
 until each producer is explicitly reopened, rerun, validated,
 baseline-compared, and committed.
 
@@ -54,8 +54,9 @@ target is a versioned Zenodo release; and the final Controlled-300 Streamlit
 application will use a separate lightweight deployment repository. The two
 public Hugging Face dataset repositories are configured, and the candidates
 repository passed a two-file public remote-read, byte-count, and SHA-256 smoke
-test on 2026-09-12. The diagnostics repository is publicly reachable but awaits
-its first applicable write test; the Zenodo record remains incomplete. Commit
+test on 2026-09-12. The diagnostics repository subsequently received and
+remotely verified Notebook 13's first applicable bulk metric artifact; the
+Zenodo record remains incomplete. Commit
 `c4f1650c` applied the approved forward-only tracking boundary: exactly 14,970
 historical N12–N36 image artifacts were removed from the current `main` index,
 with zero unrelated deletions. Every file remains present locally, and all
@@ -382,7 +383,35 @@ validation, artifact, and figure schemas. Candidate coverage increased from
 population, HINT inclusion, and expanded SDXL evidence; no pilot artifact class
 or scientific responsibility is missing or reduced.
 
-The canonical `classical_metrics.csv` table is approximately 144 MB and therefore crosses the approved 50 MiB bulk-diagnostic threshold. It remains the local Notebook 13 source of truth and must be published to the Hugging Face diagnostics repository. After remote verification it is excluded from the compact GitHub scientific record. The Notebook 13 manifest, validation evidence, figures, notebook, and inventory/publication registries remain on GitHub.
+The canonical `classical_metrics.csv` table is approximately 144 MB and therefore crosses the approved 50 MiB bulk-diagnostic threshold. It remains the local Notebook 13 source of truth and has been published and remotely verified in the Hugging Face diagnostics repository. It is excluded from the compact GitHub scientific record. The Notebook 13 manifest, validation evidence, figures, notebook, and inventory/publication registries remain on GitHub.
+
+Notebook 14's final manifest records `controlled_300`, 16,404 evaluated
+candidates, 2,620 cases, and 31,608 `lpips_metrics.v1` rows. Coverage is 4,940
+rows each for OpenCV Telea, LaMa, and HINT, 16,740 Stable Diffusion rows, and 48
+rows for the 24 technically valid SDXL candidates. Region totals reconcile at
+16,404 content-region and 15,204 mask-bounding-box rows. All 1,200 zero-control
+candidates and all 2,400 matched scratch-prompt regional pairs are retained.
+All 261 validation checks passed, three downstream artifacts were registered,
+the diagnostic figure is valid and readable, the five-file output contract is
+exact, and no work file remains. Full checkpointed execution took 3,341.795
+seconds (about 55.7 minutes).
+
+The read-only comparison copy is `E:/outputs/14_lpips_metrics/`. Both runs
+contain the same five canonical relative paths and preserve the metric,
+validation, and artifact table schemas. Candidate coverage increased from
+2,160 to 16,404, metric rows from 4,170 to 31,608, and validation rows from 253
+to 261. The expanded design retains 4,106 of 4,170 pilot metric identities. The
+64 non-retained rows are exclusively the two-region LPIPS records belonging to
+the 32 exploratory Stable Diffusion context candidates intentionally displaced
+by Notebook 11's approved expanded hash-stratified selection. Recomputed
+shared-row differences otherwise reflect expected LPIPS floating-point
+variation plus the already documented Notebook 06 `p039` morphology correction;
+they do not represent a missing evidence family.
+
+Notebook 14's approximately 13.9 MB canonical metric table is below the approved
+50 MiB bulk-diagnostic threshold. Its five compact canonical artifacts therefore
+remain in the GitHub scientific record and produce no Notebook 14 Hugging Face
+publication rows.
 
 ## 3. Frozen notebook evidence ledger
 

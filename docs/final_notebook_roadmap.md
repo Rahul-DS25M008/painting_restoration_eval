@@ -201,7 +201,7 @@ individual run outside its range.
 |---|---:|---|
 | 12A — HINT restoration | 4–6 hours | 2,320 GPU inferences plus 300 identity controls; ten-case resumable checkpoints. |
 | 13 — Classical metrics | Observed 7 h 58 m; planning range was 18–30 hours | Region-aware full-reference metrics over the expanded multi-model candidate population; checkpointed every ten cases. The observed run finished materially below the conservative planning range. |
-| 14 — LPIPS metrics | 3–7 hours | Batched GPU perceptual inference over compatible contiguous regions. |
+| 14 — LPIPS metrics | 35–90 minutes; allow a 2-hour operational ceiling | Batched GPU perceptual inference over 31,608 compatible candidate-region rows. The 4,170-row pilot compute took 263.4 seconds; the active estimate scales that observation and allows extra disk, cache, and thermal overhead. |
 | 15 — Feature similarity | 4–9 hours | CLIP and DINOv2 feature extraction, similarity computation, and embedding persistence. |
 | 16 — Difference maps and spatial diagnostics | 36–72 hours | Dense numeric maps, rendered spatial panels, compression, and high-volume disk writes; expect a multi-session resumable run. |
 | 17 — Local consistency metrics | 24–48 hours | Texture, colour, seam, boundary, and directional evidence across compatible candidates and regions. |
@@ -1342,6 +1342,15 @@ metric-consuming stages.
 
 **Notebook:** `14_lpips_metrics.ipynb`  
 **Origin:** Consolidates Existing Notebooks 11, 17, and 24  
+**Controlled-300 refactor status:** Finished
+
+**Validation status:** Finished
+
+**Completion gate passed:** Yes
+
+**Active validated coverage:** 2,620 cases; 16,404 candidates across five methods; 31,608 LPIPS rows; 261/261 validation checks
+
+**Pilot comparison:** All five pilot output paths and CSV schemas retained; candidate coverage increased from 2,160 to 16,404 and LPIPS rows from 4,170 to 31,608; 64 non-retained pilot rows are the two-region evidence for the 32 exploratory Stable Diffusion prompt-context candidates deliberately displaced in Notebook 11
 **Output root:** `outputs/14_lpips_metrics/`  
 **Depends on:** Notebook 02 geometry handoff and Notebooks 08–12A
 
@@ -1357,6 +1366,35 @@ metric-consuming stages.
 - Support candidates and all eligible experiments.
 - Validate expected rows and finite-value policies.
 - Produce compact diagnostic plots.
+
+### Observed controlled-300 completion
+
+- The canonical `lpips_metrics.v1` table contains 31,608 validated rows for
+  16,404 candidates across 2,620 cases.
+- Model coverage is 4,940 rows each for OpenCV Telea, LaMa, and HINT; 16,740
+  rows for Stable Diffusion; and 48 rows for the 24 technically valid SDXL
+  candidates.
+- Region coverage is 16,404 `content_region` rows and 15,204
+  `mask_bbox_crop` rows. All 1,200 zero-control candidates are retained as
+  exact content-region evidence.
+- The 300-painting scratch-prompt ablation retains 2,400 matched
+  case-seed-region pairs. Its direction remains descriptive and does not
+  affect candidate inclusion or validation success.
+- All 261 consolidated checks pass, all three registered artifact checksums
+  agree, the five-file canonical output contract is exact, and no temporary
+  work file remains.
+- Full checkpointed LPIPS execution took 3,341.795 seconds (about 55.7
+  minutes) on the recorded RTX 3060 laptop environment, within the approved
+  planning ceiling.
+- The read-only pilot comparison root is `E:/outputs/14_lpips_metrics/`. Both
+  runs contain the same five canonical relative paths and preserve all CSV
+  schemas. Metric rows increased from 4,170 to 31,608 and validation rows from
+  253 to 261. Of 4,170 pilot metric identities, 4,106 remain in the expanded
+  design; the other 64 belong exclusively to the 32 exploratory Stable
+  Diffusion context candidates intentionally displaced by Notebook 11's
+  approved expanded hash-stratified selection. No artifact class, primary
+  candidate responsibility, formal scratch pair, or bounded SDXL evidence was
+  lost.
 
 ### Canonical outputs
 
