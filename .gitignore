@@ -58,3 +58,4 @@ docs/supervisor/Next_Steps.docx
 # Canonical bulk metric tables published through the verified diagnostics tier.
 # The local file remains notebook-owned and authoritative.
 /outputs/13_classical_metrics/metrics/classical_metrics.csv
+/outputs/15_feature_similarity/data/embeddings.npz

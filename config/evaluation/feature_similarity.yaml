@@ -144,6 +144,7 @@ feature_similarity:
     evaluated_candidates: 16404
     zero_control_cases: 300
     zero_control_candidates: 1200
+    excluded_candidates: 11
     candidate_region_evaluations: 31608
     content_region_evaluations: 16404
     mask_bbox_region_evaluations: 15204
@@ -166,6 +167,12 @@ feature_similarity:
       lama: 2620
       stable_diffusion_inpainting: 8520
       sdxl_inpainting: 24
+      hint_places2: 2620
+    source_rows_by_model:
+      opencv_telea: 2620
+      lama: 2620
+      stable_diffusion_inpainting: 8520
+      sdxl_inpainting: 35
       hint_places2: 2620
     metric_rows_by_restoration_model:
       opencv_telea: 9880

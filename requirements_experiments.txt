@@ -42,7 +42,8 @@ torchaudio==2.5.1+cu121
 # Evaluation / ML models
 lpips==0.1.4
 diffusers==0.27.2
-transformers
+transformers==4.48.3
+huggingface-hub==0.25.2
 safetensors
 accelerate
 

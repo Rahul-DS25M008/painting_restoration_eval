@@ -202,7 +202,7 @@ individual run outside its range.
 | 12A — HINT restoration | 4–6 hours | 2,320 GPU inferences plus 300 identity controls; ten-case resumable checkpoints. |
 | 13 — Classical metrics | Observed 7 h 58 m; planning range was 18–30 hours | Region-aware full-reference metrics over the expanded multi-model candidate population; checkpointed every ten cases. The observed run finished materially below the conservative planning range. |
 | 14 — LPIPS metrics | 35–90 minutes; allow a 2-hour operational ceiling | Batched GPU perceptual inference over 31,608 compatible candidate-region rows. The 4,170-row pilot compute took 263.4 seconds; the active estimate scales that observation and allows extra disk, cache, and thermal overhead. |
-| 15 — Feature similarity | 2–4 hours likely; allow a 6-hour operational ceiling | CLIP and DINOv2 extraction over 78,336 deduplicated embeddings dominates the run. The 10,700-embedding pilot extraction took 669.6 seconds; the revised range adds image decoding, larger checkpoint manifests, persistence, and laptop thermal overhead. |
+| 15 — Feature similarity | Observed extraction 1 h 44 m 31 s plus 3 m 20 s metric construction; planning range was 2–4 hours with a 6-hour ceiling | CLIP and DINOv2 extraction over 78,336 deduplicated embeddings dominated the run. The observed compute stayed below the planning range; the approximately 2 h 56 m wall-clock span includes model loading, persistence, validation, visualization, and user pauses between batches. |
 | 16 — Difference maps and spatial diagnostics | 36–72 hours | Dense numeric maps, rendered spatial panels, compression, and high-volume disk writes; expect a multi-session resumable run. |
 | 17 — Local consistency metrics | 24–48 hours | Texture, colour, seam, boundary, and directional evidence across compatible candidates and regions. |
 | 18 — Diffusion uncertainty | 1–3 hours | Vectorized seed-group and pairwise scalar analysis using saved candidates and embeddings. |
@@ -1412,10 +1412,11 @@ validation/checks.csv
 
 **Notebook:** `15_feature_similarity.ipynb`  
 **Origin:** Consolidates Existing Notebooks 12, 18, and 25  
-**Refactor status:** In progress  
-**Validation status:** Not run  
-**Completion gate passed:** No  
+**Refactor status:** Finished\
+**Validation status:** Finished with one declared non-blocking CUDA repeatability warning\
+**Completion gate passed:** Yes\
 **Planned controlled-300 coverage:** 2,620 cases; 16,404 candidates across five methods; 31,608 candidate-region evaluations; 63,216 feature-metric rows; 78,336 retained embeddings  
+**Observed controlled-300 coverage:** 2,620 cases; 16,404 candidates across five methods; 31,608 candidate-region evaluations; 63,216 feature-metric rows; 78,336 retained embeddings; 247 validation checks; 0 blocking failures; 1 warning failure; 7 canonical files; 5 registered artifacts\
 **Output root:** `outputs/15_feature_similarity/`  
 **Depends on:** Notebook 02 geometry handoff and Notebooks 08–12A
 
@@ -1443,6 +1444,26 @@ manifests/run_manifest.json
 manifests/artifacts.csv
 validation/checks.csv
 ```
+
+### Controlled-50 continuity and storage result
+
+The active output root and the read-only pilot copy at
+`E:/outputs/15_feature_similarity/` contain the same seven canonical relative
+paths and preserve the metric, embedding-manifest, validation, and artifact
+schemas. Feature-metric rows increased from 8,340 to 63,216 (7.58×), while
+embedding rows increased from 10,700 to 78,336 (7.32×). Of the shared metric
+identities, 8,212 are retained. The 128 displaced pilot identities are the
+expected records associated with Notebook 11's 32 approved contextual-candidate
+replacements. Twelve non-bit-identical shared rows inherit Notebook 06's
+documented `p039` morphology correction; six further differences are only
+`1.19209289550781e-07`, consistent with the declared best-effort CUDA floating
+variation. No unexplained evidence family or artifact class is missing.
+
+The 111.9 MB `data/embeddings.npz` bundle exceeds the approved 50 MiB
+bulk-diagnostic threshold. It remains the local Notebook 15 source of truth and
+is classified for checksum-verified publication in the Hugging Face diagnostics
+repository. The compact tables, figure, validation evidence, manifests,
+notebook, and publication registry remain in the GitHub scientific record.
 
 ---
 

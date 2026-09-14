@@ -872,9 +872,10 @@ checksums, limitations, and downstream eligibility.
 | 12A HINT Restoration | Finished | Finished | Yes | 2,620 candidates across all eligible cases; 2,320 HINT inferences and 300 identity controls; 82/82 validation checks; 2,626 canonical files; 0 work files | New production method selected by D01; no historical pilot output counterpart; decision, adapter, checkpoint, and exact-compositing contracts preserved |
 | 13 Classical Metrics | Finished | Finished | Yes | 477,753 rows for 16,404 candidates across five methods and 2,620 cases; 262/262 validation checks; 6 canonical files; 28,705.153-second execution | All 6 pilot paths and CSV schemas retained; rows increased from 63,018 to 477,753 without unexplained missing evidence; bulk metric table externally published and verified |
 | 14 LPIPS Metrics | Finished | Finished | Yes | 31,608 rows for 16,404 candidates across five methods and 2,620 cases; 2,400 matched scratch-prompt regional pairs; 261/261 validation checks; 5 canonical files; 3,341.795-second execution | All 5 pilot paths and CSV schemas retained; rows increased from 4,170 to 31,608; 64 pilot rows map exactly to the 32 approved N11 contextual-candidate displacements; no unexplained loss |
+| 15 Feature Similarity | Finished | Finished with one non-blocking CUDA warning | Yes | 63,216 CLIP/DINOv2 metric rows and 78,336 embeddings for 16,404 candidates across five methods and 2,620 cases; 247 checks; 7 canonical files; 6,270.909-second extraction and 199.564-second metric construction | All 7 pilot paths and table schemas retained; metric rows increased from 8,340 to 63,216 and embeddings from 10,700 to 78,336; expected N11 candidate displacement and inherited N06 morphology differences fully accounted for; bulk NPZ classified for diagnostics-tier publication |
 
-Notebooks 01–14, including Notebook 12A, are completed Controlled-300
-producers. Notebook 15 is the next eligible production run. No later notebook may describe its
+Notebooks 01–15, including Notebook 12A, are completed Controlled-300
+producers. Notebook 16 is the next eligible production run. No later notebook may describe its
 historical Controlled-50 outputs as Controlled-300 evidence until that notebook
 has been explicitly reopened, rerun, validated, baseline-compared, and committed.
 
@@ -1492,6 +1493,12 @@ duplicate-key failures without hiding accidental duplicates within one execution
 of the cell. It applies to all notebooks and all validation stages, including
 preflight, loading, smoke-test, execution, scientific-validation, persistence,
 analysis, manifest, and completion-gate cells.
+
+Final persistence and cleanup cells must also be safe to rerun after successful
+completion. An already-absent notebook-owned work directory and already-closed
+memory maps are valid completed states, not missing-input failures. A rerun must
+still reject unexpected work files, partial cleanup states, or missing canonical
+artifacts before rewriting the completed manifest and final validation evidence.
 
 The approved pattern is:
 

@@ -30,7 +30,7 @@ interactive_store:
       repo_id: RahulMaddineni264/painting-restoration-eval-diagnostics
       repository_url: https://huggingface.co/datasets/RahulMaddineni264/painting-restoration-eval-diagnostics
       resolve_base_url: https://huggingface.co/datasets/RahulMaddineni264/painting-restoration-eval-diagnostics/resolve/main
-      status: public_reachable_write_test_pending
+      status: write_read_sha256_verified_bulk_ready
 
 archive_store:
   provider: zenodo

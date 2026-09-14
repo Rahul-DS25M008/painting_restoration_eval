@@ -56,8 +56,8 @@ evidence_coverage:
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "14"
-    next_eligible_notebook_id: "15"
+    completed_through_notebook_id: "15"
+    next_eligible_notebook_id: "16"
     completed_notebooks:
       - notebook_id: "01"
         stem: "01_dataset_verification"
@@ -674,6 +674,64 @@ evidence_coverage:
         baseline_table_schemas_preserved: true
         external_publication_required: false
         external_publication_reason: "compact_metric_table_below_50_mib_threshold"
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "15"
+        stem: "15_feature_similarity"
+        output_root: "outputs/15_feature_similarity"
+        manifest_path: "outputs/15_feature_similarity/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        metric_schema_version: "feature_metrics.v1"
+        embedding_manifest_schema_version: "feature_embedding_manifest.v1"
+        embedding_bundle_schema_version: "feature_embedding_bundle.v1"
+        evaluated_case_rows: 2620
+        evaluated_candidate_rows: 16404
+        candidates_by_model:
+          opencv_telea: 2620
+          lama: 2620
+          hint_places2: 2620
+          stable_diffusion_inpainting: 8520
+          sdxl_inpainting: 24
+        candidate_region_evaluations: 31608
+        metric_rows: 63216
+        embedding_rows: 78336
+        embedding_rows_by_role:
+          clean: 5240
+          damaged: 9880
+          restored: 63216
+        scratch_prompt_paired_comparisons: 4800
+        positive_improvement_rows: 46538
+        negative_improvement_rows: 14256
+        validation_rows: 247
+        blocking_validation_failures: 0
+        nonblocking_warning_failures: 1
+        nonblocking_warning_id: "cuda_bitwise_repeatability"
+        artifact_records: 5
+        canonical_figures: 1
+        canonical_output_file_count: 7
+        work_file_count_after_completion: 0
+        model_load_seconds: 41.159
+        full_extraction_seconds: 6270.909
+        metric_construction_seconds: 199.564
+        baseline_output_root: "E:/outputs/15_feature_similarity"
+        baseline_metric_rows: 8340
+        baseline_embedding_rows: 10700
+        baseline_validation_rows: 240
+        baseline_artifact_records: 5
+        baseline_canonical_figures: 1
+        baseline_output_file_count: 7
+        retained_baseline_metric_id_rows: 8212
+        displaced_baseline_metric_id_rows: 128
+        baseline_displacement_reason: "32_approved_notebook_11_context_candidate_displacements_times_four_feature_records"
+        inherited_notebook_06_changed_metric_rows: 12
+        best_effort_cuda_roundoff_rows: 6
+        best_effort_cuda_max_absolute_difference: 1.19209289550781e-07
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        external_publication_required: true
+        external_publication_tier: "diagnostics"
+        external_publication_artifact: "outputs/15_feature_similarity/data/embeddings.npz"
         unexplained_missing_or_reduced_evidence: false
 
   frozen_baseline:

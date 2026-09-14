@@ -37,9 +37,9 @@ and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
 **Controlled-300 transition review: 2026-09-14.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebooks 01–14,
-including Notebook 12A, are completed Controlled-300 producers. Notebook 15 is
-the next approved production stage; Notebooks 15–36 remain historical Controlled-50 evidence
+dependency order for the approved 300-painting study. Notebooks 01–15,
+including Notebook 12A, are completed Controlled-300 producers. Notebook 16 is
+the next approved production stage; Notebooks 16–36 remain historical Controlled-50 evidence
 until each producer is explicitly reopened, rerun, validated,
 baseline-compared, and committed.
 
@@ -127,6 +127,8 @@ metric validity and coverage passed.
 | 12 SDXL Feasibility or Restoration | `sdxl_partial_candidates.v1`, 24 technically valid restored RGB PNGs, runtime summary, feasibility report, validation and manifests | 35 predeclared cases across 30 paintings: 24 completed and technically valid, 1 timed out, and 10 explicitly skipped; 241/241 checks; 30 canonical files | All 10 pilot candidate IDs, output paths, statuses, table schema, and restored-image bytes retained; 25 cases were added under the predeclared balanced scope; runtime omissions remain exclusions rather than quality failures | Approved bounded partial-evaluation producer for compatible downstream metrics; not a full-model benchmark and not repeated-seed uncertainty evidence |
 | 12A HINT Restoration | `restorations.v1`, 2,620 restored RGB PNGs, five-row runtime summary, eight-case representative figure, validation and manifests | 2,620 completed candidates: 1,500 canonical, 245 damage-size, 525 mask-robustness and 350 eligible synthetic-degradation cases; 2,320 HINT inferences; 300 identity controls; 82/82 checks; 2,626 canonical files | New production stage with no pilot output analogue; D01 is the decision baseline and its official source revision, Places2 checkpoint, native 768 × 768 adapter, mask convention, exact compositing and outside-mask invariance contract are preserved | Approved Controlled-300 deterministic learned producer for Notebooks 13–21 and later comparison, reporting and dashboard stages; candidate evidence only, not a metric conclusion |
 | 13 Classical Metrics | `classical_metrics.v1`, two canonical figures, validation and manifests | 477,753 rows across 16,404 candidates, 2,620 cases and 5 methods; 262/262 checks; 6 canonical files | All 6 pilot paths and schemas retained; rows increased from 63,018 to 477,753 and candidates from 2,160 to 16,404; no artifact class or responsibility was lost | Approved Controlled-300 classical full-reference producer for downstream metric synthesis, spatial analysis, comparison, reporting and dashboard stages |
+| 14 LPIPS Metrics | `lpips_metrics.v1`, diagnostic distribution figure, validation and manifests | 31,608 rows across 16,404 candidates, 2,620 cases and 5 methods; 261/261 checks; 5 canonical files | All 5 pilot paths and schemas retained; rows increased from 4,170 to 31,608; 64 displaced pilot rows map exactly to Notebook 11's 32 approved contextual-candidate replacements | Approved Controlled-300 perceptual-distance producer for downstream comparison, robustness, failure, reporting and dashboard stages |
+| 15 Feature Similarity | `feature_metrics.v1`, reusable CLIP/DINOv2 embedding bundle and manifest, diagnostic figure, validation and manifests | 63,216 metric rows and 78,336 embeddings across 16,404 candidates, 2,620 cases and 5 methods; 247 checks; 0 blocking failures; 1 declared CUDA warning; 7 canonical files | All 7 pilot paths and table schemas retained; rows increased from 8,340 to 63,216 metrics and 10,700 to 78,336 embeddings; the approved N11 displacement, inherited N06 correction, and sub-micro CUDA variation fully explain shared-row differences | Approved Controlled-300 feature-evidence and reusable-embedding producer for downstream semantic, retrieval, comparison, reporting and dashboard stages; not a conservation-specific measure |
 
 Notebook 01's final manifest records `controlled_300`, dataset version `2.0.0`,
 300 expected and observed artwork/image rows, 448 expected and observed audit
@@ -412,6 +414,40 @@ Notebook 14's approximately 13.9 MB canonical metric table is below the approved
 50 MiB bulk-diagnostic threshold. Its five compact canonical artifacts therefore
 remain in the GitHub scientific record and produce no Notebook 14 Hugging Face
 publication rows.
+
+Notebook 15's final manifest records `controlled_300`, 2,620 evaluated cases,
+16,404 candidates, 31,608 candidate-region evaluations, 63,216 CLIP/DINOv2
+metric rows, and 78,336 reusable embedding records. The candidate population is
+2,620 rows each for OpenCV Telea, LaMa, and HINT, 8,520 Stable Diffusion rows,
+and 24 technically valid SDXL rows. All 4,800 scratch-prompt paired comparisons
+are retained. The 247 validation checks contain zero blocking failures and one
+declared warning: CUDA/CuBLAS execution is best-effort deterministic, so exact
+bitwise rerun identity is not asserted. Metric validity, completeness, finite
+values, persistence, and the final completion gate all passed. The output root
+contains exactly seven canonical files, five registered downstream artifacts,
+one valid diagnostic figure, and no temporary work files. Full feature
+extraction took 6,270.909 seconds (about 1 h 44 m 31 s), followed by 199.564
+seconds (about 3 m 20 s) of metric construction.
+
+The read-only comparison copy is `E:/outputs/15_feature_similarity/`. Both runs
+contain the same seven canonical relative paths and preserve all relevant table
+schemas. Metric rows increased from 8,340 to 63,216 (7.58×), and embedding rows
+increased from 10,700 to 78,336 (7.32×). The active run retains 8,212 shared
+metric identities; the 128 displaced pilot identities correspond exactly to
+the 32 exploratory Stable Diffusion context candidates replaced under Notebook
+11's approved expanded selection. Twelve non-bit-identical shared rows inherit
+the documented Notebook 06 `p039` morphology correction. Six more differ only
+by `1.19209289550781e-07`, which is consistent with the declared best-effort
+CUDA floating variation. No unexplained artifact, schema, or evidence family is
+missing.
+
+The canonical `embeddings.npz` bundle is approximately 111.9 MB and exceeds the
+approved 50 MiB bulk-diagnostic threshold. It remains authoritative locally and
+is classified for checksum-verified publication in the Hugging Face diagnostics
+repository. The approximately 44.9 MB embedding manifest and 40.0 MB feature
+metric table remain below the threshold and stay in the compact GitHub
+scientific record together with the figure, validation, manifests, notebook,
+and external-publication registry.
 
 ## 3. Frozen notebook evidence ledger
 
