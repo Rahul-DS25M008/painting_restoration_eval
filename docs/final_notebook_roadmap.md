@@ -202,7 +202,7 @@ individual run outside its range.
 | 12A — HINT restoration | 4–6 hours | 2,320 GPU inferences plus 300 identity controls; ten-case resumable checkpoints. |
 | 13 — Classical metrics | Observed 7 h 58 m; planning range was 18–30 hours | Region-aware full-reference metrics over the expanded multi-model candidate population; checkpointed every ten cases. The observed run finished materially below the conservative planning range. |
 | 14 — LPIPS metrics | 35–90 minutes; allow a 2-hour operational ceiling | Batched GPU perceptual inference over 31,608 compatible candidate-region rows. The 4,170-row pilot compute took 263.4 seconds; the active estimate scales that observation and allows extra disk, cache, and thermal overhead. |
-| 15 — Feature similarity | 4–9 hours | CLIP and DINOv2 feature extraction, similarity computation, and embedding persistence. |
+| 15 — Feature similarity | 2–4 hours likely; allow a 6-hour operational ceiling | CLIP and DINOv2 extraction over 78,336 deduplicated embeddings dominates the run. The 10,700-embedding pilot extraction took 669.6 seconds; the revised range adds image decoding, larger checkpoint manifests, persistence, and laptop thermal overhead. |
 | 16 — Difference maps and spatial diagnostics | 36–72 hours | Dense numeric maps, rendered spatial panels, compression, and high-volume disk writes; expect a multi-session resumable run. |
 | 17 — Local consistency metrics | 24–48 hours | Texture, colour, seam, boundary, and directional evidence across compatible candidates and regions. |
 | 18 — Diffusion uncertainty | 1–3 hours | Vectorized seed-group and pairwise scalar analysis using saved candidates and embeddings. |
@@ -1412,8 +1412,12 @@ validation/checks.csv
 
 **Notebook:** `15_feature_similarity.ipynb`  
 **Origin:** Consolidates Existing Notebooks 12, 18, and 25  
+**Refactor status:** In progress  
+**Validation status:** Not run  
+**Completion gate passed:** No  
+**Planned controlled-300 coverage:** 2,620 cases; 16,404 candidates across five methods; 31,608 candidate-region evaluations; 63,216 feature-metric rows; 78,336 retained embeddings  
 **Output root:** `outputs/15_feature_similarity/`  
-**Depends on:** Notebooks 08–12
+**Depends on:** Notebook 02 geometry handoff and Notebooks 08–12A
 
 ### Responsibilities
 

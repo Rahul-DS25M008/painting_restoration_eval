@@ -1,5 +1,5 @@
 config_schema_version: "feature_similarity_config.v1"
-config_version: "1.0.0"
+config_version: "2.0.0"
 
 feature_similarity:
   notebook_id: "15"
@@ -44,6 +44,11 @@ feature_similarity:
         path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
         run_manifest_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
         schema_version: "sdxl_partial_candidates.v1"
+      - source_table_id: "notebook_12a_hint"
+        model_id: "hint_places2"
+        path: "outputs/12a_hint_restoration/data/restorations.csv"
+        run_manifest_path: "outputs/12a_hint_restoration/manifests/run_manifest.json"
+        schema_version: "restorations.v1"
 
   output:
     root: "outputs/15_feature_similarity"
@@ -108,8 +113,8 @@ feature_similarity:
     deterministic_algorithms: true
     initial_batch_size: 32
     oom_batch_size_backoff: [16, 8, 4, 1]
-    progress_interval_embeddings: 100
-    checkpoint_interval_embeddings: 250
+    progress_interval_embeddings: 250
+    checkpoint_interval_embeddings: 1000
     embedding_dtype: "float32"
     normalize_embeddings: true
     clean_embedding_deduplication: "painting_content_and_case_mask_bbox"
@@ -132,38 +137,42 @@ feature_similarity:
     normalized_embedding_norm_tolerance: 0.0001
 
   expected_counts:
-    case_registry_rows: 525
-    evaluated_unique_cases: 410
-    evaluated_candidates: 2160
-    zero_control_cases: 50
-    zero_control_candidates: 150
-    candidate_region_evaluations: 4170
-    content_region_evaluations: 2160
-    mask_bbox_region_evaluations: 2010
-    metric_rows_per_feature_model: 4170
-    total_metric_rows: 8340
-    embeddings_per_feature_model: 5350
-    total_embedding_rows: 10700
-    metric_embedding_references: 25020
-    scratch_prompt_paired_comparisons: 800
+    preprocessing_geometry_rows: 300
+    case_registry_rows: 3425
+    model_eligibility_rows: 17125
+    evaluated_unique_cases: 2620
+    evaluated_candidates: 16404
+    zero_control_cases: 300
+    zero_control_candidates: 1200
+    candidate_region_evaluations: 31608
+    content_region_evaluations: 16404
+    mask_bbox_region_evaluations: 15204
+    metric_rows_per_feature_model: 31608
+    total_metric_rows: 63216
+    embeddings_per_feature_model: 39168
+    total_embedding_rows: 78336
+    metric_embedding_references: 189648
+    scratch_prompt_paired_comparisons: 4800
     embeddings_by_role_across_models:
-      clean: 820
-      damaged: 1540
-      restored: 8340
+      clean: 5240
+      damaged: 9880
+      restored: 63216
     embeddings_per_model_by_role:
-      clean: 410
-      damaged: 770
-      restored: 4170
+      clean: 2620
+      damaged: 4940
+      restored: 31608
     candidates_by_model:
-      opencv_telea: 410
-      lama: 410
-      stable_diffusion_inpainting: 1330
-      sdxl_inpainting: 10
+      opencv_telea: 2620
+      lama: 2620
+      stable_diffusion_inpainting: 8520
+      sdxl_inpainting: 24
+      hint_places2: 2620
     metric_rows_by_restoration_model:
-      opencv_telea: 1540
-      lama: 1540
-      stable_diffusion_inpainting: 5220
-      sdxl_inpainting: 40
+      opencv_telea: 9880
+      lama: 9880
+      stable_diffusion_inpainting: 33480
+      sdxl_inpainting: 96
+      hint_places2: 9880
 
   analysis:
     scratch_case_selector: "case_id_suffix"
@@ -172,7 +181,7 @@ feature_similarity:
     generic_prompt_variant_id: "p00_generic"
     scratch_aware_prompt_variant_id: "p05_scratch_aware"
     scratch_seed_count: 4
-    scratch_painting_count: 50
+    scratch_painting_count: 300
     scratch_pair_regions: ["content_region", "mask_bbox_crop"]
     scratch_pair_feature_models: ["clip_vit_b32", "dinov2_vits14"]
     figure_panels:
@@ -185,6 +194,7 @@ feature_similarity:
     - "CLIP and DINOv2 are diagnostic general-purpose representation models, not conservation-specific quality measures."
     - "Cosine similarity can retain semantic or global structure while missing local colour, texture, seam, or historical-plausibility defects."
     - "Native model preprocessing resizes and center-crops rectangular evaluation regions and may suppress peripheral crop evidence."
-    - "SDXL evidence is a predeclared technically validated ten-case partial scope, not full 410-case coverage."
+    - "SDXL evidence contains 24 technically validated completions from the predeclared 35-case bounded feasibility attempt; ten skipped and one timed-out case are omitted without placeholders."
+    - "HINT contributes one deterministic primary candidate for every one of the 2,620 restoration-eligible controlled-300 cases."
     - "Stable Diffusion contributes repeated prompts and seeds; candidate-level evidence is retained without metric-based selection."
     - "The scratch-aware prompt comparison is an ablation finding, not proof of conservation-quality restoration."
