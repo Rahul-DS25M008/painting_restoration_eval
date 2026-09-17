@@ -42,7 +42,7 @@ from .schemas import (
 
 
 LOCAL_CONSISTENCY_MODULE_NAME = "restoration_eval.local_consistency"
-LOCAL_CONSISTENCY_MODULE_VERSION = "1.0.3"
+LOCAL_CONSISTENCY_MODULE_VERSION = "1.1.0"
 LOCAL_CONSISTENCY_METRIC_VERSION = "local_consistency_metrics.v1"
 LOCAL_CONSISTENCY_MAP_VERSION = "local_consistency_map_images.v1"
 LOCAL_CONSISTENCY_RENDERER_VERSION = "local_consistency_map_renderer.v1"
@@ -1208,6 +1208,55 @@ def _candidate_checkpoint_complete(
     )
 
 
+def _complete_metric_candidate_ids(
+    worklist: pd.DataFrame,
+    metrics: pd.DataFrame,
+) -> set[str]:
+    """Identify complete checkpoint candidates without repeated full-table scans."""
+
+    if metrics.empty:
+        return set()
+
+    checkpoint = metrics.copy()
+    checkpoint["candidate_id"] = checkpoint["candidate_id"].astype(str)
+    checkpoint_summary = (
+        checkpoint.groupby("candidate_id", sort=False)
+        .agg(
+            observed_rows=("local_consistency_id", "size"),
+            unique_rows=("local_consistency_id", "nunique"),
+            error_rows=("status", lambda values: int(values.eq("error").sum())),
+        )
+    )
+    expected_rows = {
+        str(row.candidate_id): expected_rows_for_candidate(row._asdict())
+        for row in worklist.itertuples(index=False)
+    }
+    return {
+        candidate_id
+        for candidate_id, summary in checkpoint_summary.iterrows()
+        if candidate_id in expected_rows
+        and int(summary["observed_rows"]) == expected_rows[candidate_id]
+        and int(summary["unique_rows"]) == expected_rows[candidate_id]
+        and int(summary["error_rows"]) == 0
+    }
+
+
+def _merge_metric_chunks(
+    metrics: pd.DataFrame,
+    chunks: list[pd.DataFrame],
+) -> pd.DataFrame:
+    """Merge pending metric chunks only at checkpoint boundaries."""
+
+    if not chunks:
+        return metrics
+    frames = ([metrics] if not metrics.empty else []) + chunks
+    return (
+        pd.concat(frames, ignore_index=True)
+        .drop_duplicates("local_consistency_id", keep="last")
+        .loc[:, LOCAL_CONSISTENCY_COLUMNS]
+    )
+
+
 def run_local_consistency_metrics(
     worklist: pd.DataFrame,
     *,
@@ -1224,11 +1273,12 @@ def run_local_consistency_metrics(
         if checkpoint is not None and checkpoint.is_file()
         else pd.DataFrame(columns=LOCAL_CONSISTENCY_COLUMNS)
     )
-    completed_ids = {
-        str(row.candidate_id)
-        for row in worklist.itertuples(index=False)
-        if _candidate_checkpoint_complete(row._asdict(), metrics)
-    }
+    approved_ids = set(worklist["candidate_id"].astype(str))
+    if not metrics.empty:
+        metrics = metrics.loc[
+            metrics["candidate_id"].astype(str).isin(approved_ids)
+        ].copy()
+    completed_ids = _complete_metric_candidate_ids(worklist, metrics)
     reused = len(completed_ids)
     total = len(worklist)
     processed = reused
@@ -1238,6 +1288,7 @@ def run_local_consistency_metrics(
     )
     started = time.perf_counter()
     last_checkpoint_count = processed
+    pending_chunks: list[pd.DataFrame] = []
     for case_id, case_frame in worklist.groupby("case_id", sort=True):
         pending = case_frame.loc[
             ~case_frame["candidate_id"].astype(str).isin(completed_ids)
@@ -1247,20 +1298,15 @@ def run_local_consistency_metrics(
         computed = compute_case_local_consistency(
             pending, project_root=project_root, config=config
         )
-        metrics = (
-            computed.copy()
-            if metrics.empty
-            else pd.concat([metrics, computed], ignore_index=True)
-        )
+        pending_chunks.append(computed)
         completed_ids.update(pending["candidate_id"].astype(str))
         processed += len(pending)
         should_checkpoint = (
             processed - last_checkpoint_count >= interval or processed == total
         )
         if should_checkpoint:
-            metrics = metrics.drop_duplicates(
-                "local_consistency_id", keep="last"
-            ).loc[:, LOCAL_CONSISTENCY_COLUMNS]
+            metrics = _merge_metric_chunks(metrics, pending_chunks)
+            pending_chunks = []
             if checkpoint is not None:
                 execution = _settings(config)["execution"]
                 write_dataframe_atomic(
@@ -1279,6 +1325,7 @@ def run_local_consistency_metrics(
                 f"({100.0 * processed / total:.1f}%) | elapsed={elapsed:.1f}s | "
                 f"throughput={throughput:.3f} candidates/s | latest_case={case_id}"
             )
+    metrics = _merge_metric_chunks(metrics, pending_chunks)
     metrics = metrics.drop_duplicates(
         "local_consistency_id", keep="last"
     ).sort_values(
@@ -1573,19 +1620,38 @@ def run_local_consistency_maps(
         if checkpoint is not None and checkpoint.is_file()
         else pd.DataFrame(columns=LOCAL_CONSISTENCY_MAP_MANIFEST_COLUMNS)
     )
-    completed_ids = {
-        str(row.candidate_id)
-        for row in map_candidates.itertuples(index=False)
-        if _candidate_maps_complete(
-            str(row.candidate_id), manifest, project_root=project_root
-        )
+    approved_ids = set(map_candidates["candidate_id"].astype(str))
+    if not manifest.empty:
+        manifest = manifest.loc[
+            manifest["candidate_id"].astype(str).isin(approved_ids)
+        ].copy()
+    manifest_groups = {
+        str(candidate_id): group
+        for candidate_id, group in manifest.groupby("candidate_id", sort=False)
     }
+    completed_ids = set()
+    for candidate_id, subset in manifest_groups.items():
+        if len(subset) != len(MAP_TYPES) or set(subset["map_type"]) != set(MAP_TYPES):
+            continue
+        if subset["map_image_id"].duplicated().any():
+            continue
+        if all(
+            (
+                (path := resolve_path(row.relative_path, project_root)).is_file()
+                and sha256_path(path) == str(row.sha256)
+            )
+            for row in subset.itertuples(index=False)
+        ):
+            completed_ids.add(candidate_id)
     reused = len(completed_ids)
     total = len(map_candidates)
     execution = _settings(config)["execution"]
     checkpoint_interval = int(execution["checkpoint_interval_candidates"])
     progress_interval = int(execution["progress_interval_candidates"])
     started = time.perf_counter()
+    pending_chunks: list[pd.DataFrame] = []
+    newly_generated = 0
+    generated_since_checkpoint = 0
     for number, (_, row) in enumerate(map_candidates.iterrows(), start=1):
         candidate_id = str(row["candidate_id"])
         if candidate_id not in completed_ids:
@@ -1593,13 +1659,15 @@ def run_local_consistency_maps(
                 row, project_root=project_root, maps_root=maps_root,
                 config=config, scales=scales,
             )
-            manifest = (
-                computed.copy()
-                if manifest.empty
-                else pd.concat([manifest, computed], ignore_index=True)
-            )
+            pending_chunks.append(computed)
             completed_ids.add(candidate_id)
-        if number % checkpoint_interval == 0 or number == total:
+            newly_generated += 1
+            generated_since_checkpoint += 1
+        if generated_since_checkpoint >= checkpoint_interval or number == total:
+            frames = ([manifest] if not manifest.empty else []) + pending_chunks
+            if frames:
+                manifest = pd.concat(frames, ignore_index=True)
+            pending_chunks = []
             manifest = manifest.drop_duplicates(
                 "map_image_id", keep="last"
             ).loc[:, LOCAL_CONSISTENCY_MAP_MANIFEST_COLUMNS]
@@ -1609,12 +1677,12 @@ def run_local_consistency_maps(
                     attempts=int(execution["atomic_replace_attempts"]),
                     retry_delay_seconds=float(execution["atomic_replace_retry_seconds"]),
                 )
+            generated_since_checkpoint = 0
         if progress_callback is not None and (
             number % progress_interval == 0 or number == total
         ):
             elapsed = time.perf_counter() - started
-            generated = max(0, number - reused)
-            throughput = generated / elapsed if elapsed > 0 else 0.0
+            throughput = newly_generated / elapsed if elapsed > 0 else 0.0
             progress_callback(
                 f"Local-consistency maps: {number}/{total} "
                 f"({100.0 * number / total:.1f}%) | elapsed={elapsed:.1f}s | "

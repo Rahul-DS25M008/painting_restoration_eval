@@ -90,8 +90,8 @@ test whether the complete original image bytes can be retrieved individually
 from immutable, indexed, uncompressed ZIP members in the existing diagnostics
 dataset. This does not reopen N16 science, publish all N16/N17 assets, change
 the live pilot dashboard, or remove the pre-N34 storage and dashboard review.
-Full N16 publication passed its separate user-controlled gate on 2026-09-17;
-its Git handoff and the later full N17 publication remain distinct gates.
+Full N16 and N17 publication each passed a separate user-controlled gate on
+2026-09-17/18; their Git handoffs remain distinct gates.
 Successful smoke records belong in
 `outputs/inventory/`, separately from the legacy direct-file registry.
 The N16 proof passed with 76 exact-byte public image reads, three ZIPs, and
@@ -106,14 +106,33 @@ bundles. All 641 objects, 2,625,210,541 published bytes, and four public
 sample image reads passed remote checks at pinned diagnostics revision
 `8c22aa62c5be60d8a15c9c00d9bc9a6f81557b79`. The separate release record
 is `outputs/inventory/bundled_publication_n16_full.json`. Local canonical
-outputs remain authoritative. N17 remains a separately approved, not-yet-
-published release; neither release changes the pre-N34 dashboard review.
+outputs remain authoritative. Neither release changes the pre-N34 dashboard
+review.
+
+**Full N17 release verified 2026-09-18:** 27,926 original images (27,912
+candidate maps and 14 selected panels) are indexed in 360 immutable ZIP
+bundles. All 669 objects, 5,622,373,385 published bytes, and four public
+sample image reads passed remote checks at pinned diagnostics revision
+`ceac6a5aa67fe2a0f8c840c46f22306e7f606749`. The separate release record
+is `outputs/inventory/bundled_publication_n17_full.json`. Local N17 outputs
+remain canonical until the compact Git handoff and beyond it.
+
+**Why this storage split:** N16/N17 generate diagnostic maps, local-consistency
+panels, metrics and provenance—not new restoration candidates. They therefore
+live under sibling producer paths in the existing Hugging Face `diagnostics`
+dataset. The `candidates` dataset remains for model-produced restoration
+images (the verified N12 and N12A candidate releases). The earlier N16
+per-image upload exceeded the free Hub API request rate, while adding all maps
+and large tables to Git/LFS would swell the scientific repository. Per-painting
+indexed ZIPs reduce remote object/request counts and retain exact image bytes.
+They use `ZIP_STORED`: this is an access and repository-size strategy, **not**
+lossless compression that materially reduces the total hosted bytes.
 
 The scientific output contract and the Git publication contract are now
 separate. Every notebook still generates, validates, reloads, visually inspects,
 and inventories its complete canonical output tree locally. GitHub retains the
-compact scientific record. Except for the approved indexed-bundle N16 release
-and the separate user-controlled N17 gate, new bulk publication is paused
+compact scientific record. Except for the verified indexed-bundle N16 and N17
+releases, new bulk publication is paused
 while the Controlled-300 pipeline is completed locally through Notebook 33.
 
 Notebooks 01--11 are the final approved full-output Git/LFS checkpoint for the
@@ -122,7 +141,7 @@ Controlled-300 rerun. Beginning with Notebook 12:
 - GitHub retains notebook source, helpers, configuration, compact evidence
   tables, validation, manifests, selected figures, and external-asset indexes;
 - already verified N12/N12A/N13/N15 objects retain their publication records,
-  and N16's complete indexed-bundle release has its own verified record;
+  and N16/N17 each have a separate complete indexed-bundle release record;
 - storage and archival options are reassessed after N33, rather than assumed
   from the earlier Hugging Face plan; and
 - the final Controlled-300 Streamlit packaging and deployment approach is
@@ -146,7 +165,8 @@ maps remain individually accessible by local manifest paths. An attempted
 per-file Hugging Face dataset upload for N16 hit the free-account API rate
 limit; its partial remote repository was removed by the user and the local
 upload cache was cleared. That failed per-file attempt is superseded by the
-separately verified full N16 bundle release; no N17 publication is yet claimed.
+separately verified full N16 bundle release; N17 subsequently passed its own
+full bundle publication gate.
 Previously verified N12–N15 records remain valid.
 
 This decision does not require the present pilot-50 deployment to change.
@@ -161,6 +181,18 @@ the app and deployment behavior.
 Do not assume the pilot app's local-only image resolver will work on the
 lightweight Controlled-300 deployment. The final archive remains a separate
 post-freeze reproducibility release, not the interactive image backend.
+
+The **preliminary N34/N35 bundle-access option**, subject to that review, is:
+retain compact metadata and case/candidate/map indexes with the deployed app;
+resolve a selected visual to a producer-owned painting index and pinned N16 or
+N17 diagnostics revision; fetch only its bounded ZIP bundle on demand; verify
+the bundle/member hash; and reuse a bounded cache for nearby selections. The
+app must not download all 693 N16/N17 bundles at startup. Large metric CSVs
+must likewise be represented by approved compact, filterable views or on-demand
+partitions rather than eagerly loaded into Streamlit Community Cloud memory.
+Measure cold/warm latency, cache eviction, quota behavior, missing-asset
+fallback, and cross-model case coverage before this becomes the final dashboard
+contract. The live pilot-50 deployment is unchanged.
 
 For every notebook that produces a standalone report, an explicitly approved
 chat mock is the binding report blueprint. The implemented report must retain the
@@ -1578,13 +1610,15 @@ validation/checks.csv
 **Output root:** `outputs/17_local_consistency_metrics/`  
 **Depends on:** Notebooks 08–12A and canonical regions
 
-**Controlled-300 scaling status:** Local run complete and validated; compact Git commit pending. Bulk evidence remains local.
+**Controlled-300 scaling status:** Local run complete and validated; compact Git commit pending. Bulk evidence remains locally canonical.
 
-**Publication status:** Keep all 27,912 candidate-map PNGs and the large
-metrics table locally under Notebook 17 ownership. Selectable case-level
-colour, seam, and texture evidence remains a requirement for the later
-dashboard; its storage and retrieval mechanism is decided after N33 and
-before N34, not assumed to be a particular provider or archive format.
+**Publication status:** The complete indexed-bundle N17 release passed remote
+verification at the pinned diagnostics revision and record in Section 2.1.
+Keep all 27,912 candidate-map PNGs and the large metrics table locally under
+Notebook 17 ownership as well. Selectable case-level colour, seam, and texture
+evidence remains a requirement for the later dashboard. The verified bundle
+transport is a candidate backend, not a final N34/N35 deployment decision;
+that access contract is approved after N33 and before N34.
 
 **Expected execution time:** Batch 4 metric computation is the dominant stage at approximately 18–22 hours on the validated local machine; Batch 5 map generation is expected to require approximately 11–14 hours. Both stages are checkpointed and resumable.
 
@@ -3626,8 +3660,8 @@ For each numbered notebook:
    comparison pass; and
 9. commit the notebook and compact scientific evidence before moving
    downstream; beginning with Notebook 12, complete bulk media and oversized
-   tables remain locally canonical. The separately approved N16 indexed-bundle
-   release and N17 release gate are exceptions; other new external publication
+   tables remain locally canonical. The separately approved and verified N16/N17
+   indexed-bundle releases are exceptions; other new external publication
    waits for the post-N33 storage review and explicit user approval.
 
 `E:/outputs/` is an external read-only comparison snapshot, not a pipeline input

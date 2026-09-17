@@ -8,7 +8,7 @@ policy:
   local_outputs_remain_canonical: true
   rewrite_existing_git_history: false
   remove_local_after_upload: false
-  controlled_300_new_bulk_publication: n16_full_verified_n17_user_controlled_exception_other_bulk_deferred
+  controlled_300_new_bulk_publication: n16_n17_full_bundle_verified_other_bulk_deferred
   storage_review_after_notebook: 33
   dashboard_approval_after_storage_review: true
   proposed_bundle_transport_smoke_2026_09_17:
@@ -31,13 +31,28 @@ policy:
       asset_count: 76034
       remote_object_count: 641
     n17:
-      status: planned_for_separate_user_controlled_release_not_uploaded
+      status: full_remote_verified
+      record: outputs/inventory/bundled_publication_n17_full.json
+      repository: RahulMaddineni264/painting-restoration-eval-diagnostics
+      revision: ceac6a5aa67fe2a0f8c840c46f22306e7f606749
+      release_prefix: bundled_assets/v1/controlled_300/17_local_consistency_metrics/c581ed6c9c2b0f7e
+      asset_count: 27926
+      remote_object_count: 669
+
+  bundle_rationale:
+    git_role: compact_scientific_record_not_bulk_map_or_large_metric_storage
+    trigger: per_file_n16_upload_exceeded_hub_api_rate_limit
+    format: indexed_zip_stored_exact_original_image_bytes
+    benefits: fewer_remote_objects_and_case_level_retrieval_with_bounded_bundle_downloads
+    compression_claim: none_zip_stored_is_not_a_total_byte_reduction
+    n16_n17_tier: diagnostics_maps_panels_metrics_and_provenance
+    candidates_tier: model_generated_restoration_candidates
 
 interactive_store:
   provider: huggingface_dataset
   visibility: public
   revision: main
-  status: existing_n12_n15_and_n16_bundle_verified_n17_release_pending
+  status: existing_n12_n15_and_n16_n17_bundles_verified
   smoke_test:
     verified_at_utc: "2026-09-12T22:40:44Z"
     verified_file_count: 2
@@ -67,6 +82,13 @@ deployment:
   current_pilot_branch: pilot-50-dashboard
   controlled_300_repository_status: deferred_until_dashboard_rebuild
   lazy_remote_assets_required: true
+  controlled_300_diagnostic_bundle_access:
+    status: preliminary_design_requires_pre_n34_approval_and_n35_validation
+    source: pinned_huggingface_diagnostics_revisions_and_per_painting_indexes
+    access: resolve_case_candidate_and_map_to_bundle_then_fetch_only_selected_bundle
+    cache: bounded_reusable_session_cache_no_full_corpus_download_on_startup
+    numeric_evidence: prepare_compact_filterable_views_do_not_load_gigabyte_csv_at_startup
+    current_pilot_deployment_changed: false
 
 classification:
   media_extensions:

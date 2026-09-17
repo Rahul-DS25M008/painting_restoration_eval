@@ -1,15 +1,15 @@
 {
   "run_schema_version": "inventory_run.v1",
   "inventory_schema_version": "project_file_inventory.v1",
-  "inventory_run_id": "inventory_20260917T211225Z_ab1c2848",
+  "inventory_run_id": "inventory_20260917T220545Z_756377aa",
   "status": "completed",
-  "generated_at_utc": "2026-09-17T21:12:25.222536Z",
-  "completed_at_utc": "2026-09-17T21:13:13.419289Z",
-  "duration_seconds": 48.465,
+  "generated_at_utc": "2026-09-17T22:05:45.494621Z",
+  "completed_at_utc": "2026-09-17T22:15:05.382642Z",
+  "duration_seconds": 560.099,
   "repository_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
   "inventory_relative_path": "outputs/inventory/project_file_inventory.csv",
-  "inventory_sha256": "2f114d75b6bb061dbefc990b466722fc54163bf8a642d2a8977e72ffc19ba158",
-  "inventory_size_bytes": 67992600,
+  "inventory_sha256": "c82fd3f02ab567deef43eda992d37cf4d37be5af5545df00bee0c4ead4219a6e",
+  "inventory_size_bytes": 67993472,
   "hash_configuration": {
     "mode": "partial",
     "algorithm": "sha256_first_n_bytes",
@@ -18,9 +18,9 @@
   "incremental_reuse": {
     "enabled": true,
     "cache_status": "verified",
-    "source_run_id": "inventory_20260917T210623Z_0c3beb6e",
-    "reused_file_count": 130535,
-    "inspected_file_count": 1
+    "source_run_id": "inventory_20260917T211225Z_ab1c2848",
+    "reused_file_count": 130531,
+    "inspected_file_count": 6
   },
   "scan_configuration": {
     "skipped_directory_names": [
@@ -48,8 +48,8 @@
     "platform": "Windows-11-10.0.26200-SP0"
   },
   "summary": {
-    "file_count": 130536,
-    "total_size_bytes": 26468798843,
+    "file_count": 130537,
+    "total_size_bytes": 26468807277,
     "read_error_file_count": 0,
     "read_error_count": 0,
     "counts_by_format": {
@@ -57,7 +57,7 @@
       "docx": 4,
       "html": 100,
       "jpeg": 300,
-      "json": 85,
+      "json": 86,
       "markdown": 40,
       "mjs": 2,
       "no_extension": 3,
@@ -76,7 +76,7 @@
       "figure_image": 164,
       "html": 100,
       "image": 12111,
-      "json": 85,
+      "json": 86,
       "manifest_table": 45,
       "markdown": 40,
       "mask_image": 22064,
@@ -97,7 +97,7 @@
       ".html": 100,
       ".ipynb": 39,
       ".jpg": 300,
-      ".json": 85,
+      ".json": 86,
       ".md": 40,
       ".mjs": 2,
       ".npz": 4,

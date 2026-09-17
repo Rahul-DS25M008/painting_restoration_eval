@@ -1,5 +1,5 @@
 config_schema_version: "local_consistency_config.v1"
-config_version: "1.0.0"
+config_version: "1.1.0"
 
 local_consistency:
   notebook_id: "17"
@@ -46,6 +46,11 @@ local_consistency:
         path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
         run_manifest_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
         schema_version: "sdxl_partial_candidates.v1"
+      - source_table_id: "notebook_12a_hint"
+        model_id: "hint_places2"
+        path: "outputs/12a_hint_restoration/data/restorations.csv"
+        run_manifest_path: "outputs/12a_hint_restoration/manifests/run_manifest.json"
+        schema_version: "restorations.v1"
 
   output:
     root: "outputs/17_local_consistency_metrics"
@@ -232,7 +237,7 @@ local_consistency:
 
   execution:
     progress_interval_candidates: 10
-    checkpoint_interval_candidates: 10
+    checkpoint_interval_candidates: 250
     resume_policy: "reuse only candidates with an exact complete metric-key set and no error rows"
     map_resume_policy: "reuse only candidates with all three registered map files and matching checksums"
     checkpoint_policy: "notebook-owned temporary work files removed after completion"
@@ -242,9 +247,9 @@ local_consistency:
     maximum_map_filename_characters: 32
 
   representative_panels:
-    candidate_panel_count: 8
+    candidate_panel_count: 10
     cross_model_panel_count: 4
-    total_panel_count: 12
+    total_panel_count: 14
     candidate_roles:
       - "model_median_texture_error"
       - "model_highest_seam_error"
@@ -266,34 +271,42 @@ local_consistency:
     uncertainty_boundary_evidence_is_separate: true
 
   expected_counts:
-    artwork_rows: 50
-    geometry_rows: 50
-    case_registry_rows: 525
-    model_eligibility_rows: 2100
+    artwork_rows: 300
+    geometry_rows: 300
+    case_registry_rows: 3425
+    model_eligibility_rows: 17125
     region_policy_rows: 143
-    evaluated_unique_cases: 410
-    evaluated_candidates: 2160
-    nonzero_candidates: 2010
-    zero_control_candidates: 150
-    synthetic_degradation_candidates: 356
-    primary_candidates: 1240
-    mapped_primary_candidates: 1090
-    texture_descriptor_rows: 16080
-    texture_map_rows: 49664
-    texture_rows_total: 65744
-    colour_rows: 170064
-    seam_rows: 36180
-    total_metric_rows: 271988
-    candidate_map_images: 3270
-    selected_candidate_panels: 8
+    evaluated_unique_cases: 2620
+    evaluated_candidates: 16404
+    excluded_candidates: 11
+    nonzero_candidates: 15204
+    zero_control_candidates: 1200
+    synthetic_degradation_candidates: 2811
+    primary_candidates: 10504
+    mapped_primary_candidates: 9304
+    texture_descriptor_rows: 121632
+    texture_map_rows: 376140
+    texture_rows_total: 497772
+    colour_rows: 1289223
+    seam_rows: 273672
+    total_metric_rows: 2060667
+    candidate_map_images: 27912
+    selected_candidate_panels: 10
     selected_cross_model_panels: 4
-    selected_panels_total: 12
-    map_manifest_rows: 3282
+    selected_panels_total: 14
+    map_manifest_rows: 27926
     candidates_by_model:
-      opencv_telea: 410
-      lama: 410
-      stable_diffusion_inpainting: 1330
-      sdxl_inpainting: 10
+      opencv_telea: 2620
+      lama: 2620
+      hint_places2: 2620
+      stable_diffusion_inpainting: 8520
+      sdxl_inpainting: 24
+    source_rows_by_model:
+      opencv_telea: 2620
+      lama: 2620
+      hint_places2: 2620
+      stable_diffusion_inpainting: 8520
+      sdxl_inpainting: 35
 
   known_limitations:
     - "The processed images are interpreted as sRGB under the Notebook 02 policy; this is not a fully colour-managed conservation-imaging workflow."
@@ -301,5 +314,6 @@ local_consistency:
     - "Texture, smoothing, repetition, hallucinated-detail, and brushstroke-like measures are diagnostic image-processing proxies, not authentication or semantic brushstroke recognition."
     - "Visible-seam metrics are continuous comparative evidence; no universal perceptual or conservation threshold is asserted."
     - "Stable Diffusion prompt and seed candidates are repeated candidate-level observations, not independent paintings."
-    - "SDXL is limited to a predeclared technically validated ten-case partial evaluation."
-    - "Only primary non-zero candidates receive saved local-consistency maps; all 2,160 candidates retain numeric evidence."
+    - "HINT is a full controlled-300 comparison method with 2,620 completed candidates."
+    - "SDXL contributes 24 completed candidates from a predeclared 35-case bounded feasibility attempt; ten cases were skipped and one timed out."
+    - "Only primary non-zero candidates receive saved local-consistency maps; all 16,404 candidates retain numeric evidence."

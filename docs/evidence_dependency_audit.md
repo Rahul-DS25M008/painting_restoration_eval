@@ -39,9 +39,9 @@ and decision boundaries are recorded in Section 6.2 and the YAML registry.
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
 dependency order for the approved 300-painting study. Notebooks 01–15,
 including Notebook 12A, are committed Controlled-300 producers. Notebooks 16
-and 17 are locally complete and validated, pending compact Git commits. N16's
-full indexed-bundle release is remotely verified; N17's bulk maps and oversized
-metrics remain local pending its separate release. Notebooks 18–36 remain historical Controlled-50 evidence
+and 17 are locally complete and validated, pending compact Git commits. Both
+full indexed-bundle releases are remotely verified; their bulk maps and
+oversized metrics remain locally canonical. Notebooks 18–36 remain historical Controlled-50 evidence
 until each producer is explicitly reopened, rerun, validated,
 baseline-compared, and committed.
 
@@ -68,8 +68,8 @@ publication records remain valid. A later per-file LFS upload attempt for N16
 hit Hugging Face's free-account API rate limit; the user removed the partial
 remote repository and the local upload cache was cleared. That failed attempt
 was superseded by the separately approved, verified N16 indexed-bundle release.
-N17 and other new bulk publication remain separate gates; N17 is not yet
-represented as remotely published.
+N17 subsequently passed its own separate full-bundle gate. Other new bulk
+publication remains deferred to the pre-N34 storage review.
 
 **Local-first storage and dashboard decision: 2026-09-17.** The Controlled-50
 dashboard index includes all 10,050 Notebook 16 candidate maps and all 3,270
@@ -81,7 +81,7 @@ cost, case-level retrieval, and dashboard feasibility. Do not assume separate
 Hugging Face datasets or any other provider. Approve the storage contract
 first, then approve the dashboard scope and implementation; Notebook 35 later
 validates the application. The existing diagnostics repository retains its
-verified N13/N15 artifacts and later N16 bundle release; the live pilot
+verified N13/N15 artifacts and later N16/N17 bundle releases; the live pilot
 deployment stays unchanged.
 
 **Bounded bundle transport test (2026-09-17).**
@@ -104,8 +104,39 @@ passed SHA-256/size validation (337 LFS hashes and 304 public reads), and four
 sample images passed exact-byte public retrieval. Total published bytes:
 2,625,210,541. The immutable record is
 `outputs/inventory/bundled_publication_n16_full.json`. This does not alter
-N16 notebook science or authorize deleting local evidence. N17 remains
-locally complete and separately pending publication.
+N16 notebook science or authorize deleting local evidence.
+
+**Full indexed-bundle N17 publication (2026-09-18).** Its separate approved
+release contains all 27,926 original images (27,912 candidate maps and 14
+selected panels) in 360 bundles plus the metrics table, summary figure,
+indexes, and provenance. At pinned diagnostics revision
+`ceac6a5aa67fe2a0f8c840c46f22306e7f606749`, all 669 remote objects
+passed SHA-256/size validation (364 LFS hashes and 305 public reads), and four
+sample images passed exact-byte public retrieval. Total published bytes:
+5,622,373,385. The record is
+`outputs/inventory/bundled_publication_n17_full.json`. All 179 Notebook 17
+validation checks remain passed; local canonical evidence is not deleted.
+
+**Publication rationale and dashboard boundary.** The `candidates` dataset
+holds model-generated restoration images: the verified N12 SDXL and N12A HINT
+candidate rows. N16 and N17 instead produce spatial, colour, texture, and seam
+diagnostics, selected explanatory panels, metrics, and provenance. Their
+producer-owned sibling paths therefore belong in the existing `diagnostics`
+dataset; no N16/N17 release was sent to `candidates`. The earlier per-image
+N16 upload exceeded the free Hub API request rate, and putting all these maps
+and large tables into Git/LFS would inflate the compact scientific repository.
+Indexed per-painting ZIPs reduce the number of remote objects and upload/read
+requests while preserving exact original bytes. `ZIP_STORED` is deliberately
+uncompressed: do not imply that bundling reduces total hosted bytes.
+
+For the later Controlled-300 Streamlit design, the preliminary option is to
+ship compact indexes, resolve a selected case/map to its pinned N16/N17 release,
+download only the needed bounded bundle, verify its hash, and use a bounded
+cache. Avoid whole-corpus downloads or loading N17's gigabyte-scale CSV at app
+startup; precompute compact numeric views or approved on-demand partitions.
+Cold/warm latency, cache/memory use, quota behavior, and missing-asset fallback
+still require the explicit pre-N34 storage/dashboard review and N35 validation.
+The current pilot-50 deployment is unchanged.
 
 **Controlled-300 Notebook 12 closure review: 2026-09-13.** The bounded SDXL
 scope resolved all 35 predeclared rows across 30 paintings. Twenty-four

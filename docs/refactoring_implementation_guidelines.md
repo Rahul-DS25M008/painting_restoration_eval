@@ -1894,8 +1894,21 @@ original images in 333 bundles, 641 remotely verified objects totaling
 `8c22aa62c5be60d8a15c9c00d9bc9a6f81557b79`. Four public sample image
 reads matched the local originals. The full record is
 `outputs/inventory/bundled_publication_n16_full.json`. The smoke alone was not
-proof of full publication; the full record is. N17 requires its own separately
-verified record before any publication claim.
+proof of full publication; the full record is. N17 subsequently passed its
+own separate full-release gate: 27,926 images in 360 bundles, 669 remotely
+verified objects totaling 5,622,373,385 bytes at pinned diagnostics revision
+`ceac6a5aa67fe2a0f8c840c46f22306e7f606749`. Its record is
+`outputs/inventory/bundled_publication_n17_full.json`. Both releases retain
+their original images and oversized tables locally.
+
+The `diagnostics` dataset owns these releases because N16/N17 create maps,
+local texture/colour/seam evidence, selected panels, metrics and provenance.
+The `candidates` dataset owns model-generated restorations such as the verified
+N12 SDXL and N12A HINT outputs; it received no N16/N17 bundle release. Indexed
+per-painting `ZIP_STORED` bundles addressed the failed per-image Hub rate-limit
+path and keep bulk images/tables out of Git/LFS. They reduce object/request
+counts, not total hosted bytes by compression. The member index must retain
+producer path, asset identity, byte count, hash and pinned revision.
 
 The storage change does not alter notebook science, output ownership, schemas,
 validation, or the requirement to generate and inspect every approved canonical
@@ -1912,8 +1925,8 @@ The current storage tiers are:
    large numeric tables, and source manifests remain under their exact local
    `outputs/<notebook_stem>/` roots. This is the authoritative active corpus.
 3. **Previously verified external evidence:** N12, N12A, N13, N15, and the
-   separately approved N16 bundle release retain their published records.
-   N17 uses a separate user-controlled gate; other bulk publication remains
+   separately approved N16/N17 bundle releases retain their published records.
+   Other bulk publication remains
    deferred to the pre-N34 storage review.
 4. **Future storage and deployment:** after N33 and before changing N34, review
    the complete local evidence, prospective storage options, costs, public
@@ -1948,7 +1961,7 @@ counts remain the evidence of the completed publication gate. A URL or matching
 size alone is not verification. A failed or incomplete upload never authorizes
 local deletion. Do not infer publication of N16 or later notebooks from the
 existence of a Hugging Face repository, a partial transfer, or old records.
-The N16 claim rests only on its separate complete pinned-release record.
+N16 and N17 claims rest only on their separate complete pinned-release records.
 
 The machine-readable historical provider and classification contract is
 `config/publication/external_storage.yaml`. Its N12/N12A/N13/N15 verified
@@ -1956,8 +1969,8 @@ records remain valid. Do not run `tools/external_artifact_publication.py` or
 restore the failed N16 per-file uploader for N16/N17 or later producers. The
 N16 per-file LFS attempt exhausted Hugging Face's
 free-account Hub API request limit; the user removed its partial remote
-repository and its local upload cache was cleared. A separate bundled N16
-release subsequently passed full remote verification; canonical N16 evidence
+repository and its local upload cache was cleared. Separate bundled N16 and
+N17 releases subsequently passed full remote verification; canonical evidence
 still remains fully local.
 
 The local project inventory and the publication registry have different
@@ -1977,7 +1990,8 @@ N16's 76,020 candidate maps and N17's 27,912 candidate maps stay local and
 individually accessible by their producer manifests. Their full numeric CSVs
 also stay local: N16 is about 82 MB and N17 about 1.15 GB, so neither is an
 ordinary compact GitHub table. N16's complete maps and metric table are also
-available in its verified indexed-bundle release; N17 is not yet published.
+available in its verified indexed-bundle release; N17's maps, summary figure,
+and metrics are available in its own verified indexed-bundle release.
 Before the N16/N17 compact Git commits, the user must
 remove the still-tracked pilot versions of these two CSVs and their selected
 figure PNGs from the Git index with exact-path `git rm --cached` commands;
@@ -1995,6 +2009,18 @@ representative public write/read path and its cost/quota behavior before any
 bulk migration. Obtain user approval for the storage contract first, then for
 the N34 dashboard scope and UI; N35 validates the implemented application.
 The live 50-painting dashboard stays on its existing branch and deployment.
+
+**Preliminary Streamlit bundle access, not yet a deployment contract.** N34
+may include compact metadata plus local-to-remote case/candidate/map indexes.
+A selection would resolve to a painting index under a pinned N16/N17 revision,
+download only the needed bounded ZIP, validate the bundle and exact member,
+then reuse it in a size-limited cache. Never enumerate/download every bundle
+or ingest the N17 gigabyte CSV at startup. Compact filterable numeric views or
+on-demand partitions must be designed separately; they cannot silently omit
+applicable cases. Before implementation, test public cold/warm retrieval,
+cache eviction, Streamlit memory/network budgets, missing-asset behavior, and
+representative cross-model views with the user. The pre-N34 storage and page
+design approval gate and N35 validation remain mandatory.
 
 For each completed notebook before that review, provide **GitHub
 scientific-record commands only**, scoped to the files actually appropriate

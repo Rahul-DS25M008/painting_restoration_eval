@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.13"
+config_version: "1.1.14"
 
 evidence_coverage:
   authority:
@@ -58,7 +58,7 @@ evidence_coverage:
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
     completed_through_notebook_id: "17"
     next_eligible_notebook_id: "18"
-    new_bulk_publication_policy: "n16_verified_bundle_exception_n17_separate_user_controlled_release_other_bulk_deferred"
+    new_bulk_publication_policy: "n16_n17_verified_bundle_exceptions_other_bulk_deferred"
     completed_notebooks:
       - notebook_id: "01"
         stem: "01_dataset_verification"
@@ -782,8 +782,9 @@ evidence_coverage:
         baseline_metric_rows: 271988
         baseline_candidate_map_images: 3270
         baseline_artifact_paths_and_schemas_preserved: true
-        publication_status: "complete_local_only"
-        bulk_publication_deferred_until: "pre_notebook_34_storage_review"
+        publication_status: "complete_local_and_full_bundle_remote_verified"
+        publication_record: "outputs/inventory/bundled_publication_n17_full.json"
+        remote_revision: "ceac6a5aa67fe2a0f8c840c46f22306e7f606749"
         unexplained_missing_or_reduced_evidence: false
 
   frozen_baseline:
