@@ -1,4 +1,3 @@
-# Dedicated external-publication tooling; not a notebook or dashboard runtime.
-huggingface_hub>=1.5,<2
+# Publication tooling compatible with the existing project environment.
+huggingface_hub>=0.25.2,<1
 PyYAML>=6,<7
-

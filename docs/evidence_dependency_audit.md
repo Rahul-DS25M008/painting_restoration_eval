@@ -38,8 +38,10 @@ and decision boundaries are recorded in Section 6.2 and the YAML registry.
 **Controlled-300 transition review: 2026-09-14.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
 dependency order for the approved 300-painting study. Notebooks 01–15,
-including Notebook 12A, are completed Controlled-300 producers. Notebook 16 is
-the next approved production stage; Notebooks 16–36 remain historical Controlled-50 evidence
+including Notebook 12A, are committed Controlled-300 producers. Notebook 16 is
+locally complete and validated, pending external publication and commit.
+Notebook 17 is likewise locally complete and validated, pending publication
+and commit; Notebooks 18–36 remain historical Controlled-50 evidence
 until each producer is explicitly reopened, rerun, validated,
 baseline-compared, and committed.
 
@@ -62,8 +64,26 @@ historical N12–N36 image artifacts were removed from the current `main` index,
 with zero unrelated deletions. Every file remains present locally, and all
 14,970 remain recoverable from `pilot-50-dashboard` and the frozen pilot tag.
 No Git/LFS history was rewritten. Notebook-scoped bulk publication is now
-enabled; each producer still requires a successful remote read, byte-count, and
-SHA-256 gate before its external record is accepted.
+enabled; each producer still requires remote byte-count and SHA-256
+verification before its external record is accepted. The previous two-file
+public-read smoke test remains transport evidence. A new producer-specific,
+progress-reporting publisher for Notebook 16 and 17 is planned but has not
+been implemented or run; those local outputs are not remotely published.
+
+**Dashboard-first publication decision: 2026-09-17.** The Controlled-50
+dashboard index includes all 10,050 Notebook 16 candidate maps and all 3,270
+Notebook 17 candidate maps. The present application resolves local image
+paths only. To preserve complete case-level inspection after deployment from
+a lightweight repository, all 76,020 Controlled-300 Notebook 16 maps and all
+27,912 Notebook 17 maps must remain individually addressable in separate
+public producer-owned Hugging Face dataset repositories. The large metric
+tables follow their producers; the existing diagnostics repository retains
+its verified Notebook 13 and 15 artifacts. Exact new repository IDs,
+publication records, and remote checks remain pending. Bulk archives are
+reserved for the final reproducibility release, not the interactive image
+backend. Before Notebook 34 refactoring, hold a distinct user-approved
+dashboard content/access/feasibility review; Notebook 34 builds assets and
+Notebook 35 validates local and remote image resolution and deployment.
 
 **Controlled-300 Notebook 12 closure review: 2026-09-13.** The bounded SDXL
 scope resolved all 35 predeclared rows across 30 paintings. Twenty-four
@@ -129,6 +149,8 @@ metric validity and coverage passed.
 | 13 Classical Metrics | `classical_metrics.v1`, two canonical figures, validation and manifests | 477,753 rows across 16,404 candidates, 2,620 cases and 5 methods; 262/262 checks; 6 canonical files | All 6 pilot paths and schemas retained; rows increased from 63,018 to 477,753 and candidates from 2,160 to 16,404; no artifact class or responsibility was lost | Approved Controlled-300 classical full-reference producer for downstream metric synthesis, spatial analysis, comparison, reporting and dashboard stages |
 | 14 LPIPS Metrics | `lpips_metrics.v1`, diagnostic distribution figure, validation and manifests | 31,608 rows across 16,404 candidates, 2,620 cases and 5 methods; 261/261 checks; 5 canonical files | All 5 pilot paths and schemas retained; rows increased from 4,170 to 31,608; 64 displaced pilot rows map exactly to Notebook 11's 32 approved contextual-candidate replacements | Approved Controlled-300 perceptual-distance producer for downstream comparison, robustness, failure, reporting and dashboard stages |
 | 15 Feature Similarity | `feature_metrics.v1`, reusable CLIP/DINOv2 embedding bundle and manifest, diagnostic figure, validation and manifests | 63,216 metric rows and 78,336 embeddings across 16,404 candidates, 2,620 cases and 5 methods; 247 checks; 0 blocking failures; 1 declared CUDA warning; 7 canonical files | All 7 pilot paths and table schemas retained; rows increased from 8,340 to 63,216 metrics and 10,700 to 78,336 embeddings; the approved N11 displacement, inherited N06 correction, and sub-micro CUDA variation fully explain shared-row differences | Approved Controlled-300 feature-evidence and reusable-embedding producer for downstream semantic, retrieval, comparison, reporting and dashboard stages; not a conservation-specific measure |
+| 16 Difference Maps and Spatial Diagnostics | `spatial_diagnostics.v1`, 76,020 candidate maps, 14 selected panels, map manifest, validation and manifests | 143,247 spatial rows across 16,404 candidates and 2,620 cases; 76,034 map-manifest rows; 137/137 checks; 76,039 canonical files | All 7 pilot artifact classes and CSV schemas retained; rows increased from 18,896 to 143,247 and candidate maps from 10,050 to 76,020; the 170 pilot-only paths are the approved N11 candidate displacement and reselected panels | Approved Controlled-300 spatial-evidence producer for downstream analysis and dashboard stages; bulk maps and metrics CSV await a dedicated direct-image producer repository |
+| 17 Local Consistency Metrics | `local_consistency.v1`, texture, colour and seam metrics, 27,912 candidate maps, 14 selected panels, summary figure, validation and manifests | 2,060,667 metric rows across 16,404 candidates and 2,620 cases; 27,926 map-manifest rows; 179/179 checks; 27,932 canonical files | All 3,282 pilot map-manifest paths and CSV schemas retained; rows increased from 271,988 to 2,060,667 and candidate maps from 3,270 to 27,912; rendered hashes changed under expanded-population global scales | Approved Controlled-300 local-consistency producer for downstream analysis and dashboard stages; bulk maps and metrics CSV await a separate direct-image producer repository |
 
 Notebook 01's final manifest records `controlled_300`, dataset version `2.0.0`,
 300 expected and observed artwork/image rows, 448 expected and observed audit

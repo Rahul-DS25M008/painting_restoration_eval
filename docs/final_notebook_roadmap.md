@@ -107,8 +107,38 @@ Controlled-300 rerun. Beginning with Notebook 12:
 The current `pilot-50` deployment remains unchanged while the scale-up is in
 progress. No already committed history is rewritten during the active rerun.
 External publication is not complete merely because an upload returns success:
-remote readability, checksum, byte count, stable identity, and recorded URI
-must all pass before any local or tracked artifact is removed.
+the remote LFS SHA-256 and byte count must match producer-validated evidence,
+with stable identity and a recorded URI. The prior public-read smoke test
+confirms transport; full collections are checked through remote metadata
+without downloading them again. Local canonical evidence is never deleted by
+the publication tooling.
+
+**Approved dashboard-first publication decision (2026-09-17).** Preserve
+individually addressable image files for all applicable images that may enter
+the Controlled-300 dashboard visual index. The pilot dashboard index included
+all 10,050 Notebook 16 candidate maps and all 3,270 Notebook 17 candidate
+maps, not merely a small selected gallery. Archiving those producer maps now
+would make case-level filters depend on an unapproved extraction service.
+Notebook 16's 76,020 maps and Notebook 17's 27,912 maps therefore remain
+separate files locally and at their public interactive locations. Use separate
+public Hugging Face dataset repositories for these two large producers; their
+exact repository IDs and revision must be entered into the publication
+registry before upload. The existing diagnostics repository retains its
+already verified Notebook 13 and 15 artifacts. The 100,000-files-per-repository
+figure is a recommendation, not a hard repository limit; the 10,000 entries
+per folder restriction must still be checked for each producer layout.
+
+This decision does not require the present pilot-50 deployment to change.
+Notebook 34 is the **first dashboard-asset-building notebook**. After Notebook
+33 and before refactoring Notebook 34 or its application helpers, pause for a
+separate, user-approved Controlled-300 dashboard contract review: page-by-page
+content and numerical evidence, complete visual-index scope, local/remote path
+resolution, available repositories, memory and network feasibility, lazy image
+loading, fallback behavior, and validation examples. Notebook 34 then builds
+the approved package; Notebook 35 validates the app and deployment behavior.
+Do not assume the pilot app's local-only image resolver will work on the
+lightweight Controlled-300 deployment. The final archive remains a separate
+post-freeze reproducibility release, not the interactive image backend.
 
 For every notebook that produces a standalone report, an explicitly approved
 chat mock is the binding report blueprint. The implemented report must retain the
@@ -204,7 +234,7 @@ individual run outside its range.
 | 14 — LPIPS metrics | 35–90 minutes; allow a 2-hour operational ceiling | Batched GPU perceptual inference over 31,608 compatible candidate-region rows. The 4,170-row pilot compute took 263.4 seconds; the active estimate scales that observation and allows extra disk, cache, and thermal overhead. |
 | 15 — Feature similarity | Observed extraction 1 h 44 m 31 s plus 3 m 20 s metric construction; planning range was 2–4 hours with a 6-hour ceiling | CLIP and DINOv2 extraction over 78,336 deduplicated embeddings dominated the run. The observed compute stayed below the planning range; the approximately 2 h 56 m wall-clock span includes model loading, persistence, validation, visualization, and user pauses between batches. |
 | 16 — Difference maps and spatial diagnostics | 36–72 hours | Dense numeric maps, rendered spatial panels, compression, and high-volume disk writes; expect a multi-session resumable run. |
-| 17 — Local consistency metrics | 24–48 hours | Texture, colour, seam, boundary, and directional evidence across compatible candidates and regions. |
+| 17 — Local consistency metrics | Observed 37 h 44 m elapsed wall span, including pauses; planned 24–48 hours | Texture, colour, seam, boundary, and directional evidence across compatible candidates and regions. Batch 7's two full image-manifest validation passes added substantial disk I/O after map generation. |
 | 18 — Diffusion uncertainty | 1–3 hours | Vectorized seed-group and pairwise scalar analysis using saved candidates and embeddings. |
 | 19 — Uncertainty and spatial explanation maps | 12–24 hours | Dense repeated-seed variability maps, overlays, and rendered heatmaps. |
 | 20 — Semantic and structural consistency | 18–30 hours | Local CLIP/DINOv2 grids, structural proxies, map archives, and selected rendered panels. |
@@ -1471,8 +1501,19 @@ notebook, and publication registry remain in the GitHub scientific record.
 
 **Notebook:** `16_difference_maps_and_spatial_diagnostics.ipynb`  
 **Origin:** Consolidates Existing Notebooks 10, 16, and 23  
+**Refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
+**Observed controlled-300 coverage:** 2,620 cases; 16,404 candidates across five methods; 15,204 nonzero candidates; 143,247 spatial-diagnostic rows; 76,020 candidate maps; 14 selected panels; 76,034 map-manifest rows\
 **Output root:** `outputs/16_difference_maps_and_spatial_diagnostics/`  
-**Depends on:** Notebooks 02 and 08–13
+**Depends on:** Notebooks 02 and 08–13, including Notebook 12A
+
+**Publication status:** Local completion is validated; direct-image publication
+and Git commit are pending. Publish all 76,020 map PNGs as individually
+addressable objects in a dedicated public Notebook 16 dataset repository,
+alongside the large metrics table. Retain original local paths and register
+the exact remote URI and checksum for each object. Do not archive the map
+collection before the Controlled-300 dashboard access contract is approved.
 
 ### Responsibilities
 
@@ -1509,8 +1550,21 @@ validation/checks.csv
 
 **Notebook:** `17_local_consistency_metrics.ipynb`  
 **Origin:** Existing Previous Version of Notebook 31, Pre-refactor, expanded with colour and seam requirements  
+**Refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
 **Output root:** `outputs/17_local_consistency_metrics/`  
-**Depends on:** Notebooks 08–12 and canonical regions
+**Depends on:** Notebooks 08–12A and canonical regions
+
+**Controlled-300 scaling status:** Local run complete and validated; external publication and Git commit pending.
+
+**Publication status:** Publish all 27,912 candidate-map PNGs as individually
+addressable objects in a separate public Notebook 17 dataset repository,
+alongside the large metrics table. The case-level dashboard must be able to
+resolve the exact selected colour, seam, or texture map without downloading
+a bulk archive. Reuse the existing project environment for publication.
+
+**Expected execution time:** Batch 4 metric computation is the dominant stage at approximately 18–22 hours on the validated local machine; Batch 5 map generation is expected to require approximately 11–14 hours. Both stages are checkpointed and resumable.
 
 ### Texture responsibilities
 
@@ -1572,6 +1626,25 @@ manifests/artifacts.csv
 validation/checks.csv
 ```
 
+### Controlled-300 execution contract
+
+- Evaluate 16,404 completed candidates across 2,620 unique cases: 2,620 each for OpenCV Telea, LaMa, HINT, and the primary Stable Diffusion comparison scope; additional Stable Diffusion prompt/seed candidates; and 24 completed SDXL feasibility candidates.
+- Retain numeric local-consistency evidence for 15,204 non-zero candidates and 1,200 zero controls.
+- Produce 2,060,667 normalized metric rows: 497,772 texture rows, 1,289,223 colour rows, and 273,672 seam rows.
+- Restrict canonical map generation to 9,304 non-zero primary candidates, yielding 27,912 candidate-map PNGs.
+- Render ten candidate-level review panels and four cross-model panels, yielding 27,926 final map-manifest rows.
+- Treat HINT as a full comparison method and retain SDXL as a bounded 24-completion result from its declared 35-case attempt.
+
+The completed run has 2,060,667 metric rows, 27,912 candidate maps, 14
+selected panels, 27,926 map-manifest rows, and 179/179 passing validation
+checks, with no temporary work files. All 3,282 pilot map-manifest paths are
+retained. Their presentation PNG hashes differ because the declared global
+texture, colour, and seam display scales were recomputed over the expanded
+candidate population; numeric measurements remain in the canonical CSV.
+Compared with the pilot, metric rows rose from 271,988 to 2,060,667 and
+candidate maps from 3,270 to 27,912. Bulk maps and the metrics CSV await the
+dedicated Notebook 17 direct-image dataset repository.
+
 ### Downstream consumers
 
 Notebooks 19–36.
@@ -1585,11 +1658,15 @@ Notebooks 19–36.
 **Output root:** `outputs/18_diffusion_uncertainty_analysis/`  
 **Depends on:** Notebooks 01, 02, 08, 11, 13–15, and 17; Notebook 12 for seed-coverage applicability
 
+**Controlled-300 scaling status:** Preparation complete; notebook execution pending.
+
+**Expected execution time:** Image-space computation and especially pairwise LPIPS over 780 groups are the dominant checkpointed stages. Use measured progress after the first 50 groups for an ETA rather than extrapolating the pilot runtime as a guarantee.
+
 ### Purpose
 
-Measure empirical repeated-seed variability for 130 prompt-specific Stable
-Diffusion groups: 80 generic and 50 scratch-aware groups across 80 canonical
-cases, with 520 candidates and 780 unique unordered seed pairs. Each group
+Measure empirical repeated-seed variability for 780 prompt-specific Stable
+Diffusion groups: 480 generic and 300 scratch-aware groups across 480 canonical
+cases, with 3,120 candidates and 4,680 unique unordered seed pairs. Each group
 contains exactly seeds 2026–2029 with a fixed case, prompt, and configuration.
 
 Notebook 22 owns the separate damage-size uncertainty population. SDXL has only
@@ -1609,11 +1686,18 @@ and synthetic-degradation cases do not acquire seed uncertainty by association.
 - Retain LPIPS, CLIP, and DINOv2 pairwise evidence only for contiguous content and mask-crop regions.
 - Retain transparent component metrics; no combined uncertainty index is constructed.
 - Summarize the eligible canonical population by damage type, realized damage fraction, category, prompt arm, and seed coverage without inferring independent style effects.
-- Prepare the 130-row calibration-input table by joining seed-level reference, perceptual, feature, texture, colour, and seam evidence. This is an association-ready table, not fitted confidence calibration.
+- Prepare the 780-row calibration-input table by joining seed-level reference, perceptual, feature, texture, colour, and seam evidence. This is an association-ready table, not fitted confidence calibration.
 - Leave semantic evidence and computational-flag associations to their downstream producers and consumers; Notebook 18 does not compute expert ratings or failure labels.
 - State that uncertainty is an empirical proxy, not calibrated confidence.
 - State that low uncertainty does not prove correctness.
 - For deterministic models, reserve “uncertainty” for diffusion; use robustness/sensitivity terminology elsewhere.
+
+### Controlled-300 execution contract
+
+- Use the 480 canonical cases that have complete four-seed Stable Diffusion coverage; keep generic and scratch-aware prompt groups separate.
+- Produce 9,360 per-group RGB-variability rows, 56,160 pairwise RGB rows, 9,360 pairwise LPIPS rows, 18,720 pairwise CLIP/DINOv2 rows, and 31,200 seed-reference rows: 124,800 normalized uncertainty-evidence rows total.
+- Keep the 35-case SDXL attempt and its 24 completions outside repeated-seed uncertainty because each completed case has only one seed.
+- Produce two canonical figures and no persisted heatmaps; Notebook 19 owns spatial uncertainty maps.
 
 ### Canonical outputs
 
@@ -2120,6 +2204,14 @@ manifests/run_manifest.json
 manifests/artifacts.csv
 validation/checks.csv
 ```
+
+The completed local run passed all 137 validation checks and left no temporary
+work files. Compared with the preserved Controlled-50 output copy, spatial
+rows increased from 18,896 to 143,247 and candidate maps from 10,050 to
+76,020. The 170 pilot-only map-manifest paths comprise 160 maps for the 32
+approved displaced Notebook 11 contextual candidates and ten reselected
+panels; no evidence family was lost. Bulk maps and the spatial-diagnostics
+table await the dedicated Notebook 16 direct-image dataset repository.
 
 The HTML report must be self-contained, provide the complete numerical coverage
 through owned tables, and use selected embedded panels to explain—not replace—the
@@ -2957,6 +3049,34 @@ painting, report, restoration, figure, and diagnostic image available from
 validated upstream artifacts. Filters and direct selection provide access to
 the complete indexed population.
 
+### Mandatory Controlled-300 dashboard approval gate before refactoring
+
+Do not edit Notebook 34, `streamlit_app.py`, or its dashboard helpers merely
+because Notebook 33 has finished. First inspect the completed upstream
+coverage and hold a dedicated design review with the user. Record and obtain
+approval for:
+
+- the exact evidence, metrics, plots, restorations, maps, reports, and
+  conclusions on each of the eight pages, including the numerical case view;
+- complete visual-index and filter coverage versus intentional presentation
+  defaults, with no silently missing model or damage slice;
+- the display path for each asset class: compact local deployment asset or
+  direct public producer-owned image URI, with a stable local-to-remote
+  registry mapping and no archive-only image required by an interactive view;
+- the observed image counts and bytes by producer, public-Hub availability,
+  dashboard memory/startup budget, latency, request behavior, and free-service
+  feasibility, measured where possible rather than assumed;
+- lazy loading and caching so a user selection fetches only its needed images,
+  never the whole map corpus on app startup;
+- explicit missing-asset, temporarily unavailable-Hub, and optional-model
+  behavior, plus a representative cross-model rendering test matrix; and
+- preservation of the approved pilot layout unless the user explicitly
+  approves a Controlled-300 change.
+
+Only after that approval may Notebook 34 package the assets and the
+application resolver be adapted. The existing pilot-50 branch and live app
+remain unchanged through this review.
+
 The dashboard consumes prepared assets and does not rerun experiments or
 reconstruct project state from arbitrary outputs.
 
@@ -3016,6 +3136,12 @@ roles without copying those images into the project.
 - Validate model availability handling.
 - Validate missing/optional SDXL behavior.
 - Validate figure and heatmap rendering references.
+- Validate that every approved visual-index path maps to an existing local
+  file or a remotely verified, individually addressable image, with model,
+  case, metric, and diagnostic-filter paths tested end to end.
+- Validate lazy retrieval and realistic deployed memory/startup behavior;
+  sample actual public image rendering across producer repositories without
+  redownloading the complete corpus.
 - Validate filter values and ID relationships.
 - Validate that the dashboard does not recompute scientific metrics.
 - Run safe import/static checks.

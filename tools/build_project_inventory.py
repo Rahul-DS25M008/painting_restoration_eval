@@ -623,7 +623,7 @@ def build_inventory(
 
     file_rows: list[dict[str, Any]] = []
     reused_file_count = 0
-    for path in iter_files(root, out_dir, skip_dirs):
+    for number, path in enumerate(iter_files(root, out_dir, skip_dirs), start=1):
         row = reuse_unchanged_row(path, root, run_id, reusable_rows)
         if row is None:
             row = inspect_file(
@@ -636,6 +636,13 @@ def build_inventory(
         else:
             reused_file_count += 1
         file_rows.append(row)
+        if number % 10_000 == 0:
+            print(
+                f"Inventory progress: {number:,} files indexed; "
+                f"{reused_file_count:,} reused; "
+                f"{perf_counter() - timer:.1f}s elapsed",
+                flush=True,
+            )
 
     file_rows.sort(key=lambda row: str(row["relative_path"]))
     atomic_write_csv(inventory_path, file_rows)

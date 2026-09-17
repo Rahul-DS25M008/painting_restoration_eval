@@ -59,3 +59,5 @@ docs/supervisor/Next_Steps.docx
 # The local file remains notebook-owned and authoritative.
 /outputs/13_classical_metrics/metrics/classical_metrics.csv
 /outputs/15_feature_similarity/data/embeddings.npz
+/outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv
+/outputs/17_local_consistency_metrics/metrics/local_consistency.csv
