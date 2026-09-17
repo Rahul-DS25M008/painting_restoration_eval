@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.11"
+config_version: "1.1.13"
 
 evidence_coverage:
   authority:
@@ -51,13 +51,14 @@ evidence_coverage:
   # Incremental transition ledger; update only after each notebook passes its
   # completion gate and read-only pilot-output comparison.
   controlled_300_rerun:
-    recorded_on: "2026-09-14"
+    recorded_on: "2026-09-17"
     recovery_tag: "pilot-50-complete"
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "15"
-    next_eligible_notebook_id: "16"
+    completed_through_notebook_id: "17"
+    next_eligible_notebook_id: "18"
+    new_bulk_publication_policy: "n16_verified_bundle_exception_n17_separate_user_controlled_release_other_bulk_deferred"
     completed_notebooks:
       - notebook_id: "01"
         stem: "01_dataset_verification"
@@ -732,6 +733,57 @@ evidence_coverage:
         external_publication_required: true
         external_publication_tier: "diagnostics"
         external_publication_artifact: "outputs/15_feature_similarity/data/embeddings.npz"
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "16"
+        stem: "16_difference_maps_and_spatial_diagnostics"
+        output_root: "outputs/16_difference_maps_and_spatial_diagnostics"
+        manifest_path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        metric_schema_version: "spatial_diagnostics.v1"
+        evaluated_case_rows: 2620
+        evaluated_candidate_rows: 16404
+        metric_rows: 143247
+        candidate_map_images: 76020
+        selected_panels: 14
+        map_manifest_rows: 76034
+        validation_rows: 137
+        artifact_records: 5
+        canonical_output_file_count: 76039
+        work_file_count_after_completion: 0
+        baseline_output_root: "E:/outputs/16_difference_maps_and_spatial_diagnostics"
+        baseline_metric_rows: 18896
+        baseline_candidate_map_images: 10050
+        baseline_artifact_paths_and_schemas_preserved: true
+        publication_status: "complete_local_and_full_bundle_remote_verified"
+        publication_record: "outputs/inventory/bundled_publication_n16_full.json"
+        remote_revision: "8c22aa62c5be60d8a15c9c00d9bc9a6f81557b79"
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "17"
+        stem: "17_local_consistency_metrics"
+        output_root: "outputs/17_local_consistency_metrics"
+        manifest_path: "outputs/17_local_consistency_metrics/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        metric_schema_version: "local_consistency.v1"
+        evaluated_case_rows: 2620
+        evaluated_candidate_rows: 16404
+        metric_rows: 2060667
+        candidate_map_images: 27912
+        selected_panels: 14
+        map_manifest_rows: 27926
+        validation_rows: 179
+        artifact_records: 6
+        canonical_output_file_count: 27932
+        work_file_count_after_completion: 0
+        baseline_output_root: "E:/outputs/17_local_consistency_metrics"
+        baseline_metric_rows: 271988
+        baseline_candidate_map_images: 3270
+        baseline_artifact_paths_and_schemas_preserved: true
+        publication_status: "complete_local_only"
+        bulk_publication_deferred_until: "pre_notebook_34_storage_review"
         unexplained_missing_or_reduced_evidence: false
 
   frozen_baseline:

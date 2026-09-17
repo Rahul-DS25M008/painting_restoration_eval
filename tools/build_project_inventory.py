@@ -49,6 +49,7 @@ NOTEBOOK_EXTENSIONS = {".ipynb"}
 
 DEFAULT_SKIP_DIRS = {
     ".git",
+    ".codex_tmp",
     ".ipynb_checkpoints",
     "__pycache__",
     ".pytest_cache",

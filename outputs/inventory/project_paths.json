@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-14T17:27:50.023792Z",
+  "updated_at_utc": "2026-09-16T22:29:20.110549Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -1437,12 +1437,12 @@
       "artifact_type": "image_collection",
       "artifact_role": "reusable_local_consistency_maps",
       "schema_version": "local_consistency_map_renderer.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_model_local_consistency",
       "validation_status": "passed",
-      "row_count": 3270,
-      "file_count": 3270,
-      "checksum": "3208e4a4c21b3bcd0373336abb95cf274831984ed688df96c38c57b9239d5c9c"
+      "row_count": 27912,
+      "file_count": 27912,
+      "checksum": "285926193a5644400071f279b093bb4fd6c0734d98948e927e0c59b756ae50c6"
     },
     {
       "artifact_key": "local_consistency.map_manifest",
@@ -1451,12 +1451,12 @@
       "artifact_type": "table",
       "artifact_role": "normalized_local_consistency_image_index",
       "schema_version": "local_consistency_map_images.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_model_local_consistency",
       "validation_status": "passed",
-      "row_count": 3282,
+      "row_count": 27926,
       "file_count": 1,
-      "checksum": "e62db622f9b4c0716f6693cd385fde19034215e26721f5d02a65ff9bd16c71da"
+      "checksum": "52dd899caa45169caf0412920cf54a42e2a5c30fe3a6fc16d69c76b4532876c2"
     },
     {
       "artifact_key": "local_consistency.metrics",
@@ -1465,12 +1465,12 @@
       "artifact_type": "table",
       "artifact_role": "primary_downstream_evidence",
       "schema_version": "local_consistency.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_model_local_consistency",
       "validation_status": "passed",
-      "row_count": 271988,
+      "row_count": 2060667,
       "file_count": 1,
-      "checksum": "a0fd95fbddd0e70ac89507241cf4794217d1f27bd75d6b0e474fbc93154a9bd8"
+      "checksum": "662dd76152d26a3b6e317067ac49d33eaca249bf724bbd44203c579d5fc44ecf"
     },
     {
       "artifact_key": "local_consistency.selected_panels",
@@ -1479,12 +1479,12 @@
       "artifact_type": "figure_collection",
       "artifact_role": "deterministic_human_review_figures",
       "schema_version": "local_consistency_map_renderer.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_model_local_consistency",
       "validation_status": "passed",
-      "row_count": 12,
-      "file_count": 12,
-      "checksum": "16fe653ab4803d4c8c7fc3979fe45cf9ebca82ee8f4e14de47c3fbd3d822a0ba"
+      "row_count": 14,
+      "file_count": 14,
+      "checksum": "41161e771b718ba30b0b315e601e45e6684d447795219dc3ded4b63586de4aa1"
     },
     {
       "artifact_key": "local_consistency.summary_figure",
@@ -1493,12 +1493,12 @@
       "artifact_type": "figure",
       "artifact_role": "thesis_facing_summary",
       "schema_version": "local_consistency_map_renderer.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_model_local_consistency",
       "validation_status": "passed",
       "row_count": 1,
       "file_count": 1,
-      "checksum": "74cb4c422e60d711a904c47b861a0b4844728fb86118979d7429e3c182e963df"
+      "checksum": "5c4190c4c6d9c88d4c88ed12f07f7a27a27276bf31835bd702a348f0d8af3a27"
     },
     {
       "artifact_key": "lpips_metrics.distributions",
@@ -2277,12 +2277,12 @@
       "artifact_type": "image_collection",
       "artifact_role": "reusable_spatial_map_evidence",
       "schema_version": "spatial_map_renderer.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_model_spatial_diagnostics",
       "validation_status": "passed",
-      "row_count": 10050,
-      "file_count": 10050,
-      "checksum": "71fbf50f5b688b9cfd93e3dead3e8f4e272482dfbca2740e855d232ca0e63c7d"
+      "row_count": 76020,
+      "file_count": 76020,
+      "checksum": "7d317392a163475e9e36e03fabac6f39ae7ea4e96d8a408755a1da6fd439397b"
     },
     {
       "artifact_key": "spatial_diagnostics.map_manifest",
@@ -2291,12 +2291,12 @@
       "artifact_type": "table",
       "artifact_role": "normalized_spatial_image_index",
       "schema_version": "spatial_map_images.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_model_spatial_diagnostics",
       "validation_status": "passed",
-      "row_count": 10062,
+      "row_count": 76034,
       "file_count": 1,
-      "checksum": "ba59e4ff46ea5c91639168a1522b50e64f851d504e1678754753083f8a035576"
+      "checksum": "e2e9c519e975b99e673da0963a6c466ae4a61be4cbaa71b154ebb4ce2aca3841"
     },
     {
       "artifact_key": "spatial_diagnostics.metrics",
@@ -2305,12 +2305,12 @@
       "artifact_type": "table",
       "artifact_role": "primary_downstream_evidence",
       "schema_version": "spatial_diagnostics.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_model_spatial_diagnostics",
       "validation_status": "passed",
-      "row_count": 18896,
+      "row_count": 143247,
       "file_count": 1,
-      "checksum": "186102d774fc0503ecf7a071d4b9fdd5820fe5129caa4339fb26ef9231c5238d"
+      "checksum": "7f8155aaee2b4eaaad7cba004bf28f38500fc45c4f3690ea60d65f3de04badab"
     },
     {
       "artifact_key": "spatial_diagnostics.selected_panels",
@@ -2319,12 +2319,12 @@
       "artifact_type": "figure_collection",
       "artifact_role": "human_review_figures",
       "schema_version": "spatial_map_renderer.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_model_spatial_diagnostics",
       "validation_status": "passed",
-      "row_count": 12,
-      "file_count": 12,
-      "checksum": "38c102c25f76bd7402ddd2583596024c5db7608d11f8c3d115dbcd6773032a75"
+      "row_count": 14,
+      "file_count": 14,
+      "checksum": "15dee9110e50368faeb835d4e6a37f6410ddcf008cfc44d7159cb4b13e619e87"
     },
     {
       "artifact_key": "spatial_explanations.integrated_local_images",
@@ -3075,12 +3075,12 @@
       "artifact_type": "validation_table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_model_spatial_diagnostics",
       "validation_status": "passed",
-      "row_count": 134,
+      "row_count": 137,
       "file_count": 1,
-      "checksum": "2204cca3ac9bd040eafe08df3fe6340d1ab4b7baea4b9388f083f4e547cc5e37"
+      "checksum": "ac95a80a05877d264b1c408ddd6e64848c5db4c50e19e96016d21965e59d1716"
     },
     {
       "artifact_key": "validation.17_local_consistency_metrics",
@@ -3089,12 +3089,12 @@
       "artifact_type": "validation_table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_model_local_consistency",
       "validation_status": "passed",
-      "row_count": 176,
+      "row_count": 179,
       "file_count": 1,
-      "checksum": "bd50b7dbcb90193d9c2e5a863551d260b5b388d5e7356a0307c7aa16d0ad8146"
+      "checksum": "84799a2f41799feb884937981a6c632204d7233a04bf79b21de9f3e345f76d84"
     },
     {
       "artifact_key": "validation.18_diffusion_uncertainty_analysis",

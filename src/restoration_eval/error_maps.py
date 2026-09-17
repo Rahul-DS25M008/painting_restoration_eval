@@ -12,6 +12,7 @@ import hashlib
 import os
 import time
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
 
@@ -34,7 +35,7 @@ from .schemas import (
 
 
 ERROR_MAP_MODULE_NAME = "restoration_eval.error_maps"
-ERROR_MAP_VERSION = "4.0.1"
+ERROR_MAP_VERSION = "4.1.0"
 SPATIAL_DIAGNOSTIC_VERSION = "spatial_diagnostics.v1"
 SPATIAL_MAP_MANIFEST_VERSION = "spatial_map_images.v1"
 SPATIAL_MAP_RENDERER_VERSION = "spatial_map_renderer.v1"
@@ -169,24 +170,40 @@ def _row_value(row: Mapping[str, Any] | pd.Series, key: str, default: Any = "") 
     return row.get(key, default)
 
 
-def load_rgb_array(path: str | Path, project_root: str | Path) -> np.ndarray:
-    """Load an RGB image as float32 values in [0, 255]."""
+@lru_cache(maxsize=16)
+def _load_rgb_array_cached(resolved_path: str) -> np.ndarray:
+    resolved = Path(resolved_path)
+    with Image.open(resolved) as image:
+        array = np.array(image.convert("RGB"), dtype=np.float32, copy=True)
+    array.setflags(write=False)
+    return array
 
-    resolved = resolve_path(path, project_root)
+
+def load_rgb_array(path: str | Path, project_root: str | Path) -> np.ndarray:
+    """Load an RGB image as float32 values in [0, 255] with a bounded cache."""
+
+    resolved = resolve_path(path, project_root).resolve()
     if not resolved.is_file():
         raise FileNotFoundError(f"RGB image not found: {resolved}")
+    return _load_rgb_array_cached(str(resolved))
+
+
+@lru_cache(maxsize=16)
+def _load_mask_array_cached(resolved_path: str) -> np.ndarray:
+    resolved = Path(resolved_path)
     with Image.open(resolved) as image:
-        return np.asarray(image.convert("RGB"), dtype=np.float32)
+        array = np.array(image.convert("L"), dtype=np.uint8, copy=True)
+    array.setflags(write=False)
+    return array
 
 
 def load_mask_array(path: str | Path, project_root: str | Path) -> np.ndarray:
-    """Load the original grayscale mask/effect values without threshold loss."""
+    """Load grayscale mask/effect values with a bounded read-only cache."""
 
-    resolved = resolve_path(path, project_root)
+    resolved = resolve_path(path, project_root).resolve()
     if not resolved.is_file():
         raise FileNotFoundError(f"Mask/effect image not found: {resolved}")
-    with Image.open(resolved) as image:
-        return np.asarray(image.convert("L"), dtype=np.uint8)
+    return _load_mask_array_cached(str(resolved))
 
 
 def load_candidate_arrays(
@@ -799,17 +816,15 @@ def run_spatial_diagnostics(
     reused = len(completed_ids)
     total = len(worklist)
     interval = int(config["execution"]["checkpoint_interval_candidates"])
+    pending_diagnostics: list[pd.DataFrame] = []
+    pending_map_rows: list[pd.DataFrame] = []
     for number, (_, row) in enumerate(worklist.iterrows(), start=1):
         candidate_id = str(row["candidate_id"])
         if candidate_id not in completed_ids:
             result = compute_candidate_spatial_diagnostics(
                 row, project_root=project_root, config=config
             )
-            diagnostics = (
-                result.diagnostics.copy()
-                if diagnostics.empty
-                else pd.concat([diagnostics, result.diagnostics], ignore_index=True)
-            )
+            pending_diagnostics.append(result.diagnostics)
             if not bool(row["is_zero_control"]):
                 map_rows = save_candidate_map_assets(
                     row,
@@ -819,13 +834,21 @@ def run_spatial_diagnostics(
                     project_root=project_root,
                     config=config,
                 )
-                manifest = (
-                    map_rows.copy()
-                    if manifest.empty
-                    else pd.concat([manifest, map_rows], ignore_index=True)
-                )
+                pending_map_rows.append(map_rows)
             completed_ids.add(candidate_id)
         if number % interval == 0 or number == total:
+            if pending_diagnostics:
+                diagnostics = pd.concat(
+                    [diagnostics, *pending_diagnostics],
+                    ignore_index=True,
+                )
+                pending_diagnostics.clear()
+            if pending_map_rows:
+                manifest = pd.concat(
+                    [manifest, *pending_map_rows],
+                    ignore_index=True,
+                )
+                pending_map_rows.clear()
             diagnostics = diagnostics.drop_duplicates(
                 "spatial_diagnostic_id", keep="last"
             ).loc[:, SPATIAL_DIAGNOSTICS_COLUMNS]

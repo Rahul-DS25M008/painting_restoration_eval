@@ -1,5 +1,5 @@
 config_schema_version: "spatial_diagnostics_config.v1"
-config_version: "1.0.1"
+config_version: "1.1.1"
 
 spatial_diagnostics:
   notebook_id: "16"
@@ -45,6 +45,11 @@ spatial_diagnostics:
         path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
         run_manifest_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
         schema_version: "sdxl_partial_candidates.v1"
+      - source_table_id: "notebook_12a_hint"
+        model_id: "hint_places2"
+        path: "outputs/12a_hint_restoration/data/restorations.csv"
+        run_manifest_path: "outputs/12a_hint_restoration/manifests/run_manifest.json"
+        schema_version: "restorations.v1"
 
   output:
     root: "outputs/16_difference_maps_and_spatial_diagnostics"
@@ -127,16 +132,16 @@ spatial_diagnostics:
 
   execution:
     progress_interval_candidates: 10
-    checkpoint_interval_candidates: 10
+    checkpoint_interval_candidates: 100
     resume_policy: "reuse only candidates with complete diagnostics and all expected non-zero map assets"
     checkpoint_policy: "notebook-owned temporary work files removed after completion"
     map_id_policy: "spm_ plus first 16 hexadecimal characters of sha256(candidate_id)"
     maximum_map_filename_characters: 40
 
   representative_panels:
-    candidate_panel_count: 8
+    candidate_panel_count: 10
     cross_model_panel_count: 4
-    total_panel_count: 12
+    total_panel_count: 14
     primary_comparison_execution_roles: ["primary"]
     candidate_roles:
       - "model_median_masked_improvement"
@@ -158,38 +163,51 @@ spatial_diagnostics:
     qa_indicators_are_final_flags: false
 
   expected_counts:
-    case_registry_rows: 525
-    evaluated_unique_cases: 410
-    evaluated_candidates: 2160
-    nonzero_candidates: 2010
-    zero_control_cases: 50
-    zero_control_candidates: 150
-    synthetic_degradation_candidates: 356
-    active_threshold_13_candidates: 356
-    active_threshold_128_candidates: 1804
-    spatial_diagnostic_rows: 18896
+    preprocessed_images_rows: 300
+    case_registry_rows: 3425
+    model_eligibility_rows: 17125
+    region_policy_rows: 143
+    contracts_artifact_rows: 7
+    classical_metric_rows: 477753
+    evaluated_unique_cases: 2620
+    evaluated_candidates: 16404
+    excluded_candidates: 11
+    nonzero_candidates: 15204
+    zero_control_cases: 300
+    zero_control_candidates: 1200
+    synthetic_degradation_candidates: 2811
+    active_threshold_13_candidates: 2811
+    active_threshold_128_candidates: 13593
+    spatial_diagnostic_rows: 143247
     diagnostic_rows_by_region:
-      full_image: 2160
-      content_region: 2160
-      masked_region: 2010
-      mask_bbox_crop: 2010
-      inner_boundary_band: 2010
-      outer_boundary_band: 2010
-      boundary_ring: 2010
-      outside_mask_content: 2160
-      outside_boundary_ring: 2010
-      degradation_support: 356
+      full_image: 16404
+      content_region: 16404
+      masked_region: 15204
+      mask_bbox_crop: 15204
+      inner_boundary_band: 15204
+      outer_boundary_band: 15204
+      boundary_ring: 15204
+      outside_mask_content: 16404
+      outside_boundary_ring: 15204
+      degradation_support: 2811
     candidate_maps_per_nonzero_candidate: 5
-    candidate_map_images: 10050
-    selected_candidate_panels: 8
+    candidate_map_images: 76020
+    selected_candidate_panels: 10
     selected_cross_model_panels: 4
-    selected_panels_total: 12
-    map_manifest_rows: 10062
+    selected_panels_total: 14
+    map_manifest_rows: 76034
     candidates_by_model:
-      opencv_telea: 410
-      lama: 410
-      stable_diffusion_inpainting: 1330
-      sdxl_inpainting: 10
+      opencv_telea: 2620
+      lama: 2620
+      hint_places2: 2620
+      stable_diffusion_inpainting: 8520
+      sdxl_inpainting: 24
+    source_rows_by_model:
+      opencv_telea: 2620
+      lama: 2620
+      hint_places2: 2620
+      stable_diffusion_inpainting: 8520
+      sdxl_inpainting: 35
 
   known_limitations:
     - "Absolute-error and signed-improvement maps are pixel-aligned descriptive evidence, not perceptual, semantic, conservation, or historical-validity measures."
@@ -197,5 +215,6 @@ spatial_diagnostics:
     - "Standardized PNG rendering clips visual extremes at documented percentiles; canonical CSV summaries retain unclipped numerical statistics."
     - "Indexed PNG maps are visualization assets and do not replace source-resolution floating-point computation."
     - "Stable Diffusion prompt and seed candidates are repeated candidate-level observations, not independent paintings."
-    - "SDXL is a predeclared technically validated ten-case partial scope and must not be presented as full-dataset coverage."
+    - "HINT contributes one deterministic primary candidate for every one of the 2,620 restoration-eligible controlled-300 cases."
+    - "SDXL contributes 24 technically validated completions from the predeclared 35-case bounded feasibility attempt; ten budget skips and one timeout remain explicit exclusions, not quality failures."
     - "Zero controls remain in canonical diagnostics but redundant all-zero map images are intentionally omitted."

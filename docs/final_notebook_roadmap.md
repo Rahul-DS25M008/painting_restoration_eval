@@ -85,24 +85,48 @@ validation/checks.csv
 
 ### 2.1 Controlled-300 storage and publication overlay
 
+**Bundle-access proof approved 2026-09-17:** a narrowly bounded N16 smoke may
+test whether the complete original image bytes can be retrieved individually
+from immutable, indexed, uncompressed ZIP members in the existing diagnostics
+dataset. This does not reopen N16 science, publish all N16/N17 assets, change
+the live pilot dashboard, or remove the pre-N34 storage and dashboard review.
+Full N16 publication passed its separate user-controlled gate on 2026-09-17;
+its Git handoff and the later full N17 publication remain distinct gates.
+Successful smoke records belong in
+`outputs/inventory/`, separately from the legacy direct-file registry.
+The N16 proof passed with 76 exact-byte public image reads, three ZIPs, and
+eight remote objects at immutable revision
+`02ba1d971ffdf9e855f07e5266bba18cac71b929`. The isolated test prefix was
+then removed from the current diagnostics branch; only the audit record
+remains. The smoke itself was transport evidence, not the full publication.
+
+**Full N16 release verified 2026-09-17:** 76,034 original images (76,020
+candidate maps and 14 selected panels) are indexed in 333 immutable ZIP
+bundles. All 641 objects, 2,625,210,541 published bytes, and four public
+sample image reads passed remote checks at pinned diagnostics revision
+`8c22aa62c5be60d8a15c9c00d9bc9a6f81557b79`. The separate release record
+is `outputs/inventory/bundled_publication_n16_full.json`. Local canonical
+outputs remain authoritative. N17 remains a separately approved, not-yet-
+published release; neither release changes the pre-N34 dashboard review.
+
 The scientific output contract and the Git publication contract are now
 separate. Every notebook still generates, validates, reloads, visually inspects,
 and inventories its complete canonical output tree locally. GitHub retains the
-compact scientific record; bulk generated media is published through verified
-external locations after the external publication layer is configured.
+compact scientific record. Except for the approved indexed-bundle N16 release
+and the separate user-controlled N17 gate, new bulk publication is paused
+while the Controlled-300 pipeline is completed locally through Notebook 33.
 
 Notebooks 01--11 are the final approved full-output Git/LFS checkpoint for the
 Controlled-300 rerun. Beginning with Notebook 12:
 
 - GitHub retains notebook source, helpers, configuration, compact evidence
   tables, validation, manifests, selected figures, and external-asset indexes;
-- a public interactive evidence store provides lazy, case-level access to bulk
-  restorations and diagnostic media;
-- the final full-resolution evidence corpus is packaged into a versioned Zenodo
-  archival release after Notebook 36 and all extension gates are frozen; and
-- the final Controlled-300 Streamlit application is delivered from a separate
-  lightweight deployment repository rather than from the complete scientific
-  output tree.
+- already verified N12/N12A/N13/N15 objects retain their publication records,
+  and N16's complete indexed-bundle release has its own verified record;
+- storage and archival options are reassessed after N33, rather than assumed
+  from the earlier Hugging Face plan; and
+- the final Controlled-300 Streamlit packaging and deployment approach is
+  approved only after storage feasibility and dashboard scope are reviewed.
 
 The current `pilot-50` deployment remains unchanged while the scale-up is in
 progress. No already committed history is rewritten during the active rerun.
@@ -113,29 +137,27 @@ confirms transport; full collections are checked through remote metadata
 without downloading them again. Local canonical evidence is never deleted by
 the publication tooling.
 
-**Approved dashboard-first publication decision (2026-09-17).** Preserve
-individually addressable image files for all applicable images that may enter
-the Controlled-300 dashboard visual index. The pilot dashboard index included
-all 10,050 Notebook 16 candidate maps and all 3,270 Notebook 17 candidate
-maps, not merely a small selected gallery. Archiving those producer maps now
-would make case-level filters depend on an unapproved extraction service.
-Notebook 16's 76,020 maps and Notebook 17's 27,912 maps therefore remain
-separate files locally and at their public interactive locations. Use separate
-public Hugging Face dataset repositories for these two large producers; their
-exact repository IDs and revision must be entered into the publication
-registry before upload. The existing diagnostics repository retains its
-already verified Notebook 13 and 15 artifacts. The 100,000-files-per-repository
-figure is a recommendation, not a hard repository limit; the 10,000 entries
-per folder restriction must still be checked for each producer layout.
+**Revised local-first decision (2026-09-17).** The pilot dashboard index
+included all 10,050 Notebook 16 candidate maps and all 3,270 Notebook 17
+candidate maps. Preserve equivalent complete case-level access as a design
+requirement, but do not assume a storage provider or upload representation
+before the pre-N34 review. Notebook 16's 76,020 maps and Notebook 17's 27,912
+maps remain individually accessible by local manifest paths. An attempted
+per-file Hugging Face dataset upload for N16 hit the free-account API rate
+limit; its partial remote repository was removed by the user and the local
+upload cache was cleared. That failed per-file attempt is superseded by the
+separately verified full N16 bundle release; no N17 publication is yet claimed.
+Previously verified N12–N15 records remain valid.
 
 This decision does not require the present pilot-50 deployment to change.
 Notebook 34 is the **first dashboard-asset-building notebook**. After Notebook
-33 and before refactoring Notebook 34 or its application helpers, pause for a
-separate, user-approved Controlled-300 dashboard contract review: page-by-page
-content and numerical evidence, complete visual-index scope, local/remote path
-resolution, available repositories, memory and network feasibility, lazy image
-loading, fallback behavior, and validation examples. Notebook 34 then builds
-the approved package; Notebook 35 validates the app and deployment behavior.
+33 and before refactoring Notebook 34 or its application helpers, pause first
+for a user-approved storage-options and feasibility review, then for a separate
+Controlled-300 dashboard contract review: page-by-page content and numerical
+evidence, complete visual-index scope, local/remote path resolution, memory
+and network feasibility, lazy image loading, fallback behavior, and validation
+examples. Notebook 34 then builds the approved package; Notebook 35 validates
+the app and deployment behavior.
 Do not assume the pilot app's local-only image resolver will work on the
 lightweight Controlled-300 deployment. The final archive remains a separate
 post-freeze reproducibility release, not the interactive image backend.
@@ -1508,12 +1530,12 @@ notebook, and publication registry remain in the GitHub scientific record.
 **Output root:** `outputs/16_difference_maps_and_spatial_diagnostics/`  
 **Depends on:** Notebooks 02 and 08–13, including Notebook 12A
 
-**Publication status:** Local completion is validated; direct-image publication
-and Git commit are pending. Publish all 76,020 map PNGs as individually
-addressable objects in a dedicated public Notebook 16 dataset repository,
-alongside the large metrics table. Retain original local paths and register
-the exact remote URI and checksum for each object. Do not archive the map
-collection before the Controlled-300 dashboard access contract is approved.
+**Publication status:** Local completion is validated, and the separately
+approved full indexed-bundle N16 release is remotely verified at the pinned
+revision and record named in Section 2.1. All maps and the large metrics table
+remain locally canonical; the compact Git record is a separate handoff. Storage
+and dashboard access are still reassessed after N33 and before N34. Do not
+delete the local map collection.
 
 ### Responsibilities
 
@@ -1556,13 +1578,13 @@ validation/checks.csv
 **Output root:** `outputs/17_local_consistency_metrics/`  
 **Depends on:** Notebooks 08–12A and canonical regions
 
-**Controlled-300 scaling status:** Local run complete and validated; external publication and Git commit pending.
+**Controlled-300 scaling status:** Local run complete and validated; compact Git commit pending. Bulk evidence remains local.
 
-**Publication status:** Publish all 27,912 candidate-map PNGs as individually
-addressable objects in a separate public Notebook 17 dataset repository,
-alongside the large metrics table. The case-level dashboard must be able to
-resolve the exact selected colour, seam, or texture map without downloading
-a bulk archive. Reuse the existing project environment for publication.
+**Publication status:** Keep all 27,912 candidate-map PNGs and the large
+metrics table locally under Notebook 17 ownership. Selectable case-level
+colour, seam, and texture evidence remains a requirement for the later
+dashboard; its storage and retrieval mechanism is decided after N33 and
+before N34, not assumed to be a particular provider or archive format.
 
 **Expected execution time:** Batch 4 metric computation is the dominant stage at approximately 18–22 hours on the validated local machine; Batch 5 map generation is expected to require approximately 11–14 hours. Both stages are checkpointed and resumable.
 
@@ -1642,8 +1664,8 @@ retained. Their presentation PNG hashes differ because the declared global
 texture, colour, and seam display scales were recomputed over the expanded
 candidate population; numeric measurements remain in the canonical CSV.
 Compared with the pilot, metric rows rose from 271,988 to 2,060,667 and
-candidate maps from 3,270 to 27,912. Bulk maps and the metrics CSV await the
-dedicated Notebook 17 direct-image dataset repository.
+candidate maps from 3,270 to 27,912. Bulk maps and the metrics CSV remain
+local pending the pre-N34 storage review.
 
 ### Downstream consumers
 
@@ -2211,7 +2233,8 @@ rows increased from 18,896 to 143,247 and candidate maps from 10,050 to
 76,020. The 170 pilot-only map-manifest paths comprise 160 maps for the 32
 approved displaced Notebook 11 contextual candidates and ten reselected
 panels; no evidence family was lost. Bulk maps and the spatial-diagnostics
-table await the dedicated Notebook 16 direct-image dataset repository.
+table remain local pending the pre-N34 storage review; no external publication
+is currently claimed.
 
 The HTML report must be self-contained, provide the complete numerical coverage
 through owned tables, and use selected embedded panels to explain—not replace—the
@@ -3053,22 +3076,21 @@ the complete indexed population.
 
 Do not edit Notebook 34, `streamlit_app.py`, or its dashboard helpers merely
 because Notebook 33 has finished. First inspect the completed upstream
-coverage and hold a dedicated design review with the user. Record and obtain
-approval for:
+coverage and obtain a storage/access decision; then hold a dedicated dashboard
+design review with the user. Record and obtain approval for:
 
 - the exact evidence, metrics, plots, restorations, maps, reports, and
   conclusions on each of the eight pages, including the numerical case view;
 - complete visual-index and filter coverage versus intentional presentation
   defaults, with no silently missing model or damage slice;
-- the display path for each asset class: compact local deployment asset or
-  direct public producer-owned image URI, with a stable local-to-remote
-  registry mapping and no archive-only image required by an interactive view;
-- the observed image counts and bytes by producer, public-Hub availability,
+- a separately approved storage option and display path for each asset class,
+  with a stable local-to-remote mapping and complete case-level access;
+- the observed image counts and bytes by producer, storage-provider limits,
   dashboard memory/startup budget, latency, request behavior, and free-service
   feasibility, measured where possible rather than assumed;
 - lazy loading and caching so a user selection fetches only its needed images,
   never the whole map corpus on app startup;
-- explicit missing-asset, temporarily unavailable-Hub, and optional-model
+- explicit missing-asset, temporarily unavailable-storage, and optional-model
   behavior, plus a representative cross-model rendering test matrix; and
 - preservation of the approved pilot layout unless the user explicitly
   approves a Controlled-300 change.
@@ -3602,10 +3624,11 @@ For each numbered notebook:
    blocks completion;
 8. update governing audits and inventory only after the new gate and baseline
    comparison pass; and
-9. commit the notebook, compact scientific evidence, and verified publication
-   records before moving downstream; beginning with Notebook 12, complete bulk
-   media remains locally canonical and may be externally published instead of
-   being added as another Git/LFS population.
+9. commit the notebook and compact scientific evidence before moving
+   downstream; beginning with Notebook 12, complete bulk media and oversized
+   tables remain locally canonical. The separately approved N16 indexed-bundle
+   release and N17 release gate are exceptions; other new external publication
+   waits for the post-N33 storage review and explicit user approval.
 
 `E:/outputs/` is an external read-only comparison snapshot, not a pipeline input
 or a second active output root. The `pilot-50-complete` Git tag remains the

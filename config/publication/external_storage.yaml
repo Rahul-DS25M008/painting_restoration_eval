@@ -8,12 +8,36 @@ policy:
   local_outputs_remain_canonical: true
   rewrite_existing_git_history: false
   remove_local_after_upload: false
+  controlled_300_new_bulk_publication: n16_full_verified_n17_user_controlled_exception_other_bulk_deferred
+  storage_review_after_notebook: 33
+  dashboard_approval_after_storage_review: true
+  proposed_bundle_transport_smoke_2026_09_17:
+    status: n16_bounded_smoke_passed_test_objects_removed_full_release_verified
+    interpretation: individually_retrievable_exact_image_bytes_via_indexed_zip_member
+    repository: RahulMaddineni264/painting-restoration-eval-diagnostics
+    prefix: publication_tests/bundled_assets/n16/
+    maximum_bundles: 4
+    maximum_bundle_bytes: 134217728
+    full_n16_and_n17_require_separate_approval: true
+    pre_n34_dashboard_review_gate_unchanged: true
+    smoke_record: outputs/inventory/bundled_publication_n16_smoke.json
+  approved_indexed_bundle_releases:
+    n16:
+      status: full_remote_verified
+      record: outputs/inventory/bundled_publication_n16_full.json
+      repository: RahulMaddineni264/painting-restoration-eval-diagnostics
+      revision: 8c22aa62c5be60d8a15c9c00d9bc9a6f81557b79
+      release_prefix: bundled_assets/v1/controlled_300/16_difference_maps_and_spatial_diagnostics/a6377b18f9cef060
+      asset_count: 76034
+      remote_object_count: 641
+    n17:
+      status: planned_for_separate_user_controlled_release_not_uploaded
 
 interactive_store:
   provider: huggingface_dataset
   visibility: public
   revision: main
-  status: notebook_scoped_bulk_publication_enabled
+  status: existing_n12_n15_and_n16_bundle_verified_n17_release_pending
   smoke_test:
     verified_at_utc: "2026-09-12T22:40:44Z"
     verified_file_count: 2

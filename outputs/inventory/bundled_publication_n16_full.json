@@ -1,0 +1,28 @@
+{
+  "asset_count": 76034,
+  "bundle_bytes": 2351039109,
+  "bundle_count": 333,
+  "object_count": 641,
+  "prefix": "bundled_assets/v1/controlled_300/16_difference_maps_and_spatial_diagnostics/a6377b18f9cef060",
+  "producer": "16_difference_maps_and_spatial_diagnostics",
+  "public_sample_asset_count": 4,
+  "public_sample_downloaded_bytes": 38620216,
+  "public_sample_downloaded_objects": 7,
+  "public_sample_seconds": 7.56,
+  "release_id": "a6377b18f9cef060",
+  "remote_verification_methods": {
+    "lfs_sha256": 337,
+    "public_read_sha256": 304
+  },
+  "remote_verification_seconds": 117.36,
+  "remote_verified_bytes": 2625210541,
+  "remote_verified_object_count": 641,
+  "repo_id": "RahulMaddineni264/painting-restoration-eval-diagnostics",
+  "revision": "8c22aa62c5be60d8a15c9c00d9bc9a6f81557b79",
+  "schema_version": "bundle_assets.v1",
+  "source_manifest_sha256": "e2e9c519e975b99e673da0963a6c466ae4a61be4cbaa71b154ebb4ce2aca3841",
+  "source_run_id": "run_99b0d8d1af1b43bd8e8cb3d6ae754868",
+  "status": "full_remote_verified",
+  "uploaded_bytes": 2625210541,
+  "uploaded_object_count": 641
+}

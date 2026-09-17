@@ -889,12 +889,12 @@ checksums, limitations, and downstream eligibility.
 | 13 Classical Metrics | Finished | Finished | Yes | 477,753 rows for 16,404 candidates across five methods and 2,620 cases; 262/262 validation checks; 6 canonical files; 28,705.153-second execution | All 6 pilot paths and CSV schemas retained; rows increased from 63,018 to 477,753 without unexplained missing evidence; bulk metric table externally published and verified |
 | 14 LPIPS Metrics | Finished | Finished | Yes | 31,608 rows for 16,404 candidates across five methods and 2,620 cases; 2,400 matched scratch-prompt regional pairs; 261/261 validation checks; 5 canonical files; 3,341.795-second execution | All 5 pilot paths and CSV schemas retained; rows increased from 4,170 to 31,608; 64 pilot rows map exactly to the 32 approved N11 contextual-candidate displacements; no unexplained loss |
 | 15 Feature Similarity | Finished | Finished with one non-blocking CUDA warning | Yes | 63,216 CLIP/DINOv2 metric rows and 78,336 embeddings for 16,404 candidates across five methods and 2,620 cases; 247 checks; 7 canonical files; 6,270.909-second extraction and 199.564-second metric construction | All 7 pilot paths and table schemas retained; metric rows increased from 8,340 to 63,216 and embeddings from 10,700 to 78,336; expected N11 candidate displacement and inherited N06 morphology differences fully accounted for; bulk NPZ classified for diagnostics-tier publication |
-| 16 Difference Maps and Spatial Diagnostics | Finished | Finished | Yes | 143,247 spatial rows, 76,020 candidate map PNGs, 14 selected panels and 76,034 map-manifest rows for 16,404 candidates and 2,620 cases; 137/137 checks; 76,039 canonical files | All 7 pilot artifact classes and CSV schemas retained; rows increased from 18,896 to 143,247 and candidate maps from 10,050 to 76,020; 170 pilot-only manifest paths are explained by 32 approved N11 contextual-candidate displacements and ten reselected panels; bulk maps and metrics CSV await dedicated direct-image publication |
-| 17 Local Consistency Metrics | Finished | Finished | Yes | 2,060,667 texture, colour, and seam metric rows; 27,912 candidate-map PNGs, 14 selected panels and 27,926 map-manifest rows for 16,404 candidates and 2,620 cases; 179/179 checks; 27,932 canonical files | All pilot map-manifest paths and CSV schemas retained; metric rows increased from 271,988 to 2,060,667 and candidate maps from 3,270 to 27,912; presentation hashes changed under recalculated global display scales; bulk maps and metrics CSV await a separate dedicated direct-image publication |
+| 16 Difference Maps and Spatial Diagnostics | Finished | Finished | Yes | 143,247 spatial rows, 76,020 candidate map PNGs, 14 selected panels and 76,034 map-manifest rows for 16,404 candidates and 2,620 cases; 137/137 checks; 76,039 canonical files | All 7 pilot artifact classes and CSV schemas retained; rows increased from 18,896 to 143,247 and candidate maps from 10,050 to 76,020; 170 pilot-only manifest paths are explained by 32 approved N11 contextual-candidate displacements and ten reselected panels; full evidence remains local pending the pre-N34 storage review |
+| 17 Local Consistency Metrics | Finished | Finished | Yes | 2,060,667 texture, colour, and seam metric rows; 27,912 candidate-map PNGs, 14 selected panels and 27,926 map-manifest rows for 16,404 candidates and 2,620 cases; 179/179 checks; 27,932 canonical files | All pilot map-manifest paths and CSV schemas retained; metric rows increased from 271,988 to 2,060,667 and candidate maps from 3,270 to 27,912; presentation hashes changed under recalculated global display scales; full evidence remains local pending the pre-N34 storage review |
 
 Notebooks 01–15, including Notebook 12A, are committed Controlled-300
-producers. Notebooks 16–17 are locally complete and validated, pending external
-publication and commit; Notebook 18 is in preparation. No later notebook may describe its
+producers. Notebooks 16–17 are locally complete and validated, pending only
+compact Git commits; Notebook 18 is in preparation. No later notebook may describe its
 historical Controlled-50 outputs as Controlled-300 evidence until that notebook
 has been explicitly reopened, rerun, validated, baseline-compared, and committed.
 
@@ -1853,9 +1853,8 @@ separately; do not rerun models merely to reconcile documentation.
   removed during the active rerun.
 - Beginning with Notebook 12, the complete canonical output tree remains local
   and notebook-owned, but bulk generated evidence is not automatically a Git
-  publication requirement. GitHub is the compact scientific repository; an
-  external evidence store and final archival release own bulk media after their
-  publication checks pass.
+  publication requirement. GitHub is the compact scientific repository;
+  additional external storage is deferred until the pre-N34 approval gate.
 - After migration, no authoritative generated images should remain under `data/processed/`.
 - Standalone HTML reports may embed declared web-sized figures and
   representative images so the report remains usable when downloaded alone.
@@ -1866,40 +1865,70 @@ separately; do not rerun models merely to reconcile documentation.
 
 ### 27.1 Controlled-300 storage and publication boundary
 
+**Dated indexed-bundle exception (2026-09-17).** The user first approved a
+bounded N16 proof of indexed, byte-exact ZIP-member retrieval in the existing
+public diagnostics repository. This is a proposed access method, not completed
+N16/N17 publication or approval of the final dashboard backend by itself. An image may
+be individually retrievable either as a direct remote object or as a validated
+indexed ZIP member; a separate remote object per image is not required. Its
+original bytes, scientific identity, producer path, and provenance must remain
+available. The approved smoke is limited to four bundles and 128 MiB under an
+isolated test prefix. Full N16 and then N17 require separate approval and
+hash-verified release records. Existing N12/N12A/N13/N15 direct-file records
+and all canonical local scientific artifacts remain unchanged. The N33-to-N34
+storage/dashboard review gate remains in force; the pilot deployment is not
+modified by this smoke. The implementation lives in
+`tools/bundled_artifact_publication.py` and
+`src/restoration_eval/bundled_assets.py`; the old direct-file publisher is not
+reused for N16 maps.
+
+The bounded test subsequently passed: 76 indexed images from three paintings
+were read publicly and matched their source hashes; three ZIPs and eight
+remote objects passed byte-count/full-SHA-256 checks at pinned revision
+`02ba1d971ffdf9e855f07e5266bba18cac71b929`. Its temporary objects were
+removed from the current diagnostics branch by cleanup commit
+`debc818363b5271b97e9105aa77807927e493ee7`; the smoke record is retained.
+The user then separately approved and completed the full N16 release: 76,034
+original images in 333 bundles, 641 remotely verified objects totaling
+2,625,210,541 bytes at pinned diagnostics revision
+`8c22aa62c5be60d8a15c9c00d9bc9a6f81557b79`. Four public sample image
+reads matched the local originals. The full record is
+`outputs/inventory/bundled_publication_n16_full.json`. The smoke alone was not
+proof of full publication; the full record is. N17 requires its own separately
+verified record before any publication claim.
+
 The storage change does not alter notebook science, output ownership, schemas,
 validation, or the requirement to generate and inspect every approved canonical
 artifact locally. Every notebook continues to write its complete evidence to
 `outputs/<exact_notebook_stem>/`, and the project inventory continues to index
 the complete local tree.
 
-The approved publication tiers are:
+The current storage tiers are:
 
 1. **GitHub scientific repository:** notebooks, helpers, configuration,
    documentation, compact canonical tables, validation, manifests, selected
    figures, and remote-asset indexes.
-2. **Interactive evidence store:** web-addressable restoration candidates,
-   damaged/degraded images, masks, maps, heatmaps, overlays, and other bulk
-   media required for case-level dashboard inspection. Canonical CSV or NPZ
-   evidence at least 50 MiB is also treated as bulk diagnostic evidence rather
-   than a compact GitHub table. Public Hugging Face
-   dataset repositories are the default zero-cost target, subject to verified
-   account, file-count, path, provenance, and licensing constraints.
-3. **Archival release:** full-resolution evidence packages, checksums,
-   manifests, and reproducibility metadata published as a versioned Zenodo
-   record after the Controlled-300 pipeline is frozen.
-4. **Deployment repository:** the final Controlled-300 Streamlit application,
-   compact indexes, styles, and small static assets. It must load bulk evidence
-   lazily from recorded remote locations rather than clone the complete output
-   corpus.
+2. **Complete local evidence:** all notebook-owned images, maps, restorations,
+   large numeric tables, and source manifests remain under their exact local
+   `outputs/<notebook_stem>/` roots. This is the authoritative active corpus.
+3. **Previously verified external evidence:** N12, N12A, N13, N15, and the
+   separately approved N16 bundle release retain their published records.
+   N17 uses a separate user-controlled gate; other bulk publication remains
+   deferred to the pre-N34 storage review.
+4. **Future storage and deployment:** after N33 and before changing N34, review
+   the complete local evidence, prospective storage options, costs, public
+   access, and dashboard feasibility with the user. Only an approved storage
+   contract may feed the N34 dashboard design and later deployment. Zenodo
+   archival release remains a separate post-freeze decision.
 
 The currently deployed `pilot-50` application remains unchanged during the
 Controlled-300 rerun. No history rewrite, branch deletion, Git/LFS purge, or
 bulk-output untracking is permitted during the active transition without a
 separate exact-target review and explicit user approval.
 
-Before a local bulk artifact may be removed, untracked, or excluded from the
-working-tree publication set, its external copy must be verified against a
-publication record containing at least:
+Before a local bulk artifact may ever be deleted or represented as remotely
+available, its external copy must be verified against a publication record
+containing at least:
 
 ```text
 artifact_id
@@ -1914,23 +1943,22 @@ publication_status
 published_at_utc
 ```
 
-The publication gate requires a remotely reported LFS SHA-256 object ID and
-byte count matching the producer-validated manifest, stable case/candidate
-identity, and a resolvable dashboard or archive location. A URL or matching
-size alone is not verification. The tool must fail closed if remote SHA-256
-metadata is unavailable; a targeted remote read is an explicit fallback, not
-a mandatory redownload of every image. Failed or incomplete uploads never
-authorize local deletion.
+For already published N12–N15 artifacts, the recorded remote SHA-256 and byte
+counts remain the evidence of the completed publication gate. A URL or matching
+size alone is not verification. A failed or incomplete upload never authorizes
+local deletion. Do not infer publication of N16 or later notebooks from the
+existence of a Hugging Face repository, a partial transfer, or old records.
+The N16 claim rests only on its separate complete pinned-release record.
 
-The machine-readable provider and classification contract is
-`config/publication/external_storage.yaml`. The existing smoke-test and
-bounded-commit tool is `tools/external_artifact_publication.py`; its verified
-N12/N12A/N13/N15 records remain valid. Do not use its shared diagnostics-repo
-default or per-file full-download verification for Notebook 16 or 17.
-The producer-specific progress-reporting publisher is pending implementation
-after the approved local inventory. Use the existing project `.venv` and its
-compatible Hugging Face client; do not require a separate publication
-environment. The earlier public-read smoke test remains transport evidence.
+The machine-readable historical provider and classification contract is
+`config/publication/external_storage.yaml`. Its N12/N12A/N13/N15 verified
+records remain valid. Do not run `tools/external_artifact_publication.py` or
+restore the failed N16 per-file uploader for N16/N17 or later producers. The
+N16 per-file LFS attempt exhausted Hugging Face's
+free-account Hub API request limit; the user removed its partial remote
+repository and its local upload cache was cleared. A separate bundled N16
+release subsequently passed full remote verification; canonical N16 evidence
+still remains fully local.
 
 The local project inventory and the publication registry have different
 responsibilities. The inventory describes what exists in the executing local
@@ -1938,58 +1966,45 @@ repository. The publication registry describes where approved evidence is
 available outside that working tree. Neither file may silently stand in for
 the other.
 
-Before a Notebook 16 upload, refresh the complete local inventory from the
-existing `.venv` with visible progress, confirm its run status and zero read
-errors, and reconcile its Notebook 16/17 counts against completed producer
-manifests. Then approve exact public repository IDs and implement the
-producer-specific publisher. Publish, remotely verify, and let the user commit
-Notebook 16 before beginning Notebook 17 publication and commit. No command
-for the new flow is declared executable until its implementation is tested.
+During N16–N33, finish one notebook at a time using its complete local
+outputs. Refresh the inventory, inspect every read error, and reconcile each
+producer's paths, counts, SHA-256 values, and completion manifest. Repair an
+isolated invalid artifact from its recorded inputs when it can reproduce the
+original manifest checksum; otherwise stop and disclose the mismatch. Do not
+rerun expensive stages merely to address a single corrupted presentation file.
 
-The approved direct-image targets are separate public Hugging Face dataset
-repositories: one for Notebook 16's 76,020 candidate-map PNGs and large
-metrics CSV, and one for Notebook 17's 27,912 candidate-map PNGs and large
-metrics CSV. Keep original notebook-owned local paths; record each image's
-repository, revision, direct resolve URI, checksum, size, and publication
-status in the merged registry. The existing diagnostics repository keeps its
-previously verified N13/N15 evidence. Do not bundle dashboard-eligible maps
-into archives or delete local output trees.
+N16's 76,020 candidate maps and N17's 27,912 candidate maps stay local and
+individually accessible by their producer manifests. Their full numeric CSVs
+also stay local: N16 is about 82 MB and N17 about 1.15 GB, so neither is an
+ordinary compact GitHub table. N16's complete maps and metric table are also
+available in its verified indexed-bundle release; N17 is not yet published.
+Before the N16/N17 compact Git commits, the user must
+remove the still-tracked pilot versions of these two CSVs and their selected
+figure PNGs from the Git index with exact-path `git rm --cached` commands;
+the local files remain intact. GitHub commits may contain notebooks,
+configuration, helpers, compact tables, validation records, and manifests;
+no newly generated images are staged during this phase. Existing verified
+N12–N15 external objects remain untouched.
 
-The publication helper must use the installed Hub client in `.venv`, show
-periodic file/byte progress and a measured ETA, resume safely after
-interruption, and reuse producer-manifest SHA-256 and byte counts for planning.
-Avoid the old 50-file bounded-commit loop for these high-file-count notebooks.
-Verify remote object SHA-256 and byte count from Hub metadata in batches;
-perform a small public-read/render smoke test, but do not redownload every
-image. Fail closed on missing paths, unavailable hashes, mismatched sizes or
-hashes, and incomplete counts. Report any free-service quota or transfer
-failure rather than assuming unlimited public storage.
+After N33, before N34 preparation, perform a separate storage review using
+actual producer sizes, file counts, license constraints, retrieval needs,
+free-tier limits, and the complete proposed dashboard visual index. Compare
+at least direct-object access and bounded on-demand packaging; do not assume
+Hugging Face datasets, buckets, Git LFS, or Zenodo solves the problem. Test one
+representative public write/read path and its cost/quota behavior before any
+bulk migration. Obtain user approval for the storage contract first, then for
+the N34 dashboard scope and UI; N35 validates the implemented application.
+The live 50-painting dashboard stays on its existing branch and deployment.
 
-Hugging Face's 100,000-files-per-repository figure is a recommendation, not a
-hard limit. Each producer repository must remain below that planning
-threshold and the hard 10,000-entries-per-folder restriction. Notebook 16
-and 17 layouts were checked before approval. For later producers, inspect
-actual counts and the future dashboard visual index at preparation; assign a
-dedicated direct-image repository if a shared repository would grow
-uncomfortably large. Keep Zenodo archives for the post-freeze reproducibility
-release, not as the interactive dashboard image source.
-
-For every completed notebook, the assistant must explicitly separate the
-handoff commands into two blocks: **GitHub scientific-record commands** and,
-when the publication plan contains applicable rows, **Hugging Face publication
-commands**. The Hugging Face block must name the exact producer, repository
-tier, exact producer repository, plan/upload/verify sequence, and expected
-successful verification result;
-it must not be omitted merely because the notebook itself has finished. The
-GitHub block must exclude bulk artifacts classified for external storage and
-must stage the verified external-publication registry only after remote
-checksum and byte-count verification succeeds. The assistant never executes
-`git add`, commit, or push on the user's behalf.
-
-Until the external repositories and upload tooling are configured and tested,
-all Controlled-300 outputs remain intact locally. The assistant must not run
-`git add`, create commits, push, rewrite history, or remove tracked evidence;
-the user retains all Git staging and publication authority.
+For each completed notebook before that review, provide **GitHub
+scientific-record commands only**, scoped to the files actually appropriate
+for Git. State explicitly which large local artifacts are excluded and why.
+Apart from the separately approved full N16 release and user-controlled N17
+release, do not issue further bulk-upload commands. Do not make later Git
+publication depend on a new external upload. The assistant never runs
+`git add`, commit, or push;
+those actions belong to the user. All local evidence remains intact unless
+the user separately approves exact-target cleanup.
 
 ## 28. Error correction workflow
 
