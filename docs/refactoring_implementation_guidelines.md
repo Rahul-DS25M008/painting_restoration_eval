@@ -889,12 +889,13 @@ checksums, limitations, and downstream eligibility.
 | 13 Classical Metrics | Finished | Finished | Yes | 477,753 rows for 16,404 candidates across five methods and 2,620 cases; 262/262 validation checks; 6 canonical files; 28,705.153-second execution | All 6 pilot paths and CSV schemas retained; rows increased from 63,018 to 477,753 without unexplained missing evidence; bulk metric table externally published and verified |
 | 14 LPIPS Metrics | Finished | Finished | Yes | 31,608 rows for 16,404 candidates across five methods and 2,620 cases; 2,400 matched scratch-prompt regional pairs; 261/261 validation checks; 5 canonical files; 3,341.795-second execution | All 5 pilot paths and CSV schemas retained; rows increased from 4,170 to 31,608; 64 pilot rows map exactly to the 32 approved N11 contextual-candidate displacements; no unexplained loss |
 | 15 Feature Similarity | Finished | Finished with one non-blocking CUDA warning | Yes | 63,216 CLIP/DINOv2 metric rows and 78,336 embeddings for 16,404 candidates across five methods and 2,620 cases; 247 checks; 7 canonical files; 6,270.909-second extraction and 199.564-second metric construction | All 7 pilot paths and table schemas retained; metric rows increased from 8,340 to 63,216 and embeddings from 10,700 to 78,336; expected N11 candidate displacement and inherited N06 morphology differences fully accounted for; bulk NPZ classified for diagnostics-tier publication |
-| 16 Difference Maps and Spatial Diagnostics | Finished | Finished | Yes | 143,247 spatial rows, 76,020 candidate map PNGs, 14 selected panels and 76,034 map-manifest rows for 16,404 candidates and 2,620 cases; 137/137 checks; 76,039 canonical files | All 7 pilot artifact classes and CSV schemas retained; rows increased from 18,896 to 143,247 and candidate maps from 10,050 to 76,020; 170 pilot-only manifest paths are explained by 32 approved N11 contextual-candidate displacements and ten reselected panels; full evidence remains local pending the pre-N34 storage review |
-| 17 Local Consistency Metrics | Finished | Finished | Yes | 2,060,667 texture, colour, and seam metric rows; 27,912 candidate-map PNGs, 14 selected panels and 27,926 map-manifest rows for 16,404 candidates and 2,620 cases; 179/179 checks; 27,932 canonical files | All pilot map-manifest paths and CSV schemas retained; metric rows increased from 271,988 to 2,060,667 and candidate maps from 3,270 to 27,912; presentation hashes changed under recalculated global display scales; full evidence remains local pending the pre-N34 storage review |
+| 16 Difference Maps and Spatial Diagnostics | Finished | Finished | Yes | 143,247 spatial rows, 76,020 candidate map PNGs, 14 selected panels and 76,034 map-manifest rows for 16,404 candidates and 2,620 cases; 137/137 checks; 76,039 canonical files | All 7 pilot artifact classes and CSV schemas retained; complete maps and oversized metrics are local and in the verified diagnostics indexed-bundle release; compact Git committed |
+| 17 Local Consistency Metrics | Finished | Finished | Yes | 2,060,667 texture, colour, and seam metric rows; 27,912 candidate-map PNGs, 14 selected panels and 27,926 map-manifest rows for 16,404 candidates and 2,620 cases; 179/179 checks; 27,932 canonical files | Pilot schemas/paths retained; complete maps and oversized metrics are local and in the verified diagnostics indexed-bundle release; compact Git committed |
+| 18 Diffusion Uncertainty Analysis | Finished | Finished | Yes | 780 prompt-specific groups, 3,120 candidates, 4,680 pairs, 124,800 metric rows, 780 calibration rows, two figures and 150/150 passing checks | Same seven artifact classes as the E: pilot baseline; metric/calibration rows scaled sixfold from 20,800/130; no failed checks, work files or saved notebook errors; compact Git handoff pending |
 
-Notebooks 01–15, including Notebook 12A, are committed Controlled-300
-producers. Notebooks 16–17 are locally complete and validated, pending only
-compact Git commits; Notebook 18 is in preparation. No later notebook may describe its
+Notebooks 01–17, including Notebook 12A, are committed Controlled-300
+producers. Notebook 18 is locally complete and validated, pending only its
+compact Git handoff. No later notebook may describe its
 historical Controlled-50 outputs as Controlled-300 evidence until that notebook
 has been explicitly reopened, rerun, validated, baseline-compared, and committed.
 
@@ -904,6 +905,24 @@ Two governing files make downstream evidence availability explicit:
 docs/evidence_dependency_audit.md
 config/evaluation/evidence_coverage.yaml
 ```
+
+For N19–N33, the binding Controlled-300 population and method overlay in
+`docs/final_notebook_roadmap.md` Section 2.2 supersedes pilot counts retained
+in old notebooks/configuration. N19–N22 scale linearly with complete approved
+coverage; N23–N25 are the explicit exception to cell-preservation: their
+exhaustive five-painting statistical loops must be replaced by bounded,
+painting-cluster methods without reducing cases, methods, visual categories,
+quality anchors or report evidence. Never merely change `5` to `35` in a
+`n^n` bootstrap or `2^n` sign-flip path. Use N26's adaptive 5,000-draw and
+100,000-assignment design as the starting implementation precedent, validate
+its numerical/provenance outputs for each notebook, and label Monte Carlo
+results honestly. Benchmark a representative task before full execution;
+target a longest batch no longer than 36 hours and use 50 hours as an
+operational ceiling. Optimize or checkpoint and rebenchmark if above this
+limit; do not silently thin approved scientific coverage. Later notebooks
+remain bounded/linear as specified in that roadmap. Existing pilot YAML and
+helpers are changed one producer at a time during its preparation layer,
+not bulk-edited ahead of validated upstream outputs.
 
 Before approving any new or explicitly reopened notebook contract, the assistant must:
 
@@ -1854,7 +1873,9 @@ separately; do not rerun models merely to reconcile documentation.
 - Beginning with Notebook 12, the complete canonical output tree remains local
   and notebook-owned, but bulk generated evidence is not automatically a Git
   publication requirement. GitHub is the compact scientific repository;
-  additional external storage is deferred until the pre-N34 approval gate.
+  later large producers may use the verified N16/N17 indexed-bundle method
+  after a separate producer-level publication gate. The pre-N34 approval gate
+  still governs the dashboard's final storage and access design.
 - After migration, no authoritative generated images should remain under `data/processed/`.
 - Standalone HTML reports may embed declared web-sized figures and
   representative images so the report remains usable when downloaded alone.
@@ -1924,10 +1945,11 @@ The current storage tiers are:
 2. **Complete local evidence:** all notebook-owned images, maps, restorations,
    large numeric tables, and source manifests remain under their exact local
    `outputs/<notebook_stem>/` roots. This is the authoritative active corpus.
-3. **Previously verified external evidence:** N12, N12A, N13, N15, and the
-   separately approved N16/N17 bundle releases retain their published records.
-   Other bulk publication remains
-   deferred to the pre-N34 storage review.
+3. **Verified external evidence:** N12, N12A, N13, N15, and the separately
+   approved N16/N17 bundle releases retain their records. Later large
+   producers may use the same indexed-bundle workflow after notebook-specific
+   classification, capacity checks, full remote verification, and a separate
+   user-controlled upload gate. This does not decide the dashboard backend.
 4. **Future storage and deployment:** after N33 and before changing N34, review
    the complete local evidence, prospective storage options, costs, public
    access, and dashboard feasibility with the user. Only an approved storage
@@ -2022,12 +2044,17 @@ cache eviction, Streamlit memory/network budgets, missing-asset behavior, and
 representative cross-model views with the user. The pre-N34 storage and page
 design approval gate and N35 validation remain mandatory.
 
-For each completed notebook before that review, provide **GitHub
-scientific-record commands only**, scoped to the files actually appropriate
-for Git. State explicitly which large local artifacts are excluded and why.
-Apart from the separately approved full N16 release and user-controlled N17
-release, do not issue further bulk-upload commands. Do not make later Git
-publication depend on a new external upload. The assistant never runs
+For each completed notebook before that review, provide scoped **GitHub
+scientific-record commands** and, if large outputs warrant publication,
+separate **Hugging Face indexed-bundle commands** using the validated N16/N17
+strategy. Classify every asset as candidate restoration (`candidates`) or
+diagnostic/map/panel/oversized derived evidence (`diagnostics`); do not create
+one remote object per image. Include local staging verification, progress,
+resumable upload, full pinned-revision remote object/hash verification, public
+sample member reads, and a compact publication record. Check quota and object
+count before upload; keep complete local evidence. State exactly which large
+artifacts are excluded from Git and why. Do not make scientific Git completion
+depend on a pending external upload. The assistant never runs
 `git add`, commit, or push;
 those actions belong to the user. All local evidence remains intact unless
 the user separately approves exact-target cleanup.

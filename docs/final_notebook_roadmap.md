@@ -128,12 +128,19 @@ indexed ZIPs reduce remote object/request counts and retain exact image bytes.
 They use `ZIP_STORED`: this is an access and repository-size strategy, **not**
 lossless compression that materially reduces the total hosted bytes.
 
-The scientific output contract and the Git publication contract are now
-separate. Every notebook still generates, validates, reloads, visually inspects,
-and inventories its complete canonical output tree locally. GitHub retains the
-compact scientific record. Except for the verified indexed-bundle N16 and N17
-releases, new bulk publication is paused
-while the Controlled-300 pipeline is completed locally through Notebook 33.
+The scientific output contract and the Git publication contract are separate.
+Every notebook still generates, validates, reloads, visually inspects, and
+inventories its complete canonical output tree locally. GitHub retains the
+compact scientific record. The verified N16/N17 indexed-bundle workflow is
+the approved **per-producer option** for subsequent image-heavy or oversized
+outputs; publication is never automatic or a prerequisite for local scientific
+completion. Classify the producer's assets, check free-tier capacity, stage
+bounded per-painting `ZIP_STORED` bundles plus complete indexes, verify all
+remote objects and public sample member reads at a pinned revision, and retain
+the complete local tree. Candidate restorations belong in `candidates`;
+diagnostic maps, panels, and oversized diagnostic tables belong in
+`diagnostics`. The pre-N34 review still decides the dashboard's access and
+storage contract; it is not a ban on verified producer publication.
 
 Notebooks 01--11 are the final approved full-output Git/LFS checkpoint for the
 Controlled-300 rerun. Beginning with Notebook 12:
@@ -142,8 +149,8 @@ Controlled-300 rerun. Beginning with Notebook 12:
   tables, validation, manifests, selected figures, and external-asset indexes;
 - already verified N12/N12A/N13/N15 objects retain their publication records,
   and N16/N17 each have a separate complete indexed-bundle release record;
-- storage and archival options are reassessed after N33, rather than assumed
-  from the earlier Hugging Face plan; and
+- dashboard storage and archival options are reassessed after N33 using the
+  actual verified producer releases, rather than assumed in advance; and
 - the final Controlled-300 Streamlit packaging and deployment approach is
   approved only after storage feasibility and dashboard scope are reviewed.
 
@@ -193,6 +200,68 @@ partitions rather than eagerly loaded into Streamlit Community Cloud memory.
 Measure cold/warm latency, cache eviction, quota behavior, missing-asset
 fallback, and cross-model case coverage before this becomes the final dashboard
 contract. The live pilot-50 deployment is unchanged.
+
+### 2.2 Binding downstream Controlled-300 execution overlay (approved 2026-09-18)
+
+This overlay governs the N19–N33 rerun. Detailed sections below also preserve
+the frozen pilot and may contain pilot counts; those are historical, not new
+execution targets. Each preparation layer must reconcile its YAML, helpers,
+notebook cells, manifest, and report mock with this overlay. Do not shrink the
+approved evidence population to solve compute or storage issues.
+
+| Notebook | Controlled-300 execution contract |
+| --- | --- |
+| N18 | Completed: 780 Stable Diffusion prompt groups, 3,120 candidates, 4,680 pairs, 124,800 metric rows, 780 calibration rows, and 150/150 passing checks. |
+| N19 | Scale all numeric uncertainty maps and visual variants from 130 to **780 prompt-specific groups**; preserve separate generic and scratch-aware IDs. Use the diagnostics indexed-bundle option if output size warrants it. |
+| N20 | Cover **16,404 completed candidates** numerically, including HINT. Render all **9,304 nonzero primary** candidate panels (four full methods × 2,320 cases plus 24 bounded SDXL completions). Bundle large maps/panels under diagnostics if needed. |
+| N21 | Compare **four full methods × 2,620 paired cases = 10,480** selected candidates. Show **24 completed SDXL** candidates only as a separate bounded subset. Preserve metric-independent selection and painting-level leave-one-out analysis. |
+| N22 | Use all **245** N05 cases (35 paintings × seven levels). Reuse N11 seed 2026 by reference, generate **735** missing seeds, and obtain **245** four-seed groups with **1,470** unordered pairs. Candidate images, if externally published, belong in `candidates`. |
+| N23 | Analyze all **245** size cases and **980** four-method primary candidates, retaining all seven repeated levels and 35 paintings (seven per category). Use the bounded statistical design below. |
+| N24 | Analyze all **525** matched mask cases and **2,100** four-method primary candidates, preserving three families and five variants per group across 35 paintings. Use the bounded statistical design below. |
+| N25 | Analyze the full **1,155-case** degradation design; only **350** masked-removal-eligible cases enter the four-method primary comparison (**1,400** candidates). The **11** completed SDXL synthetic cases remain a separate bounded comparison. Preserve explicit exclusions. |
+| N26 | Retain the existing adaptive inference design; update to four full methods, 300 canonical paintings, 35-painting focused cohorts, and 780 N18 plus 245 N22 uncertainty groups. |
+| N27 | Apply fixed rule families linearly to the exact validated union of primary and supported repeated-seed candidates. Derive the union from candidate IDs, not the pilot 1,785. Include HINT; never fit thresholds on duplicate seeds. |
+| N28 | Keep the **23 declared ablation scenarios** fixed. Do not enumerate metric-subset powersets. Chunk the candidate-scenario joins while retaining complete traceability. |
+| N29 | Scale the full explanation catalog to N27's validated candidate union. Selected retrieval and visual panels remain report subsets, not a limit on the catalog. |
+| N30 | Create **five** method cards: Telea, LaMa, HINT, Stable Diffusion and bounded SDXL. Analyze observed 300-painting compute/storage rather than projecting merely to 300. |
+| N31 | Generate five self-contained method reports; distinguish the four full methods from SDXL's bounded scope. No new metric inference. |
+| N32 | Generate **300 painting reports** plus auditable selected case reports. Index every applicable case, candidate, report, and upstream visual even when a visual is not embedded in every report. |
+| N33 | Synthesize validated Controlled-300 evidence, four full methods, bounded SDXL, focused analyses and their limitations. Do not carry pilot-50 results forward as current claims. |
+
+**N23–N25 bounded statistical redesign.** Keep every 35-painting focused
+cohort balanced at seven paintings per broad visual category. Painting is the
+independent unit; damage levels, mask variants, effects, regions and seeds are
+nested/repeated observations. Predeclare a small primary inference grid from
+the existing anchor definitions. The primary seven are
+`classical_masked_mae`, `structural_crop_ssim`,
+`perceptual_crop_lpips`, `feature_dino_crop`, `texture_crop_p95`,
+`colour_masked_delta_e` and `seam_boundary_gradient`: one interpretable
+representative of each core evidence concern. Test matched painting-level
+model contrasts on those anchors and the notebook's declared exposure
+(N23 size trajectory; N24 mask-variant dispersion; N25 eligible degradation
+family/severity). Retain all 11 quality anchors and all required case-level
+values, curves, comparisons, figures and visual examples as descriptive
+evidence. Apply Benjamini–Hochberg correction within the declared
+inferential families. Use **5,000 seeded painting-cluster bootstrap draws**
+for 95% intervals on cached painting summaries and **100,000 seeded, batched
+Monte Carlo sign flips** (with finite-simulation correction) for 35-painting
+matched contrasts. Do not enumerate `35^35` ordered bootstrap samples or
+`2^35` sign assignments. Exact enumeration is allowed only when the actual
+independent-cluster count and a declared budget are small. N26's adaptive
+method is the precedent, but N23–N25 must independently validate methods,
+provenance, numerical results and report labels. Remove all hard-coded
+five-*painting* assumptions; the five-*mask-variant* design remains valid.
+Seven paintings per category permit exploratory category summaries, not an
+independent art-historical style-effect claim.
+
+Benchmark representative model/anchor/painting tasks before each expensive
+N23–N25 stage and log a conservative full-batch projection. Target **36 hours
+or less** for the longest batch; treat **50 hours as an operational ceiling**.
+If projected work exceeds the range, improve vectorization, caching, chunking
+or resume checkpoints and rebenchmark; do not thin approved paintings, methods,
+eligible cases, metrics or visual evidence. Print progress at least every ten
+inferential tasks. The gate is a planning control, not a runtime guarantee;
+material scope changes require explicit approval.
 
 For every notebook that produces a standalone report, an explicitly approved
 chat mock is the binding report blueprint. The implemented report must retain the
@@ -1610,7 +1679,7 @@ validation/checks.csv
 **Output root:** `outputs/17_local_consistency_metrics/`  
 **Depends on:** Notebooks 08–12A and canonical regions
 
-**Controlled-300 scaling status:** Local run complete and validated; compact Git commit pending. Bulk evidence remains locally canonical.
+**Controlled-300 scaling status:** Local run validated, indexed-bundle diagnostics release remotely verified, and compact Git record committed. Complete evidence remains locally canonical.
 
 **Publication status:** The complete indexed-bundle N17 release passed remote
 verification at the pinned diagnostics revision and record in Section 2.1.
@@ -1698,8 +1767,9 @@ retained. Their presentation PNG hashes differ because the declared global
 texture, colour, and seam display scales were recomputed over the expanded
 candidate population; numeric measurements remain in the canonical CSV.
 Compared with the pilot, metric rows rose from 271,988 to 2,060,667 and
-candidate maps from 3,270 to 27,912. Bulk maps and the metrics CSV remain
-local pending the pre-N34 storage review.
+candidate maps from 3,270 to 27,912. Bulk maps and metrics remain locally
+canonical and have a verified indexed-bundle diagnostics copy. The pre-N34
+review governs dashboard access, not preservation of this release.
 
 ### Downstream consumers
 
@@ -1714,9 +1784,14 @@ Notebooks 19–36.
 **Output root:** `outputs/18_diffusion_uncertainty_analysis/`  
 **Depends on:** Notebooks 01, 02, 08, 11, 13–15, and 17; Notebook 12 for seed-coverage applicability
 
-**Controlled-300 scaling status:** Preparation complete; notebook execution pending.
+**Refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
+**Controlled-300 scaling status:** Local execution complete and validated; compact Git handoff pending.
 
-**Expected execution time:** Image-space computation and especially pairwise LPIPS over 780 groups are the dominant checkpointed stages. Use measured progress after the first 50 groups for an ETA rather than extrapolating the pilot runtime as a guarantee.
+**Observed execution time:** The recorded N18 run completed in about 39 minutes
+(2026-09-17 22:40–23:19 UTC). A future rerun still needs measured progress
+for its ETA; this elapsed time is not a guarantee.
 
 ### Purpose
 
@@ -1755,6 +1830,15 @@ and synthetic-degradation cases do not acquire seed uncertainty by association.
 - Keep the 35-case SDXL attempt and its 24 completions outside repeated-seed uncertainty because each completed case has only one seed.
 - Produce two canonical figures and no persisted heatmaps; Notebook 19 owns spatial uncertainty maps.
 
+The completed run produced 124,800 uncertainty rows, 780 calibration rows,
+two readable figures, seven canonical files and 150/150 passing checks, with
+no notebook error output or temporary work files. The pilot E: baseline had
+the same seven artifact types but 20,800 metric rows and 130 calibration rows;
+both table populations scaled exactly sixfold. This producer has no map/image
+explosion: its largest file is an approximately 81 MB CSV already tracked by
+Git LFS. Keep this bounded seven-file N18 output in its Git handoff; no
+separate Hugging Face publication is needed for N18.
+
 ### Canonical outputs
 
 ```text
@@ -1781,7 +1865,7 @@ validation/checks.csv
 - Generate per-pixel diffusion uncertainty heatmaps for every eligible case.
 - Generate full-image, masked-region, crop, boundary, and outside-mask heatmap variants.
 - Use consistent normalization policies and record their scope.
-- Retain all 130 raw numeric uncertainty maps in the canonical compressed archive.
+- Retain all 780 prompt-specific raw numeric uncertainty maps in the canonical compressed archive.
 - Produce visual heatmaps and image overlays.
 - Integrate texture-inconsistency maps.
 - Integrate colour-drift maps.
@@ -1796,7 +1880,7 @@ validation/checks.csv
 
 ### Implementation-contract clarifications
 
-- The spatial population preserves Notebook 18's 130 prompt-specific uncertainty
+- The spatial population preserves Notebook 18's 780 prompt-specific uncertainty
   groups. Because generic and scratch-aware groups can share a `case_id`, owned
   map filenames use `uncertainty_group_id` to prevent collisions while the map
   manifest retains both identifiers.
@@ -1856,9 +1940,9 @@ validation/checks.csv
 
 ### Implementation-contract clarifications
 
-- Retain semantic and structural metrics for all 2,160 completed candidates,
-  including zero controls, Stable Diffusion prompt/seed candidates, and the
-  explicitly partial ten-case SDXL scope.
+- Retain semantic and structural metrics for all 16,404 completed candidates,
+  including zero controls, HINT, Stable Diffusion prompt/seed candidates, and
+  the explicitly bounded 24-completion SDXL scope.
 - Extract aligned local CLIP and DINOv2 token grids from the canonical
   `content_region` and `mask_bbox_crop`. Use reference-derived local similarity,
   feature-affinity, layout, covariance, and cross-encoder-agreement evidence as
@@ -1873,8 +1957,8 @@ validation/checks.csv
   applicable without a stable semantic prediction target; reference-derived
   DINOv2 feature affinity may be retained only as a labelled saliency proxy.
 - Retain unclipped numerical local-map bundles in a compressed archive for
-  downstream flagging and XAI. Render PNG panels only for the 1,090 nonzero
-  primary comparison candidates.
+  downstream flagging and XAI. Render PNG panels for all 9,304 nonzero
+  primary comparison candidates; do not cut approved coverage for size.
 - Use `candidate_id`, rather than `case_id`, as the owned map filename identity
   because Stable Diffusion contains multiple candidates for the same case.
 - Notebook 20 produces machine-readable evidence and selected visualizations;
@@ -1906,7 +1990,8 @@ validation/checks.csv
 
 ### Responsibilities
 
-- Compare OpenCV, LaMa, Stable Diffusion, and validated SDXL results.
+- Compare OpenCV Telea, LaMa, HINT and Stable Diffusion as four full methods;
+  present validated SDXL results separately as bounded feasibility evidence.
 - Determine availability from validated manifests.
 - Apply a documented non-metric candidate-selection policy for diffusion baseline comparison.
 - Compare paired identical cases.
@@ -1924,18 +2009,17 @@ validation/checks.csv
 
 ### Approved comparison and reporting contract
 
-- The full-scope paired comparison contains exactly 410 identical cases for
-  OpenCV Telea, LaMa, and Stable Diffusion: 1,230 selected candidates.
-- The four-model comparison is a separate exact ten-case subset containing the
-  same three candidates plus the technically validated SDXL candidate: 40
-  candidates. SDXL must never be presented as full-dataset evidence.
-- Candidate selection is metric-independent. OpenCV and LaMa contribute their
+- The full-scope paired comparison contains 2,620 identical cases for
+  OpenCV Telea, LaMa, HINT and Stable Diffusion: 10,480 selected candidates.
+- The SDXL comparison is a separate subset of its 24 technically completed
+  cases; SDXL must never be presented as full-dataset evidence.
+- Candidate selection is metric-independent. OpenCV, LaMa and HINT contribute their
   sole completed candidate; Stable Diffusion contributes only its completed
   generic `execution_role == "primary"` candidate; SDXL contributes its ten
   completed technically validated primary candidates. Prompt-ablation and
   repeated-seed candidates remain contextual evidence and cannot replace or
   overweight the baseline.
-- Stable Diffusion uncertainty comprises 80 generic and 50 scratch-aware
+- Stable Diffusion uncertainty comprises 480 generic and 300 scratch-aware
   prompt-specific groups. It is model-specific contextual evidence, not a
   cross-model ranking dimension. Deterministic models and single-seed SDXL do
   not receive artificial uncertainty values.
@@ -1945,14 +2029,14 @@ validation/checks.csv
   Runtime and uncertainty are excluded from quality voting. No combined quality
   or trustworthiness score is retained.
 - Ranking stability uses deterministic leave-one-painting-out analysis so the
-  nested 410-case, 50-painting design is not treated as 410 independent artworks.
+  nested 2,620-case, 300-painting design is not treated as 2,620 independent artworks.
 - The standalone report is structured around the proposal research questions
   and approved roadmap extensions. It must provide scoped section-level
   conclusions and a balanced mixture of paragraphs, finding bullets, tables,
   metrics, analytical plots, restoration grids, crops, uncertainty or semantic
   diagnostics, limitations, and thesis-level synthesis.
 - The report is self-contained when downloaded alone. It embeds web-sized copies
-  of every required figure and representative image, includes all ten SDXL case
+  of every required figure and representative image, includes all 24 completed SDXL case
   panels, uses a substantial auditable core-case and diagnostic visual atlas, and
   may embed additional presentation-only views beyond the two separately saved
   canonical figures.
@@ -2267,8 +2351,8 @@ rows increased from 18,896 to 143,247 and candidate maps from 10,050 to
 76,020. The 170 pilot-only map-manifest paths comprise 160 maps for the 32
 approved displaced Notebook 11 contextual candidates and ten reselected
 panels; no evidence family was lost. Bulk maps and the spatial-diagnostics
-table remain local pending the pre-N34 storage review; no external publication
-is currently claimed.
+table remain locally canonical and are covered by the verified indexed-bundle
+N16 diagnostics release. The pre-N34 review governs dashboard access.
 
 The HTML report must be self-contained, provide the complete numerical coverage
 through owned tables, and use selected embedded panels to explain—not replace—the
@@ -2311,13 +2395,13 @@ Create the repeated-seed Stable Diffusion evidence required to analyze generativ
 
 - Treat every Notebook 01–21 notebook, output, manifest, helper contract, and validated population as read-only evidence.
 - Reuse the existing Notebook 11 generic primary candidate at seed `2026` by reference; do not copy, overwrite, or relabel it.
-- Generate only the missing generic-prompt candidates at seeds `2027`, `2028`, and `2029` for the 35 Notebook 05 damage-size cases.
-- Own all 105 new restoration images, candidate records, uncertainty metrics, maps, checkpoints, manifests, and validation artifacts under the Notebook 22 output root.
+- Generate only the missing generic-prompt candidates at seeds `2027`, `2028`, and `2029` for the 245 Notebook 05 damage-size cases.
+- Own all 735 new restoration images, candidate records, uncertainty metrics, maps, checkpoints, manifests, and validation artifacts under the Notebook 22 output root.
 - Keep extension candidate IDs and ownership explicit so later notebooks can combine evidence without rewriting Notebook 11 history.
 
 ### Responsibilities
 
-- Build exactly 35 prompt-specific uncertainty groups covering five paintings and seven nested target levels: 2%, 4%, 6%, 8%, 10%, 15%, and 20%.
+- Build exactly 245 prompt-specific uncertainty groups covering 35 paintings (seven per category) and seven nested target levels: 2%, 4%, 6%, 8%, 10%, 15%, and 20%.
 - Use the frozen Notebook 11 `p00_generic` prompt policy, model revision, scheduler, inference steps, guidance, strength, resolution, compositing, and mask-threshold contracts.
 - Preserve the exact seed set `2026`, `2027`, `2028`, and `2029` in every group.
 - Support checksum-aware resume and generate only missing extension candidates.
@@ -2337,14 +2421,14 @@ Create the repeated-seed Stable Diffusion evidence required to analyze generativ
 ### Exact population contract
 
 ```text
-damage-size cases: 35
-paintings: 5
+damage-size cases: 245
+paintings: 35
 damage levels per painting: 7
 seeds per group: 4
-referenced frozen candidates: 35
-new extension candidates: 105
-complete uncertainty groups: 35
-unique unordered seed pairs: 210
+referenced upstream candidates: 245
+new extension candidates: 735
+complete uncertainty groups: 245
+unique unordered seed pairs: 1470
 ```
 
 ### Canonical outputs
@@ -2381,11 +2465,22 @@ validation/checks.csv
 - Identify nonlinear degradation points.
 - Test whether model rankings change with damage size.
 - Test whether uncertainty increases with damage size.
-- Analyze painting-specific trajectories and mask-morphology relationships without treating one painting per category as an independently estimated category effect.
+- Analyze painting-specific trajectories and mask-morphology relationships;
+  report seven-painting-per-category summaries as exploratory, not validated
+  art-historical style effects.
 - Compare deterministic and generative sensitivity.
 - Use paired/matched statistical methods.
 - Report confidence intervals and effect sizes.
 - Avoid overclaiming thresholds when sample sizes are small.
+
+**Controlled-300 statistical contract:** 245 cases, 35 paintings, seven
+matched levels, 980 four-method primary candidates. Compute painting-level
+trajectories, matched model differences, effect sizes and intervals using the
+bounded N23–N25 design in Section 2.2. Keep all 11 anchors descriptive;
+use the seven predeclared primary inferential anchors and freeze exact contrast
+and BH-family keys at preparation. Use N22's 245 repeated-seed groups only for Stable Diffusion
+damage-size uncertainty. Replace pilot five-painting bootstrap/sign-flip
+enumeration rather than changing a count constant.
 
 ### Canonical outputs
 
@@ -2421,6 +2516,13 @@ validation/checks.csv
 - Distinguish stochastic candidate variation from input-mask robustness.
 - Identify conclusions that depend excessively on one mask realization.
 
+**Controlled-300 statistical contract:** 525 cases and 2,100 four-method
+primary candidates over 35 paintings, three mask families and five variants
+per matched group. Preserve the five variant conditions while removing the
+pilot assumption of five paintings. Aggregate variation within a painting
+and family before painting-cluster inference; follow Section 2.2's bounded
+bootstrap, Monte Carlo and runtime gate. Category summaries remain exploratory.
+
 ### Canonical outputs
 
 ```text
@@ -2455,6 +2557,14 @@ validation/checks.csv
 - Treat Notebooks 18 and 19 as not applicable because no repeated-seed
   synthetic-degradation uncertainty groups were generated; do not create or
   imply unavailable uncertainty evidence.
+
+**Controlled-300 statistical contract:** 1,155 generated design cases across
+35 paintings, of which 350 are eligible masked-removal cases with 1,400
+four-method primary restorations. Keep the 11 completed SDXL synthetic cases
+as a bounded, descriptive subset. Predeclare matched painting-level contrasts
+for eligible family/severity/combination effects and use Section 2.2's bounded
+resampling/test design; report all 11 quality anchors descriptively. Do not
+misclassify full-image degradation effects as inpainting failures.
 
 ### Canonical outputs
 
@@ -2492,23 +2602,23 @@ Analyze performance by:
 - dataset source, recorded as not applicable for comparison because the repository
   contains only the active `controlled_300` scope;
 
-The primary cross-model population is fixed before reading metric values: 410
-OpenCV Telea, 410 LaMa, and 410 primary generic-prompt Stable Diffusion
-candidates. The 50 canonical zero-control cases remain an integrity population,
-so restoration-quality inference uses 360 nonzero cases and 1,080 core
-candidates. Ten technically valid SDXL candidates form a separate bounded,
-descriptive population and cannot be used as a full-model comparison.
+The primary cross-model population is fixed before reading metric values:
+2,620 candidates for each of OpenCV Telea, LaMa, HINT and primary generic-
+prompt Stable Diffusion. The 300 canonical zero-control cases per full method
+remain an integrity population, so restoration-quality inference uses 2,320
+nonzero cases and 9,280 full-method primary candidates. Twenty-four technically
+valid SDXL candidates form a separate bounded, descriptive population.
 
 Painting is the independent statistical unit. Cases, candidates, mask variants,
 seeds, regions, and metrics are repeated or nested observations. Category-level
-inference is restricted to the balanced 50-painting canonical population.
-Damage-size, mask-robustness, and synthetic-degradation cohorts contain one
-painting per category and therefore support painting-specific patterns rather
-than independent category effects. Incomplete metadata does not support a
-general independent style effect.
+inference is restricted to the balanced 300-painting canonical population.
+Damage-size, mask-robustness and synthetic-degradation cohorts contain seven
+paintings per category; subgroup comparisons remain exploratory with painting
+as the independent unit. Incomplete metadata does not support a general
+independent art-historical style effect.
 
-Generative uncertainty covers exactly 165 prompt-specific repeated-seed groups:
-130 canonical groups from Notebook 18 and 35 damage-size groups from Notebook 22.
+Generative uncertainty covers exactly 1,025 prompt-specific repeated-seed groups:
+780 canonical groups from Notebook 18 and 245 damage-size groups from Notebook 22.
 The generic and scratch-aware prompt arms remain separate. Mask robustness and
 synthetic degradation have no repeated-seed population and must not receive
 artificial uncertainty values.
@@ -2570,13 +2680,12 @@ and Notebooks 13–26 for analytical evidence
 
 ### Approved population
 
-- 1,240 primary comparison candidates: 1,230 core Telea, LaMa, and Stable
-  Diffusion candidates plus the bounded ten-case SDXL subset;
-- 660 candidates in complete supported repeated-seed groups: 520 from the
-  canonical uncertainty experiment and 140 from the damage-size extension;
-- 115 candidates shared by the primary and repeated-seed populations;
-- 545 uncertainty-only candidates;
-- 1,785 unique candidates in the complete Notebook 27 union.
+- 10,504 primary comparison candidates: 10,480 across four full methods plus
+  24 completed bounded SDXL candidates;
+- 4,100 candidate memberships in complete supported repeated-seed groups:
+  3,120 from N18 and 980 from N22 (including referenced N11 anchors);
+- derive shared IDs and the exact union from validated source manifests rather
+  than hard-code a pilot overlap or union count.
 
 The population role must remain explicit. Uncertainty-only seeds and prompt arms
 must not enter ordinary model comparison, and bounded SDXL evidence must not be
@@ -2627,7 +2736,7 @@ Independent flags include:
 - Test internal rule consistency.
 - Use transparent operational warning and critical thresholds rather than
   learned failure labels: fit the initial 90th and 97.5th percentile adverse-tail
-  rules on the 1,080 non-zero primary core candidates, exclude zero controls and
+  rules on the 9,280 non-zero four-method primary candidates, exclude zero controls and
   bounded SDXL from fitting, preserve experiment and indicator strata, and keep
   prompt arms separate for uncertainty evidence.
 - Apply strict adverse comparisons to percentile thresholds so observations tied
@@ -2670,6 +2779,11 @@ and embedded diagnostic images when downloaded without the repository.
 **Origin:** New Notebook; includes alternatives prepared by Previous Notebook 26  
 **Output root:** `outputs/28_metric_and_region_policy_ablation/`\
 **Depends on:** Notebooks 13–27
+
+**Controlled-300 constraint:** Retain exactly the 23 previously approved,
+explicitly named scenarios; do not form a metric-subset powerset. Process the
+expanded N27 candidate union in bounded chunks, with complete case-level
+outputs and provenance.
 
 ### Metric-family ablations
 
@@ -2785,7 +2899,7 @@ Provide:
 - embedding-based retrieval using validated feature artifacts.
 
 `data/explanation_cases.csv` is the complete machine-readable explanation
-catalog for the approved 1,785-candidate Notebook 27 union, not only the cases
+catalog for the validated Controlled-300 Notebook 27 union, not only the cases
 illustrated in the HTML report. It records population role, recommendation and
 flag evidence, available asset/map paths, uncertainty applicability, retrieval
 eligibility, report-selection roles, counterfactual-panel membership, and
@@ -2854,7 +2968,7 @@ Record and analyze:
 - throughput;
 - failure rate and retry count;
 - uncertainty candidate multiplier;
-- projected 300-painting cost;
+- observed 300-painting cost and clearly separate projections beyond 300;
 - projected SDXL cost;
 - quality versus runtime, memory, storage, candidates, and dataset size.
 
@@ -2881,6 +2995,11 @@ validation/checks.csv
 **Origin:** Consolidates Existing Notebooks 13, 19, and 26  
 **Output root:** `outputs/31_model_report_generation/`\
 **Depends on:** Notebooks 09–30
+
+**Controlled-300 scope:** Five reports: four full-evaluation methods and one
+clearly bounded SDXL report. Existing approved report structure remains the
+blueprint; numerical results and embedded visuals come from validated new
+evidence only.
 
 ### Responsibilities
 
@@ -2920,6 +3039,11 @@ validation/checks.csv
 **Origin:** Existing Previous Version of Notebook 33, Pre-refactor  
 **Output root:** `outputs/32_case_and_painting_report_generation/`\
 **Depends on:** Notebooks 09–31
+
+**Controlled-300 scope:** Produce a report for each of the 300 paintings and
+retain a complete machine-readable index of applicable cases, candidates,
+metrics and visuals. Rule-selected standalone case reports are a presentation
+subset; they do not limit evidence coverage.
 
 ### Responsibilities
 
@@ -2996,7 +3120,7 @@ Consolidate:
 - explainability findings;
 - compute/scalability;
 - model-card summaries;
-- controlled-50 results and transparent compute/storage scaling projections;
+- controlled-300 results and transparent further compute/storage projections;
 - deviations, limitations, and exclusions.
 
 Generate:

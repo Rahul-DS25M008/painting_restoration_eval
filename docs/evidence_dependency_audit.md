@@ -37,11 +37,11 @@ and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
 **Controlled-300 transition review: 2026-09-14.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebooks 01–15,
-including Notebook 12A, are committed Controlled-300 producers. Notebooks 16
-and 17 are locally complete and validated, pending compact Git commits. Both
+dependency order for the approved 300-painting study. Notebooks 01–17,
+including Notebook 12A, are committed Controlled-300 producers. Both N16/N17
 full indexed-bundle releases are remotely verified; their bulk maps and
-oversized metrics remain locally canonical. Notebooks 18–36 remain historical Controlled-50 evidence
+oversized metrics remain locally canonical. Notebook 18 is complete and
+validated locally, pending compact Git handoff. Notebooks 19–36 remain historical Controlled-50 evidence
 until each producer is explicitly reopened, rerun, validated,
 baseline-compared, and committed.
 
@@ -68,8 +68,10 @@ publication records remain valid. A later per-file LFS upload attempt for N16
 hit Hugging Face's free-account API rate limit; the user removed the partial
 remote repository and the local upload cache was cleared. That failed attempt
 was superseded by the separately approved, verified N16 indexed-bundle release.
-N17 subsequently passed its own separate full-bundle gate. Other new bulk
-publication remains deferred to the pre-N34 storage review.
+N17 subsequently passed its own separate full-bundle gate. Later oversized
+producers may use the same indexed-bundle approach after a producer-specific
+classification, capacity check and pinned remote verification. The pre-N34
+review still decides the dashboard storage and access contract.
 
 **Local-first storage and dashboard decision: 2026-09-17.** The Controlled-50
 dashboard index includes all 10,050 Notebook 16 candidate maps and all 3,270
@@ -116,6 +118,32 @@ sample images passed exact-byte public retrieval. Total published bytes:
 5,622,373,385. The record is
 `outputs/inventory/bundled_publication_n17_full.json`. All 179 Notebook 17
 validation checks remain passed; local canonical evidence is not deleted.
+
+**Controlled-300 N18 completion review (2026-09-18).** The saved notebook has
+38/38 executed code cells and no error outputs. Its completed run manifest
+records 780 prompt-specific Stable Diffusion groups (480 generic and 300
+scratch-aware), 3,120 candidates, 4,680 unordered pairs, 124,800 normalized
+uncertainty rows, 780 calibration-input rows, two readable figures, seven
+canonical files, no temporary work files, and 150/150 passing checks with no
+blocking or warning failures. All seven artifact types match the E: pilot
+baseline; metric rows increased from 20,800 to 124,800 and calibration rows
+from 130 to 780. N18 contains no spatial heatmaps (N19 owns them), no SDXL
+repeated-seed estimate, and no calibrated confidence score. Its compact Git
+handoff is pending. The largest of its seven files is an approximately 81 MB
+CSV already tracked in Git LFS, so N18 needs no separate HF publication.
+The existing machine-readable pilot coverage YAML is not
+retroactively relabelled as Controlled-300 evidence.
+
+**Downstream scale/inference decision (2026-09-18).** The binding N19–N33
+Controlled-300 population table and bounded N23–N25 statistical design are in
+the roadmap Section 2.2. N19–N22 preserve full linear coverage; N23–N25 keep
+all 35 paintings, seven per visual category, but replace exponential pilot
+enumeration with seeded painting-cluster bootstrap and batched Monte Carlo
+tests. N26's adaptive method is the starting precedent. Subsequent notebooks
+scale their validated candidate/report indexes and include HINT where
+applicable; bounded SDXL remains separate. Large outputs may use the verified
+N16/N17 indexed-bundle publication method per producer. None of these planned
+N19–N33 targets is marked complete until its own validated run exists.
 
 **Publication rationale and dashboard boundary.** The `candidates` dataset
 holds model-generated restoration images: the verified N12 SDXL and N12A HINT
@@ -202,8 +230,9 @@ metric validity and coverage passed.
 | 13 Classical Metrics | `classical_metrics.v1`, two canonical figures, validation and manifests | 477,753 rows across 16,404 candidates, 2,620 cases and 5 methods; 262/262 checks; 6 canonical files | All 6 pilot paths and schemas retained; rows increased from 63,018 to 477,753 and candidates from 2,160 to 16,404; no artifact class or responsibility was lost | Approved Controlled-300 classical full-reference producer for downstream metric synthesis, spatial analysis, comparison, reporting and dashboard stages |
 | 14 LPIPS Metrics | `lpips_metrics.v1`, diagnostic distribution figure, validation and manifests | 31,608 rows across 16,404 candidates, 2,620 cases and 5 methods; 261/261 checks; 5 canonical files | All 5 pilot paths and schemas retained; rows increased from 4,170 to 31,608; 64 displaced pilot rows map exactly to Notebook 11's 32 approved contextual-candidate replacements | Approved Controlled-300 perceptual-distance producer for downstream comparison, robustness, failure, reporting and dashboard stages |
 | 15 Feature Similarity | `feature_metrics.v1`, reusable CLIP/DINOv2 embedding bundle and manifest, diagnostic figure, validation and manifests | 63,216 metric rows and 78,336 embeddings across 16,404 candidates, 2,620 cases and 5 methods; 247 checks; 0 blocking failures; 1 declared CUDA warning; 7 canonical files | All 7 pilot paths and table schemas retained; rows increased from 8,340 to 63,216 metrics and 10,700 to 78,336 embeddings; the approved N11 displacement, inherited N06 correction, and sub-micro CUDA variation fully explain shared-row differences | Approved Controlled-300 feature-evidence and reusable-embedding producer for downstream semantic, retrieval, comparison, reporting and dashboard stages; not a conservation-specific measure |
-| 16 Difference Maps and Spatial Diagnostics | `spatial_diagnostics.v1`, 76,020 candidate maps, 14 selected panels, map manifest, validation and manifests | 143,247 spatial rows across 16,404 candidates and 2,620 cases; 76,034 map-manifest rows; 137/137 checks; 76,039 canonical files | All 7 pilot artifact classes and CSV schemas retained; rows increased from 18,896 to 143,247 and candidate maps from 10,050 to 76,020; the 170 pilot-only paths are the approved N11 candidate displacement and reselected panels | Approved local Controlled-300 spatial evidence; full maps and large CSV remain local until the pre-N34 storage review |
-| 17 Local Consistency Metrics | `local_consistency.v1`, texture, colour and seam metrics, 27,912 candidate maps, 14 selected panels, summary figure, validation and manifests | 2,060,667 metric rows across 16,404 candidates and 2,620 cases; 27,926 map-manifest rows; 179/179 checks; 27,932 canonical files | All 3,282 pilot map-manifest paths and CSV schemas retained; rows increased from 271,988 to 2,060,667 and candidate maps from 3,270 to 27,912; rendered hashes changed under expanded-population global scales | Approved local Controlled-300 consistency evidence; full maps and large CSV remain local until the pre-N34 storage review |
+| 16 Difference Maps and Spatial Diagnostics | `spatial_diagnostics.v1`, 76,020 candidate maps, 14 selected panels, map manifest, validation and manifests | 143,247 spatial rows across 16,404 candidates and 2,620 cases; 76,034 map-manifest rows; 137/137 checks; 76,039 canonical files | All 7 pilot artifact classes and CSV schemas retained; rows increased from 18,896 to 143,247 and candidate maps from 10,050 to 76,020 | Approved Controlled-300 spatial evidence; complete local corpus plus verified diagnostics bundle; compact Git committed |
+| 17 Local Consistency Metrics | `local_consistency.v1`, texture, colour and seam metrics, 27,912 candidate maps, 14 selected panels, summary figure, validation and manifests | 2,060,667 metric rows across 16,404 candidates and 2,620 cases; 27,926 map-manifest rows; 179/179 checks; 27,932 canonical files | All 3,282 pilot map-manifest paths and CSV schemas retained; rows increased from 271,988 to 2,060,667 and candidate maps from 3,270 to 27,912 | Approved Controlled-300 consistency evidence; complete local corpus plus verified diagnostics bundle; compact Git committed |
+| 18 Diffusion Uncertainty Analysis | `diffusion_uncertainty.v1`, normalized uncertainty and calibration tables, two figures, validation and manifests | 780 prompt-specific groups, 3,120 candidates, 4,680 pairs, 124,800 metric rows, 780 calibration rows, 150/150 checks, seven canonical files | Same seven pilot artifact types; metrics 20,800→124,800 and calibration 130→780; both figures visually readable | Approved local Controlled-300 scalar uncertainty evidence; compact Git handoff pending; N19 owns spatial maps |
 
 Notebook 01's final manifest records `controlled_300`, dataset version `2.0.0`,
 300 expected and observed artwork/image rows, 448 expected and observed audit
