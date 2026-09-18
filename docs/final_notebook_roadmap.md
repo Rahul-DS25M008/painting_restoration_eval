@@ -142,6 +142,18 @@ diagnostic maps, panels, and oversized diagnostic tables belong in
 `diagnostics`. The pre-N34 review still decides the dashboard's access and
 storage contract; it is not a ban on verified producer publication.
 
+Notebook 19 passed its local Controlled-300 completion gate with 2,475 owned
+PNG assets and 3,000 links to validated upstream images. Its owned images are
+diagnostics-tier material. The separate per-painting release under
+`bundled_assets/v1/controlled_300/19_uncertainty_and_spatial_explanation_maps/40b468a3712044dc`
+in the existing `diagnostics` dataset was uploaded and remotely verified at
+revision `e080704d57d2a10ebe09d0395f348b9da85ea8f7`: all 609 objects
+passed pinned SHA-256/size checks and four public sample assets were read
+exactly. The upstream links were not copied into that release. The 27 MiB
+numeric archive, compact tables, selected panels, manifests, source, and
+configuration form the GitHub scientific handoff, which remains pending the
+user's commit.
+
 Notebooks 01--11 are the final approved full-output Git/LFS checkpoint for the
 Controlled-300 rerun. Beginning with Notebook 12:
 
@@ -1860,6 +1872,16 @@ validation/checks.csv
 **Output root:** `outputs/19_uncertainty_and_spatial_explanation_maps/`  
 **Depends on:** Notebooks 01, 02, 08, 11, and 16–18
 
+**Controlled-300 execution estimate:** The 130-group pilot took about 3.4
+hours end to end. With 780 groups, use roughly **18–24 hours** as an initial
+whole-notebook planning range, not a promise or per-batch limit; derive a new
+ETA from the first 50 completed groups and rendered assets. The 2,481 expected
+canonical files include 780 uncertainty images, 780 overlays, 900 owned
+scratch-aware local-component maps and 15 selected panels. The 6,255-row
+manifest additionally links upstream maps without copying them. If the final
+archive/images are too large for the compact Git handoff, use the verified
+N16/N17 indexed-bundle diagnostics strategy after local validation.
+
 ### Responsibilities
 
 - Generate per-pixel diffusion uncertainty heatmaps for every eligible case.
@@ -1912,6 +1934,35 @@ manifests/run_manifest.json
 manifests/artifacts.csv
 validation/checks.csv
 ```
+
+### Controlled-300 completion and pilot-output comparison
+
+The saved notebook has no error outputs; the run manifest records `completed`,
+`passed`, and a passed completion gate. All 149 validation rows pass. The final
+map audit checked 5,476 distinct referenced files, including upstream links,
+with zero missing paths or checksum failures. The 20 roadmap checks pass, and
+the temporary work directory is absent. Two inspected selected panels show
+the intended uncertainty, geometry, error/improvement, and local-consistency
+evidence without collapsing it into one score.
+
+| Output family | E: pilot | Controlled-300 | Comparison |
+|---|---:|---:|---|
+| Numeric uncertainty maps (`uncertainty_maps.npz`) | 130 | 780 | All 130 shared arrays are byte-equivalent after loading; 650 new groups. |
+| Regional spatial metrics | 780 rows | 4,680 rows | Same 47 columns; all 780 shared regional means are exactly equal. |
+| Uncertainty panels | 130 PNGs | 780 PNGs | Same role; global normalization was recomputed for the expanded population. |
+| Geometry/restoration overlays | 130 PNGs | 780 PNGs | Same role; global normalization was recomputed. |
+| Scratch-aware texture/colour/seam maps | 150 PNGs | 900 PNGs | Same three map types; N17-derived global presentation scales changed. |
+| Rule-selected explanation panels | 15 PNGs | 15 PNGs | Same five-per-role/three-per-category contract; 14 pilot-only filenames were replaced by expanded-cohort selections. |
+| Normalized map manifest | 1,055 rows | 6,255 rows | Same 34 columns; 3,255 owned records plus 3,000 upstream links. |
+| Artifact manifest | 8 rows | 8 rows | Same 15 columns and artifact roles. |
+| Validation and run manifest | 149 rows + 1 JSON | 149 rows + 1 JSON | Same validation schema; all new checks pass. |
+| Complete canonical root | 431 files | 2,481 files | +2,050 files from expanded owned PNG population; no artifact family lost. |
+
+All 411 shared PNG paths differ at the byte level because the image rendering
+uses new globally estimated colour/uncertainty limits or the selected-panel
+layout and evidence population. This is not a change in the underlying shared
+numeric maps: the 130 shared archive arrays are identical, and all 780 shared
+regional means are identical. The E: copy remains read-only.
 
 ---
 

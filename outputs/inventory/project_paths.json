@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-17T23:19:03.920412Z",
+  "updated_at_utc": "2026-09-18T09:30:34.816683Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -2333,12 +2333,12 @@
       "artifact_type": "image_collection",
       "artifact_role": "scratch_aware_local_component_maps",
       "schema_version": "local_consistency_map_renderer.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "spatial_explanation_mapping",
       "validation_status": "passed",
-      "row_count": 150,
-      "file_count": 150,
-      "checksum": "2784354dd7a301132612ce7a625e7ee01b43a20b62f8036f94c54dbdf873361d"
+      "row_count": 900,
+      "file_count": 900,
+      "checksum": "e490ac634eed7633bd12cf9f8a7c9b084a0311f8a2264c1bb655f6cb52825138"
     },
     {
       "artifact_key": "spatial_explanations.map_manifest",
@@ -2347,12 +2347,12 @@
       "artifact_type": "table",
       "artifact_role": "normalized_spatial_map_index",
       "schema_version": "spatial_explanation_map_images.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "spatial_explanation_mapping",
       "validation_status": "passed",
-      "row_count": 1055,
+      "row_count": 6255,
       "file_count": 1,
-      "checksum": "be791e3d1f205407563f018cfa35ceef6bdf24f4dbf1669759126b8a8aaa4843"
+      "checksum": "3156c1d191cd8dee5b1b3de9f209e995d86c465029f6db8ddfb2c3a7668bda37"
     },
     {
       "artifact_key": "spatial_explanations.metrics",
@@ -2361,12 +2361,12 @@
       "artifact_type": "table",
       "artifact_role": "regional_spatial_explanation_evidence",
       "schema_version": "spatial_explanations.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "spatial_explanation_mapping",
       "validation_status": "passed",
-      "row_count": 780,
+      "row_count": 4680,
       "file_count": 1,
-      "checksum": "97db00153de398b8a2cc61e156addb5a092d817e87b2f2ac6a009edaebc43a94"
+      "checksum": "a55fdadcf1077856db6ce88bc427caecf5a893b9a6776d487f737c8e0e01e18b"
     },
     {
       "artifact_key": "spatial_explanations.numeric_maps",
@@ -2375,12 +2375,12 @@
       "artifact_type": "numeric_map_archive",
       "artifact_role": "raw_spatial_uncertainty_evidence",
       "schema_version": "spatial_uncertainty_numeric_archive.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "spatial_explanation_mapping",
       "validation_status": "passed",
-      "row_count": 130,
+      "row_count": 780,
       "file_count": 1,
-      "checksum": "dcadaaefa27047ce9eb0f4149b4938b5912ea4bc228b9b42509f00d9e1ae4b3f"
+      "checksum": "58e6abc196efab7a9ff4c5363815fe53384128f8430809471b85e453e9d215d8"
     },
     {
       "artifact_key": "spatial_explanations.overlay_images",
@@ -2389,12 +2389,12 @@
       "artifact_type": "image_collection",
       "artifact_role": "uncertainty_geometry_overlays",
       "schema_version": "spatial_explanation_renderer.v1.1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "spatial_explanation_mapping",
       "validation_status": "passed",
-      "row_count": 130,
-      "file_count": 130,
-      "checksum": "53aa0bd5fe775a623a6ca11e67639ea668b469862b5912306b72fd848cc68a12"
+      "row_count": 780,
+      "file_count": 780,
+      "checksum": "73960d6d216e9d3b4e6874d327a5a87bc28f63314ffb78cbf2bcce26821d4b63"
     },
     {
       "artifact_key": "spatial_explanations.selected_panels",
@@ -2403,12 +2403,12 @@
       "artifact_type": "figure_collection",
       "artifact_role": "rule_selected_combined_diagnostics",
       "schema_version": "selected_explanation_panel_layout.v1.1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "spatial_explanation_mapping",
       "validation_status": "passed",
       "row_count": 15,
       "file_count": 15,
-      "checksum": "d7d2e1562131d6236d171a727a55e631deeb2f11154e8a325becd323ba33c648"
+      "checksum": "cf4ab648630a1c69cb84887bb2fc18370d50b75aa15864db627c01efd88e08c5"
     },
     {
       "artifact_key": "spatial_explanations.uncertainty_images",
@@ -2417,12 +2417,12 @@
       "artifact_type": "image_collection",
       "artifact_role": "uncertainty_variant_panels",
       "schema_version": "spatial_explanation_renderer.v1.1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "spatial_explanation_mapping",
       "validation_status": "passed",
-      "row_count": 130,
-      "file_count": 130,
-      "checksum": "1a3a3fd48950dc58353623915657c123604fec69798ffc760614b21af188ae4e"
+      "row_count": 780,
+      "file_count": 780,
+      "checksum": "78d74dabac75434153f8eb6d7048740e466d6f7811179519cc54509b4ee50fb7"
     },
     {
       "artifact_key": "stable_diffusion.candidate_examples",
@@ -3117,12 +3117,12 @@
       "artifact_type": "validation_table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "spatial_explanation_mapping",
       "validation_status": "passed",
       "row_count": 149,
       "file_count": 1,
-      "checksum": "960ba63bdfe77b38e3a8a16e128bb17cb58db24b5f950cb65b413036c239d22d"
+      "checksum": "6090c0c44c30806316eb4396a1e66b8d8963c3b4cb936cef85c38f97d9b6dacd"
     },
     {
       "artifact_key": "validation.20_semantic_and_structural_consistency",

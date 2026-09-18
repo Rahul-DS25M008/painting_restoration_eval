@@ -1,4 +1,4 @@
-"""Resumable N16/N17 indexed-bundle publication; no notebook or Git execution.
+"""Resumable diagnostic indexed-bundle publication; no notebook or Git execution.
 
 The bounded smoke commands remain N16-only. Full uploads require explicit
 confirmation and a completed, checksum-validated producer run.
@@ -51,6 +51,13 @@ FULL_SPECS = {
         "map_key": "local_consistency.map_manifest",
         "kind": "n17_full_controlled_300",
     },
+    "19": {
+        "name": "19_uncertainty_and_spatial_explanation_maps",
+        "metric_file": "spatial_explanations.csv",
+        "metric_key": "spatial_explanations.metrics",
+        "map_key": "spatial_explanations.map_manifest",
+        "kind": "n19_full_controlled_300",
+    },
 }
 FULL_NOTEBOOK = "16"
 
@@ -62,8 +69,9 @@ def _full_spec() -> dict:
 def _rows(manifest: Path = MANIFEST) -> list[dict]:
     with manifest.open("r", encoding="utf-8-sig", newline="") as stream:
         rows = list(csv.DictReader(stream))
-    if not rows or len({row["map_image_id"] for row in rows}) != len(rows):
-        raise ValueError("Map manifest empty or has duplicate map_image_id")
+    identity_field = "map_asset_id" if FULL_NOTEBOOK == "19" else "map_image_id"
+    if not rows or len({row[identity_field] for row in rows}) != len(rows):
+        raise ValueError(f"Map manifest empty or has duplicate {identity_field}")
     return rows
 
 
@@ -106,7 +114,7 @@ def _select() -> list[dict]:
 
 def _asset(row: dict) -> dict:
     return {
-        "asset_id": row["map_image_id"],
+        "asset_id": row.get("map_image_id", row.get("map_asset_id")),
         "original_relative_path": safe_relative(row["relative_path"]),
         "painting_id": row["painting_id"],
         "case_id": row["case_id"],
@@ -233,7 +241,7 @@ def _files(stage: Path, catalogue: dict) -> dict[str, Path]:
     result = {}
     for path in stage.rglob("*"):
         if path.is_file() and path.name not in ("publication_record.json",) and not path.name.endswith(".tmp"):
-            if path.relative_to(stage).parts[0] not in ("bundles", "indexes", "tables", "provenance", "figures"):
+            if path.relative_to(stage).parts[0] not in ("bundles", "indexes", "tables", "data", "provenance", "figures"):
                 continue
             result[f"{prefix}/{path.relative_to(stage).as_posix()}"] = path
     return result
@@ -480,9 +488,16 @@ def _full_context(max_bundle_bytes: int = MAX_BUNDLE_BYTES) -> dict:
     producer_root = ROOT / "outputs" / spec["name"]
     manifest = producer_root / "manifests/map_images.csv"
     run_manifest = producer_root / "manifests/run_manifest.json"
-    rows = _rows(manifest)
-    if any(row["status"] != "passed" for row in rows):
+    manifest_rows = _rows(manifest)
+    if any(row["status"] != "passed" for row in manifest_rows):
         raise ValueError(f"N{FULL_NOTEBOOK} map manifest contains non-passed images")
+    if FULL_NOTEBOOK == "19":
+        # N19 also registers one repeated NPZ path and 3,000 upstream links.
+        # Only its owned PNGs are original images for this producer release.
+        rows = [row for row in manifest_rows
+                if row["ownership"] == "owned" and row["format"] == "PNG"]
+    else:
+        rows = manifest_rows
     assets = [_asset(row) for row in rows]
     paths = [row["original_relative_path"] for row in assets]
     if len(paths) != len(set(paths)):
@@ -492,6 +507,13 @@ def _full_context(max_bundle_bytes: int = MAX_BUNDLE_BYTES) -> dict:
         raise ValueError(f"N{FULL_NOTEBOOK} completion gate did not pass")
     if run.get("notebook_name") != spec["name"]:
         raise ValueError("Producer run manifest does not match the selected notebook")
+    if FULL_NOTEBOOK == "19":
+        expected = run["expected_counts"]
+        expected_images = sum(int(expected[key]) for key in (
+            "uncertainty_panels", "overlay_panels",
+            "owned_scratch_aware_local_component_maps", "selected_panels"))
+        if len(assets) != expected_images:
+            raise ValueError("N19 owned image coverage differs from the run contract")
     metrics = producer_root / "metrics" / spec["metric_file"]
     artifact_manifest = producer_root / "manifests/artifacts.csv"
     with artifact_manifest.open("r", encoding="utf-8-sig", newline="") as stream:
@@ -502,6 +524,13 @@ def _full_context(max_bundle_bytes: int = MAX_BUNDLE_BYTES) -> dict:
                         (spec["metric_key"], metrics_sha)):
         if artifact_rows[key]["checksum"] != actual or artifact_rows[key]["validation_status"] != "passed":
             raise ValueError(f"N{FULL_NOTEBOOK} artifact-manifest checksum/status mismatch: {key}")
+    numeric_maps = None
+    if FULL_NOTEBOOK == "19":
+        numeric_maps = producer_root / "data/uncertainty_maps.npz"
+        archive_record = artifact_rows["spatial_explanations.numeric_maps"]
+        if (archive_record["checksum"] != sha256_file(numeric_maps)
+                or archive_record["validation_status"] != "passed"):
+            raise ValueError("N19 numeric-map archive checksum/status mismatch")
     if FULL_NOTEBOOK == "17":
         summary = producer_root / "figures/local_consistency_summary.png"
         summary_record = artifact_rows["local_consistency.summary_figure"]
@@ -521,7 +550,8 @@ def _full_context(max_bundle_bytes: int = MAX_BUNDLE_BYTES) -> dict:
     return {"assets": assets, "groups": grouped, "run": run,
             "producer_root": producer_root, "manifest": manifest,
             "metrics": metrics, "manifest_sha": manifest_sha,
-            "metrics_sha": metrics_sha, "release_id": release_id,
+            "metrics_sha": metrics_sha, "numeric_maps": numeric_maps,
+            "release_id": release_id,
             "prefix": prefix, "max_bundle_bytes": max_bundle_bytes}
 
 
@@ -538,6 +568,8 @@ def plan_full(args: argparse.Namespace) -> None:
         "planned_bundle_count_conservative": parts,
         "original_image_bytes": original_bytes,
         "large_metric_table_bytes": context["metrics"].stat().st_size,
+        "numeric_archive_bytes": (context["numeric_maps"].stat().st_size
+                                  if context["numeric_maps"] else 0),
         "bundle_cap_bytes": context["max_bundle_bytes"],
         "note": "Planning reads manifests/hashes only; exact ZIP bytes are measured by prepare-full",
     }, indent=2), flush=True)
@@ -655,6 +687,8 @@ def prepare_full(args: argparse.Namespace) -> None:
         source_files["figures/local_consistency_summary.png"] = (
             context["producer_root"] / "figures/local_consistency_summary.png"
         )
+    if FULL_NOTEBOOK == "19":
+        source_files["data/uncertainty_maps.npz"] = context["numeric_maps"]
     additional = {}
     for relative, source in source_files.items():
         metadata = _copy_immutable(source, stage / relative)
@@ -807,6 +841,8 @@ def _full_upload_order(path: str) -> tuple[int, str]:
     if "/bundles/" in path:
         return (0, path)
     if "/tables/" in path:
+        return (1, path)
+    if "/data/" in path:
         return (1, path)
     if "/figures/" in path:
         return (1, path)
@@ -1005,7 +1041,7 @@ def main() -> None:
         command.add_argument("--staging-dir", required=True)
         if name in ("plan-full", "prepare-full", "verify-full-local",
                     "upload-full", "verify-full-remote"):
-            command.add_argument("--notebook", choices=("16", "17"), default="16")
+            command.add_argument("--notebook", choices=("16", "17", "19"), default="16")
         if name == "prepare-smoke":
             command.add_argument("--max-bundle-mib", type=int, default=32, choices=range(1, 33), metavar="1..32")
         if name == "upload-smoke":

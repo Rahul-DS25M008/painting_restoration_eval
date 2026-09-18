@@ -35,13 +35,14 @@ expanded benchmark. This changes no frozen Notebook 01–36 evidence. Its exact
 inputs, outputs, population, source/checkpoint requirements, observed results,
 and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
-**Controlled-300 transition review: 2026-09-14.** The pilot remains recoverable
+**Controlled-300 transition review: 2026-09-18.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebooks 01–17,
+dependency order for the approved 300-painting study. Notebooks 01–18,
 including Notebook 12A, are committed Controlled-300 producers. Both N16/N17
 full indexed-bundle releases are remotely verified; their bulk maps and
-oversized metrics remain locally canonical. Notebook 18 is complete and
-validated locally, pending compact Git handoff. Notebooks 19–36 remain historical Controlled-50 evidence
+oversized metrics remain locally canonical. Notebook 19 is complete and
+validated locally, and its full diagnostics release is remotely verified;
+its compact Git handoff remains pending. Notebooks 20–36 remain historical Controlled-50 evidence
 until each producer is explicitly reopened, rerun, validated,
 baseline-compared, and committed.
 
@@ -232,7 +233,43 @@ metric validity and coverage passed.
 | 15 Feature Similarity | `feature_metrics.v1`, reusable CLIP/DINOv2 embedding bundle and manifest, diagnostic figure, validation and manifests | 63,216 metric rows and 78,336 embeddings across 16,404 candidates, 2,620 cases and 5 methods; 247 checks; 0 blocking failures; 1 declared CUDA warning; 7 canonical files | All 7 pilot paths and table schemas retained; rows increased from 8,340 to 63,216 metrics and 10,700 to 78,336 embeddings; the approved N11 displacement, inherited N06 correction, and sub-micro CUDA variation fully explain shared-row differences | Approved Controlled-300 feature-evidence and reusable-embedding producer for downstream semantic, retrieval, comparison, reporting and dashboard stages; not a conservation-specific measure |
 | 16 Difference Maps and Spatial Diagnostics | `spatial_diagnostics.v1`, 76,020 candidate maps, 14 selected panels, map manifest, validation and manifests | 143,247 spatial rows across 16,404 candidates and 2,620 cases; 76,034 map-manifest rows; 137/137 checks; 76,039 canonical files | All 7 pilot artifact classes and CSV schemas retained; rows increased from 18,896 to 143,247 and candidate maps from 10,050 to 76,020 | Approved Controlled-300 spatial evidence; complete local corpus plus verified diagnostics bundle; compact Git committed |
 | 17 Local Consistency Metrics | `local_consistency.v1`, texture, colour and seam metrics, 27,912 candidate maps, 14 selected panels, summary figure, validation and manifests | 2,060,667 metric rows across 16,404 candidates and 2,620 cases; 27,926 map-manifest rows; 179/179 checks; 27,932 canonical files | All 3,282 pilot map-manifest paths and CSV schemas retained; rows increased from 271,988 to 2,060,667 and candidate maps from 3,270 to 27,912 | Approved Controlled-300 consistency evidence; complete local corpus plus verified diagnostics bundle; compact Git committed |
-| 18 Diffusion Uncertainty Analysis | `diffusion_uncertainty.v1`, normalized uncertainty and calibration tables, two figures, validation and manifests | 780 prompt-specific groups, 3,120 candidates, 4,680 pairs, 124,800 metric rows, 780 calibration rows, 150/150 checks, seven canonical files | Same seven pilot artifact types; metrics 20,800→124,800 and calibration 130→780; both figures visually readable | Approved local Controlled-300 scalar uncertainty evidence; compact Git handoff pending; N19 owns spatial maps |
+| 18 Diffusion Uncertainty Analysis | `diffusion_uncertainty.v1`, normalized uncertainty and calibration tables, two figures, validation and manifests | 780 prompt-specific groups, 3,120 candidates, 4,680 pairs, 124,800 metric rows, 780 calibration rows, 150/150 checks, seven canonical files | Same seven pilot artifact types; metrics 20,800→124,800 and calibration 130→780; both figures visually readable | Approved and Git-committed Controlled-300 scalar uncertainty evidence; N19 owns spatial maps |
+| 19 Uncertainty and Spatial Explanation Maps | `spatial_explanations.v1`, 780 raw numeric maps, 2,475 owned PNGs, 3,000 validated upstream links, normalized map index, validation and manifests | 4,680 regional rows; 6,255 map-manifest rows; 149/149 checks; 20/20 roadmap requirements; 2,481 canonical files and no temporary work files | Pilot schemas and eight artifact roles retained; all 130 shared numeric arrays and 780 shared regional means exact; 411 shared PNGs intentionally rerendered under changed global scales/layout; 14 selected-panel names replaced by expanded rule selection | Approved local Controlled-300 spatial explanation producer with remotely verified diagnostics release; compact Git handoff pending; no combined score or calibrated confidence claim |
+
+**Notebook 19 publication routing (local and pinned remote gates passed).**
+The complete local root is authoritative. Do not interpret 3,000 upstream-link
+rows as Notebook 19-owned files or republish their bytes under N19. The 2,475
+owned PNGs span all 300 paintings and total 1,284,143,895 bytes. Their
+producer-specific indexed release is in Hugging Face `diagnostics`, not
+`candidates`. Its pinned revision `e080704d57d2a10ebe09d0395f348b9da85ea8f7`
+passed SHA-256/size verification for all 609 remote objects (1,329,281,895
+bytes) and exact public reads of four sample images. The publication record is
+`outputs/inventory/bundled_publication_n19_full.json`. GitHub keeps
+the notebook, helper/configuration changes, the 780-entry 27.4 MiB numeric
+archive, 4,680-row metric CSV, 6,255-row map index, 15 selected panels,
+validation, run/artifact manifests, inventory, and the pinned publication
+record. The 2,460 PNGs under `images/` are ignored by Git and remain locally
+canonical; their remote release is now verified. The 15 selected
+panels are retained both in the compact Git scientific record and in the
+verified diagnostics release for self-contained public reading.
+
+| N19 canonical family | Local output | GitHub | Hugging Face |
+|---|---:|---|---|
+| Numeric uncertainty NPZ | 780 maps; 27.4 MiB | Yes, Git LFS | Diagnostics release may include the validated archive copy |
+| Regional metric table | 4,680 rows; 4.6 MiB | Yes | Diagnostics release may include a provenance copy |
+| Uncertainty and overlay images | 780 + 780 PNGs | No (`images/` ignored) | Diagnostics indexed bundles |
+| Scratch-aware texture, colour, seam | 900 PNGs | No (`images/` ignored) | Diagnostics indexed bundles |
+| Selected explanation panels | 15 PNGs | Yes | Diagnostics indexed bundles |
+| Map, artifact, validation, run manifests | 6,255 + 8 + 149 rows and one JSON | Yes | Diagnostics provenance/index copies |
+
+The E: pilot contains 431 canonical files versus 2,481 now. Its 130 shared
+raw maps are exactly equal after loading, and its 780 shared regional mean
+rows are exactly equal. All 411 shared PNG paths have different bytes because
+the controlled-300 population changed global presentation scales, while the
+selected-panel layout and representative selection changed. Fourteen
+pilot-only panel filenames are superseded by new rule-selected paintings;
+all 15 panel roles and five-per-role coverage remain. CSV column schemas and
+all eight artifact roles remain unchanged.
 
 Notebook 01's final manifest records `controlled_300`, dataset version `2.0.0`,
 300 expected and observed artwork/image rows, 448 expected and observed audit

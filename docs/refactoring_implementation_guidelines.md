@@ -850,6 +850,16 @@ Rules for the active rerun:
   units for figures or reports. Mark unchanged structural counts explicitly and
   distinguish expected scale growth from schema drift, missing evidence, and
   deliberately retired artifacts.
+- In the same final sweep, add a publication-destination table for **every
+  canonical output family**: exact local path, file/row count and bytes where
+  relevant, GitHub inclusion, Hugging Face `candidates` or `diagnostics`
+  inclusion (or an explicit deferred decision), and the reason. Distinguish
+  local scientific completion from Git staging and remote verification. Check
+  `.gitignore` and currently tracked pilot paths before writing scoped user
+  commands; include removals of superseded selected-figure paths, but never
+  stage editor lock files or unrelated changes. Give the user ordered,
+  producer-specific Hugging Face and Git commands after the inventory audit.
+  The assistant does not run `git add`, `git commit`, or `git push` for the user.
 - A committed output remains historical 50-painting evidence until its producer
   has a controlled-300 run manifest and passed completion gate. Do not rewrite a
   historical manifest to pretend that later files were part of its run.
@@ -891,11 +901,13 @@ checksums, limitations, and downstream eligibility.
 | 15 Feature Similarity | Finished | Finished with one non-blocking CUDA warning | Yes | 63,216 CLIP/DINOv2 metric rows and 78,336 embeddings for 16,404 candidates across five methods and 2,620 cases; 247 checks; 7 canonical files; 6,270.909-second extraction and 199.564-second metric construction | All 7 pilot paths and table schemas retained; metric rows increased from 8,340 to 63,216 and embeddings from 10,700 to 78,336; expected N11 candidate displacement and inherited N06 morphology differences fully accounted for; bulk NPZ classified for diagnostics-tier publication |
 | 16 Difference Maps and Spatial Diagnostics | Finished | Finished | Yes | 143,247 spatial rows, 76,020 candidate map PNGs, 14 selected panels and 76,034 map-manifest rows for 16,404 candidates and 2,620 cases; 137/137 checks; 76,039 canonical files | All 7 pilot artifact classes and CSV schemas retained; complete maps and oversized metrics are local and in the verified diagnostics indexed-bundle release; compact Git committed |
 | 17 Local Consistency Metrics | Finished | Finished | Yes | 2,060,667 texture, colour, and seam metric rows; 27,912 candidate-map PNGs, 14 selected panels and 27,926 map-manifest rows for 16,404 candidates and 2,620 cases; 179/179 checks; 27,932 canonical files | Pilot schemas/paths retained; complete maps and oversized metrics are local and in the verified diagnostics indexed-bundle release; compact Git committed |
-| 18 Diffusion Uncertainty Analysis | Finished | Finished | Yes | 780 prompt-specific groups, 3,120 candidates, 4,680 pairs, 124,800 metric rows, 780 calibration rows, two figures and 150/150 passing checks | Same seven artifact classes as the E: pilot baseline; metric/calibration rows scaled sixfold from 20,800/130; no failed checks, work files or saved notebook errors; compact Git handoff pending |
+| 18 Diffusion Uncertainty Analysis | Finished | Finished | Yes | 780 prompt-specific groups, 3,120 candidates, 4,680 pairs, 124,800 metric rows, 780 calibration rows, two figures and 150/150 passing checks | Same seven artifact classes as the E: pilot baseline; metric/calibration rows scaled sixfold from 20,800/130; no failed checks, work files or saved notebook errors; compact Git committed |
+| 19 Uncertainty and Spatial Explanation Maps | Finished | Finished | Yes | 780 numeric maps, 4,680 spatial rows, 2,475 owned PNGs, 6,255 map-manifest rows, 149/149 passing checks, and 2,481 canonical files | Pilot schemas and eight artifact roles retained; all 130 shared raw maps and 780 shared regional means are exact; globally normalized PNGs were intentionally rerendered and 14 selected-panel filenames changed under expanded rule selection; local and pinned diagnostics-release gates passed; compact Git handoff pending |
 
-Notebooks 01–17, including Notebook 12A, are committed Controlled-300
-producers. Notebook 18 is locally complete and validated, pending only its
-compact Git handoff. No later notebook may describe its
+Notebooks 01–18, including Notebook 12A, are committed Controlled-300
+producers. Notebook 19 is locally complete and validated, with its pinned
+diagnostics release remotely verified; its compact Git handoff remains pending.
+No later notebook may describe its
 historical Controlled-50 outputs as Controlled-300 evidence until that notebook
 has been explicitly reopened, rerun, validated, baseline-compared, and committed.
 
@@ -1930,6 +1942,22 @@ per-painting `ZIP_STORED` bundles addressed the failed per-image Hub rate-limit
 path and keep bulk images/tables out of Git/LFS. They reduce object/request
 counts, not total hosted bytes by compression. The member index must retain
 producer path, asset identity, byte count, hash and pinned revision.
+
+Notebook 19 has passed its local Controlled-300 gate. Its 2,475 owned
+presentation PNGs (780 uncertainty panels, 780 overlays, 900 scratch-aware
+local-component maps, and 15 selected panels) are diagnostic assets, so its
+verified indexed-bundle destination is the existing Hugging Face
+`diagnostics` dataset, not `candidates`. Its 3,000 upstream manifest links
+remain links and must not be republished as Notebook 19-owned images. The
+780-entry numeric NPZ, compact CSVs, 15 selected panels, validation and
+manifests remain in the GitHub scientific handoff; the remote bundle may also
+contain validated copies for self-contained diagnostic access. The user ran
+the separate upload and pinned verification gates. The record
+`outputs/inventory/bundled_publication_n19_full.json` pins revision
+`e080704d57d2a10ebe09d0395f348b9da85ea8f7`: all 609 objects and
+1,329,281,895 remote bytes passed verification, as did four public sample
+members. This establishes Hugging Face availability independently of the
+still-pending compact Git commit.
 
 The storage change does not alter notebook science, output ownership, schemas,
 validation, or the requirement to generate and inspect every approved canonical

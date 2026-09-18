@@ -33,7 +33,7 @@ from .schemas import (
 
 
 SPATIAL_EXPLANATIONS_MODULE_NAME = "restoration_eval.spatial_explanations"
-SPATIAL_EXPLANATIONS_MODULE_VERSION = "1.0.1"
+SPATIAL_EXPLANATIONS_MODULE_VERSION = "1.0.2"
 SPATIAL_EXPLANATIONS_METRIC_VERSION = "spatial_explanations.v1"
 SPATIAL_EXPLANATION_MAP_VERSION = "spatial_explanation_map_images.v1"
 SPATIAL_EXPLANATION_RENDERER_VERSION = "spatial_explanation_renderer.v1.1"
@@ -79,6 +79,41 @@ def load_spatial_explanations_config(path: str | Path) -> dict[str, Any]:
         expected["uncertainty_groups"]
     ):
         raise ValueError("Prompt-arm counts do not match uncertainty groups")
+    group_count = int(expected["uncertainty_groups"])
+    generic_count = int(expected["generic_groups"])
+    scratch_count = int(expected["scratch_aware_groups"])
+    expected_components = {
+        "representative_candidates": group_count,
+        "numeric_map_archive_entries": group_count,
+        "uncertainty_panels": group_count,
+        "overlay_panels": group_count,
+        "upstream_error_component_links": 2 * group_count,
+        "upstream_generic_local_component_links": 3 * generic_count,
+        "owned_scratch_aware_local_component_maps": 3 * scratch_count,
+        "selected_panels": len(settings["representative_panels"]["rules"])
+        * len(settings["representative_panels"]["categories"])
+        * int(settings["representative_panels"]["cases_per_rule_and_category"]),
+    }
+    for key, count in expected_components.items():
+        if int(expected[key]) != count:
+            raise ValueError(f"{key} does not match the component arithmetic")
+    manifest_count = sum(
+        int(expected[key]) for key in (
+            "numeric_map_archive_entries", "uncertainty_panels", "overlay_panels",
+            "upstream_error_component_links", "upstream_generic_local_component_links",
+            "owned_scratch_aware_local_component_maps", "selected_panels",
+        )
+    )
+    file_count = sum(
+        int(expected[key]) for key in (
+            "uncertainty_panels", "overlay_panels",
+            "owned_scratch_aware_local_component_maps", "selected_panels",
+        )
+    ) + 6
+    if int(expected["map_manifest_rows"]) != manifest_count:
+        raise ValueError("Map-manifest count does not match the component arithmetic")
+    if int(expected["canonical_file_count"]) != file_count:
+        raise ValueError("Canonical file count does not match owned assets")
     if settings["metric_version"] != SPATIAL_EXPLANATIONS_METRIC_VERSION:
         raise ValueError("Metric version does not match the helper")
     if settings["map_manifest_version"] != SPATIAL_EXPLANATION_MAP_VERSION:
@@ -411,14 +446,12 @@ def compute_global_normalization(
     maximum = int(settings["maximum_sampled_pixels_per_group"])
     base_seed = int(settings["deterministic_sampling_seed"])
     samples: list[np.ndarray] = []
-    full_values: list[np.ndarray] = []
     for group_id in sorted(maps):
         values = np.asarray(maps[group_id], dtype=np.float32)[
             np.asarray(content_masks[group_id], dtype=bool)
         ]
         if values.size == 0 or not np.isfinite(values).all():
             raise ValueError(f"Normalization values are invalid for {group_id}")
-        full_values.append(values)
         if values.size > maximum:
             group_seed = int(hashlib.sha256(group_id.encode("utf-8")).hexdigest()[:8], 16)
             rng = np.random.default_rng(base_seed ^ group_seed)
@@ -428,8 +461,14 @@ def compute_global_normalization(
     vmax = float(np.percentile(sampled, float(settings["percentile"])))
     if not np.isfinite(vmax) or vmax <= 0.0:
         raise ValueError("Global uncertainty vmax must be finite and positive")
-    total_pixels = sum(values.size for values in full_values)
-    clipped_pixels = sum(int(np.count_nonzero(values > vmax)) for values in full_values)
+    total_pixels = 0
+    clipped_pixels = 0
+    for group_id in sorted(maps):
+        values = np.asarray(maps[group_id], dtype=np.float32)[
+            np.asarray(content_masks[group_id], dtype=bool)
+        ]
+        total_pixels += int(values.size)
+        clipped_pixels += int(np.count_nonzero(values > vmax))
     return {
         "normalization_policy_id": settings["policy_id"],
         "vmin": float(settings["vmin"]),

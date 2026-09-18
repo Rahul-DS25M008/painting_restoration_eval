@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.14"
+config_version: "1.1.16"
 
 evidence_coverage:
   authority:
@@ -51,14 +51,14 @@ evidence_coverage:
   # Incremental transition ledger; update only after each notebook passes its
   # completion gate and read-only pilot-output comparison.
   controlled_300_rerun:
-    recorded_on: "2026-09-17"
+    recorded_on: "2026-09-18"
     recovery_tag: "pilot-50-complete"
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "17"
-    next_eligible_notebook_id: "18"
-    new_bulk_publication_policy: "n16_n17_verified_bundle_exceptions_other_bulk_deferred"
+    completed_through_notebook_id: "19"
+    next_eligible_notebook_id: "20"
+    new_bulk_publication_policy: "n16_n17_n19_verified_diagnostics_bundles_compact_git_handoff_pending_n19"
     completed_notebooks:
       - notebook_id: "01"
         stem: "01_dataset_verification"
@@ -785,6 +785,67 @@ evidence_coverage:
         publication_status: "complete_local_and_full_bundle_remote_verified"
         publication_record: "outputs/inventory/bundled_publication_n17_full.json"
         remote_revision: "ceac6a5aa67fe2a0f8c840c46f22306e7f606749"
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "18"
+        stem: "18_diffusion_uncertainty_analysis"
+        output_root: "outputs/18_diffusion_uncertainty_analysis"
+        manifest_path: "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        uncertainty_groups: 780
+        candidates: 3120
+        unique_seed_pairs: 4680
+        uncertainty_metric_rows: 124800
+        calibration_rows: 780
+        validation_rows: 150
+        canonical_output_file_count: 7
+        baseline_output_root: "E:/outputs/18_diffusion_uncertainty_analysis"
+        baseline_uncertainty_groups: 130
+        baseline_metric_rows: 20800
+        baseline_calibration_rows: 130
+        baseline_artifact_classes_preserved: true
+        external_publication_required: false
+        publication_reason: "seven_file_compact_git_handoff"
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "19"
+        stem: "19_uncertainty_and_spatial_explanation_maps"
+        output_root: "outputs/19_uncertainty_and_spatial_explanation_maps"
+        manifest_path: "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        uncertainty_groups: 780
+        numeric_archive_entries: 780
+        spatial_explanation_rows: 4680
+        owned_png_files: 2475
+        owned_png_bytes: 1284143895
+        upstream_link_rows: 3000
+        map_manifest_rows: 6255
+        validation_rows: 149
+        artifact_records: 8
+        canonical_output_file_count: 2481
+        work_file_count_after_completion: 0
+        baseline_output_root: "E:/outputs/19_uncertainty_and_spatial_explanation_maps"
+        baseline_numeric_archive_entries: 130
+        baseline_spatial_explanation_rows: 780
+        baseline_owned_png_files: 425
+        baseline_map_manifest_rows: 1055
+        baseline_canonical_output_file_count: 431
+        shared_numeric_arrays_exact: 130
+        shared_regional_mean_rows_exact: 780
+        baseline_table_schemas_and_artifact_roles_preserved: true
+        changed_shared_png_paths: 411
+        changed_shared_png_reason: "expanded_population_global_render_scales_and_selected_panel_layout"
+        superseded_selected_panel_paths: 14
+        publication_status: "full_remote_verified_compact_git_handoff_pending"
+        publication_target: "RahulMaddineni264/painting-restoration-eval-diagnostics"
+        publication_record: "outputs/inventory/bundled_publication_n19_full.json"
+        publication_prefix: "bundled_assets/v1/controlled_300/19_uncertainty_and_spatial_explanation_maps/40b468a3712044dc"
+        pinned_remote_revision: "e080704d57d2a10ebe09d0395f348b9da85ea8f7"
+        remote_verified_objects: 609
+        remote_verified_bytes: 1329281895
+        public_sample_assets_verified: 4
         unexplained_missing_or_reduced_evidence: false
 
   frozen_baseline:
