@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-18T09:30:34.816683Z",
+  "updated_at_utc": "2026-09-19T14:08:08.814964Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -2207,12 +2207,12 @@
       "artifact_type": "figure",
       "artifact_role": "representative_semantic_diagnostics",
       "schema_version": "semantic_examples_layout.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "semantic_structural_consistency",
       "validation_status": "passed",
       "row_count": 15,
       "file_count": 1,
-      "checksum": "00a80b9c1bcc485e9c4d21659bd467036d29a6ffdaba847565cba5b33fa71b1c"
+      "checksum": "db974f70ca7c53b60aa9a2639f7f1024166a8fafcc4aa02c779b26df37092e15"
     },
     {
       "artifact_key": "semantic_structural.map_images",
@@ -2221,12 +2221,12 @@
       "artifact_type": "image_collection",
       "artifact_role": "rendered_semantic_diagnostics",
       "schema_version": "semantic_map_renderer.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "semantic_structural_consistency",
       "validation_status": "passed",
-      "row_count": 1090,
-      "file_count": 1090,
-      "checksum": "02f3617057535acc5cd2b2c121cbcf2af982e4a5d0692c59ce0394c9d6817d18"
+      "row_count": 9304,
+      "file_count": 9304,
+      "checksum": "aef9b1f66b7d970b999a8d1ab5c5391db5a2c5a5777cf2d7866255d6911fd987"
     },
     {
       "artifact_key": "semantic_structural.map_manifest",
@@ -2235,12 +2235,12 @@
       "artifact_type": "table",
       "artifact_role": "normalized_semantic_map_index",
       "schema_version": "semantic_map_assets.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "semantic_structural_consistency",
       "validation_status": "passed",
-      "row_count": 9430,
+      "row_count": 72520,
       "file_count": 1,
-      "checksum": "edbdc7e45964a2ff801bed2a3d83c9a8232716104cb37f21780ecb470047d87d"
+      "checksum": "aa8c4a9a7b547bb0fd87b127f8504499ff0938df95a60032eeb11ca361e8385d"
     },
     {
       "artifact_key": "semantic_structural.metrics",
@@ -2249,12 +2249,12 @@
       "artifact_type": "table",
       "artifact_role": "semantic_structural_evidence",
       "schema_version": "semantic_structural_metrics.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "semantic_structural_consistency",
       "validation_status": "passed",
-      "row_count": 58980,
+      "row_count": 447312,
       "file_count": 1,
-      "checksum": "33e8cf29fe2272a120bc78231b688a19a94c52ade998b3695ad4e0e66ac8a1cd"
+      "checksum": "badae80c559c463cf89309d9f9ac19bd288528b9fa8a6541f7913d3a4588be5e"
     },
     {
       "artifact_key": "semantic_structural.numeric_maps",
@@ -2263,12 +2263,12 @@
       "artifact_type": "numeric_map_archive",
       "artifact_role": "raw_local_semantic_evidence",
       "schema_version": "semantic_numeric_maps.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "semantic_structural_consistency",
       "validation_status": "passed",
-      "row_count": 8340,
+      "row_count": 63216,
       "file_count": 1,
-      "checksum": "29925a0bfadea2a90f5d0665c8e0806490c0dbe12f007135377bd4842ef2855a"
+      "checksum": "da8ae0ea862f97159c9e4e6479313da0f1edef5eaf5a564d101bca2753d029cd"
     },
     {
       "artifact_key": "spatial_diagnostics.candidate_maps",
@@ -3131,12 +3131,12 @@
       "artifact_type": "validation_table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "semantic_structural_consistency",
       "validation_status": "passed",
-      "row_count": 177,
+      "row_count": 181,
       "file_count": 1,
-      "checksum": "b44bb7ec856b82e92be61c1695ac9b9a7c2f5f0a05f3d9eb8d921485509e408c"
+      "checksum": "780134f3589cef451a1242942d2d3e86e838a2de4ecb0ec16c7da5c344f79a28"
     },
     {
       "artifact_key": "validation.21_multi_model_comparison",

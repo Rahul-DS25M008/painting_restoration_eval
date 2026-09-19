@@ -53,10 +53,23 @@ FULL_SPECS = {
     },
     "19": {
         "name": "19_uncertainty_and_spatial_explanation_maps",
+        "manifest_file": "map_images.csv",
         "metric_file": "spatial_explanations.csv",
         "metric_key": "spatial_explanations.metrics",
         "map_key": "spatial_explanations.map_manifest",
         "kind": "n19_full_controlled_300",
+    },
+    "20": {
+        "name": "20_semantic_and_structural_consistency",
+        "manifest_file": "semantic_maps.csv",
+        "metric_file": "semantic_structural_metrics.csv",
+        "metric_key": "semantic_structural.metrics",
+        "map_key": "semantic_structural.map_manifest",
+        "numeric_file": "semantic_maps.npz",
+        "numeric_key": "semantic_structural.numeric_maps",
+        "figure_file": "semantic_examples.png",
+        "figure_key": "semantic_structural.examples",
+        "kind": "n20_full_controlled_300",
     },
 }
 FULL_NOTEBOOK = "16"
@@ -69,7 +82,10 @@ def _full_spec() -> dict:
 def _rows(manifest: Path = MANIFEST) -> list[dict]:
     with manifest.open("r", encoding="utf-8-sig", newline="") as stream:
         rows = list(csv.DictReader(stream))
-    identity_field = "map_asset_id" if FULL_NOTEBOOK == "19" else "map_image_id"
+    identity_field = {
+        "19": "map_asset_id",
+        "20": "semantic_map_asset_id",
+    }.get(FULL_NOTEBOOK, "map_image_id")
     if not rows or len({row[identity_field] for row in rows}) != len(rows):
         raise ValueError(f"Map manifest empty or has duplicate {identity_field}")
     return rows
@@ -114,7 +130,11 @@ def _select() -> list[dict]:
 
 def _asset(row: dict) -> dict:
     return {
-        "asset_id": row.get("map_image_id", row.get("map_asset_id")),
+        "asset_id": (
+            row.get("map_image_id")
+            or row.get("map_asset_id")
+            or row.get("semantic_map_asset_id")
+        ),
         "original_relative_path": safe_relative(row["relative_path"]),
         "painting_id": row["painting_id"],
         "case_id": row["case_id"],
@@ -486,14 +506,16 @@ def inspect(args: argparse.Namespace) -> None:
 def _full_context(max_bundle_bytes: int = MAX_BUNDLE_BYTES) -> dict:
     spec = _full_spec()
     producer_root = ROOT / "outputs" / spec["name"]
-    manifest = producer_root / "manifests/map_images.csv"
+    manifest = producer_root / "manifests" / spec.get(
+        "manifest_file", "map_images.csv"
+    )
     run_manifest = producer_root / "manifests/run_manifest.json"
     manifest_rows = _rows(manifest)
     if any(row["status"] != "passed" for row in manifest_rows):
         raise ValueError(f"N{FULL_NOTEBOOK} map manifest contains non-passed images")
-    if FULL_NOTEBOOK == "19":
-        # N19 also registers one repeated NPZ path and 3,000 upstream links.
-        # Only its owned PNGs are original images for this producer release.
+    if FULL_NOTEBOOK in ("19", "20"):
+        # N19 registers repeated/upstream paths and N20 registers repeated NPZ
+        # paths. Only producer-owned PNGs are original bundle members.
         rows = [row for row in manifest_rows
                 if row["ownership"] == "owned" and row["format"] == "PNG"]
     else:
@@ -514,10 +536,21 @@ def _full_context(max_bundle_bytes: int = MAX_BUNDLE_BYTES) -> dict:
             "owned_scratch_aware_local_component_maps", "selected_panels"))
         if len(assets) != expected_images:
             raise ValueError("N19 owned image coverage differs from the run contract")
+    if FULL_NOTEBOOK == "20":
+        expected_images = int(run["expected_counts"]["rendered_semantic_panels"])
+        if len(assets) != expected_images:
+            raise ValueError("N20 owned image coverage differs from the run contract")
     metrics = producer_root / "metrics" / spec["metric_file"]
     artifact_manifest = producer_root / "manifests/artifacts.csv"
     with artifact_manifest.open("r", encoding="utf-8-sig", newline="") as stream:
         artifact_rows = {row["artifact_key"]: row for row in csv.DictReader(stream)}
+    if any(
+        row.get("dataset_scope") != "controlled_300"
+        for row in artifact_rows.values()
+    ):
+        raise ValueError(
+            f"N{FULL_NOTEBOOK} artifact manifest is not labelled controlled_300"
+        )
     manifest_sha = sha256_file(manifest)
     metrics_sha = sha256_file(metrics)
     for key, actual in ((spec["map_key"], manifest_sha),
@@ -525,12 +558,14 @@ def _full_context(max_bundle_bytes: int = MAX_BUNDLE_BYTES) -> dict:
         if artifact_rows[key]["checksum"] != actual or artifact_rows[key]["validation_status"] != "passed":
             raise ValueError(f"N{FULL_NOTEBOOK} artifact-manifest checksum/status mismatch: {key}")
     numeric_maps = None
-    if FULL_NOTEBOOK == "19":
-        numeric_maps = producer_root / "data/uncertainty_maps.npz"
-        archive_record = artifact_rows["spatial_explanations.numeric_maps"]
+    if spec.get("numeric_file"):
+        numeric_maps = producer_root / "data" / spec["numeric_file"]
+        archive_record = artifact_rows[spec["numeric_key"]]
         if (archive_record["checksum"] != sha256_file(numeric_maps)
                 or archive_record["validation_status"] != "passed"):
-            raise ValueError("N19 numeric-map archive checksum/status mismatch")
+            raise ValueError(
+                f"N{FULL_NOTEBOOK} numeric-map archive checksum/status mismatch"
+            )
     if FULL_NOTEBOOK == "17":
         summary = producer_root / "figures/local_consistency_summary.png"
         summary_record = artifact_rows["local_consistency.summary_figure"]
@@ -678,7 +713,7 @@ def prepare_full(args: argparse.Namespace) -> None:
                {"size_bytes": ledger.stat().st_size, "sha256": sha256_file(ledger)}}
     source_files = {
         f"tables/{spec['metric_file']}": context["metrics"],
-        "tables/map_images.csv": context["manifest"],
+        f"tables/{spec.get('manifest_file', 'map_images.csv')}": context["manifest"],
         "provenance/artifacts.csv": context["producer_root"] / "manifests/artifacts.csv",
         "provenance/run_manifest.json": context["producer_root"] / "manifests/run_manifest.json",
         "provenance/checks.csv": context["producer_root"] / "validation/checks.csv",
@@ -687,8 +722,22 @@ def prepare_full(args: argparse.Namespace) -> None:
         source_files["figures/local_consistency_summary.png"] = (
             context["producer_root"] / "figures/local_consistency_summary.png"
         )
-    if FULL_NOTEBOOK == "19":
-        source_files["data/uncertainty_maps.npz"] = context["numeric_maps"]
+    if spec.get("numeric_file"):
+        source_files[f"data/{spec['numeric_file']}"] = context["numeric_maps"]
+    if spec.get("figure_file"):
+        figure = context["producer_root"] / "figures" / spec["figure_file"]
+        artifact_rows = None
+        with (context["producer_root"] / "manifests/artifacts.csv").open(
+            "r", encoding="utf-8-sig", newline=""
+        ) as stream:
+            artifact_rows = {row["artifact_key"]: row for row in csv.DictReader(stream)}
+        record = artifact_rows[spec["figure_key"]]
+        if (record["checksum"] != sha256_file(figure)
+                or record["validation_status"] != "passed"):
+            raise ValueError(
+                f"N{FULL_NOTEBOOK} figure checksum/status mismatch"
+            )
+        source_files[f"figures/{spec['figure_file']}"] = figure
     additional = {}
     for relative, source in source_files.items():
         metadata = _copy_immutable(source, stage / relative)
@@ -732,7 +781,14 @@ def _full_catalogue(stage: Path) -> dict:
 
 def verify_full_local(stage: Path, deep: bool = True) -> None:
     catalogue = _full_catalogue(stage)
-    manifest = ROOT / "outputs" / _full_spec()["name"] / "manifests/map_images.csv"
+    spec = _full_spec()
+    manifest = (
+        ROOT
+        / "outputs"
+        / spec["name"]
+        / "manifests"
+        / spec.get("manifest_file", "map_images.csv")
+    )
     if sha256_file(manifest) != catalogue["source_manifest_sha256"]:
         raise ValueError(f"N{FULL_NOTEBOOK} source manifest changed after packaging")
     seen_ids: set[str] = set()
@@ -1000,8 +1056,14 @@ def verify_full_remote(args: argparse.Namespace) -> None:
                   for asset in json.loads((stage / Path(catalogue["paintings"][painting]["path"])
                                            .relative_to(catalogue["prefix"])).read_text(encoding="utf-8"))["assets"]
                   if asset["asset_kind"] == "selected_panel"), None)
+    if panel is None and FULL_NOTEBOOK == "20":
+        painting = sorted(catalogue["paintings"])[0]
+        local = stage / Path(catalogue["paintings"][painting]["path"]).relative_to(
+            catalogue["prefix"]
+        )
+        panel = json.loads(local.read_text(encoding="utf-8"))["assets"][-1]
     if panel is None:
-        raise ValueError("No selected panel exists in full release")
+        raise ValueError("No fourth public sample exists in full release")
     samples.append((panel["painting_id"], panel))
     sample_started = time.monotonic()
     for painting, asset in samples:
@@ -1041,7 +1103,9 @@ def main() -> None:
         command.add_argument("--staging-dir", required=True)
         if name in ("plan-full", "prepare-full", "verify-full-local",
                     "upload-full", "verify-full-remote"):
-            command.add_argument("--notebook", choices=("16", "17", "19"), default="16")
+            command.add_argument(
+                "--notebook", choices=("16", "17", "19", "20"), default="16"
+            )
         if name == "prepare-smoke":
             command.add_argument("--max-bundle-mib", type=int, default=32, choices=range(1, 33), metavar="1..32")
         if name == "upload-smoke":

@@ -372,7 +372,7 @@ individual run outside its range.
 | 17 — Local consistency metrics | Observed 37 h 44 m elapsed wall span, including pauses; planned 24–48 hours | Texture, colour, seam, boundary, and directional evidence across compatible candidates and regions. Batch 7's two full image-manifest validation passes added substantial disk I/O after map generation. |
 | 18 — Diffusion uncertainty | 1–3 hours | Vectorized seed-group and pairwise scalar analysis using saved candidates and embeddings. |
 | 19 — Uncertainty and spatial explanation maps | 12–24 hours | Dense repeated-seed variability maps, overlays, and rendered heatmaps. |
-| 20 — Semantic and structural consistency | 18–30 hours | Local CLIP/DINOv2 grids, structural proxies, map archives, and selected rendered panels. |
+| 20 — Semantic and structural consistency | 24–36 hours | Pilot completed in about 3 hours 38 minutes for 2,160 candidates and 1,090 panels; controlled-300 scales to 16,404 candidates and 9,304 panels. Local CLIP/DINOv2 grids and full panel rendering dominate; estimate assumes the same machine and excludes publication. |
 | 21 — Multi-model comparison | 8–16 hours | Large evidence joins, direction-aware comparisons, ranking stability, figures, and a self-contained report. |
 | D02 — Portrait audit | 2–5 compute hours, plus 3–6 review hours | Existing-evidence screening, anatomical annotation review, matched analysis, and report generation; no new inference unless separately approved. |
 | 22 — Damage-size diffusion extension | 6–12 hours | 735 new Stable Diffusion candidates with resumable generation and validation. |
@@ -1971,7 +1971,7 @@ regional means are identical. The E: copy remains read-only.
 **Notebook:** `20_semantic_and_structural_consistency.ipynb`  
 **Origin:** New Notebook  
 **Output root:** `outputs/20_semantic_and_structural_consistency/`  
-**Depends on:** Notebooks 01, 02, 08–12, and 15–19
+**Depends on:** Notebooks 01, 02, 08–12, 12A, and 15–19
 
 ### Responsibilities
 
@@ -2014,6 +2014,23 @@ regional means are identical. The E: copy remains read-only.
   because Stable Diffusion contains multiple candidates for the same case.
 - Notebook 20 produces machine-readable evidence and selected visualizations;
   it does not generate a standalone report.
+
+### Controlled-300 completion record
+
+- Completion gate passed with 181/181 validation checks, zero blocking
+  failures, and zero warning failures.
+- The evaluated population contains 16,404 candidates across 2,620 cases and
+  five methods.
+- Canonical evidence contains 447,312 metric rows, 63,216 numeric-map bundles,
+  9,304 rendered semantic panels, 72,520 map-manifest rows, one 15-case
+  representative figure, six artifact records, and 9,311 files.
+- All eight pilot artifact paths and all CSV schemas are retained. Metrics
+  increased from 58,980 to 447,312, numeric bundles from 8,340 to 63,216,
+  rendered panels from 1,090 to 9,304, map-manifest rows from 9,430 to 72,520,
+  and validation rows from 177 to 181.
+- Complete local evidence remains authoritative. Bulk diagnostics use the
+  established indexed-bundle workflow in the Hugging Face diagnostics dataset;
+  Git retains the compact scientific handoff and pinned publication record.
 
 ### Canonical outputs
 

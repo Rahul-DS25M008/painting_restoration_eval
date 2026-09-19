@@ -235,6 +235,7 @@ metric validity and coverage passed.
 | 17 Local Consistency Metrics | `local_consistency.v1`, texture, colour and seam metrics, 27,912 candidate maps, 14 selected panels, summary figure, validation and manifests | 2,060,667 metric rows across 16,404 candidates and 2,620 cases; 27,926 map-manifest rows; 179/179 checks; 27,932 canonical files | All 3,282 pilot map-manifest paths and CSV schemas retained; rows increased from 271,988 to 2,060,667 and candidate maps from 3,270 to 27,912 | Approved Controlled-300 consistency evidence; complete local corpus plus verified diagnostics bundle; compact Git committed |
 | 18 Diffusion Uncertainty Analysis | `diffusion_uncertainty.v1`, normalized uncertainty and calibration tables, two figures, validation and manifests | 780 prompt-specific groups, 3,120 candidates, 4,680 pairs, 124,800 metric rows, 780 calibration rows, 150/150 checks, seven canonical files | Same seven pilot artifact types; metrics 20,800→124,800 and calibration 130→780; both figures visually readable | Approved and Git-committed Controlled-300 scalar uncertainty evidence; N19 owns spatial maps |
 | 19 Uncertainty and Spatial Explanation Maps | `spatial_explanations.v1`, 780 raw numeric maps, 2,475 owned PNGs, 3,000 validated upstream links, normalized map index, validation and manifests | 4,680 regional rows; 6,255 map-manifest rows; 149/149 checks; 20/20 roadmap requirements; 2,481 canonical files and no temporary work files | Pilot schemas and eight artifact roles retained; all 130 shared numeric arrays and 780 shared regional means exact; 411 shared PNGs intentionally rerendered under changed global scales/layout; 14 selected-panel names replaced by expanded rule selection | Approved local Controlled-300 spatial explanation producer with remotely verified diagnostics release; compact Git handoff pending; no combined score or calibrated confidence claim |
+| 20 Semantic and Structural Consistency | `semantic_structural_metrics.v1`, `semantic_numeric_maps.v1`, 9,304 rendered panels, representative figure, normalized map index, validation and manifests | 447,312 metric rows; 63,216 numeric bundles; 72,520 map-manifest rows; 181/181 checks; 22/22 roadmap requirements; 9,311 canonical files and no temporary work files | All eight pilot paths and CSV schemas retained; rows increased from 58,980 to 447,312, numeric bundles from 8,340 to 63,216, and rendered panels from 1,090 to 9,304 | Approved local Controlled-300 semantic/structural proxy producer; diagnostics bundle and compact Git handoff pending; not validated face, anatomy, object, iconographic, historical, or conservation assessment |
 
 **Notebook 19 publication routing (local and pinned remote gates passed).**
 The complete local root is authoritative. Do not interpret 3,000 upstream-link
@@ -252,6 +253,16 @@ record. The 2,460 PNGs under `images/` are ignored by Git and remain locally
 canonical; their remote release is now verified. The 15 selected
 panels are retained both in the compact Git scientific record and in the
 verified diagnostics release for self-contained public reading.
+
+**Notebook 20 publication routing.** The complete local root contains 9,304
+owned semantic-panel PNGs (13,567,464,318 bytes), a 63,216-entry numeric archive,
+447,312 metric rows, a 72,520-row map manifest, the representative figure, and
+validated provenance. These are derived diagnostics and therefore route to
+Hugging Face `RahulMaddineni264/painting-restoration-eval-diagnostics`, not the
+restoration-candidate dataset. The indexed-bundle release preserves producer
+paths, identities, sizes, hashes, and a pinned remote revision. GitHub retains
+the compact scientific/control-plane artifacts and final publication record;
+the complete local root remains authoritative.
 
 | N19 canonical family | Local output | GitHub | Hugging Face |
 |---|---:|---|---|

@@ -903,10 +903,11 @@ checksums, limitations, and downstream eligibility.
 | 17 Local Consistency Metrics | Finished | Finished | Yes | 2,060,667 texture, colour, and seam metric rows; 27,912 candidate-map PNGs, 14 selected panels and 27,926 map-manifest rows for 16,404 candidates and 2,620 cases; 179/179 checks; 27,932 canonical files | Pilot schemas/paths retained; complete maps and oversized metrics are local and in the verified diagnostics indexed-bundle release; compact Git committed |
 | 18 Diffusion Uncertainty Analysis | Finished | Finished | Yes | 780 prompt-specific groups, 3,120 candidates, 4,680 pairs, 124,800 metric rows, 780 calibration rows, two figures and 150/150 passing checks | Same seven artifact classes as the E: pilot baseline; metric/calibration rows scaled sixfold from 20,800/130; no failed checks, work files or saved notebook errors; compact Git committed |
 | 19 Uncertainty and Spatial Explanation Maps | Finished | Finished | Yes | 780 numeric maps, 4,680 spatial rows, 2,475 owned PNGs, 6,255 map-manifest rows, 149/149 passing checks, and 2,481 canonical files | Pilot schemas and eight artifact roles retained; all 130 shared raw maps and 780 shared regional means are exact; globally normalized PNGs were intentionally rerendered and 14 selected-panel filenames changed under expanded rule selection; local and pinned diagnostics-release gates passed; compact Git handoff pending |
+| 20 Semantic and Structural Consistency | Finished | Finished | Yes | 447,312 metric rows, 63,216 numeric-map bundles, 9,304 rendered semantic panels, 72,520 map-manifest rows, 181/181 passing checks, and 9,311 canonical files | All eight pilot artifact paths and CSV schemas retained; metrics increased from 58,980 to 447,312, numeric bundles from 8,340 to 63,216, and rendered panels from 1,090 to 9,304; representative figure visually reviewed; diagnostics bundle and compact Git handoff pending |
 
-Notebooks 01–18, including Notebook 12A, are committed Controlled-300
-producers. Notebook 19 is locally complete and validated, with its pinned
-diagnostics release remotely verified; its compact Git handoff remains pending.
+Notebooks 01–19, including Notebook 12A, are committed Controlled-300
+producers. Notebook 20 is locally complete and validated; its producer-specific
+diagnostics bundle and compact Git handoff are the next publication gates.
 No later notebook may describe its
 historical Controlled-50 outputs as Controlled-300 evidence until that notebook
 has been explicitly reopened, rerun, validated, baseline-compared, and committed.
@@ -1959,6 +1960,17 @@ the separate upload and pinned verification gates. The record
 members. This establishes Hugging Face availability independently of the
 still-pending compact Git commit.
 
+Notebook 20 has passed its local Controlled-300 gate with 447,312 transparent
+semantic/structural metric rows, 63,216 numeric bundles, 9,304 rendered panels,
+72,520 map-manifest rows, 181 passing checks, and no temporary work directory.
+Its diagnostic panels, numeric archive, large metric table, normalized map
+manifest, representative figure, and provenance use the same indexed
+per-painting bundle contract as Notebooks 16, 17, and 19. The destination is
+Hugging Face `diagnostics`, not `candidates`, because Notebook 20 produces
+derived diagnostic evidence rather than restoration candidates. Git retains
+the notebook, helper/configuration changes, compact manifests and validation,
+the representative figure, inventory, and the pinned publication record.
+
 The storage change does not alter notebook science, output ownership, schemas,
 validation, or the requirement to generate and inspect every approved canonical
 artifact locally. Every notebook continues to write its complete evidence to
@@ -1974,7 +1986,7 @@ The current storage tiers are:
    large numeric tables, and source manifests remain under their exact local
    `outputs/<notebook_stem>/` roots. This is the authoritative active corpus.
 3. **Verified external evidence:** N12, N12A, N13, N15, and the separately
-   approved N16/N17 bundle releases retain their records. Later large
+   approved N16/N17/N19 bundle releases retain their records. Later large
    producers may use the same indexed-bundle workflow after notebook-specific
    classification, capacity checks, full remote verification, and a separate
    user-controlled upload gate. This does not decide the dashboard backend.

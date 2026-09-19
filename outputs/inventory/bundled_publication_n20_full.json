@@ -1,0 +1,28 @@
+{
+  "asset_count": 9304,
+  "bundle_bytes": 13570879360,
+  "bundle_count": 513,
+  "object_count": 823,
+  "prefix": "bundled_assets/v1/controlled_300/20_semantic_and_structural_consistency/b29a25d740c9dea4",
+  "producer": "20_semantic_and_structural_consistency",
+  "public_sample_asset_count": 4,
+  "public_sample_downloaded_bytes": 110790397,
+  "public_sample_downloaded_objects": 8,
+  "public_sample_seconds": 12.31,
+  "release_id": "b29a25d740c9dea4",
+  "remote_verification_methods": {
+    "lfs_sha256": 517,
+    "public_read_sha256": 306
+  },
+  "remote_verification_seconds": 116.92,
+  "remote_verified_bytes": 14066563594,
+  "remote_verified_object_count": 823,
+  "repo_id": "RahulMaddineni264/painting-restoration-eval-diagnostics",
+  "revision": "8f849ea89e0fa6cabf309481d63c44bb3878edc3",
+  "schema_version": "bundle_assets.v1",
+  "source_manifest_sha256": "aa8c4a9a7b547bb0fd87b127f8504499ff0938df95a60032eeb11ca361e8385d",
+  "source_run_id": "run_8c94e988fd4c4d7cae0acd8c3a64fbe6",
+  "status": "full_remote_verified",
+  "uploaded_bytes": 14066563594,
+  "uploaded_object_count": 823
+}

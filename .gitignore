@@ -45,9 +45,10 @@ docs/supervisor/Next_Steps.docx
 .codex_tmp/
 
 # Controlled-300 storage boundary (Notebook 12 onward).
-# Complete notebook-owned evidence remains local. N12-15 and the approved N16
-# indexed-bundle release are externally verified; N17 has a separate release
-# gate. Other bulk publication waits for the pre-N34 storage review. GitHub
+# Complete notebook-owned evidence remains local. N12-15 and the approved
+# N16/N17/N19 indexed-bundle releases are externally verified; N20 uses the
+# same diagnostics release gate. Other bulk publication waits for the pre-N34
+# storage review. GitHub
 # retains compact scientific evidence; N01-11 are the full-output checkpoint.
 /outputs/1[2-9]_*/images/
 /outputs/12a_*/images/
@@ -64,6 +65,8 @@ docs/supervisor/Next_Steps.docx
 /outputs/15_feature_similarity/data/embeddings.npz
 /outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv
 /outputs/17_local_consistency_metrics/metrics/local_consistency.csv
+/outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv
+/outputs/20_semantic_and_structural_consistency/data/semantic_maps.npz
 
 # Upload scratch metadata is not scientific evidence, even while publication
 # is paused. The failed N16 upload cache was removed after the policy change.

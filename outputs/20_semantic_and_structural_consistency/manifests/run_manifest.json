@@ -1,64 +1,68 @@
 {
   "manifest_schema_version": "run_manifest.v1",
-  "run_id": "run_cb24def4d3134cc3bb6d679d390b777e",
+  "run_id": "run_8c94e988fd4c4d7cae0acd8c3a64fbe6",
   "notebook_id": "20",
   "notebook_name": "20_semantic_and_structural_consistency",
   "origin": "New Notebook",
   "run_status": "completed",
-  "started_at_utc": "2026-08-30T19:29:30.674663Z",
-  "completed_at_utc": "2026-08-30T23:07:37.642015Z",
-  "git_commit": "b9402903c5bb3fa55d7f1e8e6500bf0c6e97cd75",
+  "started_at_utc": "2026-09-19T11:59:43.365153Z",
+  "completed_at_utc": "2026-09-19T14:08:04.564974Z",
+  "git_commit": "e91b5e5c8dd313c66811b17b0a242f071ee0d852",
   "git_dirty": true,
   "git_branch": "main",
   "git_error": "",
-  "inventory_run_id": "inventory_20260830T181011Z_6fd49130",
+  "inventory_run_id": "inventory_20260918T105924Z_55c632e2",
   "dataset_versions": {
     "notebook_01": {
-      "run_id": "run_424a69cf0c2c4a228d0919dc2d66258a",
+      "run_id": "run_49a7e3c485394878ab4323ce661f3ef5",
       "run_status": "completed"
     },
     "notebook_02": {
-      "run_id": "run_5e54b2de32934e1c9303e7250b932404",
+      "run_id": "run_ca94012bb1e54bf5bf57c1fdabb01480",
       "run_status": "completed"
     },
     "notebook_08": {
-      "run_id": "run_a3734bc2121f401b87de4894717366ab",
+      "run_id": "run_b83466f07ebb4b55928229587922334a",
       "run_status": "completed"
     },
     "notebook_09": {
-      "run_id": "run_eafa3b4f805e472688f1df65b894b96e",
+      "run_id": "run_350786ea88014b67b0cf9efec7fac23c",
       "run_status": "completed"
     },
     "notebook_10": {
-      "run_id": "run_25e38d80461643fb91ba60cb551a9a2f",
+      "run_id": "run_6f81083a17804d36b1495e4932db4e03",
       "run_status": "completed"
     },
     "notebook_11": {
-      "run_id": "run_82ee1e1c09524a5da3e6fe93016d0627",
+      "run_id": "run_4385124a0cca4d758d357de654a33f13",
       "run_status": "completed"
     },
     "notebook_12": {
-      "run_id": "run_1daaf4a3dcb34b5599b0ff89bb7034d3",
+      "run_id": "run_1f7af9d329354a56b4275c4af3cd3f75",
+      "run_status": "completed"
+    },
+    "notebook_12a_hint": {
+      "run_id": "run_f6c9353c31ce4ed9be5e5502571d635d",
       "run_status": "completed"
     },
     "notebook_15": {
-      "run_id": "run_2b08762834b1423b8a61ef159c2679dc",
+      "run_id": "run_50c1bb5f25b44111a76df998329d69ed",
       "run_status": "completed"
     },
     "notebook_16": {
-      "run_id": "run_1181febbbd3d4e63bbd60bc565b2d0c9",
+      "run_id": "run_99b0d8d1af1b43bd8e8cb3d6ae754868",
       "run_status": "completed"
     },
     "notebook_17": {
-      "run_id": "run_a322000b2a0445c9b5b71a2e0502fdf0",
+      "run_id": "run_ed15508895b542e6ac0733c49704ad26",
       "run_status": "completed"
     },
     "notebook_18": {
-      "run_id": "run_a660cfa509e643a39708d762f18cae2b",
+      "run_id": "run_7c1d7195ed8447c1a878259360b1f5f2",
       "run_status": "completed"
     },
     "notebook_19": {
-      "run_id": "run_bddab70b2b2c46aaa013f8c45a91fc23",
+      "run_id": "run_7384c7fb8d4c4efe98264a660ac12a75",
       "run_status": "completed"
     }
   },
@@ -66,15 +70,15 @@
     "config/evaluation/semantic_structural.yaml"
   ],
   "configuration_checksums": {
-    "config/evaluation/semantic_structural.yaml": "e62a742ba3ed55d5bc141f2acee67e181bae42d9d33a07915fcff630fef4ef98"
+    "config/evaluation/semantic_structural.yaml": "6b4c5f9ed5307ccf7d7f3eccb8ecd3ff99c06a579ac721279249ec792d9f24ce"
   },
   "helper_versions": {
     "semantic_structural": "1.0.3",
     "feature_similarity": "3.0.1",
     "evaluation_inputs": "1.0.1",
     "regions": "1.1.0",
-    "schemas": "1.17.0",
-    "paths": "1.0.0",
+    "schemas": "1.19.0",
+    "paths": "1.1.0",
     "manifests": "1.0.0",
     "validation": "1.0.0"
   },
@@ -102,7 +106,7 @@
       "relative_path": "outputs/inventory/project_file_inventory.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 9469827
+      "size_bytes": 69105527
     },
     {
       "input_key": "inventory_run_path",
@@ -110,7 +114,7 @@
       "relative_path": "outputs/inventory/inventory_run.json",
       "required": true,
       "exists": true,
-      "size_bytes": 2658
+      "size_bytes": 2821
     },
     {
       "input_key": "project_paths_path",
@@ -118,7 +122,7 @@
       "relative_path": "outputs/inventory/project_paths.json",
       "required": true,
       "exists": true,
-      "size_bytes": 68252
+      "size_bytes": 152669
     },
     {
       "input_key": "artworks_path",
@@ -126,7 +130,7 @@
       "relative_path": "outputs/01_dataset_verification/data/artworks.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 29822
+      "size_bytes": 280991
     },
     {
       "input_key": "artworks_run_manifest_path",
@@ -134,7 +138,7 @@
       "relative_path": "outputs/01_dataset_verification/manifests/run_manifest.json",
       "required": true,
       "exists": true,
-      "size_bytes": 8981
+      "size_bytes": 9107
     },
     {
       "input_key": "geometry_path",
@@ -142,7 +146,7 @@
       "relative_path": "outputs/02_image_preprocessing/data/preprocessed_images.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 32706
+      "size_bytes": 193763
     },
     {
       "input_key": "geometry_run_manifest_path",
@@ -150,7 +154,7 @@
       "relative_path": "outputs/02_image_preprocessing/manifests/run_manifest.json",
       "required": true,
       "exists": true,
-      "size_bytes": 10754
+      "size_bytes": 10881
     },
     {
       "input_key": "case_registry_path",
@@ -158,7 +162,7 @@
       "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 263890
+      "size_bytes": 1734032
     },
     {
       "input_key": "model_eligibility_path",
@@ -166,7 +170,7 @@
       "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 600509
+      "size_bytes": 4942499
     },
     {
       "input_key": "region_policy_path",
@@ -190,7 +194,7 @@
       "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
       "required": true,
       "exists": true,
-      "size_bytes": 16592
+      "size_bytes": 16624
     },
     {
       "input_key": "opencv_candidates_path",
@@ -198,7 +202,7 @@
       "relative_path": "outputs/09_opencv_telea_restoration/data/restorations.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 345159
+      "size_bytes": 2212716
     },
     {
       "input_key": "opencv_run_manifest_path",
@@ -206,7 +210,7 @@
       "relative_path": "outputs/09_opencv_telea_restoration/manifests/run_manifest.json",
       "required": true,
       "exists": true,
-      "size_bytes": 12991
+      "size_bytes": 13017
     },
     {
       "input_key": "lama_candidates_path",
@@ -214,7 +218,7 @@
       "relative_path": "outputs/10_lama_restoration/data/restorations.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 457518
+      "size_bytes": 2930181
     },
     {
       "input_key": "lama_run_manifest_path",
@@ -222,7 +226,7 @@
       "relative_path": "outputs/10_lama_restoration/manifests/run_manifest.json",
       "required": true,
       "exists": true,
-      "size_bytes": 23476
+      "size_bytes": 23514
     },
     {
       "input_key": "stable_diffusion_candidates_path",
@@ -230,7 +234,7 @@
       "relative_path": "outputs/11_stable_diffusion_restoration/data/candidates.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 2436507
+      "size_bytes": 15634741
     },
     {
       "input_key": "stable_diffusion_prompt_policy_path",
@@ -246,7 +250,7 @@
       "relative_path": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json",
       "required": true,
       "exists": true,
-      "size_bytes": 27662
+      "size_bytes": 27699
     },
     {
       "input_key": "sdxl_candidates_path",
@@ -254,7 +258,7 @@
       "relative_path": "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 20267
+      "size_bytes": 66981
     },
     {
       "input_key": "sdxl_run_manifest_path",
@@ -262,7 +266,23 @@
       "relative_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json",
       "required": true,
       "exists": true,
-      "size_bytes": 18784
+      "size_bytes": 18795
+    },
+    {
+      "input_key": "hint_candidates_path",
+      "producer": "12a_hint_restoration",
+      "relative_path": "outputs/12a_hint_restoration/data/restorations.csv",
+      "required": true,
+      "exists": true,
+      "size_bytes": 1974624
+    },
+    {
+      "input_key": "hint_run_manifest_path",
+      "producer": "12a_hint_restoration",
+      "relative_path": "outputs/12a_hint_restoration/manifests/run_manifest.json",
+      "required": true,
+      "exists": true,
+      "size_bytes": 11373
     },
     {
       "input_key": "feature_config_path",
@@ -270,7 +290,7 @@
       "relative_path": "config/evaluation/feature_similarity.yaml",
       "required": true,
       "exists": true,
-      "size_bytes": 9039
+      "size_bytes": 9856
     },
     {
       "input_key": "feature_metrics_path",
@@ -278,7 +298,7 @@
       "relative_path": "outputs/15_feature_similarity/metrics/feature_metrics.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 5248929
+      "size_bytes": 40043594
     },
     {
       "input_key": "feature_embeddings_path",
@@ -286,7 +306,7 @@
       "relative_path": "outputs/15_feature_similarity/data/embeddings.npz",
       "required": true,
       "exists": true,
-      "size_bytes": 15047163
+      "size_bytes": 111901977
     },
     {
       "input_key": "feature_embedding_manifest_path",
@@ -294,7 +314,7 @@
       "relative_path": "outputs/15_feature_similarity/manifests/embeddings.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 6072209
+      "size_bytes": 44897353
     },
     {
       "input_key": "feature_run_manifest_path",
@@ -302,7 +322,7 @@
       "relative_path": "outputs/15_feature_similarity/manifests/run_manifest.json",
       "required": true,
       "exists": true,
-      "size_bytes": 21182
+      "size_bytes": 22579
     },
     {
       "input_key": "spatial_metrics_path",
@@ -310,7 +330,7 @@
       "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 10817207
+      "size_bytes": 81938963
     },
     {
       "input_key": "spatial_map_manifest_path",
@@ -318,7 +338,7 @@
       "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/map_images.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 5591171
+      "size_bytes": 41754229
     },
     {
       "input_key": "spatial_run_manifest_path",
@@ -326,7 +346,7 @@
       "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json",
       "required": true,
       "exists": true,
-      "size_bytes": 24887
+      "size_bytes": 27100
     },
     {
       "input_key": "local_metrics_path",
@@ -334,7 +354,7 @@
       "relative_path": "outputs/17_local_consistency_metrics/metrics/local_consistency.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 150969091
+      "size_bytes": 1146504203
     },
     {
       "input_key": "local_map_manifest_path",
@@ -342,7 +362,7 @@
       "relative_path": "outputs/17_local_consistency_metrics/manifests/map_images.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 2163924
+      "size_bytes": 18806676
     },
     {
       "input_key": "local_run_manifest_path",
@@ -350,7 +370,7 @@
       "relative_path": "outputs/17_local_consistency_metrics/manifests/run_manifest.json",
       "required": true,
       "exists": true,
-      "size_bytes": 25710
+      "size_bytes": 27388
     },
     {
       "input_key": "uncertainty_metrics_path",
@@ -358,7 +378,7 @@
       "relative_path": "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_metrics.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 13310933
+      "size_bytes": 81414282
     },
     {
       "input_key": "uncertainty_run_manifest_path",
@@ -366,7 +386,7 @@
       "relative_path": "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json",
       "required": true,
       "exists": true,
-      "size_bytes": 21218
+      "size_bytes": 21497
     },
     {
       "input_key": "explanation_metrics_path",
@@ -374,7 +394,7 @@
       "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/metrics/spatial_explanations.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 794959
+      "size_bytes": 4823036
     },
     {
       "input_key": "explanation_map_manifest_path",
@@ -382,7 +402,7 @@
       "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/map_images.csv",
       "required": true,
       "exists": true,
-      "size_bytes": 775219
+      "size_bytes": 4594895
     },
     {
       "input_key": "explanation_run_manifest_path",
@@ -390,7 +410,7 @@
       "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json",
       "required": true,
       "exists": true,
-      "size_bytes": 21609
+      "size_bytes": 21778
     },
     {
       "input_key": "implementation_guidelines_path",
@@ -398,7 +418,7 @@
       "relative_path": "docs/refactoring_implementation_guidelines.md",
       "required": true,
       "exists": true,
-      "size_bytes": 43517
+      "size_bytes": 113276
     },
     {
       "input_key": "notebook_roadmap_path",
@@ -406,7 +426,7 @@
       "relative_path": "docs/final_notebook_roadmap.md",
       "required": true,
       "exists": true,
-      "size_bytes": 67949
+      "size_bytes": 181177
     }
   ],
   "outputs": [
@@ -416,7 +436,7 @@
       "artifact_type": "numeric_map_archive",
       "artifact_role": "raw_local_semantic_evidence",
       "schema_version": "semantic_numeric_maps.v1",
-      "expected_row_count": 8340
+      "expected_row_count": 63216
     },
     {
       "artifact_key": "semantic_structural.metrics",
@@ -424,7 +444,7 @@
       "artifact_type": "table",
       "artifact_role": "semantic_structural_evidence",
       "schema_version": "semantic_structural_metrics.v1",
-      "expected_row_count": 58980
+      "expected_row_count": 447312
     },
     {
       "artifact_key": "semantic_structural.map_images",
@@ -432,7 +452,7 @@
       "artifact_type": "image_collection",
       "artifact_role": "rendered_semantic_diagnostics",
       "schema_version": "semantic_map_renderer.v1",
-      "expected_row_count": 1090
+      "expected_row_count": 9304
     },
     {
       "artifact_key": "semantic_structural.examples",
@@ -448,7 +468,7 @@
       "artifact_type": "table",
       "artifact_role": "normalized_semantic_map_index",
       "schema_version": "semantic_map_assets.v1",
-      "expected_row_count": 9430
+      "expected_row_count": 72520
     },
     {
       "artifact_key": "validation.20_semantic_and_structural_consistency",
@@ -456,7 +476,7 @@
       "artifact_type": "validation_table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "expected_row_count": 177
+      "expected_row_count": 181
     },
     {
       "artifact_key": "semantic_structural.artifacts",
@@ -476,66 +496,68 @@
     }
   ],
   "expected_counts": {
-    "evaluated_cases": 410,
-    "evaluated_candidates": 2160,
-    "nonzero_candidates": 2010,
-    "zero_control_candidates": 150,
+    "evaluated_cases": 2620,
+    "evaluated_candidates": 16404,
+    "nonzero_candidates": 15204,
+    "zero_control_candidates": 1200,
     "candidates_by_model": {
-      "opencv_telea": 410,
-      "lama": 410,
-      "stable_diffusion_inpainting": 1330,
-      "sdxl_inpainting": 10
+      "opencv_telea": 2620,
+      "lama": 2620,
+      "hint_places2": 2620,
+      "stable_diffusion_inpainting": 8520,
+      "sdxl_inpainting": 24
     },
-    "candidate_region_evaluations_per_encoder": 4170,
-    "content_region_evaluations_per_encoder": 2160,
-    "mask_bbox_evaluations_per_encoder": 2010,
-    "source_token_records": 10700,
-    "subject_preservation_rows": 4320,
-    "local_similarity_summary_rows": 25020,
-    "local_worsened_fraction_rows": 8340,
-    "outside_context_rows": 4320,
-    "structural_layout_rows": 8640,
-    "painterly_proxy_rows": 4170,
-    "encoder_agreement_rows": 4170,
-    "semantic_metric_rows": 58980,
-    "numeric_map_bundles": 8340,
-    "rendered_semantic_panels": 1090,
-    "map_manifest_rows": 9430,
+    "candidate_region_evaluations_per_encoder": 31608,
+    "content_region_evaluations_per_encoder": 16404,
+    "mask_bbox_evaluations_per_encoder": 15204,
+    "source_token_records": 78336,
+    "subject_preservation_rows": 32808,
+    "local_similarity_summary_rows": 189648,
+    "local_worsened_fraction_rows": 63216,
+    "outside_context_rows": 32808,
+    "structural_layout_rows": 65616,
+    "painterly_proxy_rows": 31608,
+    "encoder_agreement_rows": 31608,
+    "semantic_metric_rows": 447312,
+    "numeric_map_bundles": 63216,
+    "rendered_semantic_panels": 9304,
+    "map_manifest_rows": 72520,
     "representative_cases": 15,
     "artifact_records": 6,
-    "canonical_file_count": 1097,
+    "canonical_file_count": 9311,
     "artifact_record_count": 6,
-    "validation_row_count": 177,
+    "validation_row_count": 181,
     "temporary_work_file_count": 0,
     "blocking_validation_failures": 0,
     "warning_validation_failures": 0
   },
   "observed_counts": {
-    "evaluated_cases": 410,
-    "evaluated_candidates": 2160,
-    "nonzero_candidates": 2010,
-    "zero_control_candidates": 150,
+    "evaluated_cases": 2620,
+    "evaluated_candidates": 16404,
+    "nonzero_candidates": 15204,
+    "zero_control_candidates": 1200,
     "candidates_by_model": {
-      "lama": 410,
-      "opencv_telea": 410,
-      "sdxl_inpainting": 10,
-      "stable_diffusion_inpainting": 1330
+      "hint_places2": 2620,
+      "lama": 2620,
+      "opencv_telea": 2620,
+      "sdxl_inpainting": 24,
+      "stable_diffusion_inpainting": 8520
     },
-    "candidate_region_evaluations_per_encoder": 4170,
-    "source_token_records": 10700,
-    "semantic_metric_rows": 58980,
-    "numeric_map_bundles": 8340,
-    "rendered_semantic_panels": 1090,
-    "map_manifest_rows": 9430,
+    "candidate_region_evaluations_per_encoder": 31608,
+    "source_token_records": 78336,
+    "semantic_metric_rows": 447312,
+    "numeric_map_bundles": 63216,
+    "rendered_semantic_panels": 9304,
+    "map_manifest_rows": 72520,
     "representative_cases": 15,
     "artifact_record_count": 6,
-    "validation_row_count": 177,
-    "canonical_file_count": 1097,
+    "validation_row_count": 181,
+    "canonical_file_count": 9311,
     "temporary_work_file_count": 0
   },
   "validation_summary": {
-    "check_count": 177,
-    "passed_count": 177,
+    "check_count": 181,
+    "passed_count": 181,
     "failed_count": 0,
     "blocking_failure_count": 0,
     "overall_passed": true,
@@ -548,39 +570,40 @@
     "DINOv2 feature affinity is a diagnostic saliency proxy, not validated eye-tracking, attribution, or causal occlusion sensitivity.",
     "Category-conditioned interpretation does not imply that faces, anatomy, architecture, objects, or authentic brushwork were detected.",
     "The painterly representation metric compares DINOv2 patch-feature covariance and does not authenticate style, artist, or brushstrokes.",
-    "SDXL evidence remains a predeclared ten-case partial scope and must not be interpreted as full model coverage.",
+    "SDXL evidence contains 24 technically validated completions from a predeclared 35-case bounded attempt and must not be interpreted as full model coverage.",
+    "HINT contributes one deterministic primary candidate for every restoration-eligible controlled-300 case.",
     "Low semantic drift can coexist with consistently incorrect or historically unsupported restoration."
   ],
   "validation_status": "passed",
   "refactor_status": "refactored",
   "completion_gate_passed": true,
   "helper_checksums": {
-    "semantic_structural": "815817f478499fff752628feb51c3931276635d9bdc670782aa6f99bd79fdbdd",
+    "semantic_structural": "2281f784b073ed57c97998ffefcd904a6ec5ee8a2e79590f04e56be050e91893",
     "feature_similarity": "3d35cef889c390cadd0a1e7bc8a442f769c31293757fa9e70f7fe684a466976c",
     "evaluation_inputs": "b0a2539734e0291c9c32df435f0aee6ba7e69c5eb644d0f3d433822200cec958",
     "regions": "8b0c9d413ecba9e5056b3b8f6cd89147d4cfd044291290e31ebc78b882a16e9d",
-    "schemas": "c063d4447da017ccee829b7d7ff621b2b952b5f5553eb71e317e201c3457f38f",
-    "paths": "bab56054d466d44bc43cc8709542240a690d461cc1be4829a2d67f4a1d8e9806",
+    "schemas": "ae2f7a847a9227a25c7baaf6c52873b8f314126f4e4f9732dd1caf05e5036a35",
+    "paths": "47138acd291dd781a307db77a0cf53a45f1419a9063708d3748f41f88f7152d5",
     "manifests": "8ba9846539a63ca14becdf5bb5488204917476169e847233489f0012d5703217",
     "validation": "1311f816879b60e8314364686e2136eb906ff3718ccf7b6106a3e73f04e09a10"
   },
-  "semantic_metrics_checksum": "33e8cf29fe2272a120bc78231b688a19a94c52ade998b3695ad4e0e66ac8a1cd",
-  "numeric_maps_checksum": "29925a0bfadea2a90f5d0665c8e0806490c0dbe12f007135377bd4842ef2855a",
-  "semantic_map_manifest_checksum": "edbdc7e45964a2ff801bed2a3d83c9a8232716104cb37f21780ecb470047d87d",
-  "semantic_examples_checksum": "00a80b9c1bcc485e9c4d21659bd467036d29a6ffdaba847565cba5b33fa71b1c",
-  "artifact_manifest_checksum": "0230e98858a1a2b86f31a7f3ea2742d76abc4da9dd85b1b4044529faf156c62c",
+  "semantic_metrics_checksum": "badae80c559c463cf89309d9f9ac19bd288528b9fa8a6541f7913d3a4588be5e",
+  "numeric_maps_checksum": "da8ae0ea862f97159c9e4e6479313da0f1edef5eaf5a564d101bca2753d029cd",
+  "semantic_map_manifest_checksum": "aa8c4a9a7b547bb0fd87b127f8504499ff0938df95a60032eeb11ca361e8385d",
+  "semantic_examples_checksum": "db974f70ca7c53b60aa9a2639f7f1024166a8fafcc4aa02c779b26df37092e15",
+  "artifact_manifest_checksum": "ebecdb8d611691718dc8c5b18c1f79cec353d295285725a012587092d8afc4ca",
   "semantic_examples_layout_version": "semantic_examples_layout.v1",
   "visual_scale_contract": {
     "renderer_version": "semantic_map_renderer.v1",
-    "bundle_evidence_sha256": "fbe110f2a780192d7cf444001b4317ec293490315246d99a9a04e1cc30f12136",
+    "bundle_evidence_sha256": "4654a1c4559f07792fdff0a519fe631144e0f7e28e76f6ea1b21586471301802",
     "drift_policy": "one_minus_restored_clean_similarity",
     "drift_percentile": 99.5,
     "drift_vmin": 0.0,
-    "drift_vmax": 0.8773471379280088,
+    "drift_vmax": 0.8631521311402319,
     "improvement_policy": "symmetric_absolute_dinov2_improvement",
     "improvement_percentile": 99.5,
     "improvement_center": 0.0,
-    "improvement_absmax": 0.9381238991022111,
+    "improvement_absmax": 0.9290239265561101,
     "numeric_maps_modified": false
   },
   "representative_selection": [
@@ -588,17 +611,17 @@
       "representative_slot_id": "category_01__rule_01",
       "category": "abstraction_surrealism",
       "rule_id": "category_median_dinov2_local_similarity",
-      "case_id": "canonical__p038__mixed_damage",
-      "candidate_id": "candidate__opencv_telea__canonical__p038__mixed_damage__c00",
-      "model_id": "opencv_telea",
+      "case_id": "canonical__p085__loss_large",
+      "candidate_id": "sd15__p00__s2026__e9a057f7125d",
+      "model_id": "stable_diffusion_inpainting",
       "selection_region": "mask_bbox_crop"
     },
     {
       "representative_slot_id": "category_01__rule_02",
       "category": "abstraction_surrealism",
       "rule_id": "category_worst_dinov2_local_similarity",
-      "case_id": "mask_robustness__p039__loss_large__target_12p5pct__variant_03",
-      "candidate_id": "sd15__p00__s2026__dbc15031615c",
+      "case_id": "canonical__p096__loss_large",
+      "candidate_id": "sd15__p00__s2026__78ca3c93710c",
       "model_id": "stable_diffusion_inpainting",
       "selection_region": "mask_bbox_crop"
     },
@@ -606,26 +629,26 @@
       "representative_slot_id": "category_01__rule_03",
       "category": "abstraction_surrealism",
       "rule_id": "category_max_clip_dinov2_disagreement",
-      "case_id": "canonical__p036__loss_small",
-      "candidate_id": "sd15__p00__s2026__dc8a00a7bf78",
-      "model_id": "stable_diffusion_inpainting",
+      "case_id": "mask_robustness__p100__loss_small__target_04p5pct__variant_05",
+      "candidate_id": "candidate__opencv_telea__mask_robustness__p100__loss_small__target_04p5pct__variant_05__c00",
+      "model_id": "opencv_telea",
       "selection_region": "mask_bbox_crop"
     },
     {
       "representative_slot_id": "category_02__rule_01",
       "category": "architecture_structured",
       "rule_id": "category_median_dinov2_local_similarity",
-      "case_id": "canonical__p029__loss_small",
-      "candidate_id": "sd15__p00__s2026__b2b79094ec28",
-      "model_id": "stable_diffusion_inpainting",
+      "case_id": "mask_robustness__p140__loss_small__target_04p5pct__variant_04",
+      "candidate_id": "candidate__hint_places2__mask_robustness__p140__loss_small__target_04p5pct__variant_04__c00",
+      "model_id": "hint_places2",
       "selection_region": "mask_bbox_crop"
     },
     {
       "representative_slot_id": "category_02__rule_02",
       "category": "architecture_structured",
       "rule_id": "category_worst_dinov2_local_similarity",
-      "case_id": "synthetic_degradation__p026__partial_transparency__severe",
-      "candidate_id": "candidate__opencv_telea__synthetic_degradation__p026__partial_transparency__severe__c00",
+      "case_id": "synthetic_degradation__p123__partial_transparency__mild",
+      "candidate_id": "candidate__opencv_telea__synthetic_degradation__p123__partial_transparency__mild__c00",
       "model_id": "opencv_telea",
       "selection_region": "mask_bbox_crop"
     },
@@ -633,8 +656,8 @@
       "representative_slot_id": "category_02__rule_03",
       "category": "architecture_structured",
       "rule_id": "category_max_clip_dinov2_disagreement",
-      "case_id": "synthetic_degradation__p026__partial_transparency__mild",
-      "candidate_id": "candidate__opencv_telea__synthetic_degradation__p026__partial_transparency__mild__c00",
+      "case_id": "damage_size__p115__loss_large__size_04pct",
+      "candidate_id": "candidate__opencv_telea__damage_size__p115__loss_large__size_04pct__c00",
       "model_id": "opencv_telea",
       "selection_region": "mask_bbox_crop"
     },
@@ -642,9 +665,9 @@
       "representative_slot_id": "category_03__rule_01",
       "category": "high_texture_brushwork",
       "rule_id": "category_median_dinov2_local_similarity",
-      "case_id": "mask_robustness__p043__loss_large__target_12p5pct__variant_04",
-      "candidate_id": "candidate__lama__mask_robustness__p043__loss_large__target_12p5pct__variant_04__c00",
-      "model_id": "lama",
+      "case_id": "canonical__p225__mixed_damage",
+      "candidate_id": "candidate__hint_places2__canonical__p225__mixed_damage__c00",
+      "model_id": "hint_places2",
       "selection_region": "mask_bbox_crop"
     },
     {
@@ -660,8 +683,8 @@
       "representative_slot_id": "category_03__rule_03",
       "category": "high_texture_brushwork",
       "rule_id": "category_max_clip_dinov2_disagreement",
-      "case_id": "mask_robustness__p043__loss_large__target_12p5pct__variant_02",
-      "candidate_id": "candidate__opencv_telea__mask_robustness__p043__loss_large__target_12p5pct__variant_02__c00",
+      "case_id": "canonical__p218__loss_small",
+      "candidate_id": "candidate__opencv_telea__canonical__p218__loss_small__c00",
       "model_id": "opencv_telea",
       "selection_region": "mask_bbox_crop"
     },
@@ -669,8 +692,8 @@
       "representative_slot_id": "category_04__rule_01",
       "category": "landscape_natural",
       "rule_id": "category_median_dinov2_local_similarity",
-      "case_id": "canonical__p012__scratch_thin",
-      "candidate_id": "sd15__p00__s2026__c11becab28a2",
+      "case_id": "damage_size__p178__loss_large__size_15pct",
+      "candidate_id": "sd15__p00__s2026__cda7742fabde",
       "model_id": "stable_diffusion_inpainting",
       "selection_region": "mask_bbox_crop"
     },
@@ -678,9 +701,9 @@
       "representative_slot_id": "category_04__rule_02",
       "category": "landscape_natural",
       "rule_id": "category_worst_dinov2_local_similarity",
-      "case_id": "canonical__p017__loss_large",
-      "candidate_id": "candidate__opencv_telea__canonical__p017__loss_large__c00",
-      "model_id": "opencv_telea",
+      "case_id": "canonical__p170__loss_large",
+      "candidate_id": "sd15__p00__s2026__5900d4b6cdbd",
+      "model_id": "stable_diffusion_inpainting",
       "selection_region": "mask_bbox_crop"
     },
     {
@@ -696,9 +719,9 @@
       "representative_slot_id": "category_05__rule_01",
       "category": "portrait_figure",
       "rule_id": "category_median_dinov2_local_similarity",
-      "case_id": "mask_robustness__p001__loss_large__target_12p5pct__variant_02",
-      "candidate_id": "candidate__lama__mask_robustness__p001__loss_large__target_12p5pct__variant_02__c00",
-      "model_id": "lama",
+      "case_id": "canonical__p008__mixed_damage",
+      "candidate_id": "sd15__p00__s2026__bb4c0f087c3b",
+      "model_id": "stable_diffusion_inpainting",
       "selection_region": "mask_bbox_crop"
     },
     {
@@ -714,8 +737,8 @@
       "representative_slot_id": "category_05__rule_03",
       "category": "portrait_figure",
       "rule_id": "category_max_clip_dinov2_disagreement",
-      "case_id": "synthetic_degradation__p001__water_stain__mild",
-      "candidate_id": "candidate__opencv_telea__synthetic_degradation__p001__water_stain__mild__c00",
+      "case_id": "canonical__p282__loss_large",
+      "candidate_id": "candidate__opencv_telea__canonical__p282__loss_large__c00",
       "model_id": "opencv_telea",
       "selection_region": "mask_bbox_crop"
     }
@@ -724,7 +747,7 @@
   "combined_semantic_score_retained": false,
   "final_trustworthiness_flag_assigned": false,
   "occlusion_sensitivity_status": "not_applicable_without_stable_prediction_target",
-  "sdxl_scope": "predeclared_technically_validated_ten_case_partial_scope",
+  "sdxl_scope": "predeclared_technically_validated_35_case_bounded_scope_24_completions",
   "roadmap_requirement_count": 22,
   "roadmap_traceability_failures": 0
 }
