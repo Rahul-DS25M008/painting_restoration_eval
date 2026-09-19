@@ -542,9 +542,9 @@ Notebooks 03–08 and all later visual/reporting stages through manifests.
 
 **Notebook:** `03_canonical_mask_generation.ipynb`  
 **Origin:** Existing Notebook 03  
-**Controlled-300 refactor status:** Finished  
-**Validation status:** Finished  
-**Completion gate passed:** Yes  
+**Controlled-300 refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
 **Active validated coverage:** 300 paintings × 5 families = 1,500 canonical masks; 105 audit rows; 50 validation rows; 24 completion requirements  
 **Pilot comparison:** All 250 pilot mask PNGs are byte-identical, the 89-column schema is unchanged, and output count increased from 258 to 1,508 only through 1,250 additional masks  
 **Output root:** `outputs/03_canonical_mask_generation/`  
@@ -2053,8 +2053,11 @@ validation/checks.csv
 
 **Notebook:** `21_multi_model_comparison.ipynb`  
 **Origin:** Consolidates Existing Notebook 27 and previous pairwise comparison notebooks 20 and 24  
+**Controlled-300 refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
 **Output root:** `outputs/21_multi_model_comparison/`  
-**Depends on:** Notebooks 09–20
+**Depends on:** Notebooks 09–12, 12A, and 13–20
 
 ### Responsibilities
 
@@ -2081,9 +2084,13 @@ validation/checks.csv
   OpenCV Telea, LaMa, HINT and Stable Diffusion: 10,480 selected candidates.
 - The SDXL comparison is a separate subset of its 24 technically completed
   cases; SDXL must never be presented as full-dataset evidence.
+- The historical schema identifiers `core_three_model` and
+  `sdxl_four_model_subset` remain stable for downstream compatibility. Their
+  labels, declared model memberships, counts, figures and report prose must
+  identify the actual four-method core and five-method bounded populations.
 - Candidate selection is metric-independent. OpenCV, LaMa and HINT contribute their
   sole completed candidate; Stable Diffusion contributes only its completed
-  generic `execution_role == "primary"` candidate; SDXL contributes its ten
+  generic `execution_role == "primary"` candidate; SDXL contributes its 24
   completed technically validated primary candidates. Prompt-ablation and
   repeated-seed candidates remain contextual evidence and cannot replace or
   overweight the baseline.
@@ -2111,6 +2118,38 @@ validation/checks.csv
 - Computational winners remain evidence-defined results. They are not historical
   authenticity findings, physical-treatment recommendations, museum approval,
   or substitutes for conservator judgement.
+
+### Validated Controlled-300 outcome
+
+- 10,504 metric-independent selected candidates: 2,620 each for OpenCV Telea,
+  LaMa, HINT and Stable Diffusion, plus 24 completed SDXL candidates.
+- 3,160,618 normalized evidence rows: 296,553 classical, 19,808 LPIPS, 39,616
+  feature, 1,242,458 expanded spatial, 1,269,567 local-consistency, 282,112
+  semantic/structural, and 10,504 runtime rows.
+- 704 comparison tasks producing 277,319 direction-aware comparison rows:
+  206,344 for the four-method full population and 70,975 for the bounded
+  five-method SDXL subset.
+- 2,181 family-balanced disagreement rows across 201 population/scope groups,
+  with all eleven approved anchors retained.
+- Batch 4 remained the dominant stage and completed its 704 tasks in 1,495.625
+  seconds (24.93 minutes). The complete saved run lasted 3,574.386 seconds
+  (about 59 minutes 34 seconds), comfortably below the five-hour ceiling.
+- The completed output contains 168 representative rows across 36 unique cases,
+  two readable canonical figures, and a self-contained HTML report with 14
+  analytical views plus 44 visual panels. All 58 report images are embedded;
+  there are no external or absolute-path image dependencies.
+- All 187 consolidated checks pass: 186 blocking checks and one warning-level
+  check with no warning failure. Seven artifact checksums match, all 19 roadmap
+  responsibilities are complete, nine canonical files exist, and no temporary
+  work directory remains.
+- The E: pilot and Controlled-300 runs retain the same nine relative output
+  paths and all CSV schemas. Comparison rows increased from 86,531 to 277,319,
+  disagreement rows from 839 to 2,181, and representative rows from 76 to 168.
+- `metrics/model_comparison.csv` is approximately 145.7 MiB and exceeds the
+  approved 50 MiB bulk-diagnostic threshold. It remains locally canonical and
+  is routed as one checksum-verified object to the Hugging Face diagnostics
+  dataset. The other eight compact artifacts remain in the GitHub scientific
+  record; no indexed ZIP bundle is needed for this single large table.
 
 ### Canonical outputs
 

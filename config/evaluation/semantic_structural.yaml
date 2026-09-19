@@ -1,5 +1,5 @@
 config_schema_version: "semantic_structural_config.v1"
-config_version: "1.0.0"
+config_version: "1.1.0"
 
 semantic_structural:
   notebook_id: "20"
@@ -32,6 +32,8 @@ semantic_structural:
     stable_diffusion_run_manifest_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
     sdxl_candidates_path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
     sdxl_run_manifest_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+    hint_candidates_path: "outputs/12a_hint_restoration/data/restorations.csv"
+    hint_run_manifest_path: "outputs/12a_hint_restoration/manifests/run_manifest.json"
     feature_config_path: "config/evaluation/feature_similarity.yaml"
     feature_metrics_path: "outputs/15_feature_similarity/metrics/feature_metrics.csv"
     feature_embeddings_path: "outputs/15_feature_similarity/data/embeddings.npz"
@@ -72,6 +74,7 @@ semantic_structural:
     model_order:
       - "opencv_telea"
       - "lama"
+      - "hint_places2"
       - "stable_diffusion_inpainting"
       - "sdxl_inpainting"
     map_scope_policy: "nonzero_primary_candidates_plus_all_completed_sdxl"
@@ -79,7 +82,7 @@ semantic_structural:
     retain_all_prompt_and_seed_candidates_in_metrics: true
     zero_controls_retained_in_metrics: true
     zero_controls_rendered: false
-    sdxl_scope: "predeclared_technically_validated_ten_case_partial_scope"
+    sdxl_scope: "predeclared_technically_validated_35_case_bounded_scope_24_completions"
     filename_identity: "candidate_id"
 
   feature_models:
@@ -129,25 +132,25 @@ semantic_structural:
       source: "notebook_15_validated_feature_metrics"
       feature_models: ["clip_vit_b32", "dinov2_vits14"]
       regions: ["content_region"]
-      rows: 4320
+      rows: 32808
     local_semantic_preservation:
       metric_name: "local_patch_cosine_similarity"
       feature_models: ["clip_vit_b32", "dinov2_vits14"]
       regions: ["content_region", "mask_bbox_crop"]
       summary_statistics: ["mean", "median", "p10"]
-      rows: 25020
+      rows: 189648
     local_semantic_worsening:
       metric_name: "local_patch_worsened_fraction"
       feature_models: ["clip_vit_b32", "dinov2_vits14"]
       regions: ["content_region", "mask_bbox_crop"]
       summary_statistics: ["fraction"]
-      rows: 8340
+      rows: 63216
     outside_context_preservation:
       metric_name: "outside_context_feature_change"
       feature_models: ["clip_vit_b32", "dinov2_vits14"]
       regions: ["outside_mask_patch_subset"]
       summary_statistics: ["mean"]
-      rows: 4320
+      rows: 32808
     structural_layout:
       feature_models: ["dinov2_vits14"]
       regions: ["content_region"]
@@ -156,17 +159,17 @@ semantic_structural:
         - "reference_affinity_js_divergence"
         - "reference_affinity_centroid_shift"
         - "reference_affinity_weighted_similarity"
-      rows: 8640
+      rows: 65616
     painterly_representation:
       metric_name: "dinov2_patch_covariance_distance"
       feature_models: ["dinov2_vits14"]
       regions: ["content_region", "mask_bbox_crop"]
-      rows: 4170
+      rows: 31608
     encoder_agreement:
       metric_name: "clip_dinov2_local_map_agreement"
       feature_models: ["clip_vit_b32+dinov2_vits14"]
       regions: ["content_region", "mask_bbox_crop"]
-      rows: 4170
+      rows: 31608
 
   semantic_target_scopes:
     portrait_figure: "facial_anatomical_structure_proxy"
@@ -227,33 +230,34 @@ semantic_structural:
     work_cleanup_policy: "remove notebook-owned temporary state after canonical outputs reload and validate"
 
   expected_counts:
-    evaluated_cases: 410
-    evaluated_candidates: 2160
-    nonzero_candidates: 2010
-    zero_control_candidates: 150
+    evaluated_cases: 2620
+    evaluated_candidates: 16404
+    nonzero_candidates: 15204
+    zero_control_candidates: 1200
     candidates_by_model:
-      opencv_telea: 410
-      lama: 410
-      stable_diffusion_inpainting: 1330
-      sdxl_inpainting: 10
-    candidate_region_evaluations_per_encoder: 4170
-    content_region_evaluations_per_encoder: 2160
-    mask_bbox_evaluations_per_encoder: 2010
-    source_token_records: 10700
-    subject_preservation_rows: 4320
-    local_similarity_summary_rows: 25020
-    local_worsened_fraction_rows: 8340
-    outside_context_rows: 4320
-    structural_layout_rows: 8640
-    painterly_proxy_rows: 4170
-    encoder_agreement_rows: 4170
-    semantic_metric_rows: 58980
-    numeric_map_bundles: 8340
-    rendered_semantic_panels: 1090
-    map_manifest_rows: 9430
+      opencv_telea: 2620
+      lama: 2620
+      hint_places2: 2620
+      stable_diffusion_inpainting: 8520
+      sdxl_inpainting: 24
+    candidate_region_evaluations_per_encoder: 31608
+    content_region_evaluations_per_encoder: 16404
+    mask_bbox_evaluations_per_encoder: 15204
+    source_token_records: 78336
+    subject_preservation_rows: 32808
+    local_similarity_summary_rows: 189648
+    local_worsened_fraction_rows: 63216
+    outside_context_rows: 32808
+    structural_layout_rows: 65616
+    painterly_proxy_rows: 31608
+    encoder_agreement_rows: 31608
+    semantic_metric_rows: 447312
+    numeric_map_bundles: 63216
+    rendered_semantic_panels: 9304
+    map_manifest_rows: 72520
     representative_cases: 15
     artifact_records: 6
-    canonical_file_count: 1097
+    canonical_file_count: 9311
 
   evidence_policy:
     interpretation: "reference_based_semantic_and_structural_diagnostic_proxies"
@@ -285,5 +289,6 @@ semantic_structural:
     - "DINOv2 feature affinity is a diagnostic saliency proxy, not validated eye-tracking, attribution, or causal occlusion sensitivity."
     - "Category-conditioned interpretation does not imply that faces, anatomy, architecture, objects, or authentic brushwork were detected."
     - "The painterly representation metric compares DINOv2 patch-feature covariance and does not authenticate style, artist, or brushstrokes."
-    - "SDXL evidence remains a predeclared ten-case partial scope and must not be interpreted as full model coverage."
+    - "SDXL evidence contains 24 technically validated completions from a predeclared 35-case bounded attempt and must not be interpreted as full model coverage."
+    - "HINT contributes one deterministic primary candidate for every restoration-eligible controlled-300 case."
     - "Low semantic drift can coexist with consistently incorrect or historically unsupported restoration."

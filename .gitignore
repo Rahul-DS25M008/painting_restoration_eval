@@ -67,6 +67,7 @@ docs/supervisor/Next_Steps.docx
 /outputs/17_local_consistency_metrics/metrics/local_consistency.csv
 /outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv
 /outputs/20_semantic_and_structural_consistency/data/semantic_maps.npz
+/outputs/21_multi_model_comparison/metrics/model_comparison.csv
 
 # Upload scratch metadata is not scientific evidence, even while publication
 # is paused. The failed N16 upload cache was removed after the policy change.

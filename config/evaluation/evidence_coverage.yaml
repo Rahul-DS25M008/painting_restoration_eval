@@ -56,9 +56,9 @@ evidence_coverage:
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "20"
-    next_eligible_notebook_id: "21"
-    new_bulk_publication_policy: "n16_n17_n19_verified_diagnostics_bundles_n20_pending_diagnostics_bundle"
+    completed_through_notebook_id: "21"
+    next_eligible_notebook_id: "D02"
+    new_bulk_publication_policy: "n16_n17_n19_n20_verified_diagnostics_bundles"
     completed_notebooks:
       - notebook_id: "01"
         stem: "01_dataset_verification"
@@ -873,9 +873,45 @@ evidence_coverage:
         baseline_map_manifest_rows: 9430
         baseline_validation_rows: 177
         baseline_table_schemas_and_artifact_paths_preserved: true
-        publication_status: "diagnostics_bundle_pending"
+        publication_status: "full_remote_verified_compact_git_committed"
         publication_target: "RahulMaddineni264/painting-restoration-eval-diagnostics"
         publication_record: "outputs/inventory/bundled_publication_n20_full.json"
+        publication_prefix: "bundled_assets/v1/controlled_300/20_semantic_and_structural_consistency/b29a25d740c9dea4"
+        pinned_remote_revision: "8f849ea89e0fa6cabf309481d63c44bb3878edc3"
+        remote_verified_objects: 823
+        remote_verified_bytes: 14066563594
+        public_sample_assets_verified: 4
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "21"
+        stem: "21_multi_model_comparison"
+        output_root: "outputs/21_multi_model_comparison"
+        manifest_path: "outputs/21_multi_model_comparison/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        selected_candidates: 10504
+        core_paired_cases: 2620
+        core_paired_candidates: 10480
+        bounded_sdxl_cases: 24
+        bounded_sdxl_candidates: 120
+        normalized_evidence_rows: 3160618
+        model_comparison_rows: 277319
+        metric_disagreement_rows: 2181
+        representative_rows: 168
+        report_embedded_images: 58
+        validation_rows: 187
+        artifact_records: 7
+        canonical_output_file_count: 9
+        work_file_count_after_completion: 0
+        baseline_output_root: "E:/outputs/21_multi_model_comparison"
+        baseline_model_comparison_rows: 86531
+        baseline_metric_disagreement_rows: 839
+        baseline_representative_rows: 76
+        baseline_artifact_paths_and_table_schemas_preserved: true
+        external_publication_required: true
+        external_publication_tier: "diagnostics"
+        external_publication_artifact: "outputs/21_multi_model_comparison/metrics/model_comparison.csv"
+        publication_status: "external_publication_registry_authoritative"
         unexplained_missing_or_reduced_evidence: false
 
   frozen_baseline:

@@ -11,7 +11,7 @@ import uuid
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
-from time import perf_counter
+from time import perf_counter, sleep
 from typing import Any, Iterable
 
 try:
@@ -463,6 +463,19 @@ def inspect_file(
     return row
 
 
+def replace_with_retry(temporary_path: Path, path: Path) -> None:
+    """Tolerate transient Windows sharing locks during atomic replacement."""
+
+    for attempt in range(20):
+        try:
+            os.replace(temporary_path, path)
+            return
+        except PermissionError:
+            if attempt == 19:
+                raise
+            sleep(0.25 * min(attempt + 1, 4))
+
+
 def atomic_write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     temporary_path = path.with_suffix(path.suffix + ".tmp")
     try:
@@ -470,7 +483,7 @@ def atomic_write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
             writer = csv.DictWriter(handle, fieldnames=INVENTORY_FIELDNAMES)
             writer.writeheader()
             writer.writerows(rows)
-        os.replace(temporary_path, path)
+        replace_with_retry(temporary_path, path)
     finally:
         if temporary_path.exists():
             temporary_path.unlink()
@@ -482,7 +495,7 @@ def atomic_write_json(path: Path, payload: dict[str, Any]) -> None:
         with temporary_path.open("w", encoding="utf-8", newline="\n") as handle:
             json.dump(payload, handle, indent=2, ensure_ascii=False)
             handle.write("\n")
-        os.replace(temporary_path, path)
+        replace_with_retry(temporary_path, path)
     finally:
         if temporary_path.exists():
             temporary_path.unlink()

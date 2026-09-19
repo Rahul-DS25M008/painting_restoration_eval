@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-19T14:08:08.814964Z",
+  "updated_at_utc": "2026-09-19T21:25:53.257322Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -1958,9 +1958,9 @@
       "dataset_scope": "core_and_bounded_sdxl",
       "experiment_scope": "",
       "validation_status": "passed",
-      "row_count": 839,
+      "row_count": 2181,
       "file_count": 1,
-      "checksum": "212f1fc8747d79c72928884f564172e0a872c4786a908185b3ccb4b9a9b41fc2"
+      "checksum": "358e08be3437ef746646ce40a5941086909eb703a1571c016480f39e13e5fd5a"
     },
     {
       "artifact_key": "multi_model_comparison.disagreement_figure",
@@ -1974,7 +1974,7 @@
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "218386bd56dbd717953c41e0cc3d7188dbbf64efd08c04da2d959f87774fb44b"
+      "checksum": "7068922e9f0b4d09f6d7b9ff69d2c78f8fdedf35a575274e3a3cbf791a8306c1"
     },
     {
       "artifact_key": "multi_model_comparison.metrics",
@@ -1986,9 +1986,9 @@
       "dataset_scope": "core_and_bounded_sdxl",
       "experiment_scope": "",
       "validation_status": "passed",
-      "row_count": 86531,
+      "row_count": 277319,
       "file_count": 1,
-      "checksum": "1bfc698d9c5d1ebe60fc03d17a1f67ed1e9f475cf34b43fbd709bb2ec11f50aa"
+      "checksum": "a55a1b41f05639bde954d59f974550137d4bc6eae5a4acd73dc7c806fc4cd76b"
     },
     {
       "artifact_key": "multi_model_comparison.model_figure",
@@ -2002,7 +2002,7 @@
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "fdc84f77c2a8d5a06e38ab23e1366b92025467f47345a87779bb3af13430d1a8"
+      "checksum": "4800c6672a32bb057a18e806bddb45df5af08d4e73864f5aaf2fc9878131f0cb"
     },
     {
       "artifact_key": "multi_model_comparison.report",
@@ -2016,7 +2016,7 @@
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "b1474ef6f219bb4f585755f3190999f26d5f5da1315bbdbc6e58b8cee81418af"
+      "checksum": "291e6ecd2820bc229d86d61d2bf5cfb0bdbcca4881cdeae75e0a33047aba2238"
     },
     {
       "artifact_key": "multi_model_comparison.representatives",
@@ -2028,9 +2028,9 @@
       "dataset_scope": "core_and_bounded_sdxl",
       "experiment_scope": "",
       "validation_status": "passed",
-      "row_count": 76,
+      "row_count": 168,
       "file_count": 1,
-      "checksum": "dd07ee58d49be2b0754a44573de260747dce6aa5a8902e44559dbbb5e929ecf2"
+      "checksum": "dc4d45fdf767f6e8c76739f32283aea1e831e93ed256a0ffafedc4ae9db8fc5c"
     },
     {
       "artifact_key": "opencv_telea.restoration_examples",
@@ -3148,9 +3148,9 @@
       "dataset_scope": "notebook_21",
       "experiment_scope": "",
       "validation_status": "passed",
-      "row_count": 196,
+      "row_count": 187,
       "file_count": 1,
-      "checksum": "db8f4ede7b581a3f43940534d34c7b9d9ed84e7f4b7c871b54612324c4759d8b"
+      "checksum": "ac53d3bcf9945c39be3395a12db56bc127073db60c70507682b28112e13c7405"
     },
     {
       "artifact_key": "validation.22_damage_size_diffusion_uncertainty_extension",

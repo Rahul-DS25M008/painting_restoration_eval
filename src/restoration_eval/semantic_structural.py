@@ -260,7 +260,7 @@ def build_semantic_population(
     *,
     config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Validate and enrich the exact 2,160-candidate evaluation population."""
+    """Validate and enrich the configured completed-candidate population."""
 
     required = {
         "case_id", "candidate_id", "model_id", "painting_id", "status",

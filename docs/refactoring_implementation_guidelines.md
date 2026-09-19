@@ -153,6 +153,14 @@ The workflow for each approved notebook is:
 10. Inspect the executed final notebook and generated artifacts.
 11. Validate the notebook against the approved truth sources and input/output contract.
 12. Provide targeted replacement cells or helper changes when issues are isolated.
+    Before proposing any notebook correction, inspect the complete current
+    notebook, including every Markdown and code cell, so the correction list is
+    exhaustive and already-valid cells remain untouched. If a cell requires
+    more than three edits, provide that entire corrected cell in chat. Never
+    ask the user to find and replace repeated cardinalities, identifiers, or
+    phrases scattered through a long cell. For one to three genuinely local
+    edits, identify the exact cell and a unique surrounding code block; if the
+    location is not unambiguous, provide the complete cell instead.
 13. The user reruns the required cells; the assistant then inspects the saved results and repeats validation.
 14. After the completion gate passes, the user updates the notebook's opening
     metadata to `Refactor status: Finished`, `Validation status: Finished`, and
@@ -193,6 +201,16 @@ The workflow for each approved notebook is:
 - The assistant must not insert Batch 1 or any later cells into a notebook file.
 - Every proposed notebook cell, including a replacement for an erroneous cell,
   is delivered in chat as a complete cell for the user to copy and paste.
+- Replacement planning must be based on the saved notebook as a whole, not on
+  an isolated error excerpt or a blind search for legacy numbers. Audit both
+  Markdown and code, distinguish configuration keys from stale scientific
+  claims, and list only cells that actually require modification.
+- When one cell needs more than three changes, or repeated literals make manual
+  navigation error-prone, return one complete corrected replacement cell. Do
+  not distribute a multi-change repair as a checklist of search-and-replace
+  operations. One to three small edits may be given as exact uniquely anchored
+  snippets only when the user can locate them without searching through
+  repeated occurrences.
 - Markdown cells and code cells are labelled separately and preserve the linear
   structure already established by the successfully refactored notebooks.
 - The user alone executes notebook cells and saves the notebook.
@@ -902,12 +920,22 @@ checksums, limitations, and downstream eligibility.
 | 16 Difference Maps and Spatial Diagnostics | Finished | Finished | Yes | 143,247 spatial rows, 76,020 candidate map PNGs, 14 selected panels and 76,034 map-manifest rows for 16,404 candidates and 2,620 cases; 137/137 checks; 76,039 canonical files | All 7 pilot artifact classes and CSV schemas retained; complete maps and oversized metrics are local and in the verified diagnostics indexed-bundle release; compact Git committed |
 | 17 Local Consistency Metrics | Finished | Finished | Yes | 2,060,667 texture, colour, and seam metric rows; 27,912 candidate-map PNGs, 14 selected panels and 27,926 map-manifest rows for 16,404 candidates and 2,620 cases; 179/179 checks; 27,932 canonical files | Pilot schemas/paths retained; complete maps and oversized metrics are local and in the verified diagnostics indexed-bundle release; compact Git committed |
 | 18 Diffusion Uncertainty Analysis | Finished | Finished | Yes | 780 prompt-specific groups, 3,120 candidates, 4,680 pairs, 124,800 metric rows, 780 calibration rows, two figures and 150/150 passing checks | Same seven artifact classes as the E: pilot baseline; metric/calibration rows scaled sixfold from 20,800/130; no failed checks, work files or saved notebook errors; compact Git committed |
-| 19 Uncertainty and Spatial Explanation Maps | Finished | Finished | Yes | 780 numeric maps, 4,680 spatial rows, 2,475 owned PNGs, 6,255 map-manifest rows, 149/149 passing checks, and 2,481 canonical files | Pilot schemas and eight artifact roles retained; all 130 shared raw maps and 780 shared regional means are exact; globally normalized PNGs were intentionally rerendered and 14 selected-panel filenames changed under expanded rule selection; local and pinned diagnostics-release gates passed; compact Git handoff pending |
-| 20 Semantic and Structural Consistency | Finished | Finished | Yes | 447,312 metric rows, 63,216 numeric-map bundles, 9,304 rendered semantic panels, 72,520 map-manifest rows, 181/181 passing checks, and 9,311 canonical files | All eight pilot artifact paths and CSV schemas retained; metrics increased from 58,980 to 447,312, numeric bundles from 8,340 to 63,216, and rendered panels from 1,090 to 9,304; representative figure visually reviewed; diagnostics bundle and compact Git handoff pending |
+| 19 Uncertainty and Spatial Explanation Maps | Finished | Finished | Yes | 780 numeric maps, 4,680 spatial rows, 2,475 owned PNGs, 6,255 map-manifest rows, 149/149 passing checks, and 2,481 canonical files | Pilot schemas and eight artifact roles retained; all 130 shared raw maps and 780 shared regional means are exact; globally normalized PNGs were intentionally rerendered and 14 selected-panel filenames changed under expanded rule selection; diagnostics release and compact Git handoff verified |
+| 20 Semantic and Structural Consistency | Finished | Finished | Yes | 447,312 metric rows, 63,216 numeric-map bundles, 9,304 rendered semantic panels, 72,520 map-manifest rows, 181/181 passing checks, and 9,311 canonical files | All eight pilot artifact paths and CSV schemas retained; metrics increased from 58,980 to 447,312, numeric bundles from 8,340 to 63,216, and rendered panels from 1,090 to 9,304; representative figure visually reviewed; diagnostics release and compact Git handoff verified |
+| 21 Multi-Model Comparison | Finished | Finished | Yes | 10,504 selected candidates; 277,319 comparison rows; 2,181 disagreement rows; 168 representative rows; self-contained 58-image report; 187/187 passing checks; 9 canonical files | All nine pilot paths and CSV schemas retained; comparison/disagreement/representative rows increased from 86,531/839/76 to 277,319/2,181/168; both figures and the report were reviewed; the oversized comparison table is diagnostics-tier evidence while the other eight artifacts form the compact Git handoff |
 
-Notebooks 01–19, including Notebook 12A, are committed Controlled-300
-producers. Notebook 20 is locally complete and validated; its producer-specific
-diagnostics bundle and compact Git handoff are the next publication gates.
+Notebooks 01–21, including Notebook 12A, are completed Controlled-300
+producers. Notebook 20's producer-specific diagnostics bundle and compact Git
+handoff are remotely and locally verified. Notebook 21 passed its completion
+gate for 10,504 selected candidates, 3,160,618 normalized evidence rows,
+277,319 comparison rows and 2,181 family-balanced disagreement rows; its
+compact Git handoff and single-object diagnostics publication are the remaining
+repository handoff actions.
+Notebook 21 retains `core_three_model` and `sdxl_four_model_subset` as stable
+historical schema identifiers so downstream consumers do not require a
+gratuitous identifier migration. Their displayed labels and validated
+memberships must still state the actual four-method core and five-method
+bounded scopes.
 No later notebook may describe its
 historical Controlled-50 outputs as Controlled-300 evidence until that notebook
 has been explicitly reopened, rerun, validated, baseline-compared, and committed.
@@ -1970,6 +1998,9 @@ Hugging Face `diagnostics`, not `candidates`, because Notebook 20 produces
 derived diagnostic evidence rather than restoration candidates. Git retains
 the notebook, helper/configuration changes, compact manifests and validation,
 the representative figure, inventory, and the pinned publication record.
+The verified release is pinned at revision
+`8f849ea89e0fa6cabf309481d63c44bb3878edc3` under
+`bundled_assets/v1/controlled_300/20_semantic_and_structural_consistency/b29a25d740c9dea4`.
 
 The storage change does not alter notebook science, output ownership, schemas,
 validation, or the requirement to generate and inspect every approved canonical

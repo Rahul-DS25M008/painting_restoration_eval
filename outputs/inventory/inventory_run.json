@@ -1,15 +1,15 @@
 {
   "run_schema_version": "inventory_run.v1",
   "inventory_schema_version": "project_file_inventory.v1",
-  "inventory_run_id": "inventory_20260919T151510Z_c32f4a91",
+  "inventory_run_id": "inventory_20260919T220409Z_06ec0c76",
   "status": "completed",
-  "generated_at_utc": "2026-09-19T15:15:10.034462Z",
-  "completed_at_utc": "2026-09-19T15:33:15.047814Z",
-  "duration_seconds": 1085.188,
+  "generated_at_utc": "2026-09-19T22:04:09.179375Z",
+  "completed_at_utc": "2026-09-19T22:04:58.197245Z",
+  "duration_seconds": 49.203,
   "repository_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
   "inventory_relative_path": "outputs/inventory/project_file_inventory.csv",
-  "inventory_sha256": "94b00a0cdd6eea811698f7ab04c255a3c9bdb3d40d9954c4c7c9d2c051e5d84f",
-  "inventory_size_bytes": 73856796,
+  "inventory_sha256": "379c2a0463608d70a0297c0f3665755c133a0581d12718a090b0787b62c0aa32",
+  "inventory_size_bytes": 73856421,
   "hash_configuration": {
     "mode": "partial",
     "algorithm": "sha256_first_n_bytes",
@@ -18,9 +18,9 @@
   "incremental_reuse": {
     "enabled": true,
     "cache_status": "verified",
-    "source_run_id": "inventory_20260918T105924Z_55c632e2",
-    "reused_file_count": 131482,
-    "inspected_file_count": 9321
+    "source_run_id": "inventory_20260919T215953Z_ff904615",
+    "reused_file_count": 140800,
+    "inspected_file_count": 2
   },
   "scan_configuration": {
     "skipped_directory_names": [
@@ -48,8 +48,8 @@
     "platform": "Windows-11-10.0.26200-SP0"
   },
   "summary": {
-    "file_count": 140803,
-    "total_size_bytes": 40042735897,
+    "file_count": 140802,
+    "total_size_bytes": 40137880098,
     "read_error_file_count": 0,
     "read_error_count": 0,
     "counts_by_format": {
@@ -61,7 +61,7 @@
       "markdown": 40,
       "mjs": 2,
       "no_extension": 3,
-      "notebook": 39,
+      "notebook": 38,
       "npz": 4,
       "pdf": 3,
       "png": 139862,
@@ -81,7 +81,7 @@
       "markdown": 40,
       "mask_image": 23489,
       "metric_table": 40,
-      "notebook": 39,
+      "notebook": 38,
       "other": 17,
       "python": 105,
       "restored_image": 80652,
@@ -95,7 +95,7 @@
       ".csv": 178,
       ".docx": 4,
       ".html": 100,
-      ".ipynb": 39,
+      ".ipynb": 38,
       ".jpg": 300,
       ".json": 88,
       ".md": 40,

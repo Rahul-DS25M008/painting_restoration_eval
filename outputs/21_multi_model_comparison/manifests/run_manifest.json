@@ -1,32 +1,33 @@
 {
   "manifest_schema_version": "run_manifest.v1",
-  "run_id": "run_2acbdc178f9a470f9c3a0ac4212956bb",
+  "run_id": "run_86f7f46183634889aa050ee2a9f33b56",
   "notebook_id": "21",
   "notebook_name": "21_multi_model_comparison",
   "origin": "Consolidates Existing Notebook 27 and previous pairwise comparison notebooks 20 and 24",
   "run_status": "completed",
-  "started_at_utc": "2026-08-31T12:28:54.630382Z",
-  "completed_at_utc": "2026-08-31T14:36:49.939274Z",
-  "git_commit": "5d7fdf758172aa48a9ffd83392fbb357108d5329",
+  "started_at_utc": "2026-09-19T20:26:16.970324Z",
+  "completed_at_utc": "2026-09-19T21:25:51.356399Z",
+  "git_commit": "cdb4bbfcba287cd8747b6c72045b22be78b25bbc",
   "git_dirty": true,
   "git_branch": "main",
   "git_error": "",
-  "inventory_run_id": "inventory_20260831T081412Z_0672da40",
+  "inventory_run_id": "inventory_20260919T151510Z_c32f4a91",
   "dataset_versions": {
-    "comparison_config_version": "1.0.0",
+    "comparison_config_version": "2.0.0",
     "upstream_run_ids": {
-      "9": "run_eafa3b4f805e472688f1df65b894b96e",
-      "10": "run_25e38d80461643fb91ba60cb551a9a2f",
-      "11": "run_82ee1e1c09524a5da3e6fe93016d0627",
-      "12": "run_1daaf4a3dcb34b5599b0ff89bb7034d3",
-      "13": "run_5bbeb9a089d044fab465d5078aedab39",
-      "14": "run_4ffd061c775a46f3944ad9e405613b34",
-      "15": "run_2b08762834b1423b8a61ef159c2679dc",
-      "16": "run_1181febbbd3d4e63bbd60bc565b2d0c9",
-      "17": "run_a322000b2a0445c9b5b71a2e0502fdf0",
-      "18": "run_a660cfa509e643a39708d762f18cae2b",
-      "19": "run_bddab70b2b2c46aaa013f8c45a91fc23",
-      "20": "run_cb24def4d3134cc3bb6d679d390b777e"
+      "9": "run_350786ea88014b67b0cf9efec7fac23c",
+      "10": "run_6f81083a17804d36b1495e4932db4e03",
+      "11": "run_4385124a0cca4d758d357de654a33f13",
+      "12": "run_1f7af9d329354a56b4275c4af3cd3f75",
+      "12A": "run_f6c9353c31ce4ed9be5e5502571d635d",
+      "13": "run_41b9c87a3c034f19b6f28868127b3c89",
+      "14": "run_27cb11ae9aa94133ad474b2f38cab122",
+      "15": "run_50c1bb5f25b44111a76df998329d69ed",
+      "16": "run_99b0d8d1af1b43bd8e8cb3d6ae754868",
+      "17": "run_ed15508895b542e6ac0733c49704ad26",
+      "18": "run_7c1d7195ed8447c1a878259360b1f5f2",
+      "19": "run_7384c7fb8d4c4efe98264a660ac12a75",
+      "20": "run_8c94e988fd4c4d7cae0acd8c3a64fbe6"
     }
   },
   "configuration_paths": [
@@ -35,14 +36,14 @@
     "docs/final_notebook_roadmap.md"
   ],
   "configuration_checksums": {
-    "config/evaluation/multi_model_comparison.yaml": "de3dc393b29bbffe25d8b3b60ae3edef36423ff289aca1be44b41cf797c8891f",
-    "docs/refactoring_implementation_guidelines.md": "a52734cd5807d6fb3c097c5cd1029ea88b0c5523475cb537cf1212dcb8c5ebf0",
-    "docs/final_notebook_roadmap.md": "8c6d062afeab915d0380d125db0be831a8c50f7d37c221a8bdd23c22590927bc"
+    "config/evaluation/multi_model_comparison.yaml": "20735ceacd68422113f4d662f28e560f4f50fc86f1a47630a3ffc809c6b75ef0",
+    "docs/refactoring_implementation_guidelines.md": "4adbb511f92001b51f1907492857afa1f1d423f1b729413f1185498b1f5b6e9d",
+    "docs/final_notebook_roadmap.md": "c210ae40a392d4ce05d201d496781a22cd09fde07256d7ef5246c110d87c3c39"
   },
   "helper_versions": {
-    "multi_model_comparison": "1.0.0",
-    "schemas": "1.17.0",
-    "paths": "1.0.0",
+    "multi_model_comparison": "2.0.0",
+    "schemas": "1.19.0",
+    "paths": "1.1.0",
     "manifests": "1.0.0",
     "validation": "1.0.0"
   },
@@ -59,7 +60,7 @@
   "hardware": {
     "analysis_mode": "tabular_and_visual_comparison",
     "restoration_inference_performed": false,
-    "report_embedded_images": 44
+    "report_embedded_images": 58
   },
   "inputs": [
     {
@@ -67,91 +68,91 @@
       "producer": "global_inventory",
       "relative_path": "outputs/inventory/project_file_inventory.csv",
       "required": true,
-      "size_bytes": 10072595
+      "size_bytes": 73856796
     },
     {
       "input_key": "inventory_run_path",
       "producer": "global_inventory",
       "relative_path": "outputs/inventory/inventory_run.json",
       "required": true,
-      "size_bytes": 2660
+      "size_bytes": 2826
     },
     {
       "input_key": "project_paths_path",
       "producer": "global_inventory",
       "relative_path": "outputs/inventory/project_paths.json",
       "required": true,
-      "size_bytes": 72191
+      "size_bytes": 152678
     },
     {
       "input_key": "proposal_path",
       "producer": "repository_control",
       "relative_path": "docs/proposal/Rahul_Thesis_Proposal.docx",
       "required": true,
-      "size_bytes": 1850918
+      "size_bytes": 989561
     },
     {
       "input_key": "implementation_guidelines_path",
       "producer": "repository_control",
       "relative_path": "docs/refactoring_implementation_guidelines.md",
       "required": true,
-      "size_bytes": 51112
+      "size_bytes": 116506
     },
     {
       "input_key": "notebook_roadmap_path",
       "producer": "repository_control",
       "relative_path": "docs/final_notebook_roadmap.md",
       "required": true,
-      "size_bytes": 70725
+      "size_bytes": 183521
     },
     {
       "input_key": "opencv_candidates_path",
       "producer": "09_opencv_telea_restoration",
       "relative_path": "outputs/09_opencv_telea_restoration/data/restorations.csv",
       "required": true,
-      "size_bytes": 345159
+      "size_bytes": 2212716
     },
     {
       "input_key": "opencv_runtime_path",
       "producer": "09_opencv_telea_restoration",
       "relative_path": "outputs/09_opencv_telea_restoration/metrics/runtime_summary.csv",
       "required": true,
-      "size_bytes": 1019
+      "size_bytes": 1025
     },
     {
       "input_key": "opencv_run_manifest_path",
       "producer": "09_opencv_telea_restoration",
       "relative_path": "outputs/09_opencv_telea_restoration/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 12991
+      "size_bytes": 13017
     },
     {
       "input_key": "lama_candidates_path",
       "producer": "10_lama_restoration",
       "relative_path": "outputs/10_lama_restoration/data/restorations.csv",
       "required": true,
-      "size_bytes": 457518
+      "size_bytes": 2930181
     },
     {
       "input_key": "lama_runtime_path",
       "producer": "10_lama_restoration",
       "relative_path": "outputs/10_lama_restoration/metrics/runtime_summary.csv",
       "required": true,
-      "size_bytes": 1009
+      "size_bytes": 1022
     },
     {
       "input_key": "lama_run_manifest_path",
       "producer": "10_lama_restoration",
       "relative_path": "outputs/10_lama_restoration/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 23476
+      "size_bytes": 23514
     },
     {
       "input_key": "stable_diffusion_candidates_path",
       "producer": "11_stable_diffusion_restoration",
       "relative_path": "outputs/11_stable_diffusion_restoration/data/candidates.csv",
       "required": true,
-      "size_bytes": 2436507
+      "size_bytes": 15634741
     },
     {
       "input_key": "stable_diffusion_prompt_policy_path",
@@ -165,182 +166,203 @@
       "producer": "11_stable_diffusion_restoration",
       "relative_path": "outputs/11_stable_diffusion_restoration/metrics/runtime_summary.csv",
       "required": true,
-      "size_bytes": 2445
+      "size_bytes": 2459
     },
     {
       "input_key": "stable_diffusion_run_manifest_path",
       "producer": "11_stable_diffusion_restoration",
       "relative_path": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 27662
+      "size_bytes": 27699
     },
     {
       "input_key": "sdxl_candidates_path",
       "producer": "12_sdxl_feasibility_or_restoration",
       "relative_path": "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv",
       "required": true,
-      "size_bytes": 20267
+      "size_bytes": 66981
     },
     {
       "input_key": "sdxl_runtime_path",
       "producer": "12_sdxl_feasibility_or_restoration",
       "relative_path": "outputs/12_sdxl_feasibility_or_restoration/metrics/runtime_summary.csv",
       "required": true,
-      "size_bytes": 595
+      "size_bytes": 606
     },
     {
       "input_key": "sdxl_run_manifest_path",
       "producer": "12_sdxl_feasibility_or_restoration",
       "relative_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 18784
+      "size_bytes": 18795
+    },
+    {
+      "input_key": "hint_candidates_path",
+      "producer": "12a_hint_restoration",
+      "relative_path": "outputs/12a_hint_restoration/data/restorations.csv",
+      "required": true,
+      "size_bytes": 1974624
+    },
+    {
+      "input_key": "hint_runtime_path",
+      "producer": "12a_hint_restoration",
+      "relative_path": "outputs/12a_hint_restoration/metrics/runtime_summary.csv",
+      "required": true,
+      "size_bytes": 692
+    },
+    {
+      "input_key": "hint_run_manifest_path",
+      "producer": "12a_hint_restoration",
+      "relative_path": "outputs/12a_hint_restoration/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 11373
     },
     {
       "input_key": "classical_metrics_path",
       "producer": "13_classical_metrics",
       "relative_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
       "required": true,
-      "size_bytes": 18773255
+      "size_bytes": 144373655
     },
     {
       "input_key": "classical_run_manifest_path",
       "producer": "13_classical_metrics",
       "relative_path": "outputs/13_classical_metrics/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 16986
+      "size_bytes": 18542
     },
     {
       "input_key": "lpips_metrics_path",
       "producer": "14_lpips_metrics",
       "relative_path": "outputs/14_lpips_metrics/metrics/lpips_metrics.csv",
       "required": true,
-      "size_bytes": 1821849
+      "size_bytes": 13939180
     },
     {
       "input_key": "lpips_run_manifest_path",
       "producer": "14_lpips_metrics",
       "relative_path": "outputs/14_lpips_metrics/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 16276
+      "size_bytes": 17677
     },
     {
       "input_key": "feature_metrics_path",
       "producer": "15_feature_similarity",
       "relative_path": "outputs/15_feature_similarity/metrics/feature_metrics.csv",
       "required": true,
-      "size_bytes": 5248929
+      "size_bytes": 40043594
     },
     {
       "input_key": "feature_run_manifest_path",
       "producer": "15_feature_similarity",
       "relative_path": "outputs/15_feature_similarity/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 21182
+      "size_bytes": 22579
     },
     {
       "input_key": "spatial_metrics_path",
       "producer": "16_difference_maps_and_spatial_diagnostics",
       "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv",
       "required": true,
-      "size_bytes": 10817207
+      "size_bytes": 81938963
     },
     {
       "input_key": "spatial_map_manifest_path",
       "producer": "16_difference_maps_and_spatial_diagnostics",
       "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/map_images.csv",
       "required": true,
-      "size_bytes": 5591171
+      "size_bytes": 41754229
     },
     {
       "input_key": "spatial_run_manifest_path",
       "producer": "16_difference_maps_and_spatial_diagnostics",
       "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 24887
+      "size_bytes": 27100
     },
     {
       "input_key": "local_metrics_path",
       "producer": "17_local_consistency_metrics",
       "relative_path": "outputs/17_local_consistency_metrics/metrics/local_consistency.csv",
       "required": true,
-      "size_bytes": 150969091
+      "size_bytes": 1146504203
     },
     {
       "input_key": "local_map_manifest_path",
       "producer": "17_local_consistency_metrics",
       "relative_path": "outputs/17_local_consistency_metrics/manifests/map_images.csv",
       "required": true,
-      "size_bytes": 2163924
+      "size_bytes": 18806676
     },
     {
       "input_key": "local_run_manifest_path",
       "producer": "17_local_consistency_metrics",
       "relative_path": "outputs/17_local_consistency_metrics/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 25710
+      "size_bytes": 27388
     },
     {
       "input_key": "uncertainty_metrics_path",
       "producer": "18_diffusion_uncertainty_analysis",
       "relative_path": "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_metrics.csv",
       "required": true,
-      "size_bytes": 13310933
+      "size_bytes": 81414282
     },
     {
       "input_key": "uncertainty_calibration_path",
       "producer": "18_diffusion_uncertainty_analysis",
       "relative_path": "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_calibration_inputs.csv",
       "required": true,
-      "size_bytes": 163151
+      "size_bytes": 981315
     },
     {
       "input_key": "uncertainty_run_manifest_path",
       "producer": "18_diffusion_uncertainty_analysis",
       "relative_path": "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 21218
+      "size_bytes": 21497
     },
     {
       "input_key": "spatial_explanations_path",
       "producer": "19_uncertainty_and_spatial_explanation_maps",
       "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/metrics/spatial_explanations.csv",
       "required": true,
-      "size_bytes": 794959
+      "size_bytes": 4823036
     },
     {
       "input_key": "spatial_explanation_manifest_path",
       "producer": "19_uncertainty_and_spatial_explanation_maps",
       "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/map_images.csv",
       "required": true,
-      "size_bytes": 775219
+      "size_bytes": 4594895
     },
     {
       "input_key": "spatial_explanation_run_manifest_path",
       "producer": "19_uncertainty_and_spatial_explanation_maps",
       "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 21609
+      "size_bytes": 21778
     },
     {
       "input_key": "semantic_metrics_path",
       "producer": "20_semantic_and_structural_consistency",
       "relative_path": "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv",
       "required": true,
-      "size_bytes": 41328738
+      "size_bytes": 319331241
     },
     {
       "input_key": "semantic_map_manifest_path",
       "producer": "20_semantic_and_structural_consistency",
       "relative_path": "outputs/20_semantic_and_structural_consistency/manifests/semantic_maps.csv",
       "required": true,
-      "size_bytes": 7119183
+      "size_bytes": 55209808
     },
     {
       "input_key": "semantic_run_manifest_path",
       "producer": "20_semantic_and_structural_consistency",
       "relative_path": "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 27894
+      "size_bytes": 28659
     }
   ],
   "outputs": [
@@ -391,81 +413,126 @@
     }
   ],
   "expected_counts": {
-    "selected_candidates": 1240,
-    "selected_candidates_by_model": {
-      "opencv_telea": 410,
-      "lama": 410,
-      "stable_diffusion_inpainting": 410,
-      "sdxl_inpainting": 10
+    "raw_candidate_rows_by_model": {
+      "opencv_telea": 2620,
+      "lama": 2620,
+      "hint_places2": 2620,
+      "stable_diffusion_inpainting": 8520,
+      "sdxl_inpainting": 35
     },
-    "unique_cases": 410,
-    "core_case_count": 410,
-    "core_candidate_count": 1230,
-    "four_model_case_count": 10,
-    "four_model_candidate_count": 40,
-    "uncertainty_groups": 130,
-    "generic_uncertainty_groups": 80,
-    "scratch_aware_uncertainty_groups": 50,
-    "selected_classical_metric_rows": 34818,
-    "selected_lpips_metric_rows": 2330,
-    "selected_feature_metric_rows": 4660,
-    "selected_spatial_metric_source_rows": 10416,
-    "selected_local_consistency_rows": 148868,
-    "selected_semantic_metric_rows": 33220,
-    "selected_runtime_rows": 1240,
+    "raw_completed_rows_by_model": {
+      "opencv_telea": 2620,
+      "lama": 2620,
+      "hint_places2": 2620,
+      "stable_diffusion_inpainting": 8520,
+      "sdxl_inpainting": 24
+    },
+    "experiment_case_counts": {
+      "canonical_missing_region": 1500,
+      "damage_size_sensitivity": 245,
+      "mask_robustness": 525,
+      "synthetic_degradation": 350
+    },
+    "painting_count": 300,
+    "zero_control_count": 300,
+    "selected_candidates": 10504,
+    "selected_candidates_by_model": {
+      "opencv_telea": 2620,
+      "lama": 2620,
+      "hint_places2": 2620,
+      "stable_diffusion_inpainting": 2620,
+      "sdxl_inpainting": 24
+    },
+    "unique_cases": 2620,
+    "core_case_count": 2620,
+    "core_candidate_count": 10480,
+    "four_model_case_count": 24,
+    "four_model_candidate_count": 120,
+    "uncertainty_groups": 780,
+    "generic_uncertainty_groups": 480,
+    "scratch_aware_uncertainty_groups": 300,
+    "selected_classical_metric_rows": 296553,
+    "selected_lpips_metric_rows": 19808,
+    "selected_feature_metric_rows": 39616,
+    "selected_spatial_metric_source_rows": 88747,
+    "selected_local_consistency_rows": 1269567,
+    "selected_semantic_metric_rows": 282112,
+    "selected_runtime_rows": 10504,
+    "normalized_evidence_rows": 3160618,
+    "evidence_family_count": 17,
+    "metric_id_count": 352,
+    "disagreement_anchor_row_counts": {
+      "classical_masked_mae": 9304,
+      "structural_crop_ssim": 9304,
+      "perceptual_crop_lpips": 9304,
+      "feature_clip_crop": 9304,
+      "feature_dino_crop": 9304,
+      "spatial_masked_error": 9304,
+      "texture_crop_p95": 9304,
+      "colour_masked_delta_e": 9304,
+      "seam_boundary_gradient": 9304,
+      "semantic_local_dino": 9304,
+      "structural_affinity_correlation": 10504
+    },
+    "expected_psnr_positive_infinity_rows": 28282,
+    "expected_outside_context_nan_rows": 421,
+    "expected_undefined_hue_nan_rows": 5928,
     "comparison_tasks": 704,
-    "model_comparison_rows": 86531,
+    "model_comparison_rows": 277319,
     "model_comparison_rows_by_population": {
-      "core_three_model": 50835,
-      "sdxl_four_model_subset": 35696
+      "core_three_model": 206344,
+      "sdxl_four_model_subset": 70975
     },
     "model_comparison_overall_rows_by_population": {
-      "core_three_model": 1056,
-      "sdxl_four_model_subset": 1408
+      "core_three_model": 1408,
+      "sdxl_four_model_subset": 1760
     },
-    "runtime_comparison_rows": 263,
+    "runtime_comparison_rows": 846,
     "runtime_comparison_rows_by_population": {
-      "core_three_model": 159,
-      "sdxl_four_model_subset": 104
+      "core_three_model": 636,
+      "sdxl_four_model_subset": 210
     },
     "runtime_comparison_overall_rows_by_population": {
-      "core_three_model": 3,
-      "sdxl_four_model_subset": 4
+      "core_three_model": 4,
+      "sdxl_four_model_subset": 5
     },
-    "metric_disagreement_rows": 839,
-    "metric_disagreement_scope_groups": 79,
+    "metric_disagreement_rows": 2181,
+    "metric_disagreement_scope_groups": 201,
     "metric_disagreement_anchors": 11,
     "metric_disagreement_families": 10,
     "representative_core_slots": 12,
-    "representative_sdxl_slots": 10,
-    "representative_total_slots": 22,
-    "representative_unique_cases": 22,
-    "representative_rows": 76,
+    "representative_sdxl_slots": 24,
+    "representative_total_slots": 36,
+    "representative_unique_cases": 36,
+    "representative_rows": 168,
     "uncertainty_panel_cases": 4,
     "scratch_prompt_panel_cases": 4,
+    "report_analytical_views": 14,
+    "report_visual_panels": 44,
+    "report_embedded_images": 58,
     "canonical_artifact_records": 7,
     "canonical_file_count": 9
   },
   "observed_counts": {
-    "selected_candidates": 1240,
-    "core_cases": 410,
-    "core_candidates": 1230,
-    "bounded_sdxl_cases": 10,
-    "bounded_sdxl_candidates": 40,
-    "model_comparison_rows": 86531,
-    "metric_disagreement_rows": 839,
-    "representative_rows": 76,
-    "representative_slots": 22,
-    "report_embedded_images": 44,
+    "selected_candidates": 10504,
+    "core_cases": 2620,
+    "core_candidates": 10480,
+    "bounded_sdxl_cases": 24,
+    "bounded_sdxl_candidates": 120,
+    "model_comparison_rows": 277319,
+    "metric_disagreement_rows": 2181,
+    "representative_rows": 168,
+    "representative_slots": 36,
+    "report_embedded_images": 58,
     "report_external_images": 0,
     "artifact_record_count": 7,
-    "validation_row_count": 196,
+    "validation_row_count": 187,
     "canonical_file_count": 9,
     "temporary_work_file_count": 0
   },
   "validation_summary": {
-    "check_count": 196,
-    "passed_count": 196,
+    "check_count": 187,
+    "passed_count": 187,
     "failed_count": 0,
     "blocking_failure_count": 0,
     "overall_passed": true,
@@ -473,9 +540,9 @@
   },
   "known_limitations": [
     "Reference-based metrics measure similarity to known clean digital images and do not establish historical authenticity.",
-    "The 410 cases are nested within 50 paintings and must not be treated as 410 independent artworks.",
+    "The 2,620 cases are nested within 300 paintings and must not be treated as 2,620 independent artworks.",
     "Style or period labels are incomplete for part of the controlled population.",
-    "SDXL has a predeclared ten-case partial scope and cannot support a full-dataset ranking.",
+    "SDXL has a predeclared 24-case completed partial scope and cannot support a full-dataset ranking.",
     "Stable Diffusion uncertainty is repeated-seed variability, not calibrated confidence.",
     "OpenCV and LaMa are deterministic under the evaluated contracts; robustness and sensitivity are the appropriate later concepts.",
     "CLIP and DINOv2 are general-purpose encoders rather than conservation-specific judges.",
@@ -486,35 +553,35 @@
   "refactor_status": "refactored",
   "completion_gate_passed": true,
   "helper_checksums": {
-    "multi_model_comparison": "9ec731e2c0a6e3180ca247c382e77b4c2b6995bfd37562f670e9aafdbceb9b15",
-    "schemas": "d023eca4c5dddbe7dc02d564f6c5b0e62bf6d2fcf4565f85b5d9c0f714154d09",
-    "paths": "bab56054d466d44bc43cc8709542240a690d461cc1be4829a2d67f4a1d8e9806",
+    "multi_model_comparison": "8a05cfecaf3681d0190a6e19dc7292d7bec8ba79892340ac0726c59d3647d879",
+    "schemas": "ae2f7a847a9227a25c7baaf6c52873b8f314126f4e4f9732dd1caf05e5036a35",
+    "paths": "47138acd291dd781a307db77a0cf53a45f1419a9063708d3748f41f88f7152d5",
     "manifests": "8ba9846539a63ca14becdf5bb5488204917476169e847233489f0012d5703217",
     "validation": "1311f816879b60e8314364686e2136eb906ff3718ccf7b6106a3e73f04e09a10"
   },
   "output_checksums": {
-    "model_comparison": "1bfc698d9c5d1ebe60fc03d17a1f67ed1e9f475cf34b43fbd709bb2ec11f50aa",
-    "metric_disagreement": "212f1fc8747d79c72928884f564172e0a872c4786a908185b3ccb4b9a9b41fc2",
-    "representative_cases": "dd07ee58d49be2b0754a44573de260747dce6aa5a8902e44559dbbb5e929ecf2",
-    "model_comparison_figure": "fdc84f77c2a8d5a06e38ab23e1366b92025467f47345a87779bb3af13430d1a8",
-    "metric_disagreement_figure": "218386bd56dbd717953c41e0cc3d7188dbbf64efd08c04da2d959f87774fb44b",
-    "report": "b1474ef6f219bb4f585755f3190999f26d5f5da1315bbdbc6e58b8cee81418af",
-    "validation": "db8f4ede7b581a3f43940534d34c7b9d9ed84e7f4b7c871b54612324c4759d8b"
+    "model_comparison": "a55a1b41f05639bde954d59f974550137d4bc6eae5a4acd73dc7c806fc4cd76b",
+    "metric_disagreement": "358e08be3437ef746646ce40a5941086909eb703a1571c016480f39e13e5fd5a",
+    "representative_cases": "dc4d45fdf767f6e8c76739f32283aea1e831e93ed256a0ffafedc4ae9db8fc5c",
+    "model_comparison_figure": "4800c6672a32bb057a18e806bddb45df5af08d4e73864f5aaf2fc9878131f0cb",
+    "metric_disagreement_figure": "7068922e9f0b4d09f6d7b9ff69d2c78f8fdedf35a575274e3a3cbf791a8306c1",
+    "report": "291e6ecd2820bc229d86d61d2bf5cfb0bdbcca4881cdeae75e0a33047aba2238",
+    "validation": "ac53d3bcf9945c39be3395a12db56bc127073db60c70507682b28112e13c7405"
   },
-  "artifact_manifest_checksum": "b23e030f0a96a629224aa798d8aef00b1c6236615da4e0c396fcea0ddbf7da13",
+  "artifact_manifest_checksum": "f9e7017a4acf4b249bef476508963bb696efdff1bd3eff485e78004850931578",
   "selection_policy_id": "non_metric_primary_candidate_selection.v1",
   "disagreement_policy_id": "family_balanced_anchor_disagreement.v1",
   "report_policy_id": "self_contained_thesis_aligned_comparison_report.v1",
   "combined_quality_score_retained": false,
   "conservation_truth_claim": false,
   "uncertainty_is_calibrated_confidence": false,
-  "sdxl_scope": "validated_ten_case_partial_scope",
+  "sdxl_scope": "validated_24_case_partial_scope",
   "report_visual_contract": {
     "analytical_views": 14,
-    "visual_panels": 30,
-    "embedded_images": 44,
+    "visual_panels": 44,
+    "embedded_images": 58,
     "external_images": 0,
-    "sdxl_cases": 10
+    "sdxl_cases": 24
   },
   "roadmap_requirement_count": 19,
   "roadmap_traceability_failures": 0

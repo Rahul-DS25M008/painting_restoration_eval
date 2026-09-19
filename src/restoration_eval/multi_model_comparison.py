@@ -34,7 +34,7 @@ from .schemas import (
 
 
 MULTI_MODEL_COMPARISON_MODULE_NAME = "restoration_eval.multi_model_comparison"
-MULTI_MODEL_COMPARISON_MODULE_VERSION = "1.0.0"
+MULTI_MODEL_COMPARISON_MODULE_VERSION = "2.0.0"
 MODEL_COMPARISON_SCHEMA_VERSION = "model_comparison.v1"
 METRIC_DISAGREEMENT_SCHEMA_VERSION = "metric_disagreement.v1"
 REPRESENTATIVE_CASES_SCHEMA_VERSION = "representative_cases.v1"
@@ -102,7 +102,7 @@ def load_multi_model_comparison_config(path: str | Path) -> dict[str, Any]:
     if int(partial["exact_case_count"]) * len(partial["models"]) != int(
         partial["exact_candidate_count"]
     ):
-        raise ValueError("Four-model population arithmetic is inconsistent")
+        raise ValueError("Bounded SDXL population arithmetic is inconsistent")
     if sum(int(value) for value in expected["selected_candidates_by_model"].values()) != int(
         expected["selected_candidates"]
     ):
@@ -128,7 +128,9 @@ def load_multi_model_comparison_config(path: str | Path) -> dict[str, Any]:
 def validate_upstream_run_manifests(
     manifests: Mapping[str, Mapping[str, Any]],
     *,
-    expected_notebook_ids: Sequence[str] = tuple(str(value) for value in range(9, 21)),
+    expected_notebook_ids: Sequence[str] = (
+        "9", "10", "11", "12", "12A", "13", "14", "15", "16", "17", "18", "19", "20",
+    ),
 ) -> pd.DataFrame:
     """Audit upstream completion gates without inferring availability from files."""
 
@@ -184,6 +186,7 @@ def _normalise_restored_path(value: Any, source_notebook_id: str) -> Any:
         "10": "outputs/10_lama_restoration",
         "11": "outputs/11_stable_diffusion_restoration",
         "12": "outputs/12_sdxl_feasibility_or_restoration",
+        "12A": "outputs/12a_hint_restoration",
     }
     root = source_roots.get(str(source_notebook_id))
     return f"{root}/{text}" if root else text
@@ -283,6 +286,7 @@ def select_comparison_candidates(
     stable_diffusion: pd.DataFrame,
     sdxl: pd.DataFrame,
     *,
+    hint: pd.DataFrame | None = None,
     config: Mapping[str, Any],
 ) -> pd.DataFrame:
     """Select one metric-independent baseline candidate for each model and case."""
@@ -300,6 +304,7 @@ def select_comparison_candidates(
 
     opencv_selected = completed_rows(opencv)
     lama_selected = completed_rows(lama)
+    hint_selected = completed_rows(hint) if hint is not None else None
     sd_selected = completed_rows(stable_diffusion)
     sd_selected = sd_selected.loc[
         sd_selected["execution_role"].astype(str).eq(
@@ -326,15 +331,26 @@ def select_comparison_candidates(
             lama_selected, model_id="lama", source_notebook_id="10",
             case_assets=case_assets, selection_policy_id=selection_id,
         ),
-        _normalise_selected_candidate_frame(
-            sd_selected, model_id="stable_diffusion_inpainting", source_notebook_id="11",
-            case_assets=case_assets, selection_policy_id=selection_id,
-        ),
-        _normalise_selected_candidate_frame(
-            sdxl_selected, model_id="sdxl_inpainting", source_notebook_id="12",
-            case_assets=case_assets, selection_policy_id=selection_id,
-        ),
     ]
+    if hint_selected is not None:
+        frames.append(
+            _normalise_selected_candidate_frame(
+                hint_selected, model_id="hint_places2", source_notebook_id="12A",
+                case_assets=case_assets, selection_policy_id=selection_id,
+            )
+        )
+    frames.extend(
+        [
+            _normalise_selected_candidate_frame(
+                sd_selected, model_id="stable_diffusion_inpainting", source_notebook_id="11",
+                case_assets=case_assets, selection_policy_id=selection_id,
+            ),
+            _normalise_selected_candidate_frame(
+                sdxl_selected, model_id="sdxl_inpainting", source_notebook_id="12",
+                case_assets=case_assets, selection_policy_id=selection_id,
+            ),
+        ]
+    )
     selected = pd.concat(frames, ignore_index=True, sort=False)
     if selected.duplicated(["model_id", "case_id"], keep=False).any():
         duplicates = selected.loc[

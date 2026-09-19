@@ -1,5 +1,5 @@
 config_schema_version: "multi_model_comparison_config.v1"
-config_version: "1.0.0"
+config_version: "2.0.0"
 
 multi_model_comparison:
   notebook_id: "21"
@@ -32,6 +32,9 @@ multi_model_comparison:
     sdxl_candidates_path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
     sdxl_runtime_path: "outputs/12_sdxl_feasibility_or_restoration/metrics/runtime_summary.csv"
     sdxl_run_manifest_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+    hint_candidates_path: "outputs/12a_hint_restoration/data/restorations.csv"
+    hint_runtime_path: "outputs/12a_hint_restoration/metrics/runtime_summary.csv"
+    hint_run_manifest_path: "outputs/12a_hint_restoration/manifests/run_manifest.json"
     classical_metrics_path: "outputs/13_classical_metrics/metrics/classical_metrics.csv"
     classical_run_manifest_path: "outputs/13_classical_metrics/manifests/run_manifest.json"
     lpips_metrics_path: "outputs/14_lpips_metrics/metrics/lpips_metrics.csv"
@@ -71,6 +74,7 @@ multi_model_comparison:
     model_order:
       - "opencv_telea"
       - "lama"
+      - "hint_places2"
       - "stable_diffusion_inpainting"
       - "sdxl_inpainting"
     completed_status: "completed"
@@ -78,34 +82,43 @@ multi_model_comparison:
     stable_diffusion_primary_prompt_variant: "p00_generic"
     sdxl_technical_validation_required: true
     core_three_model:
+      # Stable schema identifier retained for downstream compatibility.
+      # The Controlled-300 population itself contains four methods.
       population_id: "core_three_model"
+      population_label: "Core four-method comparison"
       models:
         - "opencv_telea"
         - "lama"
+        - "hint_places2"
         - "stable_diffusion_inpainting"
-      exact_case_count: 410
-      exact_candidate_count: 1230
+      exact_case_count: 2620
+      exact_candidate_count: 10480
     four_model_subset:
+      # Stable schema identifier retained for downstream compatibility.
+      # The bounded population itself contains five methods including SDXL.
       population_id: "sdxl_four_model_subset"
+      population_label: "Bounded five-method SDXL comparison"
       models:
         - "opencv_telea"
         - "lama"
+        - "hint_places2"
         - "stable_diffusion_inpainting"
         - "sdxl_inpainting"
-      exact_case_count: 10
-      exact_candidate_count: 40
+      exact_case_count: 24
+      exact_candidate_count: 120
     uncertainty_context:
       model_id: "stable_diffusion_inpainting"
       generic_prompt_variant: "p00_generic"
       scratch_prompt_variant: "p05_scratch_aware"
-      exact_generic_group_count: 80
-      exact_scratch_aware_group_count: 50
+      exact_generic_group_count: 480
+      exact_scratch_aware_group_count: 300
       comparison_role: "model_specific_context_not_cross_model_ranking"
 
   candidate_selection:
     metric_independent: true
     opencv_telea: "sole_completed_candidate_per_case"
     lama: "sole_completed_candidate_per_case"
+    hint_places2: "sole_completed_candidate_per_case"
     stable_diffusion_inpainting: "completed_execution_role_primary_generic_candidate"
     sdxl_inpainting: "completed_technically_validated_predeclared_partial_candidate"
     prohibit_best_metric_candidate_selection: true
@@ -163,7 +176,7 @@ multi_model_comparison:
       source_row_id_column: "semantic_metric_id"
       comparison_basis: "restored_value"
     runtime:
-      source_notebook_id: "09-12"
+      source_notebook_id: "09-12A"
       evidence_family: "runtime_compute"
       metric_name: "runtime_seconds"
 
@@ -296,7 +309,7 @@ multi_model_comparison:
   representative_selection:
     core_slots: 12
     include_all_sdxl_cases: true
-    exact_sdxl_case_slots: 10
+    exact_sdxl_case_slots: 24
     uncertainty_panels: 4
     scratch_prompt_context_panels: 4
     consolidate_duplicate_case_roles: true
@@ -341,53 +354,94 @@ multi_model_comparison:
     required_visuals_must_not_depend_on_links: true
 
   expected_counts:
-    selected_candidates: 1240
+    raw_candidate_rows_by_model:
+      opencv_telea: 2620
+      lama: 2620
+      hint_places2: 2620
+      stable_diffusion_inpainting: 8520
+      sdxl_inpainting: 35
+    raw_completed_rows_by_model:
+      opencv_telea: 2620
+      lama: 2620
+      hint_places2: 2620
+      stable_diffusion_inpainting: 8520
+      sdxl_inpainting: 24
+    experiment_case_counts:
+      canonical_missing_region: 1500
+      damage_size_sensitivity: 245
+      mask_robustness: 525
+      synthetic_degradation: 350
+    painting_count: 300
+    zero_control_count: 300
+    selected_candidates: 10504
     selected_candidates_by_model:
-      opencv_telea: 410
-      lama: 410
-      stable_diffusion_inpainting: 410
-      sdxl_inpainting: 10
-    unique_cases: 410
-    core_case_count: 410
-    core_candidate_count: 1230
-    four_model_case_count: 10
-    four_model_candidate_count: 40
-    uncertainty_groups: 130
-    generic_uncertainty_groups: 80
-    scratch_aware_uncertainty_groups: 50
-    selected_classical_metric_rows: 34818
-    selected_lpips_metric_rows: 2330
-    selected_feature_metric_rows: 4660
-    selected_spatial_metric_source_rows: 10416
-    selected_local_consistency_rows: 148868
-    selected_semantic_metric_rows: 33220
-    selected_runtime_rows: 1240
+      opencv_telea: 2620
+      lama: 2620
+      hint_places2: 2620
+      stable_diffusion_inpainting: 2620
+      sdxl_inpainting: 24
+    unique_cases: 2620
+    core_case_count: 2620
+    core_candidate_count: 10480
+    four_model_case_count: 24
+    four_model_candidate_count: 120
+    uncertainty_groups: 780
+    generic_uncertainty_groups: 480
+    scratch_aware_uncertainty_groups: 300
+    selected_classical_metric_rows: 296553
+    selected_lpips_metric_rows: 19808
+    selected_feature_metric_rows: 39616
+    selected_spatial_metric_source_rows: 88747
+    selected_local_consistency_rows: 1269567
+    selected_semantic_metric_rows: 282112
+    selected_runtime_rows: 10504
+    normalized_evidence_rows: 3160618
+    evidence_family_count: 17
+    metric_id_count: 352
+    disagreement_anchor_row_counts:
+      classical_masked_mae: 9304
+      structural_crop_ssim: 9304
+      perceptual_crop_lpips: 9304
+      feature_clip_crop: 9304
+      feature_dino_crop: 9304
+      spatial_masked_error: 9304
+      texture_crop_p95: 9304
+      colour_masked_delta_e: 9304
+      seam_boundary_gradient: 9304
+      semantic_local_dino: 9304
+      structural_affinity_correlation: 10504
+    expected_psnr_positive_infinity_rows: 28282
+    expected_outside_context_nan_rows: 421
+    expected_undefined_hue_nan_rows: 5928
     comparison_tasks: 704
-    model_comparison_rows: 86531
+    model_comparison_rows: 277319
     model_comparison_rows_by_population:
-      core_three_model: 50835
-      sdxl_four_model_subset: 35696
+      core_three_model: 206344
+      sdxl_four_model_subset: 70975
     model_comparison_overall_rows_by_population:
-      core_three_model: 1056
-      sdxl_four_model_subset: 1408
-    runtime_comparison_rows: 263
+      core_three_model: 1408
+      sdxl_four_model_subset: 1760
+    runtime_comparison_rows: 846
     runtime_comparison_rows_by_population:
-      core_three_model: 159
-      sdxl_four_model_subset: 104
+      core_three_model: 636
+      sdxl_four_model_subset: 210
     runtime_comparison_overall_rows_by_population:
-      core_three_model: 3
-      sdxl_four_model_subset: 4
-    metric_disagreement_rows: 839
-    metric_disagreement_scope_groups: 79
+      core_three_model: 4
+      sdxl_four_model_subset: 5
+    metric_disagreement_rows: 2181
+    metric_disagreement_scope_groups: 201
     metric_disagreement_anchors: 11
     metric_disagreement_families: 10
     representative_core_slots: 12
-    representative_sdxl_slots: 10
-    representative_total_slots: 22
-    representative_unique_cases: 22
-    representative_rows: 76
+    representative_sdxl_slots: 24
+    representative_total_slots: 36
+    representative_unique_cases: 36
+    representative_rows: 168
     uncertainty_panel_cases: 4
     scratch_prompt_panel_cases: 4
+    report_analytical_views: 14
+    report_visual_panels: 44
+    report_embedded_images: 58
     canonical_artifact_records: 7
     canonical_file_count: 9
 
@@ -404,9 +458,9 @@ multi_model_comparison:
 
   known_limitations:
     - "Reference-based metrics measure similarity to known clean digital images and do not establish historical authenticity."
-    - "The 410 cases are nested within 50 paintings and must not be treated as 410 independent artworks."
+    - "The 2,620 cases are nested within 300 paintings and must not be treated as 2,620 independent artworks."
     - "Style or period labels are incomplete for part of the controlled population."
-    - "SDXL has a predeclared ten-case partial scope and cannot support a full-dataset ranking."
+    - "SDXL has a predeclared 24-case completed partial scope and cannot support a full-dataset ranking."
     - "Stable Diffusion uncertainty is repeated-seed variability, not calibrated confidence."
     - "OpenCV and LaMa are deterministic under the evaluated contracts; robustness and sensitivity are the appropriate later concepts."
     - "CLIP and DINOv2 are general-purpose encoders rather than conservation-specific judges."
