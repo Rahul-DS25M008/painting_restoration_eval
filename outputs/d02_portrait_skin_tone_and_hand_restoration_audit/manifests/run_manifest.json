@@ -1,0 +1,579 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_fdbd2ed6e93b4d709f5439af028a7600",
+  "notebook_id": "D02",
+  "notebook_name": "d02_portrait_skin_tone_and_hand_restoration_audit",
+  "origin": "New approved supplemental analysis arising from supervisor feedback",
+  "run_status": "completed",
+  "started_at_utc": "2026-09-20T19:45:52.341982Z",
+  "completed_at_utc": "2026-09-20T21:43:16.327773Z",
+  "git_commit": "d982c797ee4feaa75f7488174872089a8bd65b75",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20260919T223448Z_2c48b66f",
+  "dataset_versions": {
+    "config_version": "1.0.0",
+    "dataset_scope": "controlled_300",
+    "upstream_run_ids": {
+      "01": "run_49a7e3c485394878ab4323ce661f3ef5",
+      "02": "run_ca94012bb1e54bf5bf57c1fdabb01480",
+      "03": "run_dd51e1b1ca374f3aad16d22b0cd12c99",
+      "04": "run_92d2030511e14f108bd9ef46f8c3110a",
+      "05": "run_fb717ad978394227944ef6bf99919f08",
+      "06": "run_cd2601a25a2d4794aba0745ec6beed5c",
+      "07": "run_ad90292d5fb8462eb6241b8123a779d6",
+      "08": "run_b83466f07ebb4b55928229587922334a",
+      "09": "run_350786ea88014b67b0cf9efec7fac23c",
+      "10": "run_6f81083a17804d36b1495e4932db4e03",
+      "11": "run_4385124a0cca4d758d357de654a33f13",
+      "12": "run_1f7af9d329354a56b4275c4af3cd3f75",
+      "12A": "run_f6c9353c31ce4ed9be5e5502571d635d",
+      "13": "run_41b9c87a3c034f19b6f28868127b3c89",
+      "14": "run_27cb11ae9aa94133ad474b2f38cab122",
+      "15": "run_50c1bb5f25b44111a76df998329d69ed",
+      "16": "run_99b0d8d1af1b43bd8e8cb3d6ae754868",
+      "17": "run_ed15508895b542e6ac0733c49704ad26",
+      "18": "run_7c1d7195ed8447c1a878259360b1f5f2",
+      "19": "run_7384c7fb8d4c4efe98264a660ac12a75",
+      "20": "run_8c94e988fd4c4d7cae0acd8c3a64fbe6",
+      "21": "run_86f7f46183634889aa050ee2a9f33b56"
+    }
+  },
+  "configuration_paths": [
+    "config/evaluation/portrait_anatomy_audit.yaml",
+    "config/evaluation/evidence_coverage.yaml",
+    "docs/refactoring_implementation_guidelines.md",
+    "docs/final_notebook_roadmap.md"
+  ],
+  "configuration_checksums": {
+    "config/evaluation/portrait_anatomy_audit.yaml": "b0892db68279c68b6deb6ab310d27a5797dbb0b0a83f844a4255e148e913a747",
+    "config/evaluation/evidence_coverage.yaml": "412b563f1bbc7b1eef3ee55534835ad7e339aeff28772864e897ab174cda3def",
+    "docs/refactoring_implementation_guidelines.md": "4aea65fe88a221e70355ed75cfdab91a8f4b8c71ae115bb5c3c3d9080ac91ffe",
+    "docs/final_notebook_roadmap.md": "fe68d1dbbf5ef04a739058a3f2b3bbe89e8c66f9f13033c2d90d4f35e0eeba40"
+  },
+  "helper_versions": {
+    "portrait_anatomy_audit": "1.0.0",
+    "schemas": "1.19.0",
+    "paths": "1.1.1",
+    "manifests": "1.0.0",
+    "validation": "1.0.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "matplotlib": "3.11.0",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3",
+    "scipy": "1.17.1",
+    "statsmodels": "not_installed"
+  },
+  "hardware": {
+    "analysis_mode": "saved_evidence_analysis",
+    "restoration_inference_performed": false,
+    "manual_review_units": 32,
+    "bootstrap_replicates": 2000
+  },
+  "inputs": [
+    {
+      "input_key": "inventory_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "required": true,
+      "size_bytes": 73857210
+    },
+    {
+      "input_key": "inventory_run_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "required": true,
+      "size_bytes": 2821
+    },
+    {
+      "input_key": "project_paths_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "required": true,
+      "size_bytes": 152681
+    },
+    {
+      "input_key": "implementation_guidelines_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "docs/refactoring_implementation_guidelines.md",
+      "required": true,
+      "size_bytes": 117122
+    },
+    {
+      "input_key": "notebook_roadmap_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "docs/final_notebook_roadmap.md",
+      "required": true,
+      "size_bytes": 184020
+    },
+    {
+      "input_key": "artworks_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/01_dataset_verification/data/artworks.csv",
+      "required": true,
+      "size_bytes": 280991
+    },
+    {
+      "input_key": "preprocessing_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/02_image_preprocessing/data/preprocessed_images.csv",
+      "required": true,
+      "size_bytes": 193763
+    },
+    {
+      "input_key": "canonical_masks_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/03_canonical_mask_generation/data/masks.csv",
+      "required": true,
+      "size_bytes": 2814678
+    },
+    {
+      "input_key": "canonical_cases_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/04_canonical_damaged_image_generation/data/cases.csv",
+      "required": true,
+      "size_bytes": 1133765
+    },
+    {
+      "input_key": "damage_size_cases_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv",
+      "required": true,
+      "size_bytes": 310490
+    },
+    {
+      "input_key": "robustness_cases_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/data/cases.csv",
+      "required": true,
+      "size_bytes": 799582
+    },
+    {
+      "input_key": "degradation_cases_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/07_synthetic_degradation_dataset_generation/data/cases.csv",
+      "required": true,
+      "size_bytes": 1530120
+    },
+    {
+      "input_key": "opencv_candidates_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/09_opencv_telea_restoration/data/restorations.csv",
+      "required": true,
+      "size_bytes": 2212716
+    },
+    {
+      "input_key": "lama_candidates_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/10_lama_restoration/data/restorations.csv",
+      "required": true,
+      "size_bytes": 2930181
+    },
+    {
+      "input_key": "stable_diffusion_candidates_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/11_stable_diffusion_restoration/data/candidates.csv",
+      "required": true,
+      "size_bytes": 15634741
+    },
+    {
+      "input_key": "sdxl_candidates_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv",
+      "required": true,
+      "size_bytes": 66981
+    },
+    {
+      "input_key": "hint_candidates_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/12a_hint_restoration/data/restorations.csv",
+      "required": true,
+      "size_bytes": 1974624
+    },
+    {
+      "input_key": "classical_metrics_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+      "required": true,
+      "size_bytes": 144373655
+    },
+    {
+      "input_key": "lpips_metrics_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/14_lpips_metrics/metrics/lpips_metrics.csv",
+      "required": true,
+      "size_bytes": 13939180
+    },
+    {
+      "input_key": "feature_metrics_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/15_feature_similarity/metrics/feature_metrics.csv",
+      "required": true,
+      "size_bytes": 40043594
+    },
+    {
+      "input_key": "spatial_metrics_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv",
+      "required": true,
+      "size_bytes": 81938963
+    },
+    {
+      "input_key": "local_metrics_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/17_local_consistency_metrics/metrics/local_consistency.csv",
+      "required": true,
+      "size_bytes": 1146504203
+    },
+    {
+      "input_key": "uncertainty_metrics_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_metrics.csv",
+      "required": true,
+      "size_bytes": 81414282
+    },
+    {
+      "input_key": "spatial_explanations_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/metrics/spatial_explanations.csv",
+      "required": true,
+      "size_bytes": 4823036
+    },
+    {
+      "input_key": "semantic_metrics_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv",
+      "required": true,
+      "size_bytes": 319331241
+    },
+    {
+      "input_key": "comparison_metrics_path",
+      "producer": "repository_or_upstream",
+      "relative_path": "outputs/21_multi_model_comparison/metrics/model_comparison.csv",
+      "required": true,
+      "size_bytes": 152814687
+    },
+    {
+      "input_key": "upstream_manifest_01",
+      "producer": "01",
+      "relative_path": "outputs/01_dataset_verification/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 9107
+    },
+    {
+      "input_key": "upstream_manifest_02",
+      "producer": "02",
+      "relative_path": "outputs/02_image_preprocessing/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 10881
+    },
+    {
+      "input_key": "upstream_manifest_03",
+      "producer": "03",
+      "relative_path": "outputs/03_canonical_mask_generation/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 12902
+    },
+    {
+      "input_key": "upstream_manifest_04",
+      "producer": "04",
+      "relative_path": "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 14377
+    },
+    {
+      "input_key": "upstream_manifest_05",
+      "producer": "05",
+      "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 23570
+    },
+    {
+      "input_key": "upstream_manifest_06",
+      "producer": "06",
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 15197
+    },
+    {
+      "input_key": "upstream_manifest_07",
+      "producer": "07",
+      "relative_path": "outputs/07_synthetic_degradation_dataset_generation/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 15082
+    },
+    {
+      "input_key": "upstream_manifest_08",
+      "producer": "08",
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 16624
+    },
+    {
+      "input_key": "upstream_manifest_09",
+      "producer": "09",
+      "relative_path": "outputs/09_opencv_telea_restoration/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 13017
+    },
+    {
+      "input_key": "upstream_manifest_10",
+      "producer": "10",
+      "relative_path": "outputs/10_lama_restoration/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 23514
+    },
+    {
+      "input_key": "upstream_manifest_11",
+      "producer": "11",
+      "relative_path": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 27699
+    },
+    {
+      "input_key": "upstream_manifest_12",
+      "producer": "12",
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 18795
+    },
+    {
+      "input_key": "upstream_manifest_12A",
+      "producer": "12A",
+      "relative_path": "outputs/12a_hint_restoration/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 11373
+    },
+    {
+      "input_key": "upstream_manifest_13",
+      "producer": "13",
+      "relative_path": "outputs/13_classical_metrics/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 18542
+    },
+    {
+      "input_key": "upstream_manifest_14",
+      "producer": "14",
+      "relative_path": "outputs/14_lpips_metrics/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 17677
+    },
+    {
+      "input_key": "upstream_manifest_15",
+      "producer": "15",
+      "relative_path": "outputs/15_feature_similarity/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 22579
+    },
+    {
+      "input_key": "upstream_manifest_16",
+      "producer": "16",
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 27100
+    },
+    {
+      "input_key": "upstream_manifest_17",
+      "producer": "17",
+      "relative_path": "outputs/17_local_consistency_metrics/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 27388
+    },
+    {
+      "input_key": "upstream_manifest_18",
+      "producer": "18",
+      "relative_path": "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 21497
+    },
+    {
+      "input_key": "upstream_manifest_19",
+      "producer": "19",
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 21778
+    },
+    {
+      "input_key": "upstream_manifest_20",
+      "producer": "20",
+      "relative_path": "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 28659
+    },
+    {
+      "input_key": "upstream_manifest_21",
+      "producer": "21",
+      "relative_path": "outputs/21_multi_model_comparison/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 21816
+    }
+  ],
+  "outputs": [
+    {
+      "artifact_key": "d02_portrait_screening",
+      "relative_path": "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/data/portrait_screening.csv",
+      "artifact_type": "table"
+    },
+    {
+      "artifact_key": "d02_anatomical_annotations",
+      "relative_path": "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/data/anatomical_annotations.csv",
+      "artifact_type": "table"
+    },
+    {
+      "artifact_key": "d02_anatomical_overlap_audit",
+      "relative_path": "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/data/anatomical_overlap_audit.csv",
+      "artifact_type": "table"
+    },
+    {
+      "artifact_key": "d02_eligible_cases",
+      "relative_path": "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/data/eligible_cases.csv",
+      "artifact_type": "table"
+    },
+    {
+      "artifact_key": "d02_manual_anatomy_review",
+      "relative_path": "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/data/manual_anatomy_review.csv",
+      "artifact_type": "table"
+    },
+    {
+      "artifact_key": "d02_hand_region_comparison",
+      "relative_path": "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/metrics/hand_region_comparison.csv",
+      "artifact_type": "table"
+    },
+    {
+      "artifact_key": "d02_skin_tone_audit",
+      "relative_path": "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/metrics/skin_tone_audit.csv",
+      "artifact_type": "table"
+    },
+    {
+      "artifact_key": "d02_portrait_screening_atlas",
+      "relative_path": "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/figures/portrait_screening_atlas.png",
+      "artifact_type": "figure"
+    },
+    {
+      "artifact_key": "d02_anatomical_annotation_qa",
+      "relative_path": "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/figures/anatomical_annotation_qa.png",
+      "artifact_type": "figure"
+    },
+    {
+      "artifact_key": "d02_hand_vs_control_figure",
+      "relative_path": "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/figures/hand_vs_control.png",
+      "artifact_type": "figure"
+    },
+    {
+      "artifact_key": "d02_anatomical_failure_atlas",
+      "relative_path": "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/figures/anatomical_failure_atlas.png",
+      "artifact_type": "figure"
+    },
+    {
+      "artifact_key": "d02_skin_tone_figure",
+      "relative_path": "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/figures/skin_tone_audit.png",
+      "artifact_type": "figure"
+    },
+    {
+      "artifact_key": "d02_self_contained_report",
+      "relative_path": "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/reports/portrait_skin_tone_and_hand_audit.html",
+      "artifact_type": "report"
+    },
+    {
+      "artifact_key": "d02_validation_checks",
+      "relative_path": "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/validation/checks.csv",
+      "artifact_type": "validation"
+    }
+  ],
+  "expected_counts": {
+    "portrait_screening_rows": 60,
+    "anatomical_annotation_rows": 91,
+    "anatomical_overlap_rows": 1265,
+    "eligible_case_rows": 292,
+    "hand_control_cases": 45,
+    "hand_control_paintings": 20,
+    "hand_region_comparison_rows": 1638,
+    "skin_tone_audit_rows": 2760,
+    "skin_profile_paintings": 30,
+    "skin_context_matches": 10,
+    "manual_review_rows": 32,
+    "canonical_figure_count": 5,
+    "report_embedded_visuals": 20,
+    "report_embedded_csv_tables": 17,
+    "artifact_record_count": 14,
+    "canonical_file_count": 16
+  },
+  "observed_counts": {
+    "portrait_screening_rows": 60,
+    "anatomical_annotation_rows": 91,
+    "anatomical_overlap_rows": 1265,
+    "eligible_case_rows": 292,
+    "hand_control_cases": 45,
+    "hand_control_paintings": 20,
+    "hand_region_comparison_rows": 1638,
+    "skin_tone_audit_rows": 2760,
+    "skin_profile_paintings": 30,
+    "skin_context_matches": 10,
+    "manual_review_rows": 32,
+    "canonical_figure_count": 5,
+    "report_embedded_visuals": 20,
+    "report_embedded_csv_tables": 17,
+    "artifact_record_count": 14,
+    "validation_row_count": 99,
+    "canonical_file_count": 16,
+    "temporary_work_file_count": 0
+  },
+  "validation_summary": {
+    "check_count": 99,
+    "passed_count": 99,
+    "failed_count": 0,
+    "blocking_failure_count": 0,
+    "warning_failure_count": 0
+  },
+  "known_limitations": [
+    "The anatomical study is restricted to the governed portrait subset and eligible existing cases.",
+    "Anatomical annotations are computational study regions, not clinical or identity annotations.",
+    "Manual anatomy review describes visible restoration failures and does not establish historical correctness.",
+    "Rendered skin lightness is an image property and must not be interpreted as race, ethnicity, identity, or inherent model bias.",
+    "SDXL is retained only as descriptive exact-case overlap evidence and is excluded from the primary painting-level inference.",
+    "No combined quality, uncertainty, trustworthiness, or conservation-approval score is constructed."
+  ],
+  "validation_status": "passed",
+  "refactor_status": "refactored",
+  "completion_gate_passed": true,
+  "helper_checksums": {
+    "portrait_anatomy_audit": "73e67d7f3a388b05029422fcd99ecb924fa395e285e606215bfa48a4295ad174",
+    "schemas": "ae2f7a847a9227a25c7baaf6c52873b8f314126f4e4f9732dd1caf05e5036a35",
+    "paths": "d84d77df3fa24870289700c0bd06c00dda425a43fdd960b175b897ec1e9adf0a",
+    "manifests": "8ba9846539a63ca14becdf5bb5488204917476169e847233489f0012d5703217",
+    "validation": "1311f816879b60e8314364686e2136eb906ff3718ccf7b6106a3e73f04e09a10"
+  },
+  "output_checksums": {
+    "d02_portrait_screening": "b48ee744590765acbb031623351606145ddafbb0fb57f9faac02fed7af7b1c81",
+    "d02_anatomical_annotations": "5a40d08b54e6b76193b01a9c903e0a6488f02bf069cba407bb6a082c4282df25",
+    "d02_anatomical_overlap_audit": "5fdfb9e3778c433a177a11a7ada61da5e2c5aae191a6a639973a962b621710ef",
+    "d02_eligible_cases": "d0d50acebe5875b66e73ebab571364ddf831ed0ebc574f9fbcbb4f22efe83f49",
+    "d02_manual_anatomy_review": "f96b6638447fd0f8122b4f856bbc898f9a2bccbe2e93a38bec2e572d914d8272",
+    "d02_hand_region_comparison": "de1d0a534ff550c78dbeaffd4c4bd678020ee93a3da773331456d6b48ea935f0",
+    "d02_skin_tone_audit": "1db89fda0da30c45e291b127e2e3bbb70e59975316f548cdaa8f64d0a314f084",
+    "d02_portrait_screening_atlas": "2f98aaa2839806bbcd861cb526519b4bba7d48e2a949390577cf411f86fb22a5",
+    "d02_anatomical_annotation_qa": "eaf74c6d438932be1a11c5aebc292d9d0dfed8e985dd02d82d67625eb18f3a74",
+    "d02_hand_vs_control_figure": "24b3c52e5240fa20d57c27109fdcc4e390f47fc1e63e703d365b55814754d849",
+    "d02_anatomical_failure_atlas": "3421e9d85d6386f4ad7867903f361fe40493f8a9a66472f08041ce10b70ec7b8",
+    "d02_skin_tone_figure": "889536cfef4529b4678503b009771f2215f6bf2cc81bd090c1aa51e4daafcd9b",
+    "d02_self_contained_report": "4842db15e6310f2cb4b690767838a14a54987118a344bce14185f5503b47a4db",
+    "d02_validation_checks": "ee6941596fed84d98a0cb3a552b36c0de38b03d32edc19815dd5abdaddde08e6"
+  },
+  "artifact_manifest_checksum": "03797fda8c5801755937e9935386b2c8275052f0ec20cbbc158c8ed4bd917955",
+  "report_policy_id": "self_contained_portrait_anatomy_audit.v1",
+  "primary_estimand": "within_case_hand_minus_matched_non_hand_control",
+  "independent_unit": "painting_id",
+  "skin_tone_claim_status": "qualified_exploratory_comparison_allowed",
+  "no_combined_quality_score": true,
+  "no_race_or_ethnicity_classification": true,
+  "no_conservation_approval_claim": true,
+  "roadmap_requirement_count": 13,
+  "roadmap_traceability_failures": 0
+}

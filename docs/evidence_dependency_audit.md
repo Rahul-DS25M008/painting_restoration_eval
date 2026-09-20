@@ -37,14 +37,15 @@ and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
 **Controlled-300 transition review: 2026-09-19.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebooks 01–20,
+dependency order for the approved 300-painting study. Notebooks 01–21,
 including Notebook 12A, are committed Controlled-300 producers. N16, N17, N19,
 and N20 have verified diagnostics releases; their complete local outputs remain
-canonical. Notebook 21 is complete, validated, and baseline-compared; its
-compact Git handoff and one oversized-table diagnostics publication remain
-pending. Notebooks 22–36 remain historical Controlled-50 evidence until each
-producer is explicitly reopened, rerun, validated, baseline-compared, and
-committed.
+canonical. Notebook 21 is complete, validated, baseline-compared, Git-committed,
+and its oversized comparison table is remotely verified. D02 has now completed
+its approved post-N21 supplemental audit and is ready for the same commit. After
+that handoff, Notebook 22 is the next eligible producer. Notebooks 22–36 remain
+historical Controlled-50 evidence until each producer is explicitly reopened,
+rerun, validated, baseline-compared, and committed.
 
 **Controlled-300 storage transition review: 2026-09-13.** Commit `694dad45`
 (`n11 scaled up`) is the final approved full-output Git/LFS checkpoint for the
@@ -237,8 +238,9 @@ metric validity and coverage passed.
 | 19 Uncertainty and Spatial Explanation Maps | `spatial_explanations.v1`, 780 raw numeric maps, 2,475 owned PNGs, 3,000 validated upstream links, normalized map index, validation and manifests | 4,680 regional rows; 6,255 map-manifest rows; 149/149 checks; 20/20 roadmap requirements; 2,481 canonical files and no temporary work files | Pilot schemas and eight artifact roles retained; all 130 shared numeric arrays and 780 shared regional means exact; 411 shared PNGs intentionally rerendered under changed global scales/layout; 14 selected-panel names replaced by expanded rule selection | Approved Controlled-300 spatial explanation producer with remotely verified diagnostics release and compact Git handoff; no combined score or calibrated confidence claim |
 | 20 Semantic and Structural Consistency | `semantic_structural_metrics.v1`, `semantic_numeric_maps.v1`, 9,304 rendered panels, representative figure, normalized map index, validation and manifests | 447,312 metric rows; 63,216 numeric bundles; 72,520 map-manifest rows; 181/181 checks; 22/22 roadmap requirements; 9,311 canonical files and no temporary work files | All eight pilot paths and CSV schemas retained; rows increased from 58,980 to 447,312, numeric bundles from 8,340 to 63,216, and rendered panels from 1,090 to 9,304 | Approved Controlled-300 semantic/structural proxy producer with pinned diagnostics release and compact Git handoff; not validated face, anatomy, object, iconographic, historical, or conservation assessment |
 | 21 Multi-Model Comparison | `model_comparison.v1`, `metric_disagreement.v1`, representative-case index, two figures, self-contained report, validation and manifests | 10,504 selected candidates; 277,319 comparison rows; 2,181 disagreement rows; 168 representative rows; 187/187 checks; 19/19 roadmap responsibilities; 9 canonical files and no temporary work files | All nine pilot relative paths and CSV schemas retained; comparison rows 86,531→277,319, disagreement rows 839→2,181, representative rows 76→168; both figures remain readable and the report embeds 58/58 images | Approved Controlled-300 comparison evidence; full four-method scope covers 2,620 paired cases and the five-method SDXL scope remains bounded to 24 cases; the oversized comparison table is diagnostics-tier, not a combined quality score |
+| D02 Portrait Skin-Tone and Hand Restoration Audit | `portrait_anatomy_screening.v1`, `portrait_anatomy_annotations.v1`, overlap and eligible-case evidence, matched hand analysis, exploratory rendered-skin-lightness analysis, blinded review, five figures, self-contained report, validation and manifests | 60 portraits; 91 annotations; 1,265 overlap rows; 292 eligible records; 45 matched cases from 20 paintings; 1,638 hand-comparison rows; 2,760 skin-lightness rows; 32 blinded reviews; 99/99 checks; 16 canonical files | No pilot output exists because D02 is a new approved supplemental Controlled-300 analysis; continuity is enforced through immutable N01–N21 inputs and registered checksums | Approved analysis-only evidence for downstream grouped analysis, failure taxonomy, XAI, reporting and dashboard stages; rendered lightness is an image property, not race, ethnicity, identity, inherent bias, historical truth or conservation approval |
 
-**Notebook 21 publication routing.** The 152,814,687-byte
+**Notebook 21 publication routing (completed).** The 152,814,687-byte
 `metrics/model_comparison.csv` exceeds the approved 50 MiB bulk-diagnostic
 threshold. It remains the local canonical source and is routed as a single
 checksum-verified object to the existing Hugging Face `diagnostics` dataset;
@@ -246,8 +248,22 @@ it does not belong in the restoration-candidate dataset and does not require
 the indexed-image bundle strategy. GitHub retains the notebook, configuration
 and helper changes, disagreement and representative tables, both figures, the
 self-contained report, validation and run/artifact manifests, inventory, and
-the external-publication registry. Publication is not complete until the
-pinned remote byte count and SHA-256 verification pass.
+the external-publication registry. The remote object is published and verified
+at commit `40b155f281e01c4693e983e15cc975d1b722f6bc`, with the recorded
+152,814,687-byte size and SHA-256
+`a55a1b41f05639bde954d59f974550137d4bc6eae5a4acd73dc7c806fc4cd76b`.
+
+**D02 completion and publication routing.** D02 completed under run
+`run_fdbd2ed6e93b4d709f5439af028a7600`. All 37 code cells are executed, the
+notebook contains no saved error output, all 99 validation checks and 13
+roadmap responsibilities pass, all 14 registered artifact checksums match, and
+the output root contains exactly 16 canonical files with no work directory.
+The five RGB PNG figures passed structural and visual inspection. The
+28,222,966-byte report embeds 20 images and 17 complete CSV downloads with no
+external image dependency. D02 has no E: pilot counterpart. Its complete
+41,642,918-byte output root has no artifact above the 50 MiB publication
+threshold, so it belongs in the compact GitHub/Git-LFS handoff; no separate
+Hugging Face candidates or diagnostics publication is required.
 
 **Notebook 19 publication routing (local and pinned remote gates passed).**
 The complete local root is authoritative. Do not interpret 3,000 upstream-link

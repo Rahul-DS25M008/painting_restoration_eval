@@ -10,10 +10,10 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping
 
 
-PATHS_MODULE_VERSION = "1.1.0"
+PATHS_MODULE_VERSION = "1.1.1"
 PROJECT_PATHS_SCHEMA_VERSION = "project_paths.v1"
 NOTEBOOK_STEM_PATTERN = re.compile(
-    r"^[0-9]{2}[a-z]?_[a-z0-9]+(?:_[a-z0-9]+)*$"
+    r"^(?:[0-9]{2}[a-z]?|d[0-9]{2})_[a-z0-9]+(?:_[a-z0-9]+)*$"
 )
 ALLOWED_OUTPUT_SUBDIRS = frozenset(
     {
@@ -116,7 +116,7 @@ def validate_notebook_stem(notebook_stem: str) -> str:
     normalized = str(notebook_stem).strip()
     if not NOTEBOOK_STEM_PATTERN.fullmatch(normalized):
         raise ValueError(
-            "Notebook stem must match 01_name or 12a_name form; received "
+            "Notebook stem must match 01_name, 12a_name, or d02_name form; received "
             f"{notebook_stem!r}"
         )
     return normalized

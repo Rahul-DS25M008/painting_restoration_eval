@@ -2171,9 +2171,9 @@ validation/checks.csv
 
 **Notebook:** `d02_portrait_skin_tone_and_hand_restoration_audit.ipynb`\
 **Origin:** New approved supplemental analysis arising from supervisor feedback\
-**Refactor status:** Not started\
-**Validation status:** Not started\
-**Completion gate passed:** No\
+**Refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
 **Output root:** `outputs/d02_portrait_skin_tone_and_hand_restoration_audit/`\
 **Depends on:** Notebooks 01–21, including the full-benchmark HINT producer in Notebook 12A
 
@@ -2452,15 +2452,6 @@ manifests/artifacts.csv
 validation/checks.csv
 ```
 
-The completed local run passed all 137 validation checks and left no temporary
-work files. Compared with the preserved Controlled-50 output copy, spatial
-rows increased from 18,896 to 143,247 and candidate maps from 10,050 to
-76,020. The 170 pilot-only map-manifest paths comprise 160 maps for the 32
-approved displaced Notebook 11 contextual candidates and ten reselected
-panels; no evidence family was lost. Bulk maps and the spatial-diagnostics
-table remain locally canonical and are covered by the verified indexed-bundle
-N16 diagnostics release. The pre-N34 review governs dashboard access.
-
 The HTML report must be self-contained, provide the complete numerical coverage
 through owned tables, and use selected embedded panels to explain—not replace—the
 complete evidence. A missing or unsupported secondary skin-tone claim does not
@@ -2484,6 +2475,37 @@ applicability and completion status.
   approval claim is inferred from computational evidence.
 - All outputs remain inside the D02 root, reload successfully, reconcile with
   the artifact manifest, and pass consolidated validation.
+
+### Controlled-300 completion record
+
+D02 completed under run `run_fdbd2ed6e93b4d709f5439af028a7600`. The saved
+notebook contains 37/37 executed code cells, no saved error outputs, and an
+opening status of Finished / Finished / Yes. All 13 roadmap responsibilities
+and all 99 validation checks passed with no blocking or warning failures.
+
+The completed analysis screened all 60 governed portrait paintings, retained
+91 reviewed anatomical annotations, audited 1,265 anatomy-mask intersections,
+and identified 292 eligible case-region records. The primary matched analysis
+covers 45 cases from 20 independent paintings and persists 1,638 hand-versus-
+control evidence rows. The separate exploratory rendered-skin-lightness branch
+persists 2,760 evidence rows, 30 painting profiles across three balanced
+presentation bins, and ten context matches. The blinded visual review contains
+32 units, including 25 visible anatomy failures and seven anatomically
+acceptable outcomes under the frozen rubric.
+
+The exact output contract contains 16 files: five data tables, two metric
+tables, five RGB PNG figures, one self-contained HTML report, validation, and
+two manifests. The report embeds 20 visuals and all 17 approved complete CSV
+tables without external image dependencies. Fourteen non-self-referential
+artifacts are registered; all checksums pass and no temporary `work/` directory
+remains.
+
+D02 is a new supplemental Controlled-300 analysis and therefore has no
+`E:/outputs/` pilot counterpart. Baseline continuity is not applicable; its
+provenance boundary is instead the immutable Notebook 01–21 inputs it consumes.
+At approximately 41.64 MB total, with no individual artifact crossing the
+approved 50 MiB bulk threshold, its complete compact record is routed to
+GitHub/Git LFS. A separate Hugging Face publication is not required.
 
 ---
 

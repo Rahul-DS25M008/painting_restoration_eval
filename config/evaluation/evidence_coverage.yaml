@@ -51,13 +51,13 @@ evidence_coverage:
   # Incremental transition ledger; update only after each notebook passes its
   # completion gate and read-only pilot-output comparison.
   controlled_300_rerun:
-    recorded_on: "2026-09-19"
+    recorded_on: "2026-09-20"
     recovery_tag: "pilot-50-complete"
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "21"
-    next_eligible_notebook_id: "D02"
+    completed_through_notebook_id: "D02"
+    next_eligible_notebook_id: "22"
     new_bulk_publication_policy: "n16_n17_n19_n20_verified_diagnostics_bundles"
     completed_notebooks:
       - notebook_id: "01"
@@ -912,6 +912,35 @@ evidence_coverage:
         external_publication_tier: "diagnostics"
         external_publication_artifact: "outputs/21_multi_model_comparison/metrics/model_comparison.csv"
         publication_status: "external_publication_registry_authoritative"
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "D02"
+        stem: "d02_portrait_skin_tone_and_hand_restoration_audit"
+        output_root: "outputs/d02_portrait_skin_tone_and_hand_restoration_audit"
+        manifest_path: "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        portrait_screening_rows: 60
+        anatomical_annotation_rows: 91
+        anatomical_overlap_rows: 1265
+        eligible_case_rows: 292
+        hand_control_cases: 45
+        hand_control_paintings: 20
+        hand_region_comparison_rows: 1638
+        skin_tone_audit_rows: 2760
+        skin_profile_paintings: 30
+        skin_context_matches: 10
+        manual_review_rows: 32
+        report_embedded_visuals: 20
+        report_embedded_csv_tables: 17
+        validation_rows: 99
+        artifact_records: 14
+        canonical_output_file_count: 16
+        work_file_count_after_completion: 0
+        baseline_output_root: null
+        baseline_comparison_status: "not_applicable_new_supplemental_analysis"
+        external_publication_required: false
+        publication_status: "compact_git_lfs_handoff"
         unexplained_missing_or_reduced_evidence: false
 
   frozen_baseline:
