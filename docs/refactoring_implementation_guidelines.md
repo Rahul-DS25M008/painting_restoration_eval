@@ -925,6 +925,7 @@ checksums, limitations, and downstream eligibility.
 | 21 Multi-Model Comparison | Finished | Finished | Yes | 10,504 selected candidates; 277,319 comparison rows; 2,181 disagreement rows; 168 representative rows; self-contained 58-image report; 187/187 passing checks; 9 canonical files | All nine pilot paths and CSV schemas retained; comparison/disagreement/representative rows increased from 86,531/839/76 to 277,319/2,181/168; both figures and the report were reviewed; the oversized comparison table is diagnostics-tier evidence while the other eight artifacts form the compact Git handoff |
 | D02 Portrait Skin-Tone and Hand Restoration Audit | Finished | Finished | Yes | 60 portraits screened; 91 anatomical annotations; 1,265 overlap rows; 292 eligible records; 45 matched hand cases from 20 paintings; 1,638 hand-comparison rows; 2,760 exploratory rendered-skin-lightness rows; 32 blinded review units; 99/99 checks; 16 canonical files | New supplemental Controlled-300 analysis with no pilot output counterpart; all evidence is derived from frozen N01–N21 inputs, the 20-visual/17-table report is self-contained, all 14 registered checksums pass, and the complete 41.64 MB record stays in GitHub/Git LFS without a separate Hugging Face release |
 | 22 Damage-Size Diffusion Uncertainty Extension | Finished | Finished | Yes | 245 cases across 35 paintings; 735 new candidates; 245 four-seed groups; 1,470 unordered pairs; 33,320 metric rows; 245 numerical maps; 245 overlays; 236/236 checks; 988 canonical files | All ten pilot artifact roles and schemas retained; case-dependent rows and images increased exactly sevenfold from the 35-case pilot; no unexplained loss, temporary work files, warning failures, or saved notebook errors |
+| 23 Damage-Size Sensitivity Analysis | Finished | Finished | Yes | 35 paintings (seven/category), 245 matched cases, 980 four-method primary candidates, 245 Stable Diffusion uncertainty groups, 7,035 canonical analysis rows, 494 inferential rows, 124/124 passing checks, 10 analytical views, eight visual panels and eight canonical files | All eight pilot paths and schemas retained; analysis rows increased from 1,901 to 7,035, the report remains self-contained with 18 embedded and zero external images, and bounded inference replaces infeasible exhaustive enumeration |
 
 Notebooks 01–22, including Notebook 12A and supplemental D02, are completed
 Controlled-300 producers. Notebook 20's producer-specific diagnostics bundle
@@ -933,7 +934,9 @@ its completion gate for 10,504 selected candidates, 3,160,618 normalized
 evidence rows, 277,319 comparison rows and 2,181 family-balanced disagreement
 rows. Notebook 22 passed all 236 checks for 245 four-seed damage-size groups,
 735 owned candidates, 33,320 metric rows, and 245 numerical maps. Notebook 23
-is the next producer eligible for Controlled-300 reopening.
+passed its completion gate with 7,035 canonical analysis rows, 494 inferential
+rows, 124 passing checks and a self-contained report. Notebook 24 is the next
+producer eligible for Controlled-300 reopening.
 Notebook 21 retains `core_three_model` and `sdxl_four_model_subset` as stable
 historical schema identifiers so downstream consumers do not require a
 gratuitous identifier migration. Their displayed labels and validated
@@ -2042,16 +2045,24 @@ Until the reset and a fresh quota check:
 - keep `outputs/inventory/project_file_inventory.csv` local and regenerate it
   after every notebook, while committing the compact `inventory_run.json` that
   records its SHA-256, byte count, run ID, summary, and read-error count;
-- keep N22's 980 PNGs and `data/uncertainty_maps.npz` local; its compact Git
-  handoff consists of the notebook, helper/configuration changes, candidate
-  index, manifests, validation, and representative figure;
+- publish N22's 735 owned restoration PNGs as 35 per-painting indexed bundles
+  in the Hugging Face `candidates` dataset, and publish its 245 uncertainty
+  overlays plus `data/uncertainty_maps.npz` as 35 indexed bundles and complete
+  diagnostic sidecars in the Hugging Face `diagnostics` dataset;
+- keep N22's compact tables, manifests, validation and representative figure
+  in GitHub, while preserving the complete local canonical tree until the
+  pre-N34 storage/dashboard audit explicitly approves any cleanup;
 - do not make scientific completion depend on external publication, and do not
   publish mixed candidate and diagnostic assets under one misleading class.
 
 N22 candidate restorations are candidate-class evidence; its uncertainty maps
-and overlays are diagnostic-class evidence. A split or explicitly indexed
-external publication, if useful, is deferred to the pre-N34 storage review.
-All N22 artifacts remain complete and authoritative locally in the meantime.
+and overlays are diagnostic-class evidence. The approved split publication uses
+the same producer name under separate `candidates` and `diagnostics` repository
+prefixes, complete painting indexes, bounded ZIP members and pinned remote
+verification records. This split does not lose cross-tier identity: both sides
+retain the same source run ID, case IDs, painting IDs, checksums and producer
+provenance. All N22 artifacts remain complete and authoritative locally until
+the pre-N34 storage and Streamlit audit verifies consumption from both tiers.
 
 The currently deployed `pilot-50` application remains unchanged during the
 Controlled-300 rerun. No history rewrite, branch deletion, Git/LFS purge, or
@@ -2155,6 +2166,14 @@ depend on a pending external upload. The assistant never runs
 `git add`, commit, or push;
 those actions belong to the user. All local evidence remains intact unless
 the user separately approves exact-target cleanup.
+
+When one producer owns both candidate and diagnostic bulk evidence, do not
+force both classes into one repository and do not leave either class local-only.
+Use separate, explicitly named publication profiles and records. Notebook 22 is
+the reference implementation: `22c` publishes 735 restorations to `candidates`;
+`22d` publishes 245 overlays, the numeric uncertainty archive, and diagnostic
+sidecars to `diagnostics`. Each profile uses 35 per-painting bundles and must
+complete pinned remote verification before its record is included in Git.
 
 ## 28. Error correction workflow
 

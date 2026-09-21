@@ -8,7 +8,7 @@ policy:
   local_outputs_remain_canonical: true
   rewrite_existing_git_history: false
   remove_local_after_upload: false
-  controlled_300_new_bulk_publication: n16_n17_full_bundle_verified_other_bulk_deferred
+  controlled_300_new_bulk_publication: indexed_bundles_by_asset_class_n22_split_release_approved
   storage_review_after_notebook: 33
   dashboard_approval_after_storage_review: true
   proposed_bundle_transport_smoke_2026_09_17:
@@ -38,6 +38,24 @@ policy:
       release_prefix: bundled_assets/v1/controlled_300/17_local_consistency_metrics/c581ed6c9c2b0f7e
       asset_count: 27926
       remote_object_count: 669
+    n22_candidates:
+      status: governed_by_remote_verification_record
+      remote_verification_required: true
+      record: outputs/inventory/bundled_publication_n22c_full.json
+      repository: RahulMaddineni264/painting-restoration-eval-candidates
+      release_prefix: bundled_assets/v1/controlled_300/22_damage_size_diffusion_uncertainty_extension/candidates/4495e8c1e4641427
+      asset_count: 735
+      planned_bundle_count: 35
+      planned_remote_object_count: 77
+    n22_diagnostics:
+      status: governed_by_remote_verification_record
+      remote_verification_required: true
+      record: outputs/inventory/bundled_publication_n22d_full.json
+      repository: RahulMaddineni264/painting-restoration-eval-diagnostics
+      release_prefix: bundled_assets/v1/controlled_300/22_damage_size_diffusion_uncertainty_extension/diagnostics/02ace444a2c8c4f3
+      asset_count: 245
+      planned_bundle_count: 35
+      planned_remote_object_count: 80
 
   bundle_rationale:
     git_role: compact_scientific_record_not_bulk_map_or_large_metric_storage
@@ -47,6 +65,7 @@ policy:
     compression_claim: none_zip_stored_is_not_a_total_byte_reduction
     n16_n17_tier: diagnostics_maps_panels_metrics_and_provenance
     candidates_tier: model_generated_restoration_candidates
+    mixed_producer_rule: split_by_asset_class_retain_shared_source_run_and_case_identity
 
 interactive_store:
   provider: huggingface_dataset

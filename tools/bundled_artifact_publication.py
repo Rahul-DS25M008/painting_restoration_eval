@@ -1,7 +1,9 @@
-"""Resumable diagnostic indexed-bundle publication; no notebook or Git execution.
+"""Resumable indexed-bundle publication; no notebook or Git execution.
 
 The bounded smoke commands remain N16-only. Full uploads require explicit
-confirmation and a completed, checksum-validated producer run.
+confirmation and a completed, checksum-validated producer run. Notebook 22
+uses two explicit publication profiles so candidate restorations and
+diagnostic uncertainty artifacts remain in their correct repositories.
 """
 
 from __future__ import annotations
@@ -30,7 +32,9 @@ from restoration_eval.bundled_assets import (  # noqa: E402
     split_by_size, verify_bundle, verify_source,
 )
 
-REPO = "RahulMaddineni264/painting-restoration-eval-diagnostics"
+DIAGNOSTICS_REPO = "RahulMaddineni264/painting-restoration-eval-diagnostics"
+CANDIDATES_REPO = "RahulMaddineni264/painting-restoration-eval-candidates"
+REPO = DIAGNOSTICS_REPO
 MANIFEST = ROOT / "outputs/16_difference_maps_and_spatial_diagnostics/manifests/map_images.csv"
 RUN_MANIFEST = ROOT / "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json"
 MAX_SMOKE_BUNDLES = 4
@@ -71,6 +75,32 @@ FULL_SPECS = {
         "figure_key": "semantic_structural.examples",
         "kind": "n20_full_controlled_300",
     },
+    "22c": {
+        "name": "22_damage_size_diffusion_uncertainty_extension",
+        "repo": CANDIDATES_REPO,
+        "publication_part": "candidates",
+        "manifest_dir": "data",
+        "manifest_file": "candidates.csv",
+        "metric_dir": "data",
+        "metric_file": "candidates.csv",
+        "metric_key": "damage_size_diffusion_uncertainty.candidates",
+        "map_key": "damage_size_diffusion_uncertainty.candidates",
+        "kind": "n22_candidates_full_controlled_300",
+    },
+    "22d": {
+        "name": "22_damage_size_diffusion_uncertainty_extension",
+        "repo": DIAGNOSTICS_REPO,
+        "publication_part": "diagnostics",
+        "manifest_file": "map_images.csv",
+        "metric_file": "damage_size_uncertainty.csv",
+        "metric_key": "damage_size_diffusion_uncertainty.metrics",
+        "map_key": "damage_size_diffusion_uncertainty.map_manifest",
+        "numeric_file": "uncertainty_maps.npz",
+        "numeric_key": "damage_size_diffusion_uncertainty.maps",
+        "figure_file": "uncertainty_extension_summary.png",
+        "figure_key": "damage_size_diffusion_uncertainty.summary_figure",
+        "kind": "n22_diagnostics_full_controlled_300",
+    },
 }
 FULL_NOTEBOOK = "16"
 
@@ -85,6 +115,8 @@ def _rows(manifest: Path = MANIFEST) -> list[dict]:
     identity_field = {
         "19": "map_asset_id",
         "20": "semantic_map_asset_id",
+        "22c": "candidate_id",
+        "22d": "map_image_id",
     }.get(FULL_NOTEBOOK, "map_image_id")
     if not rows or len({row[identity_field] for row in rows}) != len(rows):
         raise ValueError(f"Map manifest empty or has duplicate {identity_field}")
@@ -129,6 +161,59 @@ def _select() -> list[dict]:
 
 
 def _asset(row: dict) -> dict:
+    if FULL_NOTEBOOK == "22c":
+        from PIL import Image
+
+        relative = safe_relative(row["restored_path"])
+        if not relative.startswith("outputs/"):
+            relative = safe_relative(
+                f"outputs/{_full_spec()['name']}/{relative}"
+            )
+        source = ROOT / relative
+        with Image.open(source) as image:
+            width, height, image_mode, image_format = (
+                image.width, image.height, image.mode, image.format
+            )
+        return {
+            "asset_id": row["candidate_id"],
+            "original_relative_path": relative,
+            "painting_id": row["painting_id"],
+            "case_id": row["case_id"],
+            "candidate_id": row["candidate_id"],
+            "model_id": row["model_id"],
+            "map_type": "restored_candidate",
+            "asset_kind": "stable_diffusion_candidate",
+            "selection_role": row["execution_role"],
+            "sha256": row["restored_sha256"],
+            "size_bytes": source.stat().st_size,
+            "width": width,
+            "height": height,
+            "image_mode": image_mode,
+            "format": image_format or source.suffix.lstrip(".").upper(),
+        }
+    if FULL_NOTEBOOK == "22d":
+        relative = safe_relative(row["relative_path"])
+        if not relative.startswith("outputs/"):
+            relative = safe_relative(
+                f"outputs/{_full_spec()['name']}/{relative}"
+            )
+        return {
+            "asset_id": row["map_image_id"],
+            "original_relative_path": relative,
+            "painting_id": row["painting_id"],
+            "case_id": row["case_id"],
+            "candidate_id": "",
+            "model_id": "stable_diffusion_inpainting",
+            "map_type": row["map_metric_name"],
+            "asset_kind": "uncertainty_overlay",
+            "selection_role": "diagnostic",
+            "sha256": row["sha256"],
+            "size_bytes": int(row["size_bytes"]),
+            "width": int(row["width"]),
+            "height": int(row["height"]),
+            "image_mode": row["image_mode"],
+            "format": row["format"],
+        }
     return {
         "asset_id": (
             row.get("map_image_id")
@@ -506,13 +591,16 @@ def inspect(args: argparse.Namespace) -> None:
 def _full_context(max_bundle_bytes: int = MAX_BUNDLE_BYTES) -> dict:
     spec = _full_spec()
     producer_root = ROOT / "outputs" / spec["name"]
-    manifest = producer_root / "manifests" / spec.get(
+    manifest = producer_root / spec.get("manifest_dir", "manifests") / spec.get(
         "manifest_file", "map_images.csv"
     )
     run_manifest = producer_root / "manifests/run_manifest.json"
     manifest_rows = _rows(manifest)
-    if any(row["status"] != "passed" for row in manifest_rows):
-        raise ValueError(f"N{FULL_NOTEBOOK} map manifest contains non-passed images")
+    approved_status = "completed" if FULL_NOTEBOOK == "22c" else "passed"
+    if any(row["status"] != approved_status for row in manifest_rows):
+        raise ValueError(
+            f"N{FULL_NOTEBOOK} source manifest contains non-approved assets"
+        )
     if FULL_NOTEBOOK in ("19", "20"):
         # N19 registers repeated/upstream paths and N20 registers repeated NPZ
         # paths. Only producer-owned PNGs are original bundle members.
@@ -540,7 +628,15 @@ def _full_context(max_bundle_bytes: int = MAX_BUNDLE_BYTES) -> dict:
         expected_images = int(run["expected_counts"]["rendered_semantic_panels"])
         if len(assets) != expected_images:
             raise ValueError("N20 owned image coverage differs from the run contract")
-    metrics = producer_root / "metrics" / spec["metric_file"]
+    if FULL_NOTEBOOK == "22c":
+        expected_images = int(run["expected_counts"]["new_candidates"])
+        if len(assets) != expected_images:
+            raise ValueError("N22 candidate coverage differs from the run contract")
+    if FULL_NOTEBOOK == "22d":
+        expected_images = int(run["expected_counts"]["uncertainty_overlay_images"])
+        if len(assets) != expected_images:
+            raise ValueError("N22 diagnostic coverage differs from the run contract")
+    metrics = producer_root / spec.get("metric_dir", "metrics") / spec["metric_file"]
     artifact_manifest = producer_root / "manifests/artifacts.csv"
     with artifact_manifest.open("r", encoding="utf-8-sig", newline="") as stream:
         artifact_rows = {row["artifact_key"]: row for row in csv.DictReader(stream)}
@@ -581,7 +677,12 @@ def _full_context(max_bundle_bytes: int = MAX_BUNDLE_BYTES) -> dict:
                "source_run_id": run["run_id"], "source_manifest_sha256": manifest_sha,
                "metrics_sha256": metrics_sha, "max_bundle_bytes": max_bundle_bytes}
     release_id = sha256_bytes(json_bytes(payload))[:16]
-    prefix = f"bundled_assets/v1/controlled_300/{run['notebook_name']}/{release_id}"
+    part = spec.get("publication_part")
+    part_path = f"/{part}" if part else ""
+    prefix = (
+        f"bundled_assets/v1/controlled_300/{run['notebook_name']}"
+        f"{part_path}/{release_id}"
+    )
     return {"assets": assets, "groups": grouped, "run": run,
             "producer_root": producer_root, "manifest": manifest,
             "metrics": metrics, "manifest_sha": manifest_sha,
@@ -786,7 +887,7 @@ def verify_full_local(stage: Path, deep: bool = True) -> None:
         ROOT
         / "outputs"
         / spec["name"]
-        / "manifests"
+        / spec.get("manifest_dir", "manifests")
         / spec.get("manifest_file", "map_images.csv")
     )
     if sha256_file(manifest) != catalogue["source_manifest_sha256"]:
@@ -1045,26 +1146,35 @@ def verify_full_remote(args: argparse.Namespace) -> None:
         raise ValueError("Use a fresh empty sample cache for public-read verification")
     reader = RemoteBundleReader(REPO, revision, catalogue["prefix"], cache)
     samples = []
-    for painting in ("p001", "p150", "p300"):
+    if FULL_NOTEBOOK in ("22c", "22d"):
+        paintings = sorted(catalogue["paintings"])
+        sample_positions = sorted(
+            {0, len(paintings) // 3, (2 * len(paintings)) // 3, len(paintings) - 1}
+        )
+        sample_paintings = [paintings[position] for position in sample_positions]
+    else:
+        sample_paintings = ["p001", "p150", "p300"]
+    for painting in sample_paintings:
         if painting not in catalogue["paintings"]:
             raise ValueError(f"Missing representative painting {painting}")
         entry = catalogue["paintings"][painting]
         local = stage / Path(entry["path"]).relative_to(catalogue["prefix"])
         index = json.loads(local.read_text(encoding="utf-8"))
         samples.append((painting, index["assets"][0]))
-    panel = next((asset for painting in sorted(catalogue["paintings"])
-                  for asset in json.loads((stage / Path(catalogue["paintings"][painting]["path"])
-                                           .relative_to(catalogue["prefix"])).read_text(encoding="utf-8"))["assets"]
-                  if asset["asset_kind"] == "selected_panel"), None)
-    if panel is None and FULL_NOTEBOOK == "20":
-        painting = sorted(catalogue["paintings"])[0]
-        local = stage / Path(catalogue["paintings"][painting]["path"]).relative_to(
-            catalogue["prefix"]
-        )
-        panel = json.loads(local.read_text(encoding="utf-8"))["assets"][-1]
-    if panel is None:
-        raise ValueError("No fourth public sample exists in full release")
-    samples.append((panel["painting_id"], panel))
+    if FULL_NOTEBOOK not in ("22c", "22d"):
+        panel = next((asset for painting in sorted(catalogue["paintings"])
+                      for asset in json.loads((stage / Path(catalogue["paintings"][painting]["path"])
+                                               .relative_to(catalogue["prefix"])).read_text(encoding="utf-8"))["assets"]
+                      if asset["asset_kind"] == "selected_panel"), None)
+        if panel is None and FULL_NOTEBOOK == "20":
+            painting = sorted(catalogue["paintings"])[0]
+            local = stage / Path(catalogue["paintings"][painting]["path"]).relative_to(
+                catalogue["prefix"]
+            )
+            panel = json.loads(local.read_text(encoding="utf-8"))["assets"][-1]
+        if panel is None:
+            raise ValueError("No fourth public sample exists in full release")
+        samples.append((panel["painting_id"], panel))
     sample_started = time.monotonic()
     for painting, asset in samples:
         data, _ = reader.read_asset(painting, asset["asset_id"])
@@ -1086,14 +1196,18 @@ def verify_full_remote(args: argparse.Namespace) -> None:
                    "public_sample_downloaded_bytes": reader.download_bytes,
                    "public_sample_downloaded_objects": reader.download_count})
     atomic_json(record_path, record)
-    inventory = ROOT / "outputs/inventory" / f"bundled_publication_n{FULL_NOTEBOOK}_full.json"
+    inventory = (
+        ROOT
+        / "outputs/inventory"
+        / f"bundled_publication_n{FULL_NOTEBOOK}_full.json"
+    )
     atomic_json(inventory, record)
     print(json.dumps(record, indent=2), flush=True)
     print(f"Full N{FULL_NOTEBOOK} release record: {inventory}", flush=True)
 
 
 def main() -> None:
-    global FULL_NOTEBOOK
+    global FULL_NOTEBOOK, REPO
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
     for name in ("prepare-smoke", "verify-local", "upload-smoke", "verify-remote",
@@ -1104,7 +1218,9 @@ def main() -> None:
         if name in ("plan-full", "prepare-full", "verify-full-local",
                     "upload-full", "verify-full-remote"):
             command.add_argument(
-                "--notebook", choices=("16", "17", "19", "20"), default="16"
+                "--notebook",
+                choices=("16", "17", "19", "20", "22c", "22d"),
+                default="16",
             )
         if name == "prepare-smoke":
             command.add_argument("--max-bundle-mib", type=int, default=32, choices=range(1, 33), metavar="1..32")
@@ -1125,6 +1241,7 @@ def main() -> None:
     args = parser.parse_args()
     if hasattr(args, "notebook"):
         FULL_NOTEBOOK = args.notebook
+        REPO = _full_spec().get("repo", DIAGNOSTICS_REPO)
     stage = _stage(args)
     if args.command == "prepare-smoke":
         prepare(args)

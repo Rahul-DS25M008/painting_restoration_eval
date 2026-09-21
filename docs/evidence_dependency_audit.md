@@ -37,14 +37,15 @@ and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
 **Controlled-300 transition review: 2026-09-21.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebooks 01–22,
+dependency order for the approved 300-painting study. Notebooks 01–23,
 including Notebook 12A and supplemental D02, are completed Controlled-300
 producers. N16, N17, N19, and N20 have verified diagnostics releases; their
 complete local outputs remain canonical. Notebook 21 is complete, validated,
 baseline-compared, Git-committed, and its oversized comparison table is
 remotely verified. Notebook 22 has completed its rerun, validation, visual
-review, and pilot comparison. Notebook 23 is the next eligible producer.
-Notebooks 23–36 remain historical Controlled-50 evidence until each producer
+review, and pilot comparison. Notebook 23 completed its bounded Controlled-300
+analysis, report and final gate; Notebook 24 is the next eligible producer.
+Notebooks 24–36 remain historical Controlled-50 evidence until each producer
 is explicitly reopened, rerun, validated, baseline-compared, and committed.
 
 **Git LFS capacity guard: 2026-09-21.** GitHub reported 9.01 GiB used from the
@@ -755,15 +756,19 @@ cover the expanded scope. The summary figure and representative 2%, 10%, and
 
 Notebook 23 used this evidence to test generative uncertainty against target and
 realized damage size. Notebook 18 remains the canonical uncertainty source for
-its original canonical-case population; Notebook 22 is the canonical source for damage-size
-uncertainty. Notebook 22 is now a read-only approved upstream dependency.
+its original canonical-case population; Notebook 22 is the canonical source for
+damage-size uncertainty and is now a read-only approved upstream dependency.
 Its complete 988-file tree remains authoritative locally. Git excludes the 980
-generated PNGs and the 35.7 MiB numerical-map archive. Any later external
-publication must classify restoration images as candidate evidence and maps or
-overlays as diagnostic evidence; it is deferred to the pre-N34 storage review.
+generated PNGs and the 35.7 MiB numerical-map archive. The approved N22
+publication contract separates 735 restoration PNGs into 35 indexed bundles in
+the Hugging Face `candidates` dataset and 245 overlays plus the numerical map
+archive into 35 indexed bundles and sidecars in `diagnostics`. Separate pinned
+remote verification records must pass before either tier is represented as
+published; local canonical evidence is retained through the pre-N34 audit.
 
-Notebook 23, `23_damage_size_sensitivity_analysis.ipynb`, subsequently completed
-the approved damage-size analysis with its completion gate passed. It:
+The historical Controlled-50 run of Notebook 23,
+`23_damage_size_sensitivity_analysis.ipynb`, completed the pilot damage-size
+analysis with its pilot completion gate passed. It:
 
 - analyzed five matched painting trajectories at seven nested target levels using
   35 cases and 105 primary candidates from OpenCV Telea, LaMa, and Stable
@@ -784,9 +789,20 @@ the approved damage-size analysis with its completion gate passed. It:
 - registered exactly six non-self-referential artifacts and eight canonical files
   under `outputs/23_damage_size_sensitivity_analysis/`.
 
-Notebook 23 is now the canonical scalar and report source for the controlled
-damage-size sensitivity experiment. Downstream consumers must preserve target
-and realized exposure definitions, the five-painting dependency structure,
+That historical run remains the pilot baseline only. Controlled-300 run
+`run_e93288fc3ac847ccb699241b4b4c8be0` is now canonical: it analyzes 35
+painting trajectories, 245 cases, 980 primary candidates across Telea, LaMa,
+HINT and Stable Diffusion, and 245 Stable Diffusion uncertainty groups. It
+persisted 7,035 unique analysis rows, including 494 inferential rows, three
+canonical figures, and a self-contained report with 10 analytical views, eight
+visual panels, 110 panel tiles, 18 embedded images and no external images. All
+124 validation checks and 10 roadmap responsibilities passed. The eight pilot
+artifact paths and schemas are retained; analysis rows increased from 1,901 to
+7,035. Inference used 5,000 seeded cluster-bootstrap draws and 100,000 seeded
+batched sign flips with the +1 correction rather than infeasible exhaustive
+enumeration. Downstream
+consumers must preserve target and realized exposure definitions, painting as
+the independent unit,
 metric-family disagreement, and the boundary that empirical Stable Diffusion
 seed variability is not calibrated confidence. The analysis does not estimate
 independent category or style effects and does not establish a universal damage

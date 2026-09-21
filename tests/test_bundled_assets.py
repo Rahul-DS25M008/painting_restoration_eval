@@ -152,6 +152,16 @@ class BundleTests(unittest.TestCase):
         self.assertEqual(_classify(Failure(503))[0], "transient")
         self.assertEqual(_classify(TimeoutError())[0], "ambiguous")
 
+    def test_n22_split_publication_profiles(self):
+        candidate = publisher.FULL_SPECS["22c"]
+        diagnostic = publisher.FULL_SPECS["22d"]
+        self.assertEqual(candidate["repo"], publisher.CANDIDATES_REPO)
+        self.assertEqual(diagnostic["repo"], publisher.DIAGNOSTICS_REPO)
+        self.assertEqual(candidate["publication_part"], "candidates")
+        self.assertEqual(diagnostic["publication_part"], "diagnostics")
+        self.assertEqual(candidate["name"], diagnostic["name"])
+        self.assertNotEqual(candidate["kind"], diagnostic["kind"])
+
     def test_full_n16_prepare_resume_with_synthetic_producer(self):
         producer = self.root / "outputs/16_difference_maps_and_spatial_diagnostics"
         manifests = producer / "manifests"
@@ -180,13 +190,23 @@ class BundleTests(unittest.TestCase):
         metrics = producer / "metrics/spatial_diagnostics.csv"
         metrics.write_text("case_id,value\ncase_p001,1\n", encoding="utf-8")
         with (manifests / "artifacts.csv").open("w", encoding="utf-8", newline="") as stream:
-            writer = csv.DictWriter(stream, fieldnames=["artifact_key", "checksum", "validation_status"])
+            writer = csv.DictWriter(
+                stream,
+                fieldnames=[
+                    "artifact_key",
+                    "checksum",
+                    "validation_status",
+                    "dataset_scope",
+                ],
+            )
             writer.writeheader()
             writer.writerows([
                 {"artifact_key": "spatial_diagnostics.map_manifest",
-                 "checksum": sha256_file(map_manifest), "validation_status": "passed"},
+                 "checksum": sha256_file(map_manifest), "validation_status": "passed",
+                 "dataset_scope": "controlled_300"},
                 {"artifact_key": "spatial_diagnostics.metrics",
-                 "checksum": sha256_file(metrics), "validation_status": "passed"},
+                 "checksum": sha256_file(metrics), "validation_status": "passed",
+                 "dataset_scope": "controlled_300"},
             ])
         run_manifest = manifests / "run_manifest.json"
         run_manifest.write_text(json.dumps({"run_status": "completed", "completion_gate_passed": True,

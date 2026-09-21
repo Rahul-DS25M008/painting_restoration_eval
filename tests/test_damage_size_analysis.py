@@ -19,12 +19,15 @@ from restoration_eval.damage_size_analysis import (
     family_balanced_ranks,
     load_damage_size_analysis_config,
     matched_rank_biserial,
+    monte_carlo_sign_flip_test,
     normalise_quality_evidence,
     normalise_uncertainty_evidence,
     resolve_analysis_inputs,
     select_damage_size_population,
+    seeded_cluster_bootstrap_interval,
     size_and_painting_adjusted_spearman,
     summarise_painting_slopes,
+    summarise_painting_slopes_bounded,
     theil_sen_slope,
     validate_damage_size_analysis,
     validate_damage_size_report_html,
@@ -48,12 +51,14 @@ class DamageSizeAnalysisTests(unittest.TestCase):
         cls.artworks = pd.read_csv(cls.inputs["artworks_path"])
         cls.opencv = pd.read_csv(cls.inputs["opencv_candidates_path"])
         cls.lama = pd.read_csv(cls.inputs["lama_candidates_path"])
+        cls.hint = pd.read_csv(cls.inputs["hint_candidates_path"])
         cls.stable_diffusion = pd.read_csv(cls.inputs["stable_diffusion_candidates_path"])
         cls.selected = select_damage_size_population(
             cls.cases,
             cls.artworks,
             cls.opencv,
             cls.lama,
+            cls.hint,
             cls.stable_diffusion,
             config=cls.config,
         )
@@ -72,6 +77,7 @@ class DamageSizeAnalysisTests(unittest.TestCase):
             "09": "opencv_run_manifest_path",
             "10": "lama_run_manifest_path",
             "11": "stable_diffusion_run_manifest_path",
+            "12A": "hint_run_manifest_path",
             "13": "classical_run_manifest_path",
             "14": "lpips_run_manifest_path",
             "15": "feature_run_manifest_path",
@@ -84,17 +90,22 @@ class DamageSizeAnalysisTests(unittest.TestCase):
         for notebook_id, key in notebook_by_key.items():
             manifests[notebook_id] = json.loads(self.inputs[key].read_text(encoding="utf-8"))
         checks = validate_upstream_run_manifests(manifests)
-        self.assertEqual(len(checks), 13)
+        self.assertEqual(len(checks), 14)
         self.assertTrue(checks["passed"].all())
 
     def test_primary_population_is_exact_and_metric_independent(self) -> None:
-        self.assertEqual(len(self.selected), 105)
-        self.assertEqual(self.selected["case_id"].nunique(), 35)
-        self.assertEqual(self.selected["painting_id"].nunique(), 5)
+        self.assertEqual(len(self.selected), 980)
+        self.assertEqual(self.selected["case_id"].nunique(), 245)
+        self.assertEqual(self.selected["painting_id"].nunique(), 35)
         self.assertEqual(self.selected["target_damage_fraction"].nunique(), 7)
         self.assertEqual(
             self.selected.groupby("model_id").size().to_dict(),
-            {"lama": 35, "opencv_telea": 35, "stable_diffusion_inpainting": 35},
+            {
+                "hint_places2": 245,
+                "lama": 245,
+                "opencv_telea": 245,
+                "stable_diffusion_inpainting": 245,
+            },
         )
         self.assertFalse(self.selected.duplicated(["model_id", "case_id"]).any())
         sd = self.selected.loc[self.selected["model_id"].eq("stable_diffusion_inpainting")]
@@ -113,20 +124,20 @@ class DamageSizeAnalysisTests(unittest.TestCase):
             "semantic_structural": pd.read_csv(self.inputs["semantic_metrics_path"], low_memory=False),
         }
         normalized = normalise_quality_evidence(tables, self.selected, config=self.config)
-        self.assertEqual(len(normalized), 33705)
-        self.assertEqual(normalized["candidate_id"].nunique(), 105)
-        self.assertEqual(normalized["case_id"].nunique(), 35)
+        self.assertEqual(len(normalized), 314580)
+        self.assertEqual(normalized["candidate_id"].nunique(), 980)
+        self.assertEqual(normalized["case_id"].nunique(), 245)
         self.assertEqual(normalized["anchor_id"].replace("", np.nan).dropna().nunique(), 11)
         self.assertFalse(normalized.duplicated(["source_notebook_id", "source_metric_row_id"]).any())
         runtime = build_runtime_evidence(self.selected, config=self.config)
-        self.assertEqual(len(runtime), 105)
+        self.assertEqual(len(runtime), 980)
         self.assertFalse(runtime["quality_ranking_eligible"].any())
 
     def test_uncertainty_is_four_seed_group_level_evidence(self) -> None:
         source = pd.read_csv(self.inputs["uncertainty_metrics_path"])
         normalized = normalise_uncertainty_evidence(source, config=self.config)
-        self.assertEqual(len(normalized), 1050)
-        self.assertEqual(normalized["uncertainty_group_id"].nunique(), 35)
+        self.assertEqual(len(normalized), 7350)
+        self.assertEqual(normalized["uncertainty_group_id"].nunique(), 245)
         self.assertTrue(pd.to_numeric(normalized["seed_count"]).eq(4).all())
         paired = normalized.loc[normalized["aggregation_method"].eq("median_of_six_unordered_seed_pairs")]
         self.assertTrue(pd.to_numeric(paired["pair_count"]).eq(6).all())
@@ -164,6 +175,45 @@ class DamageSizeAnalysisTests(unittest.TestCase):
         adjacent = compute_adjacent_changes(synthetic, direction="lower_is_better")
         self.assertEqual(len(adjacent), 30)
         np.testing.assert_allclose(adjacent["adverse_change_per_percentage_point"], 0.02)
+
+    def test_controlled_300_bounded_statistics_are_seeded_and_finite(self) -> None:
+        values = np.linspace(-1.0, 2.0, 35)
+        first = seeded_cluster_bootstrap_interval(
+            values, resamples=5000, seed=23001, batch_size=500
+        )
+        second = seeded_cluster_bootstrap_interval(
+            values, resamples=5000, seed=23001, batch_size=500
+        )
+        self.assertEqual(first, second)
+        self.assertEqual(first["resamples"], 5000)
+        self.assertLessEqual(first["ci_lower"], first["estimate"])
+        self.assertGreaterEqual(first["ci_upper"], first["estimate"])
+
+        sign_flip = monte_carlo_sign_flip_test(
+            values, assignments=100000, seed=23002, batch_size=5000
+        )
+        self.assertEqual(sign_flip["assignments"], 100000)
+        self.assertGreater(sign_flip["p_value"], 0.0)
+        self.assertLessEqual(sign_flip["p_value"], 1.0)
+
+        slopes = pd.DataFrame(
+            {
+                "painting_id": [f"p{index:03d}" for index in range(35)],
+                "adverse_slope_per_reporting_interval": values,
+            }
+        )
+        summary = summarise_painting_slopes_bounded(
+            slopes,
+            bootstrap_resamples=5000,
+            bootstrap_seed=23001,
+            bootstrap_batch_size=500,
+            sign_flip_assignments=100000,
+            sign_flip_seed=23002,
+            sign_flip_batch_size=5000,
+        )
+        self.assertEqual(summary["painting_count"], 35)
+        self.assertEqual(summary["resamples"], 5000)
+        self.assertEqual(summary["sign_flip_assignments"], 100000)
 
     def test_family_balanced_ranking_does_not_overweight_feature_anchors(self) -> None:
         rows = []

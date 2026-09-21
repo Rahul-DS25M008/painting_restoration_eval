@@ -1,0 +1,28 @@
+{
+  "asset_count": 245,
+  "bundle_bytes": 346370023,
+  "bundle_count": 35,
+  "object_count": 80,
+  "prefix": "bundled_assets/v1/controlled_300/22_damage_size_diffusion_uncertainty_extension/diagnostics/02ace444a2c8c4f3",
+  "producer": "22_damage_size_diffusion_uncertainty_extension",
+  "public_sample_asset_count": 4,
+  "public_sample_downloaded_bytes": 37082527,
+  "public_sample_downloaded_objects": 9,
+  "public_sample_seconds": 5.95,
+  "release_id": "02ace444a2c8c4f3",
+  "remote_verification_methods": {
+    "lfs_sha256": 38,
+    "public_read_sha256": 42
+  },
+  "remote_verification_seconds": 20.08,
+  "remote_verified_bytes": 407378583,
+  "remote_verified_object_count": 80,
+  "repo_id": "RahulMaddineni264/painting-restoration-eval-diagnostics",
+  "revision": "6c3ee0b232b2a555d401142040bf337b5e54ab33",
+  "schema_version": "bundle_assets.v1",
+  "source_manifest_sha256": "f8bc2116590a9ba17000d20fb8f2f68d6f9e23914d8ce443c36642362721dbf9",
+  "source_run_id": "run_d0276a6859f74fada266936f43b7499f",
+  "status": "full_remote_verified",
+  "uploaded_bytes": 407378583,
+  "uploaded_object_count": 80
+}

@@ -31,9 +31,9 @@ from .paths import find_project_root, resolve_repo_path
 
 
 MODULE_NAME = "restoration_eval.damage_size_analysis"
-MODULE_VERSION = "1.0.0"
+MODULE_VERSION = "2.0.0"
 CONFIG_SCHEMA_VERSION = "damage_size_analysis_config.v1"
-ANALYSIS_SCHEMA_VERSION = "damage_size_analysis.v1"
+ANALYSIS_SCHEMA_VERSION = "damage_size_analysis.v2"
 
 QUALITY_SOURCE_KEYS = (
     "classical",
@@ -209,8 +209,10 @@ def load_damage_size_analysis_config(path: str | Path) -> dict[str, Any]:
     population = settings["population"]
     expected = settings["expected_counts"]
     models = list(map(str, population["model_order"]))
-    if models != ["opencv_telea", "lama", "stable_diffusion_inpainting"]:
+    if models != ["opencv_telea", "lama", "hint_places2", "stable_diffusion_inpainting"]:
         raise ValueError("Model order or scope changed")
+    if population.get("dataset_scope") != "controlled_300":
+        raise ValueError("Notebook 23 must use the controlled_300 population")
     if len(population["painting_ids"]) != int(expected["paintings"]):
         raise ValueError("Painting-count arithmetic is inconsistent")
     if len(population["level_ids"]) != int(expected["damage_levels"]):
@@ -230,10 +232,20 @@ def load_damage_size_analysis_config(path: str | Path) -> dict[str, Any]:
         raise ValueError("Selected metric-source arithmetic is inconsistent")
     if int(expected["uncertainty_only_source_rows"]) + int(expected["uncertainty_reference_rows"]) != int(expected["uncertainty_metric_rows"]):
         raise ValueError("Uncertainty-source arithmetic is inconsistent")
-    if int(settings["statistics"]["bootstrap_resamples"]) != int(expected["paintings"]) ** int(expected["paintings"]):
-        raise ValueError("Exhaustive bootstrap count is inconsistent")
-    if int(settings["statistics"]["sign_flip_assignments"]) != 2 ** int(expected["paintings"]):
-        raise ValueError("Sign-flip assignment count is inconsistent")
+    statistics = settings["statistics"]
+    if statistics.get("bootstrap_method") != "seeded_painting_cluster_bootstrap":
+        raise ValueError("Notebook 23 requires the bounded seeded cluster bootstrap")
+    if int(statistics.get("bootstrap_resamples", 0)) != 5000:
+        raise ValueError("Notebook 23 requires exactly 5,000 bootstrap resamples")
+    if statistics.get("exact_test") != "seeded_monte_carlo_two_sided_sign_flip_mean_statistic":
+        raise ValueError("Notebook 23 requires the bounded Monte Carlo sign-flip test")
+    if int(statistics.get("sign_flip_assignments", 0)) != 100000:
+        raise ValueError("Notebook 23 requires exactly 100,000 sign-flip assignments")
+    if statistics.get("finite_simulation_correction") != "plus_one":
+        raise ValueError("Monte Carlo inference must retain the +1 correction")
+    for key in ("bootstrap_seed", "sign_flip_seed", "bootstrap_batch_size", "sign_flip_batch_size"):
+        if int(statistics.get(key, 0)) <= 0:
+            raise ValueError(f"statistics.{key} must be a positive integer")
     if len(settings["quality_anchors"]) != int(expected["quality_anchors"]):
         raise ValueError("Quality-anchor count is inconsistent")
     anchor_ids = [str(item["anchor_id"]) for item in settings["quality_anchors"]]
@@ -294,7 +306,7 @@ def validate_upstream_run_manifests(
     manifests: Mapping[str, Mapping[str, Any]],
     *,
     expected_notebook_ids: Sequence[str] = (
-        "05", "08", "09", "10", "11", "13", "14", "15", "16", "17", "20", "21", "22",
+        "05", "08", "09", "10", "11", "12A", "13", "14", "15", "16", "17", "20", "21", "22",
     ),
 ) -> pd.DataFrame:
     """Return one completion-gate row per direct upstream notebook."""
@@ -326,6 +338,7 @@ def _normalise_restored_path(value: Any, source_notebook_id: str) -> str:
             "09": "outputs/09_opencv_telea_restoration",
             "10": "outputs/10_lama_restoration",
             "11": "outputs/11_stable_diffusion_restoration",
+            "12A": "outputs/12a_hint_restoration",
         }
         return f"{roots[source_notebook_id]}/{text}"
     return text
@@ -336,6 +349,7 @@ def select_damage_size_population(
     artworks: pd.DataFrame,
     opencv: pd.DataFrame,
     lama: pd.DataFrame,
+    hint: pd.DataFrame,
     stable_diffusion: pd.DataFrame,
     *,
     config: Mapping[str, Any],
@@ -361,7 +375,10 @@ def select_damage_size_population(
         case_rows["painting_id"].astype(str).isin(set(map(str, population["painting_ids"])))
     ].copy()
     if len(case_rows) != int(expected["cases"]) or case_rows["case_id"].duplicated().any():
-        raise ValueError("Damage-size case population is not exactly 35 unique cases")
+        raise ValueError(
+            "Damage-size case population differs from the approved unique-case count: "
+            f"observed={len(case_rows)}, expected={int(expected['cases'])}"
+        )
     observed_levels = sorted(pd.to_numeric(case_rows["target_damage_fraction"], errors="coerce").unique())
     wanted_levels = sorted(map(float, population["target_damage_fractions"]))
     if not np.allclose(observed_levels, wanted_levels, atol=1e-12, rtol=0.0):
@@ -386,6 +403,7 @@ def select_damage_size_population(
 
     opencv_selected = deterministic(opencv, "opencv_telea", "09")
     lama_selected = deterministic(lama, "lama", "10")
+    hint_selected = deterministic(hint, "hint_places2", "12A")
     _require_columns(
         stable_diffusion,
         ("case_id", "candidate_id", "model_id", "restored_path", "runtime_seconds", "status",
@@ -404,7 +422,11 @@ def select_damage_size_population(
     ].copy()
     sd_selected["source_notebook_id"] = "11"
 
-    selected = pd.concat([opencv_selected, lama_selected, sd_selected], ignore_index=True, sort=False)
+    selected = pd.concat(
+        [opencv_selected, lama_selected, hint_selected, sd_selected],
+        ignore_index=True,
+        sort=False,
+    )
     selected = selected.merge(
         case_rows,
         on="case_id",
@@ -446,7 +468,9 @@ def select_damage_size_population(
     for model_id in population["model_order"]:
         model_cases = set(selected.loc[selected["model_id"].eq(model_id), "case_id"].astype(str))
         if model_cases != case_ids:
-            raise ValueError(f"{model_id} does not cover the exact 35 matched cases")
+            raise ValueError(
+                f"{model_id} does not cover the exact {int(expected['cases'])} matched cases"
+            )
     if selected["candidate_id"].duplicated().any():
         raise ValueError("Selected candidate IDs are not unique")
     return selected.sort_values(
@@ -680,6 +704,84 @@ def exact_sign_flip_test(differences: Sequence[float]) -> dict[str, float | int]
     }
 
 
+def seeded_cluster_bootstrap_interval(
+    values: Sequence[float],
+    *,
+    resamples: int = 5000,
+    seed: int = 23001,
+    batch_size: int = 500,
+    confidence_level: float = 0.95,
+    statistic: Callable[[np.ndarray], float] = np.median,
+) -> dict[str, float | int]:
+    """Return a deterministic bounded bootstrap interval over paintings.
+
+    Values must already contain one independent observation per painting. The
+    batched implementation bounds peak memory without changing the seeded draw
+    stream or the number of requested resamples.
+    """
+
+    array = np.asarray(values, dtype=float)
+    array = array[np.isfinite(array)]
+    if len(array) == 0:
+        return {"estimate": np.nan, "ci_lower": np.nan, "ci_upper": np.nan, "resamples": 0}
+    if not 0.0 < float(confidence_level) < 1.0:
+        raise ValueError("confidence_level must lie between zero and one")
+    if int(resamples) <= 0 or int(batch_size) <= 0:
+        raise ValueError("resamples and batch_size must be positive")
+
+    rng = np.random.default_rng(int(seed))
+    estimates = np.empty(int(resamples), dtype=float)
+    start = 0
+    while start < int(resamples):
+        stop = min(start + int(batch_size), int(resamples))
+        indices = rng.integers(0, len(array), size=(stop - start, len(array)))
+        estimates[start:stop] = [float(statistic(row)) for row in array[indices]]
+        start = stop
+
+    alpha = 1.0 - float(confidence_level)
+    return {
+        "estimate": float(statistic(array)),
+        "ci_lower": float(np.quantile(estimates, alpha / 2.0)),
+        "ci_upper": float(np.quantile(estimates, 1.0 - alpha / 2.0)),
+        "resamples": int(resamples),
+    }
+
+
+def monte_carlo_sign_flip_test(
+    differences: Sequence[float],
+    *,
+    assignments: int = 100000,
+    seed: int = 23002,
+    batch_size: int = 5000,
+) -> dict[str, float | int]:
+    """Run a seeded batched two-sided sign-flip test with +1 correction."""
+
+    values = np.asarray(differences, dtype=float)
+    values = values[np.isfinite(values)]
+    if len(values) == 0:
+        return {"statistic": np.nan, "p_value": np.nan, "assignments": 0}
+    if int(assignments) <= 0 or int(batch_size) <= 0:
+        raise ValueError("assignments and batch_size must be positive")
+
+    observed = abs(float(np.mean(values)))
+    rng = np.random.default_rng(int(seed))
+    extreme = 0
+    completed = 0
+    while completed < int(assignments):
+        current = min(int(batch_size), int(assignments) - completed)
+        signs = rng.integers(0, 2, size=(current, len(values)), dtype=np.int8)
+        signs = signs.astype(float) * 2.0 - 1.0
+        null = np.abs(np.mean(signs * values, axis=1))
+        extreme += int(np.count_nonzero(null >= observed - 1e-15))
+        completed += current
+
+    return {
+        "statistic": float(np.mean(values)),
+        "p_value": float((extreme + 1) / (int(assignments) + 1)),
+        "assignments": int(assignments),
+    }
+
+
 def matched_rank_biserial(differences: Sequence[float]) -> float:
     """Return the matched-pairs rank-biserial effect size, omitting zero ties."""
 
@@ -755,6 +857,50 @@ def summarise_painting_slopes(
     values = values[np.isfinite(values)]
     bootstrap = exhaustive_bootstrap_interval(values, confidence_level=confidence_level)
     test = exact_sign_flip_test(values)
+    return {
+        **bootstrap,
+        "p_value": float(test["p_value"]),
+        "sign_flip_assignments": int(test["assignments"]),
+        "rank_biserial": matched_rank_biserial(values),
+        "positive_direction_count": int(np.sum(values > 0)),
+        "negative_direction_count": int(np.sum(values < 0)),
+        "painting_count": int(len(values)),
+    }
+
+
+def summarise_painting_slopes_bounded(
+    slopes: pd.DataFrame,
+    *,
+    confidence_level: float = 0.95,
+    bootstrap_resamples: int = 5000,
+    bootstrap_seed: int = 23001,
+    bootstrap_batch_size: int = 500,
+    sign_flip_assignments: int = 100000,
+    sign_flip_seed: int = 23002,
+    sign_flip_batch_size: int = 5000,
+) -> dict[str, float | int]:
+    """Summarize painting slopes with the controlled-300 bounded design."""
+
+    _require_columns(slopes, ("painting_id", "adverse_slope_per_reporting_interval"), "painting slopes")
+    if slopes["painting_id"].astype(str).duplicated().any():
+        raise ValueError("Bounded slope inference requires one row per painting")
+    values = pd.to_numeric(
+        slopes["adverse_slope_per_reporting_interval"], errors="coerce"
+    ).to_numpy(float)
+    values = values[np.isfinite(values)]
+    bootstrap = seeded_cluster_bootstrap_interval(
+        values,
+        resamples=bootstrap_resamples,
+        seed=bootstrap_seed,
+        batch_size=bootstrap_batch_size,
+        confidence_level=confidence_level,
+    )
+    test = monte_carlo_sign_flip_test(
+        values,
+        assignments=sign_flip_assignments,
+        seed=sign_flip_seed,
+        batch_size=sign_flip_batch_size,
+    )
     return {
         **bootstrap,
         "p_value": float(test["p_value"]),
@@ -959,12 +1105,15 @@ __all__ = [
     "image_path_to_data_uri",
     "load_damage_size_analysis_config",
     "matched_rank_biserial",
+    "monte_carlo_sign_flip_test",
     "normalise_quality_evidence",
     "normalise_uncertainty_evidence",
     "resolve_analysis_inputs",
     "select_damage_size_population",
+    "seeded_cluster_bootstrap_interval",
     "size_and_painting_adjusted_spearman",
     "summarise_painting_slopes",
+    "summarise_painting_slopes_bounded",
     "theil_sen_slope",
     "validate_damage_size_analysis",
     "validate_damage_size_report_html",

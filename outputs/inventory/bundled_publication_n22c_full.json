@@ -1,0 +1,28 @@
+{
+  "asset_count": 735,
+  "bundle_bytes": 525038648,
+  "bundle_count": 35,
+  "object_count": 77,
+  "prefix": "bundled_assets/v1/controlled_300/22_damage_size_diffusion_uncertainty_extension/candidates/4495e8c1e4641427",
+  "producer": "22_damage_size_diffusion_uncertainty_extension",
+  "public_sample_asset_count": 4,
+  "public_sample_downloaded_bytes": 56213778,
+  "public_sample_downloaded_objects": 9,
+  "public_sample_seconds": 6.47,
+  "release_id": "4495e8c1e4641427",
+  "remote_verification_methods": {
+    "lfs_sha256": 35,
+    "public_read_sha256": 42
+  },
+  "remote_verification_seconds": 20.3,
+  "remote_verified_bytes": 527754743,
+  "remote_verified_object_count": 77,
+  "repo_id": "RahulMaddineni264/painting-restoration-eval-candidates",
+  "revision": "2d4ac6312c9b68db8377da0f591006eb07dc905a",
+  "schema_version": "bundle_assets.v1",
+  "source_manifest_sha256": "efe6834351053781bfb8e283fbd5efa35a4fa5c13c48a0a3941f61c66cbc0455",
+  "source_run_id": "run_d0276a6859f74fada266936f43b7499f",
+  "status": "full_remote_verified",
+  "uploaded_bytes": 527754743,
+  "uploaded_object_count": 77
+}

@@ -142,6 +142,18 @@ diagnostic maps, panels, and oversized diagnostic tables belong in
 `diagnostics`. The pre-N34 review still decides the dashboard's access and
 storage contract; it is not a ban on verified producer publication.
 
+Notebook 22 is the first producer whose bulk output spans both classes. Its
+approved split release preserves one producer/run identity while using two
+explicit profiles: `22c` packages 735 restoration candidates into 35
+per-painting bundles in the Hugging Face `candidates` dataset; `22d` packages
+245 uncertainty overlays into 35 per-painting bundles and includes the numeric
+map archive and diagnostic sidecars in `diagnostics`. Both profiles require
+pinned remote object/hash verification and public sample member reads. The
+split is an asset-role boundary, not a loss of linkage: case, painting,
+candidate/group, checksum and source-run identities remain indexed. N22 is no
+longer intended to remain local-only, but its local canonical tree is retained
+until the pre-N34 dashboard/storage audit validates both remote tiers.
+
 Notebook 19 passed its local Controlled-300 completion gate with 2,475 owned
 PNG assets and 3,000 links to validated upstream images. Its owned images are
 diagnostics-tier material. The separate per-painting release under
@@ -1636,9 +1648,9 @@ notebook, and publication registry remain in the GitHub scientific record.
 
 **Notebook:** `16_difference_maps_and_spatial_diagnostics.ipynb`  
 **Origin:** Consolidates Existing Notebooks 10, 16, and 23  
-**Refactor status:** Finished\
-**Validation status:** Finished\
-**Completion gate passed:** Yes\
+**Refactor status:** Prepared\
+**Validation status:** Not run\
+**Completion gate passed:** No\
 **Observed controlled-300 coverage:** 2,620 cases; 16,404 candidates across five methods; 15,204 nonzero candidates; 143,247 spatial-diagnostic rows; 76,020 candidate maps; 14 selected panels; 76,034 map-manifest rows\
 **Output root:** `outputs/16_difference_maps_and_spatial_diagnostics/`  
 **Depends on:** Notebooks 02 and 08–13, including Notebook 12A
@@ -2600,10 +2612,11 @@ figure passed visual review.
 
 The complete 988-file tree remains canonical locally. GitHub retains the
 compact scientific handoff and does not receive the 980 generated PNGs or the
-35.7 MiB numerical-map archive. If N22 is externally published after the
-pre-N34 storage review, restoration candidates belong to the `candidates`
-class while uncertainty maps and overlays belong to `diagnostics`; those roles
-must not be silently merged into an incorrectly labelled release.
+35.7 MiB numerical-map archive. The approved indexed-bundle publication sends
+the 735 restoration PNGs to the `candidates` dataset and sends the 245 overlays,
+numeric archive and diagnostic sidecars to `diagnostics`. Separate pinned
+verification records are required. The complete local tree remains intact
+until the pre-N34 storage and Streamlit audit validates both remote tiers.
 
 ---
 
@@ -2615,7 +2628,7 @@ must not be silently merged into an incorrectly labelled release.
 **Validation status:** Finished\
 **Completion gate passed:** Yes\
 **Output root:** `outputs/23_damage_size_sensitivity_analysis/`\
-**Depends on:** Notebooks 05, 08–17, and 20–22
+**Depends on:** Notebooks 05, 08–17, 20–22, and Notebook 12A
 
 ### Responsibilities
 
@@ -2640,6 +2653,21 @@ use the seven predeclared primary inferential anchors and freeze exact contrast
 and BH-family keys at preparation. Use N22's 245 repeated-seed groups only for Stable Diffusion
 damage-size uncertainty. Replace pilot five-painting bootstrap/sign-flip
 enumeration rather than changing a count constant.
+
+### Controlled-300 completion evidence
+
+Run `run_e93288fc3ac847ccb699241b4b4c8be0` completed with all 35 paintings,
+245 matched cases, 980 primary candidates and 245 Stable Diffusion uncertainty
+groups. It persisted 7,035 unique canonical analysis rows, including 494 rows
+with bounded inferential evidence, and retained all 11 anchors separately. The
+three canonical figures and self-contained HTML report passed validation; the
+report contains 10 analytical views, eight visual panels, 110 panel tiles, 18
+embedded images and no external image dependency. All 124 checks and all 10
+roadmap responsibilities passed with no blocking or warning failures. The
+eight pilot artifact paths and schemas are preserved; the pilot's 1,901 rows
+expanded to 7,035. Inference used 5,000 seeded painting-cluster bootstrap draws
+and 100,000 seeded batched sign flips with the +1 correction. Notebook 24 is
+the next eligible Controlled-300 producer.
 
 ### Canonical outputs
 
