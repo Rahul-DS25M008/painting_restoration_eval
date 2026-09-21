@@ -1408,38 +1408,55 @@ evidence_coverage:
       stem: "24_mask_robustness_analysis"
       status: "completed_validation_passed"
       completion_gate_passed: true
-      required_evidence: ["n06_robustness_groups", "n09_n11_primary_candidates", "n13_n20_metric_families"]
+      output_root: "outputs/24_mask_robustness_analysis"
+      manifest_path: "outputs/24_mask_robustness_analysis/manifests/run_manifest.json"
+      run_id: "run_bbf68684c3ca47e5827c2b8b4b666351"
+      required_evidence: ["n06_robustness_groups", "n09_n12a_primary_candidates", "n13_n21_metric_families"]
       terminology: "input_mask_robustness"
-      validated_population:
-        paintings: 5
+      planned_population:
+        paintings: 35
+        paintings_per_category: 7
         mask_families: 3
-        robustness_groups: 15
+        robustness_groups: 105
         variants_per_group: 5
-        cases: 75
-        primary_candidates: 225
+        cases: 525
+        primary_candidates: 2100
         candidates_by_model:
-          opencv_telea: 75
-          lama: 75
-          stable_diffusion_inpainting: 75
+          opencv_telea: 525
+          lama: 525
+          hint_places2: 525
+          stable_diffusion_inpainting: 525
         quality_anchors: 11
-        canonical_analysis_rows: 5373
-        validation_checks: 136
+        primary_inferential_anchors: 7
+        bootstrap_resamples: 5000
+        sign_flip_assignments: 100000
+        canonical_analysis_rows: 44847
+        canonical_output_files: 7
+      observed_population:
+        paintings: 35
+        paintings_per_category: 7
+        mask_families: 3
+        robustness_groups: 105
+        variants_per_group: 5
+        cases: 525
+        primary_candidates: 2100
+        analysis_rows: 44847
+        validation_checks: 139
         roadmap_requirements: 9
         analytical_report_views: 10
         report_visual_panels: 8
         report_embedded_images: 18
         report_external_images: 0
-        report_tile_count: 149
+        report_tile_count: 100
+        artifact_records: 5
         canonical_output_files: 7
-      primary_artifacts:
-        - path: "outputs/24_mask_robustness_analysis/metrics/mask_robustness_analysis.csv"
-          rows: 5373
-          schema_version: "mask_robustness_analysis.v1"
-        - path: "outputs/24_mask_robustness_analysis/figures/robustness_variance.png"
-        - path: "outputs/24_mask_robustness_analysis/figures/ranking_stability.png"
-        - path: "outputs/24_mask_robustness_analysis/reports/mask_robustness_analysis.html"
-        - path: "outputs/24_mask_robustness_analysis/validation/checks.csv"
-          rows: 136
+      historical_pilot_baseline:
+        paintings: 5
+        cases: 75
+        primary_candidates: 225
+        canonical_analysis_rows: 5373
+        validation_checks: 136
+        canonical_output_files: 7
       supported_scope:
         - "matched_five_variant_input_mask_robustness"
         - "within_group_quality_dispersion"
@@ -1460,6 +1477,8 @@ evidence_coverage:
         - "do_not_interpret_input_mask_robustness_as_stochastic_uncertainty_or_calibrated_confidence"
         - "do_not_separate_mask_family_from_its_fixed_target_damage_fraction"
         - "keep_runtime_out_of_quality_ranking"
+        - "use_5000_seeded_cluster_bootstrap_draws_and_100000_seeded_batched_sign_flips"
+        - "do_not_enumerate_35_power_35_bootstrap_samples_or_2_power_35_sign_assignments"
       prohibited_claims:
         - "mask_variation_is_generative_uncertainty"
         - "independent_mask_family_effect"

@@ -1,5 +1,5 @@
 config_schema_version: "mask_robustness_analysis_config.v1"
-config_version: "1.0.0"
+config_version: "2.0.0"
 
 mask_robustness_analysis:
   notebook_id: "24"
@@ -33,6 +33,8 @@ mask_robustness_analysis:
     lama_run_manifest_path: "outputs/10_lama_restoration/manifests/run_manifest.json"
     stable_diffusion_candidates_path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
     stable_diffusion_run_manifest_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+    hint_candidates_path: "outputs/12a_hint_restoration/data/restorations.csv"
+    hint_run_manifest_path: "outputs/12a_hint_restoration/manifests/run_manifest.json"
     classical_metrics_path: "outputs/13_classical_metrics/metrics/classical_metrics.csv"
     classical_run_manifest_path: "outputs/13_classical_metrics/manifests/run_manifest.json"
     lpips_metrics_path: "outputs/14_lpips_metrics/metrics/lpips_metrics.csv"
@@ -60,21 +62,22 @@ mask_robustness_analysis:
     work_root: "work"
 
   population:
-    dataset_scope: "controlled_50"
+    dataset_scope: "controlled_300"
     experiment_id: "mask_robustness"
     completed_status: "completed"
     passed_status: "passed"
-    painting_ids: ["p001", "p018", "p026", "p039", "p043"]
+    painting_ids: ["p001", "p009", "p018", "p026", "p039", "p043", "p052", "p073", "p077", "p089", "p093", "p100", "p107", "p115", "p123", "p124", "p139", "p140", "p157", "p173", "p178", "p181", "p198", "p199", "p208", "p210", "p220", "p223", "p235", "p246", "p256", "p259", "p267", "p284", "p294"]
     mask_family_order: ["scratch_thin", "loss_small", "loss_large"]
     target_damage_fraction_by_family:
       scratch_thin: 0.02
       loss_small: 0.045
       loss_large: 0.125
     variants_per_group: 5
-    model_order: ["opencv_telea", "lama", "stable_diffusion_inpainting"]
+    model_order: ["opencv_telea", "lama", "hint_places2", "stable_diffusion_inpainting"]
     model_source_notebooks:
       opencv_telea: "09"
       lama: "10"
+      hint_places2: "12A"
       stable_diffusion_inpainting: "11"
     stable_diffusion_primary_role: "primary"
     stable_diffusion_primary_prompt_variant: "p00_generic"
@@ -118,11 +121,16 @@ mask_robustness_analysis:
     repeated_unit: "five_mask_variants_nested_within_painting_and_family"
     primary_dispersion_statistic: "median_absolute_deviation"
     transparent_dispersion_statistics: ["standard_deviation", "median_absolute_deviation", "range"]
-    bootstrap_method: "exhaustive_ordered_painting_cluster_bootstrap"
-    bootstrap_resamples: 3125
+    bootstrap_method: "seeded_painting_cluster_bootstrap"
+    bootstrap_resamples: 5000
+    bootstrap_seed: 24001
+    bootstrap_batch_size: 500
     confidence_level: 0.95
-    exact_test: "two_sided_sign_flip_mean_statistic"
-    sign_flip_assignments: 32
+    exact_test: "seeded_monte_carlo_two_sided_sign_flip_mean_statistic"
+    sign_flip_assignments: 100000
+    sign_flip_seed: 24002
+    sign_flip_batch_size: 5000
+    finite_simulation_correction: "plus_one"
     effect_size: "matched_pairs_rank_biserial"
     fdr_method: "benjamini_hochberg"
     ranking_method: "average"
@@ -130,6 +138,8 @@ mask_robustness_analysis:
     runtime_in_quality_ranking: false
     combined_quality_score_retained: false
     use_uncertainty_terminology: false
+    primary_inferential_anchors: ["classical_masked_mae", "structural_crop_ssim", "perceptual_crop_lpips", "feature_dino_crop", "texture_crop_p95", "colour_masked_delta_e", "seam_boundary_gradient"]
+    descriptive_anchor_count: 11
 
   morphology:
     association_fields: ["centroid_x_normalized_content", "centroid_y_normalized_content", "bbox_fill_ratio", "bbox_aspect_ratio", "connected_component_count", "largest_component_fraction", "component_area_cv", "mask_compactness", "minimum_distance_to_content_boundary_pixels"]
@@ -163,38 +173,39 @@ mask_robustness_analysis:
     require_mixed_paragraph_bullet_table_visual_structure: true
 
   expected_counts:
-    paintings: 5
+    paintings: 35
     categories: 5
+    paintings_per_category: 7
     mask_families: 3
-    robustness_groups: 15
+    robustness_groups: 105
     variants_per_group: 5
-    cases: 75
-    candidates: 225
-    candidates_by_model: {opencv_telea: 75, lama: 75, stable_diffusion_inpainting: 75}
-    selected_classical_source_rows: 6750
-    selected_lpips_source_rows: 450
-    selected_feature_source_rows: 900
-    selected_spatial_source_rows: 2025
-    normalized_spatial_rows: 28350
-    selected_local_source_rows: 29475
-    selected_semantic_source_rows: 6300
-    selected_metric_source_rows: 45900
-    normalized_quality_rows: 72225
-    runtime_rows: 225
-    comparison_crosscheck_rows: 960
+    cases: 525
+    candidates: 2100
+    candidates_by_model: {opencv_telea: 525, lama: 525, hint_places2: 525, stable_diffusion_inpainting: 525}
+    selected_classical_source_rows: 63000
+    selected_lpips_source_rows: 4200
+    selected_feature_source_rows: 8400
+    selected_spatial_source_rows: 18900
+    normalized_spatial_rows: 264600
+    selected_local_source_rows: 275100
+    selected_semantic_source_rows: 58800
+    selected_metric_source_rows: 428400
+    normalized_quality_rows: 674100
+    runtime_rows: 2100
+    comparison_crosscheck_rows: 1280
     quality_anchors: 11
-    variant_quality_rows: 2475
-    group_quality_dispersion_rows: 1485
-    model_dispersion_summary_rows: 132
-    paired_model_dispersion_contrast_rows: 132
-    variant_family_balanced_rank_rows: 225
-    group_rank_stability_rows: 135
-    anchor_winner_stability_rows: 330
-    group_sensitivity_summary_rows: 15
-    morphology_association_rows: 297
-    runtime_group_dispersion_rows: 135
-    runtime_model_summary_rows: 12
-    canonical_analysis_rows: 5373
+    variant_quality_rows: 23100
+    group_quality_dispersion_rows: 13860
+    model_dispersion_summary_rows: 176
+    paired_model_dispersion_contrast_rows: 264
+    variant_family_balanced_rank_rows: 2100
+    group_rank_stability_rows: 1260
+    anchor_winner_stability_rows: 2310
+    group_sensitivity_summary_rows: 105
+    morphology_association_rows: 396
+    runtime_group_dispersion_rows: 1260
+    runtime_model_summary_rows: 16
+    canonical_analysis_rows: 44847
     canonical_figures: 2
     artifact_records: 5
     canonical_output_files: 7
@@ -211,8 +222,8 @@ mask_robustness_analysis:
     metric_disagreement_retained: true
 
   known_limitations:
-    - "Five paintings are the independent units; 75 cases are not 75 independent artworks."
-    - "One painting per category means painting and category effects cannot be separated."
+    - "Thirty-five paintings are the independent units; 525 cases are repeated observations, not 525 independent artworks."
+    - "Seven paintings per broad visual category support exploratory category summaries, not independent art-historical style effects."
     - "Mask family is deliberately paired with one target area: scratch_thin at 2 percent, loss_small at 4.5 percent, and loss_large at 12.5 percent. Independent family and damage-size effects therefore cannot be separated."
     - "The five variants are controlled computational realizations rather than observations of naturally occurring painting damage."
     - "Stable Diffusion uses one preselected primary candidate per input mask; the analysis measures input-mask robustness, not repeated-seed uncertainty."

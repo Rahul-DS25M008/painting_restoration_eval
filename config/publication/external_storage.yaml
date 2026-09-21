@@ -124,6 +124,8 @@ classification:
   bulk_diagnostic_role_by_extension:
     .csv: bulk_table
     .npz: bulk_array
+  forced_bulk_diagnostic_paths:
+    - outputs/24_mask_robustness_analysis/metrics/mask_robustness_analysis.csv
   candidate_image_groups:
     - clean
     - damaged

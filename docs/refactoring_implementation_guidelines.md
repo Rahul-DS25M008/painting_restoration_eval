@@ -926,8 +926,9 @@ checksums, limitations, and downstream eligibility.
 | D02 Portrait Skin-Tone and Hand Restoration Audit | Finished | Finished | Yes | 60 portraits screened; 91 anatomical annotations; 1,265 overlap rows; 292 eligible records; 45 matched hand cases from 20 paintings; 1,638 hand-comparison rows; 2,760 exploratory rendered-skin-lightness rows; 32 blinded review units; 99/99 checks; 16 canonical files | New supplemental Controlled-300 analysis with no pilot output counterpart; all evidence is derived from frozen N01–N21 inputs, the 20-visual/17-table report is self-contained, all 14 registered checksums pass, and the complete 41.64 MB record stays in GitHub/Git LFS without a separate Hugging Face release |
 | 22 Damage-Size Diffusion Uncertainty Extension | Finished | Finished | Yes | 245 cases across 35 paintings; 735 new candidates; 245 four-seed groups; 1,470 unordered pairs; 33,320 metric rows; 245 numerical maps; 245 overlays; 236/236 checks; 988 canonical files | All ten pilot artifact roles and schemas retained; case-dependent rows and images increased exactly sevenfold from the 35-case pilot; no unexplained loss, temporary work files, warning failures, or saved notebook errors |
 | 23 Damage-Size Sensitivity Analysis | Finished | Finished | Yes | 35 paintings (seven/category), 245 matched cases, 980 four-method primary candidates, 245 Stable Diffusion uncertainty groups, 7,035 canonical analysis rows, 494 inferential rows, 124/124 passing checks, 10 analytical views, eight visual panels and eight canonical files | All eight pilot paths and schemas retained; analysis rows increased from 1,901 to 7,035, the report remains self-contained with 18 embedded and zero external images, and bounded inference replaces infeasible exhaustive enumeration |
+| 24 Mask Robustness Analysis | Finished | Finished | Yes | 35 paintings (seven/category), 105 matched groups, 525 cases, 2,100 four-method primary candidates, 44,847 canonical analysis rows, 139/139 passing checks, 10 analytical views, eight visual panels and seven canonical files | All seven pilot paths and schemas retained; analysis rows increased from 5,373 to 44,847; the report remains self-contained with 18 embedded and zero external images; bounded painting-level inference replaces infeasible exhaustive enumeration |
 
-Notebooks 01–22, including Notebook 12A and supplemental D02, are completed
+Notebooks 01–24, including Notebook 12A and supplemental D02, are completed
 Controlled-300 producers. Notebook 20's producer-specific diagnostics bundle
 and compact Git handoff are remotely and locally verified. Notebook 21 passed
 its completion gate for 10,504 selected candidates, 3,160,618 normalized
@@ -935,8 +936,13 @@ evidence rows, 277,319 comparison rows and 2,181 family-balanced disagreement
 rows. Notebook 22 passed all 236 checks for 245 four-seed damage-size groups,
 735 owned candidates, 33,320 metric rows, and 245 numerical maps. Notebook 23
 passed its completion gate with 7,035 canonical analysis rows, 494 inferential
-rows, 124 passing checks and a self-contained report. Notebook 24 is the next
-producer eligible for Controlled-300 reopening.
+rows, 124 passing checks and a self-contained report. Notebook 24 run
+`run_bbf68684c3ca47e5827c2b8b4b666351` passed its completion gate with 35
+paintings, 105 groups, 525 cases, 2,100 four-method candidates, 44,847 analysis
+rows, and 139 passing checks. It used 5,000 seeded painting-cluster bootstrap
+draws and 100,000 seeded batched sign flips; exhaustive `35^35` bootstrap or
+`2^35` sign enumeration remained prohibited. Notebook 25 is the next producer
+eligible for Controlled-300 reopening.
 Notebook 21 retains `core_three_model` and `sdxl_four_model_subset` as stable
 historical schema identifiers so downstream consumers do not require a
 gratuitous identifier migration. Their displayed labels and validated
@@ -2095,9 +2101,14 @@ N16 and N17 claims rest only on their separate complete pinned-release records.
 
 The machine-readable historical provider and classification contract is
 `config/publication/external_storage.yaml`. Its N12/N12A/N13/N15 verified
-records remain valid. Do not run `tools/external_artifact_publication.py` or
-restore the failed N16 per-file uploader for N16/N17 or later producers. The
-N16 per-file LFS attempt exhausted Hugging Face's
+records remain valid. Do not restore the failed N16 per-file image uploader for
+N16/N17 or later image-heavy producers. A narrowly scoped exception is allowed
+for a producer with only one or a few oversized tabular or array artifacts:
+`tools/external_artifact_publication.py` may publish those bounded objects after
+full local hashing and must verify each by a complete remote read. Notebook 24's
+single 52.16 MB scalar CSV is the reference case for this exception; its figures,
+report, manifests and validation remain in the compact GitHub handoff. The N16
+per-file LFS attempt exhausted Hugging Face's
 free-account Hub API request limit; the user removed its partial remote
 repository and its local upload cache was cleared. Separate bundled N16 and
 N17 releases subsequently passed full remote verification; canonical evidence

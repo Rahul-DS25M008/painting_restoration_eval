@@ -37,15 +37,16 @@ and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
 **Controlled-300 transition review: 2026-09-21.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebooks 01–23,
+dependency order for the approved 300-painting study. Notebooks 01–24,
 including Notebook 12A and supplemental D02, are completed Controlled-300
 producers. N16, N17, N19, and N20 have verified diagnostics releases; their
 complete local outputs remain canonical. Notebook 21 is complete, validated,
 baseline-compared, Git-committed, and its oversized comparison table is
 remotely verified. Notebook 22 has completed its rerun, validation, visual
 review, and pilot comparison. Notebook 23 completed its bounded Controlled-300
-analysis, report and final gate; Notebook 24 is the next eligible producer.
-Notebooks 24–36 remain historical Controlled-50 evidence until each producer
+analysis, report and final gate. Notebook 24 completed its bounded Controlled-300
+mask-robustness analysis, report and final gate; Notebook 25 is the next eligible
+producer. Notebooks 25–36 remain historical Controlled-50 evidence until each producer
 is explicitly reopened, rerun, validated, baseline-compared, and committed.
 
 **Git LFS capacity guard: 2026-09-21.** GitHub reported 9.01 GiB used from the
@@ -808,39 +809,33 @@ seed variability is not calibrated confidence. The analysis does not estimate
 independent category or style effects and does not establish a universal damage
 threshold or conservation approval.
 
-Notebook 24, `24_mask_robustness_analysis.ipynb`, subsequently completed the
-approved input-mask robustness analysis with its completion gate passed. It:
+Notebook 24, `24_mask_robustness_analysis.ipynb`, completed Controlled-300 run
+`run_bbf68684c3ca47e5827c2b8b4b666351` with its completion gate passed. The
+validated evidence comprises:
 
-- analyzed five paintings, three fixed family–area conditions, 15 matched
-  robustness groups, five mask variants per group, 75 cases, and 225 preselected
-  primary candidates from OpenCV Telea, LaMa, and Stable Diffusion Inpainting;
-- retained 11 quality anchors as separate evidence and persisted 5,373 unique
-  canonical rows covering variant quality, within-group dispersion, paired model
-  contrasts, family-balanced ranks, winner stability, morphology associations,
-  painting and fixed family–area profiles, and operational runtime dispersion;
-- treated paintings as the independent units and mask variants as repeated
-  observations nested within painting–family groups;
-- found LaMa to be the broadest descriptive robustness leader, while none of the
-  132 paired model contrasts or 297 exploratory morphology associations survived
-  FDR correction;
-- preserved the design boundary that `scratch_thin`, `loss_small`, and
-  `loss_large` are paired with target damaged fractions of 2%, 4.5%, and 12.5%,
-  so independent mask-family and damage-size effects cannot be separated;
-- produced two canonical figures and a self-contained 13-section HTML report
-  with 10 analytical views, eight restoration or diagnostic panels, 18 embedded
-  images, 149 panel tiles, and no external image dependency;
-- passed all 136 validation checks and all nine roadmap traceability requirements
-  with zero blocking or warning failures;
-- registered exactly five non-self-referential artifacts and seven canonical
-  files under `outputs/24_mask_robustness_analysis/`.
+- 35 paintings balanced at seven per broad visual category, three fixed
+  family–area conditions, 105 matched groups, five variants per group, 525 cases,
+  and 2,100 preselected primary candidates from OpenCV Telea, LaMa, HINT and
+  Stable Diffusion Inpainting;
+- all 11 quality anchors retained descriptively, with the seven predeclared
+  anchors used for bounded confirmatory inference;
+- 44,847 unique canonical analysis rows, 139/139 passing validation checks,
+  nine completed roadmap responsibilities, two reviewed figures, and a
+  self-contained report containing 18 embedded images, 100 visual tiles and no
+  external image dependency;
+- 5,000 seeded painting-cluster bootstrap draws and 100,000 seeded batched
+  sign flips with the +1 correction instead of infeasible exhaustive enumeration;
+- the same seven canonical artifact paths and table schemas as the historical
+  Controlled-50 baseline, with analysis rows increasing from 5,373 to 44,847.
 
-Notebook 24 is now the canonical scalar and report source for the controlled
-mask-placement robustness experiment. Downstream consumers must preserve the
-matched five-variant grouping, the five-painting dependency structure, metric-
-family disagreement, and the distinction between input-mask robustness and
-stochastic candidate uncertainty. Low dispersion does not establish restoration
-quality, historical authenticity, or conservation approval. Runtime remains
-operational evidence and must not enter quality ranking.
+Downstream consumers must preserve metric-family disagreement and the distinction between input-mask robustness
+and stochastic candidate uncertainty. Low dispersion does not establish quality,
+historical authenticity, or conservation approval; runtime remains operational.
+The `scratch_thin`, `loss_small`, and `loss_large` families remain paired with
+target damaged fractions of 2%, 4.5%, and 12.5%, so independent family and
+damage-size effects cannot be separated. The 52.16 MB scalar table is
+diagnostics-tier evidence; compact figures, report, manifests, validation and
+the pinned external-publication record belong in the GitHub scientific handoff.
 
 Notebook 25, `25_synthetic_degradation_analysis.ipynb`, subsequently completed
 the approved synthetic-degradation analysis with its completion gate passed. It:

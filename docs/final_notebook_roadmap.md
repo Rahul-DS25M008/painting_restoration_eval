@@ -2689,7 +2689,7 @@ validation/checks.csv
 **Notebook:** `24_mask_robustness_analysis.ipynb`\
 **Origin:** New analysis stage separated from Notebook 06 generation  
 **Output root:** `outputs/24_mask_robustness_analysis/`\
-**Depends on:** Notebooks 06, 09–21
+**Depends on:** Notebooks 06, 08–17, 20, and 21, including Notebook 12A
 
 ### Responsibilities
 
@@ -2709,6 +2709,25 @@ per matched group. Preserve the five variant conditions while removing the
 pilot assumption of five paintings. Aggregate variation within a painting
 and family before painting-cluster inference; follow Section 2.2's bounded
 bootstrap, Monte Carlo and runtime gate. Category summaries remain exploratory.
+
+### Controlled-300 completion evidence
+
+Run `run_bbf68684c3ca47e5827c2b8b4b666351` completed with 35 paintings,
+105 matched groups, 525 cases, 2,100 four-method primary candidates and all 11
+quality anchors. It persisted 44,847 unique analysis rows, including bounded
+painting-level contrast, dispersion, morphology, rank-stability and runtime
+evidence. All 139 validation checks and all nine roadmap responsibilities
+passed. Both canonical figures were visually reviewed. The self-contained
+report contains 10 analytical views, eight visual panels, 18 embedded images,
+100 visual tiles and no external image dependency.
+
+The same seven pilot artifact paths and schemas are preserved; the pilot's
+5,373 analysis rows expanded to 44,847. Inference used 5,000 seeded
+painting-cluster bootstrap draws and 100,000 seeded batched sign flips with
+the +1 correction. The fixed family–area pairing prevents independent mask-family
+or damage-size claims, and mask robustness remains distinct from stochastic
+candidate uncertainty. The oversized scalar table is diagnostics-tier evidence;
+compact outputs and its verified publication record form the GitHub handoff.
 
 ### Canonical outputs
 

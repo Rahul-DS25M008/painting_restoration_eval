@@ -60,7 +60,8 @@ docs/supervisor/Next_Steps.docx
 /outputs/17_local_consistency_metrics/figures/
 
 # Canonical bulk tables remain local when too large for ordinary Git hosting.
-# N16's metrics are in its verified release; N17 remains local pending release.
+# N16/N17 are in verified indexed releases; N24 uses the bounded single-table
+# diagnostics publication path and full remote-read verification.
 /outputs/13_classical_metrics/metrics/classical_metrics.csv
 /outputs/15_feature_similarity/data/embeddings.npz
 /outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv
@@ -69,6 +70,7 @@ docs/supervisor/Next_Steps.docx
 /outputs/20_semantic_and_structural_consistency/data/semantic_maps.npz
 /outputs/21_multi_model_comparison/metrics/model_comparison.csv
 /outputs/22_damage_size_diffusion_uncertainty_extension/data/uncertainty_maps.npz
+/outputs/24_mask_robustness_analysis/metrics/mask_robustness_analysis.csv
 
 # The complete project inventory is regenerated locally after every completed
 # notebook. Keeping each approximately 70 MiB revision in Git LFS would spend

@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import hashlib
 import os
-from itertools import product
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -25,6 +24,8 @@ from .damage_size_analysis import (
     exhaustive_bootstrap_interval,
     family_balanced_ranks,
     matched_rank_biserial,
+    monte_carlo_sign_flip_test,
+    seeded_cluster_bootstrap_interval,
 )
 from .multi_model_comparison import (
     normalise_runtime_evidence,
@@ -36,7 +37,7 @@ from .paths import find_project_root, resolve_repo_path
 
 
 MODULE_NAME = "restoration_eval.mask_robustness_analysis"
-MODULE_VERSION = "1.0.0"
+MODULE_VERSION = "2.0.0"
 CONFIG_SCHEMA_VERSION = "mask_robustness_analysis_config.v1"
 ANALYSIS_SCHEMA_VERSION = "mask_robustness_analysis.v1"
 
@@ -188,7 +189,7 @@ def load_mask_robustness_analysis_config(path: str | Path) -> dict[str, Any]:
     population = settings["population"]
     expected = settings["expected_counts"]
     if list(map(str, population["model_order"])) != [
-        "opencv_telea", "lama", "stable_diffusion_inpainting"
+        "opencv_telea", "lama", "hint_places2", "stable_diffusion_inpainting"
     ]:
         raise ValueError("Model order or scope changed")
     if int(expected["robustness_groups"]) != int(expected["paintings"]) * int(expected["mask_families"]):
@@ -222,10 +223,17 @@ def load_mask_robustness_analysis_config(path: str | Path) -> dict[str, Any]:
     anchor_ids = [str(item["anchor_id"]) for item in settings["quality_anchors"]]
     if len(anchor_ids) != len(set(anchor_ids)):
         raise ValueError("Quality-anchor IDs must be unique")
-    if int(settings["statistics"]["bootstrap_resamples"]) != int(expected["paintings"]) ** int(expected["paintings"]):
-        raise ValueError("Exhaustive bootstrap count is inconsistent")
-    if int(settings["statistics"]["sign_flip_assignments"]) != 2 ** int(expected["paintings"]):
-        raise ValueError("Sign-flip assignment count is inconsistent")
+    statistics = settings["statistics"]
+    if statistics.get("bootstrap_method") != "seeded_painting_cluster_bootstrap":
+        raise ValueError("Notebook 24 requires the bounded painting-cluster bootstrap")
+    if int(statistics.get("bootstrap_resamples", 0)) != 5000:
+        raise ValueError("Notebook 24 requires exactly 5,000 bootstrap resamples")
+    if statistics.get("exact_test") != "seeded_monte_carlo_two_sided_sign_flip_mean_statistic":
+        raise ValueError("Notebook 24 requires the bounded Monte Carlo sign-flip test")
+    if int(statistics.get("sign_flip_assignments", 0)) != 100000:
+        raise ValueError("Notebook 24 requires exactly 100,000 sign-flip assignments")
+    if len(statistics.get("primary_inferential_anchors", ())) != 7:
+        raise ValueError("Notebook 24 requires seven predeclared primary inferential anchors")
     if bool(settings["statistics"]["combined_quality_score_retained"]):
         raise ValueError("A combined quality score is prohibited")
     if bool(settings["statistics"]["use_uncertainty_terminology"]):
@@ -278,7 +286,7 @@ def validate_upstream_run_manifests(
     manifests: Mapping[str, Mapping[str, Any]],
     *,
     expected_notebook_ids: Sequence[str] = (
-        "06", "08", "09", "10", "11", "13", "14", "15", "16", "17", "20", "21",
+        "06", "08", "09", "10", "11", "12A", "13", "14", "15", "16", "17", "20", "21",
     ),
 ) -> pd.DataFrame:
     """Return one completion-gate row per direct upstream notebook."""
@@ -313,6 +321,7 @@ def _normalise_restored_path(value: Any, source_notebook_id: str) -> str:
             "09": "outputs/09_opencv_telea_restoration",
             "10": "outputs/10_lama_restoration",
             "11": "outputs/11_stable_diffusion_restoration",
+            "12A": "outputs/12a_hint_restoration",
         }
         return f"{roots[source_notebook_id]}/{text}"
     return text
@@ -323,6 +332,7 @@ def select_mask_robustness_population(
     artworks: pd.DataFrame,
     opencv: pd.DataFrame,
     lama: pd.DataFrame,
+    hint: pd.DataFrame,
     stable_diffusion: pd.DataFrame,
     *,
     config: Mapping[str, Any],
@@ -349,7 +359,9 @@ def select_mask_robustness_population(
         & cases["painting_id"].astype(str).isin(set(map(str, population["painting_ids"])))
     ].copy()
     if len(case_rows) != int(expected["cases"]) or case_rows["case_id"].duplicated().any():
-        raise ValueError("Mask-robustness population is not exactly 75 unique cases")
+        raise ValueError(
+            "Mask-robustness population does not match the configured unique-case count"
+        )
     if case_rows["robustness_group_id"].nunique() != int(expected["robustness_groups"]):
         raise ValueError("Robustness-group count differs from contract")
     group_sizes = case_rows.groupby("robustness_group_id").size()
@@ -394,6 +406,7 @@ def select_mask_robustness_population(
 
     opencv_selected = deterministic(opencv, "opencv_telea", "09")
     lama_selected = deterministic(lama, "lama", "10")
+    hint_selected = deterministic(hint, "hint_places2", "12A")
     _require_columns(
         stable_diffusion,
         (
@@ -415,7 +428,11 @@ def select_mask_robustness_population(
     ].copy()
     sd_selected["source_notebook_id"] = "11"
 
-    selected = pd.concat([opencv_selected, lama_selected, sd_selected], ignore_index=True, sort=False)
+    selected = pd.concat(
+        [opencv_selected, lama_selected, hint_selected, sd_selected],
+        ignore_index=True,
+        sort=False,
+    )
     selected = selected.merge(case_rows, on="case_id", how="inner", suffixes=("", "__case"), validate="many_to_one")
     case_authority = {
         "painting_id": "painting_id",
@@ -458,7 +475,9 @@ def select_mask_robustness_population(
         raise ValueError(f"Primary candidate counts differ from contract: {observed} != {wanted}")
     for model_id in population["model_order"]:
         if set(selected.loc[selected["model_id"].eq(model_id), "case_id"].astype(str)) != case_ids:
-            raise ValueError(f"{model_id} does not cover the exact 75 matched cases")
+            raise ValueError(
+                f"{model_id} does not cover the exact configured matched cases"
+            )
     if selected["candidate_id"].duplicated().any():
         raise ValueError("Selected candidate IDs are not unique")
     return selected.sort_values(
@@ -546,7 +565,7 @@ def select_quality_anchor_values(
     ].copy()
     anchors["comparison_value"] = pd.to_numeric(anchors["comparison_value"], errors="coerce")
     if len(anchors) != int(expected["variant_quality_rows"]):
-        raise ValueError("Anchor-value population differs from the approved 2,475 rows")
+        raise ValueError("Anchor-value population differs from the configured row contract")
     if anchors.duplicated(["candidate_id", "anchor_id"], keep=False).any():
         raise ValueError("Candidate/anchor keys are not unique")
     if anchors["candidate_id"].nunique() != int(expected["candidates"]):
@@ -633,9 +652,9 @@ def within_group_centered_spearman(
 ) -> dict[str, Any]:
     """Associate geometry and outcome after removing each matched-group mean.
 
-    The point estimate uses all centered observations. Its interval resamples
-    the five paintings exhaustively as clusters. This remains exploratory and
-    does not identify an independent causal morphology effect.
+    The point estimate uses all centered observations. Its interval uses the
+    configured bounded painting-cluster bootstrap. This remains exploratory
+    and does not identify an independent causal morphology effect.
     """
 
     _require_columns(
@@ -666,30 +685,31 @@ def within_group_centered_spearman(
         }
     rho = float(spearmanr(working[x_column], working[y_column]).statistic)
     painting_ids = sorted(working[painting_column].astype(str).unique())
-    if len(painting_ids) != 5:
-        raise ValueError("Morphology inference requires exactly five painting clusters")
-    bootstrap_values: list[float] = []
-    for sample in product(painting_ids, repeat=len(painting_ids)):
-        pieces = []
-        for draw_index, painting_id in enumerate(sample):
-            piece = working.loc[working[painting_column].astype(str).eq(painting_id)].copy()
-            piece[painting_column] = f"draw_{draw_index}_{painting_id}"
-            pieces.append(piece)
-        sampled = pd.concat(pieces, ignore_index=True)
-        value = spearmanr(sampled[x_column], sampled[y_column]).statistic
+    if len(painting_ids) < 2:
+        raise ValueError("Morphology inference requires at least two painting clusters")
+    painting_rhos: list[float] = []
+    for painting_id in painting_ids:
+        subset = working.loc[working[painting_column].astype(str).eq(painting_id)]
+        if subset[x_column].nunique() < 2 or subset[y_column].nunique() < 2:
+            continue
+        value = spearmanr(subset[x_column], subset[y_column]).statistic
         if np.isfinite(value):
-            bootstrap_values.append(float(value))
-    if not bootstrap_values:
-        lower = upper = np.nan
-    else:
-        lower, upper = np.quantile(bootstrap_values, [0.025, 0.975]).tolist()
+            painting_rhos.append(float(value))
+    interval = seeded_cluster_bootstrap_interval(
+        painting_rhos,
+        resamples=5000,
+        seed=24001,
+        batch_size=500,
+        confidence_level=0.95,
+        statistic=np.median,
+    )
     return {
         "rho": rho,
-        "ci_lower": float(lower),
-        "ci_upper": float(upper),
-        "painting_count": 5,
+        "ci_lower": float(interval["ci_lower"]),
+        "ci_upper": float(interval["ci_upper"]),
+        "painting_count": int(len(painting_ids)),
         "observation_count": int(len(working)),
-        "bootstrap_resamples": int(len(bootstrap_values)),
+        "bootstrap_resamples": int(interval["resamples"]),
         "applicability_status": "applicable",
     }
 
@@ -819,10 +839,12 @@ __all__ = [
     "family_balanced_ranks",
     "load_mask_robustness_analysis_config",
     "matched_rank_biserial",
+    "monte_carlo_sign_flip_test",
     "normalise_quality_evidence",
     "resolve_analysis_inputs",
     "select_mask_robustness_population",
     "select_quality_anchor_values",
+    "seeded_cluster_bootstrap_interval",
     "validate_mask_robustness_analysis",
     "validate_mask_robustness_report_html",
     "validate_upstream_run_manifests",

@@ -162,6 +162,10 @@ def discover_rows(
             {},
         ).items()
     }
+    forced_bulk_diagnostic_paths = {
+        str(value).replace("\\", "/")
+        for value in rules.get("forced_bulk_diagnostic_paths", [])
+    }
     candidate_groups = {str(value) for value in rules["candidate_image_groups"]}
     diagnostic_groups = {str(value) for value in rules["diagnostic_image_groups"]}
     targets = configured_targets(config)
@@ -210,7 +214,10 @@ def discover_rows(
                 media_role = group
             elif (
                 suffix in bulk_diagnostic_extensions
-                and size_bytes >= bulk_diagnostic_min_bytes
+                and (
+                    size_bytes >= bulk_diagnostic_min_bytes
+                    or relative in forced_bulk_diagnostic_paths
+                )
             ):
                 tier = "diagnostics"
                 media_role = bulk_role_by_extension.get(

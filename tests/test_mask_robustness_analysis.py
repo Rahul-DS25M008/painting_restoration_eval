@@ -20,10 +20,12 @@ from restoration_eval.mask_robustness_analysis import (
     exhaustive_bootstrap_interval,
     load_mask_robustness_analysis_config,
     matched_rank_biserial,
+    monte_carlo_sign_flip_test,
     normalise_quality_evidence,
     resolve_analysis_inputs,
     select_mask_robustness_population,
     select_quality_anchor_values,
+    seeded_cluster_bootstrap_interval,
     validate_mask_robustness_analysis,
     validate_mask_robustness_report_html,
     validate_upstream_run_manifests,
@@ -47,12 +49,14 @@ class MaskRobustnessAnalysisTests(unittest.TestCase):
         cls.artworks = pd.read_csv(cls.inputs["artworks_path"])
         cls.opencv = pd.read_csv(cls.inputs["opencv_candidates_path"])
         cls.lama = pd.read_csv(cls.inputs["lama_candidates_path"])
+        cls.hint = pd.read_csv(cls.inputs["hint_candidates_path"])
         cls.stable_diffusion = pd.read_csv(cls.inputs["stable_diffusion_candidates_path"])
         cls.selected = select_mask_robustness_population(
             cls.cases,
             cls.artworks,
             cls.opencv,
             cls.lama,
+            cls.hint,
             cls.stable_diffusion,
             config=cls.config,
         )
@@ -71,6 +75,7 @@ class MaskRobustnessAnalysisTests(unittest.TestCase):
             "09": "opencv_run_manifest_path",
             "10": "lama_run_manifest_path",
             "11": "stable_diffusion_run_manifest_path",
+            "12A": "hint_run_manifest_path",
             "13": "classical_run_manifest_path",
             "14": "lpips_run_manifest_path",
             "15": "feature_run_manifest_path",
@@ -84,17 +89,22 @@ class MaskRobustnessAnalysisTests(unittest.TestCase):
             for notebook_id, key in notebook_by_key.items()
         }
         checks = validate_upstream_run_manifests(manifests)
-        self.assertEqual(len(checks), 12)
+        self.assertEqual(len(checks), 13)
         self.assertTrue(checks["passed"].all(), checks.to_dict("records"))
 
     def test_primary_population_and_fixed_family_area_mapping_are_exact(self) -> None:
-        self.assertEqual(len(self.selected), 225)
-        self.assertEqual(self.selected["case_id"].nunique(), 75)
-        self.assertEqual(self.selected["robustness_group_id"].nunique(), 15)
-        self.assertEqual(self.selected["painting_id"].nunique(), 5)
+        self.assertEqual(len(self.selected), 2100)
+        self.assertEqual(self.selected["case_id"].nunique(), 525)
+        self.assertEqual(self.selected["robustness_group_id"].nunique(), 105)
+        self.assertEqual(self.selected["painting_id"].nunique(), 35)
         self.assertEqual(
             self.selected.groupby("model_id").size().to_dict(),
-            {"lama": 75, "opencv_telea": 75, "stable_diffusion_inpainting": 75},
+            {
+                "hint_places2": 525,
+                "lama": 525,
+                "opencv_telea": 525,
+                "stable_diffusion_inpainting": 525,
+            },
         )
         self.assertFalse(self.selected.duplicated(["model_id", "case_id"]).any())
         for model_id, group in self.selected.groupby("model_id"):
@@ -122,15 +132,15 @@ class MaskRobustnessAnalysisTests(unittest.TestCase):
             "semantic_structural": pd.read_csv(self.inputs["semantic_metrics_path"], low_memory=False),
         }
         normalized = normalise_quality_evidence(tables, self.selected, config=self.config)
-        self.assertEqual(len(normalized), 72225)
-        self.assertEqual(normalized["candidate_id"].nunique(), 225)
-        self.assertEqual(normalized["case_id"].nunique(), 75)
+        self.assertEqual(len(normalized), 674100)
+        self.assertEqual(normalized["candidate_id"].nunique(), 2100)
+        self.assertEqual(normalized["case_id"].nunique(), 525)
         anchors = select_quality_anchor_values(normalized, config=self.config)
-        self.assertEqual(len(anchors), 2475)
+        self.assertEqual(len(anchors), 23100)
         self.assertEqual(anchors["anchor_id"].nunique(), 11)
         self.assertTrue(anchors.groupby("candidate_id").size().eq(11).all())
         runtime = build_runtime_evidence(self.selected, config=self.config)
-        self.assertEqual(len(runtime), 225)
+        self.assertEqual(len(runtime), 2100)
         self.assertFalse(runtime["quality_ranking_eligible"].any())
 
     def test_dispersion_and_family_balanced_rank_arithmetic(self) -> None:
@@ -144,7 +154,9 @@ class MaskRobustnessAnalysisTests(unittest.TestCase):
         )
         rows = []
         for variant_index in range(5):
-            for model_index, model_id in enumerate(("opencv_telea", "lama", "stable_diffusion_inpainting")):
+            for model_index, model_id in enumerate(
+                ("opencv_telea", "lama", "hint_places2", "stable_diffusion_inpainting")
+            ):
                 for anchor_id, family in (("a1", "pixel"), ("a2", "feature")):
                     rows.append(
                         {
@@ -162,17 +174,28 @@ class MaskRobustnessAnalysisTests(unittest.TestCase):
                     )
         synthetic = pd.DataFrame(rows)
         dispersion = compute_group_dispersion(synthetic)
-        self.assertEqual(len(dispersion), 18)
+        self.assertEqual(len(dispersion), 24)
         self.assertTrue(dispersion["variant_count"].eq(5).all())
         ranks = compute_variant_family_balanced_ranks(synthetic)
-        self.assertEqual(len(ranks), 15)
-        self.assertTrue(ranks.groupby("case_id").size().eq(3).all())
+        self.assertEqual(len(ranks), 20)
+        self.assertTrue(ranks.groupby("case_id").size().eq(4).all())
         self.assertTrue(ranks.loc[ranks["model_id"].eq("opencv_telea"), "overall_rank"].eq(1).all())
 
-    def test_exact_statistics_morphology_and_schema_validation(self) -> None:
+    def test_bounded_statistics_morphology_and_schema_validation(self) -> None:
         bootstrap = exhaustive_bootstrap_interval([1, 2, 3, 4, 5])
         self.assertEqual(bootstrap["resamples"], 3125)
         self.assertEqual(exact_sign_flip_test([1, 2, 3, 4, 5])["assignments"], 32)
+        bounded = seeded_cluster_bootstrap_interval(
+            np.arange(35, dtype=float), resamples=5000, seed=24001, batch_size=500
+        )
+        self.assertEqual(bounded["resamples"], 5000)
+        sign_flip = monte_carlo_sign_flip_test(
+            np.arange(1, 36, dtype=float),
+            assignments=100000,
+            seed=24002,
+            batch_size=5000,
+        )
+        self.assertEqual(sign_flip["assignments"], 100000)
         self.assertAlmostEqual(matched_rank_biserial([1, 2, 3, 4, 5]), 1.0)
         np.testing.assert_allclose(benjamini_hochberg([0.01, 0.02, 0.20]), [0.03, 0.03, 0.20])
 
@@ -184,7 +207,7 @@ class MaskRobustnessAnalysisTests(unittest.TestCase):
                     "compactness": variant + family_index * 0.1,
                     "outcome": 2.0 * variant + painting_index * 0.05,
                 }
-                for painting_index, painting in enumerate(["p1", "p2", "p3", "p4", "p5"])
+                for painting_index, painting in enumerate([f"p{i:03d}" for i in range(1, 36)])
                 for family_index, family in enumerate(["thin", "small", "large"])
                 for variant in range(5)
             ]
@@ -192,9 +215,9 @@ class MaskRobustnessAnalysisTests(unittest.TestCase):
         association = within_group_centered_spearman(
             morphology, morphology_column="compactness", outcome_column="outcome"
         )
-        self.assertEqual(association["painting_count"], 5)
-        self.assertEqual(association["observation_count"], 75)
-        self.assertEqual(association["bootstrap_resamples"], 3125)
+        self.assertEqual(association["painting_count"], 35)
+        self.assertEqual(association["observation_count"], 525)
+        self.assertEqual(association["bootstrap_resamples"], 5000)
         self.assertGreater(association["rho"], 0.98)
 
         record = {column: "" for column in ANALYSIS_COLUMNS}
