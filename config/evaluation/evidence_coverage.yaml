@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.17"
+config_version: "1.1.18"
 
 evidence_coverage:
   authority:
@@ -1247,6 +1247,8 @@ evidence_coverage:
       status: "completed_validation_passed"
       completion_gate_passed: true
       output_root: "outputs/22_damage_size_diffusion_uncertainty_extension"
+      manifest_path: "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json"
+      run_id: "run_d0276a6859f74fada266936f43b7499f"
       required_inputs:
         - "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv"
         - "outputs/11_stable_diffusion_restoration/data/candidates.csv"
@@ -1256,17 +1258,32 @@ evidence_coverage:
         - "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv"
         - "outputs/17_local_consistency_metrics/metrics/local_consistency.csv"
         - "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv"
-      expected_population:
-        cases: 35
-        paintings: 5
+      observed_population:
+        cases: 245
+        paintings: 35
         seeds_per_group: 4
-        referenced_seed_2026_candidates: 35
-        new_candidates: 105
-        uncertainty_groups: 35
-        unordered_seed_pairs: 210
+        referenced_seed_2026_candidates: 245
+        new_candidates: 735
+        total_candidates: 980
+        uncertainty_groups: 245
+        unordered_seed_pairs: 1470
+        metric_rows: 33320
+        uncertainty_maps: 245
+        restoration_images: 735
+        uncertainty_overlays: 245
+        validation_checks: 236
+        roadmap_requirements: 12
+        canonical_files: 988
       owns_new_inference: true
       may_write_frozen_outputs: false
-      observed_population:
+      storage_boundary:
+        canonical_local_tree_complete: true
+        github_bulk_images_excluded: true
+        github_numeric_map_archive_excluded: true
+        external_publication_status: "deferred_to_pre_n34_storage_review"
+        candidate_asset_class: "candidates"
+        uncertainty_asset_class: "diagnostics"
+      historical_pilot_population:
         cases: 35
         paintings: 5
         seeds_per_group: 4
@@ -1279,7 +1296,7 @@ evidence_coverage:
         uncertainty_overlays: 35
         validation_checks: 234
         roadmap_requirements: 12
-      primary_artifacts:
+      historical_pilot_artifacts:
         - path: "outputs/22_damage_size_diffusion_uncertainty_extension/data/candidates.csv"
           rows: 105
         - path: "outputs/22_damage_size_diffusion_uncertainty_extension/metrics/damage_size_uncertainty.csv"

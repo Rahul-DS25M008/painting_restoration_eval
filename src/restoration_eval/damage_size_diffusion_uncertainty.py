@@ -34,7 +34,7 @@ from .restoration_stable_diffusion import (
 from .schemas import validate_dataframe
 
 
-MODULE_VERSION = "1.0.0"
+MODULE_VERSION = "1.1.0"
 CONFIG_SCHEMA_VERSION = "damage_size_diffusion_uncertainty_extension_config.v1"
 METRIC_VERSION = "damage_size_empirical_seed_uncertainty.v1"
 METRICS_SCHEMA_VERSION = "damage_size_diffusion_uncertainty.v1"
@@ -144,8 +144,8 @@ def load_damage_size_uncertainty_config(path: str | Path) -> dict[str, Any]:
     cases = int(expected["cases"])
     groups = int(expected["uncertainty_groups"])
     pairs = int(expected["unordered_candidate_pairs"])
-    if cases != 35 or groups != cases:
-        raise ValueError("Notebook 22 must contain exactly 35 cases/groups")
+    if cases != 245 or groups != cases:
+        raise ValueError("Notebook 22 must contain exactly 245 cases/groups")
     if int(expected["new_candidates"]) != cases * len(generated):
         raise ValueError("New-candidate arithmetic is inconsistent")
     if int(expected["total_candidates"]) != cases * len(seeds):
@@ -218,7 +218,7 @@ def select_frozen_damage_size_anchors(
     project_root: str | Path | None = None,
     verify_files: bool = False,
 ) -> pd.DataFrame:
-    """Select and validate the exact 35 read-only Notebook 11 anchors."""
+    """Select and validate the configured read-only Notebook 11 anchors."""
 
     settings = _settings(config)
     population = settings["population"]
@@ -256,9 +256,15 @@ def select_frozen_damage_size_anchors(
     ].copy()
 
     if len(cases) != int(expected["cases"]):
-        raise ValueError(f"Expected 35 damage-size cases, observed {len(cases)}")
+        raise ValueError(
+            f"Expected {expected['cases']} damage-size cases, observed {len(cases)}"
+        )
     if len(selected) != int(expected["frozen_anchor_candidates"]):
-        raise ValueError(f"Expected 35 frozen anchors, observed {len(selected)}")
+        raise ValueError(
+            "Expected "
+            f"{expected['frozen_anchor_candidates']} frozen anchors, "
+            f"observed {len(selected)}"
+        )
     if cases["case_id"].duplicated().any() or selected["case_id"].duplicated().any():
         raise ValueError("Damage-size cases and anchors must be unique by case_id")
     case_ids = set(cases["case_id"].astype(str))
@@ -276,7 +282,10 @@ def select_frozen_damage_size_anchors(
     if len(per_painting) != int(expected["paintings"]) or not per_painting.eq(
         int(expected["damage_levels_per_painting"])
     ).all():
-        raise ValueError("Expected five paintings with seven damage levels each")
+        raise ValueError(
+            f"Expected {expected['paintings']} paintings with "
+            f"{expected['damage_levels_per_painting']} damage levels each"
+        )
 
     generation = settings["generation_contract"]
     exact_fields = {
@@ -437,7 +446,7 @@ def build_complete_uncertainty_worklist(
     *,
     config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Construct a 140-row in-memory worklist with explicit path ownership."""
+    """Construct the configured in-memory worklist with explicit path ownership."""
 
     settings = _settings(config)
     expected = settings["expected_counts"]
@@ -484,7 +493,10 @@ def build_complete_uncertainty_worklist(
     result = pd.DataFrame(records)
     result["seed"] = pd.to_numeric(result["seed"], errors="raise").astype(int)
     if len(result) != int(expected["total_candidates"]):
-        raise ValueError(f"Expected 140 combined candidates, observed {len(result)}")
+        raise ValueError(
+            f"Expected {expected['total_candidates']} combined candidates, "
+            f"observed {len(result)}"
+        )
     if result["candidate_id"].astype(str).duplicated().any():
         raise ValueError("Combined worklist repeats candidate_id")
     coverage = result.groupby("case_id")["seed"].apply(lambda values: tuple(sorted(values)))
@@ -547,7 +559,10 @@ def build_anchor_reference_rows(
     anchor_seed = int(settings["frozen_boundary"]["anchor_seed"])
     anchors = population.loc[pd.to_numeric(population["seed"], errors="coerce").eq(anchor_seed)].copy()
     if len(anchors) != int(settings["expected_counts"]["frozen_anchor_candidates"]):
-        raise ValueError("Population does not contain exactly 35 anchors")
+        raise ValueError(
+            "Population does not contain exactly "
+            f"{settings['expected_counts']['frozen_anchor_candidates']} anchors"
+        )
     records: list[dict[str, Any]] = []
     for specification in settings["reference_evidence"]["specifications"]:
         source_name = str(specification["source"])
@@ -938,7 +953,7 @@ def render_uncertainty_overlays(
 def render_uncertainty_extension_summary(
     metrics: pd.DataFrame, output_path: str | Path,
 ) -> Path:
-    """Render four painting-trajectory panels without category-effect claims."""
+    """Render readable trajectory panels without category-effect claims."""
 
     import matplotlib.pyplot as plt
 
@@ -958,19 +973,40 @@ def render_uncertainty_extension_summary(
         summary = selected.groupby(
             ["uncertainty_group_id", "painting_id", "target_damage_fraction"], as_index=False
         )["value"].mean()
-        for painting_id, group in summary.groupby("painting_id", sort=True):
+        for _, group in summary.groupby("painting_id", sort=True):
             ordered = group.sort_values("target_damage_fraction", kind="stable")
             axis.plot(
                 100 * ordered["target_damage_fraction"].to_numpy(float),
-                ordered["value"].to_numpy(float), marker="o", linewidth=1.5,
-                label=str(painting_id),
+                ordered["value"].to_numpy(float),
+                color="#6f7f78", alpha=0.22, linewidth=0.9,
             )
+        pooled = summary.groupby("target_damage_fraction")["value"].agg(
+            median="median",
+            q25=lambda values: values.quantile(0.25),
+            q75=lambda values: values.quantile(0.75),
+        ).reset_index()
+        x_values = 100 * pooled["target_damage_fraction"].to_numpy(float)
+        axis.fill_between(
+            x_values,
+            pooled["q25"].to_numpy(float),
+            pooled["q75"].to_numpy(float),
+            color="#c89a45", alpha=0.22, label="painting IQR",
+        )
+        axis.plot(
+            x_values,
+            pooled["median"].to_numpy(float),
+            color="#8b3f2f", marker="o", linewidth=2.2,
+            label="painting median",
+        )
         axis.set_title(title)
         axis.set_xlabel("Target damaged area (%)")
         axis.set_ylabel("Empirical variability")
         axis.grid(alpha=0.25)
-    axes.flat[0].legend(title="Painting", fontsize=8)
-    fig.suptitle("Damage-size Stable Diffusion seed variability by painting trajectory")
+    axes.flat[0].legend(fontsize=8)
+    fig.suptitle(
+        "Damage-size Stable Diffusion seed variability: "
+        "35 trajectories with painting-level median and IQR"
+    )
     target = Path(output_path)
     target.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(target, dpi=200, bbox_inches="tight")

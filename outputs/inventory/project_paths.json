@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-20T21:43:17.313312Z",
+  "updated_at_utc": "2026-09-21T11:08:27.963117Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -555,12 +555,12 @@
       "artifact_type": "stable_diffusion_candidate_table",
       "artifact_role": "notebook_22_extension_candidates",
       "schema_version": "stable_diffusion_candidates.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "damage_size_sensitivity",
       "validation_status": "passed",
-      "row_count": 105,
+      "row_count": 735,
       "file_count": 1,
-      "checksum": "187ddf38845d57cefd5016dc3486c55657662cf76b947af608daeeb8adbfac8d"
+      "checksum": "efe6834351053781bfb8e283fbd5efa35a4fa5c13c48a0a3941f61c66cbc0455"
     },
     {
       "artifact_key": "damage_size_diffusion_uncertainty.map_manifest",
@@ -569,12 +569,12 @@
       "artifact_type": "uncertainty_map_image_manifest",
       "artifact_role": "overlay_provenance_and_file_audit",
       "schema_version": "damage_size_uncertainty_map_images.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "damage_size_sensitivity",
       "validation_status": "passed",
-      "row_count": 35,
+      "row_count": 245,
       "file_count": 1,
-      "checksum": "eba841fdf67f028e6a06831b71593cabe9fcf91f37bcbcb0fa9a03b259b6f295"
+      "checksum": "f8bc2116590a9ba17000d20fb8f2f68d6f9e23914d8ce443c36642362721dbf9"
     },
     {
       "artifact_key": "damage_size_diffusion_uncertainty.maps",
@@ -583,12 +583,12 @@
       "artifact_type": "compressed_numerical_map_bundle",
       "artifact_role": "raw_seed_variability_maps",
       "schema_version": "damage_size_uncertainty_maps.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "damage_size_sensitivity",
       "validation_status": "passed",
-      "row_count": 35,
+      "row_count": 245,
       "file_count": 1,
-      "checksum": "01787e503230f96a3ea0656edbc70b8d7bd97bcf07eef6c6c5ed12adaf34077f"
+      "checksum": "04719c33d404cc2f52ea1f5c7c2d4b347e7aebd4c1df6499197aefb9a3207340"
     },
     {
       "artifact_key": "damage_size_diffusion_uncertainty.metrics",
@@ -597,12 +597,12 @@
       "artifact_type": "normalized_uncertainty_metric_table",
       "artifact_role": "damage_size_seed_variability_evidence",
       "schema_version": "damage_size_diffusion_uncertainty.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "damage_size_sensitivity",
       "validation_status": "passed",
-      "row_count": 4760,
+      "row_count": 33320,
       "file_count": 1,
-      "checksum": "0d09d1ca52a1d2385535c8440a240c21581058a1f512dc51043828bd8de773aa"
+      "checksum": "e386491f50166fa64d105e375a67994bbeb01c2a9214b604249b017f946d7c5e"
     },
     {
       "artifact_key": "damage_size_diffusion_uncertainty.overlays",
@@ -611,12 +611,12 @@
       "artifact_type": "uncertainty_overlay_directory",
       "artifact_role": "readable_spatial_uncertainty_evidence",
       "schema_version": "damage_size_uncertainty_map_images.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "damage_size_sensitivity",
       "validation_status": "passed",
-      "row_count": 35,
-      "file_count": 35,
-      "checksum": "d661b7d62e027f3c8080a5112b915a5a571e39786a0ef19e103819f31e64aaa6"
+      "row_count": 245,
+      "file_count": 245,
+      "checksum": "ff707314b8096568b318c52871cffe342a3e440277f5c6fe59a2e776027099f4"
     },
     {
       "artifact_key": "damage_size_diffusion_uncertainty.restored_images",
@@ -625,12 +625,12 @@
       "artifact_type": "restoration_image_directory",
       "artifact_role": "notebook_22_generated_candidates",
       "schema_version": "damage_size_extension_images.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "damage_size_sensitivity",
       "validation_status": "passed",
-      "row_count": 105,
-      "file_count": 105,
-      "checksum": "839aa9224fb74cfc175221cc24e0dfa986840bda0aaa91ad8ce1ff6529064870"
+      "row_count": 735,
+      "file_count": 735,
+      "checksum": "7770086394e03fc73aad7924b766936b4206cf02b73c81925a0c752fcaa51f1e"
     },
     {
       "artifact_key": "damage_size_diffusion_uncertainty.summary_figure",
@@ -639,12 +639,12 @@
       "artifact_type": "analytical_figure",
       "artifact_role": "painting_trajectory_uncertainty_summary",
       "schema_version": "damage_size_uncertainty_summary_figure.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "damage_size_sensitivity",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "a4e2de60da409aebcf0ea0d4582dfb2e2f658c27b00d9ccd221d955a1684b974"
+      "checksum": "decaf1775670ebb59632306d4494484f6f6447db42cfc88916826ddc56406837"
     },
     {
       "artifact_key": "dashboard.asset_manifest",
@@ -3355,12 +3355,12 @@
       "artifact_type": "validation_table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "damage_size_sensitivity",
       "validation_status": "passed",
-      "row_count": 234,
+      "row_count": 236,
       "file_count": 1,
-      "checksum": "2412dbf3caa08b0fdf0a70d9aaa4eb5638f9fbb4db72fbbf088f335d9d08c5c6"
+      "checksum": "eba456b9ea32690ff53a91bed5d4e49227106f1ba40077446757f0fd714b5316"
     },
     {
       "artifact_key": "validation.23_damage_size_sensitivity_analysis",

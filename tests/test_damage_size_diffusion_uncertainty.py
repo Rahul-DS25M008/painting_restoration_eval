@@ -58,7 +58,7 @@ class DamageSizeDiffusionUncertaintyTests(unittest.TestCase):
         )
 
     def test_contract_and_effective_generation_settings_are_frozen(self) -> None:
-        self.assertEqual(MODULE_VERSION, "1.0.0")
+        self.assertEqual(MODULE_VERSION, "1.1.0")
         self.assertEqual(METRIC_VERSION, "damage_size_empirical_seed_uncertainty.v1")
         self.assertEqual(len(MAP_IMAGE_COLUMNS), 18)
         effective = build_effective_generation_config(self.base_config, self.config)
@@ -80,9 +80,9 @@ class DamageSizeDiffusionUncertaintyTests(unittest.TestCase):
         self.assertFalse(settings["frozen_boundary"]["copy_anchor_images"])
 
     def test_real_frozen_anchors_and_extension_plan_have_exact_population(self) -> None:
-        self.assertEqual(len(self.anchors), 35)
-        self.assertEqual(self.anchors["case_id"].nunique(), 35)
-        self.assertEqual(self.anchors["painting_id"].nunique(), 5)
+        self.assertEqual(len(self.anchors), 245)
+        self.assertEqual(self.anchors["case_id"].nunique(), 245)
+        self.assertEqual(self.anchors["painting_id"].nunique(), 35)
         self.assertEqual(set(self.anchors["seed"].astype(int)), {2026})
         self.assertTrue(self.anchors["status"].eq("completed").all())
         plan = build_extension_candidate_plan(self.anchors, config=self.config)
@@ -90,15 +90,15 @@ class DamageSizeDiffusionUncertaintyTests(unittest.TestCase):
             plan, config=self.config, require_completed=False,
         )
         self.assertTrue(validation["passed"], validation)
-        self.assertEqual(len(plan), 105)
-        self.assertEqual(plan["case_id"].nunique(), 35)
+        self.assertEqual(len(plan), 735)
+        self.assertEqual(plan["case_id"].nunique(), 245)
         self.assertEqual(set(plan["seed"].astype(int)), {2027, 2028, 2029})
         self.assertEqual(plan.groupby("case_id")["seed"].nunique().unique().tolist(), [3])
         self.assertTrue(plan["candidate_id"].str.startswith("sd15dsu__").all())
         self.assertTrue(plan["restored_path"].str.startswith("images/restored/").all())
         self.assertFalse(plan["restored_path"].str.contains("outputs/11_").any())
 
-    def test_combined_worklist_builds_35_complete_four_seed_groups(self) -> None:
+    def test_combined_worklist_builds_245_complete_four_seed_groups(self) -> None:
         extension = build_extension_candidate_plan(self.anchors, config=self.config)
         extension["status"] = "completed"
         extension["execution_action"] = "stable_diffusion_inpaint"
@@ -113,9 +113,9 @@ class DamageSizeDiffusionUncertaintyTests(unittest.TestCase):
         worklist = build_complete_uncertainty_worklist(
             self.anchors, extension, self.cases, self.geometry, config=self.config,
         )
-        self.assertEqual(len(worklist), 140)
+        self.assertEqual(len(worklist), 980)
         self.assertEqual(worklist.groupby("source_owner").size().to_dict(), {
-            "extension_owned": 105, "frozen_reference": 35,
+            "extension_owned": 735, "frozen_reference": 245,
         })
         self.assertTrue(
             worklist.loc[worklist["source_owner"].eq("frozen_reference"), "restored_path"]
@@ -127,8 +127,8 @@ class DamageSizeDiffusionUncertaintyTests(unittest.TestCase):
         )
         adapter = build_uncertainty_adapter_config(self.config)
         population = build_uncertainty_population(worklist, self.artworks, config=adapter)
-        self.assertEqual(len(population), 140)
-        self.assertEqual(population["uncertainty_group_id"].nunique(), 35)
+        self.assertEqual(len(population), 980)
+        self.assertEqual(population["uncertainty_group_id"].nunique(), 245)
         self.assertTrue(population.groupby("uncertainty_group_id")["seed"].nunique().eq(4).all())
 
         feature_config = load_feature_similarity_config(
@@ -137,9 +137,9 @@ class DamageSizeDiffusionUncertaintyTests(unittest.TestCase):
         embedding_plan = build_extension_restored_embedding_plan(
             worklist, project_root=ROOT, feature_config=feature_config,
         )
-        self.assertEqual(len(embedding_plan), 420)
+        self.assertEqual(len(embedding_plan), 2940)
         self.assertEqual(embedding_plan.groupby("feature_model_id").size().to_dict(), {
-            "clip_vit_b32": 210, "dinov2_vits14": 210,
+            "clip_vit_b32": 1470, "dinov2_vits14": 1470,
         })
         self.assertTrue(embedding_plan["image_role"].eq("restored").all())
         self.assertTrue(
@@ -173,7 +173,7 @@ class DamageSizeDiffusionUncertaintyTests(unittest.TestCase):
             extension_arrays,
             config=self.config,
         )
-        self.assertEqual(len(combined_manifest), 560)
+        self.assertEqual(len(combined_manifest), 3920)
         self.assertEqual(
             set(combined_arrays),
             {
@@ -216,8 +216,8 @@ class DamageSizeDiffusionUncertaintyTests(unittest.TestCase):
         }
         references = build_anchor_reference_rows(population, sources, config=self.config)
         self.assertEqual(list(references.columns), list(DIFFUSION_UNCERTAINTY_COLUMNS))
-        self.assertEqual(len(references), 560)
-        self.assertEqual(references["uncertainty_group_id"].nunique(), 35)
+        self.assertEqual(len(references), 3920)
+        self.assertEqual(references["uncertainty_group_id"].nunique(), 245)
         self.assertEqual(references.groupby("uncertainty_group_id").size().unique().tolist(), [16])
         self.assertTrue(references["evidence_role"].eq("frozen_anchor_reference").all())
         self.assertTrue(np.isfinite(pd.to_numeric(references["value"])).all())

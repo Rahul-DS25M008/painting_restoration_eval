@@ -270,26 +270,26 @@ damage_size_diffusion_uncertainty_extension:
     work_cleanup_policy: "remove_after_canonical_outputs_validate"
 
   expected_counts:
-    cases: 35
-    paintings: 5
+    cases: 245
+    paintings: 35
     damage_levels_per_painting: 7
-    frozen_anchor_candidates: 35
-    new_candidates: 105
-    total_candidates: 140
+    frozen_anchor_candidates: 245
+    new_candidates: 735
+    total_candidates: 980
     seeds_per_group: 4
-    uncertainty_groups: 35
+    uncertainty_groups: 245
     unordered_pairs_per_group: 6
-    unordered_candidate_pairs: 210
-    pixel_group_summary_rows: 420
-    pixel_pair_rows: 2520
-    lpips_pair_rows: 420
-    feature_pair_rows: 840
-    uncertainty_only_metric_rows: 4200
+    unordered_candidate_pairs: 1470
+    pixel_group_summary_rows: 2940
+    pixel_pair_rows: 17640
+    lpips_pair_rows: 2940
+    feature_pair_rows: 5880
+    uncertainty_only_metric_rows: 29400
     reference_specifications: 16
-    anchor_reference_rows: 560
-    total_metric_rows: 4760
-    raw_uncertainty_maps: 35
-    uncertainty_overlay_images: 35
+    anchor_reference_rows: 3920
+    total_metric_rows: 33320
+    raw_uncertainty_maps: 245
+    uncertainty_overlay_images: 245
 
   evidence_policy:
     independent_unit: "painting_trajectory"
@@ -303,7 +303,7 @@ damage_size_diffusion_uncertainty_extension:
 
   known_limitations:
     - "Repeated-seed variability is empirical generative variation, not calibrated confidence or restoration correctness."
-    - "The five painting trajectories do not independently identify category or style effects."
+    - "The 35 painting trajectories span all five broad visual categories, but this evidence-generation notebook does not independently estimate category or art-historical style effects."
     - "Only the frozen seed-2026 anchor has upstream reference, spatial, local-consistency, and semantic evidence."
     - "CLIP and DINOv2 are general-purpose representation proxies, not conservation-specific judgments."
     - "LPIPS is a learned perceptual proxy and is evaluated only over approved contiguous regions."

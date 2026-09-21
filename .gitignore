@@ -68,6 +68,13 @@ docs/supervisor/Next_Steps.docx
 /outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv
 /outputs/20_semantic_and_structural_consistency/data/semantic_maps.npz
 /outputs/21_multi_model_comparison/metrics/model_comparison.csv
+/outputs/22_damage_size_diffusion_uncertainty_extension/data/uncertainty_maps.npz
+
+# The complete project inventory is regenerated locally after every completed
+# notebook. Keeping each approximately 70 MiB revision in Git LFS would spend
+# the remaining hard-capped allowance without adding immutable scientific
+# evidence; inventory_run.json retains its run identity, checksum, and summary.
+/outputs/inventory/project_file_inventory.csv
 
 # Upload scratch metadata is not scientific evidence, even while publication
 # is paused. The failed N16 upload cache was removed after the policy change.

@@ -1,32 +1,32 @@
 {
   "manifest_schema_version": "run_manifest.v1",
-  "run_id": "run_383fd03e2665485fb49c460866865b72",
+  "run_id": "run_d0276a6859f74fada266936f43b7499f",
   "notebook_id": "22",
   "notebook_name": "22_damage_size_diffusion_uncertainty_extension",
   "origin": "New post-freeze evidence extension correcting a downstream dependency omitted from the frozen 01–21 baseline",
   "run_status": "completed",
-  "started_at_utc": "2026-08-31T19:58:15.098061Z",
-  "completed_at_utc": "2026-08-31T21:33:12.331129Z",
-  "git_commit": "8dc10e1616b621d03032018545ec4f3e0c0ee29d",
+  "started_at_utc": "2026-09-20T22:55:47.545372Z",
+  "completed_at_utc": "2026-09-21T11:08:24.475045Z",
+  "git_commit": "94dfecabbe16df34c51f8159ddbd25480165cffb",
   "git_dirty": true,
   "git_branch": "main",
   "git_error": "",
-  "inventory_run_id": "inventory_20260831T184508Z_24af7294",
+  "inventory_run_id": "inventory_20260920T222206Z_81153cbc",
   "dataset_versions": {
     "extension_config_version": "1.0.0",
-    "base_generation_config_version": "1.1.0",
+    "base_generation_config_version": "2.0.0",
     "upstream_run_ids": {
-      "01": "run_424a69cf0c2c4a228d0919dc2d66258a",
-      "02": "run_5e54b2de32934e1c9303e7250b932404",
-      "05": "run_519fd38cca4c45d69dc8f43e90cae621",
-      "08": "run_a3734bc2121f401b87de4894717366ab",
-      "11": "run_82ee1e1c09524a5da3e6fe93016d0627",
-      "13": "run_5bbeb9a089d044fab465d5078aedab39",
-      "14": "run_4ffd061c775a46f3944ad9e405613b34",
-      "15": "run_2b08762834b1423b8a61ef159c2679dc",
-      "16": "run_1181febbbd3d4e63bbd60bc565b2d0c9",
-      "17": "run_a322000b2a0445c9b5b71a2e0502fdf0",
-      "20": "run_cb24def4d3134cc3bb6d679d390b777e"
+      "01": "run_49a7e3c485394878ab4323ce661f3ef5",
+      "02": "run_ca94012bb1e54bf5bf57c1fdabb01480",
+      "05": "run_fb717ad978394227944ef6bf99919f08",
+      "08": "run_b83466f07ebb4b55928229587922334a",
+      "11": "run_4385124a0cca4d758d357de654a33f13",
+      "13": "run_41b9c87a3c034f19b6f28868127b3c89",
+      "14": "run_27cb11ae9aa94133ad474b2f38cab122",
+      "15": "run_50c1bb5f25b44111a76df998329d69ed",
+      "16": "run_99b0d8d1af1b43bd8e8cb3d6ae754868",
+      "17": "run_ed15508895b542e6ac0733c49704ad26",
+      "20": "run_8c94e988fd4c4d7cae0acd8c3a64fbe6"
     }
   },
   "configuration_paths": [
@@ -41,21 +41,21 @@
     "docs/refactoring_implementation_guidelines.md"
   ],
   "configuration_checksums": {
-    "config/evaluation/damage_size_diffusion_uncertainty_extension.yaml": "100808faf373785e41cd992d49a81870822760fd7bbafead4c124a46ab1dde9f",
-    "config/experiments/stable_diffusion.yaml": "394c66a4269b0584539141c409e278939762d065fbc122f2600b340cb8e58dbe",
-    "config/evaluation/diffusion_uncertainty.yaml": "444523318a19f6cc2536537bb56701abfa37305819d1b8a057008066f24c6bc1",
-    "config/evaluation/lpips.yaml": "83cb97d9876f1039aae244f21368a9e0077e27fca7b4060e1e24889c7b4d6ada",
-    "config/evaluation/feature_similarity.yaml": "a6e192759a77d78babb8282a4ceebed9c52292a44891499d43db8aae09a1c1a5",
-    "config/evaluation/evidence_coverage.yaml": "9ffc70551dc737295d70fde67472115e61a231cbd60aa74d2f9448ba8acc44f6",
-    "docs/evidence_dependency_audit.md": "9fd8c6375da8a9a955111aa211d05b3325325f39114860c4ebcde3c5574fd789",
-    "docs/final_notebook_roadmap.md": "80c01cdafe6fdc5d8af9b3f78054b16299f359dba68aa7ec96b0518201830705",
-    "docs/refactoring_implementation_guidelines.md": "0852eaf50a606ceaa6e7ed319abde59a9746997b780b8f39da337fc816552fac"
+    "config/evaluation/damage_size_diffusion_uncertainty_extension.yaml": "fab2d893b97086110aad6130114a1a62ab97cf309dcf221a02462df0c93b5b97",
+    "config/experiments/stable_diffusion.yaml": "e04296fb5c9af1349f64b5adb38a78004e477bab80e412c88e4564a07581bfdb",
+    "config/evaluation/diffusion_uncertainty.yaml": "8763d8ce133151ad0363a4299ee6b9f0c01008f6bb645085d82cc9b9faf42bc9",
+    "config/evaluation/lpips.yaml": "6e008486b50996ea8594542fee3b95ac894623db6731d88dac1b31f33203659d",
+    "config/evaluation/feature_similarity.yaml": "07a78600163b5117612cb45a959dd46b7317fc101fe065706cc0fcad6f62bcd8",
+    "config/evaluation/evidence_coverage.yaml": "130c378432d2c60a4841d4f793b3d01fdee75bd7808d7895d995eb3e51edeb8b",
+    "docs/evidence_dependency_audit.md": "e086a32e2fb16b9ea366169514827c0dd9757bd7e4c099166a54dbf2e41162c4",
+    "docs/final_notebook_roadmap.md": "2b357bdef53722bb45460b8e6d54efd8e629f2b3aa5ec3fdfb222413d327e076",
+    "docs/refactoring_implementation_guidelines.md": "40148e78cbe2ff019cd8dc93229546d7e0c334b75e2d14fe1dc7afa3db4abe47"
   },
   "helper_versions": {
-    "damage_size_diffusion_uncertainty": "1.0.0",
-    "restoration_stable_diffusion": "5.1.0",
-    "schemas": "1.17.0",
-    "paths": "1.0.0",
+    "damage_size_diffusion_uncertainty": "1.1.0",
+    "restoration_stable_diffusion": "5.2.0",
+    "schemas": "1.19.0",
+    "paths": "1.1.1",
     "manifests": "1.0.0",
     "validation": "1.0.0"
   },
@@ -87,126 +87,126 @@
       "producer": "global_inventory",
       "relative_path": "outputs/inventory/project_file_inventory.csv",
       "required": true,
-      "size_bytes": 10081727
+      "size_bytes": 73870045
     },
     {
       "input_key": "inventory_run_path",
       "producer": "global_inventory",
       "relative_path": "outputs/inventory/inventory_run.json",
       "required": true,
-      "size_bytes": 2659
+      "size_bytes": 2822
     },
     {
       "input_key": "project_paths_path",
       "producer": "global_inventory",
       "relative_path": "outputs/inventory/project_paths.json",
       "required": true,
-      "size_bytes": 76565
+      "size_bytes": 161515
     },
     {
       "input_key": "evidence_coverage_path",
       "producer": "repository_control",
       "relative_path": "config/evaluation/evidence_coverage.yaml",
       "required": true,
-      "size_bytes": 21254
+      "size_bytes": 130607
     },
     {
       "input_key": "evidence_audit_path",
       "producer": "repository_control",
       "relative_path": "docs/evidence_dependency_audit.md",
       "required": true,
-      "size_bytes": 12337
+      "size_bytes": 113543
     },
     {
       "input_key": "roadmap_path",
       "producer": "repository_control",
       "relative_path": "docs/final_notebook_roadmap.md",
       "required": true,
-      "size_bytes": 74546
+      "size_bytes": 185853
     },
     {
       "input_key": "implementation_guidelines_path",
       "producer": "repository_control",
       "relative_path": "docs/refactoring_implementation_guidelines.md",
       "required": true,
-      "size_bytes": 54619
+      "size_bytes": 118171
     },
     {
       "input_key": "stable_diffusion_config_path",
       "producer": "repository_control",
       "relative_path": "config/experiments/stable_diffusion.yaml",
       "required": true,
-      "size_bytes": 7260
+      "size_bytes": 7273
     },
     {
       "input_key": "diffusion_uncertainty_config_path",
       "producer": "repository_control",
       "relative_path": "config/evaluation/diffusion_uncertainty.yaml",
       "required": true,
-      "size_bytes": 10827
+      "size_bytes": 10895
     },
     {
       "input_key": "lpips_config_path",
       "producer": "repository_control",
       "relative_path": "config/evaluation/lpips.yaml",
       "required": true,
-      "size_bytes": 6226
+      "size_bytes": 7071
     },
     {
       "input_key": "feature_similarity_config_path",
       "producer": "repository_control",
       "relative_path": "config/evaluation/feature_similarity.yaml",
       "required": true,
-      "size_bytes": 9039
+      "size_bytes": 9856
     },
     {
       "input_key": "artworks_path",
       "producer": "01_dataset_verification",
       "relative_path": "outputs/01_dataset_verification/data/artworks.csv",
       "required": true,
-      "size_bytes": 29822
+      "size_bytes": 280991
     },
     {
       "input_key": "artworks_run_manifest_path",
       "producer": "01_dataset_verification",
       "relative_path": "outputs/01_dataset_verification/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 8981
+      "size_bytes": 9107
     },
     {
       "input_key": "geometry_path",
       "producer": "02_image_preprocessing",
       "relative_path": "outputs/02_image_preprocessing/data/preprocessed_images.csv",
       "required": true,
-      "size_bytes": 32706
+      "size_bytes": 193763
     },
     {
       "input_key": "geometry_run_manifest_path",
       "producer": "02_image_preprocessing",
       "relative_path": "outputs/02_image_preprocessing/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 10754
+      "size_bytes": 10881
     },
     {
       "input_key": "damage_size_cases_path",
       "producer": "05_damage_size_sensitivity_dataset_generation",
       "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv",
       "required": true,
-      "size_bytes": 45111
+      "size_bytes": 310490
     },
     {
       "input_key": "damage_size_run_manifest_path",
       "producer": "05_damage_size_sensitivity_dataset_generation",
       "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 22491
+      "size_bytes": 23570
     },
     {
       "input_key": "case_registry_path",
       "producer": "08_experiment_contracts_and_region_policy",
       "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
       "required": true,
-      "size_bytes": 263890
+      "size_bytes": 1734032
     },
     {
       "input_key": "region_policy_path",
@@ -220,14 +220,14 @@
       "producer": "08_experiment_contracts_and_region_policy",
       "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 16592
+      "size_bytes": 16624
     },
     {
       "input_key": "stable_diffusion_candidates_path",
       "producer": "11_stable_diffusion_restoration",
       "relative_path": "outputs/11_stable_diffusion_restoration/data/candidates.csv",
       "required": true,
-      "size_bytes": 2436507
+      "size_bytes": 15634741
     },
     {
       "input_key": "stable_diffusion_output_root",
@@ -241,105 +241,105 @@
       "producer": "11_stable_diffusion_restoration",
       "relative_path": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 27662
+      "size_bytes": 27699
     },
     {
       "input_key": "classical_metrics_path",
       "producer": "13_classical_metrics",
       "relative_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
       "required": true,
-      "size_bytes": 18773255
+      "size_bytes": 144373655
     },
     {
       "input_key": "classical_run_manifest_path",
       "producer": "13_classical_metrics",
       "relative_path": "outputs/13_classical_metrics/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 16986
+      "size_bytes": 18542
     },
     {
       "input_key": "lpips_metrics_path",
       "producer": "14_lpips_metrics",
       "relative_path": "outputs/14_lpips_metrics/metrics/lpips_metrics.csv",
       "required": true,
-      "size_bytes": 1821849
+      "size_bytes": 13939180
     },
     {
       "input_key": "lpips_run_manifest_path",
       "producer": "14_lpips_metrics",
       "relative_path": "outputs/14_lpips_metrics/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 16276
+      "size_bytes": 17677
     },
     {
       "input_key": "feature_metrics_path",
       "producer": "15_feature_similarity",
       "relative_path": "outputs/15_feature_similarity/metrics/feature_metrics.csv",
       "required": true,
-      "size_bytes": 5248929
+      "size_bytes": 40043594
     },
     {
       "input_key": "feature_embedding_manifest_path",
       "producer": "15_feature_similarity",
       "relative_path": "outputs/15_feature_similarity/manifests/embeddings.csv",
       "required": true,
-      "size_bytes": 6072209
+      "size_bytes": 44897353
     },
     {
       "input_key": "feature_embeddings_path",
       "producer": "15_feature_similarity",
       "relative_path": "outputs/15_feature_similarity/data/embeddings.npz",
       "required": true,
-      "size_bytes": 15047163
+      "size_bytes": 111901977
     },
     {
       "input_key": "feature_run_manifest_path",
       "producer": "15_feature_similarity",
       "relative_path": "outputs/15_feature_similarity/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 21182
+      "size_bytes": 22579
     },
     {
       "input_key": "spatial_diagnostics_path",
       "producer": "16_difference_maps_and_spatial_diagnostics",
       "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv",
       "required": true,
-      "size_bytes": 10817207
+      "size_bytes": 81938963
     },
     {
       "input_key": "spatial_run_manifest_path",
       "producer": "16_difference_maps_and_spatial_diagnostics",
       "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 24887
+      "size_bytes": 27100
     },
     {
       "input_key": "local_consistency_path",
       "producer": "17_local_consistency_metrics",
       "relative_path": "outputs/17_local_consistency_metrics/metrics/local_consistency.csv",
       "required": true,
-      "size_bytes": 150969091
+      "size_bytes": 1146504203
     },
     {
       "input_key": "local_consistency_run_manifest_path",
       "producer": "17_local_consistency_metrics",
       "relative_path": "outputs/17_local_consistency_metrics/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 25710
+      "size_bytes": 27388
     },
     {
       "input_key": "semantic_structural_path",
       "producer": "20_semantic_and_structural_consistency",
       "relative_path": "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv",
       "required": true,
-      "size_bytes": 41328738
+      "size_bytes": 319331241
     },
     {
       "input_key": "semantic_run_manifest_path",
       "producer": "20_semantic_and_structural_consistency",
       "relative_path": "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 27894
+      "size_bytes": 28659
     }
   ],
   "outputs": [
@@ -395,50 +395,50 @@
     }
   ],
   "expected_counts": {
-    "cases": 35,
-    "paintings": 5,
+    "cases": 245,
+    "paintings": 35,
     "damage_levels_per_painting": 7,
-    "frozen_anchor_candidates": 35,
-    "new_candidates": 105,
-    "total_candidates": 140,
+    "frozen_anchor_candidates": 245,
+    "new_candidates": 735,
+    "total_candidates": 980,
     "seeds_per_group": 4,
-    "uncertainty_groups": 35,
+    "uncertainty_groups": 245,
     "unordered_pairs_per_group": 6,
-    "unordered_candidate_pairs": 210,
-    "pixel_group_summary_rows": 420,
-    "pixel_pair_rows": 2520,
-    "lpips_pair_rows": 420,
-    "feature_pair_rows": 840,
-    "uncertainty_only_metric_rows": 4200,
+    "unordered_candidate_pairs": 1470,
+    "pixel_group_summary_rows": 2940,
+    "pixel_pair_rows": 17640,
+    "lpips_pair_rows": 2940,
+    "feature_pair_rows": 5880,
+    "uncertainty_only_metric_rows": 29400,
     "reference_specifications": 16,
-    "anchor_reference_rows": 560,
-    "total_metric_rows": 4760,
-    "raw_uncertainty_maps": 35,
-    "uncertainty_overlay_images": 35,
+    "anchor_reference_rows": 3920,
+    "total_metric_rows": 33320,
+    "raw_uncertainty_maps": 245,
+    "uncertainty_overlay_images": 245,
     "canonical_artifact_records": 8,
-    "canonical_file_count": 148
+    "canonical_file_count": 988
   },
   "observed_counts": {
-    "damage_size_cases": 35,
-    "painting_trajectories": 5,
+    "damage_size_cases": 245,
+    "painting_trajectories": 35,
     "damage_levels_per_painting": 7,
-    "frozen_anchor_candidates": 35,
-    "new_candidates": 105,
-    "total_uncertainty_candidates": 140,
-    "uncertainty_groups": 35,
-    "unordered_candidate_pairs": 210,
-    "metric_rows": 4760,
-    "raw_uncertainty_maps": 35,
-    "uncertainty_overlay_images": 35,
-    "restoration_images": 105,
+    "frozen_anchor_candidates": 245,
+    "new_candidates": 735,
+    "total_uncertainty_candidates": 980,
+    "uncertainty_groups": 245,
+    "unordered_candidate_pairs": 1470,
+    "metric_rows": 33320,
+    "raw_uncertainty_maps": 245,
+    "uncertainty_overlay_images": 245,
+    "restoration_images": 735,
     "artifact_record_count": 8,
-    "validation_row_count": 234,
-    "canonical_file_count": 148,
+    "validation_row_count": 236,
+    "canonical_file_count": 988,
     "temporary_work_file_count": 0
   },
   "validation_summary": {
-    "check_count": 234,
-    "passed_count": 234,
+    "check_count": 236,
+    "passed_count": 236,
     "failed_count": 0,
     "blocking_failure_count": 0,
     "overall_passed": true,
@@ -446,7 +446,7 @@
   },
   "known_limitations": [
     "Repeated-seed variability is empirical generative variation, not calibrated confidence or restoration correctness.",
-    "The five painting trajectories do not independently identify category or style effects.",
+    "The 35 painting trajectories span all five broad visual categories, but this evidence-generation notebook does not independently estimate category or art-historical style effects.",
     "Only the frozen seed-2026 anchor has upstream reference, spatial, local-consistency, and semantic evidence.",
     "CLIP and DINOv2 are general-purpose representation proxies, not conservation-specific judgments.",
     "LPIPS is a learned perceptual proxy and is evaluated only over approved contiguous regions.",
@@ -471,28 +471,28 @@
     2029
   ],
   "helper_checksums": {
-    "damage_size_diffusion_uncertainty": "009c739c262600832ddf04ff4b25b4a2dfcc656bfa4f9df6379a23c570c153d2",
-    "restoration_stable_diffusion": "3cfdf4aed1b233efb41b6cb3cd2afe0435e89634dcd779ebf2f8019a8b538a89",
+    "damage_size_diffusion_uncertainty": "086feeb40c61188037596f76200c9d071637048ca2f31c1843fdb36b233d0c02",
+    "restoration_stable_diffusion": "d014b312500e5c92d97b3730b30adca04102c55fd644b930fd98717bdab1d2b3",
     "diffusion_uncertainty": "34837b12a5b89394f717f70dcaefb6d53e2e3d86b9f241a1028c260e2f1bbc14",
     "metrics_feature_similarity": "3d35cef889c390cadd0a1e7bc8a442f769c31293757fa9e70f7fe684a466976c",
     "metrics_lpips": "489d55d55300fb2b51aa9620ddc03990e78dba60f7f9490532948ff35e26a633",
     "regions": "8b0c9d413ecba9e5056b3b8f6cd89147d4cfd044291290e31ebc78b882a16e9d",
-    "schemas": "d023eca4c5dddbe7dc02d564f6c5b0e62bf6d2fcf4565f85b5d9c0f714154d09",
-    "paths": "bab56054d466d44bc43cc8709542240a690d461cc1be4829a2d67f4a1d8e9806",
+    "schemas": "ae2f7a847a9227a25c7baaf6c52873b8f314126f4e4f9732dd1caf05e5036a35",
+    "paths": "d84d77df3fa24870289700c0bd06c00dda425a43fdd960b175b897ec1e9adf0a",
     "manifests": "8ba9846539a63ca14becdf5bb5488204917476169e847233489f0012d5703217",
     "validation": "1311f816879b60e8314364686e2136eb906ff3718ccf7b6106a3e73f04e09a10"
   },
   "output_checksums": {
-    "damage_size_diffusion_uncertainty.candidates": "187ddf38845d57cefd5016dc3486c55657662cf76b947af608daeeb8adbfac8d",
-    "damage_size_diffusion_uncertainty.maps": "01787e503230f96a3ea0656edbc70b8d7bd97bcf07eef6c6c5ed12adaf34077f",
-    "damage_size_diffusion_uncertainty.metrics": "0d09d1ca52a1d2385535c8440a240c21581058a1f512dc51043828bd8de773aa",
-    "damage_size_diffusion_uncertainty.restored_images": "839aa9224fb74cfc175221cc24e0dfa986840bda0aaa91ad8ce1ff6529064870",
-    "damage_size_diffusion_uncertainty.overlays": "d661b7d62e027f3c8080a5112b915a5a571e39786a0ef19e103819f31e64aaa6",
-    "damage_size_diffusion_uncertainty.summary_figure": "a4e2de60da409aebcf0ea0d4582dfb2e2f658c27b00d9ccd221d955a1684b974",
-    "damage_size_diffusion_uncertainty.map_manifest": "eba841fdf67f028e6a06831b71593cabe9fcf91f37bcbcb0fa9a03b259b6f295",
-    "validation.22_damage_size_diffusion_uncertainty_extension": "2412dbf3caa08b0fdf0a70d9aaa4eb5638f9fbb4db72fbbf088f335d9d08c5c6"
+    "damage_size_diffusion_uncertainty.candidates": "efe6834351053781bfb8e283fbd5efa35a4fa5c13c48a0a3941f61c66cbc0455",
+    "damage_size_diffusion_uncertainty.maps": "04719c33d404cc2f52ea1f5c7c2d4b347e7aebd4c1df6499197aefb9a3207340",
+    "damage_size_diffusion_uncertainty.metrics": "e386491f50166fa64d105e375a67994bbeb01c2a9214b604249b017f946d7c5e",
+    "damage_size_diffusion_uncertainty.restored_images": "7770086394e03fc73aad7924b766936b4206cf02b73c81925a0c752fcaa51f1e",
+    "damage_size_diffusion_uncertainty.overlays": "ff707314b8096568b318c52871cffe342a3e440277f5c6fe59a2e776027099f4",
+    "damage_size_diffusion_uncertainty.summary_figure": "decaf1775670ebb59632306d4494484f6f6447db42cfc88916826ddc56406837",
+    "damage_size_diffusion_uncertainty.map_manifest": "f8bc2116590a9ba17000d20fb8f2f68d6f9e23914d8ce443c36642362721dbf9",
+    "validation.22_damage_size_diffusion_uncertainty_extension": "eba456b9ea32690ff53a91bed5d4e49227106f1ba40077446757f0fd714b5316"
   },
-  "artifact_manifest_checksum": "a664375e2bc2341f8a9bca2f4e5ca1e25a99eacc950492c6f1c1369164d859c3",
+  "artifact_manifest_checksum": "ffb2f63f452919bcf745f97b578e288c158ed0bfe00cd55b10afd187e6079319",
   "uncertainty_interpretation": "empirical_seed_variability_proxy_not_calibrated_confidence",
   "uncertainty_is_calibrated_confidence": false,
   "combined_uncertainty_index_retained": false,

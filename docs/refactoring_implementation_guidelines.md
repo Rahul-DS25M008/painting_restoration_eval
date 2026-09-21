@@ -924,14 +924,16 @@ checksums, limitations, and downstream eligibility.
 | 20 Semantic and Structural Consistency | Finished | Finished | Yes | 447,312 metric rows, 63,216 numeric-map bundles, 9,304 rendered semantic panels, 72,520 map-manifest rows, 181/181 passing checks, and 9,311 canonical files | All eight pilot artifact paths and CSV schemas retained; metrics increased from 58,980 to 447,312, numeric bundles from 8,340 to 63,216, and rendered panels from 1,090 to 9,304; representative figure visually reviewed; diagnostics release and compact Git handoff verified |
 | 21 Multi-Model Comparison | Finished | Finished | Yes | 10,504 selected candidates; 277,319 comparison rows; 2,181 disagreement rows; 168 representative rows; self-contained 58-image report; 187/187 passing checks; 9 canonical files | All nine pilot paths and CSV schemas retained; comparison/disagreement/representative rows increased from 86,531/839/76 to 277,319/2,181/168; both figures and the report were reviewed; the oversized comparison table is diagnostics-tier evidence while the other eight artifacts form the compact Git handoff |
 | D02 Portrait Skin-Tone and Hand Restoration Audit | Finished | Finished | Yes | 60 portraits screened; 91 anatomical annotations; 1,265 overlap rows; 292 eligible records; 45 matched hand cases from 20 paintings; 1,638 hand-comparison rows; 2,760 exploratory rendered-skin-lightness rows; 32 blinded review units; 99/99 checks; 16 canonical files | New supplemental Controlled-300 analysis with no pilot output counterpart; all evidence is derived from frozen N01–N21 inputs, the 20-visual/17-table report is self-contained, all 14 registered checksums pass, and the complete 41.64 MB record stays in GitHub/Git LFS without a separate Hugging Face release |
+| 22 Damage-Size Diffusion Uncertainty Extension | Finished | Finished | Yes | 245 cases across 35 paintings; 735 new candidates; 245 four-seed groups; 1,470 unordered pairs; 33,320 metric rows; 245 numerical maps; 245 overlays; 236/236 checks; 988 canonical files | All ten pilot artifact roles and schemas retained; case-dependent rows and images increased exactly sevenfold from the 35-case pilot; no unexplained loss, temporary work files, warning failures, or saved notebook errors |
 
-Notebooks 01–21, including Notebook 12A, are completed Controlled-300
-producers. Notebook 20's producer-specific diagnostics bundle and compact Git
-handoff are remotely and locally verified. Notebook 21 passed its completion
-gate for 10,504 selected candidates, 3,160,618 normalized evidence rows,
-277,319 comparison rows and 2,181 family-balanced disagreement rows; its
-compact Git handoff and single-object diagnostics publication are the remaining
-repository handoff actions.
+Notebooks 01–22, including Notebook 12A and supplemental D02, are completed
+Controlled-300 producers. Notebook 20's producer-specific diagnostics bundle
+and compact Git handoff are remotely and locally verified. Notebook 21 passed
+its completion gate for 10,504 selected candidates, 3,160,618 normalized
+evidence rows, 277,319 comparison rows and 2,181 family-balanced disagreement
+rows. Notebook 22 passed all 236 checks for 245 four-seed damage-size groups,
+735 owned candidates, 33,320 metric rows, and 245 numerical maps. Notebook 23
+is the next producer eligible for Controlled-300 reopening.
 Notebook 21 retains `core_three_model` and `sdxl_four_model_subset` as stable
 historical schema identifiers so downstream consumers do not require a
 gratuitous identifier migration. Their displayed labels and validated
@@ -2028,6 +2030,29 @@ The current storage tiers are:
    contract may feed the N34 dashboard design and later deployment. Zenodo
    archival release remains a separate post-freeze decision.
 
+**Git LFS quota guard (2026-09-21).** GitHub reported 9.01 GiB of the included
+10.0 GiB LFS allowance used (90%), with a `$0` hard budget that blocks further
+usage rather than permitting overage, and an allowance reset on 2026-10-01.
+The remaining allowance is an emergency margin, not a publication target.
+Until the reset and a fresh quota check:
+
+- never stage a complete post-N11 image tree or another large numerical archive
+  to Git/LFS;
+- use exact-path Git staging rather than `git add .`;
+- keep `outputs/inventory/project_file_inventory.csv` local and regenerate it
+  after every notebook, while committing the compact `inventory_run.json` that
+  records its SHA-256, byte count, run ID, summary, and read-error count;
+- keep N22's 980 PNGs and `data/uncertainty_maps.npz` local; its compact Git
+  handoff consists of the notebook, helper/configuration changes, candidate
+  index, manifests, validation, and representative figure;
+- do not make scientific completion depend on external publication, and do not
+  publish mixed candidate and diagnostic assets under one misleading class.
+
+N22 candidate restorations are candidate-class evidence; its uncertainty maps
+and overlays are diagnostic-class evidence. A split or explicitly indexed
+external publication, if useful, is deferred to the pre-N34 storage review.
+All N22 artifacts remain complete and authoritative locally in the meantime.
+
 The currently deployed `pilot-50` application remains unchanged during the
 Controlled-300 rerun. No history rewrite, branch deletion, Git/LFS purge, or
 bulk-output untracking is permitted during the active transition without a
@@ -2266,7 +2291,8 @@ not copy pilot candidates into the production population or report the pilot's
 After completion, update both evidence ledgers with observed counts, selected
 method and limitations, set the notebook header to `Finished`, `Finished`, and
 `Yes`, refresh `outputs/inventory/`, and commit the notebook, owned outputs,
-governing files, and inventory together.
+governing files, and compact inventory run record together. The regenerated
+`project_file_inventory.csv` remains local under the active LFS quota guard.
 
 ### 31.1 D01 completion record
 

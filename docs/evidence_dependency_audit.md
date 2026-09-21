@@ -35,17 +35,27 @@ expanded benchmark. This changes no frozen Notebook 01–36 evidence. Its exact
 inputs, outputs, population, source/checkpoint requirements, observed results,
 and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
-**Controlled-300 transition review: 2026-09-19.** The pilot remains recoverable
+**Controlled-300 transition review: 2026-09-21.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebooks 01–21,
-including Notebook 12A, are committed Controlled-300 producers. N16, N17, N19,
-and N20 have verified diagnostics releases; their complete local outputs remain
-canonical. Notebook 21 is complete, validated, baseline-compared, Git-committed,
-and its oversized comparison table is remotely verified. D02 has now completed
-its approved post-N21 supplemental audit and is ready for the same commit. After
-that handoff, Notebook 22 is the next eligible producer. Notebooks 22–36 remain
-historical Controlled-50 evidence until each producer is explicitly reopened,
-rerun, validated, baseline-compared, and committed.
+dependency order for the approved 300-painting study. Notebooks 01–22,
+including Notebook 12A and supplemental D02, are completed Controlled-300
+producers. N16, N17, N19, and N20 have verified diagnostics releases; their
+complete local outputs remain canonical. Notebook 21 is complete, validated,
+baseline-compared, Git-committed, and its oversized comparison table is
+remotely verified. Notebook 22 has completed its rerun, validation, visual
+review, and pilot comparison. Notebook 23 is the next eligible producer.
+Notebooks 23–36 remain historical Controlled-50 evidence until each producer
+is explicitly reopened, rerun, validated, baseline-compared, and committed.
+
+**Git LFS capacity guard: 2026-09-21.** GitHub reported 9.01 GiB used from the
+10.0 GiB included LFS allowance, with a `$0` hard budget and reset date of
+2026-10-01. Post-N11 bulk evidence must therefore remain local or use a
+separately approved external publication gate; it must not be staged merely
+because it fits below the remaining nominal allowance. The approximately
+70 MiB project inventory CSV is now a local regenerated audit artifact;
+`inventory_run.json` remains the compact committed record of its checksum,
+size, run identity, summary, and read-error status. Exact-path staging is
+required for later notebook handoffs.
 
 **Controlled-300 storage transition review: 2026-09-13.** Commit `694dad45`
 (`n11 scaled up`) is the final approved full-output Git/LFS checkpoint for the
@@ -715,25 +725,42 @@ spatial uncertainty archive; N22 owns the damage-size uncertainty maps.
 ## 5. Completed post-freeze evidence and analysis stages
 
 Notebook 22, `22_damage_size_diffusion_uncertainty_extension.ipynb`, is the only
-approved missing-evidence generation extension. It completed at commit
-`547a8687` (`notebook 22 done`) with its completion gate passed.
+approved missing-evidence generation extension. Its Controlled-50 pilot
+completed at commit `547a8687` (`notebook 22 done`) with its completion gate
+passed. Controlled-300 run `run_d0276a6859f74fada266936f43b7499f` now
+supersedes that pilot as active evidence while retaining the E: copy for
+continuity comparison.
 
-It:
+The completed Controlled-300 run:
 
-- referenced the 35 frozen Notebook 11 generic seed-2026 damage-size candidates;
-- generated seeds 2027–2029 for the same 35 cases;
-- owns exactly 105 new restoration images;
-- constructed 35 complete four-seed uncertainty groups and 210 unique unordered
+- reference the 245 validated Notebook 11 generic seed-2026 damage-size candidates;
+- generate seeds 2027–2029 for the same 245 cases;
+- own exactly 735 new restoration images;
+- construct 245 complete four-seed uncertainty groups and 1,470 unique unordered
   seed pairs;
-- persisted 4,760 transparent RGB, LPIPS, CLIP, DINOv2, regional, pairwise, and
-  reference-evidence metric rows plus 35 raw uncertainty maps and 35 overlays;
-- passed all 234 validation checks and all 12 roadmap traceability requirements;
+- persist 33,320 transparent RGB, LPIPS, CLIP, DINOv2, regional, pairwise, and
+  reference-evidence metric rows plus 245 raw uncertainty maps and 245 overlays;
+- preserved the exact four-seed and frozen-anchor contracts;
+- passed all 236 validation checks and all 12 roadmap requirements with no
+  blocking or warning failures;
+- produced 988 canonical files with no temporary work files; and
 - left every Notebook 01–21 source and output untouched.
+
+The historical pilot record contained 35 groups, 105 new restorations, 210
+pairs, 4,760 metric rows, 35 raw maps, 35 overlays, 234 passing checks, and 148
+files. The active run has the same ten artifact roles and schemas; every
+case-dependent count increased exactly sevenfold and the two additional checks
+cover the expanded scope. The summary figure and representative 2%, 10%, and
+20% overlays passed visual review.
 
 Notebook 23 used this evidence to test generative uncertainty against target and
 realized damage size. Notebook 18 remains the canonical uncertainty source for
 its original canonical-case population; Notebook 22 is the canonical source for damage-size
 uncertainty. Notebook 22 is now a read-only approved upstream dependency.
+Its complete 988-file tree remains authoritative locally. Git excludes the 980
+generated PNGs and the 35.7 MiB numerical-map archive. Any later external
+publication must classify restoration images as candidate evidence and maps or
+overlays as diagnostic evidence; it is deferred to the pre-N34 storage review.
 
 Notebook 23, `23_damage_size_sensitivity_analysis.ipynb`, subsequently completed
 the approved damage-size analysis with its completion gate passed. It:
@@ -1501,7 +1528,9 @@ At completion of that approved notebook work:
 2. Update this document's completion ledger and affected dependency contracts.
 3. Refresh `outputs/inventory/`.
 4. The user commits the notebook, owned outputs, governing-file updates, and
-   inventory together unless an approved staged commit is required.
+   compact `inventory_run.json` together unless an approved staged commit is
+   required. The complete `project_file_inventory.csv` remains local under the
+   2026-09-21 LFS capacity guard.
 
 For documentation or application-only maintenance, update only the approved
 files and use dated addenda to distinguish current delivery from original run

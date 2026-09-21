@@ -375,7 +375,7 @@ individual run outside its range.
 | 20 — Semantic and structural consistency | 24–36 hours | Pilot completed in about 3 hours 38 minutes for 2,160 candidates and 1,090 panels; controlled-300 scales to 16,404 candidates and 9,304 panels. Local CLIP/DINOv2 grids and full panel rendering dominate; estimate assumes the same machine and excludes publication. |
 | 21 — Multi-model comparison | 8–16 hours | Large evidence joins, direction-aware comparisons, ranking stability, figures, and a self-contained report. |
 | D02 — Portrait audit | 2–5 compute hours, plus 3–6 review hours | Existing-evidence screening, anatomical annotation review, matched analysis, and report generation; no new inference unless separately approved. |
-| 22 — Damage-size diffusion extension | 6–12 hours | 735 new Stable Diffusion candidates with resumable generation and validation. |
+| 22 — Damage-size diffusion extension | Observed 1 h 48 m generation; approximately 2 h 15 m active compute plus staged review | 735 new Stable Diffusion candidates with resumable generation and validation. The saved notebook spans 12 h 13 m wall time because execution was staged across user review and an overnight interval; that span is not a compute benchmark. |
 | 23 — Damage-size sensitivity analysis | 8–16 hours | Expanded trajectories, multi-model metric joins, statistical summaries, figures, and report generation. |
 | 24 — Mask robustness analysis | 3–8 hours | Matched robustness joins, effect summaries, statistical evidence, figures, and report generation. |
 | 25 — Synthetic degradation analysis | 8–16 hours | Eligible degradation comparisons across full methods, diagnostic summaries, figures, and report generation. |
@@ -2513,6 +2513,9 @@ GitHub/Git LFS. A separate Hugging Face publication is not required.
 
 **Notebook:** `22_damage_size_diffusion_uncertainty_extension.ipynb`\
 **Origin:** New post-freeze evidence extension correcting a downstream dependency omitted from the frozen 01–21 baseline\
+**Refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
 **Output root:** `outputs/22_damage_size_diffusion_uncertainty_extension/`\
 **Depends on:** Notebooks 05, 08, 11, and validated metric/region contracts from Notebooks 13–20
 
@@ -2574,6 +2577,33 @@ manifests/run_manifest.json
 manifests/artifacts.csv
 validation/checks.csv
 ```
+
+### Controlled-300 completion evidence
+
+Run `run_d0276a6859f74fada266936f43b7499f` completed with all 245
+damage-size cases and 35 painting trajectories. It references 245 frozen
+seed-2026 anchors, owns 735 new restoration candidates, and forms 245 complete
+four-seed groups with 1,470 unordered pairs. The canonical metric table has
+33,320 rows; the numerical archive has 245 maps; the presentation layer has
+735 restoration PNGs, 245 uncertainty overlays, and one summary figure.
+All 236 validation checks and all 12 roadmap responsibilities passed with no
+blocking or warning failures. The final tree contains 988 files, no temporary
+work files, and no saved notebook errors.
+
+The read-only `E:/outputs/22_damage_size_diffusion_uncertainty_extension/`
+pilot contained the same ten artifact roles and schemas: 35 groups, 105 new
+restorations, 210 pairs, 4,760 metric rows, 35 maps, 35 overlays, 234 passing
+checks, and 148 files. The active counts increase exactly sevenfold for all
+case-dependent evidence; the two additional checks validate the expanded
+scope. Representative low-, middle-, and high-damage overlays and the summary
+figure passed visual review.
+
+The complete 988-file tree remains canonical locally. GitHub retains the
+compact scientific handoff and does not receive the 980 generated PNGs or the
+35.7 MiB numerical-map archive. If N22 is externally published after the
+pre-N34 storage review, restoration candidates belong to the `candidates`
+class while uncertainty maps and overlays belong to `diagnostics`; those roles
+must not be silently merged into an incorrectly labelled release.
 
 ---
 
