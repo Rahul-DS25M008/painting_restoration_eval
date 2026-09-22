@@ -2824,8 +2824,16 @@ validation/checks.csv
 
 **Notebook:** `26_grouped_and_statistical_analysis.ipynb`\
 **Origin:** New Notebook; consolidates statistical responsibilities previously dispersed across comparisons  
+**Controlled-300 refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
 **Output root:** `outputs/26_grouped_and_statistical_analysis/`\
-**Depends on:** Notebooks 08–25, using validated metric evidence from Notebooks 13–25
+**Depends on:** Notebooks 08–12A and 13–25, using validated metric evidence from Notebooks 13–25
+
+The completed Controlled-50 run remains a historical baseline only. Its 4,174
+statistical rows, 504 correlation rows, 258 ranking rows, 111 validation checks,
+and ten-file output tree must be compared with the new run, but must not be
+presented as Controlled-300 evidence after the output root is regenerated.
 
 ### Responsibilities
 
@@ -2848,6 +2856,14 @@ prompt Stable Diffusion. The 300 canonical zero-control cases per full method
 remain an integrity population, so restoration-quality inference uses 2,320
 nonzero cases and 9,280 full-method primary candidates. Twenty-four technically
 valid SDXL candidates form a separate bounded, descriptive population.
+
+The completed run consumed 3,150,114 normalized quality-evidence rows,
+7,035 damage-size rows, 44,847 mask-robustness rows, and 34,977 synthetic-
+degradation rows. It produced 13,272 statistical-result rows, 694 correlation
+rows, 1,344 ranking-stability rows, three canonical figures, a 15-section
+self-contained report with 48 embedded images and 252 visual tiles, and 111/111
+passing validation checks. All ten pilot artifact paths and all eight registered
+artifact roles and schemas are retained.
 
 Painting is the independent statistical unit. Cases, candidates, mask variants,
 seeds, regions, and metrics are repeated or nested observations. Category-level
@@ -2892,6 +2908,18 @@ Runtime remains operational evidence outside restoration-quality ranking.
 Uncertainty is empirical seed variability, not calibrated confidence. Results do
 not establish historical authenticity, conservation suitability, or museum
 approval.
+
+### Expected execution time
+
+The Controlled-50 run took approximately 70 minutes. The completed
+Controlled-300 run recorded an end-to-end execution window of approximately
+**2 hours 32 minutes** before the final post-run report wording QA. Future clean
+runs should allow approximately **2.5–5 hours** on the same machine because disk
+cache, system load, and report rendering can vary. The approved 5,000-draw
+painting-cluster bootstrap and 100,000-assignment Monte Carlo sign-flip limits
+must remain bounded; do not replace them with exhaustive `300^300` or `2^300`
+enumeration and do not thin the approved evidence population merely to meet an
+estimate.
 
 ### Canonical outputs
 

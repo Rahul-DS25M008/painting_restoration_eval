@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-22T09:09:28.706565Z",
+  "updated_at_utc": "2026-09-22T13:27:20.144927Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -1423,12 +1423,12 @@
       "artifact_type": "analytical_figure",
       "artifact_role": "model_specific_metric_agreement",
       "schema_version": "grouped_correlation_matrix_figure.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_grouped_analysis",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "5ddf7763a567eff6c347e8fb120197ad152cbcf5114f8031231b45e3e5c1a499"
+      "checksum": "fcd5c98cd230e5bf4b31c3feb59719f34eb33bb850cfbd8c8d2b28649132ac0b"
     },
     {
       "artifact_key": "grouped_statistics.effect_sizes_figure",
@@ -1437,12 +1437,12 @@
       "artifact_type": "analytical_figure",
       "artifact_role": "paired_painting_level_effect_sizes",
       "schema_version": "grouped_effect_sizes_figure.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_grouped_analysis",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "2638c52dea372aaef5802b602839947da70bb556f9ba786f4d9f6d8accffa637"
+      "checksum": "e3e2b8888241e9ded89336b9c5c5d03efb59ecdc98df462c8c4f5a7bda5739d3"
     },
     {
       "artifact_key": "grouped_statistics.grouped_performance_figure",
@@ -1451,12 +1451,12 @@
       "artifact_type": "analytical_figure",
       "artifact_role": "metric_specific_grouped_performance",
       "schema_version": "grouped_performance_figure.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_grouped_analysis",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "4776ddde7dceee47bef0a9facbd712ae61709efc87d85f08528d40fc11f76761"
+      "checksum": "8c67830b08b88d47f0fc457511d9b94a1f6b5184824761a6dc3aae9dc684d115"
     },
     {
       "artifact_key": "grouped_statistics.metric_correlations",
@@ -1465,12 +1465,12 @@
       "artifact_type": "normalized_correlation_table",
       "artifact_role": "metric_region_and_model_agreement",
       "schema_version": "grouped_metric_correlations.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_grouped_analysis",
       "validation_status": "passed",
-      "row_count": 504,
+      "row_count": 694,
       "file_count": 1,
-      "checksum": "2e6b96abc5ac294ec186f8078b742af0520edc5d5c74a359540e0a79c5120662"
+      "checksum": "adb38f52d88237afa880ce4bd3397376e646813d7a94c0e3c80a5ce330d57620"
     },
     {
       "artifact_key": "grouped_statistics.ranking_stability",
@@ -1479,12 +1479,12 @@
       "artifact_type": "normalized_ranking_table",
       "artifact_role": "ranking_stability_and_sensitivity",
       "schema_version": "grouped_ranking_stability.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_grouped_analysis",
       "validation_status": "passed",
-      "row_count": 258,
+      "row_count": 1344,
       "file_count": 1,
-      "checksum": "57d8eae38f342b687b97e040413a0884be0b3ad93d61fef154cc0aa051a61a7a"
+      "checksum": "98c577cb3103f0f59c1241abe7fd4e0ac11ee5e4ba194facfd9a346861ff0cd2"
     },
     {
       "artifact_key": "grouped_statistics.report",
@@ -1493,12 +1493,12 @@
       "artifact_type": "self_contained_html_report",
       "artifact_role": "thesis_aligned_grouped_statistical_report",
       "schema_version": "approved_mock_aligned_self_contained_grouped_statistics_report.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_grouped_analysis",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "d6061185f7a1145f4728ac6fad3081b69b2ac6eda5e45ee75323198a3e76cf2d"
+      "checksum": "0c755877df1b931921033c9dba45ff3a40dc8da2b97f9b18b86f357c666ef4a0"
     },
     {
       "artifact_key": "grouped_statistics.statistical_results",
@@ -1507,12 +1507,12 @@
       "artifact_type": "normalized_analysis_table",
       "artifact_role": "cross_experiment_statistical_evidence",
       "schema_version": "grouped_statistical_results.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_grouped_analysis",
       "validation_status": "passed",
-      "row_count": 4174,
+      "row_count": 13272,
       "file_count": 1,
-      "checksum": "6f2487d4c13bf7f9cb44e004675ae2141eae0fa4002a099dcc93eca70c5f63b5"
+      "checksum": "62b5ae5f096b21929ac20ecbf378153841abf1262aee80e11baea746fa176874"
     },
     {
       "artifact_key": "hint.restoration_examples",
@@ -3411,12 +3411,12 @@
       "artifact_type": "validation_table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "cross_experiment_grouped_analysis",
       "validation_status": "passed",
       "row_count": 111,
       "file_count": 1,
-      "checksum": "8f80fe9d71fb0f64b83557511a4a4bfa2bc63152a0ce303445e890c8ab619952"
+      "checksum": "99b95f51c484797e85837b69fe655bc309e5f17817f3a67477d2baf0d6cd33e0"
     },
     {
       "artifact_key": "validation.27_failure_taxonomy_and_trustworthiness_flags",

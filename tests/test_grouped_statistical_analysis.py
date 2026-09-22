@@ -52,6 +52,7 @@ class GroupedStatisticalAnalysisTests(unittest.TestCase):
             pd.read_csv(cls.inputs["artworks_path"]),
             pd.read_csv(cls.inputs["opencv_candidates_path"]),
             pd.read_csv(cls.inputs["lama_candidates_path"]),
+            pd.read_csv(cls.inputs["hint_candidates_path"]),
             pd.read_csv(cls.inputs["stable_diffusion_candidates_path"]),
             pd.read_csv(cls.inputs["sdxl_candidates_path"]),
             config=cls.config,
@@ -61,7 +62,7 @@ class GroupedStatisticalAnalysisTests(unittest.TestCase):
         settings = self.config["grouped_statistical_analysis"]
         self.assertEqual(settings["notebook_id"], "26")
         self.assertTrue(settings["report"]["approved_mock_structure_locked"])
-        self.assertEqual(settings["population"]["dataset_source_levels"], ["controlled_50"])
+        self.assertEqual(settings["population"]["dataset_source_levels"], ["controlled_300"])
         self.assertFalse(settings["statistics"]["combined_quality_score_retained"])
         self.assertFalse(settings["statistics"]["combined_trust_score_retained"])
         self.assertEqual(len(self.inputs), len(settings["inputs"]))
@@ -69,6 +70,7 @@ class GroupedStatisticalAnalysisTests(unittest.TestCase):
             "01": "artworks_run_manifest_path", "08": "contracts_run_manifest_path",
             "09": "opencv_run_manifest_path", "10": "lama_run_manifest_path",
             "11": "stable_diffusion_run_manifest_path", "12": "sdxl_run_manifest_path",
+            "12A": "hint_run_manifest_path",
             "13": "classical_run_manifest_path", "14": "lpips_run_manifest_path",
             "15": "feature_run_manifest_path", "16": "spatial_run_manifest_path",
             "17": "local_run_manifest_path", "18": "uncertainty_run_manifest_path",
@@ -82,36 +84,42 @@ class GroupedStatisticalAnalysisTests(unittest.TestCase):
             for notebook_id, key in notebook_by_key.items()
         }
         checks = validate_upstream_run_manifests(manifests)
-        self.assertEqual(len(checks), 19)
+        self.assertEqual(len(checks), 20)
         self.assertTrue(checks["passed"].all(), checks.to_dict("records"))
 
     def test_primary_population_is_exact_and_metric_independent(self) -> None:
         selected = self.selected
-        self.assertEqual(len(selected), 1240)
-        self.assertEqual(selected["candidate_id"].nunique(), 1240)
-        self.assertEqual(selected.loc[selected["coverage_role"].eq("core_three_model"), "case_id"].nunique(), 410)
+        self.assertEqual(len(selected), 10504)
+        self.assertEqual(selected["candidate_id"].nunique(), 10504)
+        self.assertEqual(selected.loc[selected["coverage_role"].eq("core_three_model"), "case_id"].nunique(), 2620)
         self.assertEqual(selected.groupby("model_id").size().to_dict(), {
-            "lama": 410, "opencv_telea": 410,
-            "sdxl_inpainting": 10, "stable_diffusion_inpainting": 410,
+            "hint_places2": 2620, "lama": 2620, "opencv_telea": 2620,
+            "sdxl_inpainting": 24, "stable_diffusion_inpainting": 2620,
         })
         core = selected.loc[selected["coverage_role"].eq("core_three_model")]
-        self.assertEqual(int(core["is_zero_control"].sum()), 150)
-        self.assertEqual(int(core["quality_analysis_eligible"].sum()), 1080)
-        self.assertEqual(set(selected["dataset_scope"]), {"controlled_50"})
+        self.assertEqual(int(core["is_zero_control"].sum()), 1200)
+        self.assertEqual(int(core["quality_analysis_eligible"].sum()), 9280)
+        self.assertEqual(set(selected["dataset_scope"]), {"controlled_300"})
         self.assertTrue(selected["restored_path"].str.startswith("outputs/").all())
 
     def test_uncertainty_and_focused_analysis_coverage_is_explicit(self) -> None:
         canonical = pd.read_csv(self.inputs["canonical_uncertainty_groups_path"])
         damage_size = pd.read_csv(self.inputs["damage_size_uncertainty_path"])
-        self.assertEqual(canonical["uncertainty_group_id"].nunique(), 130)
-        self.assertEqual(damage_size["uncertainty_group_id"].nunique(), 35)
+        self.assertEqual(canonical["uncertainty_group_id"].nunique(), 780)
+        self.assertEqual(damage_size["uncertainty_group_id"].nunique(), 245)
         self.assertEqual(
             canonical["prompt_variant_id"].value_counts().to_dict(),
-            {"p00_generic": 80, "p05_scratch_aware": 50},
+            {"p00_generic": 480, "p05_scratch_aware": 300},
         )
-        self.assertEqual(len(pd.read_csv(self.inputs["damage_size_analysis_path"])), 1901)
-        self.assertEqual(len(pd.read_csv(self.inputs["mask_robustness_analysis_path"])), 5373)
-        self.assertEqual(len(pd.read_csv(self.inputs["degradation_analysis_path"])), 4695)
+        self.assertEqual(len(pd.read_csv(self.inputs["damage_size_analysis_path"])), 7035)
+        self.assertEqual(
+            len(pd.read_csv(self.inputs["mask_robustness_analysis_path"], low_memory=False)),
+            44847,
+        )
+        self.assertEqual(
+            len(pd.read_csv(self.inputs["degradation_analysis_path"], low_memory=False)),
+            34977,
+        )
 
     def test_deterministic_statistics(self) -> None:
         exact = sign_flip_test([1, 2, 3, 4, 5])
@@ -174,7 +182,7 @@ class GroupedStatisticalAnalysisTests(unittest.TestCase):
             f'<section id="{section}"><h2>{section}</h2>{image}{image}</section>'
             for section in sections
         ) + (
-            "<p>RQ1 RQ2 RQ3 conclusion limitation controlled_50. Painting is the "
+            "<p>RQ1 RQ2 RQ3 conclusion limitation controlled_300. Painting is the "
             "independent unit. Uncertainty is not calibrated confidence. Dataset-source "
             "comparison is not_applicable_single_dataset. SDXL is bounded.</p></body></html>"
         )

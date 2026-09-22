@@ -35,7 +35,7 @@ from .paths import find_project_root, resolve_repo_path
 
 
 MODULE_NAME = "restoration_eval.grouped_statistical_analysis"
-MODULE_VERSION = "1.0.0"
+MODULE_VERSION = "2.0.0"
 CONFIG_SCHEMA_VERSION = "grouped_statistical_analysis_config.v1"
 STATISTICAL_RESULTS_SCHEMA_VERSION = "grouped_statistical_results.v1"
 CORRELATION_SCHEMA_VERSION = "grouped_metric_correlations.v1"
@@ -177,9 +177,10 @@ def load_grouped_statistical_analysis_config(path: str | Path) -> dict[str, Any]
     expected = settings["expected_counts"]
     if int(expected["selected_candidates"]) != int(expected["primary_core_candidates"]) + int(expected["bounded_sdxl_candidates"]):
         raise ValueError("Selected-candidate arithmetic is inconsistent")
-    if int(expected["primary_core_candidates"]) != 3 * int(expected["evaluated_cases"]):
+    core_model_count = len(settings["population"]["core_model_order"])
+    if int(expected["primary_core_candidates"]) != core_model_count * int(expected["evaluated_cases"]):
         raise ValueError("Core candidate arithmetic is inconsistent")
-    if int(expected["quality_core_candidates"]) != 3 * int(expected["quality_cases"]):
+    if int(expected["quality_core_candidates"]) != core_model_count * int(expected["quality_cases"]):
         raise ValueError("Quality candidate arithmetic is inconsistent")
     if int(expected["mapped_nonzero_candidates_with_sdxl"]) * int(expected["quality_anchors"]) != int(expected["all_nonzero_anchor_rows_with_sdxl"]):
         raise ValueError("Quality-anchor arithmetic is inconsistent")
@@ -195,7 +196,7 @@ def load_grouped_statistical_analysis_config(path: str | Path) -> dict[str, Any]
     anchors = [str(item["anchor_id"]) for item in settings["quality_anchors"]]
     if len(anchors) != int(expected["quality_anchors"]) or len(anchors) != len(set(anchors)):
         raise ValueError("Quality-anchor count or identity is inconsistent")
-    if settings["population"]["dataset_source_levels"] != ["controlled_50"]:
+    if settings["population"]["dataset_source_levels"] != ["controlled_300"]:
         raise ValueError("Notebook 26 supports exactly one dataset source")
     if any(bool(settings["statistics"][key]) for key in (
         "combined_quality_score_retained", "combined_efficiency_score_retained",
@@ -244,7 +245,7 @@ def validate_upstream_run_manifests(
     manifests: Mapping[str, Mapping[str, Any]],
     *,
     expected_notebook_ids: Sequence[str] = (
-        "01", "08", "09", "10", "11", "12", "13", "14", "15", "16",
+        "01", "08", "09", "10", "11", "12", "12A", "13", "14", "15", "16",
         "17", "18", "19", "20", "21", "22", "23", "24", "25",
     ),
 ) -> pd.DataFrame:
@@ -280,6 +281,7 @@ def _normalise_restored_path(value: Any, notebook_id: str) -> str:
             "10": "outputs/10_lama_restoration",
             "11": "outputs/11_stable_diffusion_restoration",
             "12": "outputs/12_sdxl_feasibility_or_restoration",
+            "12A": "outputs/12a_hint_restoration",
         }
         return f"{roots[notebook_id]}/{text}"
     return text
@@ -306,12 +308,13 @@ def select_primary_candidate_population(
     artworks: pd.DataFrame,
     opencv: pd.DataFrame,
     lama: pd.DataFrame,
+    hint: pd.DataFrame,
     stable_diffusion: pd.DataFrame,
     sdxl: pd.DataFrame,
     *,
     config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Select 1,230 core primary candidates plus the bounded ten-case SDXL set."""
+    """Select the four-method primary population plus bounded SDXL evidence."""
 
     settings = _settings(config)
     population = settings["population"]
@@ -326,10 +329,10 @@ def select_primary_candidate_population(
     cases = case_registry.loc[case_registry["status"].astype(str).eq("passed")].copy()
     registry_case_counts = cases.groupby("experiment_id").size().to_dict()
     expected_registry_counts = {
-        "canonical_missing_region": 250,
-        "damage_size_sensitivity": 35,
-        "mask_robustness": 75,
-        "synthetic_degradation": 165,
+        "canonical_missing_region": 1500,
+        "damage_size_sensitivity": 245,
+        "mask_robustness": 525,
+        "synthetic_degradation": 1155,
     }
     if registry_case_counts != expected_registry_counts:
         raise ValueError(
@@ -339,6 +342,7 @@ def select_primary_candidate_population(
 
     opencv_selected = _candidate_subset(opencv, model_id="opencv_telea", notebook_id="09")
     lama_selected = _candidate_subset(lama, model_id="lama", notebook_id="10")
+    hint_selected = _candidate_subset(hint, model_id="hint_places2", notebook_id="12A")
     _require_columns(stable_diffusion, (
         "execution_role", "prompt_variant_id", "seed", "is_primary_candidate",
     ), "stable diffusion")
@@ -356,7 +360,7 @@ def select_primary_candidate_population(
     sdxl_selected = sdxl_selected.loc[_bool_series(sdxl_selected["technical_validation_passed"])].copy()
 
     selected = pd.concat(
-        [opencv_selected, lama_selected, sd_selected, sdxl_selected],
+        [opencv_selected, lama_selected, hint_selected, sd_selected, sdxl_selected],
         ignore_index=True,
         sort=False,
     )
@@ -422,7 +426,10 @@ def select_primary_candidate_population(
 
     core = selected.loc[selected["coverage_role"].eq("core_three_model")]
     if core["case_id"].nunique() != int(expected["evaluated_cases"]):
-        raise ValueError("Core population does not cover exactly 410 cases")
+        raise ValueError(
+            "Core population does not cover the configured evaluated cases: "
+            f"{core['case_id'].nunique()} != {int(expected['evaluated_cases'])}"
+        )
     evaluated_case_counts = (
         core[["case_id", "experiment_id"]]
         .drop_duplicates("case_id")
@@ -535,7 +542,10 @@ def select_quality_anchor_values(
         -pd.to_numeric(anchors["comparison_value"], errors="coerce"),
     )
     if len(anchors) != int(expected["all_nonzero_anchor_rows_with_sdxl"]):
-        raise ValueError("Expected exactly 11,990 nonzero candidate-anchor rows")
+        raise ValueError(
+            "Nonzero candidate-anchor rows differ from the configured contract: "
+            f"{len(anchors)} != {int(expected['all_nonzero_anchor_rows_with_sdxl'])}"
+        )
     if anchors["anchor_id"].nunique() != int(expected["quality_anchors"]):
         raise ValueError("Quality-anchor identity differs from contract")
     if not anchors.groupby("candidate_id").size().eq(int(expected["quality_anchors"])).all():
@@ -554,7 +564,9 @@ def build_runtime_evidence(
         selected_candidates, config=build_multi_model_adapter_config(config)
     )
     if len(result) != int(_settings(config)["expected_counts"]["selected_candidates"]):
-        raise ValueError("Runtime evidence must cover all 1,240 selected candidates")
+        raise ValueError(
+            "Runtime evidence must cover all configured selected candidates"
+        )
     if _bool_series(result["quality_ranking_eligible"]).any():
         raise ValueError("Runtime must not enter the restoration-quality ranking")
     return result
@@ -782,7 +794,7 @@ def validate_grouped_statistical_report_html(
     external = [source for source in image_sources if not source.startswith("data:image/")]
     lower = html_text.lower()
     required_terms = (
-        "rq1", "rq2", "rq3", "conclusion", "limitation", "controlled_50",
+        "rq1", "rq2", "rq3", "conclusion", "limitation", "controlled_300",
         "painting", "independent unit", "not calibrated confidence",
         "not_applicable_single_dataset", "sdxl", "bounded",
     )

@@ -928,8 +928,9 @@ checksums, limitations, and downstream eligibility.
 | 23 Damage-Size Sensitivity Analysis | Finished | Finished | Yes | 35 paintings (seven/category), 245 matched cases, 980 four-method primary candidates, 245 Stable Diffusion uncertainty groups, 7,035 canonical analysis rows, 494 inferential rows, 124/124 passing checks, 10 analytical views, eight visual panels and eight canonical files | All eight pilot paths and schemas retained; analysis rows increased from 1,901 to 7,035, the report remains self-contained with 18 embedded and zero external images, and bounded inference replaces infeasible exhaustive enumeration |
 | 24 Mask Robustness Analysis | Finished | Finished | Yes | 35 paintings (seven/category), 105 matched groups, 525 cases, 2,100 four-method primary candidates, 44,847 canonical analysis rows, 139/139 passing checks, 10 analytical views, eight visual panels and seven canonical files | All seven pilot paths and schemas retained; analysis rows increased from 5,373 to 44,847; the report remains self-contained with 18 embedded and zero external images; bounded painting-level inference replaces infeasible exhaustive enumeration |
 | 25 Synthetic Degradation Analysis | Finished | Finished | Yes | 35 paintings (seven/category), 1,155 generated cases, 350 eligible localized cases, 1,400 four-method primary candidates, 11 bounded SDXL candidates, 34,977 canonical analysis rows, 129/129 passing checks, 14 analytical views, nine visual panels and seven canonical files | All seven pilot paths and schemas retained; analysis rows increased from 4,695 to 34,977; the report remains self-contained with 23 embedded and zero external images and 298 tiles; bounded painting-level inference replaces infeasible exhaustive enumeration |
+| 26 Grouped and Statistical Analysis | Finished | Finished | Yes | 300 paintings; 10,480 four-method core candidates across 2,620 cases; 24 bounded SDXL candidates; 1,025 uncertainty groups; 13,272 statistical rows; 694 correlation rows; 1,344 ranking rows; 111/111 checks; 10 canonical files | All ten pilot paths and all eight artifact roles and schemas retained; statistical, correlation and ranking rows increased from 4,174, 504 and 258 respectively; the self-contained report contains 48 embedded images, 252 tiles and no external image dependency; compact GitHub handoff requires no separate Hugging Face release |
 
-Notebooks 01–25, including Notebook 12A and supplemental D02, are completed
+Notebooks 01–26, including Notebook 12A and supplemental D02, are completed
 Controlled-300 producers. Notebook 20's producer-specific diagnostics bundle
 and compact Git handoff are remotely and locally verified. Notebook 21 passed
 its completion gate for 10,504 selected candidates, 3,160,618 normalized
@@ -948,8 +949,17 @@ with 35 paintings, 1,155 generated cases, 350 eligible localized cases, 1,400
 four-method primary candidates, 11 bounded SDXL candidates, 34,977 analysis
 rows, and 129 passing checks. It used 5,000 seeded painting-cluster bootstrap
 draws and 100,000 seeded batched sign flips, preserved every pilot artifact path
-and CSV schema, and produced a self-contained 23-image report. Notebook 26 is
-the next producer eligible for Controlled-300 reopening.
+and CSV schema, and produced a self-contained 23-image report. Notebook 26 run
+`run_efc978dd6d504cdb9b138a750f6dca83` subsequently passed its completion gate.
+It consumed 2,620 cases per full method, 10,480 core candidates across OpenCV
+Telea, LaMa, HINT and primary Stable Diffusion, 24 bounded SDXL candidates,
+9,280 nonzero core quality candidates, 1,025 supported uncertainty groups and
+3,150,114 normalized quality-evidence rows. It produced 13,272 statistical
+rows, 694 correlation rows, 1,344 ranking rows, three figures, a self-contained
+report with 48 embedded images and 252 tiles, and 111/111 passing checks. The
+observed execution window was approximately 2 hours 32 minutes before final
+wording QA. All ten pilot paths and all eight registered artifact roles and
+schemas were retained.
 
 Notebook 25's 41.97 MB canonical scalar table is diagnostics-tier evidence and
 is published through the bounded external-artifact workflow. Its two figures,

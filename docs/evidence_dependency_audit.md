@@ -35,9 +35,9 @@ expanded benchmark. This changes no frozen Notebook 01–36 evidence. Its exact
 inputs, outputs, population, source/checkpoint requirements, observed results,
 and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
-**Controlled-300 transition review: 2026-09-21.** The pilot remains recoverable
+**Controlled-300 transition review: 2026-09-22.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebooks 01–25,
+dependency order for the approved 300-painting study. Notebooks 01–26,
 including Notebook 12A and supplemental D02, are completed Controlled-300
 producers. N16, N17, N19, and N20 have verified diagnostics releases; their
 complete local outputs remain canonical. Notebook 21 is complete, validated,
@@ -46,8 +46,9 @@ remotely verified. Notebook 22 has completed its rerun, validation, visual
 review, and pilot comparison. Notebook 23 completed its bounded Controlled-300
 analysis, report and final gate. Notebook 24 completed its bounded Controlled-300
 mask-robustness analysis, report and final gate. Notebook 25 completed its bounded
-Controlled-300 synthetic-degradation analysis, report and final gate; Notebook
-26 is the next eligible producer. Notebooks 26–36 remain historical
+Controlled-300 synthetic-degradation analysis, report and final gate. Notebook
+26 completed its grouped statistical analysis, report and final gate. Notebooks
+27–36 remain historical
 Controlled-50 evidence until each producer is explicitly reopened, rerun,
 validated, baseline-compared, and committed.
 
@@ -880,48 +881,50 @@ the bounded external-artifact publication route. The two figures, self-contained
 report, manifests and validation table form the compact GitHub handoff. The
 complete local seven-file tree remains canonical.
 
-Notebook 26, `26_grouped_and_statistical_analysis.ipynb`, subsequently completed
-the approved cross-experiment statistical synthesis with its completion gate
-passed. It:
+Notebook 26, `26_grouped_and_statistical_analysis.ipynb`, completed its
+Controlled-300 rerun as run `run_efc978dd6d504cdb9b138a750f6dca83`. The
+completed Controlled-50 run remains a historical comparison baseline: 1,230
+core candidates across 410 cases, ten bounded SDXL candidates, 165 uncertainty
+groups, 4,174 statistical rows, 504 correlation rows, 258 ranking rows, 111
+passing checks, three figures, and a self-contained report.
 
-- selected 1,230 metric-independent primary core candidates across 410 cases and
-  kept the ten completed SDXL candidates as a separate bounded descriptive subset;
-- excluded 150 canonical zero-control candidates from restoration-quality
-  inference, leaving 1,080 nonzero core candidates while retaining the controls as
-  integrity evidence;
-- retained 11 quality anchors as separate evidence and persisted 4,174 statistical
-  result rows across 14 result kinds, 504 metric-correlation rows across five
-  correlation kinds, and 258 ranking-stability rows across six sensitivity kinds;
-- used painting as the independent unit while preserving cases, candidates,
-  mask variants, seeds, regions, metrics, and within-painting trajectories as
-  repeated or nested evidence;
-- combined the 130 canonical and 35 damage-size prompt-specific repeated-seed
-  groups without pooling the generic and scratch-aware prompt arms, and did not
-  assign artificial uncertainty to mask robustness or synthetic degradation;
-- covered descriptive statistics, confidence intervals, paired comparisons,
-  matched effect sizes, non-parametric tests, FDR correction, metric and region
-  disagreement, uncertainty associations, ranking sensitivity, and operational
-  quality-versus-compute associations without creating a combined score;
-- found LaMa to be the strongest overall computational model across ten of the
-  eleven retained quality anchors, while keeping metric-specific exceptions,
-  disagreement, and the faster operational Telea baseline visible;
-- produced three canonical figures and a self-contained 15-section HTML report
-  with 12 analytical views, 22 restoration panels, 34 embedded images, 132 panel
-  tiles, and no external image dependency;
-- passed all 111 validation checks and all 12 roadmap traceability requirements
-  with zero blocking or warning failures;
-- registered exactly eight non-self-referential artifacts and ten canonical files
-  under `outputs/26_grouped_and_statistical_analysis/`.
+The completed Controlled-300 run:
 
-Notebook 26 is now the canonical grouped-statistics source for downstream failure
-taxonomy, ablation, reporting, dashboard, and thesis-synthesis stages. Consumers
-must preserve metric-family and region-policy disagreement, the independent-unit
-boundary, prompt-arm separation, the single-dataset limitation, and the distinction
+- selects 10,480 metric-independent primary candidates across 2,620 cases:
+  2,620 each for OpenCV Telea, LaMa, HINT and primary generic-prompt Stable
+  Diffusion;
+- keeps 1,200 canonical zero-control candidates as integrity evidence and uses
+  9,280 nonzero full-method candidates for restoration-quality inference;
+- keeps the 24 technically valid SDXL candidates as a separate bounded,
+  descriptive population;
+- normalizes 3,150,114 validated quality-evidence rows while retaining all 11
+  quality anchors as separate measurements;
+- combines 780 canonical and 245 damage-size prompt-specific repeated-seed
+  groups without mixing generic and scratch-aware prompt arms or assigning
+  artificial uncertainty to deterministic robustness/degradation evidence;
+- consumes the complete 7,035-row damage-size, 44,847-row mask-robustness and
+  34,977-row synthetic-degradation analysis tables;
+- keeps painting as the independent unit and cases, candidates, masks, seeds,
+  regions, metrics and trajectories as repeated or nested observations;
+- retains bounded 5,000-draw painting-cluster bootstrap and 100,000-assignment
+  Monte Carlo sign-flip procedures instead of infeasible exhaustive enumeration.
+
+It produced 13,272 statistical-result rows, 694 correlation rows, 1,344
+ranking-stability rows, three canonical figures, a self-contained report with
+48 embedded images and 252 visual tiles, and 111/111 passing checks. All ten
+pilot artifact paths and all eight registered artifact roles and schemas match.
+The complete output tree is approximately 13.5 MiB and contains no large
+producer-owned candidate or diagnostic-image collection, so Notebook 26 uses a
+compact GitHub handoff and requires no separate Hugging Face release.
+
+Notebook 26 is now the canonical Controlled-300 grouped-statistics source.
+Consumers must preserve metric-family and region-policy disagreement,
+prompt-arm separation, the single-dataset limitation, and the distinction
 between empirical seed variability and calibrated confidence. Runtime remains
-operational evidence outside quality ranking. The analysis does not establish an
-independent style effect, a between-dataset comparison, a full SDXL comparison,
-historical authenticity, conservation suitability, museum approval, or a universal
-quality or trust score.
+operational evidence outside quality ranking. The analysis cannot establish an
+independent art-historical style effect, a between-dataset comparison, a full SDXL
+comparison, historical authenticity, conservation suitability, museum approval,
+or a universal quality or trust score.
 
 Notebook 27, `27_failure_taxonomy_and_trustworthiness_flags.ipynb`, subsequently
 completed the approved failure-taxonomy and trustworthiness-flag analysis with its

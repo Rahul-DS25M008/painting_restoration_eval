@@ -1,5 +1,5 @@
 config_schema_version: "grouped_statistical_analysis_config.v1"
-config_version: "1.0.0"
+config_version: "2.0.0"
 
 grouped_statistical_analysis:
   notebook_id: "26"
@@ -31,6 +31,8 @@ grouped_statistical_analysis:
     opencv_run_manifest_path: "outputs/09_opencv_telea_restoration/manifests/run_manifest.json"
     lama_candidates_path: "outputs/10_lama_restoration/data/restorations.csv"
     lama_run_manifest_path: "outputs/10_lama_restoration/manifests/run_manifest.json"
+    hint_candidates_path: "outputs/12a_hint_restoration/data/restorations.csv"
+    hint_run_manifest_path: "outputs/12a_hint_restoration/manifests/run_manifest.json"
     stable_diffusion_candidates_path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
     stable_diffusion_run_manifest_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
     sdxl_candidates_path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
@@ -84,14 +86,15 @@ grouped_statistical_analysis:
     work_root: "work"
 
   population:
-    dataset_scope: "controlled_50"
-    dataset_source_levels: ["controlled_50"]
+    dataset_scope: "controlled_300"
+    dataset_source_levels: ["controlled_300"]
     dataset_source_comparison_status: "not_applicable_single_dataset"
-    core_model_order: ["opencv_telea", "lama", "stable_diffusion_inpainting"]
-    all_model_order: ["opencv_telea", "lama", "stable_diffusion_inpainting", "sdxl_inpainting"]
+    core_model_order: ["opencv_telea", "lama", "hint_places2", "stable_diffusion_inpainting"]
+    all_model_order: ["opencv_telea", "lama", "hint_places2", "stable_diffusion_inpainting", "sdxl_inpainting"]
     model_source_notebooks:
       opencv_telea: "09"
       lama: "10"
+      hint_places2: "12A"
       stable_diffusion_inpainting: "11"
       sdxl_inpainting: "12"
     experiment_order:
@@ -100,22 +103,22 @@ grouped_statistical_analysis:
       - "mask_robustness"
       - "synthetic_degradation"
     experiment_case_counts:
-      canonical_missing_region: 250
-      damage_size_sensitivity: 35
-      mask_robustness: 75
-      synthetic_degradation: 50
+      canonical_missing_region: 1500
+      damage_size_sensitivity: 245
+      mask_robustness: 525
+      synthetic_degradation: 350
     experiment_quality_case_counts:
-      canonical_missing_region: 200
-      damage_size_sensitivity: 35
-      mask_robustness: 75
-      synthetic_degradation: 50
+      canonical_missing_region: 1200
+      damage_size_sensitivity: 245
+      mask_robustness: 525
+      synthetic_degradation: 350
     stable_diffusion_primary_role: "primary"
     stable_diffusion_primary_prompt_variant: "p00_generic"
     stable_diffusion_primary_seed: 2026
     zero_control_experiment: "canonical_missing_region"
     zero_control_damage_label: "none"
     category_inference_experiment: "canonical_missing_region"
-    focused_five_painting_experiments:
+    focused_thirty_five_painting_experiments:
       - "damage_size_sensitivity"
       - "mask_robustness"
       - "synthetic_degradation"
@@ -131,7 +134,7 @@ grouped_statistical_analysis:
     spatial: {source_notebook_id: "16", source_row_id_column: "spatial_diagnostic_id", evidence_family: "spatial_diagnostics"}
     local_consistency: {source_notebook_id: "17", family_column: "metric_family", source_row_id_column: "local_consistency_id", comparison_basis: "restored_value"}
     semantic_structural: {source_notebook_id: "20", family_column: "evidence_family", source_row_id_column: "semantic_metric_id", comparison_basis: "restored_value"}
-    runtime: {source_notebook_id: "09-12", evidence_family: "runtime_compute", metric_name: "runtime_seconds"}
+    runtime: {source_notebook_id: "09-12A", evidence_family: "runtime_compute", metric_name: "runtime_seconds"}
 
   metric_direction:
     higher_is_better: ["psnr", "ssim", "clip_cosine_similarity", "dinov2_cosine_similarity", "global_feature_cosine_similarity", "local_patch_cosine_similarity", "reference_affinity_map_correlation", "reference_affinity_weighted_similarity", "clip_dinov2_local_map_agreement", "signed_improvement_mean", "signed_improvement_median", "signed_improvement_p05", "signed_improvement_p95", "improved_pixel_fraction"]
@@ -164,11 +167,11 @@ grouped_statistical_analysis:
     - {pair_id: "feature_vs_seam", left_family: "feature_similarity", left_metric: "dinov2_cosine_similarity", right_family: "seam", right_metric: "boundary_gradient_mismatch"}
 
   uncertainty:
-    canonical_group_count: 130
-    canonical_generic_groups: 80
-    canonical_scratch_aware_groups: 50
-    damage_size_group_count: 35
-    combined_group_count: 165
+    canonical_group_count: 780
+    canonical_generic_groups: 480
+    canonical_scratch_aware_groups: 300
+    damage_size_group_count: 245
+    combined_group_count: 1025
     seeds_per_group: 4
     prompt_arms_must_remain_separate: true
     applicable_experiments: ["canonical_missing_region", "damage_size_sensitivity"]
@@ -258,41 +261,41 @@ grouped_statistical_analysis:
     mock_to_final_traceability_required: true
 
   expected_counts:
-    case_registry_rows: 525
-    evaluated_cases: 410
-    primary_core_candidates: 1230
-    candidates_by_core_model: {opencv_telea: 410, lama: 410, stable_diffusion_inpainting: 410}
-    bounded_sdxl_candidates: 10
-    selected_candidates: 1240
-    zero_control_cases: 50
-    zero_control_core_candidates: 150
-    quality_cases: 360
-    quality_core_candidates: 1080
-    mapped_nonzero_candidates_with_sdxl: 1090
+    case_registry_rows: 3425
+    evaluated_cases: 2620
+    primary_core_candidates: 10480
+    candidates_by_core_model: {opencv_telea: 2620, lama: 2620, hint_places2: 2620, stable_diffusion_inpainting: 2620}
+    bounded_sdxl_candidates: 24
+    selected_candidates: 10504
+    zero_control_cases: 300
+    zero_control_core_candidates: 1200
+    quality_cases: 2320
+    quality_core_candidates: 9280
+    mapped_nonzero_candidates_with_sdxl: 9304
     quality_anchors: 11
-    primary_core_anchor_rows: 11880
-    all_nonzero_anchor_rows_with_sdxl: 11990
-    selected_classical_source_rows: 34818
-    selected_lpips_source_rows: 2330
-    selected_feature_source_rows: 4660
-    selected_spatial_source_rows: 10416
-    normalized_spatial_rows: 145824
-    selected_local_source_rows: 148868
-    selected_semantic_source_rows: 33220
-    normalized_quality_rows: 369720
-    canonical_uncertainty_groups: 130
-    damage_size_uncertainty_groups: 35
-    supported_uncertainty_groups: 165
-    damage_size_analysis_rows: 1901
-    mask_robustness_analysis_rows: 5373
-    degradation_analysis_rows: 4695
+    primary_core_anchor_rows: 102080
+    all_nonzero_anchor_rows_with_sdxl: 102344
+    selected_classical_source_rows: 296553
+    selected_lpips_source_rows: 19808
+    selected_feature_source_rows: 39616
+    selected_spatial_source_rows: 88747
+    normalized_spatial_rows: 1242458
+    selected_local_source_rows: 1269567
+    selected_semantic_source_rows: 282112
+    normalized_quality_rows: 3150114
+    canonical_uncertainty_groups: 780
+    damage_size_uncertainty_groups: 245
+    supported_uncertainty_groups: 1025
+    damage_size_analysis_rows: 7035
+    mask_robustness_analysis_rows: 44847
+    degradation_analysis_rows: 34977
     canonical_figures: 3
     artifact_records: 8
     canonical_output_files: 10
 
   evidence_policy:
-    category_inference_permitted_for_canonical_50: true
-    category_inference_permitted_for_focused_five_painting_experiments: false
+    category_inference_permitted_for_canonical_300: true
+    category_inference_permitted_for_focused_thirty_five_painting_experiments: false
     independent_style_effect_permitted: false
     between_dataset_comparison_permitted: false
     stochastic_uncertainty_claim_permitted_for_canonical_and_damage_size: true
@@ -306,12 +309,12 @@ grouped_statistical_analysis:
 
   known_limitations:
     - "Painting is the independent unit; cases, candidates, mask variants, seeds, regions, and metrics are repeated or nested observations."
-    - "The balanced 50-painting canonical population supports category analysis, but incomplete style metadata does not support a general independent style effect."
-    - "Damage-size, robustness, and synthetic-degradation experiments contain one painting per category and support painting-specific rather than independent category effects."
-    - "The repository contains only the controlled_50 dataset source, so a between-dataset comparison is not applicable."
-    - "Generative uncertainty is available only for 130 canonical prompt-specific groups and 35 damage-size groups."
+    - "The balanced 300-painting canonical population supports broad visual-category analysis, but incomplete style metadata does not support a general independent art-historical style effect."
+    - "Damage-size, robustness, and synthetic-degradation experiments contain seven paintings per broad visual category and support exploratory subgroup summaries rather than independent category effects."
+    - "The repository contains only the controlled_300 dataset source, so a between-dataset comparison is not applicable."
+    - "Generative uncertainty is available only for 780 canonical prompt-specific groups and 245 damage-size groups."
     - "Prompt variants remain separate uncertainty populations and cannot be pooled as repeated seeds."
     - "Mask-placement robustness and prompt sensitivity are not generative uncertainty."
-    - "The ten-case SDXL population is bounded, incomplete, and descriptive only."
+    - "The 24-candidate SDXL population is bounded, incomplete, and descriptive only."
     - "General-purpose computational metrics do not establish historical authenticity, conservation suitability, or museum approval."
     - "Runtime depends on recorded hardware, software, batching, caching, and system load and remains separate from restoration quality."
