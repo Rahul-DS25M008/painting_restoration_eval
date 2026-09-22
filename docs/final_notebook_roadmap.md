@@ -2942,6 +2942,9 @@ validation/checks.csv
 
 **Notebook:** `27_failure_taxonomy_and_trustworthiness_flags.ipynb`\
 **Origin:** New Notebook  
+**Controlled-300 refactor status:** Preparation complete; execution pending\
+**Validation status:** Pending controlled-300 execution\
+**Completion gate passed:** No\
 **Output root:** `outputs/27_failure_taxonomy_and_trustworthiness_flags/`\
 **Depends on:** Notebook 08 for case identity, Notebooks 09–12A for candidate identity,
 and Notebooks 13–26 for analytical evidence
@@ -2954,6 +2957,13 @@ and Notebooks 13–26 for analytical evidence
   3,120 from N18 and 980 from N22 (including referenced N11 anchors);
 - derive shared IDs and the exact union from validated source manifests rather
   than hard-code a pilot overlap or union count.
+
+The completed preparation derivation observes exactly 725 candidates shared by
+the primary and supported repeated-seed populations. Therefore 3,375 candidates
+are uncertainty-only and the complete union contains 13,879 unique candidates.
+These counts are validation targets derived from the completed source manifests,
+not independent design assumptions. The complete ledgers consequently contain
+194,306 candidate-by-category rows and 152,669 candidate-by-flag rows.
 
 The population role must remain explicit. Uncertainty-only seeds and prompt arms
 must not enter ordinary model comparison, and bounded SDXL evidence must not be
@@ -3038,6 +3048,15 @@ validation/checks.csv
 The HTML report is self-contained and retains the approved mock's fifteen-section
 structure, visual atlas, evidence-to-assertion conclusions, nearby limitations,
 and embedded diagnostic images when downloaded without the repository.
+
+### Expected execution time
+
+The Controlled-50 run took approximately 46 minutes for 1,785 candidates. Allow
+approximately **4–10 hours** for the 13,879-candidate Controlled-300 run. Batch 4
+(full evidence normalization and threshold calibration) and Batch 5 (complete
+failure assignments) are expected to dominate. The design remains linear in the
+approved candidate union and fourteen fixed failure categories; it must not
+enumerate category combinations or construct a combined trust score.
 
 ---
 

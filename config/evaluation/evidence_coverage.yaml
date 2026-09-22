@@ -1244,8 +1244,8 @@ evidence_coverage:
   planned_notebooks:
     - notebook_id: "22"
       stem: "22_damage_size_diffusion_uncertainty_extension"
-      status: "completed_validation_passed"
-      completion_gate_passed: true
+      status: "preparation_complete"
+      completion_gate_passed: false
       output_root: "outputs/22_damage_size_diffusion_uncertainty_extension"
       manifest_path: "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json"
       run_id: "run_d0276a6859f74fada266936f43b7499f"
@@ -1727,22 +1727,22 @@ evidence_coverage:
 
     - notebook_id: "27"
       stem: "27_failure_taxonomy_and_trustworthiness_flags"
-      status: "completed_validation_passed"
-      completion_gate_passed: true
+      status: "preparation_complete"
+      completion_gate_passed: false
       output_root: "outputs/27_failure_taxonomy_and_trustworthiness_flags"
       manifest_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json"
       config_path: "config/evaluation/failure_taxonomy.yaml"
       helper_path: "src/restoration_eval/failure_taxonomy.py"
       test_path: "tests/test_failure_taxonomy.py"
       candidate_population:
-        primary_candidates: 1240
-        repeated_seed_candidates: 660
-        primary_repeated_overlap: 115
-        uncertainty_only_candidates: 545
-        union_candidates: 1785
+        primary_candidates: 10504
+        repeated_seed_candidates: 4100
+        primary_repeated_overlap: 725
+        uncertainty_only_candidates: 3375
+        union_candidates: 13879
       required_evidence: ["reference_metrics", "spatial", "texture", "colour", "seam", "semantic_proxies", "canonical_uncertainty", "damage_size_uncertainty", "metric_disagreement"]
       required_outputs: ["failure_taxonomy", "complete_failure_assignment_grid", "complete_trustworthiness_flag_grid", "self_contained_flag_report", "taxonomy_figure", "run_manifest", "artifact_manifest", "validation_checks"]
-      observed_population:
+      historical_pilot_population:
         primary_candidates: 1240
         primary_core_candidates: 1230
         repeated_seed_candidates: 660
@@ -1763,20 +1763,30 @@ evidence_coverage:
         report_external_images: 0
         report_tile_count: 49
         canonical_output_files: 8
+      planned_population:
+        primary_candidates: 10504
+        primary_core_candidates: 10480
+        repeated_seed_candidates: 4100
+        primary_repeated_overlap: 725
+        uncertainty_only_candidates: 3375
+        bounded_sdxl_candidates: 24
+        supported_uncertainty_groups: 1025
+        union_candidates: 13879
+        failure_categories: 14
+        failure_assignment_rows: 194306
+        trust_flags: 11
+        trustworthiness_flag_rows: 152669
+        canonical_output_files: 8
       primary_artifacts:
         - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/data/failure_taxonomy.csv"
-          rows: 14
           schema_version: "failure_taxonomy.v1"
         - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/failure_assignments.csv"
-          rows: 24990
           schema_version: "failure_assignments.v1"
         - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv"
-          rows: 19635
           schema_version: "trustworthiness_flags.v1"
         - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/figures/failure_taxonomy.png"
         - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/reports/flag_definitions.html"
         - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/validation/checks.csv"
-          rows: 167
       supported_scope:
         - "complete_candidate_by_category_and_candidate_by_flag_screening_ledgers"
         - "transparent_operational_warning_and_critical_thresholds"
@@ -1785,14 +1795,13 @@ evidence_coverage:
         - "canonical_and_damage_size_repeated_seed_uncertainty_evidence"
         - "metric_disagreement_and_flag_cooccurrence"
         - "candidate_level_review_recommendations"
-        - "bounded_ten_case_sdxl_description"
+        - "bounded_twenty_four_candidate_sdxl_description"
       report_contract:
         section_count: 15
         self_contained: true
         mock_to_final_traceability_passed: true
         required_visuals_depend_on_external_links: false
-        embedded_images: 56
-        image_decode_failures: 0
+        minimum_embedded_images: 42
       downstream_contract:
         - "use_the_complete_notebook_27_taxonomy_assignment_and_flag_tables_as_canonical_sources"
         - "preserve_population_roles_and_prompt_arm_separation"

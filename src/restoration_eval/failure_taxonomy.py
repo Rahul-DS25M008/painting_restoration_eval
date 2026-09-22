@@ -23,7 +23,7 @@ from .paths import find_project_root, resolve_repo_path
 
 
 MODULE_NAME = "restoration_eval.failure_taxonomy"
-MODULE_VERSION = "1.0.1"
+MODULE_VERSION = "1.1.0"
 CONFIG_SCHEMA_VERSION = "failure_taxonomy_config.v1"
 TAXONOMY_SCHEMA_VERSION = "failure_taxonomy.v1"
 ASSIGNMENT_SCHEMA_VERSION = "failure_assignments.v1"
@@ -381,6 +381,7 @@ def build_failure_candidate_population(
     artworks: pd.DataFrame,
     opencv_candidates: pd.DataFrame,
     lama_candidates: pd.DataFrame,
+    hint_candidates: pd.DataFrame,
     stable_diffusion_candidates: pd.DataFrame,
     sdxl_candidates: pd.DataFrame,
     damage_size_extension_candidates: pd.DataFrame,
@@ -399,6 +400,7 @@ def build_failure_candidate_population(
         artworks,
         opencv_candidates,
         lama_candidates,
+        hint_candidates,
         stable_diffusion_candidates,
         sdxl_candidates,
         config=grouped_config,
@@ -466,8 +468,8 @@ def build_failure_candidate_population(
         ("prompt_variant_id", pd.NA),
         ("seed", pd.NA),
         ("style_or_period", pd.NA),
-        ("dataset_id", "controlled_50"),
-        ("dataset_scope", "controlled_50"),
+        ("dataset_id", "controlled_300"),
+        ("dataset_scope", "controlled_300"),
         ("target_damage_fraction", pd.NA),
         ("realized_damage_fraction", pd.NA),
     ):
@@ -1276,7 +1278,14 @@ def validate_flag_report_html(html: str, *, config: Mapping[str, Any]) -> pd.Dat
         ("report_uncertainty_limit", "not calibrated confidence" in lower, "Uncertainty limitation is explicit"),
         ("report_decision_support", "decision support" in lower or "decision-support" in lower, "Decision-support scope is explicit"),
         ("report_no_approval_claim", "not conservation approval" in lower or "does not constitute conservation approval" in lower, "No conservation approval claim"),
-        ("report_population", "1,785" in html or "1785" in html, "Union population is stated"),
+        (
+            "report_population",
+            (
+                f"{int(settings['expected_counts']['union_candidates']):,}" in html
+                or str(int(settings["expected_counts"]["union_candidates"])) in html
+            ),
+            "Union population is stated",
+        ),
         ("report_proxy_language", "proxy" in lower, "Proxy terminology is visible"),
     ]
     return _validation_rows([*section_checks, *checks])

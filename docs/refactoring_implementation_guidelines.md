@@ -961,6 +961,19 @@ observed execution window was approximately 2 hours 32 minutes before final
 wording QA. All ten pilot paths and all eight registered artifact roles and
 schemas were retained.
 
+Notebook 27's Controlled-300 preparation layer is complete. Its binding union is
+10,504 primary candidates plus 3,375 uncertainty-only candidates, producing
+13,879 unique candidates after retaining the 725-candidate overlap only once.
+The supported repeated-seed population contains 4,100 candidates in 1,025
+four-seed groups. HINT is a full deterministic primary method; uncertainty
+remains not applicable to Telea, LaMa, and HINT rather than zero. The planned
+complete ledgers contain 194,306 candidate-by-category rows and 152,669
+candidate-by-flag rows. Preserve the existing nine-batch structure and all
+approved rule families; scale the population and validations without inventing
+new failure categories, threshold combinations, or a combined score. Allow
+approximately 4–10 hours, with full evidence normalization and complete failure
+assignment expected to dominate.
+
 Notebook 25's 41.97 MB canonical scalar table is diagnostics-tier evidence and
 is published through the bounded external-artifact workflow. Its two figures,
 self-contained report, manifests and validation table form the compact GitHub

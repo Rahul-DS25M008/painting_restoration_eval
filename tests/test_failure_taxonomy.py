@@ -77,13 +77,13 @@ class FailureTaxonomyTests(unittest.TestCase):
     def test_supported_uncertainty_memberships_are_exact(self) -> None:
         canonical_ids = uncertainty_candidate_ids(self.canonical_uncertainty)
         damage_ids = uncertainty_candidate_ids(self.damage_uncertainty)
-        self.assertEqual(len(canonical_ids), 520)
-        self.assertEqual(len(damage_ids), 140)
+        self.assertEqual(len(canonical_ids), 3120)
+        self.assertEqual(len(damage_ids), 980)
         self.assertFalse(canonical_ids & damage_ids)
         canonical_members = uncertainty_group_memberships(self.canonical_uncertainty)
         damage_members = uncertainty_group_memberships(self.damage_uncertainty)
-        self.assertEqual(canonical_members["uncertainty_group_id"].nunique(), 130)
-        self.assertEqual(damage_members["uncertainty_group_id"].nunique(), 35)
+        self.assertEqual(canonical_members["uncertainty_group_id"].nunique(), 780)
+        self.assertEqual(damage_members["uncertainty_group_id"].nunique(), 245)
         self.assertTrue(canonical_members.groupby("uncertainty_group_id").size().eq(4).all())
         self.assertTrue(damage_members.groupby("uncertainty_group_id").size().eq(4).all())
 
@@ -93,6 +93,7 @@ class FailureTaxonomyTests(unittest.TestCase):
             pd.read_csv(self.inputs["artworks_path"], low_memory=False),
             pd.read_csv(self.inputs["opencv_candidates_path"], low_memory=False),
             pd.read_csv(self.inputs["lama_candidates_path"], low_memory=False),
+            pd.read_csv(self.inputs["hint_candidates_path"], low_memory=False),
             pd.read_csv(self.inputs["stable_diffusion_candidates_path"], low_memory=False),
             pd.read_csv(self.inputs["sdxl_candidates_path"], low_memory=False),
             pd.read_csv(self.inputs["damage_size_extension_candidates_path"], low_memory=False),
@@ -101,23 +102,23 @@ class FailureTaxonomyTests(unittest.TestCase):
             grouped_config=self.grouped_config,
             config=self.config,
         )
-        self.assertEqual(len(population), 1785)
-        self.assertEqual(population["candidate_id"].nunique(), 1785)
-        self.assertEqual(int(population["is_primary_candidate"].sum()), 1240)
-        self.assertEqual(int(population["is_uncertainty_candidate"].sum()), 660)
-        self.assertEqual(int(population["quality_analysis_eligible"].sum()), 1090)
-        self.assertEqual(int(population["is_zero_control"].sum()), 150)
+        self.assertEqual(len(population), 13879)
+        self.assertEqual(population["candidate_id"].nunique(), 13879)
+        self.assertEqual(int(population["is_primary_candidate"].sum()), 10504)
+        self.assertEqual(int(population["is_uncertainty_candidate"].sum()), 4100)
+        self.assertEqual(int(population["quality_analysis_eligible"].sum()), 9304)
+        self.assertEqual(int(population["is_zero_control"].sum()), 1200)
         self.assertEqual(
             population["population_role"].value_counts().to_dict(),
             {
-                "primary_comparison": 1115,
-                "uncertainty_only": 545,
-                "primary_and_uncertainty": 115,
-                "bounded_sdxl": 10,
+                "primary_comparison": 9755,
+                "uncertainty_only": 3375,
+                "primary_and_uncertainty": 725,
+                "bounded_sdxl": 24,
             },
         )
         self.assertEqual(
-            int(population["model_id"].astype(str).eq("sdxl_inpainting").sum()), 10
+            int(population["model_id"].astype(str).eq("sdxl_inpainting").sum()), 24
         )
         self.assertTrue(
             population.loc[
@@ -266,7 +267,7 @@ class FailureTaxonomyTests(unittest.TestCase):
         )
         html = (
             "<html><body>" + sections + images
-            + "<p>1,785 candidates. RQ1 RQ2 RQ3. This is decision support. "
+            + "<p>13,879 candidates. RQ1 RQ2 RQ3. This is decision support. "
             "Uncertainty is not calibrated confidence. Proxy categories are explicit. "
             "This report does not constitute conservation approval. A combined trust score "
             "is not used.</p></body></html>"

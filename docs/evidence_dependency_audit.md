@@ -966,6 +966,18 @@ recommendations are operational decision support. They do not establish historic
 authenticity, physical-treatment suitability, conservation approval, a full SDXL
 comparison, or a universal trust score.
 
+For the active Controlled-300 transition, the preceding paragraph remains the
+historical Controlled-50 baseline only. Notebook 27's preparation contract now
+selects 10,504 primary candidates, 4,100 candidates in 1,025 complete supported
+four-seed groups, a manifest-derived overlap of 725 candidates, 3,375
+uncertainty-only candidates, and a 13,879-candidate union. HINT joins Telea,
+LaMa, and primary Stable Diffusion as the fourth full primary method; 24 valid
+SDXL candidates remain bounded descriptive evidence. The planned complete
+ledgers contain 194,306 candidate-by-category rows and 152,669 candidate-by-flag
+rows. Notebook 27 does not become the canonical Controlled-300 source until its
+output root is regenerated, its completion gate passes, and all pilot artifact
+roles and schemas are baseline-compared.
+
 Notebook 28, `28_metric_and_region_policy_ablation.ipynb`, subsequently
 completed the approved evaluation-policy sensitivity analysis with its completion
 gate passed. It:
