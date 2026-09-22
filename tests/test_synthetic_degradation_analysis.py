@@ -21,12 +21,14 @@ from restoration_eval.synthetic_degradation_analysis import (
     exhaustive_bootstrap_interval,
     load_synthetic_degradation_analysis_config,
     matched_rank_biserial,
+    monte_carlo_sign_flip_test,
     normalise_quality_evidence,
     resolve_analysis_inputs,
     select_quality_anchor_values,
     select_spillover_evidence,
     select_synthetic_degradation_population,
-    summarise_painting_slopes,
+    seeded_cluster_bootstrap_interval,
+    summarise_painting_slopes_bounded,
     validate_synthetic_degradation_analysis,
     validate_synthetic_degradation_report_html,
     validate_upstream_run_manifests,
@@ -55,6 +57,7 @@ class SyntheticDegradationAnalysisTests(unittest.TestCase):
         cls.eligibility = pd.read_csv(cls.inputs["eligibility_path"])
         cls.opencv = pd.read_csv(cls.inputs["opencv_candidates_path"])
         cls.lama = pd.read_csv(cls.inputs["lama_candidates_path"])
+        cls.hint = pd.read_csv(cls.inputs["hint_candidates_path"])
         cls.stable_diffusion = pd.read_csv(
             cls.inputs["stable_diffusion_candidates_path"]
         )
@@ -65,6 +68,7 @@ class SyntheticDegradationAnalysisTests(unittest.TestCase):
             cls.eligibility,
             cls.opencv,
             cls.lama,
+            cls.hint,
             cls.stable_diffusion,
             cls.sdxl,
             config=cls.config,
@@ -90,6 +94,7 @@ class SyntheticDegradationAnalysisTests(unittest.TestCase):
             "10": "lama_run_manifest_path",
             "11": "stable_diffusion_run_manifest_path",
             "12": "sdxl_run_manifest_path",
+            "12A": "hint_run_manifest_path",
             "13": "classical_run_manifest_path",
             "14": "lpips_run_manifest_path",
             "15": "feature_run_manifest_path",
@@ -105,20 +110,22 @@ class SyntheticDegradationAnalysisTests(unittest.TestCase):
             for notebook_id, key in notebook_by_key.items()
         }
         checks = validate_upstream_run_manifests(manifests)
-        self.assertEqual(len(checks), 14)
+        self.assertEqual(len(checks), 15)
         self.assertTrue(checks["passed"].all(), checks.to_dict("records"))
 
     def test_population_eligibility_and_candidate_selection_are_exact(self) -> None:
-        self.assertEqual(len(self.selected), 156)
-        self.assertEqual(self.selected["case_id"].nunique(), 50)
-        self.assertEqual(self.selected["painting_id"].nunique(), 5)
+        expected = self.config["synthetic_degradation_analysis"]["expected_counts"]
+        self.assertEqual(len(self.selected), expected["selected_candidates"])
+        self.assertEqual(self.selected["case_id"].nunique(), expected["eligible_cases"])
+        self.assertEqual(self.selected["painting_id"].nunique(), expected["paintings"])
         self.assertEqual(
             self.selected.groupby("model_id").size().to_dict(),
             {
-                "lama": 50,
-                "opencv_telea": 50,
-                "sdxl_inpainting": 6,
-                "stable_diffusion_inpainting": 50,
+                "hint_places2": 350,
+                "lama": 350,
+                "opencv_telea": 350,
+                "sdxl_inpainting": 11,
+                "stable_diffusion_inpainting": 350,
             },
         )
         self.assertFalse(
@@ -128,11 +135,10 @@ class SyntheticDegradationAnalysisTests(unittest.TestCase):
         core = self.selected.loc[
             ~self.selected["model_id"].eq("sdxl_inpainting")
         ]
-        self.assertEqual(len(core), 150)
-        self.assertTrue(core.groupby("case_id").size().eq(3).all())
+        self.assertEqual(len(core), expected["core_candidates"])
+        self.assertTrue(core.groupby("case_id").size().eq(4).all())
         sdxl = self.selected.loc[self.selected["model_id"].eq("sdxl_inpainting")]
-        self.assertEqual(len(sdxl), 6)
-        self.assertEqual(sdxl["painting_id"].nunique(), 5)
+        self.assertEqual(len(sdxl), expected["sdxl_candidates"])
 
         stable = self.selected.loc[
             self.selected["model_id"].eq("stable_diffusion_inpainting")
@@ -147,10 +153,10 @@ class SyntheticDegradationAnalysisTests(unittest.TestCase):
             self.selected,
             config=self.config,
         )
-        self.assertEqual(len(audit), 660)
-        self.assertEqual(int(audit["eligible"].sum()), 200)
-        self.assertEqual(int((~audit["eligible"]).sum()), 460)
-        self.assertEqual(int(audit["candidate_available"].sum()), 156)
+        self.assertEqual(len(audit), expected["eligibility_case_model_rows"])
+        self.assertEqual(int(audit["eligible"].sum()), expected["eligible_case_model_rows"])
+        self.assertEqual(int((~audit["eligible"]).sum()), expected["excluded_case_model_rows"])
+        self.assertEqual(int(audit["candidate_available"].sum()), expected["selected_candidates"])
 
     def test_metric_sources_anchors_spillover_and_runtime_cover_population(self) -> None:
         tables = {
@@ -170,15 +176,16 @@ class SyntheticDegradationAnalysisTests(unittest.TestCase):
             self.selected,
             config=self.config,
         )
-        self.assertEqual(len(normalized), 54756)
-        self.assertEqual(normalized["candidate_id"].nunique(), 156)
+        expected = self.config["synthetic_degradation_analysis"]["expected_counts"]
+        self.assertEqual(len(normalized), expected["normalized_quality_rows"])
+        self.assertEqual(normalized["candidate_id"].nunique(), expected["selected_candidates"])
 
         anchors = select_quality_anchor_values(
             normalized,
             spatial_source=tables["spatial"],
             config=self.config,
         )
-        self.assertEqual(len(anchors), 1716)
+        self.assertEqual(len(anchors), expected["candidate_quality_anchor_rows"])
         self.assertEqual(anchors["anchor_id"].nunique(), 11)
         self.assertTrue(anchors.groupby("candidate_id").size().eq(11).all())
         spatial_anchor = anchors.loc[
@@ -187,7 +194,7 @@ class SyntheticDegradationAnalysisTests(unittest.TestCase):
         self.assertTrue(spatial_anchor["improvement_value"].notna().all())
 
         spillover = select_spillover_evidence(normalized, config=self.config)
-        self.assertEqual(len(spillover), 156)
+        self.assertEqual(len(spillover), expected["candidate_spillover_rows"])
         self.assertFalse(spillover["quality_ranking_eligible"].any())
         self.assertTrue(
             np.isclose(
@@ -199,7 +206,7 @@ class SyntheticDegradationAnalysisTests(unittest.TestCase):
         )
 
         runtime = build_runtime_evidence(self.selected, config=self.config)
-        self.assertEqual(len(runtime), 156)
+        self.assertEqual(len(runtime), expected["candidate_runtime_rows"])
         self.assertFalse(runtime["quality_ranking_eligible"].any())
 
         spatial_maps = pd.read_csv(self.inputs["spatial_maps_path"])
@@ -207,19 +214,24 @@ class SyntheticDegradationAnalysisTests(unittest.TestCase):
         candidate_ids = set(self.selected["candidate_id"].astype(str))
         self.assertEqual(
             int(spatial_maps["candidate_id"].astype(str).isin(candidate_ids).sum()),
-            785,
+            expected["spatial_map_records"],
         )
         self.assertEqual(
             int(local_maps["candidate_id"].astype(str).isin(candidate_ids).sum()),
-            469,
+            expected["local_map_records"],
         )
 
     def test_balanced_ranks_slopes_and_area_association(self) -> None:
-        model_ids = ["opencv_telea", "lama", "stable_diffusion_inpainting"]
+        model_ids = [
+            "opencv_telea",
+            "lama",
+            "hint_places2",
+            "stable_diffusion_inpainting",
+        ]
         rows = []
         for severity_rank, severity in enumerate(("mild", "moderate", "severe"), 1):
             for painting_index, painting_id in enumerate(
-                ("p001", "p018", "p026", "p039", "p043")
+                f"p{index:03d}" for index in range(1, 36)
             ):
                 for model_index, model_id in enumerate(model_ids):
                     for anchor_id, family in (("a1", "pixel"), ("a2", "feature")):
@@ -245,8 +257,8 @@ class SyntheticDegradationAnalysisTests(unittest.TestCase):
         synthetic = pd.DataFrame(rows)
         mild = synthetic.loc[synthetic["severity"].eq("mild")]
         ranks = compute_case_family_balanced_ranks(mild, model_ids=model_ids)
-        self.assertEqual(len(ranks), 15)
-        self.assertTrue(ranks.groupby("case_id").size().eq(3).all())
+        self.assertEqual(len(ranks), 140)
+        self.assertTrue(ranks.groupby("case_id").size().eq(4).all())
         self.assertTrue(
             ranks.loc[ranks["model_id"].eq("opencv_telea"), "overall_rank"]
             .eq(1.0)
@@ -263,25 +275,28 @@ class SyntheticDegradationAnalysisTests(unittest.TestCase):
             direction="lower_is_better",
             reporting_scale_percentage_points=1.0,
         )
-        self.assertEqual(len(slopes), 5)
+        self.assertEqual(len(slopes), 35)
         self.assertTrue(slopes["level_count"].eq(3).all())
-        slope_summary = summarise_painting_slopes(slopes)
-        self.assertEqual(slope_summary["resamples"], 3125)
-        self.assertEqual(slope_summary["sign_flip_assignments"], 32)
+        slope_summary = summarise_painting_slopes_bounded(slopes)
+        self.assertEqual(slope_summary["resamples"], 5000)
+        self.assertEqual(slope_summary["sign_flip_assignments"], 100000)
 
         association = within_family_cluster_spearman(
             slope_input,
             area_column="affected_content_fraction",
             outcome_column="comparison_value",
         )
-        self.assertEqual(association["painting_count"], 5)
-        self.assertEqual(association["observation_count"], 15)
-        self.assertEqual(association["bootstrap_resamples"], 3125)
-        self.assertGreater(association["rho"], 0.95)
+        self.assertEqual(association["painting_count"], 35)
+        self.assertEqual(association["observation_count"], 105)
+        self.assertEqual(association["bootstrap_resamples"], 5000)
+        self.assertGreater(association["rho"], 0.90)
 
-        bootstrap = exhaustive_bootstrap_interval([1, 2, 3, 4, 5])
-        self.assertEqual(bootstrap["resamples"], 3125)
-        self.assertEqual(exact_sign_flip_test([1, 2, 3, 4, 5])["assignments"], 32)
+        bootstrap = seeded_cluster_bootstrap_interval(range(1, 36))
+        self.assertEqual(bootstrap["resamples"], 5000)
+        self.assertEqual(
+            monte_carlo_sign_flip_test(range(1, 36))["assignments"],
+            100000,
+        )
         self.assertAlmostEqual(matched_rank_biserial([1, 2, 3, 4, 5]), 1.0)
         np.testing.assert_allclose(
             benjamini_hochberg([0.01, 0.02, 0.20]),

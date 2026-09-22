@@ -927,8 +927,9 @@ checksums, limitations, and downstream eligibility.
 | 22 Damage-Size Diffusion Uncertainty Extension | Finished | Finished | Yes | 245 cases across 35 paintings; 735 new candidates; 245 four-seed groups; 1,470 unordered pairs; 33,320 metric rows; 245 numerical maps; 245 overlays; 236/236 checks; 988 canonical files | All ten pilot artifact roles and schemas retained; case-dependent rows and images increased exactly sevenfold from the 35-case pilot; no unexplained loss, temporary work files, warning failures, or saved notebook errors |
 | 23 Damage-Size Sensitivity Analysis | Finished | Finished | Yes | 35 paintings (seven/category), 245 matched cases, 980 four-method primary candidates, 245 Stable Diffusion uncertainty groups, 7,035 canonical analysis rows, 494 inferential rows, 124/124 passing checks, 10 analytical views, eight visual panels and eight canonical files | All eight pilot paths and schemas retained; analysis rows increased from 1,901 to 7,035, the report remains self-contained with 18 embedded and zero external images, and bounded inference replaces infeasible exhaustive enumeration |
 | 24 Mask Robustness Analysis | Finished | Finished | Yes | 35 paintings (seven/category), 105 matched groups, 525 cases, 2,100 four-method primary candidates, 44,847 canonical analysis rows, 139/139 passing checks, 10 analytical views, eight visual panels and seven canonical files | All seven pilot paths and schemas retained; analysis rows increased from 5,373 to 44,847; the report remains self-contained with 18 embedded and zero external images; bounded painting-level inference replaces infeasible exhaustive enumeration |
+| 25 Synthetic Degradation Analysis | Finished | Finished | Yes | 35 paintings (seven/category), 1,155 generated cases, 350 eligible localized cases, 1,400 four-method primary candidates, 11 bounded SDXL candidates, 34,977 canonical analysis rows, 129/129 passing checks, 14 analytical views, nine visual panels and seven canonical files | All seven pilot paths and schemas retained; analysis rows increased from 4,695 to 34,977; the report remains self-contained with 23 embedded and zero external images and 298 tiles; bounded painting-level inference replaces infeasible exhaustive enumeration |
 
-Notebooks 01–24, including Notebook 12A and supplemental D02, are completed
+Notebooks 01–25, including Notebook 12A and supplemental D02, are completed
 Controlled-300 producers. Notebook 20's producer-specific diagnostics bundle
 and compact Git handoff are remotely and locally verified. Notebook 21 passed
 its completion gate for 10,504 selected candidates, 3,160,618 normalized
@@ -941,8 +942,19 @@ rows, 124 passing checks and a self-contained report. Notebook 24 run
 paintings, 105 groups, 525 cases, 2,100 four-method candidates, 44,847 analysis
 rows, and 139 passing checks. It used 5,000 seeded painting-cluster bootstrap
 draws and 100,000 seeded batched sign flips; exhaustive `35^35` bootstrap or
-`2^35` sign enumeration remained prohibited. Notebook 25 is the next producer
-eligible for Controlled-300 reopening.
+`2^35` sign enumeration remained prohibited. Notebook 25 run
+`run_cf89ebe972364c7b8ccfefc6bf2a63ca` subsequently passed its completion gate
+with 35 paintings, 1,155 generated cases, 350 eligible localized cases, 1,400
+four-method primary candidates, 11 bounded SDXL candidates, 34,977 analysis
+rows, and 129 passing checks. It used 5,000 seeded painting-cluster bootstrap
+draws and 100,000 seeded batched sign flips, preserved every pilot artifact path
+and CSV schema, and produced a self-contained 23-image report. Notebook 26 is
+the next producer eligible for Controlled-300 reopening.
+
+Notebook 25's 41.97 MB canonical scalar table is diagnostics-tier evidence and
+is published through the bounded external-artifact workflow. Its two figures,
+self-contained report, manifests and validation table form the compact GitHub
+handoff. The complete seven-file canonical tree remains authoritative locally.
 Notebook 21 retains `core_three_model` and `sdxl_four_model_subset` as stable
 historical schema identifiers so downstream consumers do not require a
 gratuitous identifier migration. Their displayed labels and validated

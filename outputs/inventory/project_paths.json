@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-21T21:52:43.143909Z",
+  "updated_at_utc": "2026-09-22T09:09:28.706565Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -2991,12 +2991,12 @@
       "artifact_type": "diagnostic_figure",
       "artifact_role": "representative_failure_evidence",
       "schema_version": "synthetic_degradation_failure_figure.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "synthetic_degradation",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "a8b9851ac581c1c9177fabb96571a56499185da3ebc4973c30d785f5cfc77750"
+      "checksum": "d753314ab9e9a53f69f38adf8759184ee6f9fc27a7119bc9046f597c6dfc4d6c"
     },
     {
       "artifact_key": "synthetic_degradation_analysis.metrics",
@@ -3005,12 +3005,12 @@
       "artifact_type": "normalized_analysis_table",
       "artifact_role": "synthetic_degradation_evidence",
       "schema_version": "synthetic_degradation_analysis.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "synthetic_degradation",
       "validation_status": "passed",
-      "row_count": 4695,
+      "row_count": 34977,
       "file_count": 1,
-      "checksum": "07327031bb7bb4e8f883079142fc0158112cac24c0e5ec8037ced831866c5732"
+      "checksum": "b8e838c997fc1949de41b47f31c35f0152e448acabe91c07d84c949410cdcbe5"
     },
     {
       "artifact_key": "synthetic_degradation_analysis.performance_figure",
@@ -3019,12 +3019,12 @@
       "artifact_type": "analytical_figure",
       "artifact_role": "direction_aware_performance_summary",
       "schema_version": "synthetic_degradation_performance_figure.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "synthetic_degradation",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "f4200f9a774d79aee656f94f229e4ab850703e9f0b089b3705566341773a70c1"
+      "checksum": "c77facbef09020731f14eea7b68de2de9b41d89c09bd6a1cf00781c0b172dc37"
     },
     {
       "artifact_key": "synthetic_degradation_analysis.report",
@@ -3033,12 +3033,12 @@
       "artifact_type": "self_contained_html_report",
       "artifact_role": "thesis_aligned_synthetic_degradation_report",
       "schema_version": "approved_mock_aligned_self_contained_synthetic_degradation_report.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "synthetic_degradation",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "d7d8679aa123cd5ade32b1564f7de7f7d6a72401de3a34b686f339b30d070e68"
+      "checksum": "ff40140cf8efb6e7115e95543b8ace4c4a6fe56335b8a4575c598b16616331da"
     },
     {
       "artifact_key": "validation.01_dataset_verification",
@@ -3397,12 +3397,12 @@
       "artifact_type": "validation_table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "synthetic_degradation",
       "validation_status": "passed",
-      "row_count": 125,
+      "row_count": 129,
       "file_count": 1,
-      "checksum": "ae456b313634892fd2e31c871882c0db51339a0c772ba6ac1efcf5fc7104f4b4"
+      "checksum": "f39031e17fbd6d8d1b575afec05e8fbb3bae3ce2feda9c521152d90b7f9d1235"
     },
     {
       "artifact_key": "validation.26_grouped_and_statistical_analysis",

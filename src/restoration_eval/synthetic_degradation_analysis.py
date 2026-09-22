@@ -11,14 +11,13 @@ from __future__ import annotations
 
 import hashlib
 import os
-from itertools import product
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 import numpy as np
 import pandas as pd
 import yaml
-from scipy.stats import spearmanr
+from scipy.stats import rankdata, spearmanr
 
 from .damage_size_analysis import (
     benjamini_hochberg,
@@ -27,7 +26,10 @@ from .damage_size_analysis import (
     exhaustive_bootstrap_interval,
     family_balanced_ranks,
     matched_rank_biserial,
+    monte_carlo_sign_flip_test,
+    seeded_cluster_bootstrap_interval,
     summarise_painting_slopes,
+    summarise_painting_slopes_bounded,
     theil_sen_slope,
 )
 from .multi_model_comparison import (
@@ -40,7 +42,7 @@ from .paths import find_project_root, resolve_repo_path
 
 
 MODULE_NAME = "restoration_eval.synthetic_degradation_analysis"
-MODULE_VERSION = "1.0.0"
+MODULE_VERSION = "2.0.0"
 CONFIG_SCHEMA_VERSION = "synthetic_degradation_analysis_config.v1"
 ANALYSIS_SCHEMA_VERSION = "synthetic_degradation_analysis.v1"
 
@@ -221,16 +223,18 @@ def load_synthetic_degradation_analysis_config(
     if list(map(str, population["model_order"])) != [
         "opencv_telea",
         "lama",
+        "hint_places2",
         "stable_diffusion_inpainting",
     ]:
         raise ValueError("Core model order or scope changed")
     if list(map(str, population["all_model_order"])) != [
         "opencv_telea",
         "lama",
+        "hint_places2",
         "stable_diffusion_inpainting",
         "sdxl_inpainting",
     ]:
-        raise ValueError("Four-model order or scope changed")
+        raise ValueError("All-model order or scope changed")
     if int(expected["eligible_case_model_rows"]) != (
         int(expected["eligible_cases"]) * len(population["all_model_order"])
     ):
@@ -243,10 +247,10 @@ def load_synthetic_degradation_analysis_config(
         int(expected["core_candidates"]) + int(expected["sdxl_candidates"])
     ):
         raise ValueError("Selected-candidate arithmetic is inconsistent")
-    if int(expected["four_model_subset_candidates"]) != (
-        int(expected["four_model_subset_cases"]) * len(population["all_model_order"])
+    if int(expected["all_model_subset_candidates"]) != (
+        int(expected["all_model_subset_cases"]) * len(population["all_model_order"])
     ):
-        raise ValueError("Four-model subset arithmetic is inconsistent")
+        raise ValueError("All-model subset arithmetic is inconsistent")
     if sum(map(int, expected["candidates_by_model"].values())) != int(
         expected["selected_candidates"]
     ):
@@ -279,14 +283,19 @@ def load_synthetic_degradation_analysis_config(
     )
     if analysis_total != int(expected["canonical_analysis_rows"]):
         raise ValueError("Canonical analysis-row arithmetic is inconsistent")
-    if int(settings["statistics"]["bootstrap_resamples"]) != (
-        int(expected["paintings"]) ** int(expected["paintings"])
+    statistics = settings["statistics"]
+    if int(statistics["bootstrap_resamples"]) != 5000:
+        raise ValueError("Controlled-300 bootstrap must use 5,000 resamples")
+    if int(statistics["sign_flip_assignments"]) != 100000:
+        raise ValueError("Controlled-300 sign-flip test must use 100,000 draws")
+    for key in (
+        "bootstrap_seed",
+        "bootstrap_batch_size",
+        "sign_flip_seed",
+        "sign_flip_batch_size",
     ):
-        raise ValueError("Exhaustive bootstrap count is inconsistent")
-    if int(settings["statistics"]["sign_flip_assignments"]) != (
-        2 ** int(expected["paintings"])
-    ):
-        raise ValueError("Sign-flip assignment count is inconsistent")
+        if int(statistics[key]) <= 0:
+            raise ValueError(f"statistics.{key} must be positive")
     if bool(settings["statistics"]["combined_quality_score_retained"]):
         raise ValueError("A combined quality score is prohibited")
     if bool(settings["statistics"]["uncertainty_analysis_applicable"]):
@@ -357,6 +366,7 @@ def validate_upstream_run_manifests(
         "10",
         "11",
         "12",
+        "12A",
         "13",
         "14",
         "15",
@@ -408,6 +418,7 @@ def _normalise_restored_path(value: Any, notebook_id: str) -> str:
             "10": "outputs/10_lama_restoration",
             "11": "outputs/11_stable_diffusion_restoration",
             "12": "outputs/12_sdxl_feasibility_or_restoration",
+            "12A": "outputs/12a_hint_restoration",
         }
         return f"{roots[notebook_id]}/{text}"
     return text
@@ -448,12 +459,13 @@ def select_synthetic_degradation_population(
     eligibility: pd.DataFrame,
     opencv: pd.DataFrame,
     lama: pd.DataFrame,
+    hint: pd.DataFrame,
     stable_diffusion: pd.DataFrame,
     sdxl: pd.DataFrame,
     *,
     config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Select the exact 150-candidate core and six-candidate SDXL populations."""
+    """Select the controlled-300 primary population and bounded SDXL subset."""
 
     settings = _settings(config)
     population = settings["population"]
@@ -520,7 +532,9 @@ def select_synthetic_degradation_population(
         ].index.astype(str)
     )
     if len(eligible_case_ids) != int(expected["eligible_cases"]):
-        raise ValueError("Expected exactly 50 cases eligible for all four models")
+        raise ValueError(
+            "Eligible all-model case count differs from the controlled-300 contract"
+        )
 
     approved_cases = all_cases.loc[
         all_cases["case_id"].astype(str).isin(eligible_case_ids)
@@ -531,12 +545,14 @@ def select_synthetic_degradation_population(
     observed_family_counts = (
         approved_cases.groupby("degradation_family").size().to_dict()
     )
-    if observed_family_counts != {
-        "dirt_dust": 15,
-        "partial_transparency": 15,
-        "water_stain": 15,
-        "water_stain_dirt": 5,
-    }:
+    expected_family_counts = {
+        family: int(expected["paintings"]) * len(population["severity_order"])
+        for family in population["single_degradation_order"]
+    }
+    expected_family_counts[str(population["combined_degradation"])] = int(
+        expected["paintings"]
+    )
+    if observed_family_counts != expected_family_counts:
         raise ValueError("Eligible degradation-family counts changed")
 
     core_case_ids = set(approved_cases["case_id"].astype(str))
@@ -553,6 +569,13 @@ def select_synthetic_degradation_population(
         case_ids=core_case_ids,
         model_id="lama",
         notebook_id="10",
+        completed_status=completed_status,
+    )
+    hint_selected = _candidate_subset(
+        hint,
+        case_ids=core_case_ids,
+        model_id="hint_places2",
+        notebook_id="12A",
         completed_status=completed_status,
     )
 
@@ -617,7 +640,13 @@ def select_synthetic_degradation_population(
         ].copy()
 
     selected = pd.concat(
-        [opencv_selected, lama_selected, sd_selected, sdxl_selected],
+        [
+            opencv_selected,
+            lama_selected,
+            hint_selected,
+            sd_selected,
+            sdxl_selected,
+        ],
         ignore_index=True,
         sort=False,
     )
@@ -704,12 +733,12 @@ def select_synthetic_degradation_population(
     selected["coverage_role"] = np.where(
         selected["model_id"].astype(str).eq("sdxl_inpainting"),
         "bounded_sdxl_subset",
-        "core_three_model",
+        "core_four_model",
     )
     selected["population_id"] = np.where(
         selected["model_id"].astype(str).eq("sdxl_inpainting"),
-        "sdxl_partial_six_case",
-        "core_three_model",
+        "sdxl_partial_eleven_case",
+        "core_four_model",
     )
     selected["restored_path"] = [
         _normalise_restored_path(value, notebook_id)
@@ -736,14 +765,16 @@ def select_synthetic_degradation_population(
             ].astype(str)
         )
         if observed_cases != core_case_ids:
-            raise ValueError(f"{model_id} does not cover the exact 50 core cases")
+            raise ValueError(
+                f"{model_id} does not cover the exact primary case population"
+            )
     observed_sdxl = set(
         selected.loc[
             selected["model_id"].astype(str).eq("sdxl_inpainting"), "case_id"
         ].astype(str)
     )
     if observed_sdxl != sdxl_case_ids:
-        raise ValueError("SDXL does not cover the exact six-case contract")
+        raise ValueError("SDXL does not cover the exact bounded subset contract")
     if not selected["restored_path"].astype(str).str.startswith("outputs/").all():
         raise ValueError("One or more restored paths are not repository-relative")
 
@@ -802,7 +833,7 @@ def build_eligibility_audit(
     *,
     config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Return all 660 case-model decisions with actual candidate availability."""
+    """Return every case-model decision with actual candidate availability."""
 
     settings = _settings(config)
     expected = settings["expected_counts"]
@@ -848,7 +879,7 @@ def build_eligibility_audit(
         ledger["eligible"], "eligible", "excluded"
     )
     if len(ledger) != int(expected["eligibility_case_model_rows"]):
-        raise ValueError("Eligibility audit does not contain exactly 660 rows")
+        raise ValueError("Eligibility audit row count differs from contract")
     return ledger.sort_values(
         ["model_id", "painting_id", "degradation_family", "severity_rank"],
         kind="stable",
@@ -959,7 +990,7 @@ def select_quality_anchor_values(
         anchors["improvement_value"], errors="coerce"
     )
     if len(anchors) != int(expected["candidate_quality_anchor_rows"]):
-        raise ValueError("Expected exactly 1,716 candidate quality-anchor rows")
+        raise ValueError("Candidate quality-anchor row count differs from contract")
     if anchors["anchor_id"].astype(str).nunique() != int(
         expected["quality_anchors"]
     ):
@@ -995,7 +1026,7 @@ def select_spillover_evidence(
         )
     ].copy()
     if len(rows) != int(settings["expected_counts"]["candidate_spillover_rows"]):
-        raise ValueError("Spillover evidence does not cover all 156 candidates")
+        raise ValueError("Spillover evidence does not cover all selected candidates")
     if rows["candidate_id"].astype(str).duplicated().any():
         raise ValueError("Spillover evidence must be one row per candidate")
     rows["quality_ranking_eligible"] = False
@@ -1051,11 +1082,19 @@ def within_family_cluster_spearman(
     area_column: str = "affected_content_fraction",
     outcome_column: str = "comparison_value",
     painting_column: str = "painting_id",
+    expected_paintings: int = 35,
+    observations_per_painting: int = 3,
+    bootstrap_resamples: int = 5000,
+    bootstrap_seed: int = 25001,
+    bootstrap_batch_size: int = 500,
+    sign_flip_assignments: int = 100000,
+    sign_flip_seed: int = 25002,
+    sign_flip_batch_size: int = 5000,
 ) -> dict[str, Any]:
-    """Associate affected area and outcome within painting, with cluster bootstrap.
+    """Associate affected area and outcome using bounded painting-cluster inference.
 
     This is an exploratory, non-causal association intended for one individual
-    degradation family with three severity levels in each of five paintings.
+    degradation family with three severity levels in each selected painting.
     """
 
     _require_columns(
@@ -1070,10 +1109,18 @@ def within_family_cluster_spearman(
     )
     working = working.dropna()
     painting_ids = sorted(working[painting_column].astype(str).unique())
-    if len(painting_ids) != 5:
-        raise ValueError("Affected-area analysis requires five painting clusters")
-    if len(working) != 15:
-        raise ValueError("Affected-area analysis requires 15 family observations")
+    expected_observations = int(expected_paintings) * int(observations_per_painting)
+    if len(painting_ids) != int(expected_paintings):
+        raise ValueError(
+            "Affected-area analysis painting-cluster count differs from contract"
+        )
+    if len(working) != expected_observations:
+        raise ValueError(
+            "Affected-area analysis observation count differs from contract"
+        )
+    per_painting = working.groupby(painting_column).size()
+    if not per_painting.eq(int(observations_per_painting)).all():
+        raise ValueError("Affected-area analysis requires balanced severity coverage")
 
     working["area_centered"] = working[area_column] - working.groupby(
         painting_column
@@ -1090,8 +1137,8 @@ def within_family_cluster_spearman(
             "ci_lower": np.nan,
             "ci_upper": np.nan,
             "p_value": np.nan,
-            "painting_count": 5,
-            "observation_count": 15,
+            "painting_count": int(expected_paintings),
+            "observation_count": int(expected_observations),
             "bootstrap_resamples": 0,
             "applicability_status": "not_applicable_invariant_values",
         }
@@ -1101,37 +1148,69 @@ def within_family_cluster_spearman(
             working["area_centered"], working["outcome_centered"]
         ).statistic
     )
+    rng = np.random.default_rng(int(bootstrap_seed))
     bootstrap_values: list[float] = []
-    for sample in product(painting_ids, repeat=len(painting_ids)):
-        pieces: list[pd.DataFrame] = []
-        for draw_index, painting_id in enumerate(sample):
-            piece = working.loc[
-                working[painting_column].astype(str).eq(painting_id)
-            ].copy()
-            piece[painting_column] = f"draw_{draw_index}_{painting_id}"
-            pieces.append(piece)
-        sampled = pd.concat(pieces, ignore_index=True)
-        value = spearmanr(
-            sampled["area_centered"], sampled["outcome_centered"]
-        ).statistic
-        if np.isfinite(value):
-            bootstrap_values.append(float(value))
+    clustered = [
+        group.sort_values(area_column, kind="stable")
+        for _, group in working.groupby(painting_column, sort=True)
+    ]
+    area_clusters = np.stack(
+        [group["area_centered"].to_numpy(dtype=float) for group in clustered]
+    )
+    outcome_clusters = np.stack(
+        [group["outcome_centered"].to_numpy(dtype=float) for group in clustered]
+    )
+    completed = 0
+    while completed < int(bootstrap_resamples):
+        current = min(
+            int(bootstrap_batch_size),
+            int(bootstrap_resamples) - completed,
+        )
+        samples = rng.integers(
+            0,
+            len(painting_ids),
+            size=(current, len(painting_ids)),
+        )
+        sampled_area = area_clusters[samples].reshape(current, -1)
+        sampled_outcome = outcome_clusters[samples].reshape(current, -1)
+        area_ranks = rankdata(sampled_area, axis=1, method="average")
+        outcome_ranks = rankdata(sampled_outcome, axis=1, method="average")
+        area_ranks -= area_ranks.mean(axis=1, keepdims=True)
+        outcome_ranks -= outcome_ranks.mean(axis=1, keepdims=True)
+        numerator = np.sum(area_ranks * outcome_ranks, axis=1)
+        denominator = np.sqrt(
+            np.sum(area_ranks**2, axis=1)
+            * np.sum(outcome_ranks**2, axis=1)
+        )
+        correlations = np.divide(
+            numerator,
+            denominator,
+            out=np.full(current, np.nan, dtype=float),
+            where=denominator > 0,
+        )
+        bootstrap_values.extend(correlations[np.isfinite(correlations)].tolist())
+        completed += current
+    if not bootstrap_values:
+        raise ValueError("Affected-area bootstrap produced no finite estimates")
     lower, upper = np.quantile(bootstrap_values, [0.025, 0.975]).tolist()
-    sign_test = exact_sign_flip_test(
+    sign_test = monte_carlo_sign_flip_test(
         [
             spearmanr(
                 group["area_centered"], group["outcome_centered"]
             ).statistic
             for _, group in working.groupby(painting_column, sort=True)
-        ]
+        ],
+        assignments=int(sign_flip_assignments),
+        seed=int(sign_flip_seed),
+        batch_size=int(sign_flip_batch_size),
     )
     return {
         "rho": rho,
         "ci_lower": float(lower),
         "ci_upper": float(upper),
         "p_value": float(sign_test["p_value"]),
-        "painting_count": 5,
-        "observation_count": 15,
+        "painting_count": int(expected_paintings),
+        "observation_count": int(expected_observations),
         "bootstrap_resamples": int(len(bootstrap_values)),
         "applicability_status": "applicable",
     }

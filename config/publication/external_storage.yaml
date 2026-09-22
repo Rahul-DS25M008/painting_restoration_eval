@@ -126,6 +126,7 @@ classification:
     .npz: bulk_array
   forced_bulk_diagnostic_paths:
     - outputs/24_mask_robustness_analysis/metrics/mask_robustness_analysis.csv
+    - outputs/25_synthetic_degradation_analysis/metrics/degradation_analysis.csv
   candidate_image_groups:
     - clean
     - damaged

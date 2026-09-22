@@ -37,7 +37,7 @@ and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
 **Controlled-300 transition review: 2026-09-21.** The pilot remains recoverable
 at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebooks 01–24,
+dependency order for the approved 300-painting study. Notebooks 01–25,
 including Notebook 12A and supplemental D02, are completed Controlled-300
 producers. N16, N17, N19, and N20 have verified diagnostics releases; their
 complete local outputs remain canonical. Notebook 21 is complete, validated,
@@ -45,9 +45,11 @@ baseline-compared, Git-committed, and its oversized comparison table is
 remotely verified. Notebook 22 has completed its rerun, validation, visual
 review, and pilot comparison. Notebook 23 completed its bounded Controlled-300
 analysis, report and final gate. Notebook 24 completed its bounded Controlled-300
-mask-robustness analysis, report and final gate; Notebook 25 is the next eligible
-producer. Notebooks 25–36 remain historical Controlled-50 evidence until each producer
-is explicitly reopened, rerun, validated, baseline-compared, and committed.
+mask-robustness analysis, report and final gate. Notebook 25 completed its bounded
+Controlled-300 synthetic-degradation analysis, report and final gate; Notebook
+26 is the next eligible producer. Notebooks 26–36 remain historical
+Controlled-50 evidence until each producer is explicitly reopened, rerun,
+validated, baseline-compared, and committed.
 
 **Git LFS capacity guard: 2026-09-21.** GitHub reported 9.01 GiB used from the
 10.0 GiB included LFS allowance, with a `$0` hard budget and reset date of
@@ -837,44 +839,46 @@ damage-size effects cannot be separated. The 52.16 MB scalar table is
 diagnostics-tier evidence; compact figures, report, manifests, validation and
 the pinned external-publication record belong in the GitHub scientific handoff.
 
-Notebook 25, `25_synthetic_degradation_analysis.ipynb`, subsequently completed
-the approved synthetic-degradation analysis with its completion gate passed. It:
+Notebook 25, `25_synthetic_degradation_analysis.ipynb`, completed Controlled-300
+run `run_cf89ebe972364c7b8ccfefc6bf2a63ca` with its completion gate passed. The
+historical Controlled-50 baseline contained 165 generated cases, 50 eligible
+cases, 150 three-method primary candidates, six SDXL cases, 4,695 analysis rows,
+125 passing checks and seven canonical files. The validated Controlled-300
+evidence comprises:
 
-- audited all 165 Notebook 07 procedural cases while restricting model comparison
-  to the 50 localized cases approved by Notebook 08;
-- analyzed 150 primary core candidates, comprising 50 OpenCV Telea, 50 LaMa, and
-  50 Stable Diffusion Inpainting candidates, plus a separate bounded six-case
-  SDXL subset;
-- retained 11 quality anchors as separate evidence and persisted 4,695 unique
-  canonical rows across 17 analysis kinds without creating a combined quality,
-  efficiency, uncertainty, or trust score;
-- covered eligibility and exclusions, degradation family, configured severity,
-  affected area, painting-level slopes, paired model contrasts, ordered combined-
-  component contrasts, failure profiles, spillover, family-balanced ranks, runtime,
-  and the bounded SDXL subset;
-- found LaMa to have the best overall family-balanced rank, to lead all four
-  eligible degradation families, and to lead eight of 11 individual anchors;
-  no paired core-model, severity, or affected-area result survived FDR correction;
-- preserved the boundaries that procedural RGB effects are not exact material-
-  conservation simulations, painting and category are confounded, the ordered
-  water-stain-and-dirt condition is not a physical interaction experiment, and
-  repeated-seed synthetic-degradation uncertainty is unavailable;
-- produced two canonical figures and a self-contained 15-section HTML report
-  with 14 analytical views, nine restoration or diagnostic panels, 23 embedded
-  images, 238 panel tiles, and no external image dependency;
-- passed all 125 validation checks and all nine roadmap traceability requirements
-  with zero blocking or warning failures;
-- registered exactly five non-self-referential artifacts and seven canonical
-  files under `outputs/25_synthetic_degradation_analysis/`.
+- all 1,155 Notebook 07 procedural cases audited while restricting restoration
+  comparison to the 350 localized cases approved by Notebook 08;
+- 1,400 primary candidates analyzed, comprising 350 each for OpenCV Telea, LaMa,
+  HINT and primary generic-prompt Stable Diffusion;
+- the 11 completed synthetic-degradation SDXL candidates retained as a separate
+  bounded five-method descriptive subset;
+- all 11 quality anchors kept separate across 34,977 canonical rows and the
+  same 17 analysis kinds, without a combined quality, efficiency,
+  uncertainty or trust score;
+- the 35 paintings treated as independent clusters, with cases, severities,
+  models, anchors and candidates repeated or nested within paintings;
+- pilot exhaustive enumeration replaced with 5,000 seeded batched
+  painting-cluster bootstrap draws and 100,000 seeded batched sign flips using
+  the +1 correction;
+- eligibility exclusions, degradation-family and configured-severity
+  analyses, affected-area evidence, paired contrasts, ordered combined-component
+  comparisons, failure profiles, spillover, family-balanced ranks and runtime
+  preserved;
+- all seven canonical artifact paths and all three CSV schemas preserved against
+  `E:`, with 129/129 passing checks and no blocking or warning failures;
+- a self-contained 15-section report containing 14 analytical views, nine visual
+  panels, 23 embedded images, 298 tiles and no external image dependency.
 
-Notebook 25 is now the canonical scalar and report source for the controlled
-synthetic-degradation experiment. Downstream consumers must use its eligibility
-ledger rather than treating excluded objectives as model failures, retain painting
-as the independent unit, keep runtime separate from quality, and preserve metric-
-family disagreement. Its six-case SDXL evidence is descriptive only. It does not
-support independent category or style effects, physical degradation interaction,
+Notebook 25 does not support independent art-historical style
+effects, exact physical degradation interactions, full-population SDXL claims,
 historical authenticity, conservation approval, or synthetic-degradation
-uncertainty.
+uncertainty. Procedural RGB effects remain controlled proxies rather than exact
+simulations of material aging or treatment.
+
+The 41.97 MB canonical analysis table is diagnostics-tier evidence and follows
+the bounded external-artifact publication route. The two figures, self-contained
+report, manifests and validation table form the compact GitHub handoff. The
+complete local seven-file tree remains canonical.
 
 Notebook 26, `26_grouped_and_statistical_analysis.ipynb`, subsequently completed
 the approved cross-experiment statistical synthesis with its completion gate

@@ -2746,9 +2746,22 @@ validation/checks.csv
 ## 25 — Synthetic Degradation Analysis
 
 **Notebook:** `25_synthetic_degradation_analysis.ipynb`\
-**Origin:** New analysis stage separated from Notebook 07 generation  
+**Origin:** New analysis stage separated from Notebook 07 generation\
+**Refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
 **Output root:** `outputs/25_synthetic_degradation_analysis/`\
-**Depends on:** Notebooks 01, 07–17, 20, and 21
+**Depends on:** Notebooks 01, 07–17, 20, and 21, including Notebook 12A
+
+**Controlled-300 completion record:** Run
+`run_cf89ebe972364c7b8ccfefc6bf2a63ca` completed the approved 35-painting
+analysis with all 129 validation checks and all nine roadmap responsibilities
+passing. It retained all seven pilot artifact paths and CSV schemas while
+expanding the canonical analysis table from 4,695 to 34,977 rows.
+
+**Observed runtime:** 2 hours 38 minutes 57 seconds from the recorded run start
+to completion. This was below the prepared 8–16 hour planning range and far
+below the 36-hour rebenchmark threshold.
 
 ### Responsibilities
 
@@ -2771,6 +2784,27 @@ as a bounded, descriptive subset. Predeclare matched painting-level contrasts
 for eligible family/severity/combination effects and use Section 2.2's bounded
 resampling/test design; report all 11 quality anchors descriptively. Do not
 misclassify full-image degradation effects as inpainting failures.
+
+The primary methods are OpenCV Telea, LaMa, HINT, and primary generic-prompt
+Stable Diffusion. The bounded SDXL scope contains all five methods on the same
+11 cases. Use 5,000 seeded batched painting-cluster bootstrap draws and 100,000
+seeded batched sign flips with the +1 correction; exhaustive `35^35` bootstrap
+or `2^35` sign enumeration is prohibited.
+
+### Controlled-300 evidence and handoff
+
+- 1,155 generated cases were audited; exactly 350 approved localized cases
+  entered restoration comparison.
+- The primary comparison contains 1,400 metric-independent candidates: 350 each
+  from OpenCV Telea, LaMa, HINT and Stable Diffusion Inpainting.
+- Eleven completed SDXL candidates remain a separate bounded descriptive subset.
+- All 11 quality anchors remain separate across 17 analysis kinds; no combined
+  quality, efficiency, uncertainty or trust score was created.
+- The report contains 15 approved sections, 14 analytical views, nine visual
+  panels, 23 embedded images, 298 visual tiles and no external image dependency.
+- The 41.97 MB canonical scalar table is diagnostics-tier evidence; the compact
+  GitHub handoff contains both figures, the self-contained report, manifests and
+  validation. The complete seven-file output tree remains canonical locally.
 
 ### Canonical outputs
 

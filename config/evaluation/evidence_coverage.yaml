@@ -1495,10 +1495,11 @@ evidence_coverage:
       completion_gate_passed: true
       output_root: "outputs/25_synthetic_degradation_analysis"
       manifest_path: "outputs/25_synthetic_degradation_analysis/manifests/run_manifest.json"
-      required_evidence: ["n07_degradation_cases", "n08_model_eligibility", "n09_n21_evidence"]
+      run_id: "run_cf89ebe972364c7b8ccfefc6bf2a63ca"
+      required_evidence: ["n07_degradation_cases", "n08_model_eligibility", "n09_n12a_primary_candidates", "n13_n21_evidence"]
       population_rule: "eligibility_approved_combinations_only"
-      independent_unit: "five_paintings_with_cases_nested_within_painting"
-      observed_population:
+      independent_unit: "thirty_five_paintings_with_cases_nested_within_painting"
+      historical_pilot_population:
         generated_cases: 165
         eligible_cases: 50
         paintings: 5
@@ -1520,22 +1521,47 @@ evidence_coverage:
         report_external_images: 0
         report_tile_count: 238
         canonical_output_files: 7
+      controlled_300_population:
+        generated_cases: 1155
+        eligible_cases: 350
+        paintings: 35
+        primary_core_candidates: 1400
+        candidates_by_core_model:
+          opencv_telea: 350
+          lama: 350
+          hint_places2: 350
+          stable_diffusion_inpainting: 350
+        bounded_sdxl_candidates: 11
+        selected_candidates: 1411
+        quality_anchors: 11
+        canonical_analysis_rows: 34977
+        analysis_kinds: 17
+        bootstrap_resamples: 5000
+        sign_flip_assignments: 100000
+        validation_checks: 129
+        roadmap_requirements: 9
+        analytical_report_views: 14
+        report_visual_panels: 9
+        report_embedded_images: 23
+        report_external_images: 0
+        report_tile_count: 298
+        artifact_records: 5
+        canonical_output_files: 7
       primary_artifacts:
         - path: "outputs/25_synthetic_degradation_analysis/metrics/degradation_analysis.csv"
-          rows: 4695
+          observed_rows: 34977
           schema_version: "synthetic_degradation_analysis.v1"
         - path: "outputs/25_synthetic_degradation_analysis/figures/degradation_performance.png"
         - path: "outputs/25_synthetic_degradation_analysis/figures/degradation_failure_examples.png"
         - path: "outputs/25_synthetic_degradation_analysis/reports/synthetic_degradation_analysis.html"
         - path: "outputs/25_synthetic_degradation_analysis/validation/checks.csv"
-          rows: 125
       supported_scope:
         - "eligibility_gated_localized_synthetic_degradation_analysis"
         - "degradation_family_severity_affected_area_and_painting_profiles"
         - "painting_level_slopes_and_paired_core_model_contrasts"
         - "ordered_combined_component_comparisons"
         - "quality_failure_spillover_rank_and_runtime_evidence"
-        - "bounded_six_case_sdxl_description"
+        - "bounded_eleven_case_sdxl_description"
       report_contract:
         section_count: 15
         self_contained: true
@@ -1548,6 +1574,8 @@ evidence_coverage:
         - "keep_metric_families_separate_and_preserve_disagreement"
         - "keep_runtime_out_of_quality_ranking"
         - "treat_sdxl_as_a_bounded_descriptive_subset"
+        - "use_5000_seeded_cluster_bootstrap_draws_and_100000_seeded_batched_sign_flips"
+        - "do_not_enumerate_35_power_35_bootstrap_samples_or_2_power_35_sign_assignments"
         - "do_not_create_synthetic_degradation_uncertainty_without_repeated_seed_evidence"
       prohibited_claims:
         - "procedural_degradation_is_exact_conservation_damage"
