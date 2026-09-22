@@ -9,3 +9,13 @@ outputs/**/*.tiff filter=lfs diff=lfs merge=lfs -text
 outputs/**/*.csv filter=lfs diff=lfs merge=lfs -text
 outputs/**/*.npz filter=lfs diff=lfs merge=lfs -text
 data/raw/images/*.jpg filter=lfs diff=lfs merge=lfs -text
+
+# Git LFS is hard-capped for the current billing window. Notebook 27's two
+# bulk metric tables are externally published and ignored by Git; its compact
+# scientific handoff stays in ordinary Git and must not invoke the LFS filter.
+outputs/27_failure_taxonomy_and_trustworthiness_flags/data/failure_taxonomy.csv -filter diff -merge text
+outputs/27_failure_taxonomy_and_trustworthiness_flags/figures/failure_taxonomy.png -filter -diff -merge -text
+outputs/27_failure_taxonomy_and_trustworthiness_flags/reports/flag_definitions.html -filter diff -merge text
+outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/artifacts.csv -filter diff -merge text
+outputs/27_failure_taxonomy_and_trustworthiness_flags/validation/checks.csv -filter diff -merge text
+outputs/inventory/external_artifact_publication.csv -filter diff -merge text

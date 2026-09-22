@@ -40,6 +40,14 @@ RECOMMENDATIONS = (
     "suitable_for_preliminary_inspection",
 )
 
+DETERMINISTIC_MODEL_IDS = frozenset(
+    {
+        "opencv_telea",
+        "lama",
+        "hint_places2",
+    }
+)
+
 TAXONOMY_COLUMNS = (
     "category_id", "display_name", "definition", "is_proxy",
     "applicable_to", "indicator_ids_json", "evidence_families_json",
@@ -862,7 +870,7 @@ def _category_applicability(
     if category_id != "unstable_multi_seed_completion":
         return "applicable"
     model_id = str(candidate.get("model_id", ""))
-    if model_id in {"opencv_telea", "lama"}:
+    if model_id in DETERMINISTIC_MODEL_IDS:
         return "not_applicable"
     if model_id == "sdxl_inpainting":
         return "insufficient_evidence"
@@ -1050,7 +1058,7 @@ def build_trustworthiness_flags(
         uncertainty_adverse = uncertainty.loc[uncertainty["evidence_state"].isin(["warning", "critical"])]
         uncertainty_critical = uncertainty.loc[uncertainty["evidence_state"].eq("critical")]
         model_id = str(candidate.get("model_id", ""))
-        if model_id in {"opencv_telea", "lama"}:
+        if model_id in DETERMINISTIC_MODEL_IDS:
             instability_status, instability_severity = "not_applicable", "not_assigned"
         elif not bool(candidate.get("is_uncertainty_candidate", False)):
             instability_status, instability_severity = "insufficient_evidence", "not_assigned"

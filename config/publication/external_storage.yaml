@@ -127,6 +127,8 @@ classification:
   forced_bulk_diagnostic_paths:
     - outputs/24_mask_robustness_analysis/metrics/mask_robustness_analysis.csv
     - outputs/25_synthetic_degradation_analysis/metrics/degradation_analysis.csv
+    - outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/failure_assignments.csv
+    - outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv
   candidate_image_groups:
     - clean
     - damaged

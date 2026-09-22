@@ -12,6 +12,8 @@ from restoration_eval.failure_taxonomy import (
     CONFIG_SCHEMA_VERSION,
     FLAG_SCHEMA_VERSION,
     TAXONOMY_SCHEMA_VERSION,
+    DETERMINISTIC_MODEL_IDS,
+    _category_applicability,
     build_failure_candidate_population,
     build_failure_taxonomy,
     calibrate_operational_thresholds,
@@ -135,6 +137,29 @@ class FailureTaxonomyTests(unittest.TestCase):
         self.assertEqual(taxonomy["category_id"].nunique(), 14)
         self.assertGreaterEqual(int(taxonomy["is_proxy"].sum()), 5)
         self.assertTrue(taxonomy["recommended_action"].str.len().gt(20).all())
+
+    def test_deterministic_uncertainty_scope_includes_hint(self) -> None:
+        self.assertEqual(
+            DETERMINISTIC_MODEL_IDS,
+            frozenset(
+                {
+                    "opencv_telea",
+                    "lama",
+                    "hint_places2",
+                }
+            ),
+        )
+        for model_id in sorted(DETERMINISTIC_MODEL_IDS):
+            self.assertEqual(
+                _category_applicability(
+                    {
+                        "model_id": model_id,
+                        "is_uncertainty_candidate": False,
+                    },
+                    "unstable_multi_seed_completion",
+                ),
+                "not_applicable",
+            )
 
     def test_threshold_direction_is_not_reversed(self) -> None:
         config = copy.deepcopy(self.config)

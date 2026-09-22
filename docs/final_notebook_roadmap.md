@@ -2942,9 +2942,9 @@ validation/checks.csv
 
 **Notebook:** `27_failure_taxonomy_and_trustworthiness_flags.ipynb`\
 **Origin:** New Notebook  
-**Controlled-300 refactor status:** Preparation complete; execution pending\
-**Validation status:** Pending controlled-300 execution\
-**Completion gate passed:** No\
+**Controlled-300 refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
 **Output root:** `outputs/27_failure_taxonomy_and_trustworthiness_flags/`\
 **Depends on:** Notebook 08 for case identity, Notebooks 09–12A for candidate identity,
 and Notebooks 13–26 for analytical evidence
@@ -3049,13 +3049,24 @@ The HTML report is self-contained and retains the approved mock's fifteen-sectio
 structure, visual atlas, evidence-to-assertion conclusions, nearby limitations,
 and embedded diagnostic images when downloaded without the repository.
 
+The completed run `run_bef567ee35c1409dbcecfb71f1b4f8b4` contains exactly
+194,306 candidate-by-category rows, 152,669 candidate-by-flag rows, 1,025
+supported four-seed groups, 167 passing validation checks, and eight canonical
+files. All eight pilot artifact paths and all six registered artifact roles are
+retained. The two bulk metric tables are diagnostics-tier evidence; they remain
+canonical locally and are published to the Hugging Face diagnostics repository.
+The taxonomy, figure, self-contained report, manifests, validation ledger, and
+verified publication record form the compact ordinary-Git handoff while Git LFS
+is hard-capped.
+
 ### Expected execution time
 
-The Controlled-50 run took approximately 46 minutes for 1,785 candidates. Allow
-approximately **4–10 hours** for the 13,879-candidate Controlled-300 run. Batch 4
-(full evidence normalization and threshold calibration) and Batch 5 (complete
-failure assignments) are expected to dominate. The design remains linear in the
-approved candidate union and fourteen fixed failure categories; it must not
+The Controlled-50 run took approximately 46 minutes for 1,785 candidates. The
+13,879-candidate Controlled-300 run completed in approximately **4 hours 49
+minutes** (2026-09-22 16:06:49–20:56:10 UTC). Batch 4 (full evidence
+normalization and threshold calibration) and Batch 5 (complete failure
+assignments) remained the dominant stages. The design stays linear in the
+approved candidate union and fourteen fixed failure categories; it does not
 enumerate category combinations or construct a combined trust score.
 
 ---

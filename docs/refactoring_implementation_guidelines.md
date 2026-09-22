@@ -929,6 +929,7 @@ checksums, limitations, and downstream eligibility.
 | 24 Mask Robustness Analysis | Finished | Finished | Yes | 35 paintings (seven/category), 105 matched groups, 525 cases, 2,100 four-method primary candidates, 44,847 canonical analysis rows, 139/139 passing checks, 10 analytical views, eight visual panels and seven canonical files | All seven pilot paths and schemas retained; analysis rows increased from 5,373 to 44,847; the report remains self-contained with 18 embedded and zero external images; bounded painting-level inference replaces infeasible exhaustive enumeration |
 | 25 Synthetic Degradation Analysis | Finished | Finished | Yes | 35 paintings (seven/category), 1,155 generated cases, 350 eligible localized cases, 1,400 four-method primary candidates, 11 bounded SDXL candidates, 34,977 canonical analysis rows, 129/129 passing checks, 14 analytical views, nine visual panels and seven canonical files | All seven pilot paths and schemas retained; analysis rows increased from 4,695 to 34,977; the report remains self-contained with 23 embedded and zero external images and 298 tiles; bounded painting-level inference replaces infeasible exhaustive enumeration |
 | 26 Grouped and Statistical Analysis | Finished | Finished | Yes | 300 paintings; 10,480 four-method core candidates across 2,620 cases; 24 bounded SDXL candidates; 1,025 uncertainty groups; 13,272 statistical rows; 694 correlation rows; 1,344 ranking rows; 111/111 checks; 10 canonical files | All ten pilot paths and all eight artifact roles and schemas retained; statistical, correlation and ranking rows increased from 4,174, 504 and 258 respectively; the self-contained report contains 48 embedded images, 252 tiles and no external image dependency; compact GitHub handoff requires no separate Hugging Face release |
+| 27 Failure Taxonomy and Trustworthiness Flags | Finished | Finished | Yes | 13,879 unique candidates; 10,504 primary candidates; 4,100 repeated-seed memberships in 1,025 groups; 194,306 assignment rows; 152,669 flag rows; 167/167 checks; 8 canonical files; 4-hour-49-minute execution window | All eight pilot paths and six artifact roles retained; assignment/flag grids increased from 24,990/19,635; the report embeds 56 images with no external dependency; both bulk metric tables route to Hugging Face diagnostics while the six compact artifacts stay in ordinary Git under the exhausted-LFS guard |
 
 Notebooks 01–26, including Notebook 12A and supplemental D02, are completed
 Controlled-300 producers. Notebook 20's producer-specific diagnostics bundle
@@ -961,18 +962,18 @@ observed execution window was approximately 2 hours 32 minutes before final
 wording QA. All ten pilot paths and all eight registered artifact roles and
 schemas were retained.
 
-Notebook 27's Controlled-300 preparation layer is complete. Its binding union is
+Notebook 27's Controlled-300 execution is complete and validated. Its binding union is
 10,504 primary candidates plus 3,375 uncertainty-only candidates, producing
 13,879 unique candidates after retaining the 725-candidate overlap only once.
 The supported repeated-seed population contains 4,100 candidates in 1,025
 four-seed groups. HINT is a full deterministic primary method; uncertainty
 remains not applicable to Telea, LaMa, and HINT rather than zero. The planned
 complete ledgers contain 194,306 candidate-by-category rows and 152,669
-candidate-by-flag rows. Preserve the existing nine-batch structure and all
-approved rule families; scale the population and validations without inventing
-new failure categories, threshold combinations, or a combined score. Allow
-approximately 4–10 hours, with full evidence normalization and complete failure
-assignment expected to dominate.
+candidate-by-flag rows. Run `run_bef567ee35c1409dbcecfb71f1b4f8b4`
+retains all eight pilot paths and six registered artifact roles, passes all 167
+checks, and produces a self-contained 56-image report without inventing new
+failure categories, threshold combinations, or a combined score. Its observed
+execution window was approximately 4 hours 49 minutes.
 
 Notebook 25's 41.97 MB canonical scalar table is diagnostics-tier evidence and
 is published through the bounded external-artifact workflow. Its two figures,
@@ -2095,6 +2096,26 @@ Until the reset and a fresh quota check:
   pre-N34 storage/dashboard audit explicitly approves any cleanup;
 - do not make scientific completion depend on external publication, and do not
   publish mixed candidate and diagnostic assets under one misleading class.
+
+**Git LFS hard-cap state (2026-09-22).** The included Git LFS allowance is now
+fully exhausted. This supersedes the remaining-margin wording above until the
+allowance resets and a fresh billing check confirms usable capacity. During the
+hard-cap state:
+
+- stage **no new LFS-filtered object**, even when it is small; run
+  `git check-attr filter -- <path>` before staging any generated CSV, HTML, or
+  image and require `filter: unset` for the compact Git handoff;
+- add exact `.gitattributes` ordinary-Git overrides only for explicitly approved
+  compact artifacts, never for bulk tables or image trees;
+- add every bulk table or media tree to `.gitignore`, publish it through the
+  approved Hugging Face tier with full SHA-256/size verification, and commit only
+  its compact publication record after verification;
+- use exact-path `git add` commands and verify `git lfs status` contains no new
+  objects before committing; `git add .` remains prohibited;
+- Notebook 27 routes its 213.50 MiB failure-assignment table and 115.27 MiB flag
+  table to Hugging Face `diagnostics`. Its taxonomy, canonical figure,
+  self-contained report, manifests, and validation ledger form the ordinary-Git
+  scientific handoff.
 
 N22 candidate restorations are candidate-class evidence; its uncertainty maps
 and overlays are diagnostic-class evidence. The approved split publication uses
