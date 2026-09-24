@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-22T21:21:05.536936Z",
+  "updated_at_utc": "2026-09-24T22:09:20.978634Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -1941,12 +1941,12 @@
       "artifact_type": "analytical_figure",
       "artifact_role": "candidate_and_flag_policy_sensitivity",
       "schema_version": "ablation_flag_figure.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "evaluation_policy_ablation",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "f083472862198f607709746aafe8510a1052f4a0815982ef0348330c58213750"
+      "checksum": "291fdeb7eb9780fff8706ec413c1ec8362f6d4751a9e1ef9d5532b20ada99c57"
     },
     {
       "artifact_key": "metric_region_ablation.flag_stability",
@@ -1955,12 +1955,12 @@
       "artifact_type": "normalized_flag_stability_table",
       "artifact_role": "candidate_level_policy_sensitivity",
       "schema_version": "ablation_flag_stability.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "evaluation_policy_ablation",
       "validation_status": "passed",
-      "row_count": 41055,
+      "row_count": 319217,
       "file_count": 1,
-      "checksum": "4a37e3cf9cf69097de113a63ac6c6fd88ea1eac39880296d5be0cca3edeaba82"
+      "checksum": "9e72d08b807fa142c655112734a7d2360cd3f25aa89dfec94327e8ef79b37cd7"
     },
     {
       "artifact_key": "metric_region_ablation.ranking_figure",
@@ -1969,12 +1969,12 @@
       "artifact_type": "analytical_figure",
       "artifact_role": "model_and_case_ranking_sensitivity",
       "schema_version": "ablation_ranking_figure.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "evaluation_policy_ablation",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "af6a9693c3fcd8afc64a586281ac65e094733f47b325d93854b7a4e295ebcf7f"
+      "checksum": "d54d9121da647f84d45806dd0ba850e15eb8d8ce4b63374f5f62918c3d9e004e"
     },
     {
       "artifact_key": "metric_region_ablation.report",
@@ -1983,12 +1983,12 @@
       "artifact_type": "self_contained_html_report",
       "artifact_role": "thesis_aligned_ablation_report",
       "schema_version": "approved_mock_aligned_self_contained_ablation_report.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "evaluation_policy_ablation",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "e3efc755696ed9dbbf6839154f8414bc85dec6f8cb183223ad06b782a9981d37"
+      "checksum": "82738d97b8e6cad09fa896a672731de622723ccc71237e1244a54fac098a5aea"
     },
     {
       "artifact_key": "metric_region_ablation.results",
@@ -1997,12 +1997,12 @@
       "artifact_type": "normalized_ablation_table",
       "artifact_role": "metric_region_threshold_and_aggregation_sensitivity_evidence",
       "schema_version": "metric_region_ablation_results.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "evaluation_policy_ablation",
       "validation_status": "passed",
-      "row_count": 7710,
+      "row_count": 47508,
       "file_count": 1,
-      "checksum": "9e6558b295ed7e27af51a24c6c815385c682c4ae48d9aa96043bf359146b5b74"
+      "checksum": "9b7789fcf8dc6853456b4dc248fa72bb6a575ca36c5cbe6742a585188b93288c"
     },
     {
       "artifact_key": "model_cards_compute.compute_scalability",
@@ -3439,12 +3439,12 @@
       "artifact_type": "validation_table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "evaluation_policy_ablation",
       "validation_status": "passed",
       "row_count": 122,
       "file_count": 1,
-      "checksum": "dfb9fd3311bcd920b6e60a9bbf88c1ec6900c1b4ecbba09ee6a8152354dea551"
+      "checksum": "95794c796ee2c3f87b8fc69673905b44a5509d74aeb294490e7fad63b636513a"
     },
     {
       "artifact_key": "validation.29_explainable_ai_and_case_retrieval",

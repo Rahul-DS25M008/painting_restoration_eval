@@ -3182,6 +3182,31 @@ manifests/artifacts.csv
 validation/checks.csv
 ```
 
+### Controlled-300 completion record
+
+Run `run_4325bb483fbc4ccda670df125c40731d` completed on 2026-09-24 after an
+observed execution window of approximately **12 hours 20 minutes**. It retained
+the fixed 23-scenario design and produced exactly 47,508 ablation-result rows:
+72 model-rank rows, 47,160 case-priority-rank rows, 253 scenario-by-flag rows,
+and 23 scenario summaries. The complete 13,879-candidate population produced
+319,217 candidate-by-scenario flag-stability rows, and six supported subgroup
+dimensions produced 759 descriptive rows.
+
+All 122 validation checks and all 13 roadmap responsibilities passed. The
+self-contained twelve-section report contains five analytical views, six
+diagnostic panels, 24 four-method tiles, 29 embedded images, and no external
+image dependency. All six registered artifact checksums match, all eight
+canonical output paths exist, and no checkpoint or temporary work file remains.
+
+LaMa remains a winner in all 18 ranking-applicable scenarios, while case
+priority and candidate flags remain strongly policy-sensitive. Lower flag
+counts caused by removed evidence remain explicit insufficient-evidence states,
+not evidence of improved restoration quality. The 165.21 MB
+`metrics/flag_stability.csv` table is diagnostics-tier evidence for verified
+Hugging Face publication because Git LFS is hard-capped. The 18.05 MB canonical
+ablation table, figures, report, manifests, and validation ledger form the
+ordinary-Git scientific handoff.
+
 ---
 
 ## 29 — Explainable AI and Case Retrieval

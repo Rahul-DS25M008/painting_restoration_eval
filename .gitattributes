@@ -19,3 +19,14 @@ outputs/27_failure_taxonomy_and_trustworthiness_flags/reports/flag_definitions.h
 outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/artifacts.csv -filter diff -merge text
 outputs/27_failure_taxonomy_and_trustworthiness_flags/validation/checks.csv -filter diff -merge text
 outputs/inventory/external_artifact_publication.csv -filter diff -merge text
+
+# Notebook 28 keeps its 18 MiB canonical ablation table and compact visual,
+# report, manifest, and validation handoff in ordinary Git. The 165 MiB
+# candidate-by-scenario flag-stability table is diagnostics-tier evidence and
+# is ignored locally for separately verified Hugging Face publication.
+outputs/28_metric_and_region_policy_ablation/metrics/ablation_results.csv -filter diff -merge text
+outputs/28_metric_and_region_policy_ablation/figures/ablation_flag_changes.png -filter -diff -merge -text
+outputs/28_metric_and_region_policy_ablation/figures/ablation_ranking_changes.png -filter -diff -merge -text
+outputs/28_metric_and_region_policy_ablation/reports/ablation_study.html -filter diff -merge text
+outputs/28_metric_and_region_policy_ablation/manifests/artifacts.csv -filter diff -merge text
+outputs/28_metric_and_region_policy_ablation/validation/checks.csv -filter diff -merge text

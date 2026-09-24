@@ -957,6 +957,7 @@ checksums, limitations, and downstream eligibility.
 | 25 Synthetic Degradation Analysis | Finished | Finished | Yes | 35 paintings (seven/category), 1,155 generated cases, 350 eligible localized cases, 1,400 four-method primary candidates, 11 bounded SDXL candidates, 34,977 canonical analysis rows, 129/129 passing checks, 14 analytical views, nine visual panels and seven canonical files | All seven pilot paths and schemas retained; analysis rows increased from 4,695 to 34,977; the report remains self-contained with 23 embedded and zero external images and 298 tiles; bounded painting-level inference replaces infeasible exhaustive enumeration |
 | 26 Grouped and Statistical Analysis | Finished | Finished | Yes | 300 paintings; 10,480 four-method core candidates across 2,620 cases; 24 bounded SDXL candidates; 1,025 uncertainty groups; 13,272 statistical rows; 694 correlation rows; 1,344 ranking rows; 111/111 checks; 10 canonical files | All ten pilot paths and all eight artifact roles and schemas retained; statistical, correlation and ranking rows increased from 4,174, 504 and 258 respectively; the self-contained report contains 48 embedded images, 252 tiles and no external image dependency; compact GitHub handoff requires no separate Hugging Face release |
 | 27 Failure Taxonomy and Trustworthiness Flags | Finished | Finished | Yes | 13,879 unique candidates; 10,504 primary candidates; 4,100 repeated-seed memberships in 1,025 groups; 194,306 assignment rows; 152,669 flag rows; 167/167 checks; 8 canonical files; 4-hour-49-minute execution window | All eight pilot paths and six artifact roles retained; assignment/flag grids increased from 24,990/19,635; the report embeds 56 images with no external dependency; both bulk metric tables route to Hugging Face diagnostics while the six compact artifacts stay in ordinary Git under the exhausted-LFS guard |
+| 28 Metric and Region-Policy Ablation | Finished | Finished | Yes | 23 fixed scenarios; 10,480 four-method core candidates across 2,620 cases; 13,879 flag candidates; 47,508 ablation rows; 319,217 flag-stability rows; 759 subgroup rows; 122/122 checks; 8 canonical files; 12-hour-20-minute execution window | All eight pilot paths, table schemas, and six artifact roles retained; ablation rows increased from 7,710 to 47,508 and flag-stability rows from 41,055 to 319,217; report tiles increased from 18 three-method to 24 four-method tiles with HINT; the 165.21 MB flag-stability table routes to Hugging Face diagnostics while the remaining scientific handoff stays in ordinary Git under the exhausted-LFS guard |
 
 Notebooks 01–26, including Notebook 12A and supplemental D02, are completed
 Controlled-300 producers. Notebook 20's producer-specific diagnostics bundle
@@ -1001,6 +1002,18 @@ retains all eight pilot paths and six registered artifact roles, passes all 167
 checks, and produces a self-contained 56-image report without inventing new
 failure categories, threshold combinations, or a combined score. Its observed
 execution window was approximately 4 hours 49 minutes.
+
+Notebook 28 run `run_4325bb483fbc4ccda670df125c40731d` is complete and
+validated. It retains the fixed 23-scenario catalogue rather than enumerating a
+metric powerset, analyzes 10,480 four-method core candidates across 2,620
+matched cases, and applies every scenario to the complete 13,879-candidate flag
+population. It persists 47,508 ablation rows, 319,217 flag-stability rows, 759
+supported subgroup rows, two analytical figures, and a self-contained report
+with 29 embedded images and no external dependencies. All 122 checks and all 13
+roadmap responsibilities pass, all six artifact checksums match, and the
+observed execution window is approximately 12 hours 20 minutes. The 165.21 MB
+flag-stability table is a diagnostics-tier Hugging Face artifact; the 18.05 MB
+ablation table and remaining compact evidence stay in ordinary Git.
 
 Notebook 25's 41.97 MB canonical scalar table is diagnostics-tier evidence and
 is published through the bounded external-artifact workflow. Its two figures,
@@ -2143,6 +2156,10 @@ hard-cap state:
   table to Hugging Face `diagnostics`. Its taxonomy, canonical figure,
   self-contained report, manifests, and validation ledger form the ordinary-Git
   scientific handoff.
+- Notebook 28 routes its 165.21 MB candidate-by-scenario flag-stability table to
+  Hugging Face `diagnostics`. Its 18.05 MB canonical ablation table, two figures,
+  self-contained report, manifests, and validation ledger are explicitly
+  de-filtered from Git LFS and form the ordinary-Git scientific handoff.
 
 N22 candidate restorations are candidate-class evidence; its uncertainty maps
 and overlays are diagnostic-class evidence. The approved split publication uses

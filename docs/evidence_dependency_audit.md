@@ -49,9 +49,9 @@ mask-robustness analysis, report and final gate. Notebook 25 completed its bound
 Controlled-300 synthetic-degradation analysis, report and final gate. Notebook
 26 completed its grouped statistical analysis, report and final gate. Notebook
 27 subsequently completed its expanded failure-taxonomy and trustworthiness
-analysis and remote publication gate. Notebook 28 now has an approved
-Controlled-300 preparation contract and awaits execution. Notebooks 28–36
-remain historical Controlled-50 evidence until each producer is explicitly
+analysis and remote publication gate. Notebook 28 then completed its
+Controlled-300 metric/region-policy ablation, report, validation, and final
+gate. Notebooks 29–36 remain historical Controlled-50 evidence until each producer is explicitly
 reopened, rerun, validated, baseline-compared, and committed.
 
 **Git LFS capacity guard: 2026-09-21.** GitHub reported 9.01 GiB used from the
@@ -1021,17 +1021,33 @@ evaluation-policy sensitivity analysis with its completion gate passed. It:
   under `outputs/28_metric_and_region_policy_ablation/`, with no retained runtime
   checkpoint files.
 
-These values remain the frozen pilot baseline, not the active Controlled-300
-contract. The approved preparation layer retains the same 23 named scenarios
-and eight output paths while expanding the matched ranking grid to 2,620 cases
-and four core methods (Telea, LaMa, HINT, and Stable Diffusion), the Notebook 27
-flag population to 13,879 candidates, and bounded SDXL diagnostics to the 24
-completed feasibility candidates. Expected cardinalities are 72 model-rank
-rows, 47,160 case-rank rows, 253 scenario-by-flag rows, 23 scenario summaries,
-at least 47,508 ablation-result rows, and 319,217 compact
-candidate-by-scenario flag-stability rows. These are execution contracts, not
-completed results; the pilot conclusions remain historical until the expanded
-notebook passes its own final gate.
+These values remain the frozen pilot baseline. Controlled-300 run
+`run_4325bb483fbc4ccda670df125c40731d` is now the active Notebook 28 record. It
+retained the same 23 named scenarios and eight output paths while expanding the
+matched ranking grid to 2,620 cases and four core methods (Telea, LaMa, HINT,
+and Stable Diffusion), the Notebook 27 flag population to 13,879 candidates,
+and bounded SDXL diagnostics to the 24 completed feasibility candidates. It
+persisted exactly 72 model-rank rows, 47,160 case-rank rows, 253
+scenario-by-flag rows, 23 scenario summaries, 47,508 ablation-result rows, and
+319,217 candidate-by-scenario flag-stability rows.
+
+LaMa remained a winner in all 18 ranking-applicable scenarios, including a
+transparent LaMa–Telea tie under the classical-only policy. This stable
+model-level conclusion did not make case priorities or operational flags
+policy-invariant: evidence-family removal, restricted region policies,
+threshold changes, and aggregation changes produced substantial candidate-level
+movement and explicit insufficient-evidence states. Lower flag counts produced
+by removed evidence are not interpreted as improved restoration quality.
+
+The run passed all 122 checks and all 13 roadmap responsibilities, registered
+six checksum-matching non-self-referential artifacts, retained exactly eight
+canonical files, and left no work files. Its self-contained twelve-section
+report contains five analytical views, six diagnostic panels, 24 four-method
+tiles, 29 embedded images, and zero external image dependencies. The observed
+execution window was approximately 12 hours 20 minutes. The 165.21 MB
+flag-stability table is diagnostics-tier Hugging Face evidence under the
+exhausted-LFS guard; the 18.05 MB ablation table, figures, report, manifests, and
+validation ledger form the ordinary-Git handoff.
 
 Notebook 29, `29_explainable_ai_and_case_retrieval.ipynb`, subsequently
 completed the approved explanation-catalog and case-retrieval analysis with its

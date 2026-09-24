@@ -213,7 +213,7 @@ metric_region_ablation:
     canonical_figure_count: 2
     minimum_embedded_analytical_views: 5
     diagnostic_panel_count: 6
-    diagnostic_tile_count: 18
+    diagnostic_tile_count: 24
     external_image_dependency_count: 0
     mock_to_final_traceability_required: true
     simple_assertion_after_major_result_required: true

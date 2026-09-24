@@ -1814,8 +1814,11 @@ evidence_coverage:
 
     - notebook_id: "28"
       stem: "28_metric_and_region_policy_ablation"
-      status: "controlled_300_preparation_complete_awaiting_execution"
-      completion_gate_passed: false
+      status: "controlled_300_complete_validated"
+      completion_gate_passed: true
+      run_id: "run_4325bb483fbc4ccda670df125c40731d"
+      completed_at_utc: "2026-09-24T22:09:21.501988Z"
+      observed_runtime_seconds: 44406.151
       output_root: "outputs/28_metric_and_region_policy_ablation"
       manifest_path: "outputs/28_metric_and_region_policy_ablation/manifests/run_manifest.json"
       config_path: "config/evaluation/metric_region_ablation.yaml"
@@ -1847,7 +1850,23 @@ evidence_coverage:
         minimum_analytical_report_views: 5
         diagnostic_report_panels: 6
         report_external_images: 0
-        report_tile_count: 18
+        report_tile_count: 24
+        canonical_output_files: 8
+      observed_population:
+        core_primary_candidates: 10480
+        matched_cases: 2620
+        flag_candidates: 13879
+        bounded_sdxl_candidates: 24
+        model_rank_rows: 72
+        case_rank_rows: 47160
+        scenario_flag_summary_rows: 253
+        scenario_summary_rows: 23
+        ablation_result_rows: 47508
+        flag_stability_rows: 319217
+        subgroup_summary_rows: 759
+        validation_checks: 122
+        validation_failures: 0
+        artifact_records: 6
         canonical_output_files: 8
       planned_artifacts:
         - path: "outputs/28_metric_and_region_policy_ablation/metrics/ablation_results.csv"
@@ -1870,7 +1889,9 @@ evidence_coverage:
         self_contained: true
         mock_to_final_traceability_required: true
         required_visuals_depend_on_external_links: false
-        minimum_embedded_images: 20
+        minimum_embedded_images: 26
+        observed_embedded_images: 29
+        observed_external_images: 0
       downstream_contract:
         - "use_notebook_28_canonical_tables_for_evaluation_policy_sensitivity"
         - "preserve_metric_family_and_region_specific_disagreement"
