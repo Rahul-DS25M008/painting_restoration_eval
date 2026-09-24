@@ -94,7 +94,10 @@ class MetricRegionAblationTests(unittest.TestCase):
         manifests = {
             "08": json.loads(
                 self.inputs["contracts_manifest_path"].read_text(encoding="utf-8")
-            )
+            ),
+            "12A": json.loads(
+                self.inputs["manifest_12a_path"].read_text(encoding="utf-8")
+            ),
         }
         manifests.update(
             {
@@ -107,7 +110,7 @@ class MetricRegionAblationTests(unittest.TestCase):
             }
         )
         checks = validate_upstream_completion(manifests)
-        self.assertEqual(len(checks), 16)
+        self.assertEqual(len(checks), 17)
         self.assertTrue(checks["passed"].all(), checks.to_dict("records"))
 
     def test_n08_region_ablation_memberships_are_available(self) -> None:
@@ -245,7 +248,7 @@ class MetricRegionAblationTests(unittest.TestCase):
             scenario_id="complete_approved_framework",
             scenario_family="metric",
         )
-        self.assertEqual(len(stability), 1785)
+        self.assertEqual(len(stability), 13879)
         self.assertTrue(stability["changed_flag_count"].eq(0).all())
         self.assertTrue(stability["flag_state_agreement_fraction"].eq(1.0).all())
         partial_checks = validate_flag_stability(

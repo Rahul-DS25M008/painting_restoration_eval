@@ -691,6 +691,16 @@ restorations, diagnostic maps, conclusions, limitations, filters, and
 provenance. These planning images remain outside the repository unless the user
 explicitly requests that they be retained as project artifacts.
 
+The user made that explicit retention decision on 2026-09-23 and approved the
+current primary direction on 2026-09-24. The two governing boards are stored in
+[`docs/dashboard_design_finalists/approved_current/`](dashboard_design_finalists/README.md).
+They cover all eight approved rooms and bind the future Controlled-300 UI's
+navigation, spatial museum identity, progressive evidence flow, and interaction
+grammar. Earlier selected boards remain under `alternatives/` for potential
+component reuse, not as competing layouts. All boards' illustrative labels,
+counts, metrics, painting IDs, and conclusions are not scientific evidence and
+must never be copied into the application without validation.
+
 Once the user approves the dashboard architecture and visual direction, the
 approved mockups become a binding interaction and presentation baseline. The
 implemented application may correct fictional values, replace illustrative
@@ -698,6 +708,13 @@ painting IDs, improve responsive behaviour, and make evidence-driven additions,
 but it must not silently replace the approved navigation, hierarchy, visual
 density, or conservator-facing question flow. Material redesign requires renewed
 approval.
+
+The primary composition is now selected. At the pre-N34 review, verify its
+feasibility and map final Controlled-300 content into each room before changing
+the application. Any borrowed alternative component must be explicitly named
+and must preserve one coherent navigation, typography, spacing, and interaction
+system. The traceability table must cite one of the two approved boards for
+each page or major interaction and separately identify any approved exception.
 
 The approved application contains no more than ten principal pages. The current
 approved structure contains eight:
@@ -746,6 +763,16 @@ Approved visual language:
   handwriting, or decoration that competes with scientific evidence;
 - accessibility, chart clarity, responsive layout, and thesis-presentation
   readability override stylistic imperfection.
+
+The approved boards add the following positive requirements to that visual
+language: painting-first evidence; an introductory Exhibition Foyer; room-led
+navigation; distinctive page divisions rather than repeated generic cards;
+direct pairing of conclusions with sources and limitations; tactile exhibit
+scrubbers and comparison controls; case-level magnification and synchronized
+comparison; an explicit visual derivation from evidence to review flag;
+reproducibility as the Research Archive; and an optional guided presentation
+path that does not remove free exploration. Use one dominant interaction per
+room rather than placing every pattern on every page.
 
 Scientific and technical boundaries:
 
@@ -2206,6 +2233,13 @@ representative public write/read path and its cost/quota behavior before any
 bulk migration. Obtain user approval for the storage contract first, then for
 the N34 dashboard scope and UI; N35 validates the implemented application.
 The live 50-painting dashboard stays on its existing branch and deployment.
+
+Use the two governing boards in
+[`docs/dashboard_design_finalists/approved_current/`](dashboard_design_finalists/README.md)
+during that UI review. Confirm each room's content, evidence source, dominant
+interaction, accessibility fallback, responsive behavior, and remote-asset
+requirements. Record every approved deviation or borrowed alternative
+component; silence is not approval to redesign the selected system.
 
 **Preliminary Streamlit bundle access, not yet a deployment contract.** N34
 may include compact metadata plus local-to-remote case/candidate/map indexes.

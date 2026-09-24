@@ -1,5 +1,5 @@
 config_schema_version: "metric_region_ablation_config.v1"
-config_version: "1.0.0"
+config_version: "2.0.0"
 
 metric_region_ablation:
   notebook_id: "28"
@@ -29,6 +29,7 @@ metric_region_ablation:
     lama_candidates_path: "outputs/10_lama_restoration/data/restorations.csv"
     stable_diffusion_candidates_path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
     sdxl_candidates_path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
+    hint_candidates_path: "outputs/12a_hint_restoration/data/restorations.csv"
     damage_size_extension_candidates_path: "outputs/22_damage_size_diffusion_uncertainty_extension/data/candidates.csv"
     classical_metrics_path: "outputs/13_classical_metrics/metrics/classical_metrics.csv"
     lpips_metrics_path: "outputs/14_lpips_metrics/metrics/lpips_metrics.csv"
@@ -51,6 +52,7 @@ metric_region_ablation:
     failure_taxonomy_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/data/failure_taxonomy.csv"
     failure_assignments_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/failure_assignments.csv"
     trustworthiness_flags_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv"
+    manifest_12a_path: "outputs/12a_hint_restoration/manifests/run_manifest.json"
     manifest_13_path: "outputs/13_classical_metrics/manifests/run_manifest.json"
     manifest_14_path: "outputs/14_lpips_metrics/manifests/run_manifest.json"
     manifest_15_path: "outputs/15_feature_similarity/manifests/run_manifest.json"
@@ -79,13 +81,13 @@ metric_region_ablation:
     validation_path: "validation/checks.csv"
 
   population:
-    dataset_source_levels: ["controlled_50"]
-    core_models: ["opencv_telea", "lama", "stable_diffusion_inpainting"]
+    dataset_source_levels: ["controlled_300"]
+    core_models: ["opencv_telea", "lama", "hint_places2", "stable_diffusion_inpainting"]
     bounded_model: "sdxl_inpainting"
-    matched_case_count: 410
-    core_candidate_count: 1230
-    flag_candidate_count: 1785
-    bounded_sdxl_candidate_count: 10
+    matched_case_count: 2620
+    core_candidate_count: 10480
+    flag_candidate_count: 13879
+    bounded_sdxl_candidate_count: 24
     trust_flag_count: 11
     failure_category_count: 14
     independent_unit: "painting"
@@ -223,21 +225,21 @@ metric_region_ablation:
     threshold_scenarios: 2
     aggregation_scenarios: 3
     ranking_scenarios: 18
-    core_models: 3
-    matched_cases: 410
-    flag_candidates: 1785
+    core_models: 4
+    matched_cases: 2620
+    flag_candidates: 13879
     trust_flags: 11
     failure_categories: 14
-    model_rank_rows: 54
-    case_rank_rows: 7380
+    model_rank_rows: 72
+    case_rank_rows: 47160
     flag_summary_rows: 253
-    flag_stability_rows: 41055
-    minimum_ablation_result_rows: 7710
+    flag_stability_rows: 319217
+    minimum_ablation_result_rows: 47508
     canonical_output_files: 8
     artifact_records: 6
 
   evidence_policy:
-    source_dataset_claim: "controlled_50_only"
+    source_dataset_claim: "controlled_300_internal_study_only"
     uncertainty_interpretation: "empirical_repeated_seed_variability_not_calibrated_confidence"
     flags_are_human_ground_truth: false
     flags_are_conservation_ground_truth: false
@@ -250,9 +252,9 @@ metric_region_ablation:
   known_limitations:
     - "All ablations reuse the validated controlled dataset and do not establish external generalization."
     - "Artificial degradations do not reproduce every material or historical deterioration process."
-    - "Five-painting extension experiments provide controlled descriptive evidence, not broad style effects."
+    - "Thirty-five-painting focused extension experiments provide controlled descriptive evidence, not broad style effects."
     - "Operational quantiles identify relative outliers and are not calibrated failure probabilities."
     - "CLIP and DINOv2 evidence are diagnostic pretrained-feature proxies, not historical or conservation truth."
-    - "SDXL remains a bounded ten-case diagnostic subset."
+    - "SDXL remains a bounded 24-completed-case subset within the predeclared 35-case feasibility design."
     - "A lower flag count caused by missing evidence is not an improvement."
     - "No result establishes historical authenticity, conservation suitability, museum approval, or a universal trust score."

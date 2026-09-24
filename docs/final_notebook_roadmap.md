@@ -213,6 +213,19 @@ Do not assume the pilot app's local-only image resolver will work on the
 lightweight Controlled-300 deployment. The final archive remains a separate
 post-freeze reproducibility release, not the interactive image backend.
 
+The dashboard visual exploration now has one user-approved primary direction,
+stored as two boards under
+[`dashboard_design_finalists/approved_current/`](dashboard_design_finalists/README.md).
+They define the eight-room Living Pigment Museum layout, visual identity, and
+interaction grammar. Earlier selected concepts remain in the separate
+`alternatives/` archive for explicitly approved component reuse only. At the
+dedicated pre-N34 review, the primary direction must be checked against the
+completed Controlled-300 evidence and implementation constraints; it is not an
+invitation to restart visual selection. The boards govern interaction,
+hierarchy, information flow, and presentation only: all illustrative values,
+painting identities, labels, and claims must be replaced by validated
+Controlled-300 evidence.
+
 The **preliminary N34/N35 bundle-access option**, subject to that review, is:
 retain compact metadata and case/candidate/map indexes with the deployed app;
 resolve a selected visual to a producer-owned painting index and pinned N16 or
@@ -3076,12 +3089,29 @@ enumerate category combinations or construct a combined trust score.
 **Notebook:** `28_metric_and_region_policy_ablation.ipynb`\
 **Origin:** New Notebook; includes alternatives prepared by Previous Notebook 26  
 **Output root:** `outputs/28_metric_and_region_policy_ablation/`\
-**Depends on:** Notebooks 13–27
+**Depends on:** Notebooks 08, 12A, and 13–27
 
 **Controlled-300 constraint:** Retain exactly the 23 previously approved,
 explicitly named scenarios; do not form a metric-subset powerset. Process the
 expanded N27 candidate union in bounded chunks, with complete case-level
 outputs and provenance.
+
+### Controlled-300 execution contract
+
+- Ranking population: 2,620 matched cases and 10,480 primary candidates across
+  Telea, LaMa, HINT, and Stable Diffusion. All 300 zero controls remain explicit
+  and unranked where a nonzero-damage quality rank is not applicable.
+- Flag-stability population: the complete 13,879-candidate Notebook 27 union,
+  including 3,375 uncertainty-only Stable Diffusion candidates.
+- Bounded SDXL: the 24 completed feasibility candidates remain separate
+  diagnostics and never become a full-dataset ranking.
+- Fixed scenarios: 23 total, of which 18 support model and case ranking.
+- Expected compact results: 72 model-rank rows, 47,160 case-rank rows, 253
+  scenario-by-flag rows, 23 scenario summaries, at least 47,508 ablation rows,
+  and 319,217 candidate-by-scenario flag-stability rows.
+- Painting remains the independent unit. The 35-painting focused experiments
+  provide controlled descriptive evidence and do not estimate independent
+  visual-category effects.
 
 ### Metric-family ablations
 
@@ -3127,6 +3157,17 @@ Test:
 - conclusion stability.
 
 Do not create a universal trust score.
+
+### Expected execution time
+
+Allow **36–50 active hours** on the validated local machine. Batch 4's complete
+evidence normalization and baseline reconstruction and Batch 5's 23-scenario
+flag recomputation are expected to dominate; Batch 6 ranking sensitivity is the
+next largest stage. Batch 5 must retain per-scenario atomic checkpoints and safe
+resume, visible progress, elapsed-time reporting, and a projection guard. Run a
+representative scenario benchmark before the full loop; if the projection
+exceeds the 50-hour operational ceiling, optimize reuse or chunking without
+reducing the approved population or scenario set.
 
 ### Canonical outputs
 
@@ -3515,6 +3556,16 @@ and sparse purposeful annotation marks. Tactile irregularity must remain subtle;
 charts, filters, tables, accessibility, and presentation legibility take
 priority over decoration.
 
+The frozen primary visual and interaction direction is documented in
+[`docs/dashboard_design_finalists/`](dashboard_design_finalists/README.md).
+Its two approved boards cover Exhibition Foyer, Study Design, Metric Framework,
+Model Gallery, Stability Lab, Trustworthiness, Case Explorer, and Research
+Archive. Earlier newsroom, mobile, geometric, quiet-museum, question-journey,
+exhibition, conservation-light-table, pipeline-replay, and intermediate museum
+studies remain in a separate alternatives archive. They are not competing
+layouts and may contribute a component only through an explicit pre-N34
+decision.
+
 Every principal page leads with a plain-language question or conclusion, then
 balances headline indicators, one or two primary analytical views,
 representative paintings or diagnostic images, concise evidence-backed
@@ -3549,7 +3600,10 @@ design review with the user. Record and obtain approval for:
 - explicit missing-asset, temporarily unavailable-storage, and optional-model
   behavior, plus a representative cross-model rendering test matrix; and
 - preservation of the approved pilot layout unless the user explicitly
-  approves a Controlled-300 change.
+  approves a Controlled-300 change; and
+- confirmation of the two-board approved dashboard direction, with a
+  page/component trace and any explicitly approved borrowing from the
+  alternatives archive.
 
 Only after that approval may Notebook 34 package the assets and the
 application resolver be adapted. The existing pilot-50 branch and live app

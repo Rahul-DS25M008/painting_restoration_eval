@@ -24,7 +24,7 @@ from .paths import find_project_root, resolve_repo_path
 
 
 MODULE_NAME = "restoration_eval.metric_region_ablation"
-MODULE_VERSION = "1.0.0"
+MODULE_VERSION = "2.0.0"
 CONFIG_SCHEMA_VERSION = "metric_region_ablation_config.v1"
 SCENARIO_SCHEMA_VERSION = "metric_region_ablation_scenarios.v1"
 ABLATION_RESULTS_SCHEMA_VERSION = "metric_region_ablation_results.v1"
@@ -259,7 +259,7 @@ def validate_upstream_completion(
     manifests: Mapping[str, Mapping[str, Any]],
     *,
     expected_notebook_ids: Sequence[str] = (
-        "08", "13", "14", "15", "16", "17", "18", "19", "20", "21",
+        "08", "12A", "13", "14", "15", "16", "17", "18", "19", "20", "21",
         "22", "23", "24", "25", "26", "27",
     ),
 ) -> pd.DataFrame:

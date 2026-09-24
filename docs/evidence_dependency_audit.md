@@ -47,10 +47,12 @@ review, and pilot comparison. Notebook 23 completed its bounded Controlled-300
 analysis, report and final gate. Notebook 24 completed its bounded Controlled-300
 mask-robustness analysis, report and final gate. Notebook 25 completed its bounded
 Controlled-300 synthetic-degradation analysis, report and final gate. Notebook
-26 completed its grouped statistical analysis, report and final gate. Notebooks
-27–36 remain historical
-Controlled-50 evidence until each producer is explicitly reopened, rerun,
-validated, baseline-compared, and committed.
+26 completed its grouped statistical analysis, report and final gate. Notebook
+27 subsequently completed its expanded failure-taxonomy and trustworthiness
+analysis and remote publication gate. Notebook 28 now has an approved
+Controlled-300 preparation contract and awaits execution. Notebooks 28–36
+remain historical Controlled-50 evidence until each producer is explicitly
+reopened, rerun, validated, baseline-compared, and committed.
 
 **Git LFS capacity guard: 2026-09-21.** GitHub reported 9.01 GiB used from the
 10.0 GiB included LFS allowance, with a `$0` hard budget and reset date of
@@ -979,9 +981,9 @@ metric tables are diagnostics-tier Hugging Face artifacts because Git LFS is
 hard-capped; the compact taxonomy, figure, report, manifests, validation ledger,
 and verified publication record remain the GitHub scientific handoff.
 
-Notebook 28, `28_metric_and_region_policy_ablation.ipynb`, subsequently
-completed the approved evaluation-policy sensitivity analysis with its completion
-gate passed. It:
+The historical Controlled-50 Notebook 28,
+`28_metric_and_region_policy_ablation.ipynb`, completed the original
+evaluation-policy sensitivity analysis with its completion gate passed. It:
 
 - evaluated exactly 23 controlled scenarios: the complete-framework baseline,
   eleven alternative metric-family configurations, six alternative region
@@ -1018,6 +1020,18 @@ gate passed. It:
 - registered exactly six non-self-referential artifacts and eight canonical files
   under `outputs/28_metric_and_region_policy_ablation/`, with no retained runtime
   checkpoint files.
+
+These values remain the frozen pilot baseline, not the active Controlled-300
+contract. The approved preparation layer retains the same 23 named scenarios
+and eight output paths while expanding the matched ranking grid to 2,620 cases
+and four core methods (Telea, LaMa, HINT, and Stable Diffusion), the Notebook 27
+flag population to 13,879 candidates, and bounded SDXL diagnostics to the 24
+completed feasibility candidates. Expected cardinalities are 72 model-rank
+rows, 47,160 case-rank rows, 253 scenario-by-flag rows, 23 scenario summaries,
+at least 47,508 ablation-result rows, and 319,217 compact
+candidate-by-scenario flag-stability rows. These are execution contracts, not
+completed results; the pilot conclusions remain historical until the expanded
+notebook passes its own final gate.
 
 Notebook 29, `29_explainable_ai_and_case_retrieval.ipynb`, subsequently
 completed the approved explanation-catalog and case-retrieval analysis with its
