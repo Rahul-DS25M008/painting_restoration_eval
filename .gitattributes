@@ -59,3 +59,10 @@ outputs/31_model_report_generation/data/report_index.csv -filter diff -merge tex
 outputs/31_model_report_generation/manifests/artifacts.csv -filter diff -merge text
 outputs/31_model_report_generation/reports/*.html -filter diff -merge text
 outputs/31_model_report_generation/validation/checks.csv -filter diff -merge text
+
+# Notebook 32 keeps only its compact machine-readable handoff in ordinary Git.
+# Reports and selected-case grids are ignored by Git and published directly to
+# the Hugging Face diagnostics repository.
+outputs/32_case_and_painting_report_generation/data/*.csv -filter diff -merge text
+outputs/32_case_and_painting_report_generation/manifests/artifacts.csv -filter diff -merge text
+outputs/32_case_and_painting_report_generation/validation/checks.csv -filter diff -merge text

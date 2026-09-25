@@ -2279,9 +2279,9 @@ evidence_coverage:
 
     - notebook_id: "32"
       stem: "32_case_and_painting_report_generation"
-      status: "controlled_300_preparation_complete_pending_rerun"
-      completion_gate_passed: false
-      run_id: null
+      status: "controlled_300_complete"
+      completion_gate_passed: true
+      run_id: "run_0d4ae193602944dda511bf54199105b1"
       dataset_scope: "controlled_300"
       dataset_version: "2.0.0"
       output_root: "outputs/32_case_and_painting_report_generation"
@@ -2313,6 +2313,34 @@ evidence_coverage:
         bounded_sdxl_completed_candidate_count: 24
         metadata_style_date_medium_populated_paintings: 268
         extension_painting_count: 35
+      controlled_300_completion_contract:
+        run_status: "completed"
+        validation_status: "passed"
+        creates_new_scientific_evidence: false
+        paintings: 300
+        evaluated_cases: 2620
+        approved_candidates: 13879
+        selected_cases: 30
+        case_reports: 30
+        painting_reports: 300
+        collection_indexes: 1
+        reports: 331
+        selected_case_grids: 30
+        embedded_images: 2132
+        embedded_tiles: 10622
+        validation_checks: 5819
+        blocking_failures: 0
+        warning_failures: 0
+        roadmap_requirements: 12
+        mock_traceability_rows: 67
+        artifact_records: 8
+        physical_output_files: 367
+        external_image_dependencies: 0
+        observed_runtime_seconds: 20274
+        output_size_mib: 329.94
+        historical_pilot_shared_paths: 75
+        controlled_300_added_paths: 292
+        superseded_pilot_selection_paths: 42
       historical_pilot_completion_contract:
         run_status: "completed"
         validation_status: "passed"
@@ -2367,7 +2395,7 @@ evidence_coverage:
           files: 30
           schema_version: "selected_case_grid_collection.v1"
         - path: "outputs/32_case_and_painting_report_generation/validation/checks.csv"
-          rows: null
+          rows: 5819
           schema_version: "validation_checks.v1"
       supported_scope:
         - "thirty_deterministically_selected_deep_case_reports"

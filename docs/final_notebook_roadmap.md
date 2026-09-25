@@ -9,10 +9,11 @@ This roadmap defines the final dependency order and detailed responsibility of e
 It consolidates the previously planned roadmap into 36 stages while preserving the supported methodological, experimental, engineering, reporting, explainability, and deployment scope.
 
 **Status as of 2026-09-25:** the validated 50-painting implementation is preserved
-at Git tag `pilot-50-complete`. Notebooks 01–31, including Notebook 12A and
+at Git tag `pilot-50-complete`. Notebooks 01–32, including Notebook 12A and
 supplemental D02, have completed their controlled minimal-delta reruns against
-the approved balanced 300-painting collection. Notebook 32 has a completed
-Controlled-300 preparation contract and is the next producer awaiting rerun.
+the approved balanced 300-painting collection. Notebook 32 run
+`run_0d4ae193602944dda511bf54199105b1` passed its completion gate; Notebook 33
+is the next producer awaiting preparation and rerun.
 Existing notebook names, responsibilities, cell order, schemas,
 stable identifiers, and output roots remain the starting contract. Each later
 notebook becomes current only after its Controlled-300 outputs pass its gate;
@@ -3518,8 +3519,9 @@ retain a complete machine-readable index of applicable cases, candidates,
 metrics and visuals. Rule-selected standalone case reports are a presentation
 subset; they do not limit evidence coverage.
 
-**Preparation status (2026-09-25):** Ready for the manual Controlled-300 rerun.
-The locked input contract covers 25 upstream manifests, 41 tabular inputs,
+**Controlled-300 completion status (2026-09-25):** run
+`run_0d4ae193602944dda511bf54199105b1` completed successfully. The locked input
+contract covers 25 upstream manifests, 41 tabular inputs,
 300 paintings, 2,620 evaluated cases and 13,879 approved candidates. Candidate
 coverage comprises 2,620 each for Telea, LaMa and HINT, 5,995 report-eligible
 Stable Diffusion candidates, and 24 completed candidates from the bounded
@@ -3537,16 +3539,35 @@ has 37 canonical and focused cases. Style/date/medium metadata are available for
 268 paintings and remain descriptive rather than an independent style-effect
 design.
 
-**Runtime and publication plan:** This notebook performs no model inference; its
-cost is dominated by joining large tables, rendering 330 self-contained reports,
-embedding illustrations and validating checksums/links. The pilot took about
-1 hour 31 minutes. Allow approximately **6–10 hours** for the Controlled-300
-run, with the painting-report render/validation stages likely accounting for
-about **3–6 hours**. Complete reports and selected grids remain canonical
-locally and are planned as a verified indexed bundle in the Hugging Face
-diagnostics repository after validation. Compact indexes, manifests,
-configuration and validation records remain in ordinary Git; the pre-Notebook
-34 Streamlit audit will decide which indexes and bundles the application uses.
+The final package contains 30 deep-case reports, 300 painting reports, one
+collection index, 30 selected-case grids and exactly 367 physical files. It
+contains 2,132 embedded images and 10,622 embedded visual tiles with no external
+image dependency. All 5,819 validation checks, 12 roadmap responsibilities, 67
+mock-traceability rows and eight artifact records passed without blocking or
+warning failures.
+
+**Runtime and publication record:** This notebook performs no model inference;
+its cost is dominated by joining large tables, rendering 330 self-contained
+case/painting reports, embedding illustrations and validating checksums/links.
+The observed execution window was approximately **5 hours 38 minutes**, compared
+with about 1 hour 31 minutes for the pilot. The complete local output root is
+329.94 MiB; its 361 report/grid publication files total 326.94 MiB and are
+routed to the Hugging Face diagnostics repository as a direct-access report
+package. Compact indexes, manifests,
+configuration and validation records remain in ordinary Git without Git LFS;
+the pre-Notebook 34 Streamlit audit will decide which reports and indexes the
+application exposes or retrieves lazily.
+
+The E-drive pilot comparison preserves all seven artifact classes, all eight
+artifact keys/types and every CSV schema. The painting-report role label was
+correctly scaled from `fifty_complete_painting_reports` to
+`three_hundred_complete_painting_reports`; no evidence class was removed.
+Physical files increased 117→367, painting
+reports 50→300 and validation rows 1,806→5,819. The bounded 30-case selection was
+recomputed deterministically for the expanded population: 75 relative paths are
+shared, 42 pilot-only selected report/grid paths are superseded, and 292 paths
+are added, including 250 additional painting reports. This intentional
+reselection changes presentation examples without dropping population evidence.
 
 ### Responsibilities
 

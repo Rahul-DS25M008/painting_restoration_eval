@@ -36,6 +36,9 @@ outputs/logs/
 
 docs/proposal/Rahul_Thesis_Proposal_Old.docx
 
+# Local thesis-writing exercise; intentionally not part of the pipeline record.
+/docs/thesis/
+
 # Supervisor-meeting materials. Keep editable sources and assets local,
 # but version the two approved, self-contained PDF guides.
 docs/supervisor/*
@@ -76,6 +79,14 @@ docs/supervisor/Next_Steps.docx
 /outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv
 /outputs/28_metric_and_region_policy_ablation/metrics/flag_stability.csv
 /outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv
+
+# Notebook 32's 331 self-contained HTML reports and 30 selected-case grids are
+# the diagnostics publication package. They remain canonical locally and are
+# published to Hugging Face; Git retains only the compact indexes, manifests,
+# validation ledger, and run manifest so the exhausted LFS allowance is never
+# invoked.
+/outputs/32_case_and_painting_report_generation/reports/
+/outputs/32_case_and_painting_report_generation/figures/selected_case_grids/
 
 # The complete project inventory is regenerated locally after every completed
 # notebook. Keeping each approximately 70 MiB revision in Git LFS would spend

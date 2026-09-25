@@ -1,7 +1,7 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-09-25T13:05:36.036600Z`
+- Updated: `2026-09-25T21:14:35.597534Z`
 - Registered artifacts: 250
 
 | Artifact key | Producer | Relative path | Role | Validation |
@@ -10,7 +10,7 @@
 | case_painting_reports.case_reports | 32_case_and_painting_report_generation | `outputs/32_case_and_painting_report_generation/reports/cases` | thirty_detailed_case_reports | passed |
 | case_painting_reports.collection_index | 32_case_and_painting_report_generation | `outputs/32_case_and_painting_report_generation/reports/index.html` | browse_all_case_and_painting_reports | passed |
 | case_painting_reports.painting_report_index | 32_case_and_painting_report_generation | `outputs/32_case_and_painting_report_generation/data/painting_report_index.csv` | complete_painting_report_registry | passed |
-| case_painting_reports.painting_reports | 32_case_and_painting_report_generation | `outputs/32_case_and_painting_report_generation/reports/paintings` | fifty_complete_painting_reports | passed |
+| case_painting_reports.painting_reports | 32_case_and_painting_report_generation | `outputs/32_case_and_painting_report_generation/reports/paintings` | three_hundred_complete_painting_reports | passed |
 | case_painting_reports.selected_case_grids | 32_case_and_painting_report_generation | `outputs/32_case_and_painting_report_generation/figures/selected_case_grids` | canonical_visual_grids_for_selected_cases | passed |
 | case_painting_reports.selected_cases | 32_case_and_painting_report_generation | `outputs/32_case_and_painting_report_generation/data/selected_cases.csv` | deterministic_detailed_case_selection | passed |
 | case_painting_reports.validation | 32_case_and_painting_report_generation | `outputs/32_case_and_painting_report_generation/validation/checks.csv` | consolidated_notebook_validation_checks | passed |

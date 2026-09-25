@@ -2,7 +2,7 @@
 
 **Status:** completed literature audit plus active Controlled-300 transition log\
 **Reviewed:** 2026-09-25\
-**Scope:** Controlled-300 producers completed through Notebook 31, completed HINT/MAT decision study, and historical downstream pilot/dashboard evidence\
+**Scope:** Controlled-300 producers completed through Notebook 32, completed HINT/MAT decision study, and historical downstream pilot/dashboard evidence\
 **Search priority:** 2020–2026, with explicitly identified foundational exceptions
 
 This is an annotated source catalog for thesis writing, not a list of methods

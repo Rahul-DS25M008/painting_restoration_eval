@@ -37,7 +37,7 @@ and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
 **Controlled-300 transition review: 2026-09-25.** The pilot remains recoverable
 at Git tag `pilot-50-complete`; the active working tree is rebuilt in dependency
-order for the approved 300-painting study. Notebooks 01–30, including Notebook
+order for the approved 300-painting study. Notebooks 01–32, including Notebook
 12A and supplemental D02, are completed, validated Controlled-300 producers.
 Notebook 27's expanded failure-taxonomy and trustworthiness run contains 13,879
 union candidates, 194,306 candidate-by-category rows, 152,669
@@ -49,8 +49,11 @@ compute and scalability contract with 178/178 checks and is now the canonical
 method-disclosure source. Notebook 31 run
 `run_430fd1355d3a4011bedc55b571d9544c` completed its five-report
 Controlled-300 contract with 346/346 checks and is now the canonical
-model-report source. Notebook 32 is the next active producer. Notebooks
-32–36 remain historical Controlled-50 evidence until
+model-report source. Notebook 32 run
+`run_0d4ae193602944dda511bf54199105b1` completed its 300-painting report layer
+with 5,819/5,819 checks and is now the canonical case/painting report source.
+Notebook 33 is the next active producer. Notebooks 33–36 remain historical
+Controlled-50 evidence until
 each producer is explicitly reopened, rerun, validated, baseline-compared and
 committed. Complete local outputs remain canonical even where large evidence is
 also represented by verified external publication records.
@@ -1175,28 +1178,47 @@ examples, formats validated values and creates presentation-only plots. Its
 approximately 13 MiB output is compact enough for ordinary Git under explicit
 LFS bypass rules, so no duplicate Hugging Face release is required.
 
-The Notebook 32–36 completion records below describe the **historical
-Controlled-50 reporting, dashboard and packaging layer**. They remain valid as
-pilot evidence and recovery documentation, but they are not yet the current
-Controlled-300 downstream handoff. Notebook 32 now has an approved
-Controlled-300 preparation contract and is the next producer awaiting rerun. It
-must consume Notebook 31's five-method report index before any later reporting
-notebook becomes current.
+The Notebook 33–36 completion records below describe the **historical
+Controlled-50 final-report, dashboard and packaging layer**. They remain valid
+as pilot evidence and recovery documentation, but they are not yet the current
+Controlled-300 downstream handoff. Notebook 32 is now a completed
+Controlled-300 producer and Notebook 33 is the next producer awaiting rerun.
 
-The prepared Notebook 32 contract binds 25 upstream manifests and 41 input
+The completed Notebook 32 contract binds 25 upstream manifests and 41 input
 tables to 300 paintings, 2,620 evaluated cases and 13,879 approved candidates:
 2,620 each for Telea, LaMa and HINT, 5,995 report-eligible Stable Diffusion
 candidates and 24 completed bounded-SDXL candidates. It preserves 30
 deterministically selected deep-case reports and grids as presentation evidence,
 while 300 painting reports retain the complete case population. The expected
-package therefore contains 331 reports and 367 physical files. Stable Diffusion
+package contains 331 reports and 367 physical files. Stable Diffusion
 uncertainty applies to 725 cases and 1,025 groups; deterministic-method
 uncertainty remains not applicable. The 3,260 p01–p04 context-prompt candidates
 remain an explicit scope exclusion rather than missing execution. Complete
-self-contained reports and grids will remain canonical locally and are planned
-for a verified indexed Hugging Face diagnostics bundle after the run; compact
-indexes, manifests and validation records remain in ordinary Git. No new
-scientific metrics or claims are created by this reporting layer.
+self-contained reports and grids remain canonical locally and route to the
+Hugging Face diagnostics repository; compact indexes, manifests and validation
+records remain in ordinary Git. No new scientific metrics or claims are created
+by this reporting layer.
+
+Controlled-300 Notebook 32 run `run_0d4ae193602944dda511bf54199105b1`
+completed with 30 deep-case reports, 300 painting reports, one collection index,
+30 selected-case grids and exactly 367 physical files. Its 331 reports contain
+2,132 embedded images and 10,622 embedded visual tiles with no external image
+dependency. All 5,819 validation checks, 12 roadmap responsibilities, 67
+mock-to-final traceability rows and eight artifact records passed with zero
+blocking or warning failures. The observed execution window was approximately 5
+hours 38 minutes.
+
+The E-drive pilot comparison preserves all seven artifact classes, all eight
+artifact keys/types and every CSV schema. The painting-report role label was
+correctly scaled from `fifty_complete_painting_reports` to
+`three_hundred_complete_painting_reports`; no evidence class was removed.
+Physical files increased 117→367, painting
+reports 50→300, validation rows 1,806→5,819 and the package size 69.26→329.94
+MiB. The bounded 30-case display cohort was reselected under the approved
+deterministic Controlled-300 policy: 75 relative paths are shared, 42 pilot-only
+selected report/grid paths are superseded and 292 paths are added, including 250
+additional painting reports. This is a presentation-subset change, not evidence
+loss; complete coverage remains in all 300 painting reports.
 
 Historical pilot Notebook 31 is complete and passed its completion gate. It consumed validated
 Notebook 09--30 artifacts and produced four standalone, self-contained HTML

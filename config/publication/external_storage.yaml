@@ -57,6 +57,21 @@ policy:
       planned_bundle_count: 35
       planned_remote_object_count: 80
 
+  pending_report_package_releases:
+    n32_diagnostics:
+      status: local_completion_verified_pending_remote_upload
+      repository: RahulMaddineni264/painting-restoration-eval-diagnostics
+      source_run_id: run_0d4ae193602944dda511bf54199105b1
+      release_prefix: report_packages/v1/controlled_300/32_case_and_painting_report_generation/run_0d4ae193602944dda511bf54199105b1
+      report_files: 331
+      selected_case_grid_files: 30
+      publication_files: 361
+      publication_size_mib: 326.94
+      access_pattern: direct_individual_report_or_grid_fetch
+      rationale: self_contained_html_reports_are_already_retrieval_units_and_do_not_require_zip_member_indirection
+      remote_verification_required: true
+      compact_indexes_manifests_validation_in_git: true
+
   bundle_rationale:
     git_role: compact_scientific_record_not_bulk_map_or_large_metric_storage
     trigger: per_file_n16_upload_exceeded_hub_api_rate_limit

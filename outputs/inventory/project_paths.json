@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-25T13:05:36.036600Z",
+  "updated_at_utc": "2026-09-25T21:14:35.597534Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -9,12 +9,12 @@
       "artifact_type": "normalized_report_index",
       "artifact_role": "detailed_case_report_registry",
       "schema_version": "case_report_index.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "case_painting_report_generation",
       "validation_status": "passed",
       "row_count": 30,
       "file_count": 1,
-      "checksum": "4cb4a58195194813133c5482237fc46019ab0d6f4bd53a0d2b2f57aad8710cca"
+      "checksum": "ecd6265d1438e0faab6ad6dc8b0f81e519f9ad74e33aa1219a691b98ecb29639"
     },
     {
       "artifact_key": "case_painting_reports.case_reports",
@@ -23,12 +23,12 @@
       "artifact_type": "standalone_html_report_collection",
       "artifact_role": "thirty_detailed_case_reports",
       "schema_version": "case_report_collection.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "case_painting_report_generation",
       "validation_status": "passed",
       "row_count": 30,
       "file_count": 30,
-      "checksum": "0e09800a2cec3708289e226a351080a2a7aad2a6bb81c8c7af09abca8ffb0dc5"
+      "checksum": "58463d8d49cf35d23fcacd45f581d30f344d3c4b625921c0470f2e0986625bde"
     },
     {
       "artifact_key": "case_painting_reports.collection_index",
@@ -37,12 +37,12 @@
       "artifact_type": "html_report_collection_entry_point",
       "artifact_role": "browse_all_case_and_painting_reports",
       "schema_version": "report_collection_index.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "case_painting_report_generation",
       "validation_status": "passed",
       "row_count": 1,
       "file_count": 1,
-      "checksum": "06bea94eb307f13ce0de07e48deb6f757e580797959964861eb5aaa7805cfda9"
+      "checksum": "9fe8de9540abe566eef5ca1212d6af8deb93c71849ca7ccfebbe4d5a2f066518"
     },
     {
       "artifact_key": "case_painting_reports.painting_report_index",
@@ -51,26 +51,26 @@
       "artifact_type": "normalized_report_index",
       "artifact_role": "complete_painting_report_registry",
       "schema_version": "painting_report_index.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "case_painting_report_generation",
       "validation_status": "passed",
-      "row_count": 50,
+      "row_count": 300,
       "file_count": 1,
-      "checksum": "008247cdd36c16c8238a8a3fe1d6ae5e245e5eb1775359e42646ccd63ecdfe18"
+      "checksum": "df40d9ecd44fe20c50050f4f7df30c8d795ab2de0f589b0f69cfc9d30e343123"
     },
     {
       "artifact_key": "case_painting_reports.painting_reports",
       "producer_notebook": "32_case_and_painting_report_generation",
       "relative_path": "outputs/32_case_and_painting_report_generation/reports/paintings",
       "artifact_type": "standalone_html_report_collection",
-      "artifact_role": "fifty_complete_painting_reports",
+      "artifact_role": "three_hundred_complete_painting_reports",
       "schema_version": "painting_report_collection.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "case_painting_report_generation",
       "validation_status": "passed",
-      "row_count": 50,
-      "file_count": 50,
-      "checksum": "61a961715a945ba5eb6bab65002eaff27eedb2c69a7df25ed3c30753679eed46"
+      "row_count": 300,
+      "file_count": 300,
+      "checksum": "291402605f75417ccbe47f17c991eccc91c05b58007d196e7f8f1b0fb381850a"
     },
     {
       "artifact_key": "case_painting_reports.selected_case_grids",
@@ -79,12 +79,12 @@
       "artifact_type": "diagnostic_grid_collection",
       "artifact_role": "canonical_visual_grids_for_selected_cases",
       "schema_version": "selected_case_grid_collection.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "case_painting_report_generation",
       "validation_status": "passed",
       "row_count": 30,
       "file_count": 30,
-      "checksum": "02075d874af909c5929820b7cc1ab7b592af45487a6c870d2a7691fece29ce8a"
+      "checksum": "d943c9d245381f3b6b754da7cc7209177f53c1a7c7000e66e485602ad272c620"
     },
     {
       "artifact_key": "case_painting_reports.selected_cases",
@@ -93,12 +93,12 @@
       "artifact_type": "normalized_selection_table",
       "artifact_role": "deterministic_detailed_case_selection",
       "schema_version": "selected_report_cases.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "case_painting_report_generation",
       "validation_status": "passed",
       "row_count": 30,
       "file_count": 1,
-      "checksum": "f6cbf989cf8fefd7a6b7cc1d2fd9fcfd4d05e8edf4dde94cf0555ad978fa3cc8"
+      "checksum": "82a20fe27f742228c10e1231a897a60f0c71da5fc466a6e43edfd658cc1c29f5"
     },
     {
       "artifact_key": "case_painting_reports.validation",
@@ -107,12 +107,12 @@
       "artifact_type": "validation_table",
       "artifact_role": "consolidated_notebook_validation_checks",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "case_painting_report_generation",
       "validation_status": "passed",
-      "row_count": 1806,
+      "row_count": 5819,
       "file_count": 1,
-      "checksum": "1103301993213351bfe36dbfcb1fe61981521d790334ea056c2218b5d8fbc33e"
+      "checksum": "816f08322e166de45d6d1f56e001e8e094c18043373df3d6884d18c69342c625"
     },
     {
       "artifact_key": "classical_metrics.distributions",
