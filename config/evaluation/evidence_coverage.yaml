@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.23"
+config_version: "1.1.24"
 
 evidence_coverage:
   authority:
@@ -56,8 +56,8 @@ evidence_coverage:
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "30"
-    next_eligible_notebook_id: "31"
+    completed_through_notebook_id: "31"
+    next_eligible_notebook_id: "32"
     new_bulk_publication_policy: "verified_indexed_bundles_by_artifact_class_with_n22_split_candidate_diagnostic_release"
     completed_notebooks:
       - notebook_id: "01"
@@ -2279,9 +2279,11 @@ evidence_coverage:
 
     - notebook_id: "32"
       stem: "32_case_and_painting_report_generation"
-      status: "completed_validation_passed"
-      completion_gate_passed: true
-      run_id: "run_7a508c540ae74af1ad2bd3c59928e94e"
+      status: "controlled_300_preparation_complete_pending_rerun"
+      completion_gate_passed: false
+      run_id: null
+      dataset_scope: "controlled_300"
+      dataset_version: "2.0.0"
       output_root: "outputs/32_case_and_painting_report_generation"
       manifest_path: "outputs/32_case_and_painting_report_generation/manifests/run_manifest.json"
       preparation_contract:
@@ -2290,22 +2292,28 @@ evidence_coverage:
         test_path: "tests/test_case_painting_reports.py"
         approved_mock_structure_locked: true
         creates_new_scientific_evidence: false
-        upstream_manifest_count: 24
-        approved_candidate_count: 1785
-        evaluated_case_count: 410
-        uncertainty_case_count: 115
-        uncertainty_group_count: 165
-        painting_count: 50
+        upstream_manifest_count: 25
+        input_table_count: 41
+        approved_candidate_count: 13879
+        evaluated_case_count: 2620
+        uncertainty_case_count: 725
+        uncertainty_group_count: 1025
+        painting_count: 300
         selected_case_count: 30
         case_report_count: 30
-        painting_report_count: 50
+        painting_report_count: 300
         collection_index_count: 1
-        report_count: 81
+        report_count: 331
         selected_case_grid_count: 30
         artifact_records: 8
-        physical_output_files: 117
+        physical_output_files: 367
         mock_traceability_rows: 67
-      completion_contract:
+        deterministic_full_methods: ["telea", "lama", "hint"]
+        stable_diffusion_candidate_count: 5995
+        bounded_sdxl_completed_candidate_count: 24
+        metadata_style_date_medium_populated_paintings: 268
+        extension_painting_count: 35
+      historical_pilot_completion_contract:
         run_status: "completed"
         validation_status: "passed"
         creates_new_scientific_evidence: false
@@ -2344,13 +2352,13 @@ evidence_coverage:
           rows: 30
           schema_version: "case_report_index.v1"
         - path: "outputs/32_case_and_painting_report_generation/data/painting_report_index.csv"
-          rows: 50
+          rows: 300
           schema_version: "painting_report_index.v1"
         - path: "outputs/32_case_and_painting_report_generation/reports/cases"
           files: 30
           schema_version: "case_report_collection.v1"
         - path: "outputs/32_case_and_painting_report_generation/reports/paintings"
-          files: 50
+          files: 300
           schema_version: "painting_report_collection.v1"
         - path: "outputs/32_case_and_painting_report_generation/reports/index.html"
           files: 1
@@ -2359,12 +2367,12 @@ evidence_coverage:
           files: 30
           schema_version: "selected_case_grid_collection.v1"
         - path: "outputs/32_case_and_painting_report_generation/validation/checks.csv"
-          rows: 1806
+          rows: null
           schema_version: "validation_checks.v1"
       supported_scope:
         - "thirty_deterministically_selected_deep_case_reports"
-        - "fifty_painting_reports_covering_all_410_evaluated_cases"
-        - "one_thousand_seven_hundred_eighty_five_approved_candidates"
+        - "three_hundred_painting_reports_covering_all_2620_evaluated_cases"
+        - "thirteen_thousand_eight_hundred_seventy_nine_approved_candidates"
         - "all_approved_candidates_for_each_selected_case"
         - "case_specific_classical_perceptual_feature_local_semantic_spatial_and_flag_evidence"
         - "diffusion_uncertainty_and_prompt_sensitivity_only_where_applicable"
@@ -2372,19 +2380,25 @@ evidence_coverage:
         - "report_collection_index_for_package_navigation"
       applicability_rules:
         - "detailed_case_reports_are_selected_illustrations_not_complete_case_population"
-        - "all_410_cases_are_retained_in_the_fifty_painting_report_tables"
-        - "telea_and_lama_uncertainty_is_not_applicable_deterministic_method"
+        - "all_2620_cases_are_retained_in_the_three_hundred_painting_report_tables"
+        - "telea_lama_and_hint_uncertainty_is_not_applicable_deterministic_method"
         - "stable_diffusion_uncertainty_covers_canonical_and_damage_size_populations"
         - "sdxl_uncertainty_is_not_applicable_insufficient_seed_coverage"
-        - "sdxl_remains_ten_case_five_painting_partial_evaluation"
-        - "only_eighteen_paintings_have_documented_style_or_period"
-        - "five_extension_paintings_support_descriptive_within_painting_evidence"
+        - "sdxl_remains_bounded_to_35_scheduled_cases_with_24_completed_candidates"
+        - "style_date_and_medium_are_populated_for_268_of_300_paintings"
+        - "thirty_five_extension_paintings_support_descriptive_within_painting_evidence"
         - "computational_review_actions_are_not_conservation_recommendations"
       excluded_evidence:
-        completed_candidate_count: 480
+        completed_candidate_count: 3260
         source: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
         prompt_variants: ["p01_category", "p02_artist", "p03_artist_category", "p04_full_context"]
         reason: "no_complete_notebook_27_and_29_failure_flag_and_explanation_contract"
+      publication_plan:
+        local_canonical_scope: "complete_self_contained_report_and_selected_grid_tree"
+        hugging_face_repository: "RahulMaddineni264/painting-restoration-eval-diagnostics"
+        hugging_face_strategy: "verified_indexed_bundle_after_controlled_300_completion"
+        github_scope: "compact_indexes_manifests_validation_and_configuration_in_ordinary_git"
+        streamlit_note: "pre_notebook_34_audit_will_select_web_consumed_report_indexes_and_bundles"
       downstream_contract:
         - "consume_case_report_index_for_selected_case_report_discovery"
         - "consume_painting_report_index_for_complete_painting_report_discovery"

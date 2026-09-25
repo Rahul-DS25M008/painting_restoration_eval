@@ -11,8 +11,9 @@ It consolidates the previously planned roadmap into 36 stages while preserving t
 **Status as of 2026-09-25:** the validated 50-painting implementation is preserved
 at Git tag `pilot-50-complete`. Notebooks 01–31, including Notebook 12A and
 supplemental D02, have completed their controlled minimal-delta reruns against
-the approved balanced 300-painting collection. Notebook 32 is the next eligible
-producer. Existing notebook names, responsibilities, cell order, schemas,
+the approved balanced 300-painting collection. Notebook 32 has a completed
+Controlled-300 preparation contract and is the next producer awaiting rerun.
+Existing notebook names, responsibilities, cell order, schemas,
 stable identifiers, and output roots remain the starting contract. Each later
 notebook becomes current only after its Controlled-300 outputs pass its gate;
 until then, its committed outputs remain historical 50-painting evidence.
@@ -3516,6 +3517,36 @@ validation/checks.csv
 retain a complete machine-readable index of applicable cases, candidates,
 metrics and visuals. Rule-selected standalone case reports are a presentation
 subset; they do not limit evidence coverage.
+
+**Preparation status (2026-09-25):** Ready for the manual Controlled-300 rerun.
+The locked input contract covers 25 upstream manifests, 41 tabular inputs,
+300 paintings, 2,620 evaluated cases and 13,879 approved candidates. Candidate
+coverage comprises 2,620 each for Telea, LaMa and HINT, 5,995 report-eligible
+Stable Diffusion candidates, and 24 completed candidates from the bounded
+35-case SDXL schedule. Stable Diffusion uncertainty is available for 725 cases
+and 1,025 four-seed groups. The 3,260 completed context-prompt candidates from
+prompt arms p01–p04 remain explicitly outside this report population because
+they lack the complete Notebook 27/29 failure, flag and explanation contract.
+
+The presentation layer remains deliberately bounded to 30 deterministic deep
+case reports and 30 selected-case grids. Complete population coverage is
+provided by 300 painting reports containing all 2,620 cases, plus the collection
+index: 331 reports and 367 physical output files are expected. The five-case
+canonical design applies to 265 paintings; each of the 35 extension paintings
+has 37 canonical and focused cases. Style/date/medium metadata are available for
+268 paintings and remain descriptive rather than an independent style-effect
+design.
+
+**Runtime and publication plan:** This notebook performs no model inference; its
+cost is dominated by joining large tables, rendering 330 self-contained reports,
+embedding illustrations and validating checksums/links. The pilot took about
+1 hour 31 minutes. Allow approximately **6–10 hours** for the Controlled-300
+run, with the painting-report render/validation stages likely accounting for
+about **3–6 hours**. Complete reports and selected grids remain canonical
+locally and are planned as a verified indexed bundle in the Hugging Face
+diagnostics repository after validation. Compact indexes, manifests,
+configuration and validation records remain in ordinary Git; the pre-Notebook
+34 Streamlit audit will decide which indexes and bundles the application uses.
 
 ### Responsibilities
 

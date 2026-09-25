@@ -1175,12 +1175,28 @@ examples, formats validated values and creates presentation-only plots. Its
 approximately 13 MiB output is compact enough for ordinary Git under explicit
 LFS bypass rules, so no duplicate Hugging Face release is required.
 
-The Notebook 32–36 records below describe the completed **historical
+The Notebook 32–36 completion records below describe the **historical
 Controlled-50 reporting, dashboard and packaging layer**. They remain valid as
 pilot evidence and recovery documentation, but they are not yet the current
-Controlled-300 downstream handoff. Notebook 32 is the next eligible rerun and
+Controlled-300 downstream handoff. Notebook 32 now has an approved
+Controlled-300 preparation contract and is the next producer awaiting rerun. It
 must consume Notebook 31's five-method report index before any later reporting
 notebook becomes current.
+
+The prepared Notebook 32 contract binds 25 upstream manifests and 41 input
+tables to 300 paintings, 2,620 evaluated cases and 13,879 approved candidates:
+2,620 each for Telea, LaMa and HINT, 5,995 report-eligible Stable Diffusion
+candidates and 24 completed bounded-SDXL candidates. It preserves 30
+deterministically selected deep-case reports and grids as presentation evidence,
+while 300 painting reports retain the complete case population. The expected
+package therefore contains 331 reports and 367 physical files. Stable Diffusion
+uncertainty applies to 725 cases and 1,025 groups; deterministic-method
+uncertainty remains not applicable. The 3,260 p01–p04 context-prompt candidates
+remain an explicit scope exclusion rather than missing execution. Complete
+self-contained reports and grids will remain canonical locally and are planned
+for a verified indexed Hugging Face diagnostics bundle after the run; compact
+indexes, manifests and validation records remain in ordinary Git. No new
+scientific metrics or claims are created by this reporting layer.
 
 Historical pilot Notebook 31 is complete and passed its completion gate. It consumed validated
 Notebook 09--30 artifacts and produced four standalone, self-contained HTML

@@ -970,10 +970,12 @@ checksums, limitations, and downstream eligibility.
 | 29 Explainable AI and Case Retrieval | Finished | Finished | Yes | 13,879 candidates across 2,620 cases and 300 paintings; 10,480 four-method primary candidates; 24 bounded SDXL candidates; 4,100 repeated-seed members in 1,025 groups; 13,144 dual-view retrieval-eligible candidates; 100 neighbour rows; 24 bounded visual units; 146/146 checks; 30 canonical files | All 30 pilot paths and six artifact roles retained; catalog rows increased from 1,785 to 13,879 while neighbour and panel counts remained intentionally bounded; report embeds 34 images with no external dependency; complete catalog routes to Hugging Face diagnostics and the bounded handoff stays in ordinary Git without LFS |
 | 30 Model Cards, Compute, and Scalability | Finished | Finished | Yes | Five model cards; 32 observed and 10 projected compute rows; 11 quality anchors in two populations; two figures; 178/178 checks; 13/13 roadmap responsibilities; 12 canonical files | All 11 pilot paths retained; HINT card added as the sole new path; cards 4→5, compute rows 35→42, validation rows 165→178 and files 11→12; compact outputs stay in ordinary Git and require no Hugging Face release |
 | 31 Model Report Generation | Finished | Finished | Yes | Five self-contained reports; 75 sections; 79 embedded images; 374 embedded tiles; five index rows; seven artifact records; 346/346 checks; 13/13 roadmap responsibilities; nine canonical files | All eight pilot paths retained; HINT report added as the sole new path; reports/sections/images/tiles increased 4→5, 60→75, 63→79 and 298→374; compact ~13 MiB handoff stays in ordinary Git without LFS or a Hugging Face release |
+| 32 Case and Painting Report Generation | Finished | Pending manual rerun | No | Prepared contract: 25 manifests; 41 input tables; 300 paintings; 2,620 cases; 13,879 approved candidates; 30 bounded deep-case reports; 300 painting reports; 331 total reports; 30 grids; 367 expected files | Preserve all pilot artifact paths and schemas; HINT is a full deterministic method, SDXL remains bounded, p01–p04 context-prompt candidates remain excluded, large reports/grids are planned for a verified HF diagnostics bundle, and compact indexes/manifests/validation remain ordinary Git |
 
 Notebooks 01–31, including Notebook 12A and supplemental D02, are completed
-Controlled-300 producers. Notebook 32 is the next active producer; Notebooks
-32–36 remain historical Controlled-50
+Controlled-300 producers. Notebook 32 has completed its preparation layer and
+is the next active producer awaiting manual rerun; Notebooks 32–36 remain
+historical Controlled-50
 evidence until individually rerun. Notebook 20's producer-specific diagnostics bundle
 and compact Git handoff are remotely and locally verified. Notebook 21 passed
 its completion gate for 10,504 selected candidates, 3,160,618 normalized
@@ -1003,6 +1005,21 @@ report with 48 embedded images and 252 tiles, and 111/111 passing checks. The
 observed execution window was approximately 2 hours 32 minutes before final
 wording QA. All ten pilot paths and all eight registered artifact roles and
 schemas were retained.
+
+Notebook 32 preparation binds 25 upstream manifests and 41 tabular inputs to
+300 paintings, 2,620 cases and 13,879 approved candidates. It retains the
+pilot's bounded 30-case presentation subset, but scales complete coverage to 300
+painting reports, 331 reports overall and 367 expected physical files. The
+method population is 2,620 candidates each for Telea, LaMa and HINT, 5,995
+report-eligible Stable Diffusion candidates and 24 completed bounded-SDXL
+candidates. Stable Diffusion uncertainty covers 725 cases and 1,025 groups;
+uncertainty is not applicable to deterministic methods. The 3,260 p01–p04
+context-prompt candidates remain explicitly excluded because they lack the
+complete N27/N29 contract. Expect roughly 6–10 hours without model inference.
+After completion, large self-contained reports and grids should use the verified
+indexed diagnostics-bundle workflow; compact tables, indexes, manifests and
+validation stay in ordinary Git. Final application consumption remains subject
+to the pre-N34 Streamlit/storage audit.
 
 Notebook 27's Controlled-300 execution is complete and validated. Its binding union is
 10,504 primary candidates plus 3,375 uncertainty-only candidates, producing

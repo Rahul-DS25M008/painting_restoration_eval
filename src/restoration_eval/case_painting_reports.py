@@ -25,7 +25,7 @@ from PIL import Image
 
 
 MODULE_NAME = "restoration_eval.case_painting_reports"
-MODULE_VERSION = "1.0.0"
+MODULE_VERSION = "2.0.0"
 CONFIG_SCHEMA_VERSION = "case_and_painting_reports_config.v1"
 SELECTED_CASES_SCHEMA_VERSION = "selected_report_cases.v1"
 CASE_REPORT_INDEX_SCHEMA_VERSION = "case_report_index.v1"
@@ -269,11 +269,15 @@ def load_case_painting_report_config(path: str | Path) -> dict[str, Any]:
     if sum(int(value) for value in multiplicities.values()) != int(
         population["evaluated_case_count"]
     ):
-        raise ValueError("Case multiplicity counts do not sum to 410")
+        raise ValueError(
+            "Case multiplicity counts do not sum to the configured case population"
+        )
     if sum(int(value) for value in selection["lane_quotas"].values()) != int(
         selection["selected_case_count"]
     ):
-        raise ValueError("Selection lane quotas do not sum to 30")
+        raise ValueError(
+            "Selection lane quotas do not sum to the configured selected-case count"
+        )
     if list(selection["lane_quotas"]) != list(selection["lane_order"]):
         raise ValueError("Selection lane order differs from quota order")
 
@@ -420,7 +424,7 @@ def load_upstream_manifests(inputs: Mapping[str, Path]) -> dict[str, dict[str, A
 
     manifests: dict[str, dict[str, Any]] = {}
     for key, path in sorted(inputs.items()):
-        match = re.fullmatch(r"manifest_(\d{2})_path", key)
+        match = re.fullmatch(r"manifest_(\d{2}a?)_path", key)
         if not match:
             continue
         with path.open("r", encoding="utf-8-sig") as handle:
@@ -431,7 +435,7 @@ def load_upstream_manifests(inputs: Mapping[str, Path]) -> dict[str, dict[str, A
 def validate_upstream_completion(
     manifests: Mapping[str, Mapping[str, Any]], *, config: Mapping[str, Any]
 ) -> pd.DataFrame:
-    """Require all 24 producer manifests to be completed and validated."""
+    """Require every configured producer manifest to be completed and validated."""
 
     expected_count = int(_settings(config)["expected_counts"]["upstream_manifest_count"])
     rows = [_validation_row(
@@ -573,7 +577,7 @@ def validate_case_population(
     *,
     config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Validate the approved 410-case and 1,785-candidate report population."""
+    """Validate the configured case and candidate report population."""
 
     expected = _settings(config)["expected_counts"]
     population = _settings(config)["population"]
@@ -905,7 +909,7 @@ def build_painting_summary(
     *,
     config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Build one descriptive coverage row for each of the 50 paintings."""
+    """Build one descriptive coverage row for every configured painting."""
 
     artwork_lookup = artworks.drop_duplicates("painting_id").set_index("painting_id")
     extension_ids = set(
@@ -955,7 +959,7 @@ def build_painting_summary(
 def validate_painting_summary(
     painting_summary: pd.DataFrame, *, config: Mapping[str, Any]
 ) -> pd.DataFrame:
-    """Validate complete 50-painting and 410-case coverage."""
+    """Validate complete configured painting and case coverage."""
 
     settings = _settings(config)
     expected = settings["expected_counts"]
@@ -980,7 +984,7 @@ def validate_painting_summary(
             check_name="case_sum", observed=int(painting_summary["case_count"].sum()),
             expected=int(expected["case_count"]),
             passed=int(painting_summary["case_count"].sum()) == int(expected["case_count"]),
-            issue="Painting-level cases do not sum to 410",
+            issue="Painting-level cases do not sum to the configured population",
         ),
         _validation_row(
             stage="painting_population", severity="blocking",

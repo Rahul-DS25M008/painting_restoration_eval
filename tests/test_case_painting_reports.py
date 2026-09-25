@@ -75,12 +75,12 @@ class CasePaintingReportPreparationTests(unittest.TestCase):
     def test_config_identity_population_and_output_arithmetic(self) -> None:
         expected = self.settings["expected_counts"]
         self.assertEqual(self.settings["notebook_id"], "32")
-        self.assertEqual(expected["approved_candidate_count"], 1785)
-        self.assertEqual(expected["case_count"], 410)
-        self.assertEqual(expected["painting_count"], 50)
+        self.assertEqual(expected["approved_candidate_count"], 13879)
+        self.assertEqual(expected["case_count"], 2620)
+        self.assertEqual(expected["painting_count"], 300)
         self.assertEqual(expected["selected_case_count"], 30)
-        self.assertEqual(expected["report_count"], 81)
-        self.assertEqual(expected["physical_output_files"], 117)
+        self.assertEqual(expected["report_count"], 331)
+        self.assertEqual(expected["physical_output_files"], 367)
         self.assertEqual(expected["traceability_rows"], 67)
         self.assertFalse(
             self.settings["evidence_policy"]["creates_new_scientific_evidence"]
@@ -108,7 +108,7 @@ class CasePaintingReportPreparationTests(unittest.TestCase):
 
     def test_upstream_manifest_completion_contract(self) -> None:
         manifests = load_upstream_manifests(self.inputs)
-        self.assertEqual(len(manifests), 24)
+        self.assertEqual(len(manifests), 25)
         checks = validate_upstream_completion(manifests, config=self.config)
         self.assertTrue(checks["passed"].all(), checks.to_string(index=False))
 
@@ -117,8 +117,8 @@ class CasePaintingReportPreparationTests(unittest.TestCase):
             self.case_summary, self.catalog, config=self.config
         )
         self.assertTrue(checks["passed"].all(), checks.to_string(index=False))
-        self.assertEqual(len(self.case_summary), 410)
-        self.assertEqual(int(self.case_summary["candidate_count"].sum()), 1785)
+        self.assertEqual(len(self.case_summary), 2620)
+        self.assertEqual(int(self.case_summary["candidate_count"].sum()), 13879)
         self.assertEqual(
             len(self.uncertainty_scores),
             self.settings["expected_counts"]["uncertainty_case_count"],
@@ -137,22 +137,28 @@ class CasePaintingReportPreparationTests(unittest.TestCase):
         self.assertTrue(checks["passed"].all(), checks.to_string(index=False))
         self.assertEqual(first["case_id"].nunique(), 30)
 
-    def test_all_fifty_paintings_and_all_cases_are_retained(self) -> None:
+    def test_all_three_hundred_paintings_and_all_cases_are_retained(self) -> None:
         artworks = pd.read_csv(self.inputs["artworks_path"], low_memory=False)
         painting_summary = build_painting_summary(
             self.case_summary, artworks, config=self.config
         )
         checks = validate_painting_summary(painting_summary, config=self.config)
         self.assertTrue(checks["passed"].all(), checks.to_string(index=False))
-        self.assertEqual(len(painting_summary), 50)
-        self.assertEqual(int(painting_summary["case_count"].sum()), 410)
+        self.assertEqual(len(painting_summary), 300)
+        self.assertEqual(int(painting_summary["case_count"].sum()), 2620)
         self.assertEqual(
             sorted(
                 painting_summary.loc[
                     painting_summary["is_extension_painting"], "painting_id"
                 ]
             ),
-            ["p001", "p018", "p026", "p039", "p043"],
+            [
+                "p001", "p009", "p018", "p026", "p039", "p043", "p052",
+                "p073", "p077", "p089", "p093", "p100", "p107", "p115",
+                "p123", "p124", "p139", "p140", "p157", "p173", "p178",
+                "p181", "p198", "p199", "p208", "p210", "p220", "p223",
+                "p235", "p246", "p256", "p259", "p267", "p284", "p294",
+            ],
         )
 
     def test_mock_traceability_retains_all_approved_roles(self) -> None:
