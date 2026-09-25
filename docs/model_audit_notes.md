@@ -1,19 +1,20 @@
 # Model Audit Notes
 
-**Status:** completed-pipeline audit notes with completed N37 extension addendum;
-reviewed 2026-09-06.
+**Status:** Controlled-300 audit notes with completed HINT selection and execution;
+reviewed 2026-09-25 for the Notebook 30 preparation layer.
 
 This document records model selection, implementation provenance, evidence
-boundaries and reproducibility risks. Notebook 30 consumed an earlier version
-when producing its completed model cards. This maintenance update does not
-rewrite those cards, their source checksums or any historical run manifest.
+boundaries and reproducibility risks. Notebook 30's earlier Controlled-50 cards
+remain a baseline only; the reopened notebook will replace them with the
+Controlled-300 evidence described here.
 
 - Literature justification belongs in [the literature log](literature_reference_log.md).
 - General methodology belongs in [the methodology guide](methodology_notes.md).
 - Executed counts and artifacts belong in notebook-owned manifests and canonical tables.
-- Notebook 30 produced four portable Markdown model cards and a 35-row
-  compute/scalability table: 27 observed summaries and eight projection records.
-  Detailed results belong in those outputs, not duplicated here.
+- Notebook 30 will produce five portable Markdown model cards and a 42-row
+  compute/scalability table: 32 observed summaries and ten explicitly labelled
+  future projection records. Detailed results belong in those outputs, not
+  duplicated here.
 
 ---
 
@@ -36,24 +37,26 @@ The central risk is domain gap. General-image or web-scale training does not est
 
 ## 2. Evaluated model stack
 
-| Model | Evaluation status | Methodological role | N09–N12 completed candidates |
-|---|---|---|---:|
-| OpenCV Telea | Fully evaluated | Classical deterministic baseline | 410 |
-| LaMa | Fully evaluated | Learned deterministic inpainting baseline | 410 |
-| Stable Diffusion Inpainting | Fully evaluated | Prompt-conditioned stochastic baseline | 1,330 |
-| SDXL Inpainting | Partial evaluation | Bounded higher-capacity diffusion candidate | 10 |
+| Model | Evaluation status | Methodological role | Scheduled candidate records | Completed candidates |
+|---|---|---|---:|---:|
+| OpenCV Telea | Fully evaluated | Classical deterministic baseline | 2,620 | 2,620 |
+| LaMa | Fully evaluated | Learned deterministic convolutional baseline | 2,620 | 2,620 |
+| HINT | Fully evaluated | Learned deterministic mask-aware transformer | 2,620 | 2,620 |
+| Stable Diffusion Inpainting | Fully evaluated | Prompt-conditioned stochastic baseline | 8,520 | 8,520 |
+| SDXL Inpainting | Partial evaluation | Bounded higher-capacity diffusion candidate | 35 | 24 |
 
-OpenCV Telea, LaMa, and Stable Diffusion share all 410 eligible restoration cases
-across 50 paintings, including 50 zero controls per primary branch. They do not
-restore all 525 registered cases. SDXL is restricted to ten predeclared cases
-across five paintings and must not be presented as a full-scope comparison.
+OpenCV Telea, LaMa, HINT and Stable Diffusion share all 2,620 eligible restoration
+cases across 300 paintings, including 300 zero controls per primary branch.
+Stable Diffusion additionally retains approved prompt-context and repeated-seed
+candidates. SDXL is restricted to 35 predeclared cases across 30 paintings; 24
+completed, one timed out and ten were not started under the declared compute
+budget. It must not be presented as a full-scope comparison.
 
-Notebook 22 separately owns 105 additional Stable Diffusion damage-size
-candidates. N11 and N22 therefore contain 1,435 Stable Diffusion candidates in
-total, but N30's original generation/runtime basis remains the 1,330 N11 rows.
-The downstream 1,785-candidate reporting population is a selection across models
-and experiments, not the number of Stable Diffusion outputs or all generated
-outputs. Selection approval is not restoration-quality approval.
+Notebook 22 owns additional Stable Diffusion damage-size candidates outside the
+N11 generation/runtime table. Notebook 30's observed Stable Diffusion generation
+basis is therefore the 8,520 N11 rows; it does not silently merge downstream
+metric or reporting populations into model-generation runtime. Selection
+approval is not restoration-quality approval.
 
 API-only image-editing services are outside the executed model stack. No
 comparative performance claim about an unexecuted service follows from this
@@ -188,28 +191,28 @@ Retain Stable Diffusion as the fully evaluated stochastic baseline and uncertain
 - execution: bounded partial evaluation on the recorded 6 GB RTX 3060 Laptop GPU.
 
 The pinned revision is `115134f363124c53c7d878647567d04daf26e41e`.
-The execution used a 7,200-second global budget, a 900-second per-case watchdog,
-seed 2026, 30 DDIM steps and exact-mask compositing. All ten selected cases
-completed; timeout and unstarted states in the contract are guardrail policies,
-not observed failures in this run. See the
+The execution used a seven-hour global budget, a 900-second per-case watchdog,
+seed 2026, 30 DDIM steps and exact-mask compositing. Of 35 scheduled cases, 24
+completed, one timed out and ten were skipped when the declared budget was
+reached. See the
 [executed N12 contract](notebook_12_partial_evaluation_contract.md).
 
 ### Evidence population
 
-- ten completed candidates;
-- five paintings;
-- four canonical and six synthetic-degradation cases selected for cross-method comparison;
+- 35 scheduled cases and 24 completed candidates;
+- 30 scheduled paintings and 19 paintings represented by completed candidates;
+- 13 completed canonical and 11 completed synthetic-degradation cases;
 - one seed per case, so no seed-based uncertainty estimate.
 
 ### Strengths
 
 - higher-capacity diffusion comparison;
 - provides observed local runtime and memory evidence;
-- ten persisted outputs permit a bounded four-model comparison.
+- 24 persisted outputs permit a bounded five-model comparison.
 
 ### Limitations
 
-- not evaluated on the complete 410-case design;
+- not evaluated on the complete 2,620-case design;
 - one seed per case;
 - high local runtime and memory burden;
 - insufficient evidence for a full-scope ranking or current-design projection;
@@ -218,10 +221,10 @@ not observed failures in this run. See the
 ### Project decision
 
 Retain SDXL as `partial_evaluation`, not a no-output feasibility result and not
-fully evaluated. Notebook 30 projected the common 300-painting canonical-primary
-scenario from its four executed canonical nonzero cases and marked the complete
-current-design projection not applicable. The narrow extrapolation basis must
-remain visible; it is not evidence that SDXL would finish a larger experiment.
+fully evaluated. Notebook 30 will project a hypothetical 300-painting full-design
+SDXL run from its 24 completed bounded cases. The narrow extrapolation basis,
+single-workstation runtime and observed incomplete schedule must remain visible;
+the projection is not evidence that SDXL would finish the larger experiment.
 
 ## 7. Quality evidence policy
 
@@ -248,8 +251,10 @@ edge-overlap F1 and generic “seam energy” must not replace the actual anchor
 
 Two populations remain separate:
 
-- `core_three_model`: all 410 shared cases for Telea, LaMa, and Stable Diffusion;
-- `sdxl_four_model_subset`: the bounded 10-case four-model subset.
+- `core_three_model`: stable historical identifier for the 2,620 shared cases
+  and four methods Telea, LaMa, HINT, and Stable Diffusion;
+- `sdxl_four_model_subset`: stable historical identifier for the bounded
+  24-case, 19-painting five-method subset.
 
 Anchor wins are descriptive counts across validated evidence views. They are not
 a weighted score, conservation ranking, or substitute for case-level inspection.
@@ -259,8 +264,8 @@ Neither runtime nor repeated-seed uncertainty enters cross-model quality voting.
 
 - Stable Diffusion receives empirical repeated-seed uncertainty because four candidates exist per approved group.
 - SDXL has insufficient repeated-seed coverage and receives no artificial uncertainty value.
-- Telea and LaMa are deterministic under the evaluated contract; later analyses use robustness or sensitivity terminology.
-- Notebook 18 owns scalar and pairwise uncertainty for the 130 canonical groups.
+- Telea, LaMa and HINT are deterministic under the evaluated contract; later analyses use robustness or sensitivity terminology.
+- Notebook 18 owns scalar and pairwise uncertainty for the complete approved repeated-seed groups.
 - Notebook 19 owns their numeric uncertainty maps, heatmaps and spatial overlays.
 - Notebook 22 owns the damage-size extension, including its 35-group scalar and spatial uncertainty evidence.
 
@@ -274,32 +279,38 @@ Texture and brushstroke-proxy measures do not authenticate an artist, date a wor
 
 ## 10. Compute and scalability policy
 
-Notebook 30 records observed runtime summaries from Notebooks 09–12. These values
+Notebook 30 records observed runtime summaries from Notebooks 09–12A. These values
 describe one workstation, software stack, cache state and execution policy; they
 are not an end-to-end runtime total for all 36 notebooks. The N22 additional-seed
-execution is not included in this N09–N12 runtime basis.
+execution is not included in this N09–N12A runtime basis.
 
-Two transparent 300-painting sensitivity scenarios were retained:
+Two transparent future sensitivity scenarios are retained:
 
-1. `projected_300_canonical_primary`: 1,500 candidate outputs per model, consisting of 1,200 inferred non-zero cases and 300 zero controls.
-2. `projected_300_current_design_mix`: six times the N09–N12 generation design—2,460 Telea candidates, 2,460 LaMa candidates, and 7,980 Stable Diffusion candidates. Despite the historical scenario name, this does not scale the later N22 extension or the final 1,785-candidate reporting selection. SDXL is not applicable because no full-design SDXL basis exists.
+1. `projected_600_current_design_mix`: two times the executed Controlled-300
+   generation design—5,240 candidates each for Telea, LaMa and HINT, and 17,040
+   Stable Diffusion candidates. SDXL is not applicable to this shared full-method
+   scenario because its executed evidence is bounded.
+2. `projected_300_sdxl_full_design`: 2,620 SDXL candidate records, consisting of
+   2,320 inferred non-zero cases and 300 identity zero controls, extrapolated from
+   the 24 completed bounded SDXL cases.
 
 Projection rules:
 
 - median, mean, and p95 observed per-candidate runtimes form sensitivity values;
 - these values are not confidence intervals;
-- no 300-painting experiment was executed;
+- the Controlled-300 run is executed evidence; the 600-painting and full-design
+  SDXL rows remain projections;
 - projected storage covers notebook-owned artifacts only;
 - caches, environments, Git history, downstream metrics, energy, and carbon are excluded;
 - no universal runtime or hardware benchmark is claimed.
 
 ## 11. Model-card reporting policy
 
-Notebook 30 produced four standalone Markdown cards under its approved structure.
+Notebook 30 will produce five standalone Markdown cards under its approved structure.
 They separate observed measurements from projections, record intended/excluded
 uses and provenance limitations, and remain readable without image dependencies.
-They are historical generated artifacts, not files to regenerate during this
-documentation update.
+The reopened notebook replaces the historical Controlled-50 cards only after its
+completion gate passes.
 
 Training-data and licence disclosures in those cards retain the qualifications
 recorded by their producer. In particular, a software licence must not be silently
@@ -311,6 +322,7 @@ Canonical cards:
 
 - [OpenCV Telea](../outputs/30_model_cards_compute_and_scalability/reports/model_cards/opencv_telea.md)
 - [LaMa](../outputs/30_model_cards_compute_and_scalability/reports/model_cards/lama.md)
+- [HINT](../outputs/30_model_cards_compute_and_scalability/reports/model_cards/hint_places2.md)
 - [Stable Diffusion](../outputs/30_model_cards_compute_and_scalability/reports/model_cards/stable_diffusion_inpainting.md)
 - [SDXL](../outputs/30_model_cards_compute_and_scalability/reports/model_cards/sdxl_inpainting.md)
 - [Compute/scalability table](../outputs/30_model_cards_compute_and_scalability/metrics/compute_scalability.csv)

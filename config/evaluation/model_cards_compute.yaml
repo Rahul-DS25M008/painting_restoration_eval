@@ -1,12 +1,12 @@
 config_schema_version: "model_cards_compute_config.v1"
-config_version: "1.0.0"
+config_version: "2.0.0"
 
 model_cards_compute:
   notebook_id: "30"
   notebook_stem: "30_model_cards_compute_and_scalability"
   dataset_id: "painting_restoration_eval"
-  dataset_version: "1.0.0"
-  dataset_scope: "controlled_50"
+  dataset_version: "2.0.0"
+  dataset_scope: "controlled_300"
   model_card_schema_version: "model_cards.v1"
   compute_schema_version: "compute_scalability.v1"
 
@@ -22,6 +22,7 @@ model_cards_compute:
     model_audit_notes_path: "docs/model_audit_notes.md"
     telea_config_path: "config/experiments/opencv_telea.yaml"
     lama_config_path: "config/experiments/lama.yaml"
+    hint_config_path: "config/experiments/hint.yaml"
     stable_diffusion_config_path: "config/experiments/stable_diffusion.yaml"
     scratch_prompt_config_path: "config/experiments/stable_diffusion_scratch_prompt_ablation.yaml"
     sdxl_config_path: "config/experiments/sdxl.yaml"
@@ -29,6 +30,8 @@ model_cards_compute:
     telea_runtime_path: "outputs/09_opencv_telea_restoration/metrics/runtime_summary.csv"
     lama_candidates_path: "outputs/10_lama_restoration/data/restorations.csv"
     lama_runtime_path: "outputs/10_lama_restoration/metrics/runtime_summary.csv"
+    hint_candidates_path: "outputs/12a_hint_restoration/data/restorations.csv"
+    hint_runtime_path: "outputs/12a_hint_restoration/metrics/runtime_summary.csv"
     stable_diffusion_candidates_path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
     stable_diffusion_runtime_path: "outputs/11_stable_diffusion_restoration/metrics/runtime_summary.csv"
     sdxl_candidates_path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
@@ -39,6 +42,7 @@ model_cards_compute:
     manifest_10_path: "outputs/10_lama_restoration/manifests/run_manifest.json"
     manifest_11_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
     manifest_12_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+    manifest_12a_path: "outputs/12a_hint_restoration/manifests/run_manifest.json"
     manifest_13_path: "outputs/13_classical_metrics/manifests/run_manifest.json"
     manifest_14_path: "outputs/14_lpips_metrics/manifests/run_manifest.json"
     manifest_15_path: "outputs/15_feature_similarity/manifests/run_manifest.json"
@@ -87,11 +91,11 @@ model_cards_compute:
       deterministic: true
       stochastic: false
       prompt_dependent: false
-      evaluated_painting_count: 50
-      evaluated_case_count: 410
-      evaluated_candidate_count: 410
-      model_inference_count: 360
-      zero_control_count: 50
+      evaluated_painting_count: 300
+      evaluated_case_count: 2620
+      evaluated_candidate_count: 2620
+      model_inference_count: 2320
+      zero_control_count: 300
       output_root: "outputs/09_opencv_telea_restoration"
       inference_width: 768
       inference_height: 768
@@ -136,11 +140,11 @@ model_cards_compute:
       deterministic: true
       stochastic: false
       prompt_dependent: false
-      evaluated_painting_count: 50
-      evaluated_case_count: 410
-      evaluated_candidate_count: 410
-      model_inference_count: 360
-      zero_control_count: 50
+      evaluated_painting_count: 300
+      evaluated_case_count: 2620
+      evaluated_candidate_count: 2620
+      model_inference_count: 2320
+      zero_control_count: 300
       output_root: "outputs/10_lama_restoration"
       inference_width: 768
       inference_height: 768
@@ -168,6 +172,55 @@ model_cards_compute:
         - "general-scene rather than painting-specific training"
         - "possible texture smoothing"
         - "plausible content may remain historically incorrect"
+    - model_id: "hint_places2"
+      display_name: "HINT"
+      evaluation_status: "fully_evaluated"
+      model_family: "learned_mask_aware_transformer_inpainting"
+      methodological_role: "learned_deterministic_mask_aware_transformer"
+      original_purpose: "High-fidelity image inpainting using mask-aware transformer features and a learned general-scene prior."
+      implementation: "Official HINT generator loaded directly"
+      implementation_version_field: "model_version"
+      model_identifier: "hint_places2_official"
+      software_license: "MIT"
+      weight_license: "not_separately_verified_in_project_sources"
+      license_scope_note: "The official repository software is MIT licensed; the Places2 checkpoint terms are recorded separately and are not silently equated with the software licence."
+      training_data_description: "The selected official checkpoint is the Places2 variant. Places2 is general-scene data rather than painting-conservation data."
+      training_data_transparency: "partial"
+      deterministic: true
+      stochastic: false
+      prompt_dependent: false
+      evaluated_painting_count: 300
+      evaluated_case_count: 2620
+      evaluated_candidate_count: 2620
+      model_inference_count: 2320
+      zero_control_count: 300
+      output_root: "outputs/12a_hint_restoration"
+      inference_width: 768
+      inference_height: 768
+      output_width: 768
+      output_height: 768
+      input_constraints: "Normalized 768 x 768 RGB painting input passed through the official HINT generator; identity zero controls bypass inference."
+      mask_constraints: "Single-channel binary missing-region mask under the approved HINT threshold policy; native 768 inference; exact outside-mask compositing; no per-case tuning."
+      source_ids: ["hint_repository"]
+      intended_uses:
+        - "deterministic structure-aware learned inpainting comparison"
+        - "controlled digital restoration candidate generation"
+        - "full-scope comparison with classical, convolutional and diffusion methods"
+      excluded_uses:
+        - "historically verified reconstruction"
+        - "artist authentication or conservation approval"
+        - "calibrated uncertainty estimation"
+      domain_gap: "Places2 training does not establish painting-specific, art-historical or conservation-specific competence."
+      bias_notes: "Learned scene priors may impose unsupported structure, texture or cultural regularities despite deterministic execution."
+      hardware_requirements: "Executed in float32 on the recorded RTX 3060 Laptop GPU; the project does not claim a universal minimum VRAM threshold."
+      strengths:
+        - "deterministic learned transformer family distinct from LaMa"
+        - "native 768 x 768 execution under the validated adapter"
+        - "full controlled-300 coverage"
+      weaknesses:
+        - "general-scene rather than painting-specific training"
+        - "no prompt or repeated-seed uncertainty mechanism"
+        - "plausible structure may remain historically unsupported"
     - model_id: "stable_diffusion_inpainting"
       display_name: "Stable Diffusion Inpainting"
       evaluation_status: "fully_evaluated"
@@ -185,11 +238,11 @@ model_cards_compute:
       deterministic: false
       stochastic: true
       prompt_dependent: true
-      evaluated_painting_count: 50
-      evaluated_case_count: 410
-      evaluated_candidate_count: 1330
-      model_inference_count: 1280
-      zero_control_count: 50
+      evaluated_painting_count: 300
+      evaluated_case_count: 2620
+      evaluated_candidate_count: 8520
+      model_inference_count: 8220
+      zero_control_count: 300
       output_root: "outputs/11_stable_diffusion_restoration"
       inference_width: 512
       inference_height: 512
@@ -234,17 +287,17 @@ model_cards_compute:
       deterministic: false
       stochastic: true
       prompt_dependent: true
-      evaluated_painting_count: 5
-      evaluated_case_count: 10
-      evaluated_candidate_count: 10
-      model_inference_count: 10
+      evaluated_painting_count: 30
+      evaluated_case_count: 35
+      evaluated_candidate_count: 35
+      model_inference_count: 35
       zero_control_count: 0
       output_root: "outputs/12_sdxl_feasibility_or_restoration"
       inference_width: 768
       inference_height: 768
       output_width: 768
       output_height: 768
-      input_constraints: "Normalized 768 x 768 RGB painting input in the predeclared ten-case bounded scope."
+      input_constraints: "Normalized 768 x 768 RGB painting input in the predeclared 35-case bounded scope across 30 paintings."
       mask_constraints: "Single-channel case-semantic missing-region mask using threshold 128; exact outside-mask compositing; no empty-mask controls in the partial evaluation."
       source_ids: ["sdxl_inpainting_model_card", "sdxl_base_model_card"]
       intended_uses:
@@ -263,7 +316,7 @@ model_cards_compute:
         - "technically valid 768px partial outputs"
         - "direct local feasibility evidence"
       weaknesses:
-        - "only ten purposively selected cases"
+        - "only 35 purposively selected cases, of which 24 completed"
         - "very high runtime on recorded hardware"
         - "no repeated-seed uncertainty coverage"
 
@@ -285,6 +338,9 @@ model_cards_compute:
       - source_id: "iopaint_repository"
         source_type: "runtime_repository"
         url: "https://github.com/Sanster/IOPaint"
+      - source_id: "hint_repository"
+        source_type: "official_repository"
+        url: "https://github.com/ChrisChen1023/HINT"
       - source_id: "stable_diffusion_inpainting_model_card"
         source_type: "official_model_card"
         url: "https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-inpainting"
@@ -314,21 +370,21 @@ model_cards_compute:
       - "structural_affinity_correlation"
     populations:
       core_three_model:
-        model_ids: ["opencv_telea", "lama", "stable_diffusion_inpainting"]
-        case_count: 410
-        painting_count: 50
+        # Stable schema identifier retained for downstream compatibility.
+        model_ids: ["opencv_telea", "lama", "hint_places2", "stable_diffusion_inpainting"]
+        case_count: 2620
+        painting_count: 300
       sdxl_four_model_subset:
-        model_ids: ["opencv_telea", "lama", "stable_diffusion_inpainting", "sdxl_inpainting"]
-        case_count: 10
-        painting_count: 5
+        # Stable schema identifier retained for downstream compatibility.
+        model_ids: ["opencv_telea", "lama", "hint_places2", "stable_diffusion_inpainting", "sdxl_inpainting"]
+        case_count: 24
+        painting_count: 19
     combined_quality_score_retained: false
     runtime_in_quality_vote: false
     anchor_win_count_is_descriptive_only: true
 
   projections:
-    baseline_painting_count: 50
-    target_painting_count: 300
-    scale_multiplier: 6
+    baseline_painting_count: 300
     sensitivity_statistics: ["median", "mean", "p95"]
     runtime_lower_rule: "minimum_of_scaled_median_and_scaled_mean"
     runtime_central_rule: "scaled_mean"
@@ -336,48 +392,60 @@ model_cards_compute:
     sensitivity_is_confidence_interval: false
     include_model_cache_storage: false
     scenarios:
-      - scenario_id: "projected_300_canonical_primary"
+      - scenario_id: "projected_600_current_design_mix"
+        target_painting_count: 600
+        projection_mode: "scale_complete_executed_design"
         target_case_count:
-          opencv_telea: 1500
-          lama: 1500
-          stable_diffusion_inpainting: 1500
-          sdxl_inpainting: 1500
+          opencv_telea: 5240
+          lama: 5240
+          hint_places2: 5240
+          stable_diffusion_inpainting: 5240
+          sdxl_inpainting: null
         target_candidates:
-          opencv_telea: 1500
-          lama: 1500
-          stable_diffusion_inpainting: 1500
-          sdxl_inpainting: 1500
+          opencv_telea: 5240
+          lama: 5240
+          hint_places2: 5240
+          stable_diffusion_inpainting: 17040
+          sdxl_inpainting: null
         target_inference_candidates:
-          opencv_telea: 1200
-          lama: 1200
-          stable_diffusion_inpainting: 1200
-          sdxl_inpainting: 1200
+          opencv_telea: 4640
+          lama: 4640
+          hint_places2: 4640
+          stable_diffusion_inpainting: 16440
+          sdxl_inpainting: null
         target_zero_controls:
-          opencv_telea: 300
-          lama: 300
-          stable_diffusion_inpainting: 300
+          opencv_telea: 600
+          lama: 600
+          hint_places2: 600
+          stable_diffusion_inpainting: 600
+          sdxl_inpainting: null
+      - scenario_id: "projected_300_sdxl_full_design"
+        target_painting_count: 300
+        projection_mode: "scale_bounded_sdxl_to_full_design"
+        target_case_count:
+          opencv_telea: null
+          lama: null
+          hint_places2: null
+          stable_diffusion_inpainting: null
+          sdxl_inpainting: 2620
+        target_candidates:
+          opencv_telea: null
+          lama: null
+          hint_places2: null
+          stable_diffusion_inpainting: null
+          sdxl_inpainting: 2620
+        target_inference_candidates:
+          opencv_telea: null
+          lama: null
+          hint_places2: null
+          stable_diffusion_inpainting: null
+          sdxl_inpainting: 2320
+        target_zero_controls:
+          opencv_telea: null
+          lama: null
+          hint_places2: null
+          stable_diffusion_inpainting: null
           sdxl_inpainting: 300
-      - scenario_id: "projected_300_current_design_mix"
-        target_case_count:
-          opencv_telea: 2460
-          lama: 2460
-          stable_diffusion_inpainting: 2460
-          sdxl_inpainting: null
-        target_candidates:
-          opencv_telea: 2460
-          lama: 2460
-          stable_diffusion_inpainting: 7980
-          sdxl_inpainting: null
-        target_inference_candidates:
-          opencv_telea: 2160
-          lama: 2160
-          stable_diffusion_inpainting: 7680
-          sdxl_inpainting: null
-        target_zero_controls:
-          opencv_telea: 300
-          lama: 300
-          stable_diffusion_inpainting: 300
-          sdxl_inpainting: null
 
   report:
     format: "markdown"
@@ -402,26 +470,30 @@ model_cards_compute:
       - "reproducibility-and-provenance"
 
   expected_counts:
-    upstream_manifest_count: 21
-    telea_candidate_rows: 410
-    lama_candidate_rows: 410
-    stable_diffusion_candidate_rows: 1330
-    sdxl_candidate_rows: 10
+    upstream_manifest_count: 22
+    telea_candidate_rows: 2620
+    lama_candidate_rows: 2620
+    hint_candidate_rows: 2620
+    stable_diffusion_candidate_rows: 8520
+    sdxl_candidate_rows: 35
+    sdxl_completed_rows: 24
+    sdxl_noncompleted_rows: 11
     telea_runtime_rows: 5
     lama_runtime_rows: 5
+    hint_runtime_rows: 5
     stable_diffusion_runtime_rows: 14
     sdxl_runtime_rows: 3
-    observed_compute_rows: 27
-    projection_rows: 8
-    compute_rows: 35
-    model_card_rows: 4
+    observed_compute_rows: 32
+    projection_rows: 10
+    compute_rows: 42
+    model_card_rows: 5
     quality_populations: 2
     quality_anchor_rows: 22
-    model_card_report_count: 4
+    model_card_report_count: 5
     canonical_figure_count: 2
     artifact_record_count: 6
-    canonical_file_count: 11
-    minimum_validation_rows: 120
+    canonical_file_count: 12
+    minimum_validation_rows: 130
 
   evidence_policy:
     projections_are_executed_results: false
@@ -436,8 +508,8 @@ model_cards_compute:
 
   known_limitations:
     - "Runtime and memory observations describe one recorded local workstation and software environment."
-    - "The 300-painting values are transparent linear projections, not executed experiments."
+    - "The controlled 300-painting values are executed observations; only the explicitly labelled 600-painting and full-design SDXL values are projections."
     - "Projected storage covers notebook-owned output artifacts and excludes model caches, environments, Git history, and downstream metric outputs."
-    - "SDXL has ten completed candidates nested within five paintings and cannot support a full-scope ranking."
+    - "SDXL scheduled 35 bounded cases across 30 paintings; 24 completed, one timed out and ten were skipped under the declared budget, so it cannot support a full-scope ranking."
     - "LaMa per-case runtime includes transparent allocation from IOPaint batch wall-clock measurements."
     - "Quality-anchor wins are descriptive validated Notebook 21 evidence, not a universal quality or conservation score."

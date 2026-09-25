@@ -604,7 +604,7 @@
     "explainable_case_retrieval.report": "135ea78afd827d891093fa636dd493a66ebef8064c63e27d9554fb729005e85d",
     "validation.29_explainable_ai_and_case_retrieval": "cc104cf4c5f67d21464ed8c6e874a8729a831d3a86601a1c6024276f492f2ddc"
   },
-  "artifact_manifest_checksum": "e578cbed4c1e53233961a719ae5d4eb54b3bf55e81c0baa1a49be31b30e4027b",
+  "artifact_manifest_checksum": "5df62a9675e9b6ad214475887378d29043312ca792f33ab0c5c24a7e2ac08a60",
   "roadmap_requirement_count": 13,
   "roadmap_traceability_failures": 0,
   "report_visual_contract": {

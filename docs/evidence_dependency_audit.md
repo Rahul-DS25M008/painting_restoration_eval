@@ -1122,45 +1122,35 @@ one-JSON structure while the catalog grew from 1,785 to 13,879 rows. The complet
 report, compact neighbour table, manifests and validation ledger form the
 ordinary-Git handoff without consuming Git LFS.
 
-Notebook 30, `30_model_cards_compute_and_scalability.ipynb`, subsequently
-completed the approved model-card and compute/scalability stage with its
-completion gate passed. It:
+Notebook 30, `30_model_cards_compute_and_scalability.ipynb`, is reopened for its
+Controlled-300 run. Its preparation layer is complete, but the completion gate
+remains false until the notebook is rerun. The binding contract will:
 
-- persisted four machine-readable method cards and four portable standalone
-  Markdown cards for OpenCV Telea, LaMa, Stable Diffusion Inpainting, and SDXL
-  Inpainting;
-- recorded exact implementation identity, versions and revisions, licences,
-  available training-data disclosure, intended and unsupported uses, input and
-  mask constraints, painting-domain gaps, limitations, hardware, and evaluation
-  status for every method;
-- retained the full evaluated populations of 410 Telea, 410 LaMa, and 1,330
-  Stable Diffusion candidates, while keeping SDXL explicitly bounded to ten
-  candidates from five paintings;
-- persisted 35 compute/scalability rows: 27 observed execution summaries and
-  eight transparent 300-painting projection rows;
-- kept observed and projected records separate, retained seven applicable
-  projection rows, and marked the SDXL current-design projection
-  `not_applicable_no_full_design_basis`;
-- retained all eleven Notebook 21 quality anchors as separate descriptive
-  evidence in two population-matched views, without constructing a combined
-  quality/compute score or including runtime in the quality vote;
-- generated two canonical figures and four thirteen-section text-native method
-  cards with no image dependency;
-- passed all 165 validation checks and all 13 roadmap traceability requirements
-  with zero blocking or warning failures;
-- registered six non-self-referential artifacts and exactly eleven physical
-  files under `outputs/30_model_cards_compute_and_scalability/`.
+- persist five machine-readable and portable Markdown method cards for OpenCV
+  Telea, LaMa, HINT, Stable Diffusion Inpainting, and SDXL Inpainting;
+- consume 2,620 Telea, 2,620 LaMa, 2,620 HINT and 8,520 Stable Diffusion
+  candidate records from the executed Controlled-300 producers;
+- preserve SDXL as a bounded partial evaluation: 35 scheduled cases across 30
+  paintings, with 24 completed cases across 19 paintings;
+- persist 42 compute/scalability rows: 32 observed runtime summaries and ten
+  projection rows across a 600-painting current-design scenario and a
+  hypothetical 300-painting full-design SDXL scenario;
+- retain all eleven Notebook 21 quality anchors as separate descriptive
+  evidence in the stable historical population identifiers, whose actual
+  memberships are now a four-method core and bounded five-method subset;
+- keep observed and projected evidence separate, keep runtime outside the
+  quality vote, and produce no combined quality/compute score;
+- generate two canonical figures and five thirteen-section text-native cards,
+  for exactly twelve physical canonical files.
 
-Notebook 30 is now the canonical downstream source for method-card disclosures,
-observed model compute, notebook-owned model output storage, and transparent
-300-painting scalability projections. Notebook 31 must preserve the distinction
-between the complete three-model population and the bounded SDXL subset, between
-observed and projected evidence, and between separate quality anchors and runtime.
-The projections are linear sensitivity estimates rather than executed experiments
-or confidence intervals. Recorded runtime and memory describe one workstation,
-quality-anchor wins are descriptive rather than a universal score, and the cards
-do not establish historical authenticity, conservation suitability, or approval
-for physical treatment.
+After validation, Notebook 30 becomes the Controlled-300 canonical downstream
+source for method disclosures, observed compute and notebook-owned model storage.
+Its 600-painting and full-design SDXL rows are linear sensitivity projections,
+not executed experiments or confidence intervals. Recorded runtime and memory
+describe one workstation; quality-anchor wins remain descriptive; and no card
+establishes historical authenticity, conservation suitability, or approval for
+physical treatment. The previous Controlled-50 outputs remain only the frozen
+E-drive comparison baseline.
 
 Notebook 31 is complete and passed its completion gate. It consumed validated
 Notebook 09--30 artifacts and produced four standalone, self-contained HTML

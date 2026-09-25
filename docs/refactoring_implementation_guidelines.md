@@ -1029,6 +1029,22 @@ complete explanation catalogue is diagnostics-tier Hugging Face evidence. The
 bounded panels, report, neighbour table, manifests and validation ledger stay in
 ordinary Git under the exhausted-LFS guard.
 
+A post-run metadata audit found that Notebook 29's artifact-registration cell
+had retained the literal `controlled_50` even though its tables, figures, report,
+run manifest and validated population are Controlled-300. The six canonical
+artifact-manifest and project-path registry records are corrected to
+`controlled_300`; no scientific payload or checksum of a registered target
+artifact changed. Future artifact records must derive `dataset_scope` from the
+active configuration or validated upstream scope and must never copy a pilot
+literal into a completed Controlled-300 handoff.
+
+Notebook 30's Controlled-300 preparation layer is complete. It adds HINT as the
+fifth card, consumes 32 observed runtime summaries from N09–N12A, and replaces
+the obsolete 50-to-300 projections with ten explicitly future rows: a
+600-painting current-design scenario plus a hypothetical full-design SDXL
+scenario. The notebook must still be edited manually and rerun before its
+completion metadata or project-path registrations become Controlled-300.
+
 Notebook 25's 41.97 MB canonical scalar table is diagnostics-tier evidence and
 is published through the bounded external-artifact workflow. Its two figures,
 self-contained report, manifests and validation table form the compact GitHub

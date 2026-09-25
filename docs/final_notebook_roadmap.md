@@ -3351,6 +3351,11 @@ ordinary-Git handoff without Git LFS.
 **Output root:** `outputs/30_model_cards_compute_and_scalability/`\
 **Depends on:** Notebooks 09–29 and model-audit sources
 
+**Controlled-300 preparation status (2026-09-25):** configuration, helper,
+contract tests and governing evidence records are ready; notebook execution and
+completion validation remain pending. The previous Controlled-50 output tree is
+the E-drive comparison baseline, not current evidence.
+
 ### Model/method cards
 
 Document for every method:
@@ -3368,7 +3373,10 @@ Document for every method:
 - hardware requirements;
 - fully evaluated, partially evaluated, or feasibility-only status.
 
-OpenCV Telea receives a method card.
+The five cards are OpenCV Telea, LaMa, HINT, Stable Diffusion Inpainting and
+SDXL Inpainting. Telea, LaMa, HINT and Stable Diffusion use the executed
+2,620-case/300-painting scope; SDXL remains a 35-scheduled-case bounded partial
+evaluation with 24 completed cases across 19 paintings.
 
 ### Compute and scalability
 
@@ -3385,6 +3393,17 @@ Record and analyze:
 - observed 300-painting cost and clearly separate projections beyond 300;
 - projected SDXL cost;
 - quality versus runtime, memory, storage, candidates, and dataset size.
+
+The canonical compute table contains 32 observed runtime-summary rows and ten
+projection rows. `projected_600_current_design_mix` scales the four full-scope
+methods to 600 paintings while leaving SDXL not applicable. The separate
+`projected_300_sdxl_full_design` scenario estimates the missing SDXL full-design
+cost from its 24 completed bounded cases. These sensitivity bounds are not
+confidence intervals and no projected row may be described as executed.
+
+Notebook 21's identifiers `core_three_model` and `sdxl_four_model_subset` remain
+stable for schema compatibility, but their displayed memberships are the actual
+four-method core and bounded five-method subset.
 
 ### Canonical outputs
 

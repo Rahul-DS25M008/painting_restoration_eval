@@ -23,7 +23,7 @@ from .paths import find_project_root, resolve_repo_path
 
 
 MODULE_NAME = "restoration_eval.model_cards_compute"
-MODULE_VERSION = "1.0.0"
+MODULE_VERSION = "2.0.0"
 CONFIG_SCHEMA_VERSION = "model_cards_compute_config.v1"
 MODEL_CARD_SCHEMA_VERSION = "model_cards.v1"
 COMPUTE_SCHEMA_VERSION = "compute_scalability.v1"
@@ -183,10 +183,11 @@ def load_model_cards_compute_config(path: str | Path) -> dict[str, Any]:
 
     model_ids = [str(item["model_id"]) for item in settings["models"]]
     expected_model_ids = [
-        "opencv_telea", "lama", "stable_diffusion_inpainting", "sdxl_inpainting"
+        "opencv_telea", "lama", "hint_places2",
+        "stable_diffusion_inpainting", "sdxl_inpainting",
     ]
-    if model_ids != expected_model_ids or len(set(model_ids)) != 4:
-        raise ValueError("The four-card model order or identity changed")
+    if model_ids != expected_model_ids or len(set(model_ids)) != 5:
+        raise ValueError("The five-card model order or identity changed")
     source_ids = set(_source_lookup(config))
     for model in settings["models"]:
         missing_sources = set(model["source_ids"]) - source_ids
@@ -195,7 +196,7 @@ def load_model_cards_compute_config(path: str | Path) -> dict[str, Any]:
 
     expected = settings["expected_counts"]
     runtime_total = sum(int(expected[key]) for key in (
-        "telea_runtime_rows", "lama_runtime_rows",
+        "telea_runtime_rows", "lama_runtime_rows", "hint_runtime_rows",
         "stable_diffusion_runtime_rows", "sdxl_runtime_rows",
     ))
     if runtime_total != int(expected["observed_compute_rows"]):
@@ -229,8 +230,8 @@ def load_model_cards_compute_config(path: str | Path) -> dict[str, Any]:
         for item in settings["projections"]["scenarios"]
     }
     expected_scenarios = {
-        "projected_300_canonical_primary",
-        "projected_300_current_design_mix",
+        "projected_600_current_design_mix",
+        "projected_300_sdxl_full_design",
     }
     if set(scenarios) != expected_scenarios:
         raise ValueError("The two approved projection scenarios changed")
@@ -240,7 +241,7 @@ def load_model_cards_compute_config(path: str | Path) -> dict[str, Any]:
             "target_inference_candidates", "target_zero_controls",
         ):
             if set(scenario.get(field, {})) != set(model_ids):
-                raise ValueError(f"{scenario_id}.{field} must cover all four models")
+                raise ValueError(f"{scenario_id}.{field} must cover all five models")
         for model_id in model_ids:
             target = scenario["target_candidates"][model_id]
             inference = scenario["target_inference_candidates"][model_id]
@@ -253,17 +254,28 @@ def load_model_cards_compute_config(path: str | Path) -> dict[str, Any]:
                 raise ValueError(f"{scenario_id}.{model_id} has partial projection arithmetic")
             if int(inference) + int(zero) != int(target):
                 raise ValueError(f"{scenario_id}.{model_id} inference/zero arithmetic changed")
-    canonical = scenarios["projected_300_canonical_primary"]
-    if any(int(canonical["target_case_count"][model_id]) != 1500 for model_id in model_ids):
-        raise ValueError("Canonical projection must retain 1,500 unique cases per model")
-    current = scenarios["projected_300_current_design_mix"]
-    if current["target_case_count"] != {
-        "opencv_telea": 2460,
-        "lama": 2460,
-        "stable_diffusion_inpainting": 2460,
+    scaled = scenarios["projected_600_current_design_mix"]
+    if scaled.get("target_painting_count") != 600:
+        raise ValueError("The complete-design projection must target 600 paintings")
+    if scaled["target_case_count"] != {
+        "opencv_telea": 5240,
+        "lama": 5240,
+        "hint_places2": 5240,
+        "stable_diffusion_inpainting": 5240,
         "sdxl_inpainting": None,
     }:
-        raise ValueError("Current-design projected case counts changed")
+        raise ValueError("The 600-painting current-design case counts changed")
+    sdxl_full = scenarios["projected_300_sdxl_full_design"]
+    if sdxl_full.get("target_painting_count") != 300:
+        raise ValueError("The SDXL full-design projection must target 300 paintings")
+    if sdxl_full["target_case_count"] != {
+        "opencv_telea": None,
+        "lama": None,
+        "hint_places2": None,
+        "stable_diffusion_inpainting": None,
+        "sdxl_inpainting": 2620,
+    }:
+        raise ValueError("The hypothetical SDXL full-design case counts changed")
     if any(bool(value) for value in settings["evidence_policy"].values()):
         raise ValueError("A prohibited Notebook 30 evidence interpretation is enabled")
     return config
@@ -287,9 +299,13 @@ def resolve_model_cards_compute_inputs(
 def validate_upstream_completion(
     manifests: Mapping[str, Mapping[str, Any]],
     *,
-    expected_notebook_ids: Sequence[str] = tuple(f"{n:02d}" for n in range(9, 30)),
+    expected_notebook_ids: Sequence[str] = (
+        *tuple(f"{n:02d}" for n in range(9, 13)),
+        "12a",
+        *tuple(f"{n:02d}" for n in range(13, 30)),
+    ),
 ) -> pd.DataFrame:
-    """Return one strict completion row for every Notebook 09--29 producer."""
+    """Return one strict completion row for every Notebook 09--29 producer plus 12A."""
 
     rows = []
     for notebook_id in expected_notebook_ids:
@@ -349,13 +365,14 @@ def build_model_cards(
     *,
     config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Build the four-row canonical model-card table from observed evidence."""
+    """Build the five-row canonical model-card table from observed evidence."""
 
     settings = _settings(config)
     sources = _source_lookup(config)
     storage_lookup = storage.set_index("model_id").to_dict("index")
     manifest_ids = {
         "opencv_telea": "09", "lama": "10",
+        "hint_places2": "12a",
         "stable_diffusion_inpainting": "11", "sdxl_inpainting": "12",
     }
     rows = []
@@ -470,7 +487,7 @@ def collect_observed_compute(
     *,
     config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Normalize all 27 upstream runtime-summary rows."""
+    """Normalize all 32 upstream runtime-summary rows."""
 
     card_lookup = model_cards.set_index("model_id").to_dict("index")
     rows = []
@@ -569,7 +586,7 @@ def build_scaling_projections(
     *,
     config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Build eight transparent 300-painting projection rows."""
+    """Build ten transparent future-scenario projection rows."""
 
     settings = _settings(config)
     card_lookup = model_cards.set_index("model_id").to_dict("index")
@@ -586,33 +603,35 @@ def build_scaling_projections(
             zero_target = scenario["target_zero_controls"].get(model_id)
             applicable = target is not None
             if applicable:
-                if scenario_id == "projected_300_canonical_primary":
-                    basis = _canonical_projection_basis(model_id, candidate_tables[model_id])
-                    dist = _runtime_distribution(basis)
-                    if model_id == "sdxl_inpainting":
-                        runtime_factor_count = int(inference_target)
-                        multiplier = float(inference_target / dist["count"])
-                        basis_text = "four executed SDXL canonical non-zero cases scaled to 1,200 inference cases; zero controls assigned no inference runtime"
-                    else:
-                        runtime_factor_count = int(target)
-                        multiplier = float(target / dist["count"])
-                        basis_text = f"{int(dist['count'])} executed canonical primary candidates scaled to {int(target)} candidates"
-                    scaled_median = dist["median"] * runtime_factor_count
-                    central = dist["mean"] * runtime_factor_count
-                    scaled_p95 = dist["p95"] * runtime_factor_count
-                    lower = min(scaled_median, central)
-                    upper = max(scaled_p95, central)
+                basis = candidate_tables[model_id]
+                if "case_id" in basis:
+                    basis = basis.loc[
+                        ~basis["case_id"].astype(str).str.endswith("zero_control")
+                    ]
+                if model_id == "sdxl_inpainting":
+                    basis = basis.loc[
+                        basis["status"].astype(str).str.lower().eq("completed")
+                    ]
+                dist = _runtime_distribution(basis)
+                runtime_factor_count = int(inference_target)
+                multiplier = float(runtime_factor_count / dist["count"])
+                scaled_median = dist["median"] * runtime_factor_count
+                central = dist["mean"] * runtime_factor_count
+                scaled_p95 = dist["p95"] * runtime_factor_count
+                lower = min(scaled_median, central)
+                upper = max(scaled_p95, central)
+                if scenario_id == "projected_600_current_design_mix":
+                    basis_text = (
+                        f"complete executed controlled-300 design scaled to "
+                        f"{int(scenario['target_painting_count'])} paintings; "
+                        "identity zero controls carry no inference runtime"
+                    )
                 else:
-                    basis = candidate_tables[model_id]
-                    dist = _runtime_distribution(basis)
-                    runtime_factor_count = int(target)
-                    multiplier = float(settings["projections"]["scale_multiplier"])
-                    scaled_median = dist["median"] * runtime_factor_count
-                    central = dist["mean"] * runtime_factor_count
-                    scaled_p95 = dist["p95"] * runtime_factor_count
-                    lower = min(scaled_median, central)
-                    upper = max(scaled_p95, central)
-                    basis_text = f"complete executed design multiplied by {settings['projections']['scale_multiplier']}"
+                    basis_text = (
+                        f"{int(dist['count'])} completed bounded SDXL candidates "
+                        f"scaled to {int(inference_target)} full-design inference cases; "
+                        "identity zero controls carry no inference runtime"
+                    )
                 restored_count = int(storage_row["restored_image_file_count"])
                 average_image_bytes = (
                     float(storage_row["restored_image_storage_bytes"]) / restored_count
@@ -628,7 +647,7 @@ def build_scaling_projections(
                 multiplier = np.nan
                 lower = central = upper = np.nan
                 projected_storage = projected_files = np.nan
-                basis_text = "not applicable: bounded SDXL scope has no full current-design equivalent"
+                basis_text = "not applicable to this model-specific projection scenario"
                 status = "not_applicable"
                 issue = basis_text
                 applicability = "not_applicable_no_full_design_basis"
@@ -639,9 +658,9 @@ def build_scaling_projections(
                 "record_type": "projection",
                 "scenario_id": scenario_id,
                 "summary_scope": "projection",
-                "experiment_id": "canonical_missing_region" if scenario_id.endswith("canonical_primary") else "current_design_mix",
-                "dataset_scope": "projected_300",
-                "painting_count": int(settings["projections"]["target_painting_count"]),
+                "experiment_id": "current_design_mix",
+                "dataset_scope": f"projected_{int(scenario['target_painting_count'])}",
+                "painting_count": int(scenario["target_painting_count"]),
                 "case_count": case_target if case_target is not None else np.nan,
                 "candidate_count": target if target is not None else np.nan,
                 "inference_count": inference_target if inference_target is not None else np.nan,
@@ -751,16 +770,19 @@ def coerce_compute_scalability(
 def validate_model_cards(frame: pd.DataFrame, *, config: Mapping[str, Any]) -> pd.DataFrame:
     expected = _settings(config)["expected_counts"]
     model_ids = list(_model_specs(config))
+    complete_scope = frame.loc[frame["model_id"].ne("sdxl_inpainting")]
+    sdxl = frame.loc[frame["model_id"].eq("sdxl_inpainting")]
     checks = [
         ("exact_columns", list(frame.columns) == list(MODEL_CARD_COLUMNS), f"columns={len(frame.columns)}"),
         ("row_count", len(frame) == int(expected["model_card_rows"]), f"expected={expected['model_card_rows']}; observed={len(frame)}"),
         ("model_ids", frame["model_id"].tolist() == model_ids, str(frame["model_id"].tolist())),
         ("unique_ids", not frame["model_card_id"].duplicated().any() and not frame["model_id"].duplicated().any(), "card/model IDs"),
         ("schema_version", frame["schema_version"].eq(MODEL_CARD_SCHEMA_VERSION).all(), MODEL_CARD_SCHEMA_VERSION),
-        ("completed_counts", frame["completed_count"].eq(frame["evaluated_candidate_count"]).all(), "all executed candidates complete"),
-        ("zero_failures", frame["failed_count"].eq(0).all(), str(frame.set_index("model_id")["failed_count"].to_dict())),
-        ("sdxl_partial", frame.loc[frame["model_id"].eq("sdxl_inpainting"), "evaluation_status"].eq("partial_evaluation").all(), "ten-case partial scope"),
-        ("other_models_full", frame.loc[frame["model_id"].ne("sdxl_inpainting"), "evaluation_status"].eq("fully_evaluated").all(), "three full-scope methods"),
+        ("complete_scope_counts", complete_scope["completed_count"].eq(complete_scope["evaluated_candidate_count"]).all(), "all four full-scope candidate tables complete"),
+        ("complete_scope_zero_failures", complete_scope["failed_count"].eq(0).all(), str(complete_scope.set_index("model_id")["failed_count"].to_dict())),
+        ("sdxl_observed_outcomes", len(sdxl) == 1 and int(sdxl.iloc[0]["completed_count"]) == int(expected["sdxl_completed_rows"]) and int(sdxl.iloc[0]["failed_count"]) == int(expected["sdxl_noncompleted_rows"]), "24 completed; one timeout and ten budget skips"),
+        ("sdxl_partial", frame.loc[frame["model_id"].eq("sdxl_inpainting"), "evaluation_status"].eq("partial_evaluation").all(), "35-case bounded partial scope"),
+        ("other_models_full", frame.loc[frame["model_id"].ne("sdxl_inpainting"), "evaluation_status"].eq("fully_evaluated").all(), "four full-scope methods"),
         ("no_storage_errors", frame["output_file_count"].gt(0).all() and frame["output_storage_bytes"].gt(0).all(), "positive owned storage"),
         ("sources_present", frame["source_urls_json"].map(lambda value: len(json.loads(value)) > 0).all(), "at least one primary source per card"),
         ("no_conservation_claim", ~frame["excluded_uses_json"].str.lower().str.contains("not applicable").any(), "explicit excluded uses retained"),
@@ -772,9 +794,12 @@ def validate_compute_scalability(frame: pd.DataFrame, *, config: Mapping[str, An
     expected = _settings(config)["expected_counts"]
     observed = frame.loc[frame["record_type"].eq("observed")]
     projected = frame.loc[frame["record_type"].eq("projection")]
-    sdxl_current = projected.loc[
+    sdxl_full = projected.loc[
         projected["model_id"].eq("sdxl_inpainting")
-        & projected["scenario_id"].eq("projected_300_current_design_mix")
+        & projected["scenario_id"].eq("projected_300_sdxl_full_design")
+    ]
+    observed_overall = observed.loc[
+        observed["summary_scope"].eq("overall")
     ]
     applicable = projected.loc[projected["applicability_status"].eq("applicable_projection")]
     checks = [
@@ -788,9 +813,9 @@ def validate_compute_scalability(frame: pd.DataFrame, *, config: Mapping[str, An
         ("projected_flags", projected["is_projected"].map(_as_bool).all() and ~projected["is_executed"].map(_as_bool).any(), "projected only"),
         ("projection_values", applicable[["runtime_lower_seconds", "runtime_central_seconds", "runtime_upper_seconds"]].notna().all().all(), f"applicable={len(applicable)}"),
         ("projection_order", ((applicable["runtime_lower_seconds"] <= applicable["runtime_central_seconds"]) & (applicable["runtime_central_seconds"] <= applicable["runtime_upper_seconds"])).all(), "lower <= central <= upper sensitivity"),
-        ("sdxl_current_na", len(sdxl_current) == 1 and sdxl_current["status"].eq("not_applicable").all() and sdxl_current["runtime_central_seconds"].isna().all(), "no fabricated full-design SDXL projection"),
+        ("sdxl_full_projection", len(sdxl_full) == 1 and sdxl_full["status"].eq("ok").all() and sdxl_full["runtime_central_seconds"].notna().all(), "bounded SDXL basis remains explicit"),
         ("not_confidence_interval", ~frame["sensitivity_is_confidence_interval"].map(_as_bool).any(), "sensitivity bounds only"),
-        ("no_executed_300", ~observed["dataset_scope"].eq("projected_300").any(), "300-painting scope is projected only"),
+        ("executed_controlled_300", len(observed_overall) == 5 and observed_overall["dataset_scope"].eq("controlled_300").all(), "five observed controlled-300 summaries"),
     ]
     return pd.DataFrame(checks, columns=["check_id", "passed", "details"])
 
@@ -856,11 +881,14 @@ def render_model_card_markdown(
     elif model_id == "opencv_telea":
         headline = "OpenCV Telea was the fastest and most reproducible baseline, while its local interpolation remained limited for semantically demanding missing regions."
         reliability = "OpenCV Telea is deterministic. Its appropriate reliability evidence is input robustness and sensitivity, not generative uncertainty."
+    elif model_id == "hint_places2":
+        headline = "HINT added a deterministic mask-aware transformer family with complete controlled-300 coverage, extending the learned comparison beyond LaMa's convolutional design."
+        reliability = "HINT is deterministic under the evaluated fixed-checkpoint contract. Robustness and sensitivity are the relevant reliability constructs; repeated-seed generative uncertainty is not applicable."
     elif model_id == "stable_diffusion_inpainting":
         headline = "Stable Diffusion added prompt-conditioned and repeated-seed evidence, but required far more candidates and did not lead the full-scope reference-based anchor comparison."
         reliability = "Stable Diffusion is stochastic. Repeated seeds measure empirical candidate variability, and the scratch-aware arm measures damage-specific prompt sensitivity; neither is calibrated confidence."
     else:
-        headline = "SDXL completed a bounded ten-case partial evaluation, providing direct local feasibility evidence without supporting a full-dataset ranking."
+        headline = "SDXL completed 24 of 35 scheduled cases in a bounded partial evaluation, providing local feasibility and cost evidence without supporting a full-dataset ranking."
         reliability = "SDXL has one seed per completed case. Generative uncertainty is therefore not estimable from this scope, and no artificial uncertainty value is assigned."
     projection_lines = []
     for row in projections.to_dict("records"):
@@ -1027,7 +1055,7 @@ Low variability or deterministic repetition does not prove that a reconstructed 
 |---|---:|---:|---:|
 {chr(10).join(projection_lines)}
 
-Raw observed median, mean, and p95 runtimes are retained in the compute table. The displayed sensitivity envelope uses the smaller of scaled median and mean as its lower value, scaled mean as its central value, and the larger of scaled p95 and mean as its upper value. These are not confidence intervals. No 300-painting experiment was executed.
+Raw observed median, mean, and p95 runtimes are retained in the compute table. The displayed sensitivity envelope uses the smaller of scaled median and mean as its lower value, scaled mean as its central value, and the larger of scaled p95 and mean as its upper value. These are not confidence intervals. The controlled 300-painting study was executed; only rows explicitly labelled as projections are extrapolations.
 
 <a id="strengths-and-weaknesses"></a>
 ## 11. Strengths and weaknesses
@@ -1057,7 +1085,7 @@ The method can generate and prioritize digital candidates for structured inspect
 | Field | Recorded value |
 |---|---|
 | Producer notebook | `30_model_cards_compute_and_scalability.ipynb` |
-| Candidate producer | Notebook { {'opencv_telea':'09','lama':'10','stable_diffusion_inpainting':'11','sdxl_inpainting':'12'}[model_id] } |
+| Candidate producer | Notebook { {'opencv_telea':'09','lama':'10','hint_places2':'12A','stable_diffusion_inpainting':'11','sdxl_inpainting':'12'}[model_id] } |
 | Quality producer | Notebook 21 |
 | Compute schema | `{COMPUTE_SCHEMA_VERSION}` |
 | Model-card schema | `{MODEL_CARD_SCHEMA_VERSION}` |
@@ -1092,7 +1120,7 @@ def validate_model_card_markdown(
         ("no_image_dependencies", image_tokens == 0, f"image_tokens={image_tokens}"),
         ("no_file_uri", "file://" not in markdown.lower(), "file URI prohibited"),
         ("not_planning_mock", not any(token in markdown.lower() for token in ("illustrative", "fictional", "placeholder")), "real evidence only"),
-        ("projection_scope", "No 300-painting experiment was executed" in markdown, "projection boundary"),
+        ("projection_scope", "The controlled 300-painting study was executed" in markdown, "observed/projected boundary"),
         ("conservation_boundary", "does not approve physical treatment" in markdown, "human decision support"),
         ("quality_boundary", "not a universal quality score" in markdown, "anchor count boundary"),
     ]
