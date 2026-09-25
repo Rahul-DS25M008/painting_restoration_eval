@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-24T22:09:20.978634Z",
+  "updated_at_utc": "2026-09-25T07:22:54.196098Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -1120,7 +1120,7 @@
       "validation_status": "passed",
       "row_count": 100,
       "file_count": 1,
-      "checksum": "837bb1af476fc2b3e243b8d9a693d01a49f738ac45f6f3d85fa6d8874be61a6b"
+      "checksum": "6cc63587363dfadd249c32d01dcae76e8ee82d707126a2dbe263c1771ec695fb"
     },
     {
       "artifact_key": "explainable_case_retrieval.counterfactual_panels",
@@ -1134,7 +1134,7 @@
       "validation_status": "passed",
       "row_count": "",
       "file_count": 14,
-      "checksum": "b8f2d3a1189e9716d53ff2b9e9dea714d3cb235ed7f3e02231652fedbdb71c91"
+      "checksum": "226c15b618afdc9eb60050eb59f68edb698496c21b4c26779a736fb5181a0897"
     },
     {
       "artifact_key": "explainable_case_retrieval.explanation_cases",
@@ -1146,9 +1146,9 @@
       "dataset_scope": "controlled_50",
       "experiment_scope": "explainable_case_retrieval",
       "validation_status": "passed",
-      "row_count": 1785,
+      "row_count": 13879,
       "file_count": 1,
-      "checksum": "694ba2d385aa3c84600eabf698b9316819cc7f0506669c5a71e4730cc1035ae2"
+      "checksum": "4118b8c573dcb7013751de2e3b1279d8824176eb05ad7656c4007ab24ae37f8b"
     },
     {
       "artifact_key": "explainable_case_retrieval.report",
@@ -1162,7 +1162,7 @@
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "99afd6fab9456b9080cb15d5e44c3af4c65663640e962d5e7f94dc27c4375b49"
+      "checksum": "135ea78afd827d891093fa636dd493a66ebef8064c63e27d9554fb729005e85d"
     },
     {
       "artifact_key": "explainable_case_retrieval.retrieval_panels",
@@ -1176,7 +1176,7 @@
       "validation_status": "passed",
       "row_count": "",
       "file_count": 10,
-      "checksum": "531f27f5dfce2b25dcfb6b3fd1bbebec3738492792f5bd98161cd31965530135"
+      "checksum": "f5d036698a186dab1284c0172a498b1a0e01edf1980db5ca18c146beec33896e"
     },
     {
       "artifact_key": "failure_taxonomy.assignments",
@@ -3456,9 +3456,9 @@
       "dataset_scope": "controlled_50",
       "experiment_scope": "explainable_case_retrieval",
       "validation_status": "passed",
-      "row_count": 145,
+      "row_count": 146,
       "file_count": 1,
-      "checksum": "f3816e014c71ce949cf7e6a00be039dd8425082cdefc7ea2020c6523064f62c9"
+      "checksum": "cc104cf4c5f67d21464ed8c6e874a8729a831d3a86601a1c6024276f492f2ddc"
     },
     {
       "artifact_key": "validation.30_model_cards_compute_and_scalability",

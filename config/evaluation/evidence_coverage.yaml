@@ -1904,8 +1904,9 @@ evidence_coverage:
 
     - notebook_id: "29"
       stem: "29_explainable_ai_and_case_retrieval"
-      status: "controlled_300_preparation_complete_awaiting_execution"
-      completion_gate_passed: false
+      status: "controlled_300_complete"
+      completion_gate_passed: true
+      run_id: "run_ad7603b6bdb14156a140351f6ac1f241"
       output_root: "outputs/29_explainable_ai_and_case_retrieval"
       manifest_path: "outputs/29_explainable_ai_and_case_retrieval/manifests/run_manifest.json"
       config_path: "config/evaluation/explainable_case_retrieval.yaml"
@@ -1975,7 +1976,7 @@ evidence_coverage:
           files: 10
         - path: "outputs/29_explainable_ai_and_case_retrieval/reports/explanation_catalog.html"
         - path: "outputs/29_explainable_ai_and_case_retrieval/validation/checks.csv"
-          rows: 145
+          rows: 146
       supported_scope:
         - "complete_candidate_level_explanation_catalog_for_the_notebook_27_union"
         - "candidate_level_rule_region_evidence_missingness_and_action_traceability"

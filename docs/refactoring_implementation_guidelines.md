@@ -922,7 +922,7 @@ Rules for the active rerun:
 
 #### Active Controlled-300 completion status
 
-Updated 2026-09-14. This compact status is a navigation aid; the human evidence
+Updated 2026-09-25. This compact status is a navigation aid; the human evidence
 audit and machine-readable coverage registry remain authoritative for counts,
 checksums, limitations, and downstream eligibility.
 
@@ -958,7 +958,7 @@ checksums, limitations, and downstream eligibility.
 | 26 Grouped and Statistical Analysis | Finished | Finished | Yes | 300 paintings; 10,480 four-method core candidates across 2,620 cases; 24 bounded SDXL candidates; 1,025 uncertainty groups; 13,272 statistical rows; 694 correlation rows; 1,344 ranking rows; 111/111 checks; 10 canonical files | All ten pilot paths and all eight artifact roles and schemas retained; statistical, correlation and ranking rows increased from 4,174, 504 and 258 respectively; the self-contained report contains 48 embedded images, 252 tiles and no external image dependency; compact GitHub handoff requires no separate Hugging Face release |
 | 27 Failure Taxonomy and Trustworthiness Flags | Finished | Finished | Yes | 13,879 unique candidates; 10,504 primary candidates; 4,100 repeated-seed memberships in 1,025 groups; 194,306 assignment rows; 152,669 flag rows; 167/167 checks; 8 canonical files; 4-hour-49-minute execution window | All eight pilot paths and six artifact roles retained; assignment/flag grids increased from 24,990/19,635; the report embeds 56 images with no external dependency; both bulk metric tables route to Hugging Face diagnostics while the six compact artifacts stay in ordinary Git under the exhausted-LFS guard |
 | 28 Metric and Region-Policy Ablation | Finished | Finished | Yes | 23 fixed scenarios; 10,480 four-method core candidates across 2,620 cases; 13,879 flag candidates; 47,508 ablation rows; 319,217 flag-stability rows; 759 subgroup rows; 122/122 checks; 8 canonical files; 12-hour-20-minute execution window | All eight pilot paths, table schemas, and six artifact roles retained; ablation rows increased from 7,710 to 47,508 and flag-stability rows from 41,055 to 319,217; report tiles increased from 18 three-method to 24 four-method tiles with HINT; the 165.21 MB flag-stability table routes to Hugging Face diagnostics while the remaining scientific handoff stays in ordinary Git under the exhausted-LFS guard |
-| 29 Explainable AI and Case Retrieval | Preparation complete | Pending rerun | No | Contract locked for 13,879 candidates, 2,620 cases, 300 paintings, 10,480 four-method primary candidates, 24 bounded SDXL candidates, 1,025 uncertainty groups, 13,144 dual-view retrieval-eligible catalog candidates, 100 neighbour rows and 24 bounded visual units | Historical pilot keeps all 30 output paths and schemas as the comparison baseline; the full catalog scales while query, counterfactual and report-panel counts remain fixed; expected active runtime is 3–7 hours |
+| 29 Explainable AI and Case Retrieval | Finished | Finished | Yes | 13,879 candidates across 2,620 cases and 300 paintings; 10,480 four-method primary candidates; 24 bounded SDXL candidates; 4,100 repeated-seed members in 1,025 groups; 13,144 dual-view retrieval-eligible candidates; 100 neighbour rows; 24 bounded visual units; 146/146 checks; 30 canonical files | All 30 pilot paths and six artifact roles retained; catalog rows increased from 1,785 to 13,879 while neighbour and panel counts remained intentionally bounded; report embeds 34 images with no external dependency; complete catalog routes to Hugging Face diagnostics and the bounded handoff stays in ordinary Git without LFS |
 
 Notebooks 01–26, including Notebook 12A and supplemental D02, are completed
 Controlled-300 producers. Notebook 20's producer-specific diagnostics bundle
@@ -1015,6 +1015,19 @@ roadmap responsibilities pass, all six artifact checksums match, and the
 observed execution window is approximately 12 hours 20 minutes. The 165.21 MB
 flag-stability table is a diagnostics-tier Hugging Face artifact; the 18.05 MB
 ablation table and remaining compact evidence stay in ordinary Git.
+
+Notebook 29 run `run_ad7603b6bdb14156a140351f6ac1f241` is complete and
+validated. It persists the complete 13,879-candidate Notebook 27 union across
+2,620 cases and 300 paintings, keeps 13,144 dual-view retrieval-eligible
+candidates and 735 explicit retrieval-ineligible extension candidates, and
+retains 4,100 repeated-seed members in 1,025 groups. Its intentionally bounded
+presentation layer contains 100 neighbour rows, fourteen counterfactual panels,
+ten retrieval panels, five analytical views and a self-contained report with 34
+embedded images. All 146 checks and all 13 roadmap responsibilities pass; all
+six artifact checksums match; and the final tree contains 30 files. The 46.81 MB
+complete explanation catalogue is diagnostics-tier Hugging Face evidence. The
+bounded panels, report, neighbour table, manifests and validation ledger stay in
+ordinary Git under the exhausted-LFS guard.
 
 Notebook 25's 41.97 MB canonical scalar table is diagnostics-tier evidence and
 is published through the bounded external-artifact workflow. Its two figures,

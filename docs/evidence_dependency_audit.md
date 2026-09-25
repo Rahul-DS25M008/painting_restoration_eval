@@ -1098,20 +1098,29 @@ changes, and empirical seed variability do not establish restoration correctness
 calibrated confidence, historical authenticity, conservation approval, or
 universal model superiority.
 
-The Controlled-300 preparation contract supersedes those pilot counts for the
-next execution without changing the artifact paths or schemas. It requires the
-complete 13,879-candidate Notebook 27 union across 2,620 cases and 300
-paintings; 10,480 matched four-method primary candidates; 9,280 nonzero primary
-candidates with local maps; 24 bounded SDXL candidates; 4,100 repeated-seed
-memberships in 1,025 groups; and 757 rule-defined lower-risk candidates. Each
-Notebook 15 feature view contains 16,404 restored-content embeddings, of which
-13,144 intersect the Notebook 27 catalog in both DINOv2 and CLIP. The 735
-Notebook 22 extension candidates without Notebook 15 embeddings must be marked
-retrieval-ineligible, not silently removed. Category metadata is complete for
-300 paintings; style/period is descriptive for 268. The ten queries, 100
-neighbour rows, fourteen counterfactual panels and 24 report units remain a
-bounded explanatory subset. Until the rerun passes, no downstream consumer may
-describe the historical 1,785-row artifact as Controlled-300 evidence.
+Controlled-300 run `run_ad7603b6bdb14156a140351f6ac1f241` now supersedes those
+pilot counts without changing the artifact paths or schemas. It persisted the
+complete 13,879-candidate Notebook 27 union across 2,620 cases and 300 paintings;
+10,480 matched four-method primary candidates; 9,280 nonzero primary candidates
+with local maps; 24 bounded SDXL candidates; 4,100 repeated-seed memberships in
+1,025 groups; and 757 rule-defined lower-risk candidates. Each Notebook 15
+feature view contains 16,404 restored-content embeddings, of which 13,144
+intersect the Notebook 27 catalog in both DINOv2 and CLIP. The 735 Notebook 22
+extension candidates without Notebook 15 embeddings remain explicitly
+retrieval-ineligible rather than silently removed. Category metadata is complete
+for 300 paintings; style/period is descriptive for 268.
+
+The presentation layer remains deliberately bounded at ten queries, 100
+neighbour rows, fourteen counterfactual panels, ten retrieval panels and 24
+selected visual units. Its self-contained fourteen-section report embeds 34
+images and has no external image dependency. All 146 checks and all 13 roadmap
+requirements passed, all six registered artifact checksums matched, and the
+final output tree contains exactly 30 files with no temporary artifacts. The
+E-drive comparison preserved the pilot's complete four-CSV, 24-PNG, one-HTML and
+one-JSON structure while the catalog grew from 1,785 to 13,879 rows. The complete
+46.81 MB catalog is diagnostics-tier Hugging Face evidence; the bounded figures,
+report, compact neighbour table, manifests and validation ledger form the
+ordinary-Git handoff without consuming Git LFS.
 
 Notebook 30, `30_model_cards_compute_and_scalability.ipynb`, subsequently
 completed the approved model-card and compute/scalability stage with its

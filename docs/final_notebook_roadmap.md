@@ -3213,9 +3213,9 @@ ordinary-Git scientific handoff.
 
 **Notebook:** `29_explainable_ai_and_case_retrieval.ipynb`\
 **Origin:** New Notebook  
-**Controlled-300 refactor status:** Preparation complete; execution pending\
-**Validation status:** Pending Controlled-300 execution\
-**Completion gate passed:** No; the saved outputs remain the historical pilot until rerun\
+**Controlled-300 refactor status:** Complete\
+**Validation status:** 146/146 checks passed with no blocking or warning failures\
+**Completion gate passed:** Yes; run `run_ad7603b6bdb14156a140351f6ac1f241`\
 **Output root:** `outputs/29_explainable_ai_and_case_retrieval/`\
 **Depends on:** Notebooks 15–28
 
@@ -3315,6 +3315,32 @@ manifests/run_manifest.json
 manifests/artifacts.csv
 validation/checks.csv
 ```
+
+### Observed Controlled-300 completion
+
+Run `run_ad7603b6bdb14156a140351f6ac1f241` completed the full 13,879-candidate
+catalog across 2,620 cases and 300 paintings. It retains 10,480 matched
+four-method primary candidates, 24 bounded SDXL candidates, 4,100 repeated-seed
+members in 1,025 groups, and 13,144 candidates eligible in both DINOv2 and CLIP
+retrieval views. The 735 later damage-size candidates without Notebook 15
+embeddings remain explicitly retrieval-ineligible.
+
+The bounded presentation layer remains unchanged in shape: ten queries, 100
+neighbour rows, fourteen counterfactual panels, ten retrieval panels, 24 visual
+units, five analytical views and a self-contained fourteen-section report with
+34 embedded images and no external image dependency. All 146 validation checks,
+all 13 roadmap responsibilities and all six artifact checksums passed. The final
+tree contains exactly 30 files and no temporary work artifacts.
+
+The E-drive pilot comparison confirms exact structural continuity: both runs
+contain four CSVs, 24 PNGs, one HTML report and one JSON manifest. The complete
+catalog increased from 1,785 to 13,879 rows; cases increased from 410 to 2,620;
+the neighbour table stayed at 100 rows; artifact records stayed at six; and the
+validation ledger increased from 145 to 146 rows because the Controlled-300 gate
+adds the expanded population contract. The 46.81 MB complete catalog is
+diagnostics-tier Hugging Face evidence. The bounded panels, self-contained
+report, compact neighbour table, manifests and validation ledger form the
+ordinary-Git handoff without Git LFS.
 
 ---
 

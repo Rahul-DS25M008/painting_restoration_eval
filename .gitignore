@@ -75,6 +75,7 @@ docs/supervisor/Next_Steps.docx
 /outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/failure_assignments.csv
 /outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv
 /outputs/28_metric_and_region_policy_ablation/metrics/flag_stability.csv
+/outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv
 
 # The complete project inventory is regenerated locally after every completed
 # notebook. Keeping each approximately 70 MiB revision in Git LFS would spend

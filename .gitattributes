@@ -30,3 +30,13 @@ outputs/28_metric_and_region_policy_ablation/figures/ablation_ranking_changes.pn
 outputs/28_metric_and_region_policy_ablation/reports/ablation_study.html -filter diff -merge text
 outputs/28_metric_and_region_policy_ablation/manifests/artifacts.csv -filter diff -merge text
 outputs/28_metric_and_region_policy_ablation/validation/checks.csv -filter diff -merge text
+
+# Notebook 29 publishes its 46.81 MB complete explanation catalogue to the
+# diagnostics repository. Its bounded visual/report handoff remains in ordinary
+# Git so the exhausted LFS budget is never invoked.
+outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv -filter diff -merge text
+outputs/29_explainable_ai_and_case_retrieval/data/case_neighbors.csv -filter diff -merge text
+outputs/29_explainable_ai_and_case_retrieval/figures/**/*.png -filter -diff -merge -text
+outputs/29_explainable_ai_and_case_retrieval/reports/explanation_catalog.html -filter diff -merge text
+outputs/29_explainable_ai_and_case_retrieval/manifests/artifacts.csv -filter diff -merge text
+outputs/29_explainable_ai_and_case_retrieval/validation/checks.csv -filter diff -merge text
