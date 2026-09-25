@@ -1,5 +1,5 @@
 config_schema_version: "explainable_case_retrieval_config.v1"
-config_version: "1.0.0"
+config_version: "2.0.0"
 
 explainable_case_retrieval:
   notebook_id: "29"
@@ -25,6 +25,7 @@ explainable_case_retrieval:
     lama_candidates_path: "outputs/10_lama_restoration/data/restorations.csv"
     stable_diffusion_candidates_path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
     sdxl_candidates_path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
+    hint_candidates_path: "outputs/12a_hint_restoration/data/restorations.csv"
     damage_size_candidates_path: "outputs/22_damage_size_diffusion_uncertainty_extension/data/candidates.csv"
     feature_metrics_path: "outputs/15_feature_similarity/metrics/feature_metrics.csv"
     embedding_manifest_path: "outputs/15_feature_similarity/manifests/embeddings.csv"
@@ -82,18 +83,22 @@ explainable_case_retrieval:
     validation_path: "validation/checks.csv"
 
   population:
-    dataset_source_levels: ["controlled_50"]
+    dataset_source_levels: ["controlled_300"]
     approved_catalog_source: "notebook_27_candidate_union"
-    catalog_candidate_count: 1785
-    primary_candidate_count: 1230
-    primary_nonzero_spatial_candidate_count: 1080
-    bounded_sdxl_candidate_count: 10
-    evaluated_case_count: 410
-    artwork_count: 50
-    complete_category_artwork_count: 50
-    style_period_artwork_count: 18
-    lower_risk_candidate_count: 82
-    complete_uncertainty_group_count: 165
+    catalog_candidate_count: 13879
+    primary_candidate_count: 10480
+    primary_nonzero_spatial_candidate_count: 9280
+    bounded_sdxl_candidate_count: 24
+    evaluated_case_count: 2620
+    artwork_count: 300
+    complete_category_artwork_count: 300
+    style_period_artwork_count: 268
+    lower_risk_candidate_count: 757
+    repeated_seed_candidate_count: 4100
+    complete_uncertainty_group_count: 1025
+    embedding_view_candidate_count: 16404
+    dual_feature_retrieval_eligible_candidate_count: 13144
+    retrieval_ineligible_extension_candidate_count: 735
     category_is_primary_stratification: true
     style_period_is_descriptive_only: true
 
@@ -151,8 +156,8 @@ explainable_case_retrieval:
     complete_catalog_must_be_described: true
 
   expected_counts:
-    explanation_rows: 1785
-    unique_cases: 410
+    explanation_rows: 13879
+    unique_cases: 2620
     retrieval_queries: 10
     retrieval_lanes: 2
     neighbors_per_lane: 5
@@ -166,7 +171,7 @@ explainable_case_retrieval:
     artifact_records: 6
 
   evidence_policy:
-    source_dataset_claim: "controlled_50_only"
+    source_dataset_claim: "controlled_300_only"
     flags_are_human_ground_truth: false
     flags_are_conservation_ground_truth: false
     retrieval_similarity_is_correctness: false
@@ -182,7 +187,7 @@ explainable_case_retrieval:
     - "Nearest-neighbour similarity is visual-feature similarity, not proof of restoration correctness or historical plausibility."
     - "Rule-defined lower-risk and flagged labels are operational screening evidence, not human or conservation ground truth."
     - "Uncertainty is empirical repeated-seed variability and applies only where repeated candidates exist."
-    - "Style or period metadata exists for 18 of 50 artworks and cannot support an independent style-effect claim."
+    - "Style or period metadata exists for 268 of 300 artworks and remains descriptive rather than an independently validated style-effect design."
     - "The supported prompt comparison is generic versus scratch-aware damage-specific prompting."
-    - "SDXL remains a bounded ten-case diagnostic subset."
+    - "SDXL remains a bounded diagnostic branch with 24 technically valid completed candidates from its approved 35-row schedule."
     - "Selected report panels illustrate the complete catalog but do not replace its machine-readable rows."

@@ -407,7 +407,7 @@ individual run outside its range.
 | 26 — Grouped and statistical analysis | 4–10 hours | Painting-level aggregation, paired effects, intervals, corrected tests, and sensitivity analyses. |
 | 27 — Failure taxonomy and trustworthiness flags | 4–10 hours | Rule application over expanded evidence, case catalogs, explanations, figures, and report generation. |
 | 28 — Metric and region-policy ablation | 24–48 hours | Repeated metric-policy and region-policy evaluations; checkpoint every bounded ablation block. |
-| 29 — Explainable AI and case retrieval | 6–14 hours | Full explanation catalog, counterfactual evidence, embedding retrieval, visual units, and report generation. |
+| 29 — Explainable AI and case retrieval | 3–7 hours | A 13,879-row explanation catalog and two 16,404-vector retrieval views; the expensive visual/report subset remains fixed at 24 units. |
 | 30 — Model cards, compute, and scalability | 2–5 hours | Evidence aggregation, runtime/compute summaries, model cards, figures, and report generation. |
 | 31 — Model report generation | 3–8 hours | Self-contained model reports with embedded web-sized figures and selected examples. |
 | 32 — Case and painting report generation | 8–18 hours | Report generation across 300 paintings and the expanded case catalog; heavy HTML/image encoding. |
@@ -3213,8 +3213,32 @@ ordinary-Git scientific handoff.
 
 **Notebook:** `29_explainable_ai_and_case_retrieval.ipynb`\
 **Origin:** New Notebook  
+**Controlled-300 refactor status:** Preparation complete; execution pending\
+**Validation status:** Pending Controlled-300 execution\
+**Completion gate passed:** No; the saved outputs remain the historical pilot until rerun\
 **Output root:** `outputs/29_explainable_ai_and_case_retrieval/`\
 **Depends on:** Notebooks 15–28
+
+### Binding Controlled-300 contract
+
+- Complete explanation catalog: **13,879** Notebook 27 candidates across
+  **2,620** cases and **300** paintings.
+- Matched four-method primary population: **10,480** candidates; **9,280**
+  nonzero primary candidates have local-map coverage.
+- Bounded SDXL evidence: **24** technically valid completed candidates, kept
+  separate from the full-method comparison.
+- Repeated-seed evidence: **4,100** candidate memberships in **1,025** groups.
+- Retrieval source: **16,404** restored-content embeddings per DINOv2/CLIP
+  view; **13,144** Notebook 27 catalog candidates are eligible in both views.
+  The **735** Notebook 22 extension candidates without Notebook 15 embeddings
+  remain explicitly retrieval-ineligible rather than silently dropped.
+- Category metadata is complete for all **300** paintings. Style/period is
+  available for **268** and remains descriptive.
+- Keep the visual/report workload bounded at ten queries, 100 neighbour rows,
+  fourteen counterfactual panels and 24 selected report units. These are
+  illustrations of the full catalog, not a reduction of it.
+- Expected active runtime is **3–7 hours**. Batch-level timing from the rerun
+  replaces this estimate in the completion record.
 
 ### Spatial explanations
 

@@ -1904,15 +1904,15 @@ evidence_coverage:
 
     - notebook_id: "29"
       stem: "29_explainable_ai_and_case_retrieval"
-      status: "completed_validation_passed"
-      completion_gate_passed: true
+      status: "controlled_300_preparation_complete_awaiting_execution"
+      completion_gate_passed: false
       output_root: "outputs/29_explainable_ai_and_case_retrieval"
       manifest_path: "outputs/29_explainable_ai_and_case_retrieval/manifests/run_manifest.json"
       config_path: "config/evaluation/explainable_case_retrieval.yaml"
       helper_path: "src/restoration_eval/explainable_case_retrieval.py"
       test_path: "tests/test_explainable_case_retrieval.py"
       required_evidence: ["n15_embeddings", "n16_n20_maps", "n18_n22_uncertainty", "n23_n25_counterfactual_structures", "n27_flags", "n28_ablations"]
-      observed_population:
+      historical_pilot_population:
         explanation_catalog_candidates: 1785
         explanation_catalog_cases: 410
         explanation_catalog_paintings: 50
@@ -1939,9 +1939,32 @@ evidence_coverage:
         report_external_images: 0
         physical_output_files: 30
         artifact_records: 6
+      expected_population:
+        explanation_catalog_candidates: 13879
+        explanation_catalog_cases: 2620
+        explanation_catalog_paintings: 300
+        primary_candidates: 10480
+        primary_nonzero_spatial_candidates: 9280
+        bounded_sdxl_candidates: 24
+        dual_feature_embedding_candidates_per_view: 16404
+        dual_feature_retrieval_eligible_candidates: 13144
+        retrieval_ineligible_extension_candidates: 735
+        repeated_seed_candidate_members: 4100
+        repeated_seed_groups: 1025
+        lower_risk_candidates: 757
+        retrieval_queries: 10
+        retrieval_neighbor_rows: 100
+        lower_risk_neighbor_rows: 50
+        flagged_neighbor_rows: 50
+        counterfactual_types: 7
+        counterfactual_panels: 14
+        retrieval_panels: 10
+        selected_report_units: 24
+        physical_output_files: 30
+        artifact_records: 6
       primary_artifacts:
         - path: "outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv"
-          rows: 1785
+          expected_rows: 13879
           schema_version: "explanation_cases.v1"
         - path: "outputs/29_explainable_ai_and_case_retrieval/data/case_neighbors.csv"
           rows: 100
@@ -1978,7 +2001,7 @@ evidence_coverage:
         external_images: 0
         required_visuals_depend_on_external_links: false
       downstream_contract:
-        - "use_the_complete_1785_row_explanation_catalog_for_case_level_discovery"
+        - "use_the_complete_13879_row_explanation_catalog_for_case_level_discovery"
         - "use_all_100_neighbor_rows_with_dinov2_and_clip_as_separate_views"
         - "treat_the_24_visual_report_units_as_examples_not_the_persisted_population"
         - "preserve_retrieval_leakage_exclusions_and_explicit_embedding_ineligibility"

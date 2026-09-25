@@ -46,7 +46,15 @@ class ExplainableCaseRetrievalTests(unittest.TestCase):
         self.assertEqual(settings["explanation_schema_version"], EXPLANATION_SCHEMA_VERSION)
         self.assertEqual(settings["neighbor_schema_version"], NEIGHBOR_SCHEMA_VERSION)
         self.assertEqual(settings["output"]["root"], "outputs/29_explainable_ai_and_case_retrieval")
-        self.assertEqual(settings["expected_counts"]["explanation_rows"], 1785)
+        self.assertEqual(settings["expected_counts"]["explanation_rows"], 13879)
+        self.assertEqual(settings["population"]["evaluated_case_count"], 2620)
+        self.assertEqual(settings["population"]["artwork_count"], 300)
+        self.assertEqual(settings["population"]["primary_candidate_count"], 10480)
+        self.assertEqual(settings["population"]["bounded_sdxl_candidate_count"], 24)
+        self.assertEqual(
+            settings["population"]["dual_feature_retrieval_eligible_candidate_count"],
+            13144,
+        )
         self.assertEqual(settings["expected_counts"]["neighbor_rows"], 100)
         self.assertEqual(settings["expected_counts"]["selected_report_units"], 24)
         self.assertTrue(settings["catalog"]["full_population_required"])
@@ -78,8 +86,8 @@ class ExplainableCaseRetrievalTests(unittest.TestCase):
                 image_role=settings["image_role"],
                 region_id=settings["region_id"],
             )
-            self.assertEqual(len(manifest), 2160)
-            self.assertEqual(len(vectors), 2160)
+            self.assertEqual(len(manifest), 16404)
+            self.assertEqual(len(vectors), 16404)
             self.assertTrue(np.allclose(np.linalg.norm(vectors, axis=1), 1.0, atol=1e-5))
 
     @staticmethod
@@ -183,7 +191,7 @@ class ExplainableCaseRetrievalTests(unittest.TestCase):
             "<html><body>"
             f"<h1>{report['title']}</h1><p>{report['subtitle']}</p>"
             + sections + analytical + counterfactuals + retrievals + images
-            + "<p>The complete catalog contains 1,785 candidate rows.</p>"
+            + "<p>The complete catalog contains 13,879 candidate rows.</p>"
             + ("validated evidence and direct assertion " * 100)
             + "</body></html>"
         )

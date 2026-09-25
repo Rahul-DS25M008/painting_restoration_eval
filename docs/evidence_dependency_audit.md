@@ -51,7 +51,9 @@ Controlled-300 synthetic-degradation analysis, report and final gate. Notebook
 27 subsequently completed its expanded failure-taxonomy and trustworthiness
 analysis and remote publication gate. Notebook 28 then completed its
 Controlled-300 metric/region-policy ablation, report, validation, and final
-gate. Notebooks 29–36 remain historical Controlled-50 evidence until each producer is explicitly
+gate. Notebook 29 now has a validated Controlled-300 preparation contract and
+awaits execution; its saved outputs remain historical Controlled-50 evidence.
+Notebooks 30–36 remain historical Controlled-50 evidence until each producer is explicitly
 reopened, rerun, validated, baseline-compared, and committed.
 
 **Git LFS capacity guard: 2026-09-21.** GitHub reported 9.01 GiB used from the
@@ -1049,9 +1051,10 @@ flag-stability table is diagnostics-tier Hugging Face evidence under the
 exhausted-LFS guard; the 18.05 MB ablation table, figures, report, manifests, and
 validation ledger form the ordinary-Git handoff.
 
-Notebook 29, `29_explainable_ai_and_case_retrieval.ipynb`, subsequently
-completed the approved explanation-catalog and case-retrieval analysis with its
-completion gate passed. It:
+The historical Controlled-50 execution of Notebook 29,
+`29_explainable_ai_and_case_retrieval.ipynb`, completed the approved
+explanation-catalog and case-retrieval analysis with its completion gate passed.
+It remains the pilot baseline and:
 
 - persisted the complete approved 1,785-candidate, 410-case Notebook 27 union in
   `data/explanation_cases.csv`, rather than restricting the canonical table to
@@ -1084,7 +1087,7 @@ completion gate passed. It:
 - registered exactly six non-self-referential artifacts and 30 physical files
   under `outputs/29_explainable_ai_and_case_retrieval/`, with no temporary files.
 
-Notebook 29 is now the canonical source for downstream candidate-level
+The historical Notebook 29 output is the pilot source for downstream candidate-level
 explanation discovery and selected similar-case examples. Consumers must use the
 complete 1,785-row catalog when complete case coverage is required, treat the 24
 visual units as report examples only, preserve DINOv2 and CLIP as separate views,
@@ -1094,6 +1097,21 @@ paintings. Retrieval similarity, operational recommendations, counterfactual
 changes, and empirical seed variability do not establish restoration correctness,
 calibrated confidence, historical authenticity, conservation approval, or
 universal model superiority.
+
+The Controlled-300 preparation contract supersedes those pilot counts for the
+next execution without changing the artifact paths or schemas. It requires the
+complete 13,879-candidate Notebook 27 union across 2,620 cases and 300
+paintings; 10,480 matched four-method primary candidates; 9,280 nonzero primary
+candidates with local maps; 24 bounded SDXL candidates; 4,100 repeated-seed
+memberships in 1,025 groups; and 757 rule-defined lower-risk candidates. Each
+Notebook 15 feature view contains 16,404 restored-content embeddings, of which
+13,144 intersect the Notebook 27 catalog in both DINOv2 and CLIP. The 735
+Notebook 22 extension candidates without Notebook 15 embeddings must be marked
+retrieval-ineligible, not silently removed. Category metadata is complete for
+300 paintings; style/period is descriptive for 268. The ten queries, 100
+neighbour rows, fourteen counterfactual panels and 24 report units remain a
+bounded explanatory subset. Until the rerun passes, no downstream consumer may
+describe the historical 1,785-row artifact as Controlled-300 evidence.
 
 Notebook 30, `30_model_cards_compute_and_scalability.ipynb`, subsequently
 completed the approved model-card and compute/scalability stage with its

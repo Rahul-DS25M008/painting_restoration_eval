@@ -24,7 +24,7 @@ from .paths import find_project_root, resolve_repo_path
 
 
 MODULE_NAME = "restoration_eval.explainable_case_retrieval"
-MODULE_VERSION = "1.0.0"
+MODULE_VERSION = "1.1.0"
 CONFIG_SCHEMA_VERSION = "explainable_case_retrieval_config.v1"
 EXPLANATION_SCHEMA_VERSION = "explanation_cases.v1"
 NEIGHBOR_SCHEMA_VERSION = "case_neighbors.v1"
@@ -527,7 +527,8 @@ def validate_panel_directories(
 def validate_explanation_report_html(html: str, *, config: Mapping[str, Any]) -> pd.DataFrame:
     """Validate the approved mock-bound, self-contained report contract."""
 
-    report = _settings(config)["report"]
+    settings = _settings(config)
+    report = settings["report"]
     section_ids = list(report["required_section_ids"])
     positions = [html.find(f'id="{section_id}"') if f'id="{section_id}"' in html else html.find(f"id='{section_id}'") for section_id in section_ids]
     image_sources = re.findall(r"<img[^>]+src=[\"']([^\"']+)[\"']", html, flags=re.I)
@@ -543,7 +544,12 @@ def validate_explanation_report_html(html: str, *, config: Mapping[str, Any]) ->
         ("analytical_views", len(re.findall(r"data-analytical-view=", html)) >= int(report["minimum_embedded_analytical_views"]), f"observed={len(re.findall(r'data-analytical-view=', html))}"),
         ("counterfactual_panels", len(re.findall(r"data-counterfactual-panel=", html)) >= int(report["counterfactual_panel_count"]), f"observed={len(re.findall(r'data-counterfactual-panel=', html))}"),
         ("retrieval_panels", len(re.findall(r"data-retrieval-panel=", html)) >= int(report["retrieval_panel_count"]), f"observed={len(re.findall(r'data-retrieval-panel=', html))}"),
-        ("complete_catalog_declared", "1,785" in html and "complete catalog" in html.lower(), "full catalog must be described"),
+        (
+            "complete_catalog_declared",
+            f"{int(settings['expected_counts']['explanation_rows']):,}" in html
+            and "complete catalog" in html.lower(),
+            "full catalog must be described",
+        ),
         ("no_file_uri", "file://" not in html.lower(), "file URI prohibited"),
     ]
     return pd.DataFrame(checks, columns=["check_id", "passed", "details"])
