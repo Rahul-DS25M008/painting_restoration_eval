@@ -1,7 +1,7 @@
 # Methodology Guide
 
 **Status:** historical completed-pipeline guide with Controlled-300 transition addendum, reviewed 2026-09-25\
-**Experimental scope:** historical `controlled_50`; active `controlled_300` completed through Notebook 30 with Notebook 31 prepared\
+**Experimental scope:** historical `controlled_50`; active `controlled_300` completed through Notebook 31\
 **Pipeline:** historical 36-notebook pilot remains frozen; Controlled-300 rerun proceeds in dependency order\
 **Public interface:** [Streamlit dashboard](https://fhtw-painting-restoration.streamlit.app/)
 
@@ -13,9 +13,8 @@ tables, configurations, reports, or the thesis methodology chapter.
 The detailed prose below preserves the completed pilot methodology. Current
 Controlled-300 populations and producer status supersede its pilot counts only
 where explicitly recorded in the roadmap, evidence audit, coverage registry and
-completed producer manifests. Notebook 31 is the next eligible rerun producer;
-its five-report Controlled-300 preparation contract is complete but its saved
-reports remain historical pilot outputs until manual execution and validation.
+completed producer manifests. Notebook 31 now supplies the validated five-report
+Controlled-300 model-report layer; Notebook 32 is the next eligible producer.
 
 - The detailed notebook sequence is in
   [`final_notebook_roadmap.md`](final_notebook_roadmap.md).

@@ -1,15 +1,15 @@
 {
   "run_schema_version": "inventory_run.v1",
   "inventory_schema_version": "project_file_inventory.v1",
-  "inventory_run_id": "inventory_20260925T111221Z_6a365c01",
+  "inventory_run_id": "inventory_20260925T130551Z_a9f1beba",
   "status": "completed",
-  "generated_at_utc": "2026-09-25T11:12:21.177284Z",
-  "completed_at_utc": "2026-09-25T11:13:12.742996Z",
-  "duration_seconds": 51.798,
+  "generated_at_utc": "2026-09-25T13:05:51.286204Z",
+  "completed_at_utc": "2026-09-25T13:08:00.619901Z",
+  "duration_seconds": 129.545,
   "repository_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
   "inventory_relative_path": "outputs/inventory/project_file_inventory.csv",
-  "inventory_sha256": "fdfd5ebc7e3f5ceca118d633aff9e8f0e72208770315d769f42479e82bcea53c",
-  "inventory_size_bytes": 74337142,
+  "inventory_sha256": "ffaa9ccc7de1015074fb9b44749d3e12ef0ed51591bdade894b35c1a98c3a21c",
+  "inventory_size_bytes": 74337529,
   "hash_configuration": {
     "mode": "partial",
     "algorithm": "sha256_first_n_bytes",
@@ -18,9 +18,9 @@
   "incremental_reuse": {
     "enabled": true,
     "cache_status": "verified",
-    "source_run_id": "inventory_20260925T110551Z_b9e0a030",
-    "reused_file_count": 141673,
-    "inspected_file_count": 5
+    "source_run_id": "inventory_20260925T111221Z_6a365c01",
+    "reused_file_count": 141658,
+    "inspected_file_count": 21
   },
   "scan_configuration": {
     "skipped_directory_names": [
@@ -43,19 +43,19 @@
     ]
   },
   "environment": {
-    "python_version": "3.12.6",
+    "python_version": "3.12.14",
     "python_implementation": "CPython",
     "platform": "Windows-11-10.0.26200-SP0"
   },
   "summary": {
-    "file_count": 141678,
-    "total_size_bytes": 41687571207,
+    "file_count": 141679,
+    "total_size_bytes": 41690564742,
     "read_error_file_count": 0,
     "read_error_count": 0,
     "counts_by_format": {
       "csv": 187,
       "docx": 5,
-      "html": 101,
+      "html": 102,
       "jpeg": 300,
       "json": 91,
       "markdown": 42,
@@ -74,7 +74,7 @@
       "clean_image": 300,
       "damaged_image": 22001,
       "figure_image": 169,
-      "html": 101,
+      "html": 102,
       "image": 13778,
       "json": 91,
       "manifest_table": 46,
@@ -94,7 +94,7 @@
     "counts_by_extension": {
       ".csv": 187,
       ".docx": 5,
-      ".html": 101,
+      ".html": 102,
       ".ipynb": 39,
       ".jpg": 300,
       ".json": 91,

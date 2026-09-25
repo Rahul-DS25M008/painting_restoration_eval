@@ -9,9 +9,9 @@ This roadmap defines the final dependency order and detailed responsibility of e
 It consolidates the previously planned roadmap into 36 stages while preserving the supported methodological, experimental, engineering, reporting, explainability, and deployment scope.
 
 **Status as of 2026-09-25:** the validated 50-painting implementation is preserved
-at Git tag `pilot-50-complete`. Notebooks 01–30, including Notebook 12A and
+at Git tag `pilot-50-complete`. Notebooks 01–31, including Notebook 12A and
 supplemental D02, have completed their controlled minimal-delta reruns against
-the approved balanced 300-painting collection. Notebook 31 is the next eligible
+the approved balanced 300-painting collection. Notebook 32 is the next eligible
 producer. Existing notebook names, responsibilities, cell order, schemas,
 stable identifiers, and output roots remain the starting contract. Each later
 notebook becomes current only after its Controlled-300 outputs pass its gate;
@@ -3436,12 +3436,22 @@ validation/checks.csv
 **Output root:** `outputs/31_model_report_generation/`\
 **Depends on:** Notebooks 09–30
 
-**Controlled-300 preparation status (2026-09-25):** configuration, helper,
-contract tests and governing evidence records are ready. Its committed outputs
-remain the frozen four-method Controlled-50 reports until the notebook is rerun
-and passes its new five-method completion gate. The preparation contract binds
+**Controlled-300 completion status (2026-09-25):** run
+`run_430fd1355d3a4011bedc55b571d9544c` completed and passed its gate. It binds
 23 completed upstream manifests (N09–N30 plus N12A), 40 exact canonical CSV
-contracts and N29's 13,879-row explanation catalogue.
+contracts and N29's 13,879-row explanation catalogue. The final tree contains
+five self-contained reports, five index rows, seven artifact records, 346/346
+passing checks and exactly nine physical files. All 75 required sections and 39
+mock-to-final traceability roles pass; the reports embed 79 images and 374 tiles
+with no external image dependency.
+
+Against `E:/outputs/31_model_report_generation`, every pilot relative path and
+schema is retained. HINT is the sole added report; report/section/image/tile
+counts increase from 4/60/63/298 to 5/75/79/374, artifact records from 6 to 7,
+validation rows from 324 to 346 and physical files from 8 to 9. No pilot role is
+missing and no evidence reduction is unexplained. The approximately 13 MiB
+reporting handoff stays in ordinary Git under the exhausted-LFS guard; no
+separate Hugging Face release is required.
 
 **Controlled-300 scope:** Five reports: four full-evaluation methods and one
 clearly bounded SDXL report. Existing approved report structure remains the

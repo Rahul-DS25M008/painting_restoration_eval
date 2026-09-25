@@ -969,10 +969,11 @@ checksums, limitations, and downstream eligibility.
 | 28 Metric and Region-Policy Ablation | Finished | Finished | Yes | 23 fixed scenarios; 10,480 four-method core candidates across 2,620 cases; 13,879 flag candidates; 47,508 ablation rows; 319,217 flag-stability rows; 759 subgroup rows; 122/122 checks; 8 canonical files; 12-hour-20-minute execution window | All eight pilot paths, table schemas, and six artifact roles retained; ablation rows increased from 7,710 to 47,508 and flag-stability rows from 41,055 to 319,217; report tiles increased from 18 three-method to 24 four-method tiles with HINT; the 165.21 MB flag-stability table routes to Hugging Face diagnostics while the remaining scientific handoff stays in ordinary Git under the exhausted-LFS guard |
 | 29 Explainable AI and Case Retrieval | Finished | Finished | Yes | 13,879 candidates across 2,620 cases and 300 paintings; 10,480 four-method primary candidates; 24 bounded SDXL candidates; 4,100 repeated-seed members in 1,025 groups; 13,144 dual-view retrieval-eligible candidates; 100 neighbour rows; 24 bounded visual units; 146/146 checks; 30 canonical files | All 30 pilot paths and six artifact roles retained; catalog rows increased from 1,785 to 13,879 while neighbour and panel counts remained intentionally bounded; report embeds 34 images with no external dependency; complete catalog routes to Hugging Face diagnostics and the bounded handoff stays in ordinary Git without LFS |
 | 30 Model Cards, Compute, and Scalability | Finished | Finished | Yes | Five model cards; 32 observed and 10 projected compute rows; 11 quality anchors in two populations; two figures; 178/178 checks; 13/13 roadmap responsibilities; 12 canonical files | All 11 pilot paths retained; HINT card added as the sole new path; cards 4→5, compute rows 35→42, validation rows 165→178 and files 11→12; compact outputs stay in ordinary Git and require no Hugging Face release |
+| 31 Model Report Generation | Finished | Finished | Yes | Five self-contained reports; 75 sections; 79 embedded images; 374 embedded tiles; five index rows; seven artifact records; 346/346 checks; 13/13 roadmap responsibilities; nine canonical files | All eight pilot paths retained; HINT report added as the sole new path; reports/sections/images/tiles increased 4→5, 60→75, 63→79 and 298→374; compact ~13 MiB handoff stays in ordinary Git without LFS or a Hugging Face release |
 
-Notebooks 01–30, including Notebook 12A and supplemental D02, are completed
-Controlled-300 producers. Notebook 31 is the next active producer; Notebooks
-31–36 remain historical Controlled-50
+Notebooks 01–31, including Notebook 12A and supplemental D02, are completed
+Controlled-300 producers. Notebook 32 is the next active producer; Notebooks
+32–36 remain historical Controlled-50
 evidence until individually rerun. Notebook 20's producer-specific diagnostics bundle
 and compact Git handoff are remotely and locally verified. Notebook 21 passed
 its completion gate for 10,504 selected candidates, 3,160,618 normalized
@@ -1059,18 +1060,17 @@ registered six artifact groups and produced exactly 12 files. All 11 pilot paths
 remain; the HINT card is the sole added path. Its compact tables, five Markdown
 cards, figures and control records belong in ordinary Git, not Hugging Face.
 
-Notebook 31's Controlled-300 preparation layer is complete. It adds HINT as a
-fifth self-contained model report, consumes 23 upstream manifests (N09–N30 plus
-N12A), and locks 40 canonical CSV row/schema contracts. Its N29 explanation
-catalogue is an intentionally externalized upstream artifact: before execution,
-restore the exact pinned file to its canonical path and verify the publication
-registry SHA-256. Do not substitute the 1,785-row pilot catalogue or silently
-reduce the report population. The notebook must continue to be edited manually;
-the existing twelve-batch order, executive summary plus fourteen report
-sections, and 39 traceability roles remain unchanged. The expected completion
-contract is five reports, five index rows, seven artifact records and nine
-physical files. No N31 artifact becomes Controlled-300 evidence until the final
-gate and E-drive comparison pass.
+Notebook 31 run `run_430fd1355d3a4011bedc55b571d9544c` is complete and
+validated. It adds HINT as a fifth self-contained model report, consumes 23
+upstream manifests (N09–N30 plus N12A), and preserves the 40 canonical CSV
+row/schema contracts. Its five reports retain the executive summary plus
+fourteen report sections and all 39 traceability roles. The final contract is
+five reports, five index rows, seven artifact records, 346 passing checks and
+nine physical files; all report/index/artifact checksums match, no external
+image dependencies or prohibited mock terms remain, and the E-drive comparison
+shows no missing pilot role. The compact approximately 13 MiB handoff belongs
+in ordinary Git under explicit `.gitattributes` exceptions. Do not publish a
+duplicate Hugging Face release for this notebook.
 
 Notebook 25's 41.97 MB canonical scalar table is diagnostics-tier evidence and
 is published through the bounded external-artifact workflow. Its two figures,

@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-25T10:16:47.547044Z",
+  "updated_at_utc": "2026-09-25T13:05:36.036600Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -2075,18 +2075,32 @@
       "checksum": "7c6192e1b0534e3370a303b3942cefe7303831b1bda2b9e63238dbdee779583b"
     },
     {
+      "artifact_key": "model_reports.hint_places2",
+      "producer_notebook": "31_model_report_generation",
+      "relative_path": "outputs/31_model_report_generation/reports/hint_places2.html",
+      "artifact_type": "standalone_html_report",
+      "artifact_role": "model_specific_evaluation_report",
+      "schema_version": "model_report_html.v1",
+      "dataset_scope": "controlled_300",
+      "experiment_scope": "",
+      "validation_status": "passed",
+      "row_count": "",
+      "file_count": "1",
+      "checksum": "c5976cbd1c827bb5c0b01344ccc584db640603160adc3996963b68607c4aeb51"
+    },
+    {
       "artifact_key": "model_reports.lama",
       "producer_notebook": "31_model_report_generation",
       "relative_path": "outputs/31_model_report_generation/reports/lama.html",
       "artifact_type": "standalone_html_report",
       "artifact_role": "model_specific_evaluation_report",
       "schema_version": "model_report_html.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "",
       "validation_status": "passed",
       "row_count": "",
       "file_count": "1",
-      "checksum": "82f6d415449ea3cbc11cd16a9701b900a9dc3ffcc3bde9ff60de182fac7d65ce"
+      "checksum": "0ee00e76a6406effca6366a1d1e341c9a2b9be19065f7001b4f3a7af574904e9"
     },
     {
       "artifact_key": "model_reports.opencv_telea",
@@ -2095,12 +2109,12 @@
       "artifact_type": "standalone_html_report",
       "artifact_role": "model_specific_evaluation_report",
       "schema_version": "model_report_html.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "",
       "validation_status": "passed",
       "row_count": "",
       "file_count": "1",
-      "checksum": "7fed7532c2edddacbe792b19c7059a6fbdc8600d43ddf895202f911eac0d066b"
+      "checksum": "3049da7e1a3233826f86727526610cdeff699331e09cb5addaa89e28b85a9624"
     },
     {
       "artifact_key": "model_reports.report_index",
@@ -2109,12 +2123,12 @@
       "artifact_type": "csv",
       "artifact_role": "model_report_registry",
       "schema_version": "model_report_index.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "",
       "validation_status": "passed",
-      "row_count": "4",
+      "row_count": "5",
       "file_count": "1",
-      "checksum": "80fc6b83dde8c3266f544d6a111fac360d9dee45eb0ed864a0c89f2da4819192"
+      "checksum": "204d21bd07c1f11668154a2f19724b295d6264265beff67761ceb6d6de90d887"
     },
     {
       "artifact_key": "model_reports.sdxl_inpainting",
@@ -2123,12 +2137,12 @@
       "artifact_type": "standalone_html_report",
       "artifact_role": "model_specific_evaluation_report",
       "schema_version": "model_report_html.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "",
       "validation_status": "passed",
       "row_count": "",
       "file_count": "1",
-      "checksum": "8a5bf4e43157e823738d2b8bed3f8d6e4c978ea6c3e890fdc5bf37f5a94817be"
+      "checksum": "8470561ed70de0ab6b54f2a6a3246036bd42a8cf412df5e6ce3a39844504954b"
     },
     {
       "artifact_key": "model_reports.stable_diffusion_inpainting",
@@ -2137,12 +2151,12 @@
       "artifact_type": "standalone_html_report",
       "artifact_role": "model_specific_evaluation_report",
       "schema_version": "model_report_html.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "",
       "validation_status": "passed",
       "row_count": "",
       "file_count": "1",
-      "checksum": "0c70f6552fd5349dd76c6a7c82edf3fffddc63dacc437eee119152b4a7e26c9c"
+      "checksum": "32a495902552443196ac5a8029832a099c1c41d4f18231ca6dfa7c262bd3b7d9"
     },
     {
       "artifact_key": "multi_model_comparison.disagreement",
@@ -3481,12 +3495,12 @@
       "artifact_type": "csv",
       "artifact_role": "consolidated_validation_evidence",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "",
       "validation_status": "passed",
-      "row_count": "324",
+      "row_count": "346",
       "file_count": "1",
-      "checksum": "076c2756a3675933b38b18513d31e950c4e59ce00c40c3d88c4176458dcc88f9"
+      "checksum": "2d60e6649637c6028015e9b94acb927edc20ea832a28ba2a387d2c97c8e1f26a"
     }
   ]
 }

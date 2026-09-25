@@ -46,8 +46,11 @@ checks. Notebook 29 completed its explainability and case-retrieval run, report,
 pilot comparison and final gate. Notebook 30 run
 `run_605de239145a46e9a202fd63bbbb4e9c` completed its Controlled-300 model-card,
 compute and scalability contract with 178/178 checks and is now the canonical
-method-disclosure source. Notebook 31 is the next active producer. Notebooks
-31–36 remain historical Controlled-50 evidence until
+method-disclosure source. Notebook 31 run
+`run_430fd1355d3a4011bedc55b571d9544c` completed its five-report
+Controlled-300 contract with 346/346 checks and is now the canonical
+model-report source. Notebook 32 is the next active producer. Notebooks
+32–36 remain historical Controlled-50 evidence until
 each producer is explicitly reopened, rerun, validated, baseline-compared and
 committed. Complete local outputs remain canonical even where large evidence is
 also represented by verified external publication records.
@@ -1152,31 +1155,32 @@ is retained. The only new path is the HINT card; model cards increased 4→5,
 compute rows 35→42, validation rows 165→178 and physical files 11→12. The
 previous Controlled-50 outputs remain only the frozen comparison baseline.
 
-Notebook 31 now has an approved Controlled-300 preparation contract and awaits
-manual notebook execution. It consumes 23 completed upstream manifests
-(Notebooks 09–30 plus supplemental Notebook 12A), 40 exact canonical CSV
-contracts, five N30 method cards and N29's 13,879-row explanation catalogue.
-The locally absent N29 catalogue was restored from pinned, remotely verified
-Hugging Face commit `bb7b8bde43949bb569873c87fc8f3ef28491d6d9`; its
-46,809,964-byte payload and SHA-256
-`4118b8c573dcb7013751de2e3b1279d8824176eb05ad7656c4007ab24ae37f8b`
-match the publication registry exactly.
+Notebook 31 run `run_430fd1355d3a4011bedc55b571d9544c` is complete and passed
+its Controlled-300 gate. It consumes 23 completed upstream manifests (Notebooks
+09–30 plus supplemental Notebook 12A), 40 exact canonical CSV contracts, five
+N30 method cards and N29's 13,879-row explanation catalogue. It produces five
+self-contained reports—Telea, LaMa, HINT, Stable Diffusion and bounded SDXL—a
+five-row report index, seven artifact records and nine physical files. All 346
+checks, 13 roadmap responsibilities, 75 required report sections and 39
+mock-to-final traceability roles pass. The reports embed 79 images and 374 tiles
+with no external image dependency, prohibited mock residue, checksum mismatch,
+blocking failure or warning failure.
 
-The new output contract is five self-contained reports—Telea, LaMa, HINT,
-Stable Diffusion and bounded SDXL—a five-row report index, seven artifact
-records and nine physical files. The executive-summary-plus-fourteen-section
-structure and all 39 mock-to-final traceability roles remain locked. Notebook
-31 introduces no new scientific computation: it selects declared examples,
-formats validated values and creates presentation-only plots. Its completion
-gate remains false until the notebook is manually rerun, validated and compared
-with `E:/outputs/31_model_report_generation`.
+Against `E:/outputs/31_model_report_generation`, all eight pilot relative paths
+and all artifact roles and schemas remain. HINT is the only added path. Reports,
+sections, embedded images and tiles increase from 4/60/63/298 to 5/75/79/374;
+artifact records increase 6→7, validation rows 324→346 and physical files 8→9.
+The reporting layer creates no new scientific evidence: it selects declared
+examples, formats validated values and creates presentation-only plots. Its
+approximately 13 MiB output is compact enough for ordinary Git under explicit
+LFS bypass rules, so no duplicate Hugging Face release is required.
 
-The Notebook 31–36 records below describe the completed **historical
+The Notebook 32–36 records below describe the completed **historical
 Controlled-50 reporting, dashboard and packaging layer**. They remain valid as
 pilot evidence and recovery documentation, but they are not yet the current
-Controlled-300 downstream handoff. Notebook 31 is the next eligible rerun and
-must rebuild its five-method report set from the completed N09–N30 evidence
-before any later reporting notebook becomes current.
+Controlled-300 downstream handoff. Notebook 32 is the next eligible rerun and
+must consume Notebook 31's five-method report index before any later reporting
+notebook becomes current.
 
 Historical pilot Notebook 31 is complete and passed its completion gate. It consumed validated
 Notebook 09--30 artifacts and produced four standalone, self-contained HTML

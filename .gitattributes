@@ -50,3 +50,12 @@ outputs/30_model_cards_compute_and_scalability/figures/quality_vs_compute.png -f
 outputs/30_model_cards_compute_and_scalability/figures/scaling_projection.png -filter -diff -merge -text
 outputs/30_model_cards_compute_and_scalability/manifests/artifacts.csv -filter diff -merge text
 outputs/30_model_cards_compute_and_scalability/validation/checks.csv -filter diff -merge text
+
+# Notebook 31 is a compact, self-contained reporting handoff (about 13 MiB in
+# total; no individual file exceeds 4 MiB). Keep its five HTML reports, index,
+# artifact ledger, and validation ledger in ordinary Git so the exhausted LFS
+# allowance is not invoked and the README report links remain repository-native.
+outputs/31_model_report_generation/data/report_index.csv -filter diff -merge text
+outputs/31_model_report_generation/manifests/artifacts.csv -filter diff -merge text
+outputs/31_model_report_generation/reports/*.html -filter diff -merge text
+outputs/31_model_report_generation/validation/checks.csv -filter diff -merge text

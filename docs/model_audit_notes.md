@@ -330,7 +330,10 @@ Canonical cards:
 - [SDXL](../outputs/30_model_cards_compute_and_scalability/reports/model_cards/sdxl_inpainting.md)
 - [Compute/scalability table](../outputs/30_model_cards_compute_and_scalability/metrics/compute_scalability.csv)
 
-Notebook 31 owns image-heavy model reports. Notebook 32 owns case- and painting-level reports. Notebook 34 owns final dashboard assets. Notebook 36 owns the supervisor/publication/reproducibility package.
+Notebook 31 now owns the completed five-report Controlled-300 model-report
+layer (Telea, LaMa, HINT, Stable Diffusion and bounded SDXL). Notebook 32 owns
+case- and painting-level reports. Notebook 34 owns final dashboard assets.
+Notebook 36 owns the supervisor/publication/reproducibility package.
 
 ## 12. Reproducibility and risk checks
 
@@ -344,9 +347,10 @@ cautions are:
 - **Stable Diffusion:** record revision, prompt arm, seed, scheduler, inference
   size and compositing. Resampling a razor-thin mask can leave residual lines;
   prompt treatment alone does not establish that the geometry problem is solved.
-- **SDXL:** retain the purposive ten-case scope, hardware and stopping policy.
-  All ten completing does not establish full-dataset feasibility or a universal
-  minimum VRAM requirement.
+- **SDXL:** retain the bounded 35-case schedule across 30 paintings, the 24
+  technically valid completions, hardware and stopping policy. Partial
+  completion does not establish full-dataset feasibility or a universal minimum
+  VRAM requirement.
 - **All methods:** retain per-run package/device records. All 36 saved manifests
   record Python 3.12.6, but dependency versions differ from the legacy
   experimental recipe. Determinism under the evaluated contract is not a promise
@@ -409,6 +413,6 @@ HINT and MAT are trained on general image/scene data, not conservation paintings
 The selection therefore improves architectural coverage in the current
 benchmark without removing the domain gap or establishing conservation
 suitability. Notebook 31 consequently treats HINT as a full-evaluation method
-and creates a fifth model report, while MAT remains selection-pilot evidence
-only. See the [complete selection report](../outputs/37_hint_mat_method_selection/reports/method_selection_report.html)
+and now includes it in the validated five-report Controlled-300 handoff, while
+MAT remains selection-pilot evidence only. See the [complete selection report](../outputs/37_hint_mat_method_selection/reports/method_selection_report.html)
 and [recorded decision](../outputs/37_hint_mat_method_selection/reports/selection_decision.json).

@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-09-25T10:16:47.547044Z`
-- Registered artifacts: 249
+- Updated: `2026-09-25T13:05:36.036600Z`
+- Registered artifacts: 250
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -154,6 +154,7 @@
 | model_cards_compute.model_cards | 30_model_cards_compute_and_scalability | `outputs/30_model_cards_compute_and_scalability/data/model_cards.csv` | complete_machine_readable_method_disclosures | passed |
 | model_cards_compute.quality_vs_compute_figure | 30_model_cards_compute_and_scalability | `outputs/30_model_cards_compute_and_scalability/figures/quality_vs_compute.png` | population_matched_quality_and_compute_context | passed |
 | model_cards_compute.scaling_projection_figure | 30_model_cards_compute_and_scalability | `outputs/30_model_cards_compute_and_scalability/figures/scaling_projection.png` | transparent_future_painting_scalability_projection | passed |
+| model_reports.hint_places2 | 31_model_report_generation | `outputs/31_model_report_generation/reports/hint_places2.html` | model_specific_evaluation_report | passed |
 | model_reports.lama | 31_model_report_generation | `outputs/31_model_report_generation/reports/lama.html` | model_specific_evaluation_report | passed |
 | model_reports.opencv_telea | 31_model_report_generation | `outputs/31_model_report_generation/reports/opencv_telea.html` | model_specific_evaluation_report | passed |
 | model_reports.report_index | 31_model_report_generation | `outputs/31_model_report_generation/data/report_index.csv` | model_report_registry | passed |

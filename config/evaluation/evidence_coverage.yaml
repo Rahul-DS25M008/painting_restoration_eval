@@ -2135,9 +2135,9 @@ evidence_coverage:
 
     - notebook_id: "31"
       stem: "31_model_report_generation"
-      status: "controlled_300_preparation_complete_pending_rerun"
-      completion_gate_passed: false
-      run_id: null
+      status: "controlled_300_complete"
+      completion_gate_passed: true
+      run_id: "run_430fd1355d3a4011bedc55b571d9544c"
       dataset_scope: "controlled_300"
       dataset_version: "2.0.0"
       output_root: "outputs/31_model_report_generation"
@@ -2161,6 +2161,42 @@ evidence_coverage:
         input_table_contracts: 40
         hydrated_external_input: "outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv"
         hydrated_external_input_sha256: "4118b8c573dcb7013751de2e3b1279d8824176eb05ad7656c4007ab24ae37f8b"
+      binding_population:
+        reports: 5
+        report_index_rows: 5
+        sections: 75
+        embedded_images: 79
+        embedded_tiles: 374
+        analytical_views: 29
+        representative_panels: 40
+        visual_atlases: 10
+        validation_rows: 346
+        blocking_failures: 0
+        warning_failures: 0
+        roadmap_responsibilities: 13
+        mock_traceability_rows: 39
+        artifact_records: 7
+        physical_output_files: 9
+        external_image_dependencies: 0
+      baseline_comparison:
+        root: "E:/outputs/31_model_report_generation"
+        pilot_reports: 4
+        controlled_300_reports: 5
+        pilot_sections: 60
+        controlled_300_sections: 75
+        pilot_embedded_images: 63
+        controlled_300_embedded_images: 79
+        pilot_embedded_tiles: 298
+        controlled_300_embedded_tiles: 374
+        pilot_validation_rows: 324
+        controlled_300_validation_rows: 346
+        pilot_artifact_records: 6
+        controlled_300_artifact_records: 7
+        pilot_physical_files: 8
+        controlled_300_physical_files: 9
+        all_pilot_relative_paths_retained: true
+        added_relative_paths: ["reports/hint_places2.html"]
+        unexplained_missing_or_reduced_evidence: false
       historical_pilot_completion_contract:
         run_status: "completed"
         validation_status: "passed"
