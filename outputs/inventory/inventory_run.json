@@ -1,15 +1,15 @@
 {
   "run_schema_version": "inventory_run.v1",
   "inventory_schema_version": "project_file_inventory.v1",
-  "inventory_run_id": "inventory_20260925T104337Z_e51b5f37",
+  "inventory_run_id": "inventory_20260925T111221Z_6a365c01",
   "status": "completed",
-  "generated_at_utc": "2026-09-25T10:43:37.802785Z",
-  "completed_at_utc": "2026-09-25T10:44:37.433164Z",
-  "duration_seconds": 60.129,
+  "generated_at_utc": "2026-09-25T11:12:21.177284Z",
+  "completed_at_utc": "2026-09-25T11:13:12.742996Z",
+  "duration_seconds": 51.798,
   "repository_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
   "inventory_relative_path": "outputs/inventory/project_file_inventory.csv",
-  "inventory_sha256": "a11ff9a851cc6bb34f7ba697a3f56357c1bb73b7669d104680ebb274018e19fe",
-  "inventory_size_bytes": 74335627,
+  "inventory_sha256": "fdfd5ebc7e3f5ceca118d633aff9e8f0e72208770315d769f42479e82bcea53c",
+  "inventory_size_bytes": 74337142,
   "hash_configuration": {
     "mode": "partial",
     "algorithm": "sha256_first_n_bytes",
@@ -18,9 +18,9 @@
   "incremental_reuse": {
     "enabled": true,
     "cache_status": "verified",
-    "source_run_id": "inventory_20260925T102701Z_9f689a0b",
-    "reused_file_count": 141674,
-    "inspected_file_count": 3
+    "source_run_id": "inventory_20260925T110551Z_b9e0a030",
+    "reused_file_count": 141673,
+    "inspected_file_count": 5
   },
   "scan_configuration": {
     "skipped_directory_names": [
@@ -48,12 +48,12 @@
     "platform": "Windows-11-10.0.26200-SP0"
   },
   "summary": {
-    "file_count": 141677,
-    "total_size_bytes": 41640752605,
+    "file_count": 141678,
+    "total_size_bytes": 41687571207,
     "read_error_file_count": 0,
     "read_error_count": 0,
     "counts_by_format": {
-      "csv": 186,
+      "csv": 187,
       "docx": 5,
       "html": 101,
       "jpeg": 300,
@@ -86,13 +86,13 @@
       "python": 106,
       "restored_image": 81282,
       "summary_table": 5,
-      "table": 54,
+      "table": 55,
       "text": 7,
       "validation_table": 39,
       "yaml": 68
     },
     "counts_by_extension": {
-      ".csv": 186,
+      ".csv": 187,
       ".docx": 5,
       ".html": 101,
       ".ipynb": 39,

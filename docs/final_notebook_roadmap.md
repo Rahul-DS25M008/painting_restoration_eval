@@ -3436,14 +3436,32 @@ validation/checks.csv
 **Output root:** `outputs/31_model_report_generation/`\
 **Depends on:** Notebooks 09–30
 
-**Transition status (2026-09-25):** next eligible Controlled-300 producer. Its
-committed outputs are still the frozen four-method Controlled-50 reports until
-this notebook is rerun and passes its new five-method completion gate.
+**Controlled-300 preparation status (2026-09-25):** configuration, helper,
+contract tests and governing evidence records are ready. Its committed outputs
+remain the frozen four-method Controlled-50 reports until the notebook is rerun
+and passes its new five-method completion gate. The preparation contract binds
+23 completed upstream manifests (N09–N30 plus N12A), 40 exact canonical CSV
+contracts and N29's 13,879-row explanation catalogue.
 
 **Controlled-300 scope:** Five reports: four full-evaluation methods and one
 clearly bounded SDXL report. Existing approved report structure remains the
 blueprint; numerical results and embedded visuals come from validated new
 evidence only.
+
+HINT is the fourth full-evaluation method and receives the same deterministic
+applicability boundaries as Telea and LaMa: complete quality/report coverage,
+but no repeated-seed uncertainty. SDXL remains a partial evaluation based on
+the bounded 35-case schedule and 24 completed candidates. The expected output
+contract is five self-contained HTML reports, a five-row index, two manifests
+and one validation ledger: nine physical files and seven artifact records.
+
+**Expected execution time:** approximately 2–4 hours on the recorded
+workstation. This notebook runs no restoration inference. The comparatively
+long stages are Batch 2 (large-table loading, approximately 15–35 minutes),
+Batch 7 (bounded display-evidence extraction, approximately 15–30 minutes),
+Batch 9 (representative panels and atlases, approximately 20–45 minutes), and
+Batch 11 (five self-contained HTML assemblies, approximately 10–30 minutes).
+These are planning ranges rather than guarantees.
 
 ### Responsibilities
 

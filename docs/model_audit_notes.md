@@ -1,7 +1,8 @@
 # Model Audit Notes
 
 **Status:** Controlled-300 audit notes with completed HINT selection, execution,
-and validated Notebook 30 method-card/compute handoff; reviewed 2026-09-25.
+validated Notebook 30 method-card/compute handoff, and prepared five-method
+Notebook 31 reporting contract; reviewed 2026-09-25.
 
 This document records model selection, implementation provenance, evidence
 boundaries and reproducibility risks. Notebook 30's earlier Controlled-50 cards
@@ -368,20 +369,24 @@ The model stack is methodologically coherent:
 
 1. Telea supplies a transparent classical baseline.
 2. LaMa supplies the strongest scoped learned deterministic baseline.
-3. Stable Diffusion supplies a stochastic generative baseline and uncertainty target.
-4. SDXL supplies a bounded higher-capacity partial comparison.
+3. HINT supplies a second full-scope deterministic learned family with
+   structure-guided, mask-aware multi-scale processing.
+4. Stable Diffusion supplies a stochastic generative baseline and uncertainty target.
+5. SDXL supplies a bounded higher-capacity partial comparison.
 
 The thesis contribution is the evaluation framework that shows where these restoration candidates improve, fail, disagree, hallucinate, smooth texture, create seams, alter structure, or vary across seeds—not a claim that any model reconstructs conservation truth.
 
-## 15. Completed HINT/MAT selection extension
+## 15. Completed HINT/MAT selection and production follow-through
 
-Notebook 37 compared HINT and MAT on the same twelve predeclared canonical cases
-and selected HINT for the future expanded run. This is a method-selection pilot,
-not an update to the completed full-benchmark stack above.
+Decision Notebook D01 (historical file/output identifier 37) compared HINT and
+MAT on the same twelve predeclared canonical cases and selected HINT for the
+expanded run. The selection experiment remains separate evidence, but its
+decision has now been executed: Notebook 12A produced 2,620 HINT candidates
+across the full 300-painting eligible benchmark.
 
 | Candidate | Released checkpoint | Observed adapter | Licence consideration | Outcome |
 |---|---|---|---|---|
-| HINT | official Places2 | native 768 × 768 | MIT software; checkpoint terms recorded separately | selected for the future expansion |
+| HINT | official Places2 | native 768 × 768 | MIT software; checkpoint terms recorded separately | selected and executed across the Controlled-300 benchmark |
 | MAT | official Places-512 FullData | 512 input, returned to exact-mask-composited 768 output | CC BY-NC 4.0, research-only constraint | retained as the pilot comparator; not selected |
 
 Both candidates produced all 12 required outputs and passed all 94 consolidated
@@ -401,7 +406,9 @@ for multi-scale, long-range context. MAT supplied a credible transformer
 comparator but required a 512 adapter and carried a noncommercial licence.
 
 HINT and MAT are trained on general image/scene data, not conservation paintings.
-The selection therefore improves architectural coverage for the future
+The selection therefore improves architectural coverage in the current
 benchmark without removing the domain gap or establishing conservation
-suitability. See the [complete selection report](../outputs/37_hint_mat_method_selection/reports/method_selection_report.html)
+suitability. Notebook 31 consequently treats HINT as a full-evaluation method
+and creates a fifth model report, while MAT remains selection-pilot evidence
+only. See the [complete selection report](../outputs/37_hint_mat_method_selection/reports/method_selection_report.html)
 and [recorded decision](../outputs/37_hint_mat_method_selection/reports/selection_decision.json).

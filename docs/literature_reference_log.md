@@ -1115,6 +1115,18 @@ notebook passed all 178 checks and all 13 roadmap requirements; its five cards
 and two figures remain documentation of project evidence rather than additional
 literature claims.
 
+## Notebook 31 — Model Report Generation
+
+Notebook 31 introduces no new scientific method or literature-derived metric.
+It is a presentation and traceability layer that assembles five self-contained
+method reports from already validated Controlled-300 evidence. Literature is
+used to preserve each method's provenance, intended use, domain limitations and
+interpretive boundaries; numerical results, representative cases and plots come
+only from the repository's completed producers. HINT is reported as a full
+deterministic structure-guided method, while SDXL remains explicitly bounded
+and partial. Repeated-seed disagreement remains applicable only to the approved
+Stable Diffusion populations and is not converted into calibrated confidence.
+
 In particular:
 
 - We compute no universal combined quality, uncertainty or trustworthiness score.

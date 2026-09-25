@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.22"
+config_version: "1.1.23"
 
 evidence_coverage:
   authority:
@@ -2135,9 +2135,11 @@ evidence_coverage:
 
     - notebook_id: "31"
       stem: "31_model_report_generation"
-      status: "completed_validation_passed"
-      completion_gate_passed: true
-      run_id: "run_86faee4c15ee49cbbc5b85a649cdc1b4"
+      status: "controlled_300_preparation_complete_pending_rerun"
+      completion_gate_passed: false
+      run_id: null
+      dataset_scope: "controlled_300"
+      dataset_version: "2.0.0"
       output_root: "outputs/31_model_report_generation"
       manifest_path: "outputs/31_model_report_generation/manifests/run_manifest.json"
       preparation_contract:
@@ -2146,16 +2148,20 @@ evidence_coverage:
         test_path: "tests/test_model_report_generation.py"
         approved_mock_structure_locked: true
         creates_new_scientific_evidence: false
-        upstream_manifest_range: "09-30"
-        upstream_manifest_count: 22
-        model_count: 4
-        report_count: 4
-        report_index_rows: 4
-        artifact_records: 6
-        physical_output_files: 8
+        upstream_manifest_range: "09-30_plus_12a"
+        upstream_manifest_count: 23
+        model_count: 5
+        report_count: 5
+        report_index_rows: 5
+        artifact_records: 7
+        physical_output_files: 9
         required_sections_per_report: 15
         mock_traceability_rows: 39
-      completion_contract:
+        explanation_catalog_rows: 13879
+        input_table_contracts: 40
+        hydrated_external_input: "outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv"
+        hydrated_external_input_sha256: "4118b8c573dcb7013751de2e3b1279d8824176eb05ad7656c4007ab24ae37f8b"
+      historical_pilot_completion_contract:
         run_status: "completed"
         validation_status: "passed"
         creates_new_scientific_evidence: false
@@ -2181,16 +2187,19 @@ evidence_coverage:
         physical_output_files: 8
         external_image_dependencies: 0
       required_evidence:
-        - "n09_n12_candidates_runtime_and_scope"
+        - "n09_n12_and_n12a_candidates_runtime_and_scope"
         - "n13_n20_reference_local_uncertainty_and_semantic_evidence"
         - "n21_n28_comparison_robustness_statistics_failures_and_ablation"
         - "n29_complete_explanation_catalog_and_selected_retrieval_evidence"
         - "n30_model_cards_compute_and_scalability"
-      primary_outputs:
+      planned_primary_outputs:
         - path: "outputs/31_model_report_generation/reports/opencv_telea.html"
           files: 1
           schema_version: "self_contained_model_report.v1"
         - path: "outputs/31_model_report_generation/reports/lama.html"
+          files: 1
+          schema_version: "self_contained_model_report.v1"
+        - path: "outputs/31_model_report_generation/reports/hint_places2.html"
           files: 1
           schema_version: "self_contained_model_report.v1"
         - path: "outputs/31_model_report_generation/reports/stable_diffusion_inpainting.html"
@@ -2200,25 +2209,22 @@ evidence_coverage:
           files: 1
           schema_version: "self_contained_model_report.v1"
         - path: "outputs/31_model_report_generation/data/report_index.csv"
-          rows: 4
+          rows: 5
           schema_version: "model_report_index.v1"
-        - path: "outputs/31_model_report_generation/validation/checks.csv"
-          rows: 324
-          schema_version: "validation_checks.v1"
       supported_scope:
-        - "four_parameterized_self_contained_model_reports"
-        - "complete_three_model_and_bounded_sdxl_scope_preserved"
+        - "five_parameterized_self_contained_model_reports"
+        - "complete_four_model_and_bounded_sdxl_scope_preserved"
         - "model_specific_quality_local_semantic_failure_explanation_and_compute_evidence"
         - "stable_diffusion_canonical_and_damage_size_seed_variability"
         - "stable_diffusion_scratch_prompt_ablation"
         - "deterministic_representative_success_failure_selection"
         - "approved_mock_fidelity_and_embedded_visual_density"
       applicability_rules:
-        - "telea_and_lama_repeated_seed_uncertainty_is_not_applicable_deterministic_method"
+        - "telea_lama_and_hint_repeated_seed_uncertainty_is_not_applicable_deterministic_method"
         - "stable_diffusion_uncertainty_covers_canonical_and_damage_size_populations"
         - "sdxl_uncertainty_is_not_applicable_insufficient_seed_coverage"
-        - "sdxl_is_ten_case_five_painting_partial_evaluation"
-        - "damage_size_mask_robustness_and_synthetic_extensions_use_painting_as_independent_unit"
+        - "sdxl_is_a_bounded_35_case_30_painting_schedule_with_24_completed_candidates"
+        - "damage_size_mask_robustness_and_synthetic_extensions_use_the_controlled_35_painting_cohort_and_painting_as_independent_unit"
         - "report_examples_are_illustrative_not_independent_evidence"
       downstream_contract:
         - "consume_report_index_for_report_discovery_and_provenance"

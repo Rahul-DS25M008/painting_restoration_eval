@@ -1152,6 +1152,25 @@ is retained. The only new path is the HINT card; model cards increased 4→5,
 compute rows 35→42, validation rows 165→178 and physical files 11→12. The
 previous Controlled-50 outputs remain only the frozen comparison baseline.
 
+Notebook 31 now has an approved Controlled-300 preparation contract and awaits
+manual notebook execution. It consumes 23 completed upstream manifests
+(Notebooks 09–30 plus supplemental Notebook 12A), 40 exact canonical CSV
+contracts, five N30 method cards and N29's 13,879-row explanation catalogue.
+The locally absent N29 catalogue was restored from pinned, remotely verified
+Hugging Face commit `bb7b8bde43949bb569873c87fc8f3ef28491d6d9`; its
+46,809,964-byte payload and SHA-256
+`4118b8c573dcb7013751de2e3b1279d8824176eb05ad7656c4007ab24ae37f8b`
+match the publication registry exactly.
+
+The new output contract is five self-contained reports—Telea, LaMa, HINT,
+Stable Diffusion and bounded SDXL—a five-row report index, seven artifact
+records and nine physical files. The executive-summary-plus-fourteen-section
+structure and all 39 mock-to-final traceability roles remain locked. Notebook
+31 introduces no new scientific computation: it selects declared examples,
+formats validated values and creates presentation-only plots. Its completion
+gate remains false until the notebook is manually rerun, validated and compared
+with `E:/outputs/31_model_report_generation`.
+
 The Notebook 31–36 records below describe the completed **historical
 Controlled-50 reporting, dashboard and packaging layer**. They remain valid as
 pilot evidence and recovery documentation, but they are not yet the current

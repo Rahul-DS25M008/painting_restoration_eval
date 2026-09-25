@@ -25,7 +25,7 @@ from PIL import Image
 
 
 MODULE_NAME = "restoration_eval.model_report_generation"
-MODULE_VERSION = "1.0.0"
+MODULE_VERSION = "2.0.0"
 CONFIG_SCHEMA_VERSION = "model_report_generation_config.v1"
 REPORT_INDEX_SCHEMA_VERSION = "model_report_index.v1"
 SELECTION_SCHEMA_VERSION = "model_report_selection.v1"
@@ -145,7 +145,7 @@ def load_model_report_config(path: str | Path) -> dict[str, Any]:
         "notebook_id", "notebook_stem", "dataset_id", "dataset_version",
         "dataset_scope", "report_index_schema_version", "selection_schema_version",
         "traceability_schema_version", "inputs", "output", "input_table_contracts",
-        "models", "report",
+        "models", "report", "hydrated_external_inputs",
         "expected_counts", "evidence_policy", "known_limitations",
     }
     missing = sorted(required - set(settings))
@@ -172,6 +172,15 @@ def load_model_report_config(path: str | Path) -> dict[str, Any]:
         if int(contract.get("rows", -1)) < 1 or not contract.get("required_columns"):
             raise ValueError(f"Input table contract {key} lacks rows or required columns")
 
+    hydrated = settings["hydrated_external_inputs"]
+    if set(hydrated) != {"explanation_cases_path"}:
+        raise ValueError("Notebook 31 must declare exactly the externalized N29 catalogue")
+    hydration = hydrated["explanation_cases_path"]
+    if hydration.get("path_in_repository") != settings["inputs"]["explanation_cases_path"]:
+        raise ValueError("N29 hydration path differs from the canonical input path")
+    if len(str(hydration.get("sha256", ""))) != 64 or int(hydration.get("size_bytes", 0)) < 1:
+        raise ValueError("N29 hydration checksum or size contract is invalid")
+
     exact_output = {
         "root": "outputs/31_model_report_generation",
         "report_index_path": "data/report_index.csv",
@@ -187,13 +196,18 @@ def load_model_report_config(path: str | Path) -> dict[str, Any]:
 
     model_ids = [str(item["model_id"]) for item in settings["models"]]
     expected_models = [
-        "opencv_telea", "lama", "stable_diffusion_inpainting", "sdxl_inpainting"
+        "opencv_telea",
+        "lama",
+        "hint_places2",
+        "stable_diffusion_inpainting",
+        "sdxl_inpainting",
     ]
-    if model_ids != expected_models or len(set(model_ids)) != 4:
+    if model_ids != expected_models or len(set(model_ids)) != 5:
         raise ValueError("The approved model order or identity changed")
     expected_filenames = {
         "opencv_telea": "opencv_telea.html",
         "lama": "lama.html",
+        "hint_places2": "hint_places2.html",
         "stable_diffusion_inpainting": "stable_diffusion_inpainting.html",
         "sdxl_inpainting": "sdxl_inpainting.html",
     }
@@ -228,8 +242,8 @@ def load_model_report_config(path: str | Path) -> dict[str, Any]:
     if settings["evidence_policy"]["creates_new_scientific_evidence"]:
         raise ValueError("Notebook 31 may not create new scientific evidence")
     expected = settings["expected_counts"]
-    if int(expected["upstream_manifest_count"]) != 22:
-        raise ValueError("Notebook 09--30 manifest count changed")
+    if int(expected["upstream_manifest_count"]) != 23:
+        raise ValueError("Notebook 09--30 plus Notebook 12A manifest count changed")
     if int(expected["artifact_records"]) != int(expected["report_count"]) + 2:
         raise ValueError("Artifact-count arithmetic changed")
     if int(expected["physical_output_files"]) != int(expected["report_count"]) + 4:
@@ -267,23 +281,27 @@ def model_specs(config: Mapping[str, Any]) -> dict[str, Mapping[str, Any]]:
 def load_upstream_manifests(
     inputs: Mapping[str, Path], *, start: int = 9, end: int = 30
 ) -> dict[str, dict[str, Any]]:
-    """Load the exact consecutive upstream run manifests."""
+    """Load N09--N30 plus the approved supplemental N12A manifest."""
 
     manifests: dict[str, dict[str, Any]] = {}
     for number in range(int(start), int(end) + 1):
         key = f"manifest_{number:02d}_path"
         with inputs[key].open("r", encoding="utf-8-sig") as handle:
             manifests[f"{number:02d}"] = json.load(handle)
+    with inputs["manifest_12a_path"].open("r", encoding="utf-8-sig") as handle:
+        manifests["12a"] = json.load(handle)
     return manifests
 
 
 def validate_upstream_completion(
     manifests: Mapping[str, Mapping[str, Any]], *, config: Mapping[str, Any]
 ) -> pd.DataFrame:
-    """Validate identity, completion gate, and blocking status for N09--30."""
+    """Validate completion for N09--N30 and supplemental N12A."""
 
     rows: list[dict[str, Any]] = []
-    expected_ids = [f"{number:02d}" for number in range(9, 31)]
+    expected_ids = sorted(
+        [f"{number:02d}" for number in range(9, 31)] + ["12a"]
+    )
     rows.append(_validation_row(
         stage="upstream_preflight", severity="blocking",
         check_name="exact_manifest_id_set", observed=sorted(manifests),
@@ -294,7 +312,7 @@ def validate_upstream_completion(
         manifest = manifests.get(notebook_id, {})
         summary = manifest.get("validation_summary", {})
         passed = (
-            str(manifest.get("notebook_id", "")).zfill(2) == notebook_id
+            str(manifest.get("notebook_id", "")).lower().zfill(2) == notebook_id
             and manifest.get("run_status") == "completed"
             and manifest.get("completion_gate_passed") is True
             and int(summary.get("blocking_failure_count", 0)) == 0
@@ -391,7 +409,7 @@ def validate_loaded_input_table(
 
 
 def build_applicability_matrix(config: Mapping[str, Any]) -> pd.DataFrame:
-    """Build the locked four-model evidence-applicability matrix."""
+    """Build the locked five-model evidence-applicability matrix."""
 
     records: list[dict[str, Any]] = []
     for model in _settings(config)["models"]:
@@ -946,7 +964,7 @@ def build_report_index_row(
 
 
 def validate_report_index(frame: pd.DataFrame, *, config: Mapping[str, Any]) -> pd.DataFrame:
-    """Validate exact four-report rows, schemas, paths, density, and scope labels."""
+    """Validate report rows, schemas, paths, density, and scope labels."""
 
     settings = _settings(config)
     specs = model_specs(config)

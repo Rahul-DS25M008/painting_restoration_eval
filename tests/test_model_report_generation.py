@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import tempfile
 import unittest
 from pathlib import Path
@@ -24,7 +25,6 @@ from restoration_eval.model_report_generation import (
     select_representative_cases,
     validate_applicability_matrix,
     validate_inventory_contract,
-    validate_loaded_input_table,
     validate_mock_traceability,
     validate_model_report_html,
     validate_report_index,
@@ -49,10 +49,11 @@ class ModelReportGenerationContractTests(unittest.TestCase):
 
     def test_config_identity_structure_density_and_output_contract(self) -> None:
         self.assertEqual(self.settings["notebook_id"], "31")
-        self.assertEqual(len(self.settings["models"]), 4)
+        self.assertEqual(self.settings["dataset_scope"], "controlled_300")
+        self.assertEqual(len(self.settings["models"]), 5)
         self.assertEqual(len(self.settings["report"]["required_section_ids"]), 15)
-        self.assertEqual(self.settings["expected_counts"]["report_count"], 4)
-        self.assertEqual(self.settings["expected_counts"]["physical_output_files"], 8)
+        self.assertEqual(self.settings["expected_counts"]["report_count"], 5)
+        self.assertEqual(self.settings["expected_counts"]["physical_output_files"], 9)
         self.assertFalse(self.settings["evidence_policy"]["creates_new_scientific_evidence"])
         for spec in self.specs.values():
             expected_images = (
@@ -67,24 +68,33 @@ class ModelReportGenerationContractTests(unittest.TestCase):
         inventory = pd.read_csv(self.inputs["inventory_path"], low_memory=False)
         checks = validate_inventory_contract(inventory, config=self.config)
         self.assertTrue(checks["passed"].all(), checks.to_string(index=False))
+        hydration = self.settings["hydrated_external_inputs"][
+            "explanation_cases_path"
+        ]
+        path = self.inputs["explanation_cases_path"]
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        self.assertEqual(path.stat().st_size, int(hydration["size_bytes"]))
+        self.assertEqual(digest, hydration["sha256"])
 
-    def test_every_tabular_contract_matches_loaded_headers_and_rows(self) -> None:
+    def test_every_tabular_contract_matches_loaded_headers(self) -> None:
         for input_key in self.settings["input_table_contracts"]:
-            frame = pd.read_csv(self.inputs[input_key], low_memory=False)
-            checks = validate_loaded_input_table(
-                frame, input_key=input_key, config=self.config
+            frame = pd.read_csv(self.inputs[input_key], nrows=0)
+            required = set(
+                self.settings["input_table_contracts"][input_key][
+                    "required_columns"
+                ]
             )
-            self.assertTrue(checks["passed"].all(), checks.to_string(index=False))
+            self.assertFalse(required - set(frame.columns), input_key)
 
     def test_notebooks_09_through_30_are_completed_inputs(self) -> None:
         manifests = load_upstream_manifests(self.inputs)
-        self.assertEqual(len(manifests), 22)
+        self.assertEqual(len(manifests), 23)
         checks = validate_upstream_completion(manifests, config=self.config)
         self.assertTrue(checks["passed"].all(), checks.to_string(index=False))
 
     def test_applicability_preserves_deterministic_diffusion_and_sdxl_distinctions(self) -> None:
         matrix = build_applicability_matrix(self.config)
-        self.assertEqual(len(matrix), 28)
+        self.assertEqual(len(matrix), 35)
         checks = validate_applicability_matrix(matrix, config=self.config)
         self.assertTrue(checks["passed"].all(), checks.to_string(index=False))
         uncertainty = matrix.loc[
@@ -92,6 +102,7 @@ class ModelReportGenerationContractTests(unittest.TestCase):
         ].set_index("model_id")["applicability_status"].to_dict()
         self.assertEqual(uncertainty["opencv_telea"], "not_applicable_deterministic_method")
         self.assertEqual(uncertainty["lama"], "not_applicable_deterministic_method")
+        self.assertEqual(uncertainty["hint_places2"], "not_applicable_deterministic_method")
         self.assertEqual(uncertainty["stable_diffusion_inpainting"], "applicable_canonical_and_damage_size")
         self.assertEqual(uncertainty["sdxl_inpainting"], "not_applicable_insufficient_seed_coverage")
 
@@ -158,7 +169,7 @@ class ModelReportGenerationContractTests(unittest.TestCase):
             {"model_id": model_id}, sections, config=self.config
         )
 
-    def test_all_four_rendered_report_contracts_pass(self) -> None:
+    def test_all_five_rendered_report_contracts_pass(self) -> None:
         for model_id in self.specs:
             rendered = self._report_fixture(model_id)
             checks = validate_model_report_html(

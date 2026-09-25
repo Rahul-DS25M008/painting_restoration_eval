@@ -1059,6 +1059,19 @@ registered six artifact groups and produced exactly 12 files. All 11 pilot paths
 remain; the HINT card is the sole added path. Its compact tables, five Markdown
 cards, figures and control records belong in ordinary Git, not Hugging Face.
 
+Notebook 31's Controlled-300 preparation layer is complete. It adds HINT as a
+fifth self-contained model report, consumes 23 upstream manifests (N09–N30 plus
+N12A), and locks 40 canonical CSV row/schema contracts. Its N29 explanation
+catalogue is an intentionally externalized upstream artifact: before execution,
+restore the exact pinned file to its canonical path and verify the publication
+registry SHA-256. Do not substitute the 1,785-row pilot catalogue or silently
+reduce the report population. The notebook must continue to be edited manually;
+the existing twelve-batch order, executive summary plus fourteen report
+sections, and 39 traceability roles remain unchanged. The expected completion
+contract is five reports, five index rows, seven artifact records and nine
+physical files. No N31 artifact becomes Controlled-300 evidence until the final
+gate and E-drive comparison pass.
+
 Notebook 25's 41.97 MB canonical scalar table is diagnostics-tier evidence and
 is published through the bounded external-artifact workflow. Its two figures,
 self-contained report, manifests and validation table form the compact GitHub
