@@ -35,26 +35,22 @@ expanded benchmark. This changes no frozen Notebook 01–36 evidence. Its exact
 inputs, outputs, population, source/checkpoint requirements, observed results,
 and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
-**Controlled-300 transition review: 2026-09-22.** The pilot remains recoverable
-at Git tag `pilot-50-complete`, while the active working tree is being rebuilt in
-dependency order for the approved 300-painting study. Notebooks 01–26,
-including Notebook 12A and supplemental D02, are completed Controlled-300
-producers. N16, N17, N19, and N20 have verified diagnostics releases; their
-complete local outputs remain canonical. Notebook 21 is complete, validated,
-baseline-compared, Git-committed, and its oversized comparison table is
-remotely verified. Notebook 22 has completed its rerun, validation, visual
-review, and pilot comparison. Notebook 23 completed its bounded Controlled-300
-analysis, report and final gate. Notebook 24 completed its bounded Controlled-300
-mask-robustness analysis, report and final gate. Notebook 25 completed its bounded
-Controlled-300 synthetic-degradation analysis, report and final gate. Notebook
-26 completed its grouped statistical analysis, report and final gate. Notebook
-27 subsequently completed its expanded failure-taxonomy and trustworthiness
-analysis and remote publication gate. Notebook 28 then completed its
-Controlled-300 metric/region-policy ablation, report, validation, and final
-gate. Notebook 29 now has a validated Controlled-300 preparation contract and
-awaits execution; its saved outputs remain historical Controlled-50 evidence.
-Notebooks 30–36 remain historical Controlled-50 evidence until each producer is explicitly
-reopened, rerun, validated, baseline-compared, and committed.
+**Controlled-300 transition review: 2026-09-25.** The pilot remains recoverable
+at Git tag `pilot-50-complete`; the active working tree is rebuilt in dependency
+order for the approved 300-painting study. Notebooks 01–30, including Notebook
+12A and supplemental D02, are completed, validated Controlled-300 producers.
+Notebook 27's expanded failure-taxonomy and trustworthiness run contains 13,879
+union candidates, 194,306 candidate-by-category rows, 152,669
+candidate-by-flag rows, 1,025 supported uncertainty groups and 167/167 passing
+checks. Notebook 29 completed its explainability and case-retrieval run, report,
+pilot comparison and final gate. Notebook 30 run
+`run_605de239145a46e9a202fd63bbbb4e9c` completed its Controlled-300 model-card,
+compute and scalability contract with 178/178 checks and is now the canonical
+method-disclosure source. Notebook 31 is the next active producer. Notebooks
+31–36 remain historical Controlled-50 evidence until
+each producer is explicitly reopened, rerun, validated, baseline-compared and
+committed. Complete local outputs remain canonical even where large evidence is
+also represented by verified external publication records.
 
 **Git LFS capacity guard: 2026-09-21.** GitHub reported 9.01 GiB used from the
 10.0 GiB included LFS allowance, with a `$0` hard budget and reset date of
@@ -1122,9 +1118,9 @@ one-JSON structure while the catalog grew from 1,785 to 13,879 rows. The complet
 report, compact neighbour table, manifests and validation ledger form the
 ordinary-Git handoff without consuming Git LFS.
 
-Notebook 30, `30_model_cards_compute_and_scalability.ipynb`, is reopened for its
-Controlled-300 run. Its preparation layer is complete, but the completion gate
-remains false until the notebook is rerun. The binding contract will:
+Notebook 30, `30_model_cards_compute_and_scalability.ipynb`, completed its
+Controlled-300 run as `run_605de239145a46e9a202fd63bbbb4e9c`. The completed
+contract:
 
 - persist five machine-readable and portable Markdown method cards for OpenCV
   Telea, LaMa, HINT, Stable Diffusion Inpainting, and SDXL Inpainting;
@@ -1143,16 +1139,27 @@ remains false until the notebook is rerun. The binding contract will:
 - generate two canonical figures and five thirteen-section text-native cards,
   for exactly twelve physical canonical files.
 
-After validation, Notebook 30 becomes the Controlled-300 canonical downstream
+Notebook 30 is now the Controlled-300 canonical downstream
 source for method disclosures, observed compute and notebook-owned model storage.
 Its 600-painting and full-design SDXL rows are linear sensitivity projections,
 not executed experiments or confidence intervals. Recorded runtime and memory
 describe one workstation; quality-anchor wins remain descriptive; and no card
 establishes historical authenticity, conservation suitability, or approval for
-physical treatment. The previous Controlled-50 outputs remain only the frozen
-E-drive comparison baseline.
+physical treatment. All 178 validation checks, all 13 roadmap responsibilities,
+all six artifact records and the exact 12-file output contract passed. Against
+`E:/outputs/30_model_cards_compute_and_scalability`, every pilot relative path
+is retained. The only new path is the HINT card; model cards increased 4→5,
+compute rows 35→42, validation rows 165→178 and physical files 11→12. The
+previous Controlled-50 outputs remain only the frozen comparison baseline.
 
-Notebook 31 is complete and passed its completion gate. It consumed validated
+The Notebook 31–36 records below describe the completed **historical
+Controlled-50 reporting, dashboard and packaging layer**. They remain valid as
+pilot evidence and recovery documentation, but they are not yet the current
+Controlled-300 downstream handoff. Notebook 31 is the next eligible rerun and
+must rebuild its five-method report set from the completed N09–N30 evidence
+before any later reporting notebook becomes current.
+
+Historical pilot Notebook 31 is complete and passed its completion gate. It consumed validated
 Notebook 09--30 artifacts and produced four standalone, self-contained HTML
 reports plus a four-row report index. All four reports preserve the approved
 executive summary plus fourteen-section structure. Together they contain 63
@@ -1169,7 +1176,7 @@ format validated values, create presentation-only plots, and embed web-sized
 visuals, but they do not create new metrics, statistical tests, rankings,
 exclusions, composite scores, or scientific evidence.
 
-Notebook 31 is now the canonical downstream source for model-report discovery
+Within the frozen pilot, Notebook 31 is the canonical source for model-report discovery
 and provenance through `data/report_index.csv`. Complete machine-readable
 evidence remains in the producing upstream tables, including Notebook 29's
 1,785-row explanation catalog; embedded report examples are auditable
@@ -1182,7 +1189,7 @@ evaluation with insufficient seed coverage for uncertainty. The reports do not
 establish historical authenticity, conservation approval, calibrated confidence,
 or universal model superiority.
 
-Notebook 32 is complete and passed its completion gate. It consumed validated
+Historical pilot Notebook 32 is complete and passed its completion gate. It consumed validated
 Notebook 01 and Notebook 09--31 artifacts and produced 81 self-contained HTML
 reports: 30 deterministically selected deep case reports, one report for each of
 all 50 paintings, and one collection index. It also persisted 30 selected-case
@@ -1209,7 +1216,7 @@ the complete Notebook 27/29 failure, flag, and explanation contract. This is an
 explicit evidence-scope exclusion, not missing execution or complete downstream
 evaluation.
 
-Notebook 32 is now the canonical downstream source for selected case-report and
+Within the frozen pilot, Notebook 32 is the canonical source for selected case-report and
 complete painting-report discovery through `data/case_report_index.csv` and
 `data/painting_report_index.csv`; `reports/index.html` is the package entry point.
 The report layer groups, sorts, formats, selects declared illustrations, builds
@@ -1223,7 +1230,7 @@ populations, and SDXL remains a ten-case partial evaluation with insufficient
 seed coverage. Computational flags and review actions are not expert annotations,
 historical-authenticity evidence, or physical conservation advice.
 
-Notebook 33 is complete and passed its completion gate. It consumed the frozen
+Historical pilot Notebook 33 is complete and passed its completion gate. It consumed the frozen
 methodology and validated Notebook 21--32 synthesis artifacts without running
 restoration inference, recomputing scientific metrics, creating new statistical
 tests, or constructing a universal combined score. It persisted 293 canonical
@@ -1246,7 +1253,7 @@ physical files were registered under `outputs/33_final_evaluation_report/`; all
 artifact checksums, the artifact-manifest checksum, and the manifest-declared
 physical-file set were independently reverified.
 
-Notebook 33 is now the canonical final-report source for Notebook 34. Downstream
+Within the frozen pilot, Notebook 33 is the canonical final-report source for Notebook 34. Downstream
 consumers must preserve its applicability boundaries: the complete comparison is
 limited to Telea, LaMa, and Stable Diffusion; SDXL remains a ten-case, five-
 painting feasibility population; uncertainty covers supported Stable Diffusion
@@ -1257,7 +1264,7 @@ retrieval results, and visual plausibility do not establish expert ground truth,
 historical authenticity, conservation approval, or a physical treatment
 recommendation.
 
-Notebook 34 is complete and passed its completion gate. It consumed 41 validated
+Historical pilot Notebook 34 is complete and passed its completion gate. It consumed 41 validated
 input tables and all 33 completed upstream run manifests without running
 restoration inference, recomputing scientific metrics, creating new statistical
 tests, or constructing a universal combined score. It persisted nine normalized
@@ -1286,7 +1293,7 @@ Notebook 34 passed all 410 validation checks and all 25 roadmap responsibilities
 with zero blocking or warning failures. Fifteen dashboard assets and 17 universal
 artifact records were registered across exactly 19 physical files; their
 checksums and the manifest-declared output set were independently reverified.
-Notebook 34 is now the canonical dashboard-data source for Notebook 35.
+Within the frozen pilot, Notebook 34 is the canonical dashboard-data source for Notebook 35.
 Downstream consumers must preserve nested observation units, bounded SDXL
 applicability, separate uncertainty/robustness/prompt-sensitivity terminology,
 and the limits of computational flags and retrieval evidence. The approved

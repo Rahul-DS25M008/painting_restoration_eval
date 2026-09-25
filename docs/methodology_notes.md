@@ -1,14 +1,19 @@
 # Methodology Guide
 
-**Status:** completed-pipeline description, reviewed 2026-09-04\
-**Experimental scope:** `controlled_50`\
-**Pipeline:** 36 completed and frozen notebooks\
+**Status:** historical completed-pipeline guide with Controlled-300 transition addendum, reviewed 2026-09-25\
+**Experimental scope:** historical `controlled_50`; active `controlled_300` completed through Notebook 30\
+**Pipeline:** historical 36-notebook pilot remains frozen; Controlled-300 rerun proceeds in dependency order\
 **Public interface:** [Streamlit dashboard](https://fhtw-painting-restoration.streamlit.app/)
 
 This guide explains the main scientific and engineering decisions in the
 completed painting-restoration evaluation framework. It is a navigation and
 interpretation document, not a replacement for producer manifests, validation
 tables, configurations, reports, or the thesis methodology chapter.
+
+The detailed prose below preserves the completed pilot methodology. Current
+Controlled-300 populations and producer status supersede its pilot counts only
+where explicitly recorded in the roadmap, evidence audit, coverage registry and
+completed producer manifests. Notebook 31 is the next eligible rerun producer.
 
 - The detailed notebook sequence is in
   [`final_notebook_roadmap.md`](final_notebook_roadmap.md).

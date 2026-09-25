@@ -174,6 +174,15 @@ The workflow for each approved notebook is:
     verify the completed notebook's entries in the project paths registry. These
     updates occur only after the notebook passes its completion gate.
 16. Refresh the project inventory again so the next notebook receives the validated state.
+17. Perform a repository-wide documentation freshness sweep before handoff. Search
+    the completed notebook ID and stem across the roadmap, evidence audit,
+    `evidence_coverage.yaml`, project-path registries, methodology/model notes and
+    any downstream status summary. Remove stale `planned`, `preparation_complete`,
+    `pending`, pilot-only population and obsolete `next notebook` claims wherever
+    they refer to the newly completed producer. Confirm that the top-level
+    `completed through` and `next eligible` summaries agree with the detailed
+    notebook record and canonical run manifest; checking only the notebook's own
+    section is insufficient.
 
 ### 6.1 Execution-time planning and closure
 
@@ -951,7 +960,7 @@ checksums, limitations, and downstream eligibility.
 | 20 Semantic and Structural Consistency | Finished | Finished | Yes | 447,312 metric rows, 63,216 numeric-map bundles, 9,304 rendered semantic panels, 72,520 map-manifest rows, 181/181 passing checks, and 9,311 canonical files | All eight pilot artifact paths and CSV schemas retained; metrics increased from 58,980 to 447,312, numeric bundles from 8,340 to 63,216, and rendered panels from 1,090 to 9,304; representative figure visually reviewed; diagnostics release and compact Git handoff verified |
 | 21 Multi-Model Comparison | Finished | Finished | Yes | 10,504 selected candidates; 277,319 comparison rows; 2,181 disagreement rows; 168 representative rows; self-contained 58-image report; 187/187 passing checks; 9 canonical files | All nine pilot paths and CSV schemas retained; comparison/disagreement/representative rows increased from 86,531/839/76 to 277,319/2,181/168; both figures and the report were reviewed; the oversized comparison table is diagnostics-tier evidence while the other eight artifacts form the compact Git handoff |
 | D02 Portrait Skin-Tone and Hand Restoration Audit | Finished | Finished | Yes | 60 portraits screened; 91 anatomical annotations; 1,265 overlap rows; 292 eligible records; 45 matched hand cases from 20 paintings; 1,638 hand-comparison rows; 2,760 exploratory rendered-skin-lightness rows; 32 blinded review units; 99/99 checks; 16 canonical files | New supplemental Controlled-300 analysis with no pilot output counterpart; all evidence is derived from frozen N01–N21 inputs, the 20-visual/17-table report is self-contained, all 14 registered checksums pass, and the complete 41.64 MB record stays in GitHub/Git LFS without a separate Hugging Face release |
-| 22 Damage-Size Diffusion Uncertainty Extension | Finished | Finished | Yes | 245 cases across 35 paintings; 735 new candidates; 245 four-seed groups; 1,470 unordered pairs; 33,320 metric rows; 245 numerical maps; 245 overlays; 236/236 checks; 988 canonical files | All ten pilot artifact roles and schemas retained; case-dependent rows and images increased exactly sevenfold from the 35-case pilot; no unexplained loss, temporary work files, warning failures, or saved notebook errors |
+| 22 Damage-Size Diffusion Uncertainty Extension | Finished | Finished | Yes | 245 cases across 35 paintings; 735 new candidates; 245 four-seed groups; 1,470 unordered pairs; 33,320 metric rows; 245 numerical maps; 245 overlays; 236/236 checks; 988 canonical files | All ten pilot artifact roles and schemas retained; case-dependent rows and images increased exactly sevenfold from the 35-case pilot; candidate images and diagnostic maps are split across their verified Hugging Face repositories while compact records remain in Git |
 | 23 Damage-Size Sensitivity Analysis | Finished | Finished | Yes | 35 paintings (seven/category), 245 matched cases, 980 four-method primary candidates, 245 Stable Diffusion uncertainty groups, 7,035 canonical analysis rows, 494 inferential rows, 124/124 passing checks, 10 analytical views, eight visual panels and eight canonical files | All eight pilot paths and schemas retained; analysis rows increased from 1,901 to 7,035, the report remains self-contained with 18 embedded and zero external images, and bounded inference replaces infeasible exhaustive enumeration |
 | 24 Mask Robustness Analysis | Finished | Finished | Yes | 35 paintings (seven/category), 105 matched groups, 525 cases, 2,100 four-method primary candidates, 44,847 canonical analysis rows, 139/139 passing checks, 10 analytical views, eight visual panels and seven canonical files | All seven pilot paths and schemas retained; analysis rows increased from 5,373 to 44,847; the report remains self-contained with 18 embedded and zero external images; bounded painting-level inference replaces infeasible exhaustive enumeration |
 | 25 Synthetic Degradation Analysis | Finished | Finished | Yes | 35 paintings (seven/category), 1,155 generated cases, 350 eligible localized cases, 1,400 four-method primary candidates, 11 bounded SDXL candidates, 34,977 canonical analysis rows, 129/129 passing checks, 14 analytical views, nine visual panels and seven canonical files | All seven pilot paths and schemas retained; analysis rows increased from 4,695 to 34,977; the report remains self-contained with 23 embedded and zero external images and 298 tiles; bounded painting-level inference replaces infeasible exhaustive enumeration |
@@ -959,9 +968,12 @@ checksums, limitations, and downstream eligibility.
 | 27 Failure Taxonomy and Trustworthiness Flags | Finished | Finished | Yes | 13,879 unique candidates; 10,504 primary candidates; 4,100 repeated-seed memberships in 1,025 groups; 194,306 assignment rows; 152,669 flag rows; 167/167 checks; 8 canonical files; 4-hour-49-minute execution window | All eight pilot paths and six artifact roles retained; assignment/flag grids increased from 24,990/19,635; the report embeds 56 images with no external dependency; both bulk metric tables route to Hugging Face diagnostics while the six compact artifacts stay in ordinary Git under the exhausted-LFS guard |
 | 28 Metric and Region-Policy Ablation | Finished | Finished | Yes | 23 fixed scenarios; 10,480 four-method core candidates across 2,620 cases; 13,879 flag candidates; 47,508 ablation rows; 319,217 flag-stability rows; 759 subgroup rows; 122/122 checks; 8 canonical files; 12-hour-20-minute execution window | All eight pilot paths, table schemas, and six artifact roles retained; ablation rows increased from 7,710 to 47,508 and flag-stability rows from 41,055 to 319,217; report tiles increased from 18 three-method to 24 four-method tiles with HINT; the 165.21 MB flag-stability table routes to Hugging Face diagnostics while the remaining scientific handoff stays in ordinary Git under the exhausted-LFS guard |
 | 29 Explainable AI and Case Retrieval | Finished | Finished | Yes | 13,879 candidates across 2,620 cases and 300 paintings; 10,480 four-method primary candidates; 24 bounded SDXL candidates; 4,100 repeated-seed members in 1,025 groups; 13,144 dual-view retrieval-eligible candidates; 100 neighbour rows; 24 bounded visual units; 146/146 checks; 30 canonical files | All 30 pilot paths and six artifact roles retained; catalog rows increased from 1,785 to 13,879 while neighbour and panel counts remained intentionally bounded; report embeds 34 images with no external dependency; complete catalog routes to Hugging Face diagnostics and the bounded handoff stays in ordinary Git without LFS |
+| 30 Model Cards, Compute, and Scalability | Finished | Finished | Yes | Five model cards; 32 observed and 10 projected compute rows; 11 quality anchors in two populations; two figures; 178/178 checks; 13/13 roadmap responsibilities; 12 canonical files | All 11 pilot paths retained; HINT card added as the sole new path; cards 4→5, compute rows 35→42, validation rows 165→178 and files 11→12; compact outputs stay in ordinary Git and require no Hugging Face release |
 
-Notebooks 01–26, including Notebook 12A and supplemental D02, are completed
-Controlled-300 producers. Notebook 20's producer-specific diagnostics bundle
+Notebooks 01–30, including Notebook 12A and supplemental D02, are completed
+Controlled-300 producers. Notebook 31 is the next active producer; Notebooks
+31–36 remain historical Controlled-50
+evidence until individually rerun. Notebook 20's producer-specific diagnostics bundle
 and compact Git handoff are remotely and locally verified. Notebook 21 passed
 its completion gate for 10,504 selected candidates, 3,160,618 normalized
 evidence rows, 277,319 comparison rows and 2,181 family-balanced disagreement
@@ -996,7 +1008,7 @@ Notebook 27's Controlled-300 execution is complete and validated. Its binding un
 13,879 unique candidates after retaining the 725-candidate overlap only once.
 The supported repeated-seed population contains 4,100 candidates in 1,025
 four-seed groups. HINT is a full deterministic primary method; uncertainty
-remains not applicable to Telea, LaMa, and HINT rather than zero. The planned
+remains not applicable to Telea, LaMa, and HINT rather than zero. The canonical
 complete ledgers contain 194,306 candidate-by-category rows and 152,669
 candidate-by-flag rows. Run `run_bef567ee35c1409dbcecfb71f1b4f8b4`
 retains all eight pilot paths and six registered artifact roles, passes all 167
@@ -1038,12 +1050,14 @@ artifact changed. Future artifact records must derive `dataset_scope` from the
 active configuration or validated upstream scope and must never copy a pilot
 literal into a completed Controlled-300 handoff.
 
-Notebook 30's Controlled-300 preparation layer is complete. It adds HINT as the
-fifth card, consumes 32 observed runtime summaries from N09–N12A, and replaces
-the obsolete 50-to-300 projections with ten explicitly future rows: a
-600-painting current-design scenario plus a hypothetical full-design SDXL
-scenario. The notebook must still be edited manually and rerun before its
-completion metadata or project-path registrations become Controlled-300.
+Notebook 30 run `run_605de239145a46e9a202fd63bbbb4e9c` is complete and validated.
+It adds HINT as the fifth card, consumes 32 observed runtime summaries from
+N09–N12A, and replaces the obsolete 50-to-300 projections with ten explicitly
+future rows: a 600-painting current-design scenario plus a hypothetical
+full-design SDXL scenario. It passed 178 checks and all 13 roadmap requirements,
+registered six artifact groups and produced exactly 12 files. All 11 pilot paths
+remain; the HINT card is the sole added path. Its compact tables, five Markdown
+cards, figures and control records belong in ordinary Git, not Hugging Face.
 
 Notebook 25's 41.97 MB canonical scalar table is diagnostics-tier evidence and
 is published through the bounded external-artifact workflow. Its two figures,
@@ -1124,8 +1138,8 @@ Final-package rules:
 - preserve copied bytes and verify source-to-destination SHA-256 checksums;
 - keep every generated file under
   `outputs/36_supervisor_publication_reproducibility_package/`;
-- include the final self-contained report, four self-contained model reports,
-  24 final figures, four model cards, eight compact tables/indexes, all upstream
+- include the final self-contained report, five self-contained model reports,
+  24 final figures, five model cards, the approved compact tables/indexes, all upstream
   run manifests, evaluation configurations, environment files, dashboard
   delivery documentation, and Notebook 36 provenance;
 - index rather than duplicate the full case/painting report collection,

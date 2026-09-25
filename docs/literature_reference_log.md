@@ -1,8 +1,8 @@
 # Literature Reference Log
 
-**Status:** completed-pipeline literature audit and expanded reading log\
-**Reviewed:** 2026-09-06\
-**Scope:** 36 completed core notebooks, completed Notebook 37 method-selection extension, controlled 50-painting study, and approved dashboard\
+**Status:** completed literature audit plus active Controlled-300 transition log\
+**Reviewed:** 2026-09-25\
+**Scope:** Controlled-300 producers completed through Notebook 30, completed HINT/MAT decision study, and historical downstream pilot/dashboard evidence\
 **Search priority:** 2020–2026, with explicitly identified foundational exceptions
 
 This is an annotated source catalog for thesis writing, not a list of methods
@@ -1077,7 +1077,7 @@ or a guarantee of continuous free-hosting availability.
 The following are declared operational choices whose exact values come from
 the repository, not prescriptions found in the papers:
 
-- 50 paintings, five balanced broad visual categories and the available metadata;
+- 300 paintings, five balanced broad visual categories and the available metadata;
 - 768 × 768 aspect-preserving preprocessing with recorded content bounds;
 - five canonical mask conditions and controlled white missing-region encoding;
 - damage-size targets of 2%, 4%, 6%, 8%, 10%, 15% and 20%;
@@ -1085,22 +1085,35 @@ the repository, not prescriptions found in the papers:
   boundary bands;
 - exact-mask compositing and eligibility rules for synthetic masked removal;
 - the generic versus scratch-aware prompt wording and four seeds 2026–2029;
-- N18's 130 groups/520 candidates/780 pairs plus N22's 35 groups/210 pairs;
+- N18's 780 prompt-specific groups/3,120 candidates/4,680 unordered pairs plus
+  N22's 245 damage-size groups and their registered repeated-seed comparisons;
 - the eleven separate quality anchors and their directional ranking summaries;
 - rule-derived review flags, thresholds and report-example selection policies;
-- SDXL's ten-case scope and bounded execution budgets.
-- Notebook 37's 12 paired cases, 24 candidates, native-768 HINT run, 512-adapted
-  MAT run, and the recorded HINT selection.
+- SDXL's 35 scheduled bounded cases, 24 completed candidates and execution budget;
+- Decision Notebook D01's 12 paired cases, 24 candidates, native-768 HINT run,
+  512-adapted MAT run, and the recorded HINT selection.
 
-The full case registry has 525 rows; 410 cases are eligible per principal
-restoration method. The downstream reporting population contains 1,785
-candidates, not every generated output. N11 contains 1,330 SD candidates and N22
-adds 105. These counts and their exclusions are explained in the methodology
-guide and producer records, not justified by a citation.
+The full Controlled-300 case registry has 3,425 rows; 2,620 cases are eligible
+per full-scope restoration method. Telea, LaMa and HINT each persist 2,620
+candidates. N11 contains 8,520 Stable Diffusion candidates, including repeated
+seeds and the approved prompt arm. SDXL remains a bounded partial evaluation:
+35 cases were scheduled and 24 completed. These counts and their exclusions are
+explained in the methodology guide and producer records, not justified by a
+citation.
 
-Notebook 37 adds 24 separately owned pilot candidates. They are not appended to
-the frozen 1,785-candidate reporting catalog or treated as a completed fourth
-full-model benchmark.
+Decision Notebook D01's 24 separately owned selection candidates are not
+appended to the production reporting population. Its selected HINT method was
+subsequently executed across the full 2,620-case eligible benchmark in N12A.
+
+Notebook 30 run `run_605de239145a46e9a202fd63bbbb4e9c` consumed executed
+Controlled-300 generation/runtime evidence for five method cards. Its canonical
+compute table contains 32 observed runtime
+summaries and ten explicitly labelled projection rows. The 600-painting
+current-design scenario and hypothetical full-design SDXL scenario are future
+sensitivity calculations, not executed results or confidence intervals. The
+notebook passed all 178 checks and all 13 roadmap requirements; its five cards
+and two figures remain documentation of project evidence rather than additional
+literature claims.
 
 In particular:
 
@@ -1109,7 +1122,8 @@ In particular:
 - Feature/affinity maps and texture descriptors are not authentication tools.
 - Flags request review; they are not expert failure labels or conservation approval.
 - No source here makes four seeds sufficient for a general confidence guarantee.
-- Comparing five-painting trajectories does not isolate independent category effects.
+- Comparing the focused 35-painting trajectories does not isolate independent
+  category effects from painting identity.
 
 ## 11. Reading and thesis-writing priorities
 

@@ -40,3 +40,13 @@ outputs/29_explainable_ai_and_case_retrieval/figures/**/*.png -filter -diff -mer
 outputs/29_explainable_ai_and_case_retrieval/reports/explanation_catalog.html -filter diff -merge text
 outputs/29_explainable_ai_and_case_retrieval/manifests/artifacts.csv -filter diff -merge text
 outputs/29_explainable_ai_and_case_retrieval/validation/checks.csv -filter diff -merge text
+
+# Notebook 30 is a compact documentation and compute-audit handoff (under
+# 1 MiB in total). Keep its CSV ledgers and two figures in ordinary Git so the
+# exhausted Git LFS budget is not invoked; no Hugging Face release is needed.
+outputs/30_model_cards_compute_and_scalability/data/model_cards.csv -filter diff -merge text
+outputs/30_model_cards_compute_and_scalability/metrics/compute_scalability.csv -filter diff -merge text
+outputs/30_model_cards_compute_and_scalability/figures/quality_vs_compute.png -filter -diff -merge -text
+outputs/30_model_cards_compute_and_scalability/figures/scaling_projection.png -filter -diff -merge -text
+outputs/30_model_cards_compute_and_scalability/manifests/artifacts.csv -filter diff -merge text
+outputs/30_model_cards_compute_and_scalability/validation/checks.csv -filter diff -merge text

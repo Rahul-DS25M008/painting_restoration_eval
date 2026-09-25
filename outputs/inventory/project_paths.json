@@ -1,6 +1,6 @@
 {
   "registry_schema_version": "project_paths.v1",
-  "updated_at_utc": "2026-09-25T08:15:12.277007Z",
+  "updated_at_utc": "2026-09-25T10:16:47.547044Z",
   "artifacts": [
     {
       "artifact_key": "case_painting_reports.case_report_index",
@@ -2011,12 +2011,12 @@
       "artifact_type": "normalized_compute_scalability_table",
       "artifact_role": "observed_compute_and_transparent_scaling_projections",
       "schema_version": "compute_scalability.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "notebook_30_consolidated",
       "validation_status": "passed",
-      "row_count": 35,
+      "row_count": 42,
       "file_count": 1,
-      "checksum": "16e87f3d73c57e5624e9c31b22c0215e1feb558f4f3179b2669fe2a0bd108caf"
+      "checksum": "3fa8452dca2de59152f1214b1609853d8d8bb23ecdb4143e1124a500baa134c1"
     },
     {
       "artifact_key": "model_cards_compute.model_card_reports",
@@ -2025,12 +2025,12 @@
       "artifact_type": "standalone_markdown_model_card_collection",
       "artifact_role": "portable_human_readable_method_disclosures",
       "schema_version": "model_card_markdown.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "notebook_30_consolidated",
       "validation_status": "passed",
-      "row_count": 4,
-      "file_count": 4,
-      "checksum": "c9ed2a2ec5aef4267f012524fab16bab72f649c8814a4e124dd2a87e815b8dda"
+      "row_count": 5,
+      "file_count": 5,
+      "checksum": "b46bfc7d492581afd27ea64472a2a2fd417a32eab07c81f234ad44dc162788e9"
     },
     {
       "artifact_key": "model_cards_compute.model_cards",
@@ -2039,12 +2039,12 @@
       "artifact_type": "normalized_model_card_table",
       "artifact_role": "complete_machine_readable_method_disclosures",
       "schema_version": "model_cards.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "notebook_30_consolidated",
       "validation_status": "passed",
-      "row_count": 4,
+      "row_count": 5,
       "file_count": 1,
-      "checksum": "34900309628ea968c8b82931bfd3f37af2862201f8a969d36108ddb5c36b3b35"
+      "checksum": "ab99e55304f8c57422de9a200e88fd8af4d903e4deed7a05d611d0476ba12e8d"
     },
     {
       "artifact_key": "model_cards_compute.quality_vs_compute_figure",
@@ -2053,26 +2053,26 @@
       "artifact_type": "analytical_figure",
       "artifact_role": "population_matched_quality_and_compute_context",
       "schema_version": "png.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "notebook_30_consolidated",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "e524aa63094659129cc99cdfc8249e87b9852c655741bd5e2c22ef065964485b"
+      "checksum": "306ec5b8fa9a7a5900b44b388255c8f3f3ca3f77a01d5ffef674d77ede8ce443"
     },
     {
       "artifact_key": "model_cards_compute.scaling_projection_figure",
       "producer_notebook": "30_model_cards_compute_and_scalability",
       "relative_path": "outputs/30_model_cards_compute_and_scalability/figures/scaling_projection.png",
       "artifact_type": "analytical_figure",
-      "artifact_role": "transparent_300_painting_scalability_projection",
+      "artifact_role": "transparent_future_painting_scalability_projection",
       "schema_version": "png.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "notebook_30_consolidated",
       "validation_status": "passed",
       "row_count": "",
       "file_count": 1,
-      "checksum": "0542eb1dee9e3751a92f5d42c7332d8ae7ad3a01d6172317f53598287ae14b3a"
+      "checksum": "7c6192e1b0534e3370a303b3942cefe7303831b1bda2b9e63238dbdee779583b"
     },
     {
       "artifact_key": "model_reports.lama",
@@ -3467,12 +3467,12 @@
       "artifact_type": "validation_table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "dataset_scope": "controlled_50",
+      "dataset_scope": "controlled_300",
       "experiment_scope": "notebook_30_consolidated",
       "validation_status": "passed",
-      "row_count": 165,
+      "row_count": 178,
       "file_count": 1,
-      "checksum": "944624bbe73efca2d24d042e59e1f687b3e63a090432902f8d99fa939d322b95"
+      "checksum": "f6e3ad3f2754996251de99460bfe1309ffe89cd83928bae1c7dc82f8b0ed5b9f"
     },
     {
       "artifact_key": "validation.31_model_report_generation",

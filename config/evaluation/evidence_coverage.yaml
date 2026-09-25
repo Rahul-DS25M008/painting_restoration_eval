@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.20"
+config_version: "1.1.22"
 
 evidence_coverage:
   authority:
@@ -56,8 +56,8 @@ evidence_coverage:
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "29"
-    next_eligible_notebook_id: "30"
+    completed_through_notebook_id: "30"
+    next_eligible_notebook_id: "31"
     new_bulk_publication_policy: "verified_indexed_bundles_by_artifact_class_with_n22_split_candidate_diagnostic_release"
     completed_notebooks:
       - notebook_id: "01"
@@ -1244,8 +1244,10 @@ evidence_coverage:
   planned_notebooks:
     - notebook_id: "22"
       stem: "22_damage_size_diffusion_uncertainty_extension"
-      status: "preparation_complete"
-      completion_gate_passed: false
+      status: "controlled_300_complete_validated"
+      completion_gate_passed: true
+      dataset_scope: "controlled_300"
+      dataset_version: "2.0.0"
       output_root: "outputs/22_damage_size_diffusion_uncertainty_extension"
       manifest_path: "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json"
       run_id: "run_d0276a6859f74fada266936f43b7499f"
@@ -1280,9 +1282,13 @@ evidence_coverage:
         canonical_local_tree_complete: true
         github_bulk_images_excluded: true
         github_numeric_map_archive_excluded: true
-        external_publication_status: "deferred_to_pre_n34_storage_review"
+        external_publication_status: "split_candidate_and_diagnostic_releases_remotely_verified"
         candidate_asset_class: "candidates"
+        candidate_repository: "RahulMaddineni264/painting-restoration-eval-candidates"
+        candidate_verification_record: "outputs/inventory/bundled_publication_n22c_full.json"
         uncertainty_asset_class: "diagnostics"
+        diagnostics_repository: "RahulMaddineni264/painting-restoration-eval-diagnostics"
+        diagnostics_verification_record: "outputs/inventory/bundled_publication_n22d_full.json"
       historical_pilot_population:
         cases: 35
         paintings: 5
@@ -1727,8 +1733,11 @@ evidence_coverage:
 
     - notebook_id: "27"
       stem: "27_failure_taxonomy_and_trustworthiness_flags"
-      status: "preparation_complete"
-      completion_gate_passed: false
+      status: "controlled_300_complete_validated"
+      completion_gate_passed: true
+      run_id: "run_bef567ee35c1409dbcecfb71f1b4f8b4"
+      dataset_scope: "controlled_300"
+      dataset_version: "2.0.0"
       output_root: "outputs/27_failure_taxonomy_and_trustworthiness_flags"
       manifest_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json"
       config_path: "config/evaluation/failure_taxonomy.yaml"
@@ -1763,7 +1772,7 @@ evidence_coverage:
         report_external_images: 0
         report_tile_count: 49
         canonical_output_files: 8
-      planned_population:
+      observed_population:
         primary_candidates: 10504
         primary_core_candidates: 10480
         repeated_seed_candidates: 4100
@@ -1776,6 +1785,14 @@ evidence_coverage:
         failure_assignment_rows: 194306
         trust_flags: 11
         trustworthiness_flag_rows: 152669
+        supported_uncertainty_groups: 1025
+        analytical_report_views: 7
+        diagnostic_report_panels: 7
+        report_embedded_images: 56
+        report_external_images: 0
+        report_tile_count: 49
+        validation_checks: 167
+        artifact_records: 6
         canonical_output_files: 8
       primary_artifacts:
         - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/data/failure_taxonomy.csv"
@@ -1802,6 +1819,10 @@ evidence_coverage:
         mock_to_final_traceability_passed: true
         required_visuals_depend_on_external_links: false
         minimum_embedded_images: 42
+        observed_embedded_images: 56
+        observed_external_images: 0
+        observed_diagnostic_panels: 7
+        observed_tile_count: 49
       downstream_contract:
         - "use_the_complete_notebook_27_taxonomy_assignment_and_flag_tables_as_canonical_sources"
         - "preserve_population_roles_and_prompt_arm_separation"
@@ -2013,11 +2034,14 @@ evidence_coverage:
 
     - notebook_id: "30"
       stem: "30_model_cards_compute_and_scalability"
-      status: "controlled_300_preparation_complete_pending_rerun"
-      completion_gate_passed: false
+      status: "controlled_300_complete_validated"
+      run_status: "completed"
+      completion_gate_passed: true
       output_root: "outputs/30_model_cards_compute_and_scalability"
       manifest_path: "outputs/30_model_cards_compute_and_scalability/manifests/run_manifest.json"
-      run_id: null
+      run_id: "run_605de239145a46e9a202fd63bbbb4e9c"
+      dataset_scope: "controlled_300"
+      dataset_version: "2.0.0"
       config_path: "config/evaluation/model_cards_compute.yaml"
       helper_path: "src/restoration_eval/model_cards_compute.py"
       test_path: "tests/test_model_cards_compute.py"
@@ -2059,8 +2083,10 @@ evidence_coverage:
         report_sections_per_card: 13
         canonical_figures: 2
         artifact_records: 6
+        validation_rows: 178
+        roadmap_responsibilities: 13
         physical_output_files: 12
-      planned_primary_artifacts:
+      canonical_primary_artifacts:
         - path: "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv"
           rows: 5
           schema_version: "model_cards.v1"
@@ -2071,6 +2097,19 @@ evidence_coverage:
           files: 5
         - path: "outputs/30_model_cards_compute_and_scalability/figures/quality_vs_compute.png"
         - path: "outputs/30_model_cards_compute_and_scalability/figures/scaling_projection.png"
+      baseline_comparison:
+        root: "E:/outputs/30_model_cards_compute_and_scalability"
+        pilot_model_cards: 4
+        controlled_300_model_cards: 5
+        pilot_compute_rows: 35
+        controlled_300_compute_rows: 42
+        pilot_validation_rows: 165
+        controlled_300_validation_rows: 178
+        pilot_physical_files: 11
+        controlled_300_physical_files: 12
+        all_pilot_relative_paths_retained: true
+        added_relative_paths: ["reports/model_cards/hint_places2.md"]
+        unexplained_missing_or_reduced_evidence: false
       supported_scope:
         - "five_machine_readable_and_portable_markdown_method_cards"
         - "observed_runtime_throughput_failure_retry_memory_storage_and_geometry_evidence"

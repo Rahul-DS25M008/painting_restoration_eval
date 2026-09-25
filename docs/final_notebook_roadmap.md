@@ -8,12 +8,13 @@ This roadmap defines the final dependency order and detailed responsibility of e
 
 It consolidates the previously planned roadmap into 36 stages while preserving the supported methodological, experimental, engineering, reporting, explainability, and deployment scope.
 
-**Status as of 2026-09-09:** the validated 50-painting implementation is preserved
-at Git tag `pilot-50-complete`. The working tree now contains the approved,
-balanced 300-painting raw collection and is entering a controlled minimal-delta
-rerun of Notebooks 01–36. Existing notebook names, responsibilities, cell order,
-schemas, stable identifiers, and output roots remain the starting contract.
-Each notebook becomes current only after its 300-painting outputs pass its gate;
+**Status as of 2026-09-25:** the validated 50-painting implementation is preserved
+at Git tag `pilot-50-complete`. Notebooks 01–30, including Notebook 12A and
+supplemental D02, have completed their controlled minimal-delta reruns against
+the approved balanced 300-painting collection. Notebook 31 is the next eligible
+producer. Existing notebook names, responsibilities, cell order, schemas,
+stable identifiers, and output roots remain the starting contract. Each later
+notebook becomes current only after its Controlled-300 outputs pass its gate;
 until then, its committed outputs remain historical 50-painting evidence.
 
 The completed HINT-versus-MAT selection study is now identified as **Decision
@@ -3351,10 +3352,16 @@ ordinary-Git handoff without Git LFS.
 **Output root:** `outputs/30_model_cards_compute_and_scalability/`\
 **Depends on:** Notebooks 09–29 and model-audit sources
 
-**Controlled-300 preparation status (2026-09-25):** configuration, helper,
-contract tests and governing evidence records are ready; notebook execution and
-completion validation remain pending. The previous Controlled-50 output tree is
-the E-drive comparison baseline, not current evidence.
+**Controlled-300 completion status (2026-09-25):** run
+`run_605de239145a46e9a202fd63bbbb4e9c` completed with 178/178 validation checks,
+13/13 roadmap responsibilities, six verified artifact records and exactly 12
+physical files. The previous Controlled-50 output tree remains the read-only
+E-drive comparison baseline rather than current evidence.
+
+The baseline comparison retains all 11 pilot relative paths and adds only
+`reports/model_cards/hint_places2.md`. Model cards increased from four to five,
+compute/scalability rows from 35 to 42, validation rows from 165 to 178 and the
+physical tree from 11 to 12 files. No pilot artifact class or path was lost.
 
 ### Model/method cards
 
@@ -3428,6 +3435,10 @@ validation/checks.csv
 **Origin:** Consolidates Existing Notebooks 13, 19, and 26  
 **Output root:** `outputs/31_model_report_generation/`\
 **Depends on:** Notebooks 09–30
+
+**Transition status (2026-09-25):** next eligible Controlled-300 producer. Its
+committed outputs are still the frozen four-method Controlled-50 reports until
+this notebook is rerun and passes its new five-method completion gate.
 
 **Controlled-300 scope:** Five reports: four full-evaluation methods and one
 clearly bounded SDXL report. Existing approved report structure remains the
@@ -3837,7 +3848,7 @@ delivery from already validated evidence. Notebook 36 is a packaging and
 traceability stage: it does not rerun restoration models, recompute scientific
 metrics, change upstream conclusions, or invent unavailable evidence.
 
-### Approved evidence population
+### Historical pilot evidence population (replace on Controlled-300 rerun)
 
 - 35 completed upstream notebook manifests;
 - 50 paintings, 525 registered cases, and 410 restoration cases;
@@ -3848,16 +3859,23 @@ metrics, change upstream conclusions, or invent unavailable evidence.
 - 23,964 indexed visual records and 104 indexed reports;
 - ten bounded SDXL feasibility cases;
 - 18 thesis figures and six publication figures;
-- four self-contained model reports and one self-contained final report;
+- five self-contained model reports and one self-contained final report;
 - 30 case-report records and 50 painting-report records.
+
+The Controlled-300 rerun must derive its exact package population from the
+completed producer manifests rather than copying these pilot counts. It must
+include all 300 paintings, the five N30 method cards, five N31 model reports,
+and the final validated N32–N35 indexes available at execution time. Large
+candidate and diagnostic collections remain indexed to their verified external
+releases instead of being duplicated into the package.
 
 ### Package boundary
 
 The portable package bundles the material required for efficient review:
 
-- the final self-contained HTML report and four self-contained model reports;
+- the final self-contained HTML report and five self-contained model reports;
 - all 24 Notebook 33 thesis/publication figures;
-- four model cards and eight compact tables or report indexes;
+- five model cards and the approved compact tables or report indexes;
 - all 35 upstream run manifests and all evaluation-configuration YAML snapshots;
 - the two declared requirements files;
 - the Notebook 35 deployment-readiness report;

@@ -1,19 +1,19 @@
-# LaMa - Model Card and Compute Audit
+# HINT - Model Card and Compute Audit
 
 **Evaluation status:** Fully Evaluated  
-**Method role:** learned deterministic inpainting baseline  
+**Method role:** learned deterministic mask aware transformer  
 **Dataset scope:** controlled_300  
 **Decision boundary:** Digital restoration candidate method, not a conservation authority
 
 <a id="at-a-glance"></a>
 ## 1. At a glance
 
-LaMa provided the strongest broad reference-based baseline under the validated full-scope anchor policy.
+HINT added a deterministic mask-aware transformer family with complete controlled-300 coverage, extending the learned comparison beyond LaMa's convolutional design.
 
 - Completed candidates: **2,620 of 2,620**.
-- Mean runtime: **1.36 seconds per candidate**.
-- Observed notebook-owned storage: **1.76 GiB**.
-- Validated anchor wins in the applicable population: **10 of 11**.
+- Mean runtime: **6.12 seconds per candidate**.
+- Observed notebook-owned storage: **1.79 GiB**.
+- Validated anchor wins in the applicable population: **0 of 11**.
 
 **Conclusion:** The compute and quality evidence support this method only within its declared evaluation scope. Anchor wins are descriptive Notebook 21 outcomes, not a combined quality score or conservation verdict.
 
@@ -22,43 +22,43 @@ LaMa provided the strongest broad reference-based baseline under the validated f
 
 | Field | Recorded value |
 |---|---|
-| Model ID | `lama` |
-| Family | learned fourier convolution inpainting |
-| Original purpose | Resolution-robust large-mask image inpainting using Fourier convolutions. |
-| Project implementation | IOPaint CLI model=lama |
-| Implementation version | 1.6.0 |
-| Model identifier | `big-lama.pt` |
-| Model revision | `iopaint_lama_default` |
-| Software licence | Apache-2.0_method_and_runtime_code |
+| Model ID | `hint_places2` |
+| Family | learned mask aware transformer inpainting |
+| Original purpose | High-fidelity image inpainting using mask-aware transformer features and a learned general-scene prior. |
+| Project implementation | Official HINT generator loaded directly |
+| Implementation version | 15e867d8c8689b9d5050383fc3884537ae876145 |
+| Model identifier | `hint_places2_official` |
+| Model revision | `15e867d8c8689b9d5050383fc3884537ae876145` |
+| Software licence | MIT |
 | Weight licence | not_separately_verified_in_project_sources |
 
-The LaMa and IOPaint code are Apache-2.0; the downloaded Big-LaMa weight artifact is not assigned a separate project-verified licence claim.
+The official repository software is MIT licensed; the Places2 checkpoint terms are recorded separately and are not silently equated with the software licence.
 
 <a id="intended-and-unsupported-use"></a>
 ## 3. Intended and unsupported use
 
 Appropriate project uses:
 
-- learned large-mask inpainting baseline
+- deterministic structure-aware learned inpainting comparison
 - controlled digital restoration candidate generation
-- quality and robustness comparison against classical and diffusion methods
+- full-scope comparison with classical, convolutional and diffusion methods
 
 Unsupported uses:
 
 - historically verified reconstruction
-- artist authentication or semantic brushstroke recognition
-- conservation approval
+- artist authentication or conservation approval
+- calibrated uncertainty estimation
 
 <a id="training-data-and-domain-gap"></a>
 ## 4. Training data and painting-domain gap
 
-Official LaMa documentation describes Places365/Places-based training; the exact IOPaint-converted checkpoint-to-training-run mapping is not independently verified here.
+The selected official checkpoint is the Places2 variant. Places2 is general-scene data rather than painting-conservation data.
 
 **Training-data transparency status:** partial
 
-**Domain gap:** General-scene inpainting training does not establish painting-specific or conservation-specific competence.
+**Domain gap:** Places2 training does not establish painting-specific, art-historical or conservation-specific competence.
 
-**Bias and risk:** Learned priors may smooth texture or synthesize plausible but unsupported structures.
+**Bias and risk:** Learned scene priors may impose unsupported structure, texture or cultural regularities despite deterministic execution.
 
 **Conclusion:** Source transparency and general-image performance do not establish painting-specific historical or conservation competence.
 
@@ -67,18 +67,18 @@ Official LaMa documentation describes Places365/Places-based training; the exact
 
 | Setting | Recorded value |
 |---|---|
-| Configuration | `lama_iopaint_masked_composite_v1` |
+| Configuration | `hint_places2_native_768_exact_composite_v1` |
 | Device | cuda |
-| Backend | iopaint |
+| Backend | official_hint_direct |
 | Recorded accelerator | NVIDIA GeForce RTX 3060 Laptop GPU |
 | Precision | float32 |
 | Inference resolution | 768 x 768 |
 | Output resolution | 768 x 768 |
-| Input constraints | Normalized 768 x 768 RGB painting input passed through the pinned IOPaint LaMa runtime; identity zero controls bypass inference. |
-| Mask constraints | Single-channel binary missing-region mask using threshold 128; exact outside-mask compositing; no per-case tuning. |
+| Input constraints | Normalized 768 x 768 RGB painting input passed through the official HINT generator; identity zero controls bypass inference. |
+| Mask constraints | Single-channel binary missing-region mask under the approved HINT threshold policy; native 768 inference; exact outside-mask compositing; no per-case tuning. |
 | Deterministic | True |
 | Prompt dependent | False |
-| Hardware statement | Executed with CUDA on the recorded RTX 3060 Laptop GPU; no experimentally validated minimum VRAM threshold is claimed. |
+| Hardware statement | Executed in float32 on the recorded RTX 3060 Laptop GPU; the project does not claim a universal minimum VRAM threshold. |
 
 The project used a fixed predeclared configuration and exact outside-mask compositing policy where applicable. Per-case metric-guided tuning was not used.
 
@@ -100,19 +100,19 @@ Cases and repeated candidates remain nested within paintings. Candidate rows are
 
 | Measure | Observed result |
 |---|---:|
-| Total runtime | 59.5 minutes |
-| Mean runtime | 1.363 s |
-| Median runtime | 1.451 s |
-| p95 runtime | 1.586 s |
+| Total runtime | 4.5 hours |
+| Mean runtime | 6.117 s |
+| Median runtime | 6.677 s |
+| p95 runtime | 7.851 s |
 | Failed candidates | 0 |
 | Failure rate | 0.00% |
 | Retries | 0 |
-| Throughput | 0.7338 candidates/second |
+| Throughput | 0.1635 candidates/second |
 | Candidate multiplier | 1.0000 candidates per evaluated case |
 | Recorded peak GPU allocation | not applicable |
 | Recorded total GPU memory | not applicable |
 | Output files | 2,626 |
-| Output storage | 1.76 GiB |
+| Output storage | 1.79 GiB |
 
 **Conclusion:** These measurements describe the recorded workstation and software environment. They are project evidence, not universal hardware benchmarks.
 
@@ -123,26 +123,26 @@ Applicable population: `core_three_model` (2620 cases nested within 300 painting
 
 | Validated anchor | Restored mean | Rank | Winner |
 |---|---:|---:|---|
-| classical_masked_mae | 14.83 | 1 | lama |
-| colour_masked_delta_e | 6.8834 | 1 | lama |
-| feature_clip_crop | 0.95714 | 1 | lama |
-| feature_dino_crop | 0.87116 | 1 | lama |
-| perceptual_crop_lpips | 0.12915 | 1 | lama |
-| seam_boundary_gradient | 0.007027 | 1 | lama |
-| semantic_local_dino | 0.8008 | 1 | lama |
-| spatial_masked_error | 14.83 | 1 | lama |
-| structural_affinity_correlation | 0.9424 | 1 | lama |
-| structural_crop_ssim | 0.8577 | 2 | opencv_telea |
-| texture_crop_p95 | 0.41157 | 1 | lama |
+| classical_masked_mae | 19.155 | 3 | lama |
+| colour_masked_delta_e | 8.961 | 3 | lama |
+| feature_clip_crop | 0.9257 | 3 | lama |
+| feature_dino_crop | 0.81558 | 3 | lama |
+| perceptual_crop_lpips | 0.17476 | 2 | lama |
+| seam_boundary_gradient | 0.0092329 | 3 | lama |
+| semantic_local_dino | 0.7132 | 2 | lama |
+| spatial_masked_error | 19.155 | 3 | lama |
+| structural_affinity_correlation | 0.90167 | 2 | lama |
+| structural_crop_ssim | 0.8168 | 3 | opencv_telea |
+| texture_crop_p95 | 1.2739 | 3 | lama |
 
-The method won 10 of 11 validated anchors in this population. Its strongest displayed anchor was `classical_masked_mae`.
+The method won 0 of 11 validated anchors in this population. Its strongest displayed anchor was `perceptual_crop_lpips`.
 
 **Conclusion:** Better or worse language applies only to the named anchor and population. Runtime is not included in the quality vote, and the anchor count is not a universal quality score.
 
 <a id="determinism-robustness-and-uncertainty"></a>
 ## 9. Determinism, robustness, and uncertainty
 
-LaMa is deterministic under the evaluated contract. Mask robustness and damage sensitivity are the relevant reliability constructs; repeated-seed generative uncertainty is not applicable.
+HINT is deterministic under the evaluated fixed-checkpoint contract. Robustness and sensitivity are the relevant reliability constructs; repeated-seed generative uncertainty is not applicable.
 
 Low variability or deterministic repetition does not prove that a reconstructed region is correct.
 
@@ -151,7 +151,7 @@ Low variability or deterministic repetition does not prove that a reconstructed 
 
 | Scenario | Candidate outputs | Central runtime projection | Output-storage projection |
 |---|---:|---:|---:|
-| projected_600_current_design_mix | 5,240 | 115.4 minutes | 3.52 GiB |
+| projected_600_current_design_mix | 5,240 | 8.8 hours | 3.57 GiB |
 | projected_300_sdxl_full_design | not applicable | not applicable | not applicable to this model-specific projection scenario |
 
 Raw observed median, mean, and p95 runtimes are retained in the compute table. The displayed sensitivity envelope uses the smaller of scaled median and mean as its lower value, scaled mean as its central value, and the larger of scaled p95 and mean as its upper value. These are not confidence intervals. The controlled 300-painting study was executed; only rows explicitly labelled as projections are extrapolations.
@@ -161,15 +161,15 @@ Raw observed median, mean, and p95 runtimes are retained in the compute table. T
 
 Strengths:
 
-- broad learned context
-- practical large-mask baseline
-- deterministic under the evaluated contract
+- deterministic learned transformer family distinct from LaMa
+- native 768 x 768 execution under the validated adapter
+- full controlled-300 coverage
 
 Weaknesses:
 
 - general-scene rather than painting-specific training
-- possible texture smoothing
-- plausible content may remain historically incorrect
+- no prompt or repeated-seed uncertainty mechanism
+- plausible structure may remain historically unsupported
 
 Known project limitations:
 
@@ -179,13 +179,11 @@ Known project limitations:
 - SDXL scheduled 35 bounded cases across 30 paintings; 24 completed, one timed out and ten were skipped under the declared budget, so it cannot support a full-scope ranking.
 - LaMa per-case runtime includes transparent allocation from IOPaint batch wall-clock measurements.
 - Quality-anchor wins are descriptive validated Notebook 21 evidence, not a universal quality or conservation score.
-- LaMa produces plausible learned inpainting, not historically verified reconstruction.
-- IOPaint batch execution exposes group wall-clock runtime; per-case inference runtimes are transparently allocated estimates.
-- The fixed model and mask policies are not tuned per painting or per damage case.
-- Eligible synthetic-degradation cases are supplementary masked-removal diagnostics and remain separate from missing-content claims.
-- Exact model-weight provenance depends on the locally resolved IOPaint cache artifact and is recorded when discoverable.
-- CUDA inference is evaluated for tightly bounded numerical repeatability rather than byte-identical output; the configured smoke tolerance permits at most one 8-bit channel level of deviation while outside-mask invariance remains exact.
-- Runtime measurements describe the recorded hardware and software environment and are not universal benchmarks.
+- HINT was trained on Places2 rather than conservation-restoration paintings.
+- A plausible completion is not evidence of historical authenticity or conservation suitability.
+- The deterministic run measures one fixed checkpoint and configuration, not model-family uncertainty.
+- Eligible synthetic-degradation cases are supplementary masked-removal diagnostics.
+- Runtime measurements describe the recorded local hardware and are not universal benchmarks.
 
 <a id="human-decision-support-interpretation"></a>
 ## 12. Human decision-support interpretation
@@ -200,7 +198,7 @@ The method can generate and prioritize digital candidates for structured inspect
 | Field | Recorded value |
 |---|---|
 | Producer notebook | `30_model_cards_compute_and_scalability.ipynb` |
-| Candidate producer | Notebook 10 |
+| Candidate producer | Notebook 12A |
 | Quality producer | Notebook 21 |
 | Compute schema | `compute_scalability.v1` |
 | Model-card schema | `model_cards.v1` |
@@ -208,10 +206,8 @@ The method can generate and prioritize digital candidates for structured inspect
 
 Primary and runtime sources:
 
-- https://github.com/advimman/lama
-- https://github.com/Sanster/IOPaint/blob/main/iopaint/model/lama.py
-- https://github.com/Sanster/IOPaint
+- https://github.com/ChrisChen1023/HINT
 
 ### Final scoped verdict
 
-LaMa provided the strongest broad reference-based baseline under the validated full-scope anchor policy. This conclusion remains limited to the controlled evidence and the recorded compute environment.
+HINT added a deterministic mask-aware transformer family with complete controlled-300 coverage, extending the learned comparison beyond LaMa's convolutional design. This conclusion remains limited to the controlled evidence and the recorded compute environment.

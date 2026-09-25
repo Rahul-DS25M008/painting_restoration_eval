@@ -2,7 +2,7 @@
 
 **Evaluation status:** Fully Evaluated  
 **Method role:** classical deterministic baseline  
-**Dataset scope:** controlled_50  
+**Dataset scope:** controlled_300  
 **Decision boundary:** Digital restoration candidate method, not a conservation authority
 
 <a id="at-a-glance"></a>
@@ -10,9 +10,9 @@
 
 OpenCV Telea was the fastest and most reproducible baseline, while its local interpolation remained limited for semantically demanding missing regions.
 
-- Completed candidates: **410 of 410**.
-- Mean runtime: **0.45 seconds per candidate**.
-- Observed notebook-owned storage: **287.49 MiB**.
+- Completed candidates: **2,620 of 2,620**.
+- Mean runtime: **0.55 seconds per candidate**.
+- Observed notebook-owned storage: **1.74 GiB**.
 - Validated anchor wins in the applicable population: **1 of 11**.
 
 **Conclusion:** The compute and quality evidence support this method only within its declared evaluation scope. Anchor wins are descriptive Notebook 21 outcomes, not a combined quality score or conservation verdict.
@@ -87,11 +87,11 @@ The project used a fixed predeclared configuration and exact outside-mask compos
 
 | Coverage field | Recorded count |
 |---|---:|
-| Paintings | 50 |
-| Unique cases | 410 |
-| Candidates | 410 |
-| Model-inference candidates | 360 |
-| Identity zero controls | 50 |
+| Paintings | 300 |
+| Unique cases | 2,620 |
+| Candidates | 2,620 |
+| Model-inference candidates | 2,320 |
+| Identity zero controls | 300 |
 
 Cases and repeated candidates remain nested within paintings. Candidate rows are not treated as independent artworks.
 
@@ -100,40 +100,40 @@ Cases and repeated candidates remain nested within paintings. Candidate rows are
 
 | Measure | Observed result |
 |---|---:|
-| Total runtime | 3.1 minutes |
-| Mean runtime | 0.453 s |
-| Median runtime | 0.424 s |
-| p95 runtime | 0.698 s |
+| Total runtime | 24.1 minutes |
+| Mean runtime | 0.552 s |
+| Median runtime | 0.519 s |
+| p95 runtime | 0.925 s |
 | Failed candidates | 0 |
 | Failure rate | 0.00% |
 | Retries | 0 |
-| Throughput | 2.2089 candidates/second |
+| Throughput | 1.8110 candidates/second |
 | Candidate multiplier | 1.0000 candidates per evaluated case |
 | Recorded peak GPU allocation | not applicable |
 | Recorded total GPU memory | not applicable |
-| Output files | 416 |
-| Output storage | 287.49 MiB |
+| Output files | 2,626 |
+| Output storage | 1.74 GiB |
 
 **Conclusion:** These measurements describe the recorded workstation and software environment. They are project evidence, not universal hardware benchmarks.
 
 <a id="quality-evidence"></a>
 ## 8. Quality evidence
 
-Applicable population: `core_three_model` (410 cases nested within 50 paintings).
+Applicable population: `core_three_model` (2620 cases nested within 300 paintings).
 
 | Validated anchor | Restored mean | Rank | Winner |
 |---|---:|---:|---|
-| classical_masked_mae | 17.258 | 2 | lama |
-| colour_masked_delta_e | 7.858 | 2 | lama |
-| feature_clip_crop | 0.88628 | 3 | lama |
-| feature_dino_crop | 0.69663 | 3 | lama |
-| perceptual_crop_lpips | 0.18639 | 3 | lama |
-| seam_boundary_gradient | 0.0075863 | 2 | lama |
-| semantic_local_dino | 0.60301 | 3 | lama |
-| spatial_masked_error | 17.258 | 2 | lama |
-| structural_affinity_correlation | 0.85369 | 3 | lama |
-| structural_crop_ssim | 0.87224 | 1 | opencv_telea |
-| texture_crop_p95 | 0.63161 | 2 | lama |
+| classical_masked_mae | 17.575 | 2 | lama |
+| colour_masked_delta_e | 7.7657 | 2 | lama |
+| feature_clip_crop | 0.88181 | 4 | lama |
+| feature_dino_crop | 0.68702 | 4 | lama |
+| perceptual_crop_lpips | 0.20066 | 4 | lama |
+| seam_boundary_gradient | 0.0082864 | 2 | lama |
+| semantic_local_dino | 0.59121 | 4 | lama |
+| spatial_masked_error | 17.575 | 2 | lama |
+| structural_affinity_correlation | 0.81834 | 4 | lama |
+| structural_crop_ssim | 0.86323 | 1 | opencv_telea |
+| texture_crop_p95 | 0.62469 | 2 | lama |
 
 The method won 1 of 11 validated anchors in this population. Its strongest displayed anchor was `structural_crop_ssim`.
 
@@ -151,10 +151,10 @@ Low variability or deterministic repetition does not prove that a reconstructed 
 
 | Scenario | Candidate outputs | Central runtime projection | Output-storage projection |
 |---|---:|---:|---:|
-| projected_300_canonical_primary | 1,500 | 10.4 minutes | 1.01 GiB |
-| projected_300_current_design_mix | 2,460 | 18.6 minutes | 1.65 GiB |
+| projected_600_current_design_mix | 5,240 | 44.1 minutes | 3.47 GiB |
+| projected_300_sdxl_full_design | not applicable | not applicable | not applicable to this model-specific projection scenario |
 
-Raw observed median, mean, and p95 runtimes are retained in the compute table. The displayed sensitivity envelope uses the smaller of scaled median and mean as its lower value, scaled mean as its central value, and the larger of scaled p95 and mean as its upper value. These are not confidence intervals. No 300-painting experiment was executed.
+Raw observed median, mean, and p95 runtimes are retained in the compute table. The displayed sensitivity envelope uses the smaller of scaled median and mean as its lower value, scaled mean as its central value, and the larger of scaled p95 and mean as its upper value. These are not confidence intervals. The controlled 300-painting study was executed; only rows explicitly labelled as projections are extrapolations.
 
 <a id="strengths-and-weaknesses"></a>
 ## 11. Strengths and weaknesses
@@ -174,9 +174,9 @@ Weaknesses:
 Known project limitations:
 
 - Runtime and memory observations describe one recorded local workstation and software environment.
-- The 300-painting values are transparent linear projections, not executed experiments.
+- The controlled 300-painting values are executed observations; only the explicitly labelled 600-painting and full-design SDXL values are projections.
 - Projected storage covers notebook-owned output artifacts and excludes model caches, environments, Git history, and downstream metric outputs.
-- SDXL has ten completed candidates nested within five paintings and cannot support a full-scope ranking.
+- SDXL scheduled 35 bounded cases across 30 paintings; 24 completed, one timed out and ten were skipped under the declared budget, so it cannot support a full-scope ranking.
 - LaMa per-case runtime includes transparent allocation from IOPaint batch wall-clock measurements.
 - Quality-anchor wins are descriptive validated Notebook 21 evidence, not a universal quality or conservation score.
 - OpenCV Telea is a local interpolation baseline and does not reconstruct historically verified content.

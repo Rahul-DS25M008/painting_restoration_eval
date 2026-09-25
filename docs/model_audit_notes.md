@@ -1,17 +1,18 @@
 # Model Audit Notes
 
-**Status:** Controlled-300 audit notes with completed HINT selection and execution;
-reviewed 2026-09-25 for the Notebook 30 preparation layer.
+**Status:** Controlled-300 audit notes with completed HINT selection, execution,
+and validated Notebook 30 method-card/compute handoff; reviewed 2026-09-25.
 
 This document records model selection, implementation provenance, evidence
 boundaries and reproducibility risks. Notebook 30's earlier Controlled-50 cards
-remain a baseline only; the reopened notebook will replace them with the
-Controlled-300 evidence described here.
+remain the frozen E-drive baseline; run `run_605de239145a46e9a202fd63bbbb4e9c`
+has replaced them as current evidence with the Controlled-300 outputs described
+here.
 
 - Literature justification belongs in [the literature log](literature_reference_log.md).
 - General methodology belongs in [the methodology guide](methodology_notes.md).
 - Executed counts and artifacts belong in notebook-owned manifests and canonical tables.
-- Notebook 30 will produce five portable Markdown model cards and a 42-row
+- Notebook 30 produced five portable Markdown model cards and a 42-row
   compute/scalability table: 32 observed summaries and ten explicitly labelled
   future projection records. Detailed results belong in those outputs, not
   duplicated here.
@@ -221,7 +222,7 @@ reached. See the
 ### Project decision
 
 Retain SDXL as `partial_evaluation`, not a no-output feasibility result and not
-fully evaluated. Notebook 30 will project a hypothetical 300-painting full-design
+fully evaluated. Notebook 30 projects a hypothetical 300-painting full-design
 SDXL run from its 24 completed bounded cases. The narrow extrapolation basis,
 single-workstation runtime and observed incomplete schedule must remain visible;
 the projection is not evidence that SDXL would finish the larger experiment.
@@ -306,11 +307,12 @@ Projection rules:
 
 ## 11. Model-card reporting policy
 
-Notebook 30 will produce five standalone Markdown cards under its approved structure.
+Notebook 30 produced five standalone Markdown cards under its approved structure.
 They separate observed measurements from projections, record intended/excluded
 uses and provenance limitations, and remain readable without image dependencies.
-The reopened notebook replaces the historical Controlled-50 cards only after its
-completion gate passes.
+The completion gate passed with 178/178 checks, 13/13 roadmap responsibilities,
+six verified artifact records and exactly 12 physical files. Against the pilot
+baseline, all 11 relative paths remain and the HINT card is the sole added path.
 
 Training-data and licence disclosures in those cards retain the qualifications
 recorded by their producer. In particular, a software licence must not be silently
