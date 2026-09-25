@@ -3624,6 +3624,20 @@ validation/checks.csv
 **Output root:** `outputs/33_final_evaluation_report/`\
 **Depends on:** Notebooks 21–32
 
+**Controlled-300 preparation status (2026-09-25):** preparation complete;
+manual notebook execution pending. The validated input contract covers 32
+completed upstream manifests and 33 canonical tables. It binds 300 paintings,
+3,425 registered cases, 2,620 evaluated cases, 10,480 matched primary
+candidates across OpenCV Telea, LaMa, HINT and Stable Diffusion, 13,879 approved
+report candidates, 1,025 supported Stable-Diffusion uncertainty groups and 24
+completed bounded SDXL candidates. The final presentation plan contains 15
+tables with 338 rows, 18 thesis figures, six publication figures, 19 report
+sections, 49 evidence claims, 18 limitations, 107 evidence-catalog rows and 126
+mock-to-final traceability rows. Notebook 33 creates no new scientific evidence.
+The upstream N21 identifier `core_three_model` is retained only for schema
+continuity; its Controlled-300 population contains all four full methods and
+must never be described as a three-method result.
+
 ### Responsibilities
 
 Consolidate:

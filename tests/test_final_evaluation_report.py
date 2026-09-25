@@ -112,13 +112,13 @@ class FinalEvaluationReportPreparationTests(unittest.TestCase):
         catalog = build_evidence_catalog_plan(self.config)
         traceability = build_mock_traceability(self.config)
         self.assertEqual(len(tables), 15)
-        self.assertEqual(int(tables["expected_rows"].sum()), 293)
+        self.assertEqual(int(tables["expected_rows"].sum()), 338)
         self.assertEqual(figures["figure_class"].value_counts().to_dict(), {"thesis": 18, "publication": 6})
         self.assertEqual(len(sections), 19)
-        self.assertEqual(int(sections["claim_count"].sum()), 48)
-        self.assertEqual(len(catalog), 106)
+        self.assertEqual(int(sections["claim_count"].sum()), 49)
+        self.assertEqual(len(catalog), 107)
         self.assertEqual(catalog["schema_version"].unique().tolist(), [EVIDENCE_CATALOG_SCHEMA_VERSION])
-        self.assertEqual(len(traceability), 125)
+        self.assertEqual(len(traceability), 126)
         self.assertEqual(tuple(traceability.columns), TRACEABILITY_COLUMNS)
         checks = validate_preparation_plans(self.config)
         self.assertTrue(checks["passed"].astype(bool).all(), checks.loc[~checks["passed"]])
@@ -126,7 +126,7 @@ class FinalEvaluationReportPreparationTests(unittest.TestCase):
     def test_evidence_catalog_retains_all_approved_roles(self) -> None:
         catalog = build_evidence_catalog_plan(self.config)
         expected_types = {
-            "claim": 48,
+            "claim": 49,
             "table": 15,
             "thesis_figure": 18,
             "publication_figure": 6,
@@ -168,7 +168,7 @@ class FinalEvaluationReportPreparationTests(unittest.TestCase):
                         "Test table"
                         "</div>"
                     )
-                for claim_number in range(48):
+                for claim_number in range(49):
                     body += (
                         f'<p data-claim-id="test_claim_{claim_number + 1:02d}">'
                         "Test evidence claim."

@@ -5,8 +5,8 @@ final_evaluation_report:
   notebook_id: "33"
   notebook_stem: "33_final_evaluation_report"
   dataset_id: "painting_restoration_eval"
-  dataset_version: "1.0.0"
-  dataset_scope: "controlled_50"
+  dataset_version: "2.0.0"
+  dataset_scope: "controlled_300"
   creates_new_scientific_evidence: false
   thesis_table_schema_version: "thesis_tables.v1"
   latex_table_schema_version: "latex_tables.v1"
@@ -111,57 +111,57 @@ final_evaluation_report:
     work_dir: "work"
 
   input_table_contracts:
-    artworks_path: {rows: 50, required_columns: [painting_id, category, style_or_period, metadata_completeness_pct, acceptance_status]}
-    dataset_audit_path: {rows: 101, required_columns: [audit_section, metric_name, metric_value, denominator, status]}
-    canonical_masks_path: {rows: 250, required_columns: [mask_id, painting_id, mask_type, status]}
-    canonical_cases_path: {rows: 250, required_columns: [case_id, painting_id, mask_type, status]}
-    damage_size_cases_path: {rows: 35, required_columns: [case_id, painting_id, target_damage_fraction, realized_damage_fraction, status]}
-    mask_robustness_cases_path: {rows: 75, required_columns: [case_id, painting_id, mask_type, variant_id, status]}
-    synthetic_degradation_cases_path: {rows: 165, required_columns: [case_id, painting_id, degradation_family, severity, status]}
-    case_registry_path: {rows: 525, required_columns: [case_id, experiment_id, painting_id, clean_image_path, mask_or_effect_path, status]}
-    model_eligibility_path: {rows: 2100, required_columns: [case_id, model_id, eligible, eligibility_reason]}
+    artworks_path: {rows: 300, required_columns: [painting_id, category, style_or_period, metadata_completeness_pct, acceptance_status]}
+    dataset_audit_path: {rows: 448, required_columns: [audit_section, metric_name, metric_value, denominator, status]}
+    canonical_masks_path: {rows: 1500, required_columns: [mask_id, painting_id, mask_type, status]}
+    canonical_cases_path: {rows: 1500, required_columns: [case_id, painting_id, mask_type, status]}
+    damage_size_cases_path: {rows: 245, required_columns: [case_id, painting_id, target_damage_fraction, realized_damage_fraction, status]}
+    mask_robustness_cases_path: {rows: 525, required_columns: [case_id, painting_id, mask_type, variant_id, status]}
+    synthetic_degradation_cases_path: {rows: 1155, required_columns: [case_id, painting_id, degradation_family, severity, status]}
+    case_registry_path: {rows: 3425, required_columns: [case_id, experiment_id, painting_id, clean_image_path, mask_or_effect_path, status]}
+    model_eligibility_path: {rows: 17125, required_columns: [case_id, model_id, eligible, eligibility_reason]}
     region_policy_path: {rows: 143, required_columns: [metric_family, region_id, compatible, ablation_policy_ids_json, status]}
-    model_comparison_path: {rows: 86531, required_columns: [population_id, analysis_scope, evidence_family, anchor_id, model_id, winner_model_id, status]}
-    metric_disagreement_path: {rows: 839, required_columns: [population_id, anchor_id, model_rank_order, winner_model_id, status]}
-    representative_cases_path: {rows: 76, required_columns: [case_id, painting_id, selection_role, status]}
-    damage_size_uncertainty_path: {rows: 4760, required_columns: [uncertainty_group_id, case_id, metric_name, region_id, value, status]}
-    damage_size_analysis_path: {rows: 1901, required_columns: [analysis_kind, anchor_id, model_id, estimate, independent_unit, applicability_status, status]}
-    mask_robustness_analysis_path: {rows: 5373, required_columns: [analysis_kind, anchor_id, model_id, estimate, independent_unit, applicability_status, status]}
-    degradation_analysis_path: {rows: 4695, required_columns: [analysis_kind, anchor_id, model_id, estimate, independent_unit, applicability_status, status]}
-    statistical_results_path: {rows: 4174, required_columns: [result_kind, metric_name, model_id, estimate, independent_unit, applicability_status, status]}
-    metric_correlations_path: {rows: 504, required_columns: [correlation_kind, left_evidence_family, right_evidence_family, correlation, independent_unit, status]}
-    ranking_stability_path: {rows: 258, required_columns: [ranking_kind, model_id, winner_model_id, independent_unit, applicability_status, status]}
+    model_comparison_path: {rows: 277319, required_columns: [population_id, analysis_scope, evidence_family, anchor_id, model_id, winner_model_id, status]}
+    metric_disagreement_path: {rows: 2181, required_columns: [population_id, anchor_id, model_rank_order, winner_model_id, status]}
+    representative_cases_path: {rows: 168, required_columns: [case_id, painting_id, selection_role, status]}
+    damage_size_uncertainty_path: {rows: 33320, required_columns: [uncertainty_group_id, case_id, metric_name, region_id, value, status]}
+    damage_size_analysis_path: {rows: 7035, required_columns: [analysis_kind, anchor_id, model_id, estimate, independent_unit, applicability_status, status]}
+    mask_robustness_analysis_path: {rows: 44847, required_columns: [analysis_kind, anchor_id, model_id, estimate, independent_unit, applicability_status, status]}
+    degradation_analysis_path: {rows: 34977, required_columns: [analysis_kind, anchor_id, model_id, estimate, independent_unit, applicability_status, status]}
+    statistical_results_path: {rows: 13272, required_columns: [result_kind, metric_name, model_id, estimate, independent_unit, applicability_status, status]}
+    metric_correlations_path: {rows: 694, required_columns: [correlation_kind, left_evidence_family, right_evidence_family, correlation, independent_unit, status]}
+    ranking_stability_path: {rows: 1344, required_columns: [ranking_kind, model_id, winner_model_id, independent_unit, applicability_status, status]}
     failure_taxonomy_path: {rows: 14, required_columns: [category_id, display_name, is_proxy, status]}
-    failure_assignments_path: {rows: 24990, required_columns: [candidate_id, case_id, model_id, category_id, assignment_status, recommended_action, status]}
-    trustworthiness_flags_path: {rows: 19635, required_columns: [candidate_id, case_id, model_id, flag_id, flag_status, recommended_action, status]}
-    ablation_results_path: {rows: 7710, required_columns: [scenario_id, scenario_family, result_kind, model_id, applicability_status, status]}
-    flag_stability_path: {rows: 41055, required_columns: [scenario_id, candidate_id, model_id, flag_state_agreement_fraction, status]}
-    explanation_cases_path: {rows: 1785, required_columns: [candidate_id, case_id, painting_id, model_id, restored_path, recommendation_category, status]}
+    failure_assignments_path: {rows: 194306, required_columns: [candidate_id, case_id, model_id, category_id, assignment_status, recommended_action, status]}
+    trustworthiness_flags_path: {rows: 152669, required_columns: [candidate_id, case_id, model_id, flag_id, flag_status, recommended_action, status]}
+    ablation_results_path: {rows: 47508, required_columns: [scenario_id, scenario_family, result_kind, model_id, applicability_status, status]}
+    flag_stability_path: {rows: 319217, required_columns: [scenario_id, candidate_id, model_id, flag_state_agreement_fraction, status]}
+    explanation_cases_path: {rows: 13879, required_columns: [candidate_id, case_id, painting_id, model_id, restored_path, recommendation_category, status]}
     case_neighbors_path: {rows: 100, required_columns: [query_candidate_id, lane, feature_model_id, neighbor_candidate_id, neighbor_rank, status]}
-    model_cards_path: {rows: 4, required_columns: [model_id, display_name, evaluation_status, known_limitations_json, status]}
-    compute_scalability_path: {rows: 35, required_columns: [model_id, record_type, scenario_id, is_executed, is_projected, applicability_status, status]}
-    model_report_index_path: {rows: 4, required_columns: [model_id, evaluation_status, report_path, section_count, self_contained, status]}
+    model_cards_path: {rows: 5, required_columns: [model_id, display_name, evaluation_status, known_limitations_json, status]}
+    compute_scalability_path: {rows: 42, required_columns: [model_id, record_type, scenario_id, is_executed, is_projected, applicability_status, status]}
+    model_report_index_path: {rows: 5, required_columns: [model_id, evaluation_status, report_path, section_count, self_contained, status]}
     selected_cases_path: {rows: 30, required_columns: [selection_order, case_id, painting_id, selection_lane, status]}
     case_report_index_path: {rows: 30, required_columns: [case_id, painting_id, selection_lane, report_path, self_contained, status]}
-    painting_report_index_path: {rows: 50, required_columns: [painting_id, case_count, candidate_count, report_path, self_contained, status]}
+    painting_report_index_path: {rows: 300, required_columns: [painting_id, case_count, candidate_count, report_path, self_contained, status]}
 
   population:
-    painting_count: 50
-    unified_case_count: 525
-    eligible_restoration_case_count: 410
-    approved_report_candidate_count: 1785
-    primary_core_candidate_count: 1230
-    primary_nonzero_core_candidate_count: 1080
-    canonical_uncertainty_group_count: 130
-    damage_size_uncertainty_group_count: 35
-    total_uncertainty_group_count: 165
-    model_count: 4
-    core_model_count: 3
+    painting_count: 300
+    unified_case_count: 3425
+    eligible_restoration_case_count: 2620
+    approved_report_candidate_count: 13879
+    primary_core_candidate_count: 10480
+    primary_nonzero_core_candidate_count: 9280
+    canonical_uncertainty_group_count: 780
+    damage_size_uncertainty_group_count: 245
+    total_uncertainty_group_count: 1025
+    model_count: 5
+    core_model_count: 4
     quality_anchor_count: 11
     ablation_scenario_count: 23
-    documented_style_painting_count: 18
-    sdxl_candidate_count: 10
-    excluded_context_prompt_candidate_count: 480
+    documented_style_painting_count: 268
+    sdxl_candidate_count: 24
+    excluded_context_prompt_candidate_count: 3260
 
   research_questions:
     - id: "rq1"
@@ -176,12 +176,12 @@ final_evaluation_report:
   table_plan:
     - {table_id: "t01_research_question_map", section_id: "research-questions", expected_rows: 4, source_keys: [evidence_coverage_path]}
     - {table_id: "t02_dataset_design_scope", section_id: "dataset-design", expected_rows: 8, source_keys: [artworks_path, dataset_audit_path, case_registry_path]}
-    - {table_id: "t03_model_coverage", section_id: "methods-coverage", expected_rows: 4, source_keys: [model_cards_path]}
-    - {table_id: "t04_quality_anchor_summary", section_id: "canonical-comparison", expected_rows: 33, source_keys: [model_comparison_path]}
+    - {table_id: "t03_model_coverage", section_id: "methods-coverage", expected_rows: 5, source_keys: [model_cards_path]}
+    - {table_id: "t04_quality_anchor_summary", section_id: "canonical-comparison", expected_rows: 44, source_keys: [model_comparison_path]}
     - {table_id: "t05_metric_disagreement", section_id: "canonical-comparison", expected_rows: 11, source_keys: [metric_disagreement_path]}
-    - {table_id: "t06_damage_size", section_id: "damage-size", expected_rows: 33, source_keys: [damage_size_analysis_path]}
-    - {table_id: "t07_mask_robustness", section_id: "mask-robustness", expected_rows: 33, source_keys: [mask_robustness_analysis_path]}
-    - {table_id: "t08_synthetic_degradation", section_id: "synthetic-degradation", expected_rows: 33, source_keys: [degradation_analysis_path]}
+    - {table_id: "t06_damage_size", section_id: "damage-size", expected_rows: 44, source_keys: [damage_size_analysis_path]}
+    - {table_id: "t07_mask_robustness", section_id: "mask-robustness", expected_rows: 44, source_keys: [mask_robustness_analysis_path]}
+    - {table_id: "t08_synthetic_degradation", section_id: "synthetic-degradation", expected_rows: 44, source_keys: [degradation_analysis_path]}
     - {table_id: "t09_uncertainty", section_id: "diffusion-uncertainty", expected_rows: 8, source_keys: [damage_size_uncertainty_path, statistical_results_path]}
     - {table_id: "t10_grouped_statistics", section_id: "grouped-statistics", expected_rows: 22, source_keys: [statistical_results_path, ranking_stability_path]}
     - {table_id: "t11_failure_flags", section_id: "failure-flags", expected_rows: 44, source_keys: [failure_assignments_path, trustworthiness_flags_path]}
@@ -277,13 +277,13 @@ final_evaluation_report:
   limitations:
     - "controlled_artificial_damage_not_real_material_treatment"
     - "no_paired_real_damaged_undamaged_conservation_dataset"
-    - "controlled_50_not_proposed_expanded_dataset"
-    - "style_or_period_documented_for_18_of_50_paintings"
-    - "five_painting_extensions_confound_category_and_painting"
-    - "sdxl_partial_ten_case_five_painting_evaluation"
+    - "controlled_300_balanced_collection_does_not_represent_all_painting_traditions_or_conservation_conditions"
+    - "style_or_period_documented_for_268_of_300_paintings"
+    - "thirty_five_painting_extensions_do_not_separate_category_from_painting_identity"
+    - "sdxl_bounded_35_case_schedule_has_24_completed_candidates_across_30_paintings"
     - "uncertainty_only_for_supported_repeated_seed_populations"
     - "uncertainty_is_not_calibrated_confidence"
-    - "telea_and_lama_are_deterministic"
+    - "telea_lama_and_hint_are_deterministic"
     - "no_human_or_expert_rating_dataset"
     - "computational_flags_are_not_expert_ground_truth"
     - "retrieval_similarity_is_not_restoration_correctness"
@@ -298,16 +298,16 @@ final_evaluation_report:
     upstream_manifests: 32
     input_tables: 33
     table_definitions: 15
-    thesis_table_rows: 293
+    thesis_table_rows: 338
     latex_table_rows: 15
     thesis_figures: 18
     publication_figures: 6
     persisted_figures: 24
     report_sections: 19
-    evidence_claims: 48
+    evidence_claims: 49
     limitation_records: 18
-    evidence_catalog_rows: 106
-    mock_traceability_rows: 125
+    evidence_catalog_rows: 107
+    mock_traceability_rows: 126
     selected_case_grids: 12
     report_count: 1
     artifact_records: 8

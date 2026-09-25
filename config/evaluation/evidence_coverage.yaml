@@ -2448,9 +2448,11 @@ evidence_coverage:
 
     - notebook_id: "33"
       stem: "33_final_evaluation_report"
-      status: "completed_validation_passed"
-      completion_gate_passed: true
-      run_id: "run_ffab0ce2624e43608c3c21764b7f6f1b"
+      status: "controlled_300_preparation_ready"
+      completion_gate_passed: false
+      run_id: null
+      dataset_scope: "controlled_300"
+      dataset_version: "2.0.0"
       output_root: "outputs/33_final_evaluation_report"
       manifest_path: "outputs/33_final_evaluation_report/manifests/run_manifest.json"
       preparation_contract:
@@ -2461,20 +2463,26 @@ evidence_coverage:
         creates_new_scientific_evidence: false
         upstream_manifest_count: 32
         input_table_count: 33
-        painting_count: 50
-        unified_case_count: 525
-        eligible_restoration_case_count: 410
-        approved_report_candidate_count: 1785
-        primary_core_candidate_count: 1230
+        painting_count: 300
+        unified_case_count: 3425
+        eligible_restoration_case_count: 2620
+        approved_report_candidate_count: 13879
+        primary_core_candidate_count: 10480
+        primary_nonzero_core_candidate_count: 9280
+        model_count: 5
+        full_method_count: 4
+        bounded_sdxl_completed_candidate_count: 24
         quality_anchor_count: 11
-        canonical_uncertainty_group_count: 130
-        damage_size_uncertainty_group_count: 35
+        canonical_uncertainty_group_count: 780
+        damage_size_uncertainty_group_count: 245
+        total_supported_uncertainty_group_count: 1025
+        extension_painting_count: 35
         ablation_scenario_count: 23
         table_definition_count: 15
-        thesis_table_rows: 293
+        thesis_table_rows: 338
         latex_table_rows: 15
-        evidence_catalog_rows: 106
-        evidence_claim_count: 48
+        evidence_catalog_rows: 107
+        evidence_claim_count: 49
         limitation_record_count: 18
         report_section_count: 19
         thesis_figure_count: 18
@@ -2483,10 +2491,10 @@ evidence_coverage:
         selected_case_grid_count: 12
         minimum_embedded_image_count: 64
         minimum_embedded_tile_count: 260
-        mock_traceability_rows: 125
+        mock_traceability_rows: 126
         artifact_records: 8
         physical_output_files: 32
-      completion_contract:
+      historical_pilot_completion_contract:
         run_status: "completed"
         validation_status: "passed"
         creates_new_scientific_evidence: false
@@ -2532,13 +2540,13 @@ evidence_coverage:
         - "n32_selected_case_and_complete_painting_report_discovery"
       primary_outputs:
         - path: "outputs/33_final_evaluation_report/data/thesis_tables.csv"
-          rows: 293
+          rows: 338
           schema_version: "thesis_tables.v1"
         - path: "outputs/33_final_evaluation_report/data/latex_tables.csv"
           rows: 15
           schema_version: "latex_tables.v1"
         - path: "outputs/33_final_evaluation_report/data/report_evidence_catalog.csv"
-          rows: 106
+          rows: 107
           schema_version: "final_report_evidence_catalog.v1"
         - path: "outputs/33_final_evaluation_report/figures/thesis"
           files: 18
@@ -2557,8 +2565,8 @@ evidence_coverage:
           schema_version: "validation_checks.v1"
       supported_scope:
         - "proposal_research_question_oriented_final_synthesis"
-        - "controlled_50_dataset_and_410_eligible_case_evidence"
-        - "complete_three_model_comparison_and_bounded_sdxl_evidence"
+        - "controlled_300_dataset_and_2620_evaluated_case_evidence"
+        - "complete_four_method_comparison_and_bounded_sdxl_evidence"
         - "separate_classical_perceptual_feature_texture_colour_seam_semantic_and_uncertainty_evidence"
         - "damage_size_mask_robustness_and_synthetic_degradation_extensions"
         - "metric_disagreement_grouped_statistics_and_ranking_stability"
@@ -2569,10 +2577,10 @@ evidence_coverage:
       applicability_rules:
         - "candidate_case_and_painting_observations_remain_nested"
         - "painting_is_the_independent_unit_for_grouped_inference"
-        - "five_painting_extensions_do_not_estimate_independent_category_or_style_effects"
-        - "telea_and_lama_repeated_seed_uncertainty_is_not_applicable_deterministic_method"
+        - "thirty_five_painting_extensions_do_not_estimate_independent_category_or_style_effects"
+        - "telea_lama_and_hint_repeated_seed_uncertainty_is_not_applicable_deterministic_method"
         - "stable_diffusion_uncertainty_covers_canonical_and_damage_size_populations_only"
-        - "sdxl_is_ten_case_five_painting_partial_evaluation"
+        - "sdxl_is_a_bounded_35_case_30_painting_schedule_with_24_completed_candidates"
         - "runtime_is_operational_evidence_outside_quality_ranking"
         - "report_examples_are_illustrative_not_independent_evidence"
         - "report_layer_performs_presentation_only_transformations"

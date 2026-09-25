@@ -52,7 +52,11 @@ Controlled-300 contract with 346/346 checks and is now the canonical
 model-report source. Notebook 32 run
 `run_0d4ae193602944dda511bf54199105b1` completed its 300-painting report layer
 with 5,819/5,819 checks and is now the canonical case/painting report source.
-Notebook 33 is the next active producer. Notebooks 33–36 remain historical
+Its 331 reports and 30 selected-case grids are also remotely verified in the
+diagnostics dataset at pinned revision
+`c33bbd87e65fe96f9a81c1c794fd4a70f7226874` (361 objects; 342,821,662
+bytes). Notebook 33 now has a validated Controlled-300 preparation layer and
+is the next active producer awaiting manual execution. Notebooks 33–36 remain historical
 Controlled-50 evidence until
 each producer is explicitly reopened, rerun, validated, baseline-compared and
 committed. Complete local outputs remain canonical even where large evidence is
@@ -154,8 +158,22 @@ from 130 to 780. N18 contains no spatial heatmaps (N19 owns them), no SDXL
 repeated-seed estimate, and no calibrated confidence score. Its compact Git
 handoff is pending. The largest of its seven files is an approximately 81 MB
 CSV already tracked in Git LFS, so N18 needs no separate HF publication.
-The existing machine-readable pilot coverage YAML is not
-retroactively relabelled as Controlled-300 evidence.
+   The existing machine-readable pilot coverage YAML is not
+   retroactively relabelled as Controlled-300 evidence.
+
+**Controlled-300 N33 preparation review (2026-09-25).** The final-evaluation
+contract now consumes all 32 completed upstream manifests and 33 current input
+tables. Its binding scope is 300 paintings, 3,425 registered cases, 2,620
+evaluated cases, 10,480 matched four-method primary candidates, 9,280 nonzero
+primary candidates, 13,879 approved report candidates, 1,025 supported
+Stable-Diffusion uncertainty groups, five model cards and 24 completed bounded
+SDXL candidates. The presentation-only plan retains 15 tables, 18 thesis
+figures, six publication figures, 19 report sections and 18 explicit
+limitations; adding HINT expands the thesis-table plan from 293 pilot rows to
+338 Controlled-300 rows. A latent pilot claim-count mismatch was resolved by
+retaining all 49 declared claims, yielding 107 evidence-catalog rows and 126
+mock-traceability rows. This preparation record is not completion evidence:
+N33 remains unexecuted until its saved notebook, outputs and final gate pass.
 
 **Downstream scale/inference decision (2026-09-18).** The binding N19–N33
 Controlled-300 population table and bounded N23–N25 statistical design are in

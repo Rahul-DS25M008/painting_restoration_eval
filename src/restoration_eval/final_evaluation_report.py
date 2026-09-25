@@ -524,7 +524,7 @@ def validate_upstream_completion(
 
 
 def build_thesis_table_plan(config: Mapping[str, Any]) -> pd.DataFrame:
-    """Return the approved 15-table, 293-row display plan."""
+    """Return the approved 15-table, 338-row Controlled-300 display plan."""
 
     records = []
     for order, item in enumerate(_settings(config)["table_plan"], start=1):
@@ -813,7 +813,7 @@ def build_final_thesis_tables(
     source_tables: Mapping[str, pd.DataFrame],
     config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Build the approved 15-table, 293-row presentation-only synthesis."""
+    """Build the approved 15-table, 338-row Controlled-300 synthesis."""
 
     settings = _settings(config)
     required_keys = set(settings["input_table_contracts"])
@@ -923,7 +923,7 @@ def build_final_thesis_tables(
         ("paintings", "Controlled paintings", len(artworks), "painting", "01", "artworks_path"),
         ("registered_cases", "Registered experimental cases", cases["case_id"].nunique(), "case", "08", "case_registry_path"),
         ("eligible_cases", "Restoration-eligible cases", explanations["case_id"].nunique(), "case", "29", "explanation_cases_path"),
-        ("primary_candidates", "Primary three-model candidates", primary_count, "candidate", "29", "explanation_cases_path"),
+        ("primary_candidates", "Primary four-method candidates", primary_count, "candidate", "29", "explanation_cases_path"),
         ("nonzero_primary", "Nonzero primary candidates", nonzero_primary_count, "candidate", "29", "explanation_cases_path"),
         ("style_documented", "Paintings with documented style or period", style_count, "painting", "01", "artworks_path"),
         ("style_missing", "Paintings without documented style or period", len(artworks) - style_count, "painting", "01", "artworks_path"),
@@ -935,7 +935,7 @@ def build_final_thesis_tables(
             key,
             label,
             {"count": int(value), "unit": unit},
-            "controlled_50_and_approved_extensions",
+            "controlled_300_and_approved_extensions",
             f"all applicable {unit} records",
             unit,
             [notebook_id],
@@ -968,10 +968,12 @@ def build_final_thesis_tables(
             ["model_cards_path"],
             [str(row["model_card_id"])],
             "partial" if model_id == "sdxl_inpainting" else "supported",
-            "Coverage status constrains comparisons; partial SDXL evidence is not a full four-model benchmark.",
+            "Coverage status constrains comparisons; bounded SDXL evidence is not part of the complete four-method benchmark.",
         )
 
-    # T04: 11 anchors x three core models for the overall nonzero comparison.
+    # T04: 11 anchors x four full methods. The upstream population identifier
+    # remains `core_three_model` for schema continuity, but its Controlled-300
+    # rows contain Telea, LaMa, HINT, and primary Stable Diffusion.
     comparison = source_tables["model_comparison_path"]
     quality_rows = comparison.loc[
         comparison["population_id"].astype(str).eq("core_three_model")
@@ -979,7 +981,7 @@ def build_final_thesis_tables(
         & comparison["scope_value"].astype(str).eq("all")
         & comparison["anchor_id"].notna()
     ].sort_values(["anchor_id", "aggregate_rank", "model_id"], kind="stable")
-    _require_row_count(quality_rows, 33, "T04 quality anchor selection")
+    _require_row_count(quality_rows, 44, "T04 quality anchor selection")
     for row in quality_rows.to_dict(orient="records"):
         add(
             "t04_quality_anchor_summary",
@@ -995,7 +997,7 @@ def build_final_thesis_tables(
                 "eligible_case_count": row["population_case_count"],
                 "paired_painting_count": row["paired_painting_count"],
             },
-            "core_three_model_overall_nonzero_cases",
+            "controlled_300_core_four_method_overall_nonzero_cases",
             f"{int(row['population_case_count'])} cases; {int(row['paired_painting_count'])} paintings",
             "painting",
             ["21"],
@@ -1025,7 +1027,7 @@ def build_final_thesis_tables(
                 "agrees_with_majority_vote": row["agrees_with_majority_vote"],
                 "loo_winner_stability_fraction": row["loo_winner_stability_fraction"],
             },
-            "core_three_model_overall_nonzero_cases",
+            "controlled_300_core_four_method_overall_nonzero_cases",
             f"{int(row['eligible_case_count'])} cases; {int(row['eligible_painting_count'])} paintings",
             "painting",
             ["21"],
@@ -1042,7 +1044,7 @@ def build_final_thesis_tables(
         & damage["exposure_definition"].astype(str).eq("realized_damage_fraction")
         & damage["anchor_id"].notna()
     ].sort_values(["anchor_id", "model_id"], kind="stable")
-    _require_row_count(damage_rows, 33, "T06 realized damage trend selection")
+    _require_row_count(damage_rows, 44, "T06 realized damage trend selection")
     for row in damage_rows.to_dict(orient="records"):
         add(
             "t06_damage_size",
@@ -1056,14 +1058,14 @@ def build_final_thesis_tables(
                 "q_value": row["q_value"],
                 "n_paintings": row["n_paintings"],
             },
-            "five_painting_damage_size_trajectories",
+            "thirty_five_painting_damage_size_trajectories",
             f"{int(row['n_paintings'])} paintings",
             str(row["independent_unit"]),
             ["23"],
             ["damage_size_analysis_path"],
             [str(row["analysis_row_id"])],
             str(row["applicability_status"]),
-            "Positive adverse slope means quality worsened as realized damage increased; the five-painting scope remains confounded.",
+            "Positive adverse slope means quality worsened as realized damage increased; the 35-painting scope is balanced across categories but does not separate category from painting identity.",
         )
 
     # T07: overall mask-placement dispersion per anchor and core model.
@@ -1073,7 +1075,7 @@ def build_final_thesis_tables(
         & robustness["scope_type"].astype(str).eq("overall")
         & robustness["scope_value"].astype(str).eq("all_mask_families")
     ].sort_values(["anchor_id", "model_id"], kind="stable")
-    _require_row_count(robustness_rows, 33, "T07 mask robustness selection")
+    _require_row_count(robustness_rows, 44, "T07 mask robustness selection")
     for row in robustness_rows.to_dict(orient="records"):
         add(
             "t07_mask_robustness",
@@ -1104,7 +1106,7 @@ def build_final_thesis_tables(
         & degradation["scope_type"].astype(str).eq("overall")
         & degradation["scope_value"].astype(str).eq("all_eligible_cases")
     ].sort_values(["anchor_id", "model_id"], kind="stable")
-    _require_row_count(degradation_rows, 33, "T08 degradation selection")
+    _require_row_count(degradation_rows, 44, "T08 degradation selection")
     for row in degradation_rows.to_dict(orient="records"):
         add(
             "t08_synthetic_degradation",
@@ -1118,7 +1120,7 @@ def build_final_thesis_tables(
                 "n_cases": row["n_cases"],
                 "n_paintings": row["n_paintings"],
             },
-            "five_painting_synthetic_degradation_extension",
+            "thirty_five_painting_synthetic_degradation_extension",
             f"{int(row['n_cases'])} cases; {int(row['n_paintings'])} paintings",
             str(row["independent_unit"]),
             ["25"],
@@ -1552,12 +1554,14 @@ def generate_final_figures(
     model_labels = {
         "lama": "LaMa",
         "opencv_telea": "OpenCV Telea",
+        "hint_places2": "HINT",
         "stable_diffusion_inpainting": "Stable Diffusion",
         "sdxl_inpainting": "SDXL",
     }
     palette = {
         "lama": "#287271",
         "opencv_telea": "#E07A5F",
+        "hint_places2": "#6A4C93",
         "stable_diffusion_inpainting": "#3D5A80",
         "sdxl_inpainting": "#8E6C8A",
     }
@@ -1673,11 +1677,13 @@ def generate_final_figures(
         & comparison["scope_value"].astype(str).eq("all")
         & comparison["anchor_id"].notna()
     ].copy()
-    _require_row_count(canonical, 33, "Canonical figure selection")
+    _require_row_count(canonical, 44, "Canonical figure selection")
     rank_matrix = canonical.pivot(index="anchor_id", columns="model_id", values="aggregate_rank")
-    rank_matrix = rank_matrix[["lama", "opencv_telea", "stable_diffusion_inpainting"]]
-    figure, axis = plt.subplots(figsize=(8, 7))
-    image = axis.imshow(rank_matrix.astype(float), cmap="YlGnBu_r", vmin=1, vmax=3, aspect="auto")
+    rank_matrix = rank_matrix[
+        ["opencv_telea", "lama", "hint_places2", "stable_diffusion_inpainting"]
+    ]
+    figure, axis = plt.subplots(figsize=(9, 7))
+    image = axis.imshow(rank_matrix.astype(float), cmap="YlGnBu_r", vmin=1, vmax=4, aspect="auto")
     for row_index in range(rank_matrix.shape[0]):
         for column_index in range(rank_matrix.shape[1]):
             axis.text(column_index, row_index, f"{rank_matrix.iloc[row_index, column_index]:.0f}", ha="center", va="center")
@@ -1706,7 +1712,7 @@ def generate_final_figures(
         & damage["anchor_id"].notna()
     ].copy()
     damage["adverse_slope"] = pd.to_numeric(damage["estimate"], errors="coerce")
-    _require_row_count(damage, 33, "Damage-size figure selection")
+    _require_row_count(damage, 44, "Damage-size figure selection")
 
     robustness = source_tables["mask_robustness_analysis_path"]
     robustness = robustness.loc[
@@ -1715,7 +1721,7 @@ def generate_final_figures(
         & robustness["scope_value"].astype(str).eq("all_mask_families")
     ].copy()
     robustness["dispersion"] = pd.to_numeric(robustness["estimate"], errors="coerce")
-    _require_row_count(robustness, 33, "Mask-robustness figure selection")
+    _require_row_count(robustness, 44, "Mask-robustness figure selection")
 
     degradation = source_tables["degradation_analysis_path"]
     degradation = degradation.loc[
@@ -1724,7 +1730,7 @@ def generate_final_figures(
         & degradation["scope_value"].astype(str).eq("all_eligible_cases")
     ].copy()
     degradation["directional_utility"] = pd.to_numeric(degradation["estimate"], errors="coerce")
-    _require_row_count(degradation, 33, "Synthetic-degradation figure selection")
+    _require_row_count(degradation, 44, "Synthetic-degradation figure selection")
 
     save("f06_damage_size_sensitivity", grouped_points(damage, "adverse_slope", "Damage-size sensitivity by model and anchor", "Adverse slope per 10 percentage points"))
     save("f07_mask_robustness", grouped_points(robustness, "dispersion", "Mask-placement robustness", "Median within-group dispersion (lower is more robust)"))
@@ -1736,7 +1742,7 @@ def generate_final_figures(
     figure, axis = plt.subplots(figsize=(10, 6))
     axis.barh(omnibus["row_label"].str.replace("Omnibus model difference — ", "", regex=False), pd.to_numeric(omnibus["effect_size"]), color="#287271")
     axis.invert_yaxis()
-    style_axis(axis, "Grouped model differences across 50 paintings", "Kendall's W", "")
+    style_axis(axis, "Grouped model differences across 300 paintings", "Kendall's W", "")
     save("f09_grouped_effects", figure)
 
     # F10: mean metric-pair correlation matrix across core models.
@@ -1807,7 +1813,7 @@ def generate_final_figures(
         raise ValueError("No applicable triggered/not-triggered trustworthiness flags were found")
     flags["triggered"] = flags["flag_status"].astype(str).eq("triggered").astype(float)
     flag_matrix = flags.groupby(["flag_id", "model_id"])["triggered"].mean().unstack(fill_value=0)
-    model_order = [value for value in ["lama", "opencv_telea", "stable_diffusion_inpainting", "sdxl_inpainting"] if value in flag_matrix.columns]
+    model_order = [value for value in ["opencv_telea", "lama", "hint_places2", "stable_diffusion_inpainting", "sdxl_inpainting"] if value in flag_matrix.columns]
     flag_matrix = flag_matrix[model_order]
     figure, axis = plt.subplots(figsize=(8, 7))
     image = axis.imshow(flag_matrix, cmap="OrRd", vmin=0, vmax=max(0.01, float(flag_matrix.to_numpy().max())), aspect="auto")
@@ -2234,6 +2240,7 @@ def build_final_report_sections(
     model_name = {
         "lama": "LaMa",
         "opencv_telea": "OpenCV Telea",
+        "hint_places2": "HINT",
         "stable_diffusion_inpainting": "Stable Diffusion",
         "sdxl_inpainting": "SDXL",
     }
@@ -2250,12 +2257,12 @@ def build_final_report_sections(
             "The approved extensions test conditional method behaviour, cross-painting consistency, stochastic stability, explanation, and practical reporting.",
         ],
         "dataset-design": [
-            "The controlled design contains 50 paintings, 525 cases, and 1,785 approved candidates, enabling paired computational comparisons.",
+            "The controlled design contains 300 paintings, 3,425 registered cases, 2,620 evaluated restoration cases, and 13,879 approved candidates, enabling paired computational comparisons.",
             "Artificial damage and incomplete style metadata limit external validity; the dataset does not represent real physical treatment outcomes.",
         ],
         "methods-coverage": [
-            "Telea, LaMa, and Stable Diffusion have complete core coverage and can be compared directly on the approved population.",
-            "SDXL has ten completed candidates only, so four-model conclusions are inconclusive and SDXL remains a feasibility result.",
+            "Telea, LaMa, HINT, and primary Stable Diffusion have complete matched coverage across 2,620 cases and can be compared directly on the approved population.",
+            "SDXL has 24 completed candidates from a bounded 35-case schedule, so it remains a separate feasibility result rather than a fifth full-benchmark method.",
         ],
         "evaluation-framework": [
             "Eleven quality anchors cover classical, perceptual, feature, texture, colour, seam, semantic, spatial, and structural evidence.",
@@ -2263,7 +2270,7 @@ def build_final_report_sections(
             "No universal combined quality or trust score is reported because its weights cannot be justified from the available evidence.",
         ],
         "canonical-comparison": [
-            f"{leader_label} wins {leader_wins} quality anchors and has the lowest mean anchor rank among the three fully evaluated models.",
+            f"{leader_label} wins {leader_wins} quality anchors and has the lowest mean anchor rank among the four fully evaluated methods.",
             "OpenCV Telea wins the remaining structural anchor, showing that a classical method can still be better for a specific criterion.",
             "Stable Diffusion is competitive on several perceptual and feature anchors but is worse on the aggregate rank across the approved anchors.",
             "Metric-specific disagreement means model choice should follow the restoration objective rather than a universal winner label.",
@@ -2271,7 +2278,7 @@ def build_final_report_sections(
         "damage-size": [
             "Several adverse slopes increase as realized damage grows, so larger missing regions generally make restoration worse.",
             "The model ordering changes by quality anchor; low sensitivity on one metric does not guarantee low sensitivity on another.",
-            "Only five paintings support this extension, so category and painting effects remain confounded.",
+            "Thirty-five paintings, balanced as seven per visual category, support this extension; category and painting identity nevertheless remain confounded.",
         ],
         "mask-robustness": [
             "Lower within-group dispersion indicates better robustness to the tested mask placements.",
@@ -2281,7 +2288,7 @@ def build_final_report_sections(
         "synthetic-degradation": [
             "Directional utility differs across degradation families, meaning one model is not consistently better for every synthetic defect.",
             "Thin scratches and broad stains create different failure patterns and should not be collapsed into one damage label.",
-            "The five-painting extension supports controlled comparison but remains too small for general category claims.",
+            "The 35-painting extension supports controlled comparison across all five categories but does not estimate an independent category effect.",
         ],
         "grouped-statistics": [
             "Painting-level grouped tests preserve the painting as the independent unit instead of treating correlated candidates as independent.",
@@ -2290,10 +2297,10 @@ def build_final_report_sections(
             "Statistical significance is interpreted with effect size, multiplicity control, and scope rather than as automatic practical importance.",
         ],
         "diffusion-uncertainty": [
-            "Stable Diffusion repeated seeds provide 165 supported disagreement groups across canonical and damage-size experiments.",
+            "Stable Diffusion repeated seeds provide 1,025 supported disagreement groups across canonical and damage-size experiments.",
             "Higher seed variability marks less stable generation, but lower variability does not prove a correct restoration.",
             "Spatial maps show where variability, error, colour drift, texture change, and seam evidence occur.",
-            "Telea and LaMa are deterministic; their analyses use robustness rather than artificial repeated-seed variability.",
+            "Telea, LaMa, and HINT are deterministic; their analyses use robustness rather than artificial repeated-seed variability.",
         ],
         "failure-flags": [
             "Flags convert metric evidence into transparent review triggers rather than a hidden combined score.",
@@ -2306,7 +2313,7 @@ def build_final_report_sections(
             "Context-prompt candidates p01-p04 lack complete downstream flag coverage, which remains an explicit limitation.",
         ],
         "explainability": [
-            "All 1,785 approved candidates remain catalogued with evidence and path references.",
+            "All 13,879 approved candidates remain catalogued with evidence and path references.",
             "Counterfactual panels explain how model, seed, damage size, or evidence-family removal changes the assessment.",
             "Nearest-case retrieval supplies comparable examples for human review but similarity is not restoration correctness.",
         ],
