@@ -2448,9 +2448,9 @@ evidence_coverage:
 
     - notebook_id: "33"
       stem: "33_final_evaluation_report"
-      status: "controlled_300_preparation_ready"
-      completion_gate_passed: false
-      run_id: null
+      status: "completed_validation_passed"
+      completion_gate_passed: true
+      run_id: "run_aef04267c2e44495a4e7a6249426bd4d"
       dataset_scope: "controlled_300"
       dataset_version: "2.0.0"
       output_root: "outputs/33_final_evaluation_report"
@@ -2479,7 +2479,7 @@ evidence_coverage:
         extension_painting_count: 35
         ablation_scenario_count: 23
         table_definition_count: 15
-        thesis_table_rows: 338
+        thesis_table_rows: 352
         latex_table_rows: 15
         evidence_catalog_rows: 107
         evidence_claim_count: 49
@@ -2494,6 +2494,45 @@ evidence_coverage:
         mock_traceability_rows: 126
         artifact_records: 8
         physical_output_files: 32
+      completion_contract:
+        run_status: "completed"
+        validation_status: "passed"
+        creates_new_scientific_evidence: false
+        upstream_manifest_count: 32
+        input_table_count: 33
+        paintings: 300
+        unified_cases: 3425
+        eligible_restoration_cases: 2620
+        approved_report_candidates: 13879
+        primary_core_candidates: 10480
+        primary_nonzero_core_candidates: 9280
+        bounded_sdxl_completed_candidates: 24
+        canonical_uncertainty_groups: 780
+        damage_size_uncertainty_groups: 245
+        total_supported_uncertainty_groups: 1025
+        thesis_table_rows: 352
+        thesis_tables: 15
+        latex_tables: 15
+        evidence_catalog_rows: 107
+        report_sections: 19
+        evidence_claims: 49
+        limitations: 18
+        thesis_figures: 18
+        publication_figures: 6
+        persisted_figures: 24
+        selected_case_grids: 12
+        embedded_images: 68
+        embedded_tiles: 281
+        external_image_dependencies: 0
+        validation_checks: 536
+        blocking_failures: 0
+        warning_failures: 0
+        roadmap_requirements: 21
+        mock_traceability_rows: 126
+        artifact_records: 8
+        physical_output_files: 32
+        execution_seconds: 1038.552
+        publication_tier: "ordinary_git_compact_final_synthesis"
       historical_pilot_completion_contract:
         run_status: "completed"
         validation_status: "passed"
@@ -2540,7 +2579,7 @@ evidence_coverage:
         - "n32_selected_case_and_complete_painting_report_discovery"
       primary_outputs:
         - path: "outputs/33_final_evaluation_report/data/thesis_tables.csv"
-          rows: 338
+          rows: 352
           schema_version: "thesis_tables.v1"
         - path: "outputs/33_final_evaluation_report/data/latex_tables.csv"
           rows: 15
@@ -2561,7 +2600,7 @@ evidence_coverage:
           files: 1
           schema_version: "final_evaluation_limitations.v1"
         - path: "outputs/33_final_evaluation_report/validation/checks.csv"
-          rows: 535
+          rows: 536
           schema_version: "validation_checks.v1"
       supported_scope:
         - "proposal_research_question_oriented_final_synthesis"

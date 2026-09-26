@@ -524,7 +524,7 @@ def validate_upstream_completion(
 
 
 def build_thesis_table_plan(config: Mapping[str, Any]) -> pd.DataFrame:
-    """Return the approved 15-table, 338-row Controlled-300 display plan."""
+    """Return the approved 15-table, 352-row Controlled-300 display plan."""
 
     records = []
     for order, item in enumerate(_settings(config)["table_plan"], start=1):
@@ -583,7 +583,7 @@ def build_report_section_plan(config: Mapping[str, Any]) -> pd.DataFrame:
 
 
 def build_evidence_catalog_plan(config: Mapping[str, Any]) -> pd.DataFrame:
-    """Build the approved 106-record claim/table/figure/limitation catalog."""
+    """Build the approved 107-record claim/table/figure/limitation catalog."""
 
     settings = _settings(config)
     records: list[dict[str, Any]] = []
@@ -664,7 +664,7 @@ def build_evidence_catalog_plan(config: Mapping[str, Any]) -> pd.DataFrame:
 
 
 def build_mock_traceability(config: Mapping[str, Any]) -> pd.DataFrame:
-    """Build the 125-row approved mock-to-final traceability baseline."""
+    """Build the 126-row approved mock-to-final traceability baseline."""
 
     section_plan = build_report_section_plan(config)
     catalog = build_evidence_catalog_plan(config)
@@ -813,7 +813,7 @@ def build_final_thesis_tables(
     source_tables: Mapping[str, pd.DataFrame],
     config: Mapping[str, Any],
 ) -> pd.DataFrame:
-    """Build the approved 15-table, 338-row Controlled-300 synthesis."""
+    """Build the approved 15-table, 352-row Controlled-300 synthesis."""
 
     settings = _settings(config)
     required_keys = set(settings["input_table_contracts"])
@@ -1265,11 +1265,11 @@ def build_final_thesis_tables(
             "Runtime association is operational evidence, not a causal quality effect or quality ranking.",
         )
 
-    # T11: 11 independent flags x four models.
+    # T11: 11 independent flags x five evaluated models, including bounded SDXL.
     flags = source_tables["trustworthiness_flags_path"]
     flag_groups = list(flags.groupby(["flag_id", "model_id"], sort=True, dropna=False))
-    if len(flag_groups) != 44:
-        raise ValueError(f"T11 expected 44 flag/model groups, observed {len(flag_groups)}")
+    if len(flag_groups) != 55:
+        raise ValueError(f"T11 expected 55 flag/model groups, observed {len(flag_groups)}")
     for (flag_id, model_id), subset in flag_groups:
         status_counts = subset["flag_status"].astype(str).value_counts().sort_index().to_dict()
         add(
@@ -1380,7 +1380,7 @@ def build_final_thesis_tables(
         "Retrieval coverage is deliberately bounded and illustrative rather than exhaustive evidence of correctness.",
     )
 
-    # T14: four observed-overall rows plus all eight transparent projections.
+    # T14: five observed-overall model rows plus all ten transparent projections.
     compute = source_tables["compute_scalability_path"]
     compute_rows = compute.loc[
         (
@@ -1389,7 +1389,7 @@ def build_final_thesis_tables(
         )
         | compute["record_type"].astype(str).eq("projection")
     ].sort_values(["record_type", "scenario_id", "model_id"], kind="stable")
-    _require_row_count(compute_rows, 12, "T14 compute selection")
+    _require_row_count(compute_rows, 15, "T14 compute selection")
     for row in compute_rows.to_dict(orient="records"):
         add(
             "t14_compute_scalability",
@@ -2305,7 +2305,7 @@ def build_final_report_sections(
         "failure-flags": [
             "Flags convert metric evidence into transparent review triggers rather than a hidden combined score.",
             "A triggered flag means the candidate needs attention; it does not prove that a conservator would reject it.",
-            "Insufficient evidence and manual-review states are retained instead of being silently counted as successful restoration.",
+            "Inconclusive or insufficient evidence and manual-review states are retained instead of being silently counted as successful restoration.",
         ],
         "policy-ablation": [
             "Ablations show whether rankings and flags survive reasonable metric and region-policy changes.",

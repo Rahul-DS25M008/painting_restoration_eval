@@ -8,13 +8,13 @@ This document records the boundaries that must remain attached to the final eval
 
 1. Controlled artificial damage not real material treatment.
 2. No paired real damaged undamaged conservation dataset.
-3. Controlled 50 not proposed expanded dataset.
-4. Style or period documented for 18 of 50 paintings.
-5. Five painting extensions confound category and painting.
-6. Sdxl partial ten case five painting evaluation.
+3. Controlled 300 balanced collection does not represent all painting traditions or conservation conditions.
+4. Style or period documented for 268 of 300 paintings.
+5. Thirty five painting extensions do not separate category from painting identity.
+6. Sdxl bounded 35 case schedule has 24 completed candidates across 30 paintings.
 7. Uncertainty only for supported repeated seed populations.
 8. Uncertainty is not calibrated confidence.
-9. Telea and lama are deterministic.
+9. Telea lama and hint are deterministic.
 10. No human or expert rating dataset.
 11. Computational flags are not expert ground truth.
 12. Retrieval similarity is not restoration correctness.

@@ -184,10 +184,10 @@ final_evaluation_report:
     - {table_id: "t08_synthetic_degradation", section_id: "synthetic-degradation", expected_rows: 44, source_keys: [degradation_analysis_path]}
     - {table_id: "t09_uncertainty", section_id: "diffusion-uncertainty", expected_rows: 8, source_keys: [damage_size_uncertainty_path, statistical_results_path]}
     - {table_id: "t10_grouped_statistics", section_id: "grouped-statistics", expected_rows: 22, source_keys: [statistical_results_path, ranking_stability_path]}
-    - {table_id: "t11_failure_flags", section_id: "failure-flags", expected_rows: 44, source_keys: [failure_assignments_path, trustworthiness_flags_path]}
+    - {table_id: "t11_failure_flags", section_id: "failure-flags", expected_rows: 55, source_keys: [failure_assignments_path, trustworthiness_flags_path]}
     - {table_id: "t12_ablation", section_id: "policy-ablation", expected_rows: 23, source_keys: [ablation_results_path, flag_stability_path]}
     - {table_id: "t13_explainability", section_id: "explainability", expected_rows: 7, source_keys: [explanation_cases_path, case_neighbors_path]}
-    - {table_id: "t14_compute_scalability", section_id: "compute-scalability", expected_rows: 12, source_keys: [model_cards_path, compute_scalability_path]}
+    - {table_id: "t14_compute_scalability", section_id: "compute-scalability", expected_rows: 15, source_keys: [model_cards_path, compute_scalability_path]}
     - {table_id: "t15_limitations", section_id: "limitations", expected_rows: 18, source_keys: [evidence_dependency_audit_path]}
 
   thesis_figures:
@@ -298,7 +298,7 @@ final_evaluation_report:
     upstream_manifests: 32
     input_tables: 33
     table_definitions: 15
-    thesis_table_rows: 338
+    thesis_table_rows: 352
     latex_table_rows: 15
     thesis_figures: 18
     publication_figures: 6

@@ -112,7 +112,7 @@ class FinalEvaluationReportPreparationTests(unittest.TestCase):
         catalog = build_evidence_catalog_plan(self.config)
         traceability = build_mock_traceability(self.config)
         self.assertEqual(len(tables), 15)
-        self.assertEqual(int(tables["expected_rows"].sum()), 338)
+        self.assertEqual(int(tables["expected_rows"].sum()), 352)
         self.assertEqual(figures["figure_class"].value_counts().to_dict(), {"thesis": 18, "publication": 6})
         self.assertEqual(len(sections), 19)
         self.assertEqual(int(sections["claim_count"].sum()), 49)

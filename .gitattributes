@@ -66,3 +66,14 @@ outputs/31_model_report_generation/validation/checks.csv -filter diff -merge tex
 outputs/32_case_and_painting_report_generation/data/*.csv -filter diff -merge text
 outputs/32_case_and_painting_report_generation/manifests/artifacts.csv -filter diff -merge text
 outputs/32_case_and_painting_report_generation/validation/checks.csv -filter diff -merge text
+
+# Notebook 33 is a compact final-synthesis handoff (about 17.69 MiB total).
+# Keep its tables, 24 figures, self-contained report, artifact ledger and
+# validation ledger in ordinary Git so the exhausted LFS budget is not invoked.
+# It creates no candidate or bulk diagnostic population and therefore requires
+# no duplicate Hugging Face release.
+outputs/33_final_evaluation_report/data/*.csv -filter diff -merge text
+outputs/33_final_evaluation_report/figures/**/*.png -filter -diff -merge -text
+outputs/33_final_evaluation_report/manifests/artifacts.csv -filter diff -merge text
+outputs/33_final_evaluation_report/reports/final_evaluation.html -filter diff -merge text
+outputs/33_final_evaluation_report/validation/checks.csv -filter diff -merge text

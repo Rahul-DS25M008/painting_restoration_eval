@@ -8,12 +8,13 @@ This roadmap defines the final dependency order and detailed responsibility of e
 
 It consolidates the previously planned roadmap into 36 stages while preserving the supported methodological, experimental, engineering, reporting, explainability, and deployment scope.
 
-**Status as of 2026-09-25:** the validated 50-painting implementation is preserved
-at Git tag `pilot-50-complete`. Notebooks 01–32, including Notebook 12A and
+**Status as of 2026-09-26:** the validated 50-painting implementation is preserved
+at Git tag `pilot-50-complete`. Notebooks 01–33, including Notebook 12A and
 supplemental D02, have completed their controlled minimal-delta reruns against
-the approved balanced 300-painting collection. Notebook 32 run
-`run_0d4ae193602944dda511bf54199105b1` passed its completion gate; Notebook 33
-is the next producer awaiting preparation and rerun.
+the approved balanced 300-painting collection. Notebook 33 run
+`run_aef04267c2e44495a4e7a6249426bd4d` passed its completion gate and is now
+the canonical Controlled-300 final synthesis; Notebook 34 is held behind the
+approved storage/access and dashboard-design review before any refactoring.
 Existing notebook names, responsibilities, cell order, schemas,
 stable identifiers, and output roots remain the starting contract. Each later
 notebook becomes current only after its Controlled-300 outputs pass its gate;
@@ -3620,23 +3621,36 @@ validation/checks.csv
 ## 33 — Final Evaluation Report
 
 **Notebook:** `33_final_evaluation_report.ipynb`\
-**Origin:** Existing Previous Version of Notebook 28, Pre-refactor  
+**Origin:** Existing Previous Version of Notebook 33, Pre-refactor
 **Output root:** `outputs/33_final_evaluation_report/`\
 **Depends on:** Notebooks 21–32
 
-**Controlled-300 preparation status (2026-09-25):** preparation complete;
-manual notebook execution pending. The validated input contract covers 32
-completed upstream manifests and 33 canonical tables. It binds 300 paintings,
-3,425 registered cases, 2,620 evaluated cases, 10,480 matched primary
-candidates across OpenCV Telea, LaMa, HINT and Stable Diffusion, 13,879 approved
-report candidates, 1,025 supported Stable-Diffusion uncertainty groups and 24
-completed bounded SDXL candidates. The final presentation plan contains 15
-tables with 338 rows, 18 thesis figures, six publication figures, 19 report
-sections, 49 evidence claims, 18 limitations, 107 evidence-catalog rows and 126
-mock-to-final traceability rows. Notebook 33 creates no new scientific evidence.
+**Controlled-300 completion status (2026-09-26):** run
+`run_aef04267c2e44495a4e7a6249426bd4d` completed and passed its final gate. The
+validated input contract covers 32 completed upstream manifests and 33
+canonical tables. It binds 300 paintings, 3,425 registered cases, 2,620
+evaluated cases, 10,480 matched primary candidates across OpenCV Telea, LaMa,
+HINT and Stable Diffusion, 13,879 approved report candidates, 1,025 supported
+Stable-Diffusion uncertainty groups and 24 completed bounded SDXL candidates.
+The persisted synthesis contains 15 tables with 352 rows, 18 thesis figures,
+six publication figures, 19 report sections, 49 evidence claims, 18
+limitations, 107 evidence-catalog rows and 126 mock-to-final traceability rows.
+All 536 validation checks, 21 roadmap responsibilities, eight artifact records
+and 32 physical files passed with zero blocking or warning failures. The saved
+execution window was 17 minutes 18.552 seconds. Notebook 33 creates no new
+scientific evidence.
 The upstream N21 identifier `core_three_model` is retained only for schema
 continuity; its Controlled-300 population contains all four full methods and
 must never be described as a three-method result.
+
+Against `E:/outputs/33_final_evaluation_report`, all 32 relative paths, eight
+artifact roles and CSV schemas are preserved. Thesis-table rows increase
+293→352, evidence-catalog rows 106→107, evidence claims 48→49,
+mock-traceability rows 125→126 and validation rows 535→536; both runs retain 15
+LaTeX rows, 24 figures, 19 report sections, 18 limitations, 68 embedded images
+and 281 embedded tiles. These are expected Controlled-300 presentation changes,
+not evidence loss. The approximately 17.69 MiB synthesis is a compact ordinary-
+Git handoff and requires no duplicate Hugging Face release.
 
 ### Responsibilities
 

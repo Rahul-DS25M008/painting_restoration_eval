@@ -35,9 +35,9 @@ expanded benchmark. This changes no frozen Notebook 01–36 evidence. Its exact
 inputs, outputs, population, source/checkpoint requirements, observed results,
 and decision boundaries are recorded in Section 6.2 and the YAML registry.
 
-**Controlled-300 transition review: 2026-09-25.** The pilot remains recoverable
+**Controlled-300 transition review: 2026-09-26.** The pilot remains recoverable
 at Git tag `pilot-50-complete`; the active working tree is rebuilt in dependency
-order for the approved 300-painting study. Notebooks 01–32, including Notebook
+order for the approved 300-painting study. Notebooks 01–33, including Notebook
 12A and supplemental D02, are completed, validated Controlled-300 producers.
 Notebook 27's expanded failure-taxonomy and trustworthiness run contains 13,879
 union candidates, 194,306 candidate-by-category rows, 152,669
@@ -55,9 +55,10 @@ with 5,819/5,819 checks and is now the canonical case/painting report source.
 Its 331 reports and 30 selected-case grids are also remotely verified in the
 diagnostics dataset at pinned revision
 `c33bbd87e65fe96f9a81c1c794fd4a70f7226874` (361 objects; 342,821,662
-bytes). Notebook 33 now has a validated Controlled-300 preparation layer and
-is the next active producer awaiting manual execution. Notebooks 33–36 remain historical
-Controlled-50 evidence until
+bytes). Notebook 33 run `run_aef04267c2e44495a4e7a6249426bd4d` completed its
+Controlled-300 final synthesis with 536/536 checks, 21/21 roadmap requirements,
+eight verified artifact groups and 32 canonical files. Notebooks 34–36 remain
+historical Controlled-50 evidence until
 each producer is explicitly reopened, rerun, validated, baseline-compared and
 committed. Complete local outputs remain canonical even where large evidence is
 also represented by verified external publication records.
@@ -161,7 +162,7 @@ CSV already tracked in Git LFS, so N18 needs no separate HF publication.
    The existing machine-readable pilot coverage YAML is not
    retroactively relabelled as Controlled-300 evidence.
 
-**Controlled-300 N33 preparation review (2026-09-25).** The final-evaluation
+**Controlled-300 N33 completion review (2026-09-26).** The final-evaluation
 contract now consumes all 32 completed upstream manifests and 33 current input
 tables. Its binding scope is 300 paintings, 3,425 registered cases, 2,620
 evaluated cases, 10,480 matched four-method primary candidates, 9,280 nonzero
@@ -169,22 +170,34 @@ primary candidates, 13,879 approved report candidates, 1,025 supported
 Stable-Diffusion uncertainty groups, five model cards and 24 completed bounded
 SDXL candidates. The presentation-only plan retains 15 tables, 18 thesis
 figures, six publication figures, 19 report sections and 18 explicit
-limitations; adding HINT expands the thesis-table plan from 293 pilot rows to
-338 Controlled-300 rows. A latent pilot claim-count mismatch was resolved by
+limitations; adding HINT and retaining all five observed plus ten projected
+compute records and the bounded SDXL flag/model groups expand the thesis-table plan from 293 pilot rows to 352
+Controlled-300 rows. A latent pilot claim-count mismatch was resolved by
 retaining all 49 declared claims, yielding 107 evidence-catalog rows and 126
-mock-traceability rows. This preparation record is not completion evidence:
-N33 remains unexecuted until its saved notebook, outputs and final gate pass.
+mock-traceability rows. Run `run_aef04267c2e44495a4e7a6249426bd4d` persisted
+all planned outputs and passed all 536 validation checks, 21 roadmap
+responsibilities, eight artifact checksums and the exact 32-file output-set
+gate with zero blocking or warning failures. Its self-contained report embeds
+68 images and 281 tiles with no external dependency; the observed execution
+window was 17 minutes 18.552 seconds. Against the E-drive pilot, every relative
+path, artifact role and CSV schema is preserved. Thesis-table, evidence-
+catalogue, claim, mock-traceability and validation rows scale 293→352, 106→107,
+48→49, 125→126 and 535→536 respectively, while the 15 LaTeX rows, 24 figures,
+19 sections, 18 limitations, 68 embedded images and 281 tiles remain structurally
+stable. The approximately 17.69 MiB final synthesis is compact ordinary-Git
+evidence and has no duplicate Hugging Face release.
 
 **Downstream scale/inference decision (2026-09-18).** The binding N19–N33
 Controlled-300 population table and bounded N23–N25 statistical design are in
 the roadmap Section 2.2. N19–N22 preserve full linear coverage; N23–N25 keep
 all 35 paintings, seven per visual category, but replace exponential pilot
 enumeration with seeded painting-cluster bootstrap and batched Monte Carlo
-tests. N26's adaptive method is the starting precedent. Subsequent notebooks
-scale their validated candidate/report indexes and include HINT where
-applicable; bounded SDXL remains separate. Large outputs may use the verified
-N16/N17 indexed-bundle publication method per producer. None of these planned
-N19–N33 targets is marked complete until its own validated run exists.
+tests. N26's adaptive method was the starting precedent. Subsequent notebooks
+scaled their validated candidate/report indexes and included HINT where
+applicable; bounded SDXL remained separate. Large outputs could use the verified
+N16/N17 indexed-bundle publication method per producer. All N19–N33 producers
+have now passed their own completion gates; this paragraph preserves the design
+rationale that governed those runs rather than describing pending work.
 
 **Publication rationale and dashboard boundary.** The `candidates` dataset
 holds model-generated restoration images: the verified N12 SDXL and N12A HINT
@@ -1198,9 +1211,10 @@ LFS bypass rules, so no duplicate Hugging Face release is required.
 
 The Notebook 33–36 completion records below describe the **historical
 Controlled-50 final-report, dashboard and packaging layer**. They remain valid
-as pilot evidence and recovery documentation, but they are not yet the current
-Controlled-300 downstream handoff. Notebook 32 is now a completed
-Controlled-300 producer and Notebook 33 is the next producer awaiting rerun.
+as pilot evidence and recovery documentation, but only the Notebook 33 record
+now has a completed current Controlled-300 successor. Notebook 33 is the
+canonical Controlled-300 final synthesis; Notebooks 34–36 remain pending behind
+the pre-N34 storage/access and dashboard-design approval gate.
 
 The completed Notebook 32 contract binds 25 upstream manifests and 41 input
 tables to 300 paintings, 2,620 evaluated cases and 13,879 approved candidates:

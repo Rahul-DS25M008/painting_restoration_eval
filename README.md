@@ -6,9 +6,9 @@ The framework combines controlled artificial damage, complementary inpainting me
 
 > **Visual plausibility is not the same as restoration trustworthiness.**
 
-[Explore the dashboard](https://fhtw-painting-restoration.streamlit.app/) · [Full evaluation report — HTML](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/33_final_evaluation_report/reports/final_evaluation.html) · [Case and painting reports — HTML](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/32_case_and_painting_report_generation/reports/index.html)
+[Explore the dashboard](https://fhtw-painting-restoration.streamlit.app/) · [Full evaluation report — HTML](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/33_final_evaluation_report/reports/final_evaluation.html) · [Case and painting reports — pinned HF package](https://huggingface.co/datasets/RahulMaddineni264/painting-restoration-eval-diagnostics/blob/c33bbd87e65fe96f9a81c1c794fd4a70f7226874/report_packages/v1/controlled_300/32_case_and_painting_report_generation/run_0d4ae193602944dda511bf54199105b1/reports/index.html)
 
-**Status:** The 36-notebook core computational pipeline and the post-pipeline Notebook 37 method-selection extension are complete. The interactive dashboard is publicly deployed.
+**Status:** Controlled-300 Notebooks 01–33, Decision Notebook D01, and supplemental Notebook D02 are complete and validated. Notebooks 34–36 and the public Streamlit deployment still represent the frozen 50-painting pilot until the approved dashboard/storage review is completed.
 
 For interactive inspection, open the dashboard. For standalone reports, download the HTML file and open it in a browser; its presentation images are embedded.
 
@@ -26,16 +26,17 @@ A *quality anchor* is a specific metric evaluated in a defined image region. Anc
 |---|---|---|
 | **LaMa** | Leads 10 of 11 anchors | Strongest starting point among the evaluated methods when several aspects of restoration quality matter. |
 | **OpenCV Telea** | Leads crop SSIM; median recorded runtime **0.424 s** | Useful for fast, deterministic filling, but its SSIM advantage does not translate into the strongest overall result. |
+| **HINT** | Full deterministic learned baseline across all 2,620 eligible cases | Adds a mask-aware transformer architecture and long-range context modelling; it is evaluated as a full method, not through seed uncertainty. |
 | **Stable Diffusion Inpainting** | Leads none of the 11 aggregate anchors | Candidate diversity requires closer inspection of reference fidelity, local consistency, and repeated-seed variation. |
-| **SDXL Inpainting** | Ten completed feasibility cases | Supports bounded inspection, not a fourth full-benchmark ranking. |
+| **SDXL Inpainting** | 24 completed candidates from a bounded 35-case schedule | Supports bounded inspection, not a full-benchmark ranking. |
 
 These findings apply to the tested collection and experimental settings—not to every painting, damage condition, or conservation task.
 
 **Model reports (HTML):** [LaMa](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/31_model_report_generation/reports/lama.html) · [Telea](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/31_model_report_generation/reports/opencv_telea.html) · [HINT](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/31_model_report_generation/reports/hint_places2.html) · [Stable Diffusion](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/31_model_report_generation/reports/stable_diffusion_inpainting.html) · [SDXL](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/31_model_report_generation/reports/sdxl_inpainting.html)
 
-### Why HINT was selected for the next expansion
+### Why HINT was added to the full benchmark
 
-The completed benchmark intentionally contains different method families: Telea is classical and deterministic, LaMa is learned and deterministic, and Stable Diffusion is stochastic and prompt-conditioned. Notebook 37 tested **HINT** and **MAT** because the planned 300-painting expansion would benefit from a second deterministic learned architecture with an explicit mask-aware transformer design and stronger long-range context modelling.
+The benchmark intentionally contains different method families: Telea is classical and deterministic, LaMa and HINT are learned and deterministic, and Stable Diffusion is stochastic and prompt-conditioned. Decision Notebook D01 tested **HINT** and **MAT** before the Controlled-300 rerun because the full benchmark benefited from a second deterministic learned architecture with an explicit mask-aware transformer design and stronger long-range context modelling.
 
 Both candidates passed the technical hard gates on the same 12 canonical cases, but HINT provided the clearer expansion path:
 
@@ -45,7 +46,7 @@ Both candidates passed the technical hard gates on the same 12 canonical cases, 
 - Complete visual review found that MAT often retained thin scratches and produced pale or fragmented large-loss completions. HINT was more consistent across the paired scope.
 - HINT's MIT-licensed implementation is better suited to later reuse than MAT's noncommercial research license.
 
-HINT is therefore the selected additional method for the future expanded benchmark. This **24-candidate selection pilot is not merged into the frozen three-method leaderboard** and does not establish full painting-domain superiority.
+HINT was therefore selected and subsequently run across all **2,620 restoration-eligible cases** as the fourth full method. The earlier **24-candidate HINT–MAT study remains decision evidence**, not part of the quality leaderboard and not proof of universal painting-domain superiority.
 
 [HINT–MAT selection report](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/37_hint_mat_method_selection/reports/method_selection_report.html) · [Recorded selection decision](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/37_hint_mat_method_selection/reports/selection_decision.json)
 
@@ -61,20 +62,20 @@ For the study design, evaluation choices, and interpretation boundaries, see the
 
 ## Dataset and experiments
 
-The controlled collection contains **50 paintings**, balanced across five broad visual categories: portrait/figure, landscape/natural, architecture/structured, abstraction/surrealism, and high-texture/brushwork.
+The controlled collection contains **300 paintings**, balanced across five broad visual categories: portrait/figure, landscape/natural, architecture/structured, abstraction/surrealism, and high-texture/brushwork.
 
 Clean reference images allow artificial damage to be introduced and restoration outputs to be compared against known image content.
 
 | Experiment | Coverage | Purpose and evidence |
 |---|---|---|
-| **Canonical damage** | 250 cases: four damage types and one undamaged control per painting | Compare thin scratches, small losses, large losses, and mixed damage. [Model comparison](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/21_multi_model_comparison/reports/multi_model_comparison.html) |
-| **Damage-size sensitivity** | 35 cases across five paintings; target areas of 2%, 4%, 6%, 8%, 10%, 15%, and 20% | Examine how restoration changes as the missing area grows. [Analysis](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/23_damage_size_sensitivity_analysis/reports/damage_size_analysis.html) |
-| **Mask robustness** | 75 cases across five paintings | Test sensitivity to controlled changes in mask geometry. [Analysis](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/24_mask_robustness_analysis/reports/mask_robustness_analysis.html) |
-| **Synthetic degradation** | 165 cases spanning 13 individual and combined families | Examine effects such as stains, dirt, fading, and blur, with restoration comparisons restricted to eligible conditions. [Analysis](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/25_synthetic_degradation_analysis/reports/synthetic_degradation_analysis.html) |
+| **Canonical damage** | 1,500 cases: four damage types and one undamaged control per painting | Compare thin scratches, small losses, large losses, and mixed damage. [Model comparison](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/21_multi_model_comparison/reports/multi_model_comparison.html) |
+| **Damage-size sensitivity** | 245 cases across 35 paintings; target areas of 2%, 4%, 6%, 8%, 10%, 15%, and 20% | Examine how restoration changes as the missing area grows. [Analysis](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/23_damage_size_sensitivity_analysis/reports/damage_size_analysis.html) |
+| **Mask robustness** | 525 cases across 35 paintings | Test sensitivity to controlled changes in mask geometry. [Analysis](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/24_mask_robustness_analysis/reports/mask_robustness_analysis.html) |
+| **Synthetic degradation** | 1,155 cases across 35 paintings and 13 individual or combined families | Examine effects such as stains, dirt, fading, and blur, with restoration comparisons restricted to eligible conditions. [Analysis](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/25_synthetic_degradation_analysis/reports/synthetic_degradation_analysis.html) |
 
-Together, these produce **525 registered cases**, of which **410 enter the restoration evidence population**. The frozen core catalog contains **1,785 retained candidates**, including repeated-seed and prompt-ablation evidence. Notebook 37 adds a separate 24-candidate HINT–MAT selection pilot without changing that catalog.
+Together, these produce **3,425 registered cases**, of which **2,620 enter the restoration evidence population**. The approved report catalog contains **13,879 candidates**, including four full-method primary candidates, repeated-seed and prompt-ablation evidence, and the bounded SDXL branch. Decision Notebook D01 remains a separate 24-candidate HINT–MAT selection study.
 
-The retained catalog defines the analysis population, not a quality-approval list. The 410 cases include 50 undamaged controls, which support validation; core restoration-quality comparisons use the 360 nonzero-damage cases.
+The retained catalog defines the analysis population, not a quality-approval list. The 2,620 cases include 300 undamaged controls, which support validation; core restoration-quality comparisons use the 2,320 nonzero-damage cases.
 
 Cases, candidates, and independent paintings are different quantities. Repeated outputs from one painting do not increase the number of independent paintings.
 
@@ -96,19 +97,19 @@ Metrics use regions appropriate to their definitions, including the damaged regi
 
 ## Repeated-candidate stability, prompts, and human review
 
-Stable Diffusion stability analysis covers **165 four-seed groups**: 130 original prompt-specific groups and 35 damage-size groups. Spatial maps reveal where repeated candidates disagree.
+Stable Diffusion stability analysis covers **1,025 four-seed groups**: 780 canonical prompt-specific groups and 245 damage-size groups. Spatial maps reveal where repeated candidates disagree.
 
 A controlled thin-scratch prompt ablation compares generic and damage-aware prompting. Prompt variants remain separate within uncertainty groups so prompt changes are not mistaken for seed variation.
 
 **Higher variability identifies less stable areas that deserve closer inspection; lower variability does not establish correctness.** Deterministic methods are assessed through robustness and sensitivity rather than artificial seed-based uncertainty.
 
-Conservative computational rules flag **1,703 of 1,785 candidates** for review. This is **not a 95.4% objective failure rate**: the flags organize inspection and do not replace expert judgement.
+Conservative computational rules produce **152,669 candidate-by-flag records across 13,879 candidates**. Each flag is interpreted separately and may be triggered, not triggered, not applicable, or unsupported by sufficient evidence; these records organize inspection and are not an objective failure rate or expert judgement.
 
 [Prompt policy](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/11_stable_diffusion_restoration/reports/prompt_policy.md) · [Flag definitions](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/27_failure_taxonomy_and_trustworthiness_flags/reports/flag_definitions.html) · [Explanation catalog](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/29_explainable_ai_and_case_retrieval/reports/explanation_catalog.html)
 
 ## Explore the evidence
 
-The [Streamlit dashboard](https://fhtw-painting-restoration.streamlit.app/) provides eight views:
+The [currently deployed pilot Streamlit dashboard](https://fhtw-painting-restoration.streamlit.app/) provides eight views:
 
 **Overview · Study Design · Metric Framework · Model Performance · Robustness & Uncertainty · Trustworthiness & XAI · Case Explorer · Reports & Reproducibility**
 
@@ -118,7 +119,7 @@ Measurements are shown only where they were computed. Additional damage-size see
 
 The dashboard reads existing evidence; it does not run restoration models or recompute scientific metrics.
 
-Reports show selected examples for readability. The complete retained candidate catalog and indexed visual evidence remain available separately. Detailed reports cover **30 selected cases and all 50 paintings**.
+Reports show selected examples for readability. The complete retained candidate catalog and indexed visual evidence remain available separately. The current Controlled-300 report package covers **30 selected cases and all 300 paintings**; the public pilot dashboard is not yet rebuilt against that package.
 
 **Reading HTML reports:** Repository links open the report files on GitHub. Download an HTML report and open it locally to view its embedded figures and images, or access it through the dashboard.
 
@@ -142,7 +143,7 @@ The dashboard does not require a GPU. Full experimental reproduction uses a sepa
 
 Repository navigation:
 
-- `notebooks/` — the completed 36-stage core pipeline plus the separate Notebook 37 method-selection extension; see the [notebook roadmap](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/docs/final_notebook_roadmap.md).
+- `notebooks/` — the Controlled-300 pipeline through Notebook 33, Decision Notebook D01, supplemental Notebook D02, and the retained historical downstream notebooks; see the [notebook roadmap](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/docs/final_notebook_roadmap.md).
 - `src/restoration_eval/` — reusable implementation modules.
 - `config/` — versioned experiment and evaluation contracts.
 - `outputs/<notebook_name>/` — notebook-owned evidence, reports, and validation.
@@ -154,6 +155,6 @@ The [review package](https://github.com/Rahul-DS25M008/painting_restoration_eval
 
 The study uses controlled synthetic damage, not verified physical conservation treatments. Broad visual categories are not independently established art-historical style effects; the focused five-painting experiments support within-study sensitivity analysis.
 
-Uncertainty is not calibrated confidence, computational flags are not expert annotations, and feature similarity is not historical authenticity. SDXL remains a bounded feasibility study. Notebook 37 is a 12-case method-selection pilot; HINT has not yet been run as a fourth full-benchmark method.
+Uncertainty is not calibrated confidence, computational flags are not expert annotations, and feature similarity is not historical authenticity. SDXL remains a bounded feasibility study. Decision Notebook D01 is a 12-case method-selection study; HINT is now a full deterministic benchmark method, but the D01 comparison does not establish universal superiority over MAT.
 
 **Overall conclusion:** restoration evaluation should combine regional fidelity, perceptual and local consistency, variability, and inspectable case evidence. The framework supports better-informed review—not automatic conservation approval.

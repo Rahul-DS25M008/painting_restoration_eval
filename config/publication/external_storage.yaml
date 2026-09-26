@@ -75,6 +75,17 @@ policy:
       remote_verification_required: true
       compact_indexes_manifests_validation_in_git: true
 
+  compact_git_handoffs:
+    n33_final_evaluation_report:
+      status: completed_validation_passed
+      source_run_id: run_aef04267c2e44495a4e7a6249426bd4d
+      output_root: outputs/33_final_evaluation_report
+      physical_files: 32
+      total_bytes: 18548340
+      routing: ordinary_git_no_lfs
+      huggingface_release_required: false
+      rationale: final_presentation_synthesis_contains_no_new_candidate_or_bulk_diagnostic_population
+
   bundle_rationale:
     git_role: compact_scientific_record_not_bulk_map_or_large_metric_storage
     trigger: per_file_n16_upload_exceeded_hub_api_rate_limit
