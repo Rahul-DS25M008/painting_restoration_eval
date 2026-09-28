@@ -2,7 +2,7 @@
 
 **Status:** All eight top-level rooms and the `D02` mini room approved through
 2026-09-28; cross-page consistency, producer-artifact mapping and remote
-integrity gates completed on 2026-09-28
+integrity, and runtime loading gates completed on 2026-09-28
 **Mandatory review point:** After Notebook 33 and immediately before Notebook
 34 or any Controlled-300 Streamlit implementation begins  
 **Scope:** Navigation, interaction, visual hierarchy, information flow, and
@@ -49,6 +49,9 @@ supersede the corresponding illustrative room on the two overview boards:
 - [Controlled-300 remote asset audit](controlled_300_remote_asset_audit.md),
   which certifies immutable GitHub/Hugging Face routing, recorded checksums,
   verified bundle releases, and explicit missing-asset behaviour.
+- [Controlled-300 runtime loading contract](controlled_300_runtime_loading_contract.md),
+  which fixes local bootstrap, on-demand retrieval, cache, retry, resource,
+  responsive-layout and degraded-mode rules.
 
 Together they define a chromatic, tactile, painting-first museum that remains a
 usable website. The approved interaction language includes illuminated room
@@ -171,7 +174,7 @@ completed Controlled-300 evidence and confirm:
 5. the supervisor-guided presentation path and the free exploration path; and
 6. the local/remote asset-loading contract established by the storage review.
 
-Items 1 and 3 and the remote portion of item 6 were completed on 2026-09-28.
+Items 1, 3, 4 and 6 were completed on 2026-09-28.
 The result freezes the eight-room
 order, the single D02 subroute, the canonical brand, public population labels,
 clean-reference language, exact-candidate handoff and no-silent-fallback rule.
@@ -179,9 +182,9 @@ Every approved evidence component is now classified as an existing direct
 artifact, an existing filtered view, an N34-derived registered asset, a
 conditionally available instance of one of those states, or unsupported until
 its declared derivation exists.
-Immutable remote URL/checksum validation also passes. Runtime lazy loading,
-caching, startup limits, responsive behaviour and retry/fallback policy are the
-next gate.
+Immutable remote URL/checksum validation and the runtime lazy-loading, caching,
+startup, responsive and retry/fallback contract also pass. The next gate is the
+final N34 implementation contract and asset-manifest schema.
 
 Notebook 34 then packages only the assets required by that confirmed contract.
 Notebook 35 validates fidelity, functionality, evidence coverage, and deployed

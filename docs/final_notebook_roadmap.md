@@ -252,9 +252,15 @@ revisions. N34 must compile immutable URLs, derive HF revisions from the
 publication commit records rather than `resolve/main`, distinguish ordinary
 Git blobs from Git LFS pointers, verify bytes before display and show an
 explicit unavailable/integrity state instead of substituting another identity.
-The remaining pre-N34 decision is operational: lazy loading, cache limits,
-startup/network budgets, responsive renditions, timeouts, retries and offline
-behaviour.
+The operational runtime decision completed on 2026-09-28 in
+[`controlled_300_runtime_loading_contract.md`](dashboard_design_finalists/controlled_300_runtime_loading_contract.md).
+It requires ≤12 MiB of boot-critical data and a ≤64 MiB complete local N34
+evidence/index package, zero external startup requests, active-room/active-layer
+execution, no runtime scans of producer-scale CSVs, a 512 MiB
+checksum-validating remote cache, bounded retries, registered responsive
+renditions and explicit degraded states.
+Step 5 now translates the page, producer, remote and runtime contracts into the
+final N34 implementation contract and asset-manifest schema.
 
 The **preliminary N34/N35 bundle-access option**, subject to that review, is:
 retain compact metadata and case/candidate/map indexes with the deployed app;

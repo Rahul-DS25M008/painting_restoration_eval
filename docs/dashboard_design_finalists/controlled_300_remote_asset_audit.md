@@ -7,8 +7,11 @@
 **Scope:** GitHub, Hugging Face Candidates, Hugging Face Diagnostics, indexed
 bundle releases, the N32 report package, checksums, and missing-asset behaviour
 
-**Next gate:** Step 4 runtime policy for lazy loading, caching, startup limits,
-responsive behaviour, and remote fallbacks
+**Runtime gate:** Step 4 completed in
+[`controlled_300_runtime_loading_contract.md`](controlled_300_runtime_loading_contract.md)
+
+**Next gate:** Step 5 final N34 implementation contract and asset-manifest
+schema
 
 ## Decision
 
@@ -167,8 +170,7 @@ must still point to the immutable source record.
 
 ## Step 4 handoff
 
-Step 3 certifies identity and availability; it does not yet choose runtime
-budgets. Step 4 must approve:
+Step 3 certifies identity and availability. Step 4 subsequently approved:
 
 - what is packaged locally versus fetched lazily;
 - cache scope, byte limit, eviction and invalidation;
@@ -177,5 +179,5 @@ budgets. Step 4 must approve:
 - responsive image/rendition choices; and
 - the exact user-facing unavailable/error states.
 
-Only after that decision should the final N34 implementation contract and asset
-manifest schema be frozen.
+Those decisions are binding through the runtime loading contract. Step 5 now
+freezes the final N34 implementation contract and asset-manifest schema.

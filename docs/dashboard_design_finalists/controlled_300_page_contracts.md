@@ -15,6 +15,9 @@ That map is binding wherever a mockup or general page description does not
 identify an exact artifact. Immutable transport, checksum and missing-asset
 rules are recorded in
 [`controlled_300_remote_asset_audit.md`](controlled_300_remote_asset_audit.md).
+Runtime loading, caching, retry, responsive-layout and degraded-mode rules are
+recorded in
+[`controlled_300_runtime_loading_contract.md`](controlled_300_runtime_loading_contract.md).
 
 ## Shared rules
 
@@ -35,6 +38,9 @@ rules are recorded in
   verify its expected size and SHA-256 before display, and show an explicit
   unavailable or integrity-error state when the exact artifact cannot be
   verified. Never fall back to a neighbouring identity or mock image.
+- Load only the active room and explicitly requested evidence layer. Keep the
+  Foyer and explanatory context locally usable without network access; hidden
+  rooms, tabs, drawers and unsubmitted selectors must not fetch remote bytes.
 
 ## Cross-page consistency gate
 

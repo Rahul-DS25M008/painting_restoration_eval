@@ -1,6 +1,6 @@
 # Controlled-300 Dashboard Producer-Artifact Map
 
-**Status:** Pre-N34 Steps 2 and 3 complete on 2026-09-28
+**Status:** Pre-N34 Steps 2–4 complete on 2026-09-28
 
 **UI authority:** `controlled_300_page_contracts.md`
 
@@ -8,8 +8,9 @@
 
 **Remote authority:** `controlled_300_remote_asset_audit.md`
 
-**Next gate:** runtime lazy loading, caching, startup limits, responsive
-behaviour and fallback policy
+**Runtime authority:** `controlled_300_runtime_loading_contract.md`
+
+**Next gate:** final N34 implementation contract and asset-manifest schema
 
 ## Purpose
 

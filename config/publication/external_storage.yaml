@@ -175,8 +175,56 @@ deployment:
   current_pilot_branch: pilot-50-dashboard
   controlled_300_repository_status: deferred_until_dashboard_rebuild
   lazy_remote_assets_required: true
+  runtime_contract: docs/dashboard_design_finalists/controlled_300_runtime_loading_contract.md
+  runtime_contract_status: approved_step4_2026_09_28
+  runtime_budgets:
+    boot_critical_bytes_target: 8388608
+    boot_critical_bytes_hard_max: 12582912
+    local_n34_package_bytes_target: 33554432
+    local_n34_package_bytes_hard_max: 67108864
+    bootstrap_dataframe_memory_bytes_max: 67108864
+    bootstrap_rss_increase_bytes_max: 134217728
+    foyer_ready_process_rss_bytes_target: 402653184
+    foyer_ready_process_rss_bytes_hard_max: 536870912
+    representative_route_process_rss_bytes_max: 536870912
+    foyer_ready_seconds_p95_target: 3
+    foyer_ready_seconds_hard_max: 5
+    warm_navigation_seconds_p95_max: 1.5
+    external_startup_requests: 0
+    routine_room_remote_bytes_max: 4194304
+    exact_diagnostic_payload_bytes_max: 33554432
+    exact_diagnostic_transfer_bytes_max: 35651584
+    session_remote_bytes_warn: 134217728
+    session_remote_bytes_pause: 268435456
+    shared_remote_cache_bytes_max: 536870912
+    shared_remote_cache_evict_to_bytes: 402653184
+    decoded_image_cache_bytes_max: 67108864
+    decoded_image_cache_entries_max: 16
+    room_partition_serialized_bytes_max: 5242880
+    room_partition_memory_bytes_max: 26214400
+    simultaneous_full_evidence_images_max: 6
+  retry_policy:
+    total_attempts: 2
+    connect_timeout_seconds: 5
+    index_or_direct_read_timeout_seconds: 15
+    bundle_read_timeout_seconds: 45
+    foreground_operation_deadline_seconds: 60
+    retry_after_cap_seconds: 15
+    fallback_backoff_seconds: [1]
+    retry_statuses: [408, 429, 500, 502, 503, 504]
+    permanent_statuses: [401, 403, 404]
+  cache_policy:
+    room_partition_max_entries: 16
+    case_view_max_entries: 32
+    data_ttl_seconds: 3600
+    stale_partial_cleanup_seconds: 120
+    remote_request_global_concurrency_max: 2
+    remote_bundle_concurrency_max: 1
+    immutable_404_negative_cache_scope: session
+    transient_failure_negative_cache: false
+    background_prefetch: false
   controlled_300_diagnostic_bundle_access:
-    status: remote_integrity_verified_runtime_policy_pending_step4
+    status: remote_integrity_and_runtime_policy_approved_step4
     source: pinned_huggingface_diagnostics_revisions_and_per_painting_indexes
     access: resolve_case_candidate_and_map_to_bundle_then_fetch_only_selected_bundle
     cache: bounded_reusable_session_cache_no_full_corpus_download_on_startup

@@ -721,11 +721,10 @@ density, or conservator-facing question flow. Material redesign requires renewed
 approval.
 
 The primary composition and final room content are now selected. The remote
-integrity gate completed on 2026-09-28; before changing the application,
-complete the remaining pre-N34 runtime audit: measure startup and request
-behaviour and approve lazy loading, fallbacks, responsive renditions and
-caching. Use the completed component-to-producer map and remote asset audit as
-the sources tested by that remaining gate. Any borrowed alternative component must be
+integrity and runtime-loading gates completed on 2026-09-28. Before changing
+the application, freeze the final N34 implementation contract and asset-manifest
+schema from the page contract, component-to-producer map, remote audit and
+runtime contract. Any borrowed alternative component must be
 explicitly named and must preserve one coherent navigation, typography,
 spacing, and interaction system. The traceability table must cite the applicable
 page-specific approved image and content contract for every major component and
@@ -763,6 +762,18 @@ GitHub endpoint returns only the pointer. Verify expected size and SHA-256
 before display. A 404, timeout after the approved retry budget, absent route or
 checksum mismatch produces an explicit unavailable/integrity state and never a
 silent substitute.
+
+The runtime gate is binding through
+[`controlled_300_runtime_loading_contract.md`](dashboard_design_finalists/controlled_300_runtime_loading_contract.md).
+The app starts with zero external requests, keeps boot-critical data at or below
+12 MiB and the complete local N34 evidence/index package at or below 64 MiB,
+loads only the active room and explicit evidence layer, uses the 512 MiB
+checksum-validating file cache for remote bytes, and keeps hidden views from
+executing remote work. It must never scan or hash a producer-scale CSV during a
+runtime interaction. The Foyer and explanatory catalogue remain usable
+offline. Streamlit session state stores identities rather than dataframes or
+image/report bytes. N35 must enforce the recorded startup/RSS, request, retry,
+cache, responsive and degraded-mode gates.
 
 The approved application contains no more than ten principal pages. The current
 approved structure contains eight:
