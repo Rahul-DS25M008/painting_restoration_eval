@@ -1339,8 +1339,8 @@ visual discussion, while complete case and painting evidence remains available
 through Notebook 32 and complete machine-readable candidate evidence remains in
 the canonical producing notebooks.
 
-The completed synthesis passed all 535 stage-scoped validation checks, all 21
-roadmap responsibilities, and all 125 approved mock-to-final traceability roles
+The completed synthesis passed all 536 stage-scoped validation checks, all 21
+roadmap responsibilities, and all 126 approved mock-to-final traceability roles
 with zero blocking or warning failures. Eight artifact groups and exactly 32
 physical files were registered under `outputs/33_final_evaluation_report/`; all
 artifact checksums, the artifact-manifest checksum, and the manifest-declared

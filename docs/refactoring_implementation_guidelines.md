@@ -730,6 +730,15 @@ spacing, and interaction system. The traceability table must cite the applicable
 page-specific approved image and content contract for every major component and
 separately identify any approved exception.
 
+The cross-page consistency gate completed on 2026-09-28. Its binding
+vocabulary, population definitions, identity-preserving route state and
+mockup-correction register live in
+[`controlled_300_page_contracts.md`](dashboard_design_finalists/controlled_300_page_contracts.md).
+The canonical brand is `Painting Restoration Evidence Museum`; D02 remains one
+Trustworthiness subroute. Existing N34/N35 outputs and dashboard YAML files are
+the frozen Controlled-50 baseline and must be replaced by newly versioned
+Controlled-300 contracts, not edited piecemeal or relabelled.
+
 The approved application contains no more than ten principal pages. The current
 approved structure contains eight:
 
@@ -754,7 +763,7 @@ Dashboard presentation rules:
   expanders or drill-down views rather than making them the initial visual focus.
 - Use representative cases for initial presentation while preserving direct
   filtered access to the complete applicable indexed population.
-- Keep visual comparisons synchronized and explicitly label original, damaged,
+- Keep visual comparisons synchronized and explicitly label clean reference, damaged,
   mask, restoration, difference, uncertainty, seam, semantic, and retrieval
   views.
 - Treat retrieval as supporting context, uncertainty as empirical variation, and

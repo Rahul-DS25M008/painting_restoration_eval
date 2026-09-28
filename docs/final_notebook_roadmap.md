@@ -220,8 +220,9 @@ post-freeze reproducibility release, not the interactive image backend.
 The dashboard visual exploration now has one user-approved primary direction,
 stored as two boards under
 [`dashboard_design_finalists/approved_current/`](dashboard_design_finalists/README.md).
-They define the eight-room Living Pigment Museum layout, visual identity, and
-interaction grammar. Earlier selected concepts remain in the separate
+They define the eight-room **Painting Restoration Evidence Museum** layout,
+visual identity, and interaction grammar. Earlier selected concepts remain in
+the separate
 `alternatives/` archive for explicitly approved component reuse only. At the
 dedicated pre-N34 review, the primary direction must be checked against the
 completed Controlled-300 evidence and implementation constraints; it is not an
@@ -2514,7 +2515,7 @@ and all 99 validation checks passed with no blocking or warning failures.
 
 The completed analysis screened all 60 governed portrait paintings, retained
 91 reviewed anatomical annotations, audited 1,265 anatomy-mask intersections,
-and identified 292 eligible case-region records. The primary matched analysis
+and identified 292 eligible case records. The primary matched analysis
 covers 45 cases from 20 independent paintings and persists 1,638 hand-versus-
 control evidence rows. The separate exploratory rendered-skin-lightness branch
 persists 2,760 evidence rows, 30 painting profiles across three balanced
@@ -3864,19 +3865,24 @@ The Streamlit application must be updated to read this notebook-owned asset root
 
 Validate the dashboard as a reproducible inspection and decision-support layer.
 
-At Notebook 35 validation time, the application consumed the fixed dashboard
-package under
-`outputs/34_final_streamlit_dashboard_assets/`. It implements the approved
-eight-page sequence: Overview, Study Design, Metric Framework, Model
-Performance, Robustness & Uncertainty, Trustworthiness & XAI, Case Explorer,
-and Reports & Reproducibility. Representative defaults control initial display
-only; all 1,785 indexed candidates, 50 paintings, 23,964 visual records, and 104
-reports remain accessible through filters or indexed downloads.
+The completed Notebook 35 record is the historical Controlled-50 validation.
+At that validation time, the application consumed the fixed pilot package under
+`outputs/34_final_streamlit_dashboard_assets/` and used the old labels
+`Overview`, `Study Design`, `Metric Framework`, `Model Performance`,
+`Robustness & Uncertainty`, `Trustworthiness & XAI`, `Case Explorer`, and
+`Reports & Reproducibility`. Its 1,785 candidates, 50 paintings, 23,964 visual
+records and 104 reports are pilot facts, not the Controlled-300 target.
 
-The three approved UI reference images remain external read-only planning
-references and are not repository inputs or artifacts. Notebook 35 validates
-mock-to-application traceability against the implemented interaction and visual
-roles without copying those images into the project.
+The Controlled-300 rerun must instead validate the fixed sequence `Exhibition
+Foyer`, `Study Design`, `Metric Framework`, `Model Gallery`, `Stability Lab`,
+`Trustworthiness`, `Case Explorer`, and `Research Archive`, plus the single D02
+subroute. It must consume a newly built Controlled-300 N34 package rather than
+relabel the pilot package.
+
+The approved page-specific UI references are repository planning artifacts, not
+scientific dashboard inputs or deployable page backgrounds. Notebook 35
+validates mock-to-application traceability against their interaction and visual
+roles without serving the mockup rasters as the interface.
 
 ### Responsibilities
 

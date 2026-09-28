@@ -1,3 +1,7 @@
+# FROZEN CONTROLLED-50 BASELINE.
+# Do not relabel this package as Controlled-300. The pre-N34 design and
+# evidence audit requires a newly versioned eight-room Controlled-300 contract
+# before this configuration is replaced.
 config_schema_version: "dashboard_assets_config.v1"
 config_version: "1.0.0"
 

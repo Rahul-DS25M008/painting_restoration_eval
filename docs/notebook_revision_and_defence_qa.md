@@ -3054,7 +3054,7 @@ evidence for later revision.
 ### Q1. What method does N27 use?
 
 - Applies transparent rules to validated evidence without new inference.
-- Defines 14 operational failure categories and 11 independent review flags.
+- Defines 14 operational failure categories and 11 review-flag types.
 - Assigns one review recommendation per candidate.
 - One critical indicator or warnings from two distinct components triggers a category.
 - Missing evidence remains insufficient; no combined trust or confidence score is created.
@@ -3446,7 +3446,7 @@ evidence for later revision.
 - 91 manually reviewed anatomical annotations and 1,265 anatomy–damage intersections.
 - Required at least 256 damaged anatomical pixels and 5% anatomical coverage.
 - Final hand study: 45 cases from 20 independent paintings.
-- 292 eligible case-region records overall.
+- 292 eligible case records overall.
 
 ### Q3. How was the hand comparison designed?
 

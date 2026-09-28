@@ -1,7 +1,7 @@
 # Controlled-300 Dashboard Design Direction
 
 **Status:** All eight top-level rooms and the `D02` mini room approved through
-2026-09-28
+2026-09-28; cross-page consistency gate completed on 2026-09-28
 **Mandatory review point:** After Notebook 33 and immediately before Notebook
 34 or any Controlled-300 Streamlit implementation begins  
 **Scope:** Navigation, interaction, visual hierarchy, information flow, and
@@ -49,6 +49,13 @@ routes, exhibit scrubbers, movable inspection lenses, before/after dividers,
 spatial model carousels, synchronized seed and damage-size controls, explicit
 flag-derivation paths, sliding evidence drawers, and provenance trails. Motion
 must remain restrained and curatorial rather than futuristic or decorative.
+
+The canonical public name is **Painting Restoration Evidence Museum**. The
+page-specific finals define the approved visual direction. Their illustrative
+text and imagery are not application assets: the corrected cross-page
+vocabulary, counts, identity handoff and evidence boundaries in
+[`controlled_300_page_contracts.md`](controlled_300_page_contracts.md) take
+precedence wherever a raster mockup differs.
 
 The eight-room structure is now fixed as the primary navigation:
 
@@ -156,6 +163,13 @@ completed Controlled-300 evidence and confirm:
 4. the responsive and accessible representation of the chosen visual system;
 5. the supervisor-guided presentation path and the free exploration path; and
 6. the local/remote asset-loading contract established by the storage review.
+
+Item 1 and the cross-page portion of item 3 were completed on 2026-09-28. The
+result freezes the eight-room order, the single D02 subroute, the canonical
+brand, public population labels, clean-reference language, exact-candidate
+handoff and no-silent-fallback rule. Exact artifact-to-component mapping is the
+next gate; remote URL/checksum validation and runtime loading behaviour remain
+later gates.
 
 Notebook 34 then packages only the assets required by that confirmed contract.
 Notebook 35 validates fidelity, functionality, evidence coverage, and deployed

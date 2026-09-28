@@ -1,3 +1,7 @@
+# FROZEN CONTROLLED-50 BASELINE.
+# Its page IDs, counts and schemas describe the deployed pilot. N35 must receive
+# a newly versioned Controlled-300 validation contract after N34's final asset
+# and loading design is approved; do not patch these values piecemeal.
 schema_version: dashboard_validation_config.v1
 configuration_version: 1.0.0
 

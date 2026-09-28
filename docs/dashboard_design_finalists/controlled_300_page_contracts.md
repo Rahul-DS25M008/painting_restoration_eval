@@ -21,6 +21,81 @@ Notebook 35 validates the replacement.
 - Display exact source paintings and generated evidence in the implemented
   dashboard. Generated mock imagery is a layout reference only.
 
+## Cross-page consistency gate
+
+**Status:** Completed against the Controlled-300 repository evidence on
+2026-09-28.
+
+The canonical public name is **Painting Restoration Evidence Museum**. The
+approved page-specific images define composition, atmosphere and interaction
+hierarchy; they are not deployable page backgrounds or scientific records.
+Their illustrative paintings, plots, labels and values must be replaced by
+live components backed by registered assets. Where illustrative text differs
+from this contract or a producer record, the producer record and this corrected
+contract take precedence.
+
+### Fixed navigation and route state
+
+The primary navigation is always, in this order: `Exhibition Foyer`, `Study
+Design`, `Metric Framework`, `Model Gallery`, `Stability Lab`,
+`Trustworthiness`, `Case Explorer`, and `Research Archive`. `D02` is the single
+`Trustworthiness / Focused portrait review` subroute, never a ninth tab.
+
+Cross-room links preserve the exact selection rather than reopening a room at
+its default. The minimum portable state is `painting_id`, `case_id`,
+`candidate_id`, `model_id`, optional `seed`, optional `prompt_variant_id`,
+`metric_name`, `region_id`, `evidence_layer`, and `return_room`. Routes into the
+focused portrait review also preserve the applicable `annotation_id`,
+`matched_control_id`, and `review_id`. An unavailable destination must explain
+why it is unavailable; it must never substitute a different case, model,
+candidate, metric, region, report, seed, prompt, annotation, control, or review
+silently.
+
+### Fixed public vocabulary and populations
+
+| Public label | Exact meaning |
+|---|---|
+| 300 paintings | The accepted collection, balanced as 60 paintings in each of five broad visual categories. |
+| Five broad visual categories | `Abstraction / Surrealism`, `Architecture / Structured`, `High Texture / Brushwork`, `Landscape / Natural`, and `Portrait / Figure`; these are study groupings, not historical styles. |
+| 3,425 registered experimental cases | All registered cases: 1,500 canonical, 245 damage-size, 525 mask-placement and 1,155 procedural-degradation cases. |
+| 2,620 method-eligible cases | Cases completed by each of the four full-scope methods: 1,500 canonical cases, including 300 unchanged controls, plus 245 damage-size, 525 mask-placement and 350 eligible degradation cases. Public copy must explain that eligibility is computational, not conservation approval. |
+| Four full-scope methods | Telea, LaMa, HINT and Stable Diffusion 1.5. Stable Diffusion's ordinary matched comparison uses `p00_generic` and seed 2026. |
+| Bounded SDXL branch | 35 scheduled cases, 24 completed candidates, one timeout and ten budget skips; never a fifth full-scope method. |
+| 10,504 comparison candidates | 10,480 full-scope primary candidates plus 24 bounded SDXL candidates. |
+| 13,879 indexed candidates | The union used for explanation and inspection: 10,504 comparison candidates plus repeated-seed additions after removing overlap. `Indexed` or `available for inspection` must replace wording that could imply quality approval. |
+| Repeated-seed population | 1,025 supported four-seed Stable Diffusion groups, 4,100 memberships and 6,150 unordered pairs; 725 candidates overlap the primary population and 3,375 are uncertainty-only. |
+| N32 report population | 300 painting reports plus 30 selected detailed case reports = 330 case/painting reports; adding one collection index gives 331 browsable N32 reports. |
+| Other reports | Five N31 model reports and one N33 final report remain separate from the 331 N32 records. |
+| Final synthesis | N33 retains 24 final figures, 49 evidence claims, 18 limitations and 536 of 536 passed checks. |
+| External publication registry | 2,653 individually published artifacts are remotely verified. Verified bundled releases use separate release records and are not included in that row count. |
+
+Use `clean digital reference` or the compact label `clean reference` in
+analytical rooms. `Original` is reserved for artwork metadata or carefully
+qualified source context; the controlled clean image is not the unknowable
+historical original. Use `mask placement`, not `mask position`. Do not use
+copy such as `a clearer past` or `richer truth`, which can imply historical
+recovery; prefer `clearer evidence`, `richer view` or similarly bounded text.
+
+### Corrected implementation reading of the approved mockups
+
+- The existing N34/N35 package and configs are a frozen Controlled-50 baseline,
+  not a data source to relabel. N34 must rebuild the package from the completed
+  Controlled-300 producers.
+- Grouped Metric Framework region labels must expand to their canonical N08
+  rows and roles; a group containing mixed primary and diagnostic rows cannot
+  receive one misleading status colour.
+- Stability Lab must distinguish the four restoration-eligible procedural
+  families from generated degradation-only diagnostics.
+- Trustworthiness must keep same-case comparison peers separate from the
+  threshold-fitting reference stratum and expose each flag's own derivation.
+- D02 must use the exact selected case, annotation, matched control, metric and
+  review record; approximate charts or convenient crops are prohibited.
+- Case reports are conditional: every painting has a painting report, but only
+  30 selected cases have detailed case reports.
+- Research Archive must resolve the real per-artifact GitHub or Hugging Face
+  location. Destination labels describe common roles, not exclusive storage
+  classes.
+
 ## 01 — Exhibition Foyer
 
 **Status:** Approved and frozen on 2026-09-27  
@@ -71,6 +146,8 @@ trustworthiness.*
 - The preview contains the room name, its plain-language question, a short
   explanation, one small evidence thumbnail, and an explicit `Enter room`
   action.
+- Every preview reuses that room's exact approved opening question; shortened
+  illustrative questions from the mockups are not separate page definitions.
 - Navigation occurs only after activating `Enter room`.
 - On touch devices, the first tap opens the preview and the second explicit
   action enters the room.
@@ -83,6 +160,9 @@ trustworthiness.*
 - `Explore freely` leaves every room directly accessible.
 - The tour presents one question, one real visual, one supported takeaway, and
   one limitation per room. It is not an autoplay video.
+- The Trustworthiness stop introduces the focused portrait audit and offers an
+  explicit optional D02 detour. The detour does not become a ninth tour room
+  and does not interrupt completion of the eight-room path.
 
 ### Deliberately excluded from the Foyer
 
@@ -108,7 +188,7 @@ design; it does not reveal model winners or treat eligibility as success.
 
 > We started with 300 paintings, divided evenly across five broad visual
 > categories. Every painting received the same core tests, while smaller
-> balanced experiments examined damage size, mask position and other image
+> balanced experiments examined damage size, mask placement and other image
 > changes.
 
 **Boundary statement:** *Equal category sizes make comparisons easier. They do
@@ -123,7 +203,8 @@ foreground bench rather than as dashboard cards:
 - 300 paintings — 60 per category;
 - five core conditions — including the unchanged control;
 - 3,425 registered cases; and
-- 2,620 restoration-ready cases.
+- 2,620 method-eligible cases — cases processed by all four full-scope
+  computational methods, not paintings judged ready for conservation.
 
 ### Approved dominant interaction
 
@@ -132,7 +213,7 @@ the anchor and exposes four independent choices under `Choose a study path`:
 
 - `Core test`;
 - `Damage size`;
-- `Mask position`; and
+- `Mask placement`; and
 - `Other image changes`.
 
 These choices are parallel experiment branches, not sequential stages. They
@@ -140,10 +221,11 @@ must therefore use separate archival specimen tabs with branch-specific
 conservation glyphs. Do not use a connected line, ordered dots, step numbers,
 or other progress-stepper language.
 
-The selected `Core test` view shows the original beside one selected controlled
-condition and retains a compact selector for:
+The selected `Core test` view is labelled `Clean reference + five core
+conditions`. It shows the clean digital reference beside one selected
+controlled condition and retains a compact selector for:
 
-- original;
+- clean reference;
 - unchanged control;
 - thin scratch;
 - small loss;
@@ -153,7 +235,9 @@ condition and retains a compact selector for:
 The status plaque explains whether the selected case is `Suitable for
 restoration testing` or `Studied as a degradation instead`, together with a
 short reason. It expresses methodological routing only and must not imply that
-the restoration succeeded.
+the restoration succeeded. Do not call the generated damage `realistic`;
+describe it as controlled synthetic damage valid under the registered
+protocol.
 
 ### Approved collection control
 
@@ -271,6 +355,11 @@ only evidence that actually exists: focused 35-painting experiments and the
 bounded SDXL branch must not appear as though they cover the full collection.
 Large diagnostic bundles may be fetched lazily and cached per painting.
 
+The compact `Damage / case` and `Method / candidate` selectors must remain
+visible alongside `Change painting`; the final implementation must not rely on
+the inspection lens to imply those selections. Unavailable combinations are
+disabled with a reason rather than hidden or replaced.
+
 The painting itself must not carry a permanent colour scale. Interpretation
 lives in the compact selected-metric plaque beside the exhibit so that the
 artwork remains visually primary.
@@ -291,10 +380,26 @@ one- or two-line plain-language explanation:
 - `Local meaning & layout` — local DINO similarity and structural-affinity
   correlation.
 
+These seven public teaching lenses group the 13 registered N08 metric
+families; they are not seven replacement metric families. Repeated-seed
+uncertainty remains a separate Stability Lab concept rather than an eighth
+quality lens.
+
 The primary interface groups the available locations into understandable
 choices: whole image, painting content, damaged area, damage crop, boundary,
 outside repair and local patches. The literal 11-region policy remains in the
 optional full ledger rather than crowding the main interaction.
+
+Every grouped location expands to the canonical region rows and shows the role
+for the active metric family. A group may not receive one role or colour when
+its children differ. For `Spatial change`, N08 defines `content_region`,
+`masked_region`, `boundary_ring` and `outside_mask_content` as primary;
+`full_image`, `mask_bbox_crop`, `inner_boundary_band`,
+`outer_boundary_band`, `outside_boundary_ring`, `patch_window` and the
+synthetic-only `degradation_support` are diagnostic. The public legend reads
+`Primary — headline evidence`, `Diagnostic — supporting evidence` and
+`Prohibited — not defensible for this metric and region`; it must not imply
+that diagnostic evidence is invalid.
 
 ### Selected-map interpretation
 
@@ -396,7 +501,7 @@ damage condition, seed or prompt.
 
 ### Full-scope comparison
 
-The four primary methods cover the 2,620 restoration-eligible Controlled-300
+The four primary methods cover the 2,620 method-eligible Controlled-300
 cases. Their roles must remain explicit:
 
 - Telea is a fast classical neighbourhood-based baseline;
@@ -412,6 +517,11 @@ anchors while Telea led crop SSIM in the completed comparison. It must
 immediately retain the qualifiers `separate comparisons` and `no combined
 score`. Results remain conditional on this dataset, controlled damage, region
 policy and metric family.
+
+That headline is always labelled `Overall registered comparison — 300
+paintings / 2,620 method-eligible cases`. It must remain visually separate from
+the active `This case` selector and evidence. Changing the active case cannot
+make the population result appear to be a score for that case.
 
 Recorded median runtimes may be shown as operational evidence for the recorded
 workstation: Telea 0.519 seconds, LaMa 1.451 seconds, HINT 6.677 seconds and
@@ -514,6 +624,16 @@ mechanically aimed at the damaged-input frame but must never cast a beam or
 overlay across the painting. A separate contact-sheet drawer exposes
 `Repeated seeds · Stable Diffusion only` where four-seed evidence exists.
 
+If the active method is deterministic, the repeated-seed drawer is disabled
+with `Stable Diffusion only — switch method`. Activating it requires an
+explicit method change and must never substitute Stable Diffusion silently.
+
+The bell-jar trolley names the four restoration-eligible procedural families:
+`Dirt / dust`, `Partial transparency`, `Water stain`, and `Water stain + dirt`.
+Other generated families such as blur, fading or colour-shift diagnostics may
+appear only in a separately labelled `Not an inpainting task` drawer and must
+not inherit restoration rankings.
+
 Painting, method and evidence selectors live on a small registrar's desk rather
 than directly beneath the artwork. A single clipped trajectory is shown for the
 active test; the page must not display every stress-test chart at once.
@@ -530,7 +650,9 @@ secondary to the visual comparison:
   variants; 105 matched groups, 525 cases and 2,100 four-method candidates.
 - **Other image changes:** 1,155 generated procedural-degradation inputs, of
   which 350 localized cases are restoration-eligible; 1,400 four-method
-  candidates plus 11 bounded SDXL candidates.
+  candidates plus 11 bounded SDXL candidates. Both `1,155 generated` and `350
+  eligible for restoration comparison` remain visible so the denominator is
+  not lost.
 - **Repeated seeds:** 1,025 supported four-seed Stable Diffusion groups across
   the canonical and damage-size experiments; 4,100 candidate memberships and
   6,150 unordered pairs.
@@ -619,6 +741,10 @@ The approved opening candidate is:
 
 `p002 · loss_large · Stable Diffusion · seed 2026`
 
+The exact candidate identity is
+`sd15__p00__s2026__29ff258ff921`. The selected-record drawer must show it;
+the shorter public label is not a substitute for identity.
+
 Its evidence route is presented as six physical review stations rather than a
 dashboard-card grid:
 
@@ -655,6 +781,11 @@ Two related populations must remain distinguishable:
   Ordinary fitting uses eligible non-zero primary candidates and excludes
   bounded SDXL; uncertainty fitting uses eligible repeated-seed groups.
 
+The interface therefore exposes two nested records rather than one ambiguous
+`fair comparison` box: `Comparison peers` shows the same-case four-method
+comparison, while `Threshold reference stratum` shows the population used to
+fit the selected indicator boundary.
+
 The public view may use short drawer labels such as `Same experiment`, `Same
 indicator`, `Same region + statistic` and `Eligible non-zero cases`, but its
 detail view must expose the exact field names and whether the unit is an
@@ -675,9 +806,17 @@ The central brass ruler must retain this real candidate example:
 
 The nearby explanation must say that the critical cutoff is the fitted 97.5th
 percentile of the relevant comparison stratum. It is **not** a 97.5% chance of
-failure. The general rule is one critical indicator or warnings from two
-distinct evidence components; a flag remains a screening and review-priority
-signal rather than a correctness judgement.
+failure. The **failure-category trigger rule** is one critical indicator or
+warnings from two distinct evidence components. Derived review flags use their
+own declared rules: for example instability, metric disagreement, insufficient
+evidence and manual-review-required are not inferred from one universal flag
+formula. Every triggered flag must link to its exact derivation. A flag remains
+a screening and review-priority signal rather than a correctness judgement.
+
+For the opening p002 candidate, the complete triggered set is `High generative
+uncertainty`, `Texture inconsistency`, `Restoration instability`, `Metric
+disagreement`, `Insufficient evidence`, and `Manual review required`. `Colour
+inconsistency — insufficient evidence` is shown as unresolved, not as a pass.
 
 ### Approved population and rule summary
 
@@ -687,7 +826,7 @@ signal rather than a correctness judgement.
 - 725 candidates shared by the primary and uncertainty populations;
 - 3,375 uncertainty-only candidates;
 - 13,879 unique candidates in the union;
-- 14 operational failure categories and 11 independent review flags;
+- 14 operational failure categories and 11 review-flag types;
 - 194,306 category-assignment rows and 152,669 flag-assignment rows; and
 - 137 fitted threshold strata in the completed run.
 
@@ -724,19 +863,22 @@ The mini room must contain two clearly separated investigations:
 
 The opening scope record must retain:
 
-- 60 portraits screened;
-- 91 manually reviewed anatomical annotations;
+- 60 portraits screened: 36 included for focused follow-up and 24 excluded;
+- 91 manually reviewed anatomical annotations, of which 88 were retained;
 - 1,265 anatomy–damage intersections;
 - eligibility of at least 256 damaged anatomical pixels and 5% anatomical
-  coverage;
+  coverage, plus a viable same-case non-hand control with at least 256 damaged
+  non-hand pixels;
 - a final hand study of 45 cases from 20 independent paintings;
-- 292 eligible case-region records overall;
+- 292 eligible case records overall;
 - all 12 primary model–metric estimates worse for hands, with 10 of 12 meeting
   the corrected significance rule;
-- 32 candidates in blind visual review, with 25 visible anatomical failures;
+- 32 candidate review units across eight cases and four methods in a bounded
+  Codex-assisted blind visual review, with 25 visible anatomical failures;
 - 30 rendered-lightness painting profiles and 10 context matches; and
-- adjusted lightness associations with zero clearly positive, three clearly
-  negative and 21 intervals crossing zero.
+- 24 adjusted model–metric lightness associations: zero clearly positive,
+  three chroma-error associations clearly negative and 21 intervals crossing
+  zero.
 
 The room must keep the automated N27 flag route and the manual/focused D02
 study visually and conceptually separate. D02 does not create a new automated
@@ -763,13 +905,24 @@ to, but compositionally distinct from, Trustworthiness.
 - Keep the hand-penalty evidence in one restrained frame. The primary plain-
   language conclusion is `Damaged hands were harder to restore in this
   audit`, paired with `12/12 worse for hands`, `10/12 supported after
-  correction` and `No universal model winner`.
+  correction` and the bounded statement `No single method minimized all three
+  hand penalties`.
 - Keep blind visual review on a low folio stand with a visible-failure versus
   acceptable-counterexample control, the `25 of 32` result and the bounded
   review note; do not convert the selected review into a model leaderboard.
+  The default `p269 · mixed damage · HINT` record shows review `R005`, `visible
+  anatomy failure`, `high confidence`, and its recorded merged-digit,
+  malformed-contour observation rather than only the aggregate result.
+  Its selected left-hand annotation contains 1,196 damaged hand pixels
+  (26.28% of the annotation), with a 1,196-pixel matched control crop. The
+  displayed control must use the registered control design rather than a
+  visually convenient substitute.
 - Place rendered lightness in a physically separate compact alcove. Its
-  conclusion is `No consistent link between restoration error and rendered
-  L*`, immediately paired with `Rendered L* is not race or identity`.
+  conclusion is `No consistent overall association across 24 model–metric
+  analyses`, immediately paired with `three chroma-error associations were
+  negative`, `21 intervals crossed zero`, and `Rendered L* is not race or
+  identity`. Use six-metric small multiples or an explicit metric selector and
+  direction legend; do not plot one unnamed combined estimate.
 - Integrate `D02 report`, `Annotations`, `Tables` and `Methods & limits` as
   small archival drawer-label controls rather than underlined web links.
 - Retain the foreground reference books as quiet material cues with the exact
@@ -793,7 +946,7 @@ of the parent Trustworthiness room.
   into the cabinet below the evidence frames; it must never hang from the
   painting frame.
 - Use the coloured foreground books only as quiet guides: `Evidence`,
-  `Thresholds`, `Failure rules`, `Uncertainty` and `Human review`.
+  `Thresholds`, `Failure rules`, `Uncertainty` and `Review policy`.
 - The focused portrait audit remains a visibly separate recessed alcove whose
   activation opens the mini study room.
 
@@ -848,8 +1001,8 @@ traced from controlled damage to measurements, warnings and source records.
 The catalogue exposes the validated N29 inspection population:
 
 - 300 paintings;
-- 2,620 cases; and
-- 13,879 approved restoration candidates.
+- 2,620 method-eligible cases; and
+- 13,879 indexed restoration candidates available for inspection.
 
 Filtering may use painting, visual category, experiment, damage, model, review
 status, candidate, seed and prompt where those fields apply. The interface must
@@ -864,6 +1017,9 @@ must keep its identities explicit:
 - condition: mixed damage;
 - candidate: `candidate__lama__canonical__p018__mixed_damage__c00`; and
 - deterministic method, so generative uncertainty is not applicable.
+
+The exact candidate ID remains visible in the selected-record plaque or drawer;
+an ordinal such as `Candidate 1` may appear only as a secondary convenience.
 
 The separate `p018` scratch-thin and mild dirt/dust examples may support
 uncertainty and retrieval demonstrations, but the interface must never imply
@@ -880,8 +1036,11 @@ Keep five synchronized framed views as the primary evidence:
 5. selected evidence map.
 
 The evidence-layer selector provides difference, boundary/seam, colour,
-texture, semantic/structure and uncertainty where available. The clean image is
-a controlled pre-damage digital reference, not historical ground truth.
+texture, `Semantic & structure` and uncertainty where available. Each layer
+shows its availability before activation. For the deterministic opening LaMa
+candidate, uncertainty is disabled with `Not applicable — deterministic
+method`, not rendered as zero or as a generic warning. The clean image is a
+controlled pre-damage digital reference, not historical ground truth.
 
 ### Approved saved-value example
 
@@ -926,10 +1085,13 @@ proof.
 ### Reports, provenance and D02 route
 
 The room links to the applicable painting report, selected case report, source
-notebooks and exact saved rows. The report population consists of 300 painting
-reports and 30 selected detailed case reports. Eligible reviewed portraits may
-open the single canonical `D02` mini room; non-portrait cases show that route as
-not applicable.
+notebooks and exact saved rows. Every painting has a painting report. A detailed
+case report is enabled only for the 30 selected cases; all other cases show
+`Not selected for a detailed case report` and never substitute a neighbouring
+report. The population is therefore 300 painting reports plus 30 detailed case
+reports, while Research Archive additionally counts the N32 collection index
+to reach 331 N32 reports. Eligible reviewed portraits may open the single
+canonical `D02` mini room; non-portrait cases show that route as not applicable.
 
 ### Approved spatial and material treatment
 
@@ -989,10 +1151,12 @@ artifact lives.
 The searchable archive may expose these authoritative Controlled-300 counts:
 
 - 300 paintings;
-- a 33-stage primary pipeline from N01 through N33;
-- two supplementary studies: N12A and D02;
+- 33 numbered stages from N01 through N33;
+- one inserted full-production stage, N12A;
+- one frozen method-selection decision, D01, and one supplemental focused
+  analysis, D02;
 - 3,425 unified registered cases;
-- 13,879 approved restoration candidates;
+- 13,879 indexed restoration candidates available for inspection;
 - 331 browsable N32 reports;
 - five model reports; and
 - 24 final N33 figures.
@@ -1003,26 +1167,29 @@ Controlled-50 records are not part of this final-room scope.
 
 ### Approved central research ledger
 
-The default open ledger is `Final evaluation - N33`. It presents:
+The archive overview presents:
 
-- 33-stage primary pipeline;
-- N12A and D02 supplementary studies;
+- 33 numbered stages, the inserted N12A production stage, frozen D01 decision
+  evidence and supplemental D02 analysis;
 - 24 final figures;
 - 49 evidence claims;
 - 18 recorded limitations; and
 - the lineage `Source -> Notebook -> Manifest -> Report -> Checksum`.
 
-The selected record exposes its run ID, notebook ID, recorded Git commit,
-dirty/clean state, configuration and SHA-256, input and output checksums,
-Python/platform/package versions and validation result. For N33, show the
-recorded dirty working-tree state honestly; do not imply a pristine checkout.
+The default open record is `Final evaluation - N33`. It exposes its run ID,
+notebook ID, recorded Git commit, dirty/clean state, configuration and SHA-256,
+input and output checksums, Python/platform/package versions and validation
+result. Its own manifest contains 32 upstream run-ID entries for N01 through
+N32; D01, N12A and D02 remain separately linked project records and must not be
+invented as direct N33 manifest keys. For N33, show the recorded dirty
+working-tree state honestly; do not imply a pristine checkout.
 
 ### Report catalogue
 
 Keep the report populations separate:
 
-- 331 browsable N32 reports: 300 painting reports, 30 selected case reports and
-  one collection index;
+- 330 N32 case/painting reports: 300 painting reports and 30 selected case
+  reports; one collection index brings the browsable N32 total to 331;
 - five self-contained N31 model reports: Telea, LaMa, Stable Diffusion, SDXL
   and HINT; and
 - one N33 final-evaluation report.
@@ -1040,18 +1207,24 @@ historical representativeness.
 
 ### Publication locations
 
-Use three purpose-specific destinations:
+Use the exact per-artifact destination from the publication registry and bundle
+release records. The public destination guide describes common roles, not
+exclusive storage classes:
 
-- GitHub: notebooks, source code, configurations, documentation, compact
-  tables, manifests, validations and indexes;
-- Hugging Face Candidates: restoration candidates; and
-- Hugging Face Diagnostics: maps, metrics, bundled evidence and generated
-  reports.
+- GitHub stores notebooks, source code, configurations, documentation, compact
+  tables, manifests, validations and indexes, plus some earlier Git/LFS
+  candidate and compact report evidence;
+- Hugging Face Candidates stores verified candidate releases, including the
+  full HINT and bounded SDXL releases and candidate portions of later split
+  releases; and
+- Hugging Face Diagnostics stores maps, metrics, diagnostic bundles and the
+  N32 report package, while compact N31/N33 reports remain in GitHub.
 
-The external publication registry records 2,653 of 2,653 individually
-published artifacts as remotely verified. Bundled releases have their own
-verified release records and must not be silently counted as individual rows.
-Zenodo is labelled `planned after pipeline freeze`; no DOI may be invented.
+The external publication registry records 2,653 of 2,653 **individually
+published** artifacts as remotely verified. A separate `Verified bundled
+releases` catalogue exposes bundle count, release ID, pinned revision and
+verification status; bundles must not be added to the 2,653 row count. Zenodo
+is labelled `planned after pipeline freeze`; no DOI may be invented.
 
 ### Limits cabinet
 
