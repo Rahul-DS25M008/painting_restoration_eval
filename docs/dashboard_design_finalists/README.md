@@ -1,7 +1,7 @@
 # Controlled-300 Dashboard Design Direction
 
-**Status:** Current primary layout and interaction direction approved by the
-user on 2026-09-24  
+**Status:** All eight top-level rooms and the `D02` mini room approved through
+2026-09-28
 **Mandatory review point:** After Notebook 33 and immediately before Notebook
 34 or any Controlled-300 Streamlit implementation begins  
 **Scope:** Navigation, interaction, visual hierarchy, information flow, and
@@ -16,6 +16,32 @@ Controlled-300 dashboard:
    Exhibition Foyer, Study Design, Metric Framework, and Model Gallery.
 2. [Interactive Museum Rooms 05–08](approved_current/02_interactive_museum_rooms_05_to_08.png):
    Stability Lab, Trustworthiness, Case Explorer, and Research Archive.
+
+The room-by-room approval pass is complete. Page-specific approved references
+supersede the corresponding illustrative room on the two overview boards:
+
+- [Final Exhibition Foyer](approved_current/03_exhibition_foyer_final.png),
+  approved on 2026-09-27;
+- [Final Study Design](approved_current/04_study_design_final.png), approved
+  on 2026-09-28;
+- [Final Metric Framework](approved_current/05_metric_framework_final.png),
+  approved on 2026-09-28;
+- [Final Model Gallery](approved_current/06_model_gallery_final.png), approved
+  on 2026-09-28;
+- [Final Stability Lab](approved_current/07_stability_lab_final.png), approved
+  on 2026-09-28;
+- [Final Trustworthiness](approved_current/08_trustworthiness_final.png),
+  approved on 2026-09-28;
+- [Final Focused Portrait Review mini room](approved_current/09_focused_portrait_review_final.png),
+  approved on 2026-09-28 as the canonical `D02` subroute of
+  Trustworthiness rather than a ninth top-level room;
+- [Final Case Explorer](approved_current/10_case_explorer_final.png), approved
+  on 2026-09-28 as the canonical candidate-level inspection room;
+- [Final Research Archive](approved_current/11_research_archive_final.png),
+  approved on 2026-09-28 as the canonical provenance, reproducibility,
+  publication, and download room;
+- [Controlled-300 page contracts](controlled_300_page_contracts.md), which
+  records the approved evidence, language, interaction, and limitation rules.
 
 Together they define a chromatic, tactile, painting-first museum that remains a
 usable website. The approved interaction language includes illuminated room
@@ -34,6 +60,13 @@ The eight-room structure is now fixed as the primary navigation:
 6. Trustworthiness;
 7. Case Explorer; and
 8. Research Archive.
+
+The focused portrait audit (`D02`) does not add a ninth top-level room. It is
+an explicitly separate mini study room opened from the Trustworthiness room.
+Study Design may link to the same room from its compact audit summary, while
+Case Explorer may deep-link to an individual reviewed portrait. These links
+must resolve to the same evidence-backed subroute rather than duplicate the
+study or imply that it is part of the automated flag taxonomy.
 
 The exact tab content may be refined when the final Controlled-300 evidence is
 available. Such refinement may replace illustrative values and reorganize
@@ -95,6 +128,22 @@ finalists, the preferred qualities are consistent:
   and
 - a useful presentation mode or guided path for explaining the thesis to a
   supervisor without removing exploratory access for technical users.
+
+## Global language and disclosure rule
+
+The public dashboard and presentation materials must use clear, everyday
+language first. Technical terms may appear when they are necessary, but they
+must be explained where they are introduced or placed inside an optional
+detail view. Formal definitions, equations, implementation terminology, and
+extended statistical discussion belong in the thesis and linked research
+records rather than in the primary reading path.
+
+Plain language must not weaken the scientific boundaries. Every headline
+result must still identify its relevant population or condition and keep a
+nearby statement of what the evidence does not establish. In particular, the
+dashboard must not turn visual plausibility, metric performance, stability, or
+a computational review flag into a claim of historical correctness,
+conservation approval, calibrated confidence, or universal model superiority.
 
 ## Mandatory pre-Notebook-34 review
 

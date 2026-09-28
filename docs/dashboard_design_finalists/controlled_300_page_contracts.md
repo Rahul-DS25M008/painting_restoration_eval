@@ -1,0 +1,1103 @@
+# Controlled-300 Dashboard Page Contracts
+
+**Purpose:** Preserve the room-by-room content and interaction decisions made
+before Notebook 34 packages or implements the Controlled-300 dashboard.
+
+**Implementation boundary:** These contracts authorize design planning only.
+The live Controlled-50 application remains unchanged until all eight rooms are
+approved, the required remote assets are audited, Notebook 34 is rebuilt, and
+Notebook 35 validates the replacement.
+
+## Shared rules
+
+- Use clear, everyday language in the primary reading path.
+- Explain necessary technical terms where they first appear or inside an
+  optional detail view.
+- Keep one dominant painting-first interaction per room.
+- Pair every result with a nearby statement of what it does not establish.
+- Never turn visual plausibility, metric performance, stability, or a review
+  flag into historical correctness, conservation approval, calibrated
+  confidence, or universal model superiority.
+- Display exact source paintings and generated evidence in the implemented
+  dashboard. Generated mock imagery is a layout reference only.
+
+## 01 — Exhibition Foyer
+
+**Status:** Approved and frozen on 2026-09-27  
+**Visual authority:**
+[03_exhibition_foyer_final.png](approved_current/03_exhibition_foyer_final.png)
+
+### Purpose
+
+Orient a visitor who has no prior knowledge of the thesis. The visitor should
+understand what is being tested, why a visually convincing restoration is not
+enough, and how to begin exploring within approximately twenty seconds.
+
+### Approved opening
+
+**Question:** *How should we judge an AI-restored painting?*
+
+> This thesis tests digital restoration methods by applying controlled damage
+> to 300 paintings. We compare the restored images, measure what changed and
+> check whether the results stay consistent—but a convincing image is not
+> automatically historically correct.
+
+**Boundary statement:** *Visual plausibility is not the same as restoration
+trustworthiness.*
+
+### Approved scope indicators
+
+- 300 paintings;
+- five broad visual categories;
+- 3,425 registered experimental cases; and
+- four full-scope methods plus a bounded SDXL branch.
+
+### Approved visual hierarchy
+
+- The exact repository painting is the dominant exhibit. The current layout
+  reference uses `p001`, *Juan de Pareja* by Diego Velázquez (1650).
+- The guided-tour and free-exploration controls resemble museum exhibit
+  controls rather than commercial call-to-action buttons.
+- The compact collection strip and room route remain subordinate to the
+  painting, leaving a visible band of museum floor above them.
+- The public implementation uses a museum-catalogue display serif and a clear
+  humanist sans-serif for controls and explanatory text.
+
+### Approved route interaction
+
+- The compact eight-room route remains visible at the bottom of the Foyer.
+- Hovering or keyboard-focusing a room highlights its stop and opens a small
+  preview above the route without navigating.
+- The preview contains the room name, its plain-language question, a short
+  explanation, one small evidence thumbnail, and an explicit `Enter room`
+  action.
+- Navigation occurs only after activating `Enter room`.
+- On touch devices, the first tap opens the preview and the second explicit
+  action enters the room.
+- The route always identifies `You are here: Exhibition Foyer`.
+
+### Guided tour
+
+- `Take the guided tour · about 6 min` starts a skippable in-application path
+  through all eight rooms.
+- `Explore freely` leaves every room directly accessible.
+- The tour presents one question, one real visual, one supported takeaway, and
+  one limitation per room. It is not an autoplay video.
+
+### Deliberately excluded from the Foyer
+
+Full metric definitions, threshold formulae, ranking tables, uncertainty
+grids, D02 statistics, raw provenance, report catalogues, notebook identifiers,
+and download controls remain in their relevant later rooms.
+
+## 02 — Study Design
+
+**Status:** Approved and frozen on 2026-09-28  
+**Visual authority:**
+[04_study_design_final.png](approved_current/04_study_design_final.png)
+
+### Purpose
+
+Explain what entered the study, how the controlled experiment branches differ,
+and why equal treatment makes comparison possible. This room describes the
+design; it does not reveal model winners or treat eligibility as success.
+
+### Approved opening
+
+**Question:** *What did we test, and how did we keep the comparison fair?*
+
+> We started with 300 paintings, divided evenly across five broad visual
+> categories. Every painting received the same core tests, while smaller
+> balanced experiments examined damage size, mask position and other image
+> changes.
+
+**Boundary statement:** *Equal category sizes make comparisons easier. They do
+not make the collection representative of every artistic period, culture or
+style.*
+
+### Approved scope indicators
+
+The following four facts appear as labelled research catalogues on the
+foreground bench rather than as dashboard cards:
+
+- 300 paintings — 60 per category;
+- five core conditions — including the unchanged control;
+- 3,425 registered cases; and
+- 2,620 restoration-ready cases.
+
+### Approved dominant interaction
+
+`Follow one painting through the study` uses one exact repository painting as
+the anchor and exposes four independent choices under `Choose a study path`:
+
+- `Core test`;
+- `Damage size`;
+- `Mask position`; and
+- `Other image changes`.
+
+These choices are parallel experiment branches, not sequential stages. They
+must therefore use separate archival specimen tabs with branch-specific
+conservation glyphs. Do not use a connected line, ordered dots, step numbers,
+or other progress-stepper language.
+
+The selected `Core test` view shows the original beside one selected controlled
+condition and retains a compact selector for:
+
+- original;
+- unchanged control;
+- thin scratch;
+- small loss;
+- large loss; and
+- mixed damage.
+
+The status plaque explains whether the selected case is `Suitable for
+restoration testing` or `Studied as a degradation instead`, together with a
+short reason. It expresses methodological routing only and must not imply that
+the restoration succeeded.
+
+### Approved collection control
+
+`The collection` is a compact dark-timber catalogue cabinet on the lower-left
+side. It contains five drawer choices, each representing 60 paintings:
+
+- Abstraction / Surrealism;
+- Architecture / Structured;
+- High Texture / Brushwork;
+- Landscape / Natural; and
+- Portrait / Figure.
+
+The selected drawer uses a pale archival-paper front; inactive drawers recede
+into the timber. The control must remain visually subordinate to the painting
+and must not stretch across the viewport.
+
+### Study Notes
+
+The technical explanations live in a narrow architectural card catalogue,
+with only the selected drawer expanded:
+
+- how paintings were selected;
+- how images were prepared;
+- how controlled damage was created;
+- how focused tests work;
+- why some cases are not restoration tasks; and
+- how the portrait audit was designed.
+
+Primary reading stays in plain language. Exact mask targets, preprocessing
+rules, experiment counts, eligibility logic and other implementation detail
+belong inside these drawers.
+
+### Focused portrait audit
+
+The D02 branch receives its own small recessed side alcove so it is visibly
+supplemental rather than part of the 3,425-case registry. The concise label
+records:
+
+- 60 portraits screened;
+- 45 matched hand cases;
+- 20 paintings; and
+- existing restoration results were reused.
+
+The room points visitors to Trustworthiness for findings and to the Research
+Archive for the complete protocol. It does not present D02 conclusions here.
+
+### Approved spatial and material treatment
+
+- Preserve a large calm central floor and strong gallery depth.
+- Keep information on the perimeter and reveal detail progressively.
+- Use matte plaster, lightly worn timber, linen, archival paper and restrained
+  track lighting rather than a glossy luxury-showroom finish.
+- Keep the painting pair as the dominant evidence and avoid an A4/report grid.
+- Display the four scope facts as natural museum objects on the bench.
+- Use the exact repository images in production; generated paintings in the
+  mock remain layout placeholders.
+
+### Explicit limitations
+
+- The five visual categories are broad study groupings, not formal historical
+  styles.
+- Controlled synthetic damage is not physical deterioration.
+- Restoration eligibility is not restoration success or conservation
+  approval.
+- Rendered skin lightness is not race, ethnicity or identity.
+
+### Deliberately excluded from Study Design
+
+Model rankings, restoration-quality conclusions, metric winners, uncertainty
+findings, trustworthiness-flag prevalence and D02 outcome comparisons remain in
+their corresponding later rooms.
+
+## 03 — Metric Framework
+
+**Status:** Approved and frozen on 2026-09-28  
+**Visual authority:**
+[05_metric_framework_final.png](approved_current/05_metric_framework_final.png)
+
+### Purpose
+
+Show why the apparent quality of one restoration can change when the visitor
+asks a different measurement question or inspects a different region. This
+room teaches visitors to read complementary measurements rather than collapse
+them into one universal score.
+
+### Approved opening
+
+**Question:** *Why can the conclusion change when the metric or region
+changes?*
+
+> No single number can judge a restoration. Different measurements examine
+> pixels, structure, visual similarity, texture, colour, seams and unintended
+> changes. Each measure is only meaningful in the regions it was designed to
+> examine.
+
+**Boundary statement:** *Different metrics answer different questions.
+Disagreement is evidence to inspect—not noise to average away.*
+
+### Approved dominant interaction
+
+The central painting remains the dominant exhibit. A movable inspection lens
+reveals one selected diagnostic map over the same painting while the visitor
+chooses, in order:
+
+1. a painting;
+2. an available damage case;
+3. a restoration method or candidate;
+4. an evidence lens; and
+5. a region for which that measurement is valid.
+
+`p018 · mixed damage · LaMa` is the curated opening example, not a fixed case.
+`Change painting` provides searchable access to all 300 paintings and
+`Surprise me` selects another real available case. The interface must expose
+only evidence that actually exists: focused 35-painting experiments and the
+bounded SDXL branch must not appear as though they cover the full collection.
+Large diagnostic bundles may be fetched lazily and cached per painting.
+
+The painting itself must not carry a permanent colour scale. Interpretation
+lives in the compact selected-metric plaque beside the exhibit so that the
+artwork remains visually primary.
+
+### Approved evidence lenses
+
+Selecting a lens expands its drawer and reveals its exact measurements plus a
+one- or two-line plain-language explanation:
+
+- `Pixel difference` — MAE, MSE and PSNR;
+- `Structure` — SSIM;
+- `Perceptual similarity` — LPIPS;
+- `Learned visual features` — CLIP and DINOv2 cosine similarity;
+- `Spatial change` — absolute RGB error, signed improvement and changed-pixel
+  fraction;
+- `Texture, colour & seams` — LBP, Gabor and GLCM texture measures, ΔE2000 and
+  boundary-gradient mismatch; and
+- `Local meaning & layout` — local DINO similarity and structural-affinity
+  correlation.
+
+The primary interface groups the available locations into understandable
+choices: whole image, painting content, damaged area, damage crop, boundary,
+outside repair and local patches. The literal 11-region policy remains in the
+optional full ledger rather than crowding the main interaction.
+
+### Selected-map interpretation
+
+The opening example uses `Signed improvement`, calculated as:
+
+`damaged reference error − restored reference error`
+
+Its compact side plaque explains:
+
+- blue / positive — restoration is closer to the clean digital reference;
+- red / negative — restoration is farther from that reference;
+- neutral / zero — the measured reference error is unchanged; and
+- grey — outside the selected region or not evaluated.
+
+The plaque must also state that this measurement cannot establish historical
+correctness. Its wording remains concise and must not collide with the nearby
+`Same restoration. Different question.` interpretation plaque.
+
+### Metric-policy ledger
+
+The open research ledger records the validated policy without presenting it as
+a scorecard:
+
+- 13 metric families;
+- 11 evaluation regions;
+- 143 declared metric–region combinations;
+- 39 primary and 47 diagnostic combinations allowed, for 86 allowed in total;
+- 57 combinations prohibited; and
+- 11 quality anchors kept separate from the metric–region policy.
+
+The previous illustrative phrase `17 evidence families` is stale and must not
+return in the implementation.
+
+### Explicit limitations
+
+- The clean reference is the controlled pre-damage digital image, not
+  historical ground truth.
+- No metric can establish authenticity, artist intent or conservation
+  approval.
+- No universal score is calculated.
+- Texture measurements are not brushstroke authentication.
+- Uncertainty or disagreement is not calibrated confidence.
+- Statistical conclusions treat the painting, rather than every generated
+  image, as the independent unit.
+
+### Deliberately excluded from Metric Framework
+
+Overall model conclusions belong in Model Gallery; repeated-seed and
+damage-size behaviour belongs in Stability Lab; derived warning thresholds and
+flag prevalence belong in Trustworthiness; complete case inspection belongs in
+Case Explorer; and equations, policy tables and full provenance belong in
+Research Archive.
+
+## 04 — Model Gallery
+
+**Status:** Approved and frozen on 2026-09-28  
+**Visual authority:**
+[06_model_gallery_final.png](approved_current/06_model_gallery_final.png)
+
+### Purpose
+
+Let visitors compare how the four full-scope restoration methods rebuild the
+same controlled loss. The room presents their different assumptions and
+trade-offs without turning separate measurements into one score or declaring a
+universal winner.
+
+### Approved opening
+
+**Question:** *How do different restoration methods rebuild the same loss?*
+
+> The four methods receive the same damaged painting and mask, but they rebuild
+> the missing region in different ways. Compare the result, inspect the local
+> evidence and then open the full model record when more detail is needed.
+
+**Boundary statement:** *A convincing completion is a candidate to inspect—not
+recovered historical truth.*
+
+### Approved spatial interaction
+
+The page is a circular restoration rotunda, not another flat comparison grid.
+A damaged painting stands on the central easel and four coloured floor routes
+lead to four architectural alcoves:
+
+- `Telea` — classical, local and deterministic;
+- `LaMa` — learned, context-aware and deterministic;
+- `HINT` — learned, mask-aware transformer and deterministic; and
+- `Stable Diffusion` — prompt-conditioned and stochastic.
+
+The curated opening is `p018 · mixed damage`, because exact outputs are
+available for all four full-scope methods and the bounded SDXL study. Visitors
+can change the painting, damage case and evidence view using tactile specimen
+drawers on the foreground curator table. The selected method receives a short
+plain-language record and a link to its complete configuration and evidence.
+
+The production page must expose only cases that genuinely exist for the
+selected method. Selecting a method changes the active alcove and the evidence
+on the curator table; it must not silently substitute another painting,
+damage condition, seed or prompt.
+
+### Full-scope comparison
+
+The four primary methods cover the 2,620 restoration-eligible Controlled-300
+cases. Their roles must remain explicit:
+
+- Telea is a fast classical neighbourhood-based baseline;
+- LaMa is a learned large-mask inpainting method that uses broader image
+  context;
+- HINT adds a heritage-oriented, mask-aware transformer capability that was
+  selected over MAT in the separate decision study; and
+- Stable Diffusion tests prompt-conditioned generative restoration and retains
+  its seed and prompt identity.
+
+The headline comparison may state that LaMa led 10 of the 11 separate quality
+anchors while Telea led crop SSIM in the completed comparison. It must
+immediately retain the qualifiers `separate comparisons` and `no combined
+score`. Results remain conditional on this dataset, controlled damage, region
+policy and metric family.
+
+Recorded median runtimes may be shown as operational evidence for the recorded
+workstation: Telea 0.519 seconds, LaMa 1.451 seconds, HINT 6.677 seconds and
+Stable Diffusion 8.620 seconds. They are not portable hardware benchmarks and
+must not enter the quality ranking.
+
+### Bounded SDXL study
+
+SDXL is a separate low conservation-study vitrine rather than a fifth full
+alcove. It records:
+
+- 35 scheduled cases;
+- 24 completed cases;
+- one timed-out case; and
+- ten cases skipped under the approved compute budget.
+
+It is not included in the full-scope ranking. For a selected painting with an
+SDXL result, the low angled vitrine opens and displays the exact result. For any
+painting without one, the vitrine closes and explains that the evidence is
+unavailable. Its position must remain below and outside the Stable Diffusion
+alcove's sightline, and it must never create a fifth floor route. The recorded
+median of 198.031 seconds describes only the completed bounded run on the
+recorded workstation.
+
+### Optional evidence drawers
+
+- `Why was HINT selected?` opens the HINT-versus-MAT decision evidence without
+  repeating the whole decision notebook.
+- `Open full model record` reveals configuration, weights, prompt/seed where
+  applicable, runtime context, licensing notes and source lineage.
+- The evidence selector may show one valid local comparison such as crop SSIM,
+  but detailed metric education remains in Metric Framework.
+
+### Explicit limitations
+
+- A plausible restoration is not proof of the original painted content.
+- Metric leadership is conditional and is not universal model superiority.
+- The clean image is a controlled digital reference, not historical ground
+  truth.
+- HINT's heritage orientation does not constitute conservation approval.
+- Stable Diffusion seed variation is empirical disagreement, not calibrated
+  confidence.
+- SDXL is a bounded feasibility study and must not be presented as though it
+  covers all 2,620 eligible cases.
+- Runtime depends on hardware, environment and execution conditions.
+
+### Deliberately excluded from Model Gallery
+
+Repeated-seed, damage-size and mask-placement stress tests belong in Stability
+Lab; warning thresholds and flag prevalence belong in Trustworthiness; complete
+case-level diagnostic inspection belongs in Case Explorer; and full model
+cards, checksums, notebook lineage and downloadable bundles belong in Research
+Archive.
+
+## 05 — Stability Lab
+
+**Status:** Approved and frozen on 2026-09-28  
+**Visual authority:**
+[07_stability_lab_final.png](approved_current/07_stability_lab_final.png)
+
+### Purpose
+
+Let visitors replay controlled changes and see whether a measured restoration
+behaviour remains similar. The room keeps four different ideas separate:
+damage-size sensitivity, mask-placement robustness, procedural-degradation
+stress and repeated-seed variability.
+
+### Approved opening
+
+**Question:** *How much does a restoration change when we change the test?*
+
+> A restoration may look convincing once but behave differently when the
+> damaged area grows, the mask moves, the input changes or Stable Diffusion
+> uses another seed. Select one test and see what stays consistent.
+
+**Boundary statement:** *Stable here means less change under this controlled
+test—not historically correct, safe to conserve or certain.*
+
+### Approved dominant interaction
+
+The room is an after-hours kinetic conservation atelier, not a conventional
+dashboard. The selected damaged input and restoration appear upright,
+rectilinear and equally sized on a straight, front-facing conservation light
+wall. The curated opening is:
+
+`p018 · Damage size · 20% · LaMa · spatial masked error`
+
+This is an intentionally notable observed trajectory: p018 with LaMa had the
+steepest observed painting-level adverse slope for this measure. It is labelled
+as an example, not a universal threshold.
+
+Three physical test instruments remain visible around the comparison:
+
+- a brass aperture rail with seven stops for `Damage size`;
+- a five-position registration wheel for `Mask placement`; and
+- a bell-jar specimen trolley for `Other image changes`.
+
+They are parallel choices, not ordered stages. The selected aperture is
+mechanically aimed at the damaged-input frame but must never cast a beam or
+overlay across the painting. A separate contact-sheet drawer exposes
+`Repeated seeds · Stable Diffusion only` where four-seed evidence exists.
+
+Painting, method and evidence selectors live on a small registrar's desk rather
+than directly beneath the artwork. A single clipped trajectory is shown for the
+active test; the page must not display every stress-test chart at once.
+
+### Approved evidence populations
+
+The card-catalogue Test ledger retains the exact populations while keeping them
+secondary to the visual comparison:
+
+- **Damage size:** 35 paintings, seven per broad visual category; seven nested
+  levels at 2%, 4%, 6%, 8%, 10%, 15% and 20%; 245 cases and 980 four-method
+  candidates.
+- **Mask placement:** 35 paintings; three fixed family/area conditions and five
+  variants; 105 matched groups, 525 cases and 2,100 four-method candidates.
+- **Other image changes:** 1,155 generated procedural-degradation inputs, of
+  which 350 localized cases are restoration-eligible; 1,400 four-method
+  candidates plus 11 bounded SDXL candidates.
+- **Repeated seeds:** 1,025 supported four-seed Stable Diffusion groups across
+  the canonical and damage-size experiments; 4,100 candidate memberships and
+  6,150 unordered pairs.
+
+The 35 paintings are the independent units for the three focused stress tests.
+Their repeated cases, levels, variants and candidates are not additional
+independent paintings.
+
+### Approved concise findings
+
+- As damage grew, LaMa had the lowest adverse slope on 5 of 11 separate quality
+  anchors, Stable Diffusion on 4, Telea on 2 and HINT on 0. LaMa ranked first at
+  all seven requested sizes, but metrics and paintings still disagreed.
+- All five main Stable Diffusion disagreement components increased with damage
+  size; four met the corrected significance rule.
+- Under mask movement, LaMa had the lowest overall within-group median absolute
+  deviation on 10 of 11 anchors and Telea on one. The anchor winner changed in
+  625 of 1,155 group–anchor comparisons.
+- Under eligible procedural degradations, LaMa led all four eligible families
+  and 8 of 11 separate anchors. Exact compositing changed zero pixels outside
+  effect masks, which verifies input construction rather than successful
+  repair.
+
+These statements remain separate findings. The room must not construct a
+combined quality, stability, uncertainty or trust score.
+
+### Approved spatial and material treatment
+
+- Use a calm after-hours palette: chalky slate, muted aubergine, indigo shadow,
+  worn teal cloth, oxblood accents, walnut and aged brass.
+- Combine cool night-window light with small pools of warm task light; avoid a
+  glossy blue control-room appearance.
+- Preserve a broad empty foreground and visible window architecture.
+- Keep the mask wheel, seed drawer and degradation specimens close enough to
+  the main comparison for their labels to remain readable.
+- Keep the full-size Test ledger on the far-right wall.
+- Use the coloured book spines only as quiet micro-guides: `Observe the
+  change`, `Measure the region`, `Question the result`, `Preserve the evidence`,
+  `Analyse the pattern`, `Compare the methods` and `Respect the limits`.
+
+### Explicit limitations
+
+- Repeated-seed disagreement is an empirical variability proxy, not calibrated
+  confidence; low disagreement can still mean consistently wrong output.
+- Repeated-seed evidence applies only to supported Stable Diffusion groups. It
+  must not be attached to deterministic methods, mask-robustness cases or
+  degradation cases by association.
+- Mask-placement family and area are deliberately paired, so their independent
+  effects cannot be separated in this experiment.
+- Procedural RGB degradation is not physical ageing, material chemistry or a
+  conservation treatment simulation.
+- The clean image is a controlled digital reference, not historical ground
+  truth.
+- Seven paintings per broad category support balanced coverage, not an
+  independent art-historical style effect.
+- SDXL evidence remains bounded and descriptive.
+
+### Deliberately excluded from Stability Lab
+
+Derived review flags and their fitted thresholds belong in Trustworthiness;
+full diagnostic inspection of an individual restoration belongs in Case
+Explorer; and complete statistical tables, model configuration, notebook
+lineage and downloadable evidence belong in Research Archive.
+
+## 06 — Trustworthiness
+
+**Status:** Approved and frozen on 2026-09-28  
+**Visual authority:**
+[08_trustworthiness_final.png](approved_current/08_trustworthiness_final.png)
+
+### Purpose
+
+Explain why a restoration received an operational review flag, show the
+evidence and comparison rule that produced it, and keep the recommendation
+traceable. The page must never turn the flags into a universal trust score,
+probability of failure, expert verdict or conservation approval.
+
+### Approved opening
+
+**Question:** *Why did this restoration receive a review flag?*
+
+> Flags help us decide what to inspect. They are not probabilities, expert
+> verdicts, or proof that a restoration is right or wrong.
+
+The approved opening candidate is:
+
+`p002 · loss_large · Stable Diffusion · seed 2026`
+
+Its evidence route is presented as six physical review stations rather than a
+dashboard-card grid:
+
+1. candidate evidence;
+2. fair comparison group;
+3. threshold;
+4. failure category;
+5. review flags; and
+6. recommendation.
+
+### Candidate finding and filtering
+
+The selected clean reference, damaged input and restoration appear together
+in the left evidence cabinet. Because the union contains 13,879 candidates, a
+single flat candidate dropdown is prohibited. The approved angled catalogue
+tray supports progressive filtering by broad category, painting, damage or
+case, method and seed or prompt variant, plus direct candidate-ID search.
+
+The implemented control may expose the more diagnostic fields `review action`,
+`flag or failure category`, `experiment` and `population role` under an
+optional `More filters` drawer. It must always retain the exact candidate ID
+and must not silently substitute a different seed, prompt arm, case or model.
+
+### Fair comparison and threshold scope
+
+Two related populations must remain distinguishable:
+
+- **Matched primary comparison:** the same `case_id`, one approved primary
+  candidate for each full method, and the same experiment. Stable Diffusion is
+  fixed to the canonical prompt arm and seed 2026 for this ordinary comparison;
+  extra seeds and bounded SDXL remain separate.
+- **Threshold-fitting stratum:** the same experiment, indicator, region and
+  summary statistic. Uncertainty evidence additionally matches the prompt arm.
+  Ordinary fitting uses eligible non-zero primary candidates and excludes
+  bounded SDXL; uncertainty fitting uses eligible repeated-seed groups.
+
+The public view may use short drawer labels such as `Same experiment`, `Same
+indicator`, `Same region + statistic` and `Eligible non-zero cases`, but its
+detail view must expose the exact field names and whether the unit is an
+eligible candidate or an eligible seed group. The configured minimum fitting
+population is 30. A declared broader fallback exists, although the completed
+run did not need it.
+
+### Approved worked threshold example
+
+The central brass ruler must retain this real candidate example:
+
+- indicator: `local_texture_error_p95` in the mask bounding-box crop;
+- observed value: **10.05**;
+- critical cutoff: **4.89**;
+- direction: higher is worse; and
+- result: the indicator crosses the critical boundary and contributes a
+  critical `Texture smoothing` category.
+
+The nearby explanation must say that the critical cutoff is the fitted 97.5th
+percentile of the relevant comparison stratum. It is **not** a 97.5% chance of
+failure. The general rule is one critical indicator or warnings from two
+distinct evidence components; a flag remains a screening and review-priority
+signal rather than a correctness judgement.
+
+### Approved population and rule summary
+
+- 10,504 primary candidates: 10,480 full-method candidates plus 24 bounded
+  SDXL candidates;
+- 4,100 repeated-seed candidate memberships across 1,025 supported groups;
+- 725 candidates shared by the primary and uncertainty populations;
+- 3,375 uncertainty-only candidates;
+- 13,879 unique candidates in the union;
+- 14 operational failure categories and 11 independent review flags;
+- 194,306 category-assignment rows and 152,669 flag-assignment rows; and
+- 137 fitted threshold strata in the completed run.
+
+These counts belong in drawers or research records rather than a large KPI
+strip. Lower flag burden under these rules does not establish that a method is
+more correct.
+
+### Focused portrait-review mini room (`D02`)
+
+The portrait audit is substantial enough to require its own detailed view,
+but it is not a ninth top-level tab. The approved solution is a mini study room
+opened from the recessed `Focused portrait review — separate study` alcove in
+Trustworthiness.
+
+The same canonical mini room may also be opened from:
+
+- the compact `Focused portrait audit` summary in Study Design; and
+- contextual links attached to reviewed portraits in Case Explorer.
+
+All entrances must resolve to one subroute, for example
+`Trustworthiness / Focused portrait review`, with a visible return to the
+parent room. Study Design remains a brief explanation of why and how the audit
+was sampled; Trustworthiness owns the full evidence and interpretation.
+
+The mini room must contain two clearly separated investigations:
+
+1. **Hands and visible anatomy** — show the anatomy annotation, damage mask,
+   overlap eligibility, restored crop, paired evidence and blind visual-review
+   outcome for a selected case.
+2. **Rendered lightness context** — show the declared rendered-lightness
+   grouping, matched context, adjusted estimates and uncertainty intervals.
+   The interface must state that rendered lightness was studied, not race or
+   ethnicity.
+
+The opening scope record must retain:
+
+- 60 portraits screened;
+- 91 manually reviewed anatomical annotations;
+- 1,265 anatomy–damage intersections;
+- eligibility of at least 256 damaged anatomical pixels and 5% anatomical
+  coverage;
+- a final hand study of 45 cases from 20 independent paintings;
+- 292 eligible case-region records overall;
+- all 12 primary model–metric estimates worse for hands, with 10 of 12 meeting
+  the corrected significance rule;
+- 32 candidates in blind visual review, with 25 visible anatomical failures;
+- 30 rendered-lightness painting profiles and 10 context matches; and
+- adjusted lightness associations with zero clearly positive, three clearly
+  negative and 21 intervals crossing zero.
+
+The room must keep the automated N27 flag route and the manual/focused D02
+study visually and conceptually separate. D02 does not create a new automated
+flag family and does not justify a general inherent-bias claim.
+
+### Approved focused portrait-review presentation
+
+The final visual authority for this subroute is
+[Final Focused Portrait Review mini room](approved_current/09_focused_portrait_review_final.png),
+approved on 2026-09-28. It replaces the earlier idea of another full evidence
+wall with a smaller, quieter portrait print room that is visibly subordinate
+to, but compositionally distinct from, Trustworthiness.
+
+- Keep the main museum navigation visible with `Trustworthiness` active and a
+  breadcrumb/back route; do not add a ninth tab.
+- Use an intimate pale-sage and warm-ivory room with cherrywood, linen, aged
+  brass, daylight, an open doorway and substantial empty wall and floor space.
+- Make the selected portrait investigation the central object on a low
+  conservation table. Present `Clean`, `Damaged + mask`, `Restored`,
+  `Difference` and `Matched control` as straight physical prints with compact
+  selectors integrated into the table edge.
+- Present study formation as a small salon-style constellation of portrait
+  miniatures and pinned labels rather than KPI cards or a large drawer bank.
+- Keep the hand-penalty evidence in one restrained frame. The primary plain-
+  language conclusion is `Damaged hands were harder to restore in this
+  audit`, paired with `12/12 worse for hands`, `10/12 supported after
+  correction` and `No universal model winner`.
+- Keep blind visual review on a low folio stand with a visible-failure versus
+  acceptable-counterexample control, the `25 of 32` result and the bounded
+  review note; do not convert the selected review into a model leaderboard.
+- Place rendered lightness in a physically separate compact alcove. Its
+  conclusion is `No consistent link between restoration error and rendered
+  L*`, immediately paired with `Rendered L* is not race or identity`.
+- Integrate `D02 report`, `Annotations`, `Tables` and `Methods & limits` as
+  small archival drawer-label controls rather than underlined web links.
+- Retain the foreground reference books as quiet material cues with the exact
+  titles `Portrait screening`, `Hand anatomy`, `Matched controls` and `Blind
+  review`.
+
+The mini room must retain generous negative space and must not inherit the
+large threshold wall, stage rail, wax-seal composition or dense cabinet scale
+of the parent Trustworthiness room.
+
+### Approved spatial and material treatment
+
+- Use a warm conservation review chamber with wine-plum plaster, dark walnut,
+  moss textile, parchment and aged brass.
+- Keep a broad open floor and a readable left-to-right path from candidate to
+  threshold to category, flags and recommendation.
+- Use archive drawers, a physical percentile ruler, wax evidence seals and a
+  hanging recommendation tag instead of generic software cards or traffic
+  lights.
+- Keep the candidate selector on a gently angled catalogue tray integrated
+  into the cabinet below the evidence frames; it must never hang from the
+  painting frame.
+- Use the coloured foreground books only as quiet guides: `Evidence`,
+  `Thresholds`, `Failure rules`, `Uncertainty` and `Human review`.
+- The focused portrait audit remains a visibly separate recessed alcove whose
+  activation opens the mini study room.
+
+### Explicit limitations
+
+- Thresholds are operational relative-screening boundaries, not calibrated
+  probabilities or universal quality standards.
+- One critical indicator can trigger a category; this prioritizes inspection
+  and does not prove visible or material failure.
+- Missing evidence must not count as a pass.
+- Fewer flags can result from lost evidence and therefore do not necessarily
+  indicate an improved candidate.
+- The clean image is a controlled digital reference, not historical ground
+  truth.
+- D02's anatomy annotations and rendered-lightness groups are focused,
+  manually reviewed evidence; they do not establish demographic identity,
+  causal bias, historical correctness or conservation suitability.
+
+### Deliberately excluded from Trustworthiness
+
+Complete metric education belongs in Metric Framework; stress-test replay
+belongs in Stability Lab; unrestricted candidate-by-candidate diagnostic
+inspection belongs in Case Explorer; and full threshold tables, model cards,
+checksums, notebook lineage, ablation tables and downloadable bundles belong
+in Research Archive.
+
+## 07 — Case Explorer
+
+**Status:** Content and final visual approved on 2026-09-28  
+**Visual authority:**
+[Final Case Explorer](approved_current/10_case_explorer_final.png)
+
+### Purpose
+
+Case Explorer is the candidate-level inspection room. It lets a visitor follow
+one saved restoration from controlled reference and damage through the selected
+output, spatial evidence, numerical records, operational review status and
+source reports. It does not calculate a new score or silently pool different
+cases.
+
+### Approved opening
+
+Use the plain-language question:
+
+> What evidence supports this restoration conclusion?
+
+Follow it with one concise sentence explaining that a restoration can be
+traced from controlled damage to measurements, warnings and source records.
+
+### Candidate finding and scope
+
+The catalogue exposes the validated N29 inspection population:
+
+- 300 paintings;
+- 2,620 cases; and
+- 13,879 approved restoration candidates.
+
+Filtering may use painting, visual category, experiment, damage, model, review
+status, candidate, seed and prompt where those fields apply. The interface must
+not imply that every model, seed, prompt or evidence family exists for every
+case. Missing evidence remains visibly unavailable rather than becoming zero or
+a pass.
+
+The approved visual anchor is `p018`, mixed damage and LaMa. The implementation
+must keep its identities explicit:
+
+- experiment: canonical missing-region (`Core test` in the compact selector);
+- condition: mixed damage;
+- candidate: `candidate__lama__canonical__p018__mixed_damage__c00`; and
+- deterministic method, so generative uncertainty is not applicable.
+
+The separate `p018` scratch-thin and mild dirt/dust examples may support
+uncertainty and retrieval demonstrations, but the interface must never imply
+that those outputs belong to the mixed-damage case.
+
+### Approved dominant comparison
+
+Keep five synchronized framed views as the primary evidence:
+
+1. clean controlled reference;
+2. damaged input;
+3. mask;
+4. selected restoration; and
+5. selected evidence map.
+
+The evidence-layer selector provides difference, boundary/seam, colour,
+texture, semantic/structure and uncertainty where available. The clean image is
+a controlled pre-damage digital reference, not historical ground truth.
+
+### Approved saved-value example
+
+The compact metric ledger may use these exact saved `p018` LaMa records:
+
+- damaged-area mean Delta E 2000: `52.963 -> 4.066`, reduction `48.897`;
+  lower is better;
+- damage-crop LPIPS (AlexNet): `0.410 -> 0.019`, reduction `0.391`;
+  lower is better; and
+- damage-crop SSIM: `0.883 -> 0.969`, increase `0.086`; higher is better.
+
+Call the LPIPS and SSIM region the damage crop or mask bounding-box crop; no
+irregular masked-region record exists for those two metrics. Display saved raw
+values and direction, never a combined score.
+
+### Candidate status and trace
+
+The approved anchor is `specialist_review_required` with manual review needed
+and complete multi-family evidence. Its deterministic-method uncertainty status
+is not applicable. The concise explanation is:
+
+> One required colour indicator is missing. Missing is not a pass.
+
+This status does not mean that the three displayed metrics worsened or that the
+restoration has been proven wrong. The Trustworthiness link must open the exact
+flag derivation rather than a generic definition.
+
+### Related cases and controlled changes
+
+The stored retrieval demonstration contains ten approved queries and 100
+neighbour rows: five lower-risk and five flagged neighbours per query. DINOv2
+is the primary retrieval view; CLIP remains a separate comparison. Self,
+same-case and same-painting matches are excluded. Similarity supplies context,
+not correctness, and 735 candidates without eligible retrieval evidence remain
+visibly ineligible rather than silently removed.
+
+The `What could change?` controls may open the 14 selected N29 panels covering
+damage size, mask placement, model, metric choice, seed, prompt and removed
+evidence families. These are selected counterfactual examples, not causal
+proof.
+
+### Reports, provenance and D02 route
+
+The room links to the applicable painting report, selected case report, source
+notebooks and exact saved rows. The report population consists of 300 painting
+reports and 30 selected detailed case reports. Eligible reviewed portraits may
+open the single canonical `D02` mini room; non-portrait cases show that route as
+not applicable.
+
+### Approved spatial and material treatment
+
+- Use an enclosed verdigris conservation case room rather than a hallway or
+  open model arena.
+- Keep the left catalogue and right evidence-layer board as integrated museum
+  fixtures.
+- Embed the metric ledger, status label, provenance drawers, retrieval light
+  table and controlled-change knobs into a dark-walnut workbench.
+- Preserve visible wall, patterned floor and walking space; supporting evidence
+  must not form a stack of white dashboard boards.
+- Use aged brass catalogue symbols and muted archive books rather than modern
+  app icons.
+
+### Explicit limitations
+
+- Case evidence measures agreement with a controlled digital reference, not
+  historical correctness or material authenticity.
+- A review flag is an operational inspection aid, not expert ground truth.
+- Retrieval similarity does not establish restoration quality.
+- Selected counterfactual panels do not establish causal effects.
+- Missing evidence is neither zero nor a pass.
+- The room does not make a physical-treatment recommendation.
+
+### Deliberately excluded from Case Explorer
+
+Full study design belongs in Study Design; metric teaching belongs in Metric
+Framework; population-level model comparison belongs in Model Gallery;
+stress-test populations belong in Stability Lab; threshold construction belongs
+in Trustworthiness; and full run manifests, model cards, checksums, publication
+locations and downloadable evidence belong in Research Archive.
+
+## 08 — Research Archive
+
+**Status:** Content and final visual approved on 2026-09-28  
+**Visual authority:**
+[Final Research Archive](approved_current/11_research_archive_final.png)
+
+### Purpose
+
+Research Archive is the provenance, reproducibility, publication and download
+room. It records what a conclusion used, what validation passed, what remains
+missing, where each artifact lives and how to reproduce the corresponding
+analysis. It is not a second results dashboard.
+
+### Approved opening
+
+Use the plain-language introduction:
+
+> Trace every conclusion to its saved evidence.
+
+The archive records what was used, what passed, what is missing and where each
+artifact lives.
+
+### Approved catalogue scope
+
+The searchable archive may expose these authoritative Controlled-300 counts:
+
+- 300 paintings;
+- a 33-stage primary pipeline from N01 through N33;
+- two supplementary studies: N12A and D02;
+- 3,425 unified registered cases;
+- 13,879 approved restoration candidates;
+- 331 browsable N32 reports;
+- five model reports; and
+- 24 final N33 figures.
+
+N33 records 32 upstream manifests and 536 of 536 final-report checks passed.
+The archive must filter by `controlled_300`; existing N34-N36 and N37
+Controlled-50 records are not part of this final-room scope.
+
+### Approved central research ledger
+
+The default open ledger is `Final evaluation - N33`. It presents:
+
+- 33-stage primary pipeline;
+- N12A and D02 supplementary studies;
+- 24 final figures;
+- 49 evidence claims;
+- 18 recorded limitations; and
+- the lineage `Source -> Notebook -> Manifest -> Report -> Checksum`.
+
+The selected record exposes its run ID, notebook ID, recorded Git commit,
+dirty/clean state, configuration and SHA-256, input and output checksums,
+Python/platform/package versions and validation result. For N33, show the
+recorded dirty working-tree state honestly; do not imply a pristine checkout.
+
+### Report catalogue
+
+Keep the report populations separate:
+
+- 331 browsable N32 reports: 300 painting reports, 30 selected case reports and
+  one collection index;
+- five self-contained N31 model reports: Telea, LaMa, Stable Diffusion, SDXL
+  and HINT; and
+- one N33 final-evaluation report.
+
+The interface must not add the model and final reports to the `331` label or
+misrepresent them as the same report population.
+
+### Painting provenance and missingness
+
+The archive can state that all 300 paintings have a source URL, rights-status
+value and raw SHA-256 record. Style/period, date/period and medium are populated
+for 268 paintings; the remaining 32 retain valid image and source records but
+lack those three descriptive fields. Category balance does not establish
+historical representativeness.
+
+### Publication locations
+
+Use three purpose-specific destinations:
+
+- GitHub: notebooks, source code, configurations, documentation, compact
+  tables, manifests, validations and indexes;
+- Hugging Face Candidates: restoration candidates; and
+- Hugging Face Diagnostics: maps, metrics, bundled evidence and generated
+  reports.
+
+The external publication registry records 2,653 of 2,653 individually
+published artifacts as remotely verified. Bundled releases have their own
+verified release records and must not be silently counted as individual rows.
+Zenodo is labelled `planned after pipeline freeze`; no DOI may be invented.
+
+### Limits cabinet
+
+Keep all 18 final limitations accessible and group them into four drawers:
+
+- dataset boundary;
+- model boundary;
+- interpretation boundary; and
+- use boundary.
+
+The primary path must retain at least these statements: no universal quality or
+trust score, no expert-rating ground truth, uncertainty is not calibrated
+confidence, similarity is not correctness, and no conservation approval or
+physical-treatment recommendation is provided.
+
+### Approved spatial and material treatment
+
+- Use a spacious, clean, ancient university rare-book room with curved oak
+  shelves, stone arches, ladders, restrained brass, parchment and an open
+  central research ledger.
+- Preserve broad stone walking paths and architectural air around the smaller
+  reading desk.
+- Integrate search into a compact dark-oak card catalogue, limitations into an
+  accessible glass-fronted cabinet and publication locations into a recessed
+  document-box shelf.
+- Use crisp letterpress, engraved labels, library stamps, leather tabs and
+  restrained wax seals instead of modern colourful icons.
+- Keep distant archive destinations and publication tags readable at normal
+  full-screen size without turning them into bright banners.
+- The atmosphere may feel mysterious and old, but the room must remain clean,
+  cared for and usable rather than dirty, theatrical or fantasy-branded.
+
+### Explicit limitations
+
+- A successful checksum confirms file identity, not scientific correctness.
+- A completed validation gate only verifies the declared computational
+  contract.
+- Published availability does not remove the scope limits of the underlying
+  study.
+- Workstation runtimes and scaling projections are not universal performance
+  guarantees.
+- The archive does not convert computational evidence into historical or
+  conservation authority.
+
+### Deliberately excluded from Research Archive
+
+Do not make the archive the primary place for model ranking, stress-test replay,
+flag interpretation or free-form candidate comparison. Those tasks remain in
+Model Gallery, Stability Lab, Trustworthiness and Case Explorer respectively.

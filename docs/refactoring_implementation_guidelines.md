@@ -700,15 +700,17 @@ restorations, diagnostic maps, conclusions, limitations, filters, and
 provenance. These planning images remain outside the repository unless the user
 explicitly requests that they be retained as project artifacts.
 
-The user made that explicit retention decision on 2026-09-23 and approved the
-current primary direction on 2026-09-24. The two governing boards are stored in
+The user made that explicit retention decision on 2026-09-23, approved the
+primary direction on 2026-09-24, and completed the room-by-room content and
+visual approval pass on 2026-09-28. The governing overview boards and
+page-specific final references are stored in
 [`docs/dashboard_design_finalists/approved_current/`](dashboard_design_finalists/README.md).
-They cover all eight approved rooms and bind the future Controlled-300 UI's
-navigation, spatial museum identity, progressive evidence flow, and interaction
-grammar. Earlier selected boards remain under `alternatives/` for potential
-component reuse, not as competing layouts. All boards' illustrative labels,
-counts, metrics, painting IDs, and conclusions are not scientific evidence and
-must never be copied into the application without validation.
+They cover all eight approved rooms plus the `D02` mini room and bind the future
+Controlled-300 UI's navigation, spatial museum identity, progressive evidence
+flow, evidence density, and interaction grammar. Earlier selected boards remain
+under `alternatives/` for potential component reuse, not as competing layouts.
+All mock-image labels and values remain illustrative unless the corresponding
+page contract cites the exact validated upstream record.
 
 Once the user approves the dashboard architecture and visual direction, the
 approved mockups become a binding interaction and presentation baseline. The
@@ -718,24 +720,27 @@ but it must not silently replace the approved navigation, hierarchy, visual
 density, or conservator-facing question flow. Material redesign requires renewed
 approval.
 
-The primary composition is now selected. At the pre-N34 review, verify its
-feasibility and map final Controlled-300 content into each room before changing
-the application. Any borrowed alternative component must be explicitly named
-and must preserve one coherent navigation, typography, spacing, and interaction
-system. The traceability table must cite one of the two approved boards for
-each page or major interaction and separately identify any approved exception.
+The primary composition and final room content are now selected. Before changing
+the application, complete the remaining pre-N34 implementation-readiness audit:
+verify every required local/remote asset, measure startup and request behavior,
+approve fallbacks and caching, and map each component to its exact
+Controlled-300 producer record. Any borrowed alternative component must be
+explicitly named and must preserve one coherent navigation, typography,
+spacing, and interaction system. The traceability table must cite the applicable
+page-specific approved image and content contract for every major component and
+separately identify any approved exception.
 
 The approved application contains no more than ten principal pages. The current
 approved structure contains eight:
 
-1. Overview;
+1. Exhibition Foyer;
 2. Study Design;
 3. Metric Framework;
-4. Model Performance;
-5. Robustness & Uncertainty;
-6. Trustworthiness & XAI;
+4. Model Gallery;
+5. Stability Lab;
+6. Trustworthiness;
 7. Case Explorer;
-8. Reports & Reproducibility.
+8. Research Archive.
 
 Dashboard presentation rules:
 

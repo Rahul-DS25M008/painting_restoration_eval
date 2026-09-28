@@ -3715,22 +3715,24 @@ validation/checks.csv
 
 Prepare lightweight validated assets for the approved eight-page application:
 
-1. **Overview** — thesis framing, benchmark scope, headline findings, model
-   roles, representative evidence, and central limitations.
+1. **Exhibition Foyer** — plain-language thesis framing, benchmark scope,
+   guided-tour entry, room map, representative evidence, and central limits.
 2. **Study Design** — dataset and bias, canonical damage, damage-size, mask
    robustness, synthetic degradation, and the experiment pipeline.
 3. **Metric Framework** — canonical regions, valid metric-region combinations,
    metric families, disagreement, ablation, and interpretation limits.
-4. **Model Performance** — model stack, overall and conditional comparisons,
+4. **Model Gallery** — model stack, overall and conditional comparisons,
    local diagnostics, model cards, and compute trade-offs.
-5. **Robustness & Uncertainty** — damage-size sensitivity, mask robustness,
+5. **Stability Lab** — damage-size sensitivity, mask robustness,
    degradation sensitivity, repeated-seed variability, and spatial uncertainty.
-6. **Trustworthiness & XAI** — failure taxonomy, separate diagnostic flags,
-   difference/local/semantic maps, counterfactuals, and CLIP/DINOv2 retrieval.
+6. **Trustworthiness** — failure taxonomy, separate diagnostic flags,
+   threshold derivation, ablation evidence, and the `D02` focused portrait
+   mini-room.
 7. **Case Explorer** — complete indexed case and painting populations with
    restorations, maps, evidence, provenance, and report links.
-8. **Reports & Reproducibility** — final, model, case, painting, method, and
-   sensitivity reports together with validation and provenance evidence.
+8. **Research Archive** — final, model, case, painting, method, and sensitivity
+   reports together with validation, provenance, publication locations,
+   checksums, limitations, and reproducibility evidence.
 
 These pages must package and expose the following validated evidence without
 recomputing it:
@@ -3771,13 +3773,15 @@ priority over decoration.
 
 The frozen primary visual and interaction direction is documented in
 [`docs/dashboard_design_finalists/`](dashboard_design_finalists/README.md).
-Its two approved boards cover Exhibition Foyer, Study Design, Metric Framework,
-Model Gallery, Stability Lab, Trustworthiness, Case Explorer, and Research
-Archive. Earlier newsroom, mobile, geometric, quiet-museum, question-journey,
+Its two overview boards and nine page-specific final references cover
+Exhibition Foyer, Study Design, Metric Framework, Model Gallery, Stability Lab,
+Trustworthiness, the `D02` mini room, Case Explorer, and Research Archive.
+All page-specific content and visual contracts were approved by 2026-09-28.
+Earlier newsroom, mobile, geometric, quiet-museum, question-journey,
 exhibition, conservation-light-table, pipeline-replay, and intermediate museum
 studies remain in a separate alternatives archive. They are not competing
-layouts and may contribute a component only through an explicit pre-N34
-decision.
+layouts and may contribute a component only through an explicit recorded
+exception.
 
 Every principal page leads with a plain-language question or conclusion, then
 balances headline indicators, one or two primary analytical views,
@@ -3792,12 +3796,13 @@ painting, report, restoration, figure, and diagnostic image available from
 validated upstream artifacts. Filters and direct selection provide access to
 the complete indexed population.
 
-### Mandatory Controlled-300 dashboard approval gate before refactoring
+### Mandatory Controlled-300 implementation-readiness gate before refactoring
 
-Do not edit Notebook 34, `streamlit_app.py`, or its dashboard helpers merely
-because Notebook 33 has finished. First inspect the completed upstream
-coverage and obtain a storage/access decision; then hold a dedicated dashboard
-design review with the user. Record and obtain approval for:
+The dedicated room-by-room content and design review finished on 2026-09-28.
+Do not yet edit Notebook 34, `streamlit_app.py`, or its dashboard helpers merely
+because that design gate passed. First inspect completed upstream coverage and
+obtain the remaining storage/access and implementation decisions. Record and
+obtain approval for:
 
 - the exact evidence, metrics, plots, restorations, maps, reports, and
   conclusions on each of the eight pages, including the numerical case view;
@@ -3814,9 +3819,11 @@ design review with the user. Record and obtain approval for:
   behavior, plus a representative cross-model rendering test matrix; and
 - preservation of the approved pilot layout unless the user explicitly
   approves a Controlled-300 change; and
-- confirmation of the two-board approved dashboard direction, with a
-  page/component trace and any explicitly approved borrowing from the
-  alternatives archive.
+- a page/component trace to the nine page-specific approved references and
+  their content contracts, including the `D02` subroute; and
+- responsive and accessible implementation rules that preserve the approved
+  information hierarchy without trying to reproduce illustrative room scenery
+  as one static background image.
 
 Only after that approval may Notebook 34 package the assets and the
 application resolver be adapted. The existing pilot-50 branch and live app
