@@ -723,8 +723,8 @@ approval.
 The primary composition and final room content are now selected. Before changing
 the application, complete the remaining pre-N34 implementation-readiness audit:
 verify every required local/remote asset, measure startup and request behavior,
-approve fallbacks and caching, and map each component to its exact
-Controlled-300 producer record. Any borrowed alternative component must be
+and approve fallbacks and caching. Use the completed component-to-producer map
+as the source of the assets tested by those remaining gates. Any borrowed alternative component must be
 explicitly named and must preserve one coherent navigation, typography,
 spacing, and interaction system. The traceability table must cite the applicable
 page-specific approved image and content contract for every major component and
@@ -738,6 +738,18 @@ The canonical brand is `Painting Restoration Evidence Museum`; D02 remains one
 Trustworthiness subroute. Existing N34/N35 outputs and dashboard YAML files are
 the frozen Controlled-50 baseline and must be replaced by newly versioned
 Controlled-300 contracts, not edited piecemeal or relabelled.
+
+The producer-artifact mapping gate also completed on 2026-09-28. Its binding
+component-to-producer paths, selectors, exact example identities, and N34
+derivation register live in
+[`controlled_300_producer_artifact_map.md`](dashboard_design_finalists/controlled_300_producer_artifact_map.md).
+Notebook 34 must preserve its four provenance states: `existing_direct`,
+`existing_filtered`, `n34_derived_registered`, and
+`unsupported_until_derived`, with conditional availability recorded
+separately. A component in the last state must remain
+unavailable with an explanation until the declared derivative is created,
+validated, hashed, and registered. A convenient neighbouring candidate, image,
+threshold, crop, or temporary work file is never an acceptable substitute.
 
 The approved application contains no more than ten principal pages. The current
 approved structure contains eight:

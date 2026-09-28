@@ -231,6 +231,19 @@ hierarchy, information flow, and presentation only: all illustrative values,
 painting identities, labels, and claims must be replaced by validated
 Controlled-300 evidence.
 
+The cross-page content contract and exact producer-artifact map were completed
+on 2026-09-28 and are binding for N34:
+[`controlled_300_page_contracts.md`](dashboard_design_finalists/controlled_300_page_contracts.md)
+and
+[`controlled_300_producer_artifact_map.md`](dashboard_design_finalists/controlled_300_producer_artifact_map.md).
+The latter assigns every approved image, metric, report, and conclusion to an
+upstream artifact or a named N34 derivation. In particular, N34 must persist the
+N27 threshold-reference strata needed to explain flag derivation and must
+deterministically rebuild and register the exact D02 R005 review panel and
+matched-control geometry that were previously temporary work products. Until
+those derivatives pass validation, their UI components remain unavailable;
+similar cases or mock imagery must not be substituted.
+
 The **preliminary N34/N35 bundle-access option**, subject to that review, is:
 retain compact metadata and case/candidate/map indexes with the deployed app;
 resolve a selected visual to a producer-owned painting index and pinned N16 or

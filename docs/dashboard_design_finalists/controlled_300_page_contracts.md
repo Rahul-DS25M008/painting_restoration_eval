@@ -8,6 +8,12 @@ The live Controlled-50 application remains unchanged until all eight rooms are
 approved, the required remote assets are audited, Notebook 34 is rebuilt, and
 Notebook 35 validates the replacement.
 
+**Evidence authority:** Exact producer paths, row selectors, display states,
+and required Notebook 34 derivations are recorded in
+[`controlled_300_producer_artifact_map.md`](controlled_300_producer_artifact_map.md).
+That map is binding wherever a mockup or general page description does not
+identify an exact artifact.
+
 ## Shared rules
 
 - Use clear, everyday language in the primary reading path.
@@ -20,6 +26,9 @@ Notebook 35 validates the replacement.
   confidence, or universal model superiority.
 - Display exact source paintings and generated evidence in the implemented
   dashboard. Generated mock imagery is a layout reference only.
+- Do not render a component classified as `unsupported_until_derived` until
+  Notebook 34 creates, validates, hashes, and registers the named derivative.
+  Never substitute a visually similar case or temporary file.
 
 ## Cross-page consistency gate
 
@@ -46,7 +55,7 @@ its default. The minimum portable state is `painting_id`, `case_id`,
 `candidate_id`, `model_id`, optional `seed`, optional `prompt_variant_id`,
 `metric_name`, `region_id`, `evidence_layer`, and `return_room`. Routes into the
 focused portrait review also preserve the applicable `annotation_id`,
-`matched_control_id`, and `review_id`. An unavailable destination must explain
+`hand_control_id`, `review_unit_id`, and `blind_review_code`. An unavailable destination must explain
 why it is unavailable; it must never substitute a different case, model,
 candidate, metric, region, report, seed, prompt, annotation, control, or review
 silently.
