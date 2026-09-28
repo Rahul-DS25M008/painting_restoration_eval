@@ -721,10 +721,12 @@ density, or conservator-facing question flow. Material redesign requires renewed
 approval.
 
 The primary composition and final room content are now selected. The remote
-integrity and runtime-loading gates completed on 2026-09-28. Before changing
-the application, freeze the final N34 implementation contract and asset-manifest
-schema from the page contract, component-to-producer map, remote audit and
-runtime contract. Any borrowed alternative component must be
+integrity, runtime-loading and final N34 implementation-contract gates completed
+on 2026-09-28. The binding `dashboard_package.v2`, manifest schema, derivations,
+execution batches and visual-fidelity rules are recorded in
+[`controlled_300_n34_implementation_contract.md`](dashboard_design_finalists/controlled_300_n34_implementation_contract.md).
+Step 6 may now refactor and execute N34; the Streamlit application is changed
+only after that package passes. Any borrowed alternative component must be
 explicitly named and must preserve one coherent navigation, typography,
 spacing, and interaction system. The traceability table must cite the applicable
 page-specific approved image and content contract for every major component and
@@ -2237,10 +2239,10 @@ The current storage tiers are:
    producers may use the same indexed-bundle workflow after notebook-specific
    classification, capacity checks, full remote verification, and a separate
    user-controlled upload gate. This does not decide the dashboard backend.
-4. **Future storage and deployment:** after N33 and before changing N34, review
-   the complete local evidence, prospective storage options, costs, public
-   access, and dashboard feasibility with the user. Only an approved storage
-   contract may feed the N34 dashboard design and later deployment. Zenodo
+4. **Dashboard storage and deployment:** the pre-N34 review completed on
+   2026-09-28. The approved local-bootstrap, immutable remote-route, cache and
+   fallback contract now feeds N34 and later deployment. It does not authorize
+   deleting local evidence or mutating the verified remote releases. Zenodo
    archival release remains a separate post-freeze decision.
 
 **Git LFS quota guard (2026-09-21).** GitHub reported 9.01 GiB of the included
@@ -2369,34 +2371,32 @@ configuration, helpers, compact tables, validation records, and manifests;
 no newly generated images are staged during this phase. Existing verified
 N12–N15 external objects remain untouched.
 
-After N33, before N34 preparation, perform a separate storage review using
-actual producer sizes, file counts, license constraints, retrieval needs,
-free-tier limits, and the complete proposed dashboard visual index. Compare
-at least direct-object access and bounded on-demand packaging; do not assume
-Hugging Face datasets, buckets, Git LFS, or Zenodo solves the problem. Test one
-representative public write/read path and its cost/quota behavior before any
-bulk migration. Obtain user approval for the storage contract first, then for
-the N34 dashboard scope and UI; N35 validates the implemented application.
-The live 50-painting dashboard stays on its existing branch and deployment.
+The post-N33 storage review completed on 2026-09-28 using actual producer sizes,
+file counts, retrieval needs, verified public routes and application limits.
+The resulting remote audit and runtime contract approve a zero-network local
+bootstrap plus immutable on-demand GitHub/Hugging Face retrieval. They do not
+assume that one provider contains every asset and do not authorize bulk
+migration or local cleanup. N35 validates the implemented application. The live
+50-painting dashboard stays on its existing branch and deployment until the new
+application passes that gate.
 
-Use the two governing boards in
-[`docs/dashboard_design_finalists/approved_current/`](dashboard_design_finalists/README.md)
-during that UI review. Confirm each room's content, evidence source, dominant
-interaction, accessibility fallback, responsive behavior, and remote-asset
-requirements. Record every approved deviation or borrowed alternative
-component; silence is not approval to redesign the selected system.
+The completed UI review used the two governing boards and nine page-specific
+references in
+[`docs/dashboard_design_finalists/approved_current/`](dashboard_design_finalists/README.md).
+Step 7 must continue to trace each room's content, evidence source, dominant
+interaction, accessibility fallback, responsive behavior and remote-asset
+requirements to those references. Record every approved deviation or borrowed
+alternative component; silence is not approval to redesign the selected system.
 
-**Preliminary Streamlit bundle access, not yet a deployment contract.** N34
-may include compact metadata plus local-to-remote case/candidate/map indexes.
-A selection would resolve to a painting index under a pinned N16/N17 revision,
-download only the needed bounded ZIP, validate the bundle and exact member,
-then reuse it in a size-limited cache. Never enumerate/download every bundle
-or ingest the N17 gigabyte CSV at startup. Compact filterable numeric views or
-on-demand partitions must be designed separately; they cannot silently omit
-applicable cases. Before implementation, test public cold/warm retrieval,
-cache eviction, Streamlit memory/network budgets, missing-asset behavior, and
-representative cross-model views with the user. The pre-N34 storage and page
-design approval gate and N35 validation remain mandatory.
+**Binding Streamlit bundle access.** The final N34 contract requires compact
+bootstrap metadata, room partitions, 300 per-painting identity/route shards and
+immutable asset locators. A deliberate selection resolves through the trusted
+root manifest to a pinned object or painting index, downloads at most one
+bounded ZIP, validates the complete checksum chain and reuses it in the 512 MiB
+cache. Never enumerate/download every bundle or scan the N17 gigabyte CSV at
+runtime. Compact filterable numeric views are produced by N34 and retain exact
+producer row IDs/checksums. N35 validates cold/warm retrieval, cache eviction,
+memory/network budgets, failures, identity preservation and responsive views.
 
 For each completed notebook before that review, provide scoped **GitHub
 scientific-record commands** and, if large outputs warrant publication,

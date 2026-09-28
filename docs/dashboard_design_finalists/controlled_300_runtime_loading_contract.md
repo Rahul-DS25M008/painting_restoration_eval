@@ -11,8 +11,10 @@ Streamlit implementation, and Notebook 35 deployment validation
 and
 [`controlled_300_remote_asset_audit.md`](controlled_300_remote_asset_audit.md)
 
-**Next gate:** Step 5 final N34 implementation contract and asset-manifest
-schema
+**Step 5 implementation authority:**
+[`controlled_300_n34_implementation_contract.md`](controlled_300_n34_implementation_contract.md)
+
+**Next gate:** Step 6 Notebook 34 refactor and package execution
 
 ## Decision
 
@@ -213,8 +215,8 @@ paths or raw tracebacks.
 
 The renderer uses distinct machine-readable and plain-language states:
 `not_applicable`, `not_published`, `not_found`, `offline_uncached`, `timeout`,
-`rate_limited`, `integrity_error` and `decode_error`. Only transient network
-states expose Retry.
+`rate_limited`, `access_denied`, `integrity_error` and `decode_error`. Only
+transient network states expose Retry.
 
 There is no identity fallback. A packaged web rendition may stand in for its
 own full-resolution source only when its N34 manifest records the same producer
@@ -324,6 +326,7 @@ Notebook 35 must exercise at least:
 10. instrumentation showing request count, downloaded bytes, cache bytes, load
    duration and user-visible outcome without exposing secrets.
 
-Step 4 is complete only as a runtime decision. Step 5 must now translate these
+Step 4 is complete as a runtime decision. Step 5 subsequently translated these
 rules and the Step 2 producer bindings into the final N34 schema, required
-derivations, validators and exact output contract.
+derivations, validators and exact output contract. Step 6 now implements and
+executes that package contract.

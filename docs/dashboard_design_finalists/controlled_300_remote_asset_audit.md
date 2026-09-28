@@ -10,8 +10,10 @@ bundle releases, the N32 report package, checksums, and missing-asset behaviour
 **Runtime gate:** Step 4 completed in
 [`controlled_300_runtime_loading_contract.md`](controlled_300_runtime_loading_contract.md)
 
-**Next gate:** Step 5 final N34 implementation contract and asset-manifest
-schema
+**Implementation gate:** Step 5 completed in
+[`controlled_300_n34_implementation_contract.md`](controlled_300_n34_implementation_contract.md)
+
+**Next step:** Step 6 Notebook 34 refactor and package execution
 
 ## Decision
 
@@ -179,5 +181,6 @@ Step 3 certifies identity and availability. Step 4 subsequently approved:
 - responsive image/rendition choices; and
 - the exact user-facing unavailable/error states.
 
-Those decisions are binding through the runtime loading contract. Step 5 now
-freezes the final N34 implementation contract and asset-manifest schema.
+Those decisions are binding through the runtime loading contract. Step 5 has
+now frozen the final N34 implementation contract and asset-manifest schema;
+Step 6 implements and executes them.

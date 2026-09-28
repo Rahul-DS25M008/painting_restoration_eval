@@ -18,6 +18,9 @@ rules are recorded in
 Runtime loading, caching, retry, responsive-layout and degraded-mode rules are
 recorded in
 [`controlled_300_runtime_loading_contract.md`](controlled_300_runtime_loading_contract.md).
+The final package schema, binding records, execution plan and visual-fidelity
+gate are recorded in
+[`controlled_300_n34_implementation_contract.md`](controlled_300_n34_implementation_contract.md).
 
 ## Shared rules
 

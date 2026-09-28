@@ -259,10 +259,15 @@ evidence/index package, zero external startup requests, active-room/active-layer
 execution, no runtime scans of producer-scale CSVs, a 512 MiB
 checksum-validating remote cache, bounded retries, registered responsive
 renditions and explicit degraded states.
-Step 5 now translates the page, producer, remote and runtime contracts into the
-final N34 implementation contract and asset-manifest schema.
+Step 5 completed on 2026-09-28 in
+[`controlled_300_n34_implementation_contract.md`](dashboard_design_finalists/controlled_300_n34_implementation_contract.md).
+It freezes `dashboard_package.v2`, the root trust manifest, display bindings,
+asset/rendition/remote-locator records, nine room/subroute partitions, seven
+mandatory derivation groups, ten restart-safe execution batches and the
+desktop/tablet/mobile visual-fidelity gate. Step 6 now refactors and executes
+Notebook 34 against that contract.
 
-The **preliminary N34/N35 bundle-access option**, subject to that review, is:
+The **approved N34/N35 bundle-access design** is:
 retain compact metadata and case/candidate/map indexes with the deployed app;
 resolve a selected visual to a producer-owned painting index and pinned N16 or
 N17 diagnostics revision; fetch only its bounded ZIP bundle on demand; verify
@@ -3741,7 +3746,8 @@ validation/checks.csv
 **Notebook:** `34_final_streamlit_dashboard_assets.ipynb`\
 **Origin:** Consolidates Existing Previous Versions of Notebooks 29 and 34, Pre-refactor  
 **Output root:** `outputs/34_final_streamlit_dashboard_assets/`\
-**Depends on:** Notebooks 01–33
+**Depends on:** Notebooks 01–33 plus the separately registered N12A, D01 and
+D02 records
 
 ### Responsibilities
 
@@ -3828,13 +3834,13 @@ painting, report, restoration, figure, and diagnostic image available from
 validated upstream artifacts. Filters and direct selection provide access to
 the complete indexed population.
 
-### Mandatory Controlled-300 implementation-readiness gate before refactoring
+### Completed Controlled-300 implementation-readiness gate
 
-The dedicated room-by-room content and design review finished on 2026-09-28.
-Do not yet edit Notebook 34, `streamlit_app.py`, or its dashboard helpers merely
-because that design gate passed. First inspect completed upstream coverage and
-obtain the remaining storage/access and implementation decisions. Record and
-obtain approval for:
+The dedicated room-by-room content/design, producer mapping, remote integrity,
+runtime loading and final implementation-contract reviews all finished on
+2026-09-28. Their binding implementation authority is
+[`controlled_300_n34_implementation_contract.md`](dashboard_design_finalists/controlled_300_n34_implementation_contract.md).
+The completed gate records:
 
 - the exact evidence, metrics, plots, restorations, maps, reports, and
   conclusions on each of the eight pages, including the numerical case view;
@@ -3849,17 +3855,18 @@ obtain approval for:
   never the whole map corpus on app startup;
 - explicit missing-asset, temporarily unavailable-storage, and optional-model
   behavior, plus a representative cross-model rendering test matrix; and
-- preservation of the approved pilot layout unless the user explicitly
-  approves a Controlled-300 change; and
+- preservation of the approved room layouts unless the user explicitly
+  approves a Controlled-300 change;
 - a page/component trace to the nine page-specific approved references and
-  their content contracts, including the `D02` subroute; and
+  their content contracts, including the `D02` subroute;
 - responsive and accessible implementation rules that preserve the approved
   information hierarchy without trying to reproduce illustrative room scenery
   as one static background image.
 
-Only after that approval may Notebook 34 package the assets and the
-application resolver be adapted. The existing pilot-50 branch and live app
-remain unchanged through this review.
+This approval now authorizes Step 6 to refactor the N34 configuration, helper,
+tests and notebook as one `v2` layer and execute its package batches. It does
+not authorize changing or redeploying the live pilot application; application
+implementation begins only after the N34 package passes.
 
 The dashboard consumes prepared assets and does not rerun experiments or
 reconstruct project state from arbitrary outputs.
@@ -3867,16 +3874,28 @@ reconstruct project state from arbitrary outputs.
 ### Canonical outputs
 
 ```text
-data/dashboard_summary.json
-data/dashboard_tables/
-data/dashboard_indexes/
-manifests/dashboard_assets.csv
+data/bootstrap/
+data/rooms/
+data/paintings/
+data/reports/
+data/derived/
+assets/renditions/
+manifests/dashboard_runtime_manifest.json
+manifests/display_components.csv
+manifests/dashboard_assets.parquet
+manifests/asset_locators.parquet
+manifests/renditions.csv
+manifests/room_partitions.csv
 manifests/run_manifest.json
 manifests/artifacts.csv
 validation/checks.csv
 ```
 
-The Streamlit application must be updated to read this notebook-owned asset root rather than legacy `outputs/dashboard/`.
+The Streamlit application must be updated to read this notebook-owned `v2`
+asset root rather than legacy `outputs/dashboard/` or the eager pilot package.
+Notebook 34 uses ten restart-safe batches: preflight, identity normalization,
+bootstrap, selector/routes, room partitions, required derivations, renditions,
+remote locators, trust manifests and atomic persistence/completion.
 
 ---
 

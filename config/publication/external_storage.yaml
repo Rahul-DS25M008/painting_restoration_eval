@@ -177,6 +177,16 @@ deployment:
   lazy_remote_assets_required: true
   runtime_contract: docs/dashboard_design_finalists/controlled_300_runtime_loading_contract.md
   runtime_contract_status: approved_step4_2026_09_28
+  n34_implementation_contract: docs/dashboard_design_finalists/controlled_300_n34_implementation_contract.md
+  n34_implementation_contract_status: approved_step5_2026_09_28
+  controlled_300_dashboard_schemas:
+    package: dashboard_package.v2
+    runtime_manifest: dashboard_runtime_manifest.v1
+    display_binding: dashboard_display_binding.v1
+    asset: dashboard_asset.v1
+    locator: dashboard_locator.v1
+    rendition: dashboard_rendition.v1
+    room_partition: dashboard_room_partition.v1
   runtime_budgets:
     boot_critical_bytes_target: 8388608
     boot_critical_bytes_hard_max: 12582912

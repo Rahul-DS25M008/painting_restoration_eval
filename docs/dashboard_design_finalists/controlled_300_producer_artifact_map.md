@@ -1,6 +1,6 @@
 # Controlled-300 Dashboard Producer-Artifact Map
 
-**Status:** Pre-N34 Steps 2–4 complete on 2026-09-28
+**Status:** Pre-N34 Steps 2–5 complete on 2026-09-28
 
 **UI authority:** `controlled_300_page_contracts.md`
 
@@ -10,7 +10,9 @@
 
 **Runtime authority:** `controlled_300_runtime_loading_contract.md`
 
-**Next gate:** final N34 implementation contract and asset-manifest schema
+**Implementation authority:** `controlled_300_n34_implementation_contract.md`
+
+**Next step:** refactor and execute Notebook 34
 
 ## Purpose
 

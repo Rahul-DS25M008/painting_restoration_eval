@@ -1214,10 +1214,12 @@ Controlled-50 final-report, dashboard and packaging layer**. They remain valid
 as pilot evidence and recovery documentation, but only the Notebook 33 record
 now has a completed current Controlled-300 successor. Notebook 33 is the
 canonical Controlled-300 final synthesis; Notebooks 34–36 remain pending. The
-pre-N34 design, producer mapping, immutable remote-integrity and runtime-loading
-gates completed on 2026-09-28. The remaining gate is the final N34
-implementation contract and asset-manifest schema; the historical N34–N36
-outputs must not be relabelled as Controlled-300.
+pre-N34 design, producer mapping, immutable remote-integrity, runtime-loading
+and final implementation-contract gates completed on 2026-09-28. The binding
+`dashboard_package.v2` contract is
+`docs/dashboard_design_finalists/controlled_300_n34_implementation_contract.md`;
+Step 6 now refactors and executes N34. The historical N34–N36 outputs must not
+be relabelled as Controlled-300.
 
 The completed Notebook 32 contract binds 25 upstream manifests and 41 input
 tables to 300 paintings, 2,620 evaluated cases and 13,879 approved candidates:

@@ -2,7 +2,8 @@
 
 **Status:** All eight top-level rooms and the `D02` mini room approved through
 2026-09-28; cross-page consistency, producer-artifact mapping and remote
-integrity, and runtime loading gates completed on 2026-09-28
+integrity, runtime loading and final N34 implementation-contract gates completed
+on 2026-09-28
 **Mandatory review point:** After Notebook 33 and immediately before Notebook
 34 or any Controlled-300 Streamlit implementation begins  
 **Scope:** Navigation, interaction, visual hierarchy, information flow, and
@@ -52,6 +53,10 @@ supersede the corresponding illustrative room on the two overview boards:
 - [Controlled-300 runtime loading contract](controlled_300_runtime_loading_contract.md),
   which fixes local bootstrap, on-demand retrieval, cache, retry, resource,
   responsive-layout and degraded-mode rules.
+- [Controlled-300 N34 implementation contract](controlled_300_n34_implementation_contract.md),
+  which fixes the `dashboard_package.v2` structure, manifests, identities,
+  required derivations, validation gates, execution batches and visual-fidelity
+  tests.
 
 Together they define a chromatic, tactile, painting-first museum that remains a
 usable website. The approved interaction language includes illuminated room
@@ -162,10 +167,10 @@ dashboard must not turn visual plausibility, metric performance, stability, or
 a computational review flag into a claim of historical correctness,
 conservation approval, calibrated confidence, or universal model superiority.
 
-## Mandatory pre-Notebook-34 review
+## Completed pre-Notebook-34 review
 
-Before Notebook 34 is refactored, review the two approved boards against the
-completed Controlled-300 evidence and confirm:
+The completed review checked the approved references against the Controlled-300
+evidence and confirmed:
 
 1. the eight-room navigation and primary interaction assigned to each room;
 2. any explicitly approved component borrowed from the alternatives archive;
@@ -174,17 +179,19 @@ completed Controlled-300 evidence and confirm:
 5. the supervisor-guided presentation path and the free exploration path; and
 6. the local/remote asset-loading contract established by the storage review.
 
-Items 1, 3, 4 and 6 were completed on 2026-09-28.
-The result freezes the eight-room
+All six items were completed on 2026-09-28. No alternative component is adopted
+unless the page contract names it, and the guided route follows the eight-room
+sequence with D02 as an optional Trustworthiness branch. The result freezes the eight-room
 order, the single D02 subroute, the canonical brand, public population labels,
 clean-reference language, exact-candidate handoff and no-silent-fallback rule.
 Every approved evidence component is now classified as an existing direct
 artifact, an existing filtered view, an N34-derived registered asset, a
 conditionally available instance of one of those states, or unsupported until
 its declared derivation exists.
-Immutable remote URL/checksum validation and the runtime lazy-loading, caching,
-startup, responsive and retry/fallback contract also pass. The next gate is the
-final N34 implementation contract and asset-manifest schema.
+Immutable remote URL/checksum validation, the runtime lazy-loading, caching,
+startup, responsive and retry/fallback contract, and the final
+`dashboard_package.v2`/asset-manifest design also pass. The next step is the
+versioned Notebook 34 refactor and package execution.
 
 Notebook 34 then packages only the assets required by that confirmed contract.
 Notebook 35 validates fidelity, functionality, evidence coverage, and deployed
