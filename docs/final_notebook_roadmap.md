@@ -3953,9 +3953,9 @@ evidence until that rerun passes.
 
 **Notebook:** `35_dashboard_and_deployment_validation.ipynb`\
 **Origin:** New Notebook  
-**Refactor status:** Finished\
-**Validation status:** Finished with non-blocking dependency warnings\
-**Completion gate passed:** Yes\
+**Historical Controlled-50 status:** Finished with non-blocking dependency warnings\
+**Controlled-300 implementation status:** Preparation layer in progress; room implementation and validation pending\
+**Controlled-300 completion gate passed:** No\
 **Output root:** `outputs/35_dashboard_and_deployment_validation/`\
 **Depends on:** Notebook 34, `streamlit_app.py`,
 `config/evaluation/dashboard_validation.yaml`, and
@@ -3978,6 +3978,31 @@ Foyer`, `Study Design`, `Metric Framework`, `Model Gallery`, `Stability Lab`,
 `Trustworthiness`, `Case Explorer`, and `Research Archive`, plus the single D02
 subroute. It must consume a newly built Controlled-300 N34 package rather than
 relabel the pilot package.
+
+The Controlled-300 application is implemented and reviewed room by room. Each
+room receives a live local Streamlit preview against its approved visual
+reference before work moves to the next room. This is a ten-batch delivery and
+validation sequence:
+
+1. replace the pilot validation contract and data-access helper with the v2
+   zero-network, lazy-loading trust boundary;
+2. implement and approve the shared museum shell and Exhibition Foyer;
+3. implement and approve Study Design;
+4. implement and approve Metric Framework;
+5. implement and approve Model Gallery;
+6. implement and approve Stability Lab;
+7. implement and approve Trustworthiness plus its D02 Focused Portrait Review
+   child room;
+8. implement and approve Case Explorer;
+9. implement and approve Research Archive;
+10. run cross-room, responsive, deep-link, remote-fallback, cache, missing-asset,
+    application-smoke and canonical-persistence validation.
+
+Only the active room may execute its data and asset work. Approved mockups are
+visual authorities, never deployable page backgrounds. High fidelity means the
+live interface preserves the approved composition, hierarchy, space, palette
+and interaction roles while real evidence and responsive layouts remain usable;
+it does not mean a fixed screenshot is copied pixel for pixel.
 
 The approved page-specific UI references are repository planning artifacts, not
 scientific dashboard inputs or deployable page backgrounds. Notebook 35

@@ -745,7 +745,10 @@ schemas. A Batch 1 preflight must retain zero producer-scale
 dataframes and write zero N34 output files. The assistant must continue the
 normal notebook rule: never edit the `.ipynb` directly; provide complete
 replacement markdown/code cells for the user to paste and run. The live pilot
-application and `dashboard_application.py` remain unchanged until Step 7.
+application and `dashboard_application.py` remained unchanged through Step 6.
+Step 7 now replaces the application helper and validation contract as one v2
+unit; `streamlit_app.py` stays on its pilot implementation until the first
+visual room batch is prepared.
 
 Because Git LFS is exhausted, N34's promoted package may enter ordinary Git
 only while its blocking 64 MiB package ceiling passes. Path-specific N34
@@ -762,6 +765,25 @@ below the 64 MiB hard ceiling. There is no promoted `work/` tree. These observed
 values, rather than the historical pilot's 19-file eager package, are the N35
 input contract. N35 must fail rather than fall back to legacy dashboard tables
 or silently mix the two packages.
+
+Notebook 35 uses a separate room-by-room visual approval workflow. Its first
+batch replaces and validates the Controlled-50 contract and eager loader as one
+coherent v2 trust boundary; it does not write canonical N35 outputs. Subsequent
+batches implement exactly one principal room at a time, except that the D02
+Focused Portrait Review is reviewed with its Trustworthiness parent. After each
+room batch, run the local Streamlit application, open that route directly, and
+compare it with the approved reference before proceeding. The assistant may
+edit application, configuration, helper and test files directly, but must never
+edit the notebook file: complete notebook markdown and code replacements remain
+user-pasted and user-executed. Keep the public pilot branch unchanged until the
+final Controlled-300 validation gate passes.
+
+Room approval requires real N34 evidence, readable controls and labels, the
+approved dominant composition and negative space, a nearby limitation, no
+overlap or clipping, and acceptable desktop/tablet/mobile reflow. A mock PNG
+must never be used as a page background. Hidden rooms, closed expanders and
+unsubmitted selectors must not load remote evidence. An approved room remains
+frozen except for a documented cross-room consistency or accessibility fix.
 
 The final N34 sweep must also scan package text manifests for machine-specific
 absolute paths. Four passing validation rows originally serialized the local

@@ -66,6 +66,17 @@ validated, baseline-compared and committed. Complete local outputs remain
 canonical even where large evidence is also represented by verified external
 publication records.
 
+**Controlled-300 Notebook 35 preparation: 2026-09-28.** The historical N35
+outputs remain evidence of the pilot run, but they are not valid inputs or
+completion evidence for the new application. Preparation replaces the frozen
+v1 validation YAML and eager CSV helper as one `dashboard_package.v2` trust
+boundary. The target interface has eight principal rooms in the approved order
+and one D02 child route under Trustworthiness. Implementation is reviewed one
+live room at a time against the approved repository references; the application
+must start offline, load only the active room, preserve exact artifact identity,
+and expose explicit unavailable/integrity states instead of substitutions. The
+live pilot deployment remains unchanged until the new N35 gate passes.
+
 **Git LFS capacity guard: 2026-09-21.** GitHub reported 9.01 GiB used from the
 10.0 GiB included LFS allowance, with a `$0` hard budget and reset date of
 2026-10-01. Post-N11 bulk evidence must therefore remain local or use a

@@ -7,7 +7,10 @@ from pathlib import Path
 
 import pandas as pd
 
-from restoration_eval.dashboard_application import load_dashboard_package
+from restoration_eval.dashboard_application import (
+    DASHBOARD_PACKAGE_SCHEMA_VERSION,
+    load_dashboard_package,
+)
 from restoration_eval.dashboard_metrics import (
     METRIC_SOURCES, aggregate_metric_records, attach_candidate_identity,
     candidate_seed_metadata, load_case_metric_rows, metric_source_path,
@@ -17,6 +20,14 @@ from restoration_eval.dashboard_metrics import (
 ROOT = Path(__file__).resolve().parents[1]
 
 
+@unittest.skipIf(
+    DASHBOARD_PACKAGE_SCHEMA_VERSION == "dashboard_package.v2",
+    (
+        "Historical Controlled-50 dashboard-metrics integration tests; "
+        "the Controlled-300 room contract is validated by "
+        "test_dashboard_application.py and the room-specific N35 batches."
+    ),
+)
 class DashboardMetricsTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

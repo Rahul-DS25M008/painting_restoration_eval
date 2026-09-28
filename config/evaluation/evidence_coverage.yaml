@@ -2770,6 +2770,30 @@ evidence_coverage:
       status: "completed_validation_warning"
       execution_scope: "historical_controlled_50"
       controlled_300_rerun_required: true
+      controlled_300_target:
+        status: "preparation_in_progress"
+        completion_gate_passed: false
+        input_package_schema_version: "dashboard_package.v2"
+        input_runtime_manifest_schema_version: "dashboard_runtime_manifest.v1"
+        input_run_id: "run_1e831de6e27f9ead0147bb30"
+        input_release_id: "release_c5edf0d0ec99affbfa403726"
+        principal_rooms: 8
+        child_routes: 1
+        room_order:
+          - "exhibition_foyer"
+          - "study_design"
+          - "metric_framework"
+          - "model_gallery"
+          - "stability_lab"
+          - "trustworthiness"
+          - "case_explorer"
+          - "research_archive"
+        child_route_ids:
+          - "focused_portrait_review"
+        implementation_rule: "approve_each_live_room_before_implementing_the_next"
+        startup_network_requests: 0
+        creates_new_scientific_evidence: false
+        canonical_output_count: 4
       completion_gate_passed: true
       run_id: "run_e04d0dfa163b4a15966c5420b01d74c7"
       output_root: "outputs/35_dashboard_and_deployment_validation"
