@@ -1,9 +1,15 @@
 # Controlled-300 Dashboard Producer-Artifact Map
 
-**Status:** Pre-N34 Step 2 complete on 2026-09-28  
-**UI authority:** `controlled_300_page_contracts.md`  
-**Scope:** eight public rooms plus the D02 focused portrait-review subroute  
-**Next gate:** remote URL, revision, checksum and missing-asset verification
+**Status:** Pre-N34 Steps 2 and 3 complete on 2026-09-28
+
+**UI authority:** `controlled_300_page_contracts.md`
+
+**Scope:** eight public rooms plus the D02 focused portrait-review subroute
+
+**Remote authority:** `controlled_300_remote_asset_audit.md`
+
+**Next gate:** runtime lazy loading, caching, startup limits, responsive
+behaviour and fallback policy
 
 ## Purpose
 
@@ -31,9 +37,11 @@ available component still records whether its evidence is direct, filtered or
 derived; the UI then shows it only when the exact active identity has that
 supporting record.
 
-Remote repositories, revisions, URLs and checksum reads are intentionally not
-certified here; that is Step 3. Publication hints in this file only determine
-which registry or bundle record Step 3 must verify.
+Remote repositories, revisions, URL forms, checksum reads and missing-asset
+behaviour were certified by Step 3 in
+[`controlled_300_remote_asset_audit.md`](controlled_300_remote_asset_audit.md).
+Publication hints in this file bind a component to that certified transport
+record; N34 must still compile the exact immutable route into its manifest.
 
 ## Producer-root register
 
@@ -122,7 +130,7 @@ The curated opening is case `canonical__p018__mixed_damage`, candidate
 | Display ID | Display | Producer binding | State / handoff |
 |---|---|---|---|
 | `metric.anchor.images` | Clean, mask, damaged and LaMa result | N02 `clean/p018.png`; N03 `p018/mixed_damage.png`; N04 `p018/mixed_damage.png`; N10 `canonical__p018__mixed_damage.png` | `existing_direct` |
-| `metric.anchor.signed_improvement` | Opening inspection map | N16 `images/maps/lama/spm_e5f9511cc6c7d95a/masked_signed_improvement.png`; exact index row in N16 `manifests/map_images.csv` | `existing_direct`; verified N16 diagnostics bundle is the remote candidate for Step 3 |
+| `metric.anchor.signed_improvement` | Opening inspection map | N16 `images/maps/lama/spm_e5f9511cc6c7d95a/masked_signed_improvement.png`; exact index row in N16 `manifests/map_images.csv` | `existing_direct`; pinned N16 diagnostics bundle verified by Step 3 |
 | `metric.lens.pixel` | MAE, MSE, PSNR | N13 `classical_metrics.csv`, `metric_family=classical_pixel` and exact `metric_name`/`region_id` | `existing_filtered` |
 | `metric.lens.structure` | SSIM | N13 table, `metric_family=ssim`, `metric_name=ssim` | `existing_filtered` |
 | `metric.lens.perceptual` | LPIPS AlexNet | N14 `lpips_metrics.csv`, `metric_name=lpips`, `network=alex` | `existing_filtered` |
@@ -147,9 +155,9 @@ The opening case is `canonical__p018__mixed_damage`.
 | `models.anchor.input` | Damaged painting and mask | N04 `images/damaged/p018/mixed_damage.png`; N03 `images/masks/p018/mixed_damage.png` | `existing_direct` |
 | `models.output.telea` | Telea restoration | N09 `images/restored/canonical_missing_region/canonical__p018__mixed_damage.png`; candidate `candidate__opencv_telea__canonical__p018__mixed_damage__c00` | `existing_direct` |
 | `models.output.lama` | LaMa restoration | N10 equivalent path; candidate `candidate__lama__canonical__p018__mixed_damage__c00` | `existing_direct` |
-| `models.output.hint` | HINT restoration | N12A equivalent path; candidate `candidate__hint_places2__canonical__p018__mixed_damage__c00` | `existing_direct`; HF Candidates publication candidate for Step 3 |
+| `models.output.hint` | HINT restoration | N12A equivalent path; candidate `candidate__hint_places2__canonical__p018__mixed_damage__c00` | `existing_direct`; exact HF Candidates object verified under the Step 3 route contract |
 | `models.output.sd15` | Stable Diffusion restoration | N11 `canonical__p018__mixed_damage/sd15__p00__s2026__d0cd65cf894a.png` | `existing_direct` |
-| `models.output.sdxl` | Conditional SDXL vitrine | N12 `canonical__p018__mixed_damage/sdxl__5d3f1bc4bed2__p00_generic__seed2026.png`; show only a completed exact row | `existing_direct`; availability is conditional; HF Candidates publication candidate for Step 3 |
+| `models.output.sdxl` | Conditional SDXL vitrine | N12 `canonical__p018__mixed_damage/sdxl__5d3f1bc4bed2__p00_generic__seed2026.png`; show only a completed exact row | `existing_direct`; availability is conditional; exact HF Candidates object verified under the Step 3 route contract |
 | `models.records` | Method descriptions and complete records | N30 `model_cards.csv`; N31 `report_index.csv` and five HTML reports | `existing_direct` / `existing_filtered` |
 | `models.conclusion.anchors` | LaMa led 10/11 separate anchors; Telea led crop SSIM | N21 `metric_disagreement.csv`, overall rows; crop-SSIM row has `anchor_id=structural_crop_ssim`, `region_id=mask_bbox_crop` | `existing_filtered`; always show no-combined-score qualifier |
 | `models.runtime` | Recorded median runtimes | N09, N10, N11, N12 and N12A runtime summaries, or their lineage-preserving N30 model-card fields | `existing_filtered`; workstation-specific |
@@ -169,7 +177,7 @@ The opening replay is `p018`, 20% damage size and LaMa.
 | `stability.mask.summary` | 35 paintings, 105 groups, 525 cases, 2,100 candidates and mask-placement findings | N06 design plus N24 `mask_robustness_analysis.csv`, figures and report | `existing_filtered`; N24 bulk table is a diagnostics publication candidate |
 | `stability.degradation.summary` | 1,155 generated, 350 eligible, 1,400 primary and 11 bounded SDXL candidates | N07 design; N25 `degradation_analysis.csv` filtered to `dirt_dust`, `partial_transparency`, `water_stain`, `water_stain_dirt` | `existing_filtered`; N25 bulk table is a diagnostics publication candidate |
 | `stability.seed.group` | p018 20% four-seed Stable Diffusion group | Seed 2026 N11 candidate `sd15__p00__s2026__bc46647b2698`; seeds 2027–2029 N22 candidates `sd15dsu__eb31376e152c1244`, `sd15dsu__b82cbfb9b3d389fc`, `sd15dsu__2b547cbdd68b2f6e`; group `ug_1de955f7e0f3d00cf0` | `existing_direct` / `existing_filtered` |
-| `stability.seed.overlay` | Selected uncertainty overlay | N22 `images/uncertainty/ug_1de955f7e0f3d00cf0.png` and its map-manifest row | `existing_direct`; split N22 diagnostics bundle candidate for Step 3 |
+| `stability.seed.overlay` | Selected uncertainty overlay | N22 `images/uncertainty/ug_1de955f7e0f3d00cf0.png` and its map-manifest row | `existing_direct`; split N22 diagnostics bundle and p018 index verified by Step 3 |
 | `stability.seed.population` | 1,025 groups, 4,100 candidates and 6,150 seed pairs | N18/N22 uncertainty tables and N26/N27 registered population summaries | `existing_filtered` |
 
 Case-level contact sheets and compact replay charts are N34 display derivatives;
@@ -253,8 +261,8 @@ The opening candidate is
 | `archive.n12a.record` | Inserted HINT full-production stage | N12A manifest, restoration index and report lineage | `existing_direct` |
 | `archive.d02.record` | Supplemental portrait audit | D02 manifest, 16 canonical artifacts and report | `existing_direct` |
 | `archive.provenance` | Source URL, rights status and raw SHA for all 300; descriptive completeness 268/32 | N01 `artworks.csv`, exact provenance and metadata columns | `existing_filtered` |
-| `archive.publication.individual` | 2,653 individually published, remotely verified rows | `outputs/inventory/external_artifact_publication.csv`; do not add bundles | `existing_filtered`; Step 3 verifies every remote URI/revision/checksum |
-| `archive.publication.bundles` | Verified large bundle releases | `outputs/inventory/bundled_publication_*_full.json`; keep release count and identity separate from 2,653 | `existing_direct`; Step 3 verifies remote records |
+| `archive.publication.individual` | 2,653 individually published, remotely verified rows | `outputs/inventory/external_artifact_publication.csv`; do not add bundles | `existing_filtered`; Step 3 re-hashed every local source and certified immutable per-row routing |
+| `archive.publication.bundles` | Verified large bundle releases | `outputs/inventory/bundled_publication_*_full.json`; keep release count and identity separate from 2,653 | `existing_direct`; six full bundle records and N32 package certified by Step 3 |
 | `archive.limits` | Four drawers containing all 18 final limitations | N33 `thesis_tables.csv`, `table_id=t15_limitations`, and limitations report | `n34_derived_registered` grouping; text is existing evidence |
 
 GitHub, Hugging Face Candidates and Hugging Face Diagnostics are mixed

@@ -244,6 +244,18 @@ matched-control geometry that were previously temporary work products. Until
 those derivatives pass validation, their UI components remain unavailable;
 similar cases or mock imagery must not be substituted.
 
+The remote integrity gate also completed on 2026-09-28. Its binding audit is
+[`controlled_300_remote_asset_audit.md`](dashboard_design_finalists/controlled_300_remote_asset_audit.md).
+All 2,653 individual publication rows reproduce their local size and SHA-256;
+six indexed bundle releases and the N32 report package retain verified pinned
+revisions. N34 must compile immutable URLs, derive HF revisions from the
+publication commit records rather than `resolve/main`, distinguish ordinary
+Git blobs from Git LFS pointers, verify bytes before display and show an
+explicit unavailable/integrity state instead of substituting another identity.
+The remaining pre-N34 decision is operational: lazy loading, cache limits,
+startup/network budgets, responsive renditions, timeouts, retries and offline
+behaviour.
+
 The **preliminary N34/N35 bundle-access option**, subject to that review, is:
 retain compact metadata and case/candidate/map indexes with the deployed app;
 resolve a selected visual to a producer-owned painting index and pinned N16 or

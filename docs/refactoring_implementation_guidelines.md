@@ -720,11 +720,12 @@ but it must not silently replace the approved navigation, hierarchy, visual
 density, or conservator-facing question flow. Material redesign requires renewed
 approval.
 
-The primary composition and final room content are now selected. Before changing
-the application, complete the remaining pre-N34 implementation-readiness audit:
-verify every required local/remote asset, measure startup and request behavior,
-and approve fallbacks and caching. Use the completed component-to-producer map
-as the source of the assets tested by those remaining gates. Any borrowed alternative component must be
+The primary composition and final room content are now selected. The remote
+integrity gate completed on 2026-09-28; before changing the application,
+complete the remaining pre-N34 runtime audit: measure startup and request
+behaviour and approve lazy loading, fallbacks, responsive renditions and
+caching. Use the completed component-to-producer map and remote asset audit as
+the sources tested by that remaining gate. Any borrowed alternative component must be
 explicitly named and must preserve one coherent navigation, typography,
 spacing, and interaction system. The traceability table must cite the applicable
 page-specific approved image and content contract for every major component and
@@ -750,6 +751,18 @@ separately. A component in the last state must remain
 unavailable with an explanation until the declared derivative is created,
 validated, hashed, and registered. A convenient neighbouring candidate, image,
 threshold, crop, or temporary work file is never an acceptable substitute.
+
+The remote URL/checksum/missing-asset gate completed on 2026-09-28 and is
+binding through
+[`controlled_300_remote_asset_audit.md`](dashboard_design_finalists/controlled_300_remote_asset_audit.md).
+N34 must pin every GitHub and Hugging Face request to a full immutable revision,
+derive HF revisions from each publication commit URL rather than historical
+`resolve/main` aliases, and distinguish committed Git blobs from Git LFS
+pointers. Git LFS payloads use `media.githubusercontent.com/media`; the raw
+GitHub endpoint returns only the pointer. Verify expected size and SHA-256
+before display. A 404, timeout after the approved retry budget, absent route or
+checksum mismatch produces an explicit unavailable/integrity state and never a
+silent substitute.
 
 The approved application contains no more than ten principal pages. The current
 approved structure contains eight:

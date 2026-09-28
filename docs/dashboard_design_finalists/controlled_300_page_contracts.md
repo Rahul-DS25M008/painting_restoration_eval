@@ -12,7 +12,9 @@ Notebook 35 validates the replacement.
 and required Notebook 34 derivations are recorded in
 [`controlled_300_producer_artifact_map.md`](controlled_300_producer_artifact_map.md).
 That map is binding wherever a mockup or general page description does not
-identify an exact artifact.
+identify an exact artifact. Immutable transport, checksum and missing-asset
+rules are recorded in
+[`controlled_300_remote_asset_audit.md`](controlled_300_remote_asset_audit.md).
 
 ## Shared rules
 
@@ -29,6 +31,10 @@ identify an exact artifact.
 - Do not render a component classified as `unsupported_until_derived` until
   Notebook 34 creates, validates, hashes, and registers the named derivative.
   Never substitute a visually similar case or temporary file.
+- Resolve remote evidence only at a full immutable Git/Hugging Face revision,
+  verify its expected size and SHA-256 before display, and show an explicit
+  unavailable or integrity-error state when the exact artifact cannot be
+  verified. Never fall back to a neighbouring identity or mock image.
 
 ## Cross-page consistency gate
 
