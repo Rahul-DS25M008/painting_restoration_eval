@@ -57,11 +57,14 @@ diagnostics dataset at pinned revision
 `c33bbd87e65fe96f9a81c1c794fd4a70f7226874` (361 objects; 342,821,662
 bytes). Notebook 33 run `run_aef04267c2e44495a4e7a6249426bd4d` completed its
 Controlled-300 final synthesis with 536/536 checks, 21/21 roadmap requirements,
-eight verified artifact groups and 32 canonical files. Notebooks 34–36 remain
-historical Controlled-50 evidence until
-each producer is explicitly reopened, rerun, validated, baseline-compared and
-committed. Complete local outputs remain canonical even where large evidence is
-also represented by verified external publication records.
+eight verified artifact groups and 32 canonical files. Notebook 34 run
+`run_1e831de6e27f9ead0147bb30` subsequently completed the Controlled-300
+`dashboard_package.v2` build with 916/916 passing checks and promoted release
+`release_c5edf0d0ec99affbfa403726`. Notebooks 35–36 remain historical
+Controlled-50 evidence until each producer is explicitly reopened, rerun,
+validated, baseline-compared and committed. Complete local outputs remain
+canonical even where large evidence is also represented by verified external
+publication records.
 
 **Git LFS capacity guard: 2026-09-21.** GitHub reported 9.01 GiB used from the
 10.0 GiB included LFS allowance, with a `$0` hard budget and reset date of
@@ -1373,6 +1376,37 @@ retrieval results, and visual plausibility do not establish expert ground truth,
 historical authenticity, conservation approval, or a physical treatment
 recommendation.
 
+The Controlled-300 Notebook 34 run `run_1e831de6e27f9ead0147bb30` is complete
+and passed its completion gate. It consumes the completed N01–N33 chain plus
+separately registered N12A, D01 and D02 records without running restoration
+inference or recomputing scientific metrics. It atomically promoted
+`dashboard_package.v2` release `release_c5edf0d0ec99affbfa403726` under
+`outputs/34_final_streamlit_dashboard_assets/`.
+
+The package contains exactly 377 files and 12 registered artifact groups. It
+indexes all 300 paintings through 300 painting partitions and provides nine
+room partitions: the eight approved principal rooms plus the D02 Focused
+Portrait Review child route. Its presentation contract closes 100 approved
+display IDs through 170 bindings, 56 logical assets, 48 local renditions and 95
+immutable locators. All 916 validation checks passed with zero failures. The
+final tree occupies 7,978,024 bytes; the pre-promotion budget check observed
+7,602,275 bytes against the 67,108,864-byte hard limit. It records zero startup
+network requests and no remaining disposable work tree. The deterministic
+package checksum is
+`f1157c3086a6d827f08a9e936c509fdc23112ccf11f689688065a3791adf30a7`.
+The final portability sweep normalized four validation-ledger path displays to
+`<PROJECT_ROOT>`; no machine-specific absolute path remains in the package, and
+the scientific evidence and 916/916 pass result are unchanged.
+
+This package supersedes the pilot N34 package only for the active
+Controlled-300 application build. The pilot package remains frozen comparison
+evidence in `E:/outputs/34_final_streamlit_dashboard_assets/`: 19 files,
+36,395,907 bytes, 50 paintings and the earlier eager dashboard schema. The new
+package intentionally has more physical files because it uses per-painting and
+per-room partitions, yet it is much smaller overall and starts without network
+access. Notebook 35 must consume the Controlled-300 v2 manifests and must not
+silently fall back to the pilot tables.
+
 Historical pilot Notebook 34 is complete and passed its completion gate. It consumed 41 validated
 input tables and all 33 completed upstream run manifests without running
 restoration inference, recomputing scientific metrics, creating new statistical
@@ -1542,7 +1576,9 @@ deployment. These delivery facts do not change any experimental population.
   N34 chart estimates and intervals. The input, display, and verification
   contract is `docs/dashboard_numeric_metrics.md`; its implementation and focused
   tests are `src/restoration_eval/dashboard_metrics.py` and
-  `tests/test_dashboard_metrics.py`. N34 remains the candidate allow-list.
+  `tests/test_dashboard_metrics.py`. In this historical deployment record, the
+  pilot N34 package remains the candidate allow-list; the Controlled-300
+  application must instead consume the promoted `dashboard_package.v2` release.
 - **Availability workflow:** commit `4f285808` adds
   `.github/workflows/streamlit-availability.yml`,
   `tools/check_streamlit_availability.py`, and

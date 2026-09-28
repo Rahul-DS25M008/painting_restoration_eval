@@ -2641,59 +2641,55 @@ evidence_coverage:
       stem: "34_final_streamlit_dashboard_assets"
       status: "completed_validation_passed"
       completion_gate_passed: true
-      run_id: "run_a8d0c877315947ff84d76d93e29c547c"
+      run_id: "run_1e831de6e27f9ead0147bb30"
       output_root: "outputs/34_final_streamlit_dashboard_assets"
       manifest_path: "outputs/34_final_streamlit_dashboard_assets/manifests/run_manifest.json"
       creates_new_scientific_evidence: false
       preparation_contract:
         config_path: "config/evaluation/dashboard_assets.yaml"
         helper_path: "src/restoration_eval/dashboard_assets.py"
-        upstream_manifest_count: 33
-        input_table_count: 41
-        principal_page_count: 8
+        sequential_upstream_manifest_count: 33
+        separately_registered_manifest_count: 3
+        total_upstream_manifest_count: 36
+        input_table_count: 70
+        declared_local_input_count: 91
+        principal_room_count: 8
+        child_route_count: 1
         principal_page_limit: 10
-        dashboard_table_count: 9
-        dashboard_index_count: 5
-        painting_index_rows: 50
-        candidate_index_rows: 1785
-        model_report_count: 4
-        case_report_count: 30
-        painting_report_count: 50
-        canonical_uncertainty_groups: 130
-        damage_size_uncertainty_groups: 35
+        approved_display_id_count: 100
+        package_schema_version: "dashboard_package.v2"
       completion_contract:
         run_status: "completed"
         validation_status: "passed"
         creates_new_scientific_evidence: false
-        principal_pages: 8
-        dashboard_tables: 9
-        dashboard_indexes: 5
-        dashboard_data_assets: 15
-        headline_findings: 8
-        study_design_rows: 35
-        metric_framework_rows: 178
-        performance_summary_rows: 1241
-        sensitivity_and_statistical_rows: 18951
-        grouped_statistical_rows: 4174
-        correlation_measure_rows: 1008
-        ranking_stability_measure_rows: 1800
-        uncertainty_summary_rows: 1723
-        trustworthiness_summary_rows: 284
-        compute_summary_rows: 35
-        research_question_rows: 4
-        candidate_index_rows: 1785
-        painting_index_rows: 50
-        visual_asset_index_rows: 23964
-        report_index_rows: 104
-        filter_option_groups: 16
-        validation_checks: 410
+        release_id: "release_c5edf0d0ec99affbfa403726"
+        package_schema_version: "dashboard_package.v2"
+        paintings: 300
+        principal_rooms: 8
+        child_routes: 1
+        room_partitions: 9
+        painting_partitions: 300
+        display_ids: 100
+        display_bindings: 170
+        logical_assets: 56
+        local_renditions: 48
+        immutable_asset_locators: 95
+        validation_checks: 916
         blocking_failures: 0
         warning_failures: 0
-        roadmap_requirements: 25
-        dashboard_asset_records: 15
-        artifact_records: 17
-        physical_output_files: 19
+        artifact_records: 12
+        physical_output_files: 377
+        physical_output_bytes: 7978024
+        package_budget_observed_bytes: 7602275
+        package_budget_hard_bytes: 67108864
+        startup_network_requests: 0
+        disposable_work_files: 0
+        deterministic_package_sha256: "f1157c3086a6d827f08a9e936c509fdc23112ccf11f689688065a3791adf30a7"
       required_evidence:
+        - "n01_n33_completed_controlled_300_manifests"
+        - "n12a_full_scope_hint_restoration"
+        - "d01_method_selection_record"
+        - "d02_focused_portrait_review"
         - "n01_n08_dataset_damage_experiment_and_region_contracts"
         - "n16_n20_spatial_local_uncertainty_and_semantic_map_manifests"
         - "n21_model_comparison_disagreement_and_representatives"
@@ -2705,24 +2701,44 @@ evidence_coverage:
         - "n30_model_cards_compute_and_scalability"
         - "n31_n33_model_case_painting_and_final_reports"
       primary_outputs:
-        - path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_summary.json"
-          files: 1
-          schema_version: "dashboard_package.v1"
-        - path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables"
-          files: 9
-          schema_version: "dashboard_package.v1"
-        - path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes"
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/bootstrap"
           files: 5
-          schema_version: "dashboard_package.v1"
-        - path: "outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_assets.csv"
-          rows: 15
-          schema_version: "dashboard_assets_manifest.v1"
+          schema_version: "dashboard_package.v2"
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/rooms"
+          files: 9
+          schema_version: "dashboard_room_partition.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/paintings"
+          files: 300
+          schema_version: "dashboard_painting_partition.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/reports/index.json.gz"
+          files: 1
+          schema_version: "dashboard_report_index.v2"
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/derived"
+          files: 5
+          schema_version: "dashboard_package.v2"
+        - path: "outputs/34_final_streamlit_dashboard_assets/assets/renditions"
+          files: 48
+          schema_version: "dashboard_rendition.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_assets.parquet"
+          rows: 56
+          schema_version: "dashboard_asset.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/manifests/asset_locators.parquet"
+          rows: 95
+          schema_version: "dashboard_locator.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/manifests/display_components.csv"
+          rows: 170
+          schema_version: "dashboard_display_binding.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_runtime_manifest.json"
+          files: 1
+          schema_version: "dashboard_runtime_manifest.v1"
         - path: "outputs/34_final_streamlit_dashboard_assets/validation/checks.csv"
-          rows: 410
+          rows: 916
           schema_version: "validation_checks.v1"
       supported_scope:
-        - "eight_page_manifest_driven_dashboard_package"
-        - "complete_1785_candidate_case_index_and_50_painting_index"
+        - "eight_room_manifest_driven_controlled_300_dashboard_package"
+        - "focused_portrait_review_child_route"
+        - "complete_300_painting_partition_index"
+        - "one_hundred_approved_display_contracts"
         - "representative_defaults_with_complete_filterable_evidence_access"
         - "separate_metric_region_model_robustness_uncertainty_xai_and_report_views"
         - "bounded_sdxl_feasibility_labels"
@@ -2732,11 +2748,12 @@ evidence_coverage:
         - "dashboard_does_not_recompute_metrics_or_run_restoration_inference"
         - "candidate_case_and_painting_observations_remain_nested"
         - "painting_is_the_independent_unit_for_grouped_inference"
-        - "five_painting_extensions_do_not_estimate_independent_category_or_style_effects"
-        - "uncertainty_is_stable_diffusion_repeated_seed_variation_only"
-        - "sdxl_is_ten_case_five_painting_partial_evaluation"
+        - "focused_extensions_do_not_estimate_independent_category_or_style_effects"
+        - "uncertainty_is_empirical_repeated_seed_variation_not_calibrated_confidence"
+        - "sdxl_is_a_bounded_24_candidate_feasibility_population"
         - "retrieval_and_feature_affinity_are_supporting_context_not_proof"
         - "representative_defaults_do_not_limit_complete_indexed_access"
+        - "startup_uses_zero_network_requests_and_remote_assets_load_on_demand"
       prohibited_claims:
         - "dashboard_is_restoration_or_experiment_tool"
         - "dashboard_recomputes_scientific_metrics"
@@ -2751,6 +2768,8 @@ evidence_coverage:
     - notebook_id: "35"
       stem: "35_dashboard_and_deployment_validation"
       status: "completed_validation_warning"
+      execution_scope: "historical_controlled_50"
+      controlled_300_rerun_required: true
       completion_gate_passed: true
       run_id: "run_e04d0dfa163b4a15966c5420b01d74c7"
       output_root: "outputs/35_dashboard_and_deployment_validation"

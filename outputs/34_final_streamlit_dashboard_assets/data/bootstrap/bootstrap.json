@@ -1,0 +1,423 @@
+{
+  "application": {
+    "child_route_count": 1,
+    "creates_new_scientific_evidence": false,
+    "default_room_id": "exhibition_foyer",
+    "principal_room_count": 8,
+    "title": "Painting Restoration Evidence Lab"
+  },
+  "child_routes": [
+    {
+      "parent_room_id": "trustworthiness",
+      "room_id": "focused_portrait_review"
+    }
+  ],
+  "dataset": {
+    "dataset_id": "painting_restoration_eval",
+    "dataset_scope": "controlled_300",
+    "dataset_version": "2.0.0"
+  },
+  "guided_tour": {
+    "autoplay_video": false,
+    "label": "Take the guided tour · about 6 min",
+    "optional_detour": {
+      "interrupts_principal_completion": false,
+      "offered_from": "trustworthiness",
+      "room_id": "focused_portrait_review"
+    },
+    "room_ids": [
+      "exhibition_foyer",
+      "study_design",
+      "metric_framework",
+      "model_gallery",
+      "stability_lab",
+      "trustworthiness",
+      "case_explorer",
+      "research_archive"
+    ],
+    "skippable": true
+  },
+  "headline_findings": [
+    {
+      "finding_id": "balanced_collection",
+      "limitation": "This does not represent every artistic tradition, period or conservation condition.",
+      "source_notebook_ids": [
+        "01"
+      ],
+      "statement": "The collection contains 300 paintings, with 60 in each of five broad visual categories.",
+      "title": "Balanced controlled collection"
+    },
+    {
+      "finding_id": "comparison_population",
+      "limitation": "Eligibility and metric performance do not establish historical correctness.",
+      "source_notebook_ids": [
+        "08",
+        "21"
+      ],
+      "statement": "The four full-scope methods were compared on 2,620 eligible cases, producing 10,480 primary candidates.",
+      "title": "Matched four-method evidence"
+    },
+    {
+      "finding_id": "metric_disagreement",
+      "limitation": "No combined or universal quality score was created.",
+      "source_notebook_ids": [
+        "21",
+        "33"
+      ],
+      "statement": "LaMa led 10 of 11 separate quality anchors; Telea led crop SSIM.",
+      "title": "Different measurements can prefer different methods"
+    },
+    {
+      "finding_id": "repeated_seed_evidence",
+      "limitation": "This is empirical variation, not calibrated confidence.",
+      "source_notebook_ids": [
+        "18",
+        "22"
+      ],
+      "statement": "Stable Diffusion has 1,025 supported four-seed groups covering 4,100 candidate memberships.",
+      "title": "Repeated outputs reveal variation"
+    },
+    {
+      "finding_id": "review_flags",
+      "limitation": "A flag is not a probability, expert verdict or conservation decision.",
+      "source_notebook_ids": [
+        "27",
+        "28",
+        "29"
+      ],
+      "statement": "Operational thresholds point to evidence that deserves closer inspection.",
+      "title": "Flags organize review rather than replace it"
+    },
+    {
+      "finding_id": "focused_portrait_audit",
+      "limitation": "Rendered lightness is not race or identity, and the audit does not establish demographic bias.",
+      "source_notebook_ids": [
+        "D02"
+      ],
+      "statement": "D02 found hands harder to restore in its matched audit, while rendered lightness did not show a consistent overall association.",
+      "title": "The focused portrait audit remains separate"
+    }
+  ],
+  "known_limitations": [
+    "controlled artificial damage not real material treatment",
+    "no paired real damaged undamaged conservation dataset",
+    "controlled 300 balanced collection does not represent all painting traditions or conservation conditions",
+    "style or period documented for 268 of 300 paintings",
+    "thirty five painting extensions do not separate category from painting identity",
+    "sdxl bounded 35 case schedule has 24 completed candidates across 30 paintings",
+    "uncertainty only for supported repeated seed populations",
+    "uncertainty is not calibrated confidence",
+    "telea lama and hint are deterministic",
+    "no human or expert rating dataset",
+    "computational flags are not expert ground truth",
+    "retrieval similarity is not restoration correctness",
+    "feature similarity is not historical authenticity",
+    "runtime and memory describe one workstation",
+    "scaling projections are not executed results or confidence intervals",
+    "context prompt candidates p01 to p04 lack complete downstream flag coverage",
+    "no combined universal quality or trust score",
+    "no conservation approval or physical treatment recommendation"
+  ],
+  "model_summaries": [
+    {
+      "boundary": "Full-scope computational method; not conservation approval.",
+      "deterministic": true,
+      "display_name": "HINT",
+      "evaluation_status": "fully_evaluated",
+      "model_id": "hint_places2",
+      "plain_description": "A learned mask-aware transformer selected in the separate D01 study.",
+      "prompt_dependent": false,
+      "stochastic": false
+    },
+    {
+      "boundary": "Full-scope computational method; not conservation approval.",
+      "deterministic": true,
+      "display_name": "LaMa",
+      "evaluation_status": "fully_evaluated",
+      "model_id": "lama",
+      "plain_description": "A learned deterministic method that uses broader image context.",
+      "prompt_dependent": false,
+      "stochastic": false
+    },
+    {
+      "boundary": "Full-scope computational method; not conservation approval.",
+      "deterministic": true,
+      "display_name": "OpenCV Telea",
+      "evaluation_status": "fully_evaluated",
+      "model_id": "opencv_telea",
+      "plain_description": "A fast classical method that fills a loss from nearby pixels.",
+      "prompt_dependent": false,
+      "stochastic": false
+    },
+    {
+      "boundary": "Bounded evidence; not a full-scope comparison method.",
+      "deterministic": false,
+      "display_name": "SDXL Inpainting",
+      "evaluation_status": "partial_evaluation",
+      "model_id": "sdxl_inpainting",
+      "plain_description": "A higher-capacity generative method evaluated only in a bounded feasibility branch.",
+      "prompt_dependent": true,
+      "stochastic": true
+    },
+    {
+      "boundary": "Full-scope computational method; not conservation approval.",
+      "deterministic": false,
+      "display_name": "Stable Diffusion Inpainting",
+      "evaluation_status": "fully_evaluated",
+      "model_id": "stable_diffusion_inpainting",
+      "plain_description": "A prompt-conditioned generative method whose output can change with seed and prompt.",
+      "prompt_dependent": true,
+      "stochastic": true
+    }
+  ],
+  "opening": {
+    "binding_state": "pending_registered_rendition",
+    "boundary": "Visual plausibility is not the same as restoration trustworthiness.",
+    "display_id": "exhibition_foyer.opening",
+    "painting_id": "p001",
+    "question": "How should we judge an AI-restored painting?",
+    "text": "This thesis tests digital restoration methods by applying controlled damage to 300 paintings. We compare the restored images, measure what changed and check whether the results stay consistent—but a convincing image is not automatically historically correct."
+  },
+  "package_schema_version": "dashboard_package.v2",
+  "principal_room_ids": [
+    "exhibition_foyer",
+    "study_design",
+    "metric_framework",
+    "model_gallery",
+    "stability_lab",
+    "trustworthiness",
+    "case_explorer",
+    "research_archive"
+  ],
+  "prohibited_claims": [
+    "conservation approval",
+    "historical truth",
+    "authenticity proof",
+    "calibrated confidence",
+    "universal best model",
+    "combined quality score"
+  ],
+  "publication_overview": {
+    "final_reports": 1,
+    "model_reports": 5,
+    "n33_claims": 49,
+    "n33_figures": 24,
+    "n33_limitations": 18,
+    "painting_reports": 300,
+    "selected_case_reports": 30,
+    "verified_bundle_releases": 6,
+    "verified_individual_records": 2653
+  },
+  "release_id": "release_c5edf0d0ec99affbfa403726",
+  "research_questions": [
+    {
+      "display_order": 1,
+      "evidence_status": "addressed_by_completed_upstream_evidence",
+      "interpretation": "Notebook 33 answers this position only with completed, scoped upstream evidence.",
+      "question_id": "rq1",
+      "source_notebook_ids": [
+        "01",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32"
+      ],
+      "source_paths": [
+        "config/evaluation/evidence_coverage.yaml",
+        "docs/proposal/Rahul_Thesis_Proposal.docx"
+      ],
+      "title": "Region-aware evidence beyond traditional image similarity"
+    },
+    {
+      "display_order": 2,
+      "evidence_status": "addressed_by_completed_upstream_evidence",
+      "interpretation": "Notebook 33 answers this position only with completed, scoped upstream evidence.",
+      "question_id": "rq2",
+      "source_notebook_ids": [
+        "01",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32"
+      ],
+      "source_paths": [
+        "config/evaluation/evidence_coverage.yaml",
+        "docs/proposal/Rahul_Thesis_Proposal.docx"
+      ],
+      "title": "Method differences across damage conditions and consistency across paintings"
+    },
+    {
+      "display_order": 3,
+      "evidence_status": "addressed_by_completed_upstream_evidence",
+      "interpretation": "Notebook 33 answers this position only with completed, scoped upstream evidence.",
+      "question_id": "rq3",
+      "source_notebook_ids": [
+        "01",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32"
+      ],
+      "source_paths": [
+        "config/evaluation/evidence_coverage.yaml",
+        "docs/proposal/Rahul_Thesis_Proposal.docx"
+      ],
+      "title": "Repeated-candidate disagreement and stochastic stability"
+    },
+    {
+      "display_order": 4,
+      "evidence_status": "addressed_by_completed_upstream_evidence",
+      "interpretation": "Notebook 33 answers this position only with completed, scoped upstream evidence.",
+      "question_id": "practical_output",
+      "source_notebook_ids": [
+        "01",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32"
+      ],
+      "source_paths": [
+        "config/evaluation/evidence_coverage.yaml",
+        "docs/proposal/Rahul_Thesis_Proposal.docx"
+      ],
+      "title": "Interpretable museum-oriented decision-support reporting"
+    }
+  ],
+  "resources": {
+    "filter_options": "data/bootstrap/filter_options.json",
+    "glossary": "data/bootstrap/glossary.json",
+    "painting_lookup": "data/bootstrap/painting_lookup.parquet",
+    "report_index": "data/reports/index.json.gz",
+    "room_catalogue": "data/bootstrap/room_catalogue.json"
+  },
+  "route_previews": [
+    {
+      "binding_state": "pending_registered_rendition",
+      "display_name": "Study Design",
+      "preview_display_id": "study_design.route_preview",
+      "question": "What did we test, and how did we keep the comparison fair?",
+      "room_id": "study_design",
+      "summary": "We started with 300 paintings, divided evenly across five broad visual categories. Every painting received the same core tests, while smaller balanced experiments examined damage size, mask placement and other image changes."
+    },
+    {
+      "binding_state": "pending_registered_rendition",
+      "display_name": "Metric Framework",
+      "preview_display_id": "metric_framework.route_preview",
+      "question": "Why can the conclusion change when the metric or region changes?",
+      "room_id": "metric_framework",
+      "summary": "No single number can judge a restoration. Different measurements examine pixels, structure, visual similarity, texture, colour, seams and unintended changes. Each measure is only meaningful in the regions it was designed to examine."
+    },
+    {
+      "binding_state": "pending_registered_rendition",
+      "display_name": "Model Gallery",
+      "preview_display_id": "model_gallery.route_preview",
+      "question": "How do different restoration methods rebuild the same loss?",
+      "room_id": "model_gallery",
+      "summary": "The four methods receive the same damaged painting and mask, but they rebuild the missing region in different ways. Compare the result, inspect the local evidence and then open the full model record when more detail is needed."
+    },
+    {
+      "binding_state": "pending_registered_rendition",
+      "display_name": "Stability Lab",
+      "preview_display_id": "stability_lab.route_preview",
+      "question": "How much does a restoration change when we change the test?",
+      "room_id": "stability_lab",
+      "summary": "A restoration may look convincing once but behave differently when the damaged area grows, the mask moves, the input changes or Stable Diffusion uses another seed. Select one test and see what stays consistent."
+    },
+    {
+      "binding_state": "pending_registered_rendition",
+      "display_name": "Trustworthiness",
+      "preview_display_id": "trustworthiness.route_preview",
+      "question": "Why did this restoration receive a review flag?",
+      "room_id": "trustworthiness",
+      "summary": "Flags help us decide what to inspect. They are not probabilities, expert verdicts, or proof that a restoration is right or wrong."
+    },
+    {
+      "binding_state": "pending_registered_rendition",
+      "display_name": "Case Explorer",
+      "preview_display_id": "case_explorer.route_preview",
+      "question": "What evidence supports this restoration conclusion?",
+      "room_id": "case_explorer",
+      "summary": "Trace one restoration from controlled damage to measurements, warnings and source records."
+    },
+    {
+      "binding_state": "pending_registered_rendition",
+      "display_name": "Research Archive",
+      "preview_display_id": "research_archive.route_preview",
+      "question": "Trace every conclusion to its saved evidence.",
+      "room_id": "research_archive",
+      "summary": "The archive records what was used, what passed, what is missing and where each artifact lives."
+    }
+  ],
+  "schema_version": "dashboard_bootstrap.v1",
+  "scope_indicators": [
+    {
+      "explanation": "60 in each broad visual category",
+      "indicator_id": "paintings",
+      "label": "paintings",
+      "value": 300
+    },
+    {
+      "explanation": "study groupings, not historical styles",
+      "indicator_id": "visual_categories",
+      "label": "broad visual categories",
+      "value": 5
+    },
+    {
+      "explanation": "across all four experiment branches",
+      "indicator_id": "registered_cases",
+      "label": "registered experimental cases",
+      "value": 3425
+    },
+    {
+      "explanation": "plus a separate bounded SDXL branch",
+      "indicator_id": "methods",
+      "label": "full-scope methods",
+      "value": 4
+    }
+  ],
+  "selector_index": {
+    "candidate_ids_in_bootstrap": false,
+    "painting_availability_count": 300,
+    "painting_partition_template": "data/paintings/{painting_id}.json.gz"
+  },
+  "startup": {
+    "identity_substitution_allowed": false,
+    "loading_tier": "bootstrap",
+    "missing_asset_behaviour": "show_explicit_unavailable_state",
+    "network_requests": 0,
+    "remote_fallback_allowed": false
+  },
+  "status": "ok"
+}

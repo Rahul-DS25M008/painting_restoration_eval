@@ -1,11 +1,11 @@
 # Controlled-300 Dashboard Design Direction
 
-**Status:** All eight top-level rooms and the `D02` mini room approved through
-2026-09-28; cross-page consistency, producer-artifact mapping and remote
-integrity, runtime loading and final N34 implementation-contract gates completed
-on 2026-09-28
-**Mandatory review point:** After Notebook 33 and immediately before Notebook
-34 or any Controlled-300 Streamlit implementation begins  
+**Status:** All eight top-level rooms and the `D02` mini room approved;
+cross-page consistency, producer-artifact mapping, remote integrity, runtime
+loading and the final implementation contract are complete; Notebook 34 release
+`release_c5edf0d0ec99affbfa403726` passed on 2026-09-28
+**Mandatory review point:** Binding input for Controlled-300 Streamlit
+implementation and the Notebook 35 validation rerun
 **Scope:** Navigation, interaction, visual hierarchy, information flow, and
 presentation references only
 
@@ -190,11 +190,11 @@ conditionally available instance of one of those states, or unsupported until
 its declared derivation exists.
 Immutable remote URL/checksum validation, the runtime lazy-loading, caching,
 startup, responsive and retry/fallback contract, and the final
-`dashboard_package.v2`/asset-manifest design also pass. The next step is the
-versioned Notebook 34 refactor and package execution.
+`dashboard_package.v2`/asset-manifest design also pass. Notebook 34 has now
+implemented that contract and promoted its 377-file Controlled-300 package.
 
-Notebook 34 then packages only the assets required by that confirmed contract.
-Notebook 35 validates fidelity, functionality, evidence coverage, and deployed
-access. The mockups' illustrative text and imagery are not substitutes for
-those gates, and the currently deployed 50-painting application remains
-unchanged until the approved Controlled-300 implementation is ready.
+The next step is to implement the approved interface from that package.
+Notebook 35 then validates fidelity, functionality, evidence coverage, and
+deployed access. The mockups' illustrative text and imagery are not substitutes
+for those gates, and the currently deployed 50-painting application remains
+unchanged until the Controlled-300 implementation and N35 gate pass.

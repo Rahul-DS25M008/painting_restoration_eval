@@ -1,688 +1,2227 @@
 {
-  "manifest_schema_version": "run_manifest.v1",
-  "run_id": "run_a8d0c877315947ff84d76d93e29c547c",
-  "notebook_id": "34",
-  "notebook_name": "34_final_streamlit_dashboard_assets",
-  "origin": "Consolidates Existing Previous Versions of Notebooks 29 and 34, Pre-refactor",
-  "run_status": "completed",
-  "started_at_utc": "2026-09-03T06:34:26Z",
-  "completed_at_utc": "2026-09-03T07:32:59Z",
-  "git_commit": "0f1d3f667b0bf89a067359e13cc1899f29811930",
-  "git_dirty": true,
-  "git_branch": "main",
-  "git_error": "",
-  "inventory_run_id": "inventory_20260902T231016Z_d7ee71cf",
-  "dataset_versions": {
-    "dataset_id": "painting_restoration_eval",
-    "dataset_version": "1.0.0",
-    "dataset_scope": "controlled_50",
-    "configuration_version": "1.0.0",
-    "configuration_schema_version": "dashboard_assets_config.v1",
-    "dashboard_schema_version": "dashboard_package.v1",
-    "upstream_run_ids": {
-      "01": "run_424a69cf0c2c4a228d0919dc2d66258a",
-      "02": "run_5e54b2de32934e1c9303e7250b932404",
-      "03": "run_16536d2f39c54081b0dd58a00b5e9f01",
-      "04": "run_bf312c29726843a4b3c5319e05bf49f0",
-      "05": "run_519fd38cca4c45d69dc8f43e90cae621",
-      "06": "run_3d910e4c145e44d18ba19233125634d6",
-      "07": "run_306a79f17cfb48edb73fa90d174317f0",
-      "08": "run_a3734bc2121f401b87de4894717366ab",
-      "09": "run_eafa3b4f805e472688f1df65b894b96e",
-      "10": "run_25e38d80461643fb91ba60cb551a9a2f",
-      "11": "run_82ee1e1c09524a5da3e6fe93016d0627",
-      "12": "run_1daaf4a3dcb34b5599b0ff89bb7034d3",
-      "13": "run_5bbeb9a089d044fab465d5078aedab39",
-      "14": "run_4ffd061c775a46f3944ad9e405613b34",
-      "15": "run_2b08762834b1423b8a61ef159c2679dc",
-      "16": "run_1181febbbd3d4e63bbd60bc565b2d0c9",
-      "17": "run_a322000b2a0445c9b5b71a2e0502fdf0",
-      "18": "run_a660cfa509e643a39708d762f18cae2b",
-      "19": "run_bddab70b2b2c46aaa013f8c45a91fc23",
-      "20": "run_cb24def4d3134cc3bb6d679d390b777e",
-      "21": "run_2acbdc178f9a470f9c3a0ac4212956bb",
-      "22": "run_383fd03e2665485fb49c460866865b72",
-      "23": "run_85d5f0e0228b4e918632433f86493ff0",
-      "24": "run_2002f9ec00144db083fe2af421c3199d",
-      "25": "run_65a5abfcedde48f9aa823f60cd6f8baf",
-      "26": "run_b223a228966647a291fe71b2df8dee82",
-      "27": "run_e8c3d7bdf26b4f7e945cab79c71635ea",
-      "28": "run_25d4e0d032c84f0c9508578091a807b0",
-      "29": "run_3163029edceb4fb385cf818d29a36a6f",
-      "30": "run_99fc7daf6af54d5992ef6c26f05bd901",
-      "31": "run_86faee4c15ee49cbbc5b85a649cdc1b4",
-      "32": "run_7a508c540ae74af1ad2bd3c59928e94e",
-      "33": "run_ffab0ce2624e43608c3c21764b7f6f1b"
-    }
+  "artifact_manifest_checksum": "adcb204caef6c593dfc7921329722567c226dbc8ff2ee6ed447e9da056f8f6fc",
+  "completed_at_utc": "2026-09-28T19:24:04Z",
+  "completion_gate_passed": true,
+  "configuration_checksums": {
+    "config/evaluation/dashboard_assets.yaml": "ff5a959a8b0f4c416ffd19a63a83babb0782dd55b45afec5cdaa05ca0af6647e",
+    "docs/dashboard_design_finalists/controlled_300_n34_implementation_contract.md": "b6806a0a4791990db9b47f13c288d5900546a5729a66337891606ea9e7f71af3",
+    "docs/dashboard_design_finalists/controlled_300_page_contracts.md": "1e69c2a9ade1b2b254ccbcf79db3a24bf9d309faea4059fae78fd8b2dfe3578d",
+    "docs/dashboard_design_finalists/controlled_300_producer_artifact_map.md": "c41aa69bcedb5e9a1a36bd6bfd41d050f9eebdc48463c0db751280107d36789e",
+    "docs/dashboard_design_finalists/controlled_300_remote_asset_audit.md": "92d530f78fa6d890a8b61b3125105217f9c06484c9cc51826524a0823a56ccd7",
+    "docs/dashboard_design_finalists/controlled_300_runtime_loading_contract.md": "b5d8abe2a6ac74984a8675847e8fd4360d3cc91d66986a2ce1ffbf6f8ad0e81a"
   },
   "configuration_paths": [
     "config/evaluation/dashboard_assets.yaml",
-    "config/evaluation/evidence_coverage.yaml"
+    "docs/dashboard_design_finalists/controlled_300_page_contracts.md",
+    "docs/dashboard_design_finalists/controlled_300_producer_artifact_map.md",
+    "docs/dashboard_design_finalists/controlled_300_remote_asset_audit.md",
+    "docs/dashboard_design_finalists/controlled_300_runtime_loading_contract.md",
+    "docs/dashboard_design_finalists/controlled_300_n34_implementation_contract.md"
   ],
-  "configuration_checksums": {
-    "config/evaluation/dashboard_assets.yaml": "06b7a48527459715df4a8d14998b6f9e930da4f5bd360f91b7c323006acf4bd9",
-    "config/evaluation/evidence_coverage.yaml": "43b47eedfa8df1a23722c5dfdfe4f96ebf1297ad1bce0c6446b6291adc05efcf"
+  "creates_new_scientific_evidence": false,
+  "dashboard_release_id": "release_c5edf0d0ec99affbfa403726",
+  "dataset_versions": {
+    "configuration_version": "2.0.0",
+    "dashboard_package_schema_version": "dashboard_package.v2",
+    "dashboard_release_id": "release_c5edf0d0ec99affbfa403726",
+    "dataset_id": "painting_restoration_eval",
+    "dataset_scope": "controlled_300",
+    "dataset_version": "2.0.0",
+    "upstream_run_ids": {
+      "01": "run_49a7e3c485394878ab4323ce661f3ef5",
+      "02": "run_ca94012bb1e54bf5bf57c1fdabb01480",
+      "03": "run_dd51e1b1ca374f3aad16d22b0cd12c99",
+      "04": "run_92d2030511e14f108bd9ef46f8c3110a",
+      "05": "run_fb717ad978394227944ef6bf99919f08",
+      "06": "run_cd2601a25a2d4794aba0745ec6beed5c",
+      "07": "run_ad90292d5fb8462eb6241b8123a779d6",
+      "08": "run_b83466f07ebb4b55928229587922334a",
+      "09": "run_350786ea88014b67b0cf9efec7fac23c",
+      "10": "run_6f81083a17804d36b1495e4932db4e03",
+      "11": "run_4385124a0cca4d758d357de654a33f13",
+      "12": "run_1f7af9d329354a56b4275c4af3cd3f75",
+      "12A": "run_f6c9353c31ce4ed9be5e5502571d635d",
+      "13": "run_41b9c87a3c034f19b6f28868127b3c89",
+      "14": "run_27cb11ae9aa94133ad474b2f38cab122",
+      "15": "run_50c1bb5f25b44111a76df998329d69ed",
+      "16": "run_99b0d8d1af1b43bd8e8cb3d6ae754868",
+      "17": "run_ed15508895b542e6ac0733c49704ad26",
+      "18": "run_7c1d7195ed8447c1a878259360b1f5f2",
+      "19": "run_7384c7fb8d4c4efe98264a660ac12a75",
+      "20": "run_8c94e988fd4c4d7cae0acd8c3a64fbe6",
+      "21": "run_86f7f46183634889aa050ee2a9f33b56",
+      "22": "run_d0276a6859f74fada266936f43b7499f",
+      "23": "run_e93288fc3ac847ccb699241b4b4c8be0",
+      "24": "run_bbf68684c3ca47e5827c2b8b4b666351",
+      "25": "run_cf89ebe972364c7b8ccfefc6bf2a63ca",
+      "26": "run_efc978dd6d504cdb9b138a750f6dca83",
+      "27": "run_bef567ee35c1409dbcecfb71f1b4f8b4",
+      "28": "run_4325bb483fbc4ccda670df125c40731d",
+      "29": "run_ad7603b6bdb14156a140351f6ac1f241",
+      "30": "run_605de239145a46e9a202fd63bbbb4e9c",
+      "31": "run_430fd1355d3a4011bedc55b571d9544c",
+      "32": "run_0d4ae193602944dda511bf54199105b1",
+      "33": "run_aef04267c2e44495a4e7a6249426bd4d",
+      "D01": "run_6583cb070ead425b91e0bf738f1822ea",
+      "D02": "run_fdbd2ed6e93b4d709f5439af028a7600"
+    }
   },
+  "deterministic_package_sha256": "f1157c3086a6d827f08a9e936c509fdc23112ccf11f689688065a3791adf30a7",
+  "expected_counts": {
+    "asset_locators": 95,
+    "child_routes": 1,
+    "display_ids": 100,
+    "logical_assets": 56,
+    "paintings": 300,
+    "principal_rooms": 8,
+    "renditions": 48
+  },
+  "git_branch": "main",
+  "git_commit": "f32bdfe01d0b4f4b71ac367a1385c478622c5c34",
+  "git_dirty": true,
+  "git_error": "",
+  "hardware": {},
   "helper_versions": {
-    "dashboard_assets": "1.0.0",
-    "manifests": "1.0.0",
-    "validation": "1.0.0",
-    "paths": "1.0.0"
-  },
-  "python_version": "3.12.6",
-  "python_implementation": "CPython",
-  "platform": "Windows-11-10.0.26200-SP0",
-  "package_versions": {
-    "PyYAML": "6.0.3",
-    "pandas": "2.3.3"
-  },
-  "hardware": {
-    "analysis_mode": "presentation_only_dashboard_asset_packaging",
-    "restoration_inference_performed": false,
-    "new_metric_computation_performed": false,
-    "new_statistical_test_performed": false,
-    "dashboard_application_executed": false
+    "dashboard_assets": "2.0.0",
+    "manifests": "1.0.0"
   },
   "inputs": [
     {
-      "input_key": "configuration.dashboard_assets",
-      "relative_path": "config/evaluation/dashboard_assets.yaml",
-      "checksum": "06b7a48527459715df4a8d14998b6f9e930da4f5bd360f91b7c323006acf4bd9"
-    },
-    {
-      "input_key": "configuration.evidence_coverage",
-      "relative_path": "config/evaluation/evidence_coverage.yaml",
-      "checksum": "43b47eedfa8df1a23722c5dfdfe4f96ebf1297ad1bce0c6446b6291adc05efcf"
-    },
-    {
-      "input_key": "governance.evidence_dependency_audit",
-      "relative_path": "docs/evidence_dependency_audit.md",
-      "checksum": "9d2f189bd5696487b9a48dd170440f2abe785be2fa28cd7c809a63db833c397a"
-    },
-    {
-      "input_key": "governance.implementation_guidelines",
-      "relative_path": "docs/refactoring_implementation_guidelines.md",
-      "checksum": "d0a981a78d5050f76f31f0e9f0fe39b3535b6a0ed3344249848ceaa0333a8d16"
-    },
-    {
-      "input_key": "governance.notebook_roadmap",
-      "relative_path": "docs/final_notebook_roadmap.md",
-      "checksum": "1520fbe4ec93f6fb101dd6b6d20c39e1cef8813a9ed803f469a4d0ff354b5cc9"
-    },
-    {
-      "input_key": "inventory.inventory_run",
-      "relative_path": "outputs/inventory/inventory_run.json",
-      "checksum": "398edd84f41a5dbb6d2b8b46a1065501b61f654472be09e63ee832da2f95a884"
-    },
-    {
-      "input_key": "inventory.project_file_inventory",
-      "relative_path": "outputs/inventory/project_file_inventory.csv",
-      "checksum": "f123447addd1d2447acc9f6c2c7f75a2e3813774d5b493911684445eecf3507d"
-    },
-    {
-      "input_key": "inventory.project_paths",
-      "relative_path": "outputs/inventory/project_paths.json",
-      "checksum": "3f0aa92d945dc6ddc1f04d25943cebc5b9e64b87ff1811a6797b5203762e4e3a"
-    },
-    {
-      "input_key": "table.ablation_results_path",
-      "relative_path": "outputs/28_metric_and_region_policy_ablation/metrics/ablation_results.csv",
-      "checksum": "9e6558b295ed7e27af51a24c6c815385c682c4ae48d9aa96043bf359146b5b74"
-    },
-    {
-      "input_key": "table.artworks_path",
-      "relative_path": "outputs/01_dataset_verification/data/artworks.csv",
-      "checksum": "e6b9ed016a433edc227f5fe96422106956677138774001aa772d951dc401a5dd"
-    },
-    {
-      "input_key": "table.canonical_cases_path",
-      "relative_path": "outputs/04_canonical_damaged_image_generation/data/cases.csv",
-      "checksum": "55111dcc874ae83c198e80da216bd634a5e1a54133c3c1da1213a3ff6f9a1755"
-    },
-    {
-      "input_key": "table.canonical_masks_path",
-      "relative_path": "outputs/03_canonical_mask_generation/data/masks.csv",
-      "checksum": "b517853358812f8f378a7d6bbaba8ffa0582ff5083a9eb6afc4f9ba9701461b3"
-    },
-    {
-      "input_key": "table.canonical_uncertainty_path",
-      "relative_path": "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_calibration_inputs.csv",
-      "checksum": "fd89fe9ff75cd9c29a3e22203399ca4ebaa5e2abb64a8e42c217795a4e5149fa"
-    },
-    {
-      "input_key": "table.case_neighbors_path",
-      "relative_path": "outputs/29_explainable_ai_and_case_retrieval/data/case_neighbors.csv",
-      "checksum": "837bb1af476fc2b3e243b8d9a693d01a49f738ac45f6f3d85fa6d8874be61a6b"
-    },
-    {
-      "input_key": "table.case_registry_path",
-      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
-      "checksum": "cd560b6599e85c63bd7e81e80de6292fe7fd5f6f17c32b0ac9faadee51da5d75"
-    },
-    {
-      "input_key": "table.case_report_index_path",
-      "relative_path": "outputs/32_case_and_painting_report_generation/data/case_report_index.csv",
-      "checksum": "4cb4a58195194813133c5482237fc46019ab0d6f4bd53a0d2b2f57aad8710cca"
-    },
-    {
-      "input_key": "table.compute_scalability_path",
-      "relative_path": "outputs/30_model_cards_compute_and_scalability/metrics/compute_scalability.csv",
-      "checksum": "16e87f3d73c57e5624e9c31b22c0215e1feb558f4f3179b2669fe2a0bd108caf"
-    },
-    {
-      "input_key": "table.damage_size_analysis_path",
-      "relative_path": "outputs/23_damage_size_sensitivity_analysis/metrics/damage_size_analysis.csv",
-      "checksum": "74064d71c1802c1f47aae1fb13f0f312abb88e0ec19b979d65aea2b59be09e48"
-    },
-    {
-      "input_key": "table.damage_size_cases_path",
-      "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv",
-      "checksum": "be2bc3db98728588642a2ce8eb8f731165e1a112f54b92972f13b4df7bf40501"
-    },
-    {
-      "input_key": "table.damage_size_map_manifest_path",
-      "relative_path": "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/map_images.csv",
-      "checksum": "eba841fdf67f028e6a06831b71593cabe9fcf91f37bcbcb0fa9a03b259b6f295"
-    },
-    {
-      "input_key": "table.damage_size_uncertainty_path",
-      "relative_path": "outputs/22_damage_size_diffusion_uncertainty_extension/metrics/damage_size_uncertainty.csv",
-      "checksum": "0d09d1ca52a1d2385535c8440a240c21581058a1f512dc51043828bd8de773aa"
-    },
-    {
-      "input_key": "table.dataset_audit_path",
-      "relative_path": "outputs/01_dataset_verification/metrics/dataset_audit.csv",
-      "checksum": "8051e7e58cd7777f6e740ba14e39723ad97cb94d47d991de8f98cd113d4a2ac1"
-    },
-    {
-      "input_key": "table.degradation_analysis_path",
-      "relative_path": "outputs/25_synthetic_degradation_analysis/metrics/degradation_analysis.csv",
-      "checksum": "07327031bb7bb4e8f883079142fc0158112cac24c0e5ec8037ced831866c5732"
-    },
-    {
-      "input_key": "table.degradation_cases_path",
-      "relative_path": "outputs/07_synthetic_degradation_dataset_generation/data/cases.csv",
-      "checksum": "317cc266a8607277ad25a7a5bb43bee8b7622f7354ce0a39f605d815bca0f91b"
-    },
-    {
-      "input_key": "table.explanation_cases_path",
-      "relative_path": "outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv",
-      "checksum": "694ba2d385aa3c84600eabf698b9316819cc7f0506669c5a71e4730cc1035ae2"
-    },
-    {
-      "input_key": "table.failure_assignments_path",
-      "relative_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/failure_assignments.csv",
-      "checksum": "3ed75de17102fce62062c46febd26aca41a7d4f9e3f8beb0a0e8a107bb1c6bb2"
-    },
-    {
-      "input_key": "table.failure_taxonomy_path",
-      "relative_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/data/failure_taxonomy.csv",
-      "checksum": "3c09f1e425757279510ebd8d548bba7fd62fb7ae280536652d81cbc9f6c833a9"
-    },
-    {
-      "input_key": "table.final_evidence_catalog_path",
-      "relative_path": "outputs/33_final_evaluation_report/data/report_evidence_catalog.csv",
-      "checksum": "7db71a0b3f058f05402703f6c00a1eb741c32d16c12a91221842034bff1d5a65"
-    },
-    {
-      "input_key": "table.flag_stability_path",
-      "relative_path": "outputs/28_metric_and_region_policy_ablation/metrics/flag_stability.csv",
-      "checksum": "4a37e3cf9cf69097de113a63ac6c6fd88ea1eac39880296d5be0cca3edeaba82"
-    },
-    {
-      "input_key": "table.local_map_manifest_path",
-      "relative_path": "outputs/17_local_consistency_metrics/manifests/map_images.csv",
-      "checksum": "e62db622f9b4c0716f6693cd385fde19034215e26721f5d02a65ff9bd16c71da"
-    },
-    {
-      "input_key": "table.mask_robustness_analysis_path",
-      "relative_path": "outputs/24_mask_robustness_analysis/metrics/mask_robustness_analysis.csv",
-      "checksum": "5dd8c7144ed16534634c7a1fbba4128db2f154789a497aca397481cd351d60ed"
-    },
-    {
-      "input_key": "table.mask_robustness_cases_path",
-      "relative_path": "outputs/06_mask_robustness_dataset_generation/data/cases.csv",
-      "checksum": "300f5740822428e94dea47263f76af798d255c203eba38c960aee3be31e3de7f"
-    },
-    {
-      "input_key": "table.metric_correlations_path",
-      "relative_path": "outputs/26_grouped_and_statistical_analysis/metrics/metric_correlations.csv",
-      "checksum": "2e6b96abc5ac294ec186f8078b742af0520edc5d5c74a359540e0a79c5120662"
-    },
-    {
-      "input_key": "table.metric_disagreement_path",
-      "relative_path": "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv",
-      "checksum": "212f1fc8747d79c72928884f564172e0a872c4786a908185b3ccb4b9a9b41fc2"
-    },
-    {
-      "input_key": "table.model_cards_path",
-      "relative_path": "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv",
-      "checksum": "34900309628ea968c8b82931bfd3f37af2862201f8a969d36108ddb5c36b3b35"
-    },
-    {
-      "input_key": "table.model_comparison_path",
-      "relative_path": "outputs/21_multi_model_comparison/metrics/model_comparison.csv",
-      "checksum": "1bfc698d9c5d1ebe60fc03d17a1f67ed1e9f475cf34b43fbd709bb2ec11f50aa"
-    },
-    {
-      "input_key": "table.model_eligibility_path",
-      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
-      "checksum": "46f16b05337bb5d29b6c5d4bb23cbdc72817d66b7c69956688401cdf1ef88b76"
-    },
-    {
-      "input_key": "table.model_report_index_path",
-      "relative_path": "outputs/31_model_report_generation/data/report_index.csv",
-      "checksum": "80fc6b83dde8c3266f544d6a111fac360d9dee45eb0ed864a0c89f2da4819192"
-    },
-    {
-      "input_key": "table.painting_report_index_path",
-      "relative_path": "outputs/32_case_and_painting_report_generation/data/painting_report_index.csv",
-      "checksum": "008247cdd36c16c8238a8a3fe1d6ae5e245e5eb1775359e42646ccd63ecdfe18"
-    },
-    {
-      "input_key": "table.ranking_stability_path",
-      "relative_path": "outputs/26_grouped_and_statistical_analysis/metrics/ranking_stability.csv",
-      "checksum": "57d8eae38f342b687b97e040413a0884be0b3ad93d61fef154cc0aa051a61a7a"
-    },
-    {
-      "input_key": "table.region_policy_path",
-      "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv",
-      "checksum": "17f30040897fb72900abb6f2aa1b5559f80b38d0b52b0ccc0857be70b7286710"
-    },
-    {
-      "input_key": "table.representative_cases_path",
-      "relative_path": "outputs/21_multi_model_comparison/data/representative_cases.csv",
-      "checksum": "dd07ee58d49be2b0754a44573de260747dce6aa5a8902e44559dbbb5e929ecf2"
-    },
-    {
-      "input_key": "table.selected_cases_path",
-      "relative_path": "outputs/32_case_and_painting_report_generation/data/selected_cases.csv",
-      "checksum": "f6cbf989cf8fefd7a6b7cc1d2fd9fcfd4d05e8edf4dde94cf0555ad978fa3cc8"
-    },
-    {
-      "input_key": "table.semantic_map_manifest_path",
-      "relative_path": "outputs/20_semantic_and_structural_consistency/manifests/semantic_maps.csv",
-      "checksum": "edbdc7e45964a2ff801bed2a3d83c9a8232716104cb37f21780ecb470047d87d"
-    },
-    {
-      "input_key": "table.spatial_map_manifest_path",
-      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/map_images.csv",
-      "checksum": "ba59e4ff46ea5c91639168a1522b50e64f851d504e1678754753083f8a035576"
-    },
-    {
-      "input_key": "table.statistical_results_path",
-      "relative_path": "outputs/26_grouped_and_statistical_analysis/metrics/statistical_results.csv",
-      "checksum": "6f2487d4c13bf7f9cb44e004675ae2141eae0fa4002a099dcc93eca70c5f63b5"
-    },
-    {
-      "input_key": "table.thesis_tables_path",
-      "relative_path": "outputs/33_final_evaluation_report/data/thesis_tables.csv",
-      "checksum": "803f663b5b589cecd28244168df5935e7ee07688f0ec11802b5d852d2b263462"
-    },
-    {
-      "input_key": "table.trustworthiness_flags_path",
-      "relative_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv",
-      "checksum": "c3f48e8690c34eba622f102012e57156050f483593ff324418f62d1a28502ac8"
-    },
-    {
-      "input_key": "table.uncertainty_map_manifest_path",
-      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/map_images.csv",
-      "checksum": "be791e3d1f205407563f018cfa35ceef6bdf24f4dbf1669759126b8a8aaa4843"
-    },
-    {
+      "checksum": "3b52be254867caf056deb794c0eb5f779a98f25f51df8ce450b32a75c3599bb3",
       "input_key": "upstream_manifest.01",
-      "relative_path": "outputs/01_dataset_verification/manifests/run_manifest.json",
-      "checksum": "4af536c91b81b9e16aa3ffbfb461399b34034ac717c2ad0ec5231d6186b3e15a"
+      "relative_path": "outputs/01_dataset_verification/manifests/run_manifest.json"
     },
     {
+      "checksum": "296c1ade6ec8a53e459cee80e43b492fa9063ac80a81b321672809f71e2dd034",
       "input_key": "upstream_manifest.02",
-      "relative_path": "outputs/02_image_preprocessing/manifests/run_manifest.json",
-      "checksum": "5e7c4076587f9b6d149c897c817c798d596d5e740f016da5ce2aca6dc9ca310e"
+      "relative_path": "outputs/02_image_preprocessing/manifests/run_manifest.json"
     },
     {
+      "checksum": "9c376c0cc1ae9b6ea0aa447e9c990aab7cf3b0e0399d4f23c6b88eefc0fad434",
       "input_key": "upstream_manifest.03",
-      "relative_path": "outputs/03_canonical_mask_generation/manifests/run_manifest.json",
-      "checksum": "5c678a0199d405e69c4a321db313c3a97bec349753c116e2740df3d9cbcbd49e"
+      "relative_path": "outputs/03_canonical_mask_generation/manifests/run_manifest.json"
     },
     {
+      "checksum": "a393cf9b75d29e3cf09465b943f61d26f711dc837477a0040d7ed4834da691a9",
       "input_key": "upstream_manifest.04",
-      "relative_path": "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json",
-      "checksum": "f9e95b91dd72440c36f07c56853b971022a64def824579daeb8c6e484875e6bc"
+      "relative_path": "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json"
     },
     {
+      "checksum": "c542b22cbc3186a06a7eabf1693e1c5a40cdb1a1449b117463e7a7c6172b4e00",
       "input_key": "upstream_manifest.05",
-      "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json",
-      "checksum": "a5bad621639729fc4ba7b3dd4ff7551be2f9f4696d341ec146bda1afea792f8d"
+      "relative_path": "outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json"
     },
     {
+      "checksum": "891e137b62e49a8454de05b141ba0f3baaee46169b0aa1e34082721a6744924d",
       "input_key": "upstream_manifest.06",
-      "relative_path": "outputs/06_mask_robustness_dataset_generation/manifests/run_manifest.json",
-      "checksum": "9678fc918324a51023bd705ab6cb7c398ccf6771f1910083cce6f00a2dd02ed9"
+      "relative_path": "outputs/06_mask_robustness_dataset_generation/manifests/run_manifest.json"
     },
     {
+      "checksum": "81303b0c9031ff18eefb4b8e86454e3f338f2af7f3cd461524d2ed303084321f",
       "input_key": "upstream_manifest.07",
-      "relative_path": "outputs/07_synthetic_degradation_dataset_generation/manifests/run_manifest.json",
-      "checksum": "9eb03a79f9faeb0cfe159950642a5fda2f2c0c79b6c230c5a097186458f99d1e"
+      "relative_path": "outputs/07_synthetic_degradation_dataset_generation/manifests/run_manifest.json"
     },
     {
+      "checksum": "9104d4c949d02fd7e8f1d4bdec33fbf641af0a1e4aa647cc4fa9dd92cba6d711",
       "input_key": "upstream_manifest.08",
-      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
-      "checksum": "d1b62caa720194e666894afd276d0c6a8c973343b4a378bd787467273bbceb8a"
+      "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
     },
     {
+      "checksum": "6d037f7da1c8de8cd0db45ece2585dce877bb59f95901ec523d8b34ec8d4bed1",
       "input_key": "upstream_manifest.09",
-      "relative_path": "outputs/09_opencv_telea_restoration/manifests/run_manifest.json",
-      "checksum": "d3cfe89d3ba87f168f7884836caf5cb72f50f675786d1f94cd9904fe0537cbf7"
+      "relative_path": "outputs/09_opencv_telea_restoration/manifests/run_manifest.json"
     },
     {
+      "checksum": "8aaae56f650775208a9e61a750fdf79911811adaa94f7f52853330e3f8a6f3e5",
       "input_key": "upstream_manifest.10",
-      "relative_path": "outputs/10_lama_restoration/manifests/run_manifest.json",
-      "checksum": "e2c2ce786f030472152142d44322ac90b03b98cdce0f041d00657324df9257ff"
+      "relative_path": "outputs/10_lama_restoration/manifests/run_manifest.json"
     },
     {
+      "checksum": "0aa3ca008cdaf2c56bc1047aae3d01a692d60ad4fc2f6d912ad46fccca445e4a",
       "input_key": "upstream_manifest.11",
-      "relative_path": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json",
-      "checksum": "7b76c94c9b857dcdf7f4efb5c619494b718717126c6f76f8343d8dae8f3a6b73"
+      "relative_path": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
     },
     {
+      "checksum": "9fc227df1854000cc9eb8dd7265cee462a670a4ef3a156a1bfdcdee097dfb441",
       "input_key": "upstream_manifest.12",
-      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json",
-      "checksum": "0b46a1a7fbec8f27bdd0d22266a3d1630f5a4150c0ced3ec0fb6a1e4554ba009"
+      "relative_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
     },
     {
+      "checksum": "3e8da13290d022c5655b02aeb9dbe7ef95572fd362db46ba1ed416f60053da42",
       "input_key": "upstream_manifest.13",
-      "relative_path": "outputs/13_classical_metrics/manifests/run_manifest.json",
-      "checksum": "90d5905958348041055dfa915f4577af335c34b26036a31767452297679538d2"
+      "relative_path": "outputs/13_classical_metrics/manifests/run_manifest.json"
     },
     {
+      "checksum": "daac3c6196b3dafb5d875853a659a920409c7a311bac12e8c51d9522c82cb9e2",
       "input_key": "upstream_manifest.14",
-      "relative_path": "outputs/14_lpips_metrics/manifests/run_manifest.json",
-      "checksum": "2728e750f41f1441c5cddc6bbfe79a60eeb7b3d318f83e2b93a0396a2be9dfd7"
+      "relative_path": "outputs/14_lpips_metrics/manifests/run_manifest.json"
     },
     {
+      "checksum": "ed6f4d4f1eac07977fa63a381a0fd1c2a71e1d8c7aed88ef4f714a92a5db6a03",
       "input_key": "upstream_manifest.15",
-      "relative_path": "outputs/15_feature_similarity/manifests/run_manifest.json",
-      "checksum": "cc9ee35005e9520a56baeeee0b130608e0ef51a00007aac3b459b9e097cb2984"
+      "relative_path": "outputs/15_feature_similarity/manifests/run_manifest.json"
     },
     {
+      "checksum": "33b0c49e5c011e026b9e7e19882789df049dbeebf4d374457d7aa3fb9bd21c3a",
       "input_key": "upstream_manifest.16",
-      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json",
-      "checksum": "5ffa5ee1de12e39f575b29cb760c3e8c86df794aadf7962304a5d3d99dd954a7"
+      "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json"
     },
     {
+      "checksum": "277fadb9eee38bf2b6a5ce05fa3916bd1b5f0a878db292944011ff5910e44ffc",
       "input_key": "upstream_manifest.17",
-      "relative_path": "outputs/17_local_consistency_metrics/manifests/run_manifest.json",
-      "checksum": "78396a22402cb97f49c422f7db22c5134a3d499aa2a96fdc45beb0aed861e51d"
+      "relative_path": "outputs/17_local_consistency_metrics/manifests/run_manifest.json"
     },
     {
+      "checksum": "acb25a99dcebc8da7e84581503832a1e337004a75ea58b7c219996a2579423ca",
       "input_key": "upstream_manifest.18",
-      "relative_path": "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json",
-      "checksum": "099e773f7f211ef5ebad0fe2703601a347af88e5fee9426aaea7217c1fda7959"
+      "relative_path": "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json"
     },
     {
+      "checksum": "0d03e4ef146f645c16cdc3a6e1897002ea74fcd64c505e3388bb60d77e5585f6",
       "input_key": "upstream_manifest.19",
-      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json",
-      "checksum": "bf2c00948375da795ef2672242be4ca47347440093e3bf82f1f46d2f46250523"
+      "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json"
     },
     {
+      "checksum": "299f83e9a43341778b801b06c5a49dfdc8c4c393a624bed124700b30d7bc10d8",
       "input_key": "upstream_manifest.20",
-      "relative_path": "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json",
-      "checksum": "c64d4ea1a984a83bd3fc2b7c1ef6b53f67c8fed85156c19888ab23ab51658af6"
+      "relative_path": "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json"
     },
     {
+      "checksum": "fbbcae169e03223bbbd0fceeca482c09988188003521d062e49d232375d695ee",
       "input_key": "upstream_manifest.21",
-      "relative_path": "outputs/21_multi_model_comparison/manifests/run_manifest.json",
-      "checksum": "7517eb7ba360302eaa73b4bdda8870a52b4c1a87bf728ac59970c6d48b44c660"
+      "relative_path": "outputs/21_multi_model_comparison/manifests/run_manifest.json"
     },
     {
+      "checksum": "966e56d7026d0d175e411ad81ea4b6124175826759bc01e3c75a52c5d0eb7cda",
       "input_key": "upstream_manifest.22",
-      "relative_path": "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json",
-      "checksum": "dff582edbeb029dca56287dd39dcfc5f29a309a42a3c46b86c7a43e1592df9b8"
+      "relative_path": "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json"
     },
     {
+      "checksum": "863f8ddce30abccffaf7c5a9f2d7282b7691b67cac60e49a4ceb68ebf4e7a6d8",
       "input_key": "upstream_manifest.23",
-      "relative_path": "outputs/23_damage_size_sensitivity_analysis/manifests/run_manifest.json",
-      "checksum": "9663eb4762302a03ab09882ebbf1b0a1276815d8ac4bd60a54191cda2f5dcefd"
+      "relative_path": "outputs/23_damage_size_sensitivity_analysis/manifests/run_manifest.json"
     },
     {
+      "checksum": "7055a8a2a5c930999ff07ddb82f53dfaab77082ba7a83985f1b65dd003280d1a",
       "input_key": "upstream_manifest.24",
-      "relative_path": "outputs/24_mask_robustness_analysis/manifests/run_manifest.json",
-      "checksum": "1210a5776bf930ac5a8039063cb902b4790e8742798492c318a79a470a766b5e"
+      "relative_path": "outputs/24_mask_robustness_analysis/manifests/run_manifest.json"
     },
     {
+      "checksum": "9a35b56f8bfc09dfabfddb44aa17294167f35232179e93b88c4a2a3df2d35a97",
       "input_key": "upstream_manifest.25",
-      "relative_path": "outputs/25_synthetic_degradation_analysis/manifests/run_manifest.json",
-      "checksum": "660792ea34d70201df85b1f1a7ac478c0498c0b41bcd9b4bc8f8f18197d4778c"
+      "relative_path": "outputs/25_synthetic_degradation_analysis/manifests/run_manifest.json"
     },
     {
+      "checksum": "7be576c1a5cd441f076375151e06f8a93c5ce582f32e2605691d62dccacd3190",
       "input_key": "upstream_manifest.26",
-      "relative_path": "outputs/26_grouped_and_statistical_analysis/manifests/run_manifest.json",
-      "checksum": "bf83485f83d6aef2d0f342f0155a8f2ef353f017750a224145c7f09b0d3114db"
+      "relative_path": "outputs/26_grouped_and_statistical_analysis/manifests/run_manifest.json"
     },
     {
+      "checksum": "ce884c0140e56835eb573a76aff0d04b0b3c4ebe06b179b88df697a8a80b3b0b",
       "input_key": "upstream_manifest.27",
-      "relative_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json",
-      "checksum": "35df0a1169467a9225ae48898def27e727cf2ec16faa928670b7c6fc39a47073"
+      "relative_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json"
     },
     {
+      "checksum": "006ad73014ef999fb57e1d2ad9317cd8055cc91ea500fd72bddeafa75adcb23d",
       "input_key": "upstream_manifest.28",
-      "relative_path": "outputs/28_metric_and_region_policy_ablation/manifests/run_manifest.json",
-      "checksum": "199a94d16ef679920e17301dc780e4a2c1cdfcb665bcbd8790e27e3502ba180e"
+      "relative_path": "outputs/28_metric_and_region_policy_ablation/manifests/run_manifest.json"
     },
     {
+      "checksum": "c1a4bf99a86a3f08e9ab01da7b04b4e0648183b3c5f2d3ccdd8f93a545c24438",
       "input_key": "upstream_manifest.29",
-      "relative_path": "outputs/29_explainable_ai_and_case_retrieval/manifests/run_manifest.json",
-      "checksum": "35d9d4383c1b25e8f5e61905b9462d22b31344a37571b9167a5ac1b773d64b1f"
+      "relative_path": "outputs/29_explainable_ai_and_case_retrieval/manifests/run_manifest.json"
     },
     {
+      "checksum": "061a47c940808d154e97712ab399ed2f75d985fcbd94f04d53259d0843a333e0",
       "input_key": "upstream_manifest.30",
-      "relative_path": "outputs/30_model_cards_compute_and_scalability/manifests/run_manifest.json",
-      "checksum": "6095f48bfae48eca853c6492b403c280b9d67786d0c4e57e27c4c4efdafffc41"
+      "relative_path": "outputs/30_model_cards_compute_and_scalability/manifests/run_manifest.json"
     },
     {
+      "checksum": "05f8b385b57bee7f198689c6cccb0253ab143f8dc9d161ae54ec7411398930f0",
       "input_key": "upstream_manifest.31",
-      "relative_path": "outputs/31_model_report_generation/manifests/run_manifest.json",
-      "checksum": "568dcb669f227e270057b22043e504b2727c99904d6813952d17745aaf452340"
+      "relative_path": "outputs/31_model_report_generation/manifests/run_manifest.json"
     },
     {
+      "checksum": "a8eb7d35628cc7177ebdc9665e6c63fbbc20dc4a5a0c0a692c68a584de491d68",
       "input_key": "upstream_manifest.32",
-      "relative_path": "outputs/32_case_and_painting_report_generation/manifests/run_manifest.json",
-      "checksum": "7fa92ec00b349a50a6085e09a95c5fb37f05b11bd1ddf60eb0da7614f364c4c7"
+      "relative_path": "outputs/32_case_and_painting_report_generation/manifests/run_manifest.json"
     },
     {
+      "checksum": "fd8eac279d80d75a23246792dc20e2bcc582c42e3f0939ae87ae200ae9b47139",
       "input_key": "upstream_manifest.33",
-      "relative_path": "outputs/33_final_evaluation_report/manifests/run_manifest.json",
-      "checksum": "a143fbd5661a540fc6cd9392aec0851d06db419b682a150c94e634b10210289b"
+      "relative_path": "outputs/33_final_evaluation_report/manifests/run_manifest.json"
+    },
+    {
+      "checksum": "1675d1a5f80ab7f065c3c8bc8e64d80f061b3e0dacedbe80c5631c6236c778f7",
+      "input_key": "upstream_manifest.12A",
+      "relative_path": "outputs/12a_hint_restoration/manifests/run_manifest.json"
+    },
+    {
+      "checksum": "f740f4cd755ef83bf8518ac4b9af106d4bcbf43b7b4f27f1b499b06e12c82c41",
+      "input_key": "upstream_manifest.D01",
+      "relative_path": "outputs/37_hint_mat_method_selection/manifests/run_manifest.json"
+    },
+    {
+      "checksum": "b2c3d4fa440d35d12d4dbce32f6bf814081ae52f80e88ce50180f507078caa80",
+      "input_key": "upstream_manifest.D02",
+      "relative_path": "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/manifests/run_manifest.json"
+    },
+    {
+      "checksum": "1e69c2a9ade1b2b254ccbcf79db3a24bf9d309faea4059fae78fd8b2dfe3578d",
+      "input_key": "governing_contract.page_contract",
+      "relative_path": "docs/dashboard_design_finalists/controlled_300_page_contracts.md"
+    },
+    {
+      "checksum": "c41aa69bcedb5e9a1a36bd6bfd41d050f9eebdc48463c0db751280107d36789e",
+      "input_key": "governing_contract.producer_artifact_map",
+      "relative_path": "docs/dashboard_design_finalists/controlled_300_producer_artifact_map.md"
+    },
+    {
+      "checksum": "92d530f78fa6d890a8b61b3125105217f9c06484c9cc51826524a0823a56ccd7",
+      "input_key": "governing_contract.remote_asset_audit",
+      "relative_path": "docs/dashboard_design_finalists/controlled_300_remote_asset_audit.md"
+    },
+    {
+      "checksum": "b5d8abe2a6ac74984a8675847e8fd4360d3cc91d66986a2ce1ffbf6f8ad0e81a",
+      "input_key": "governing_contract.runtime_loading_contract",
+      "relative_path": "docs/dashboard_design_finalists/controlled_300_runtime_loading_contract.md"
+    },
+    {
+      "checksum": "b6806a0a4791990db9b47f13c288d5900546a5729a66337891606ea9e7f71af3",
+      "input_key": "governing_contract.n34_implementation_contract",
+      "relative_path": "docs/dashboard_design_finalists/controlled_300_n34_implementation_contract.md"
     }
   ],
+  "inventory_run_id": "inventory_20260928T143704Z_c0925051",
+  "known_limitations": [
+    "The dashboard summarizes a controlled synthetic-damage benchmark rather than real conservation interventions.",
+    "Computational flags are review rules and not independent human or conservation ground truth.",
+    "Repeated-seed variability is empirical generative uncertainty, not calibrated confidence.",
+    "SDXL is a bounded 24-candidate feasibility population, not a full-scope comparison method.",
+    "Rendered lightness is an image property, not race, ethnicity or identity.",
+    "No combined universal quality or trust score is produced."
+  ],
+  "manifest_schema_version": "run_manifest.v1",
+  "notebook_id": "34",
+  "notebook_name": "34_final_streamlit_dashboard_assets",
+  "observed_counts": {
+    "asset_locators": 95,
+    "child_routes": 1,
+    "display_bindings": 170,
+    "display_ids": 100,
+    "logical_assets": 56,
+    "package_files": 377,
+    "paintings": 300,
+    "principal_rooms": 8,
+    "renditions": 48
+  },
+  "origin": "Controlled-300 dashboard package built from approved N01–N33, N12A, D01, and D02 evidence",
   "outputs": [
     {
-      "artifact_key": "output.data.dashboard_indexes.case_index.csv",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/case_index.csv",
-      "artifact_type": "csv"
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_181d74a460fce3e2a07c2513.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_181d74a460fce3e2a07c2513.png"
     },
     {
-      "artifact_key": "output.data.dashboard_indexes.filter_options.json",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/filter_options.json",
-      "artifact_type": "json"
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_19f0c2d52e3a45bf10483511.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_19f0c2d52e3a45bf10483511.png"
     },
     {
-      "artifact_key": "output.data.dashboard_indexes.painting_index.csv",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/painting_index.csv",
-      "artifact_type": "csv"
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_2aa7900ac541c931918e5f9c.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_2aa7900ac541c931918e5f9c.png"
     },
     {
-      "artifact_key": "output.data.dashboard_indexes.report_index.csv",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/report_index.csv",
-      "artifact_type": "csv"
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_2bd79df6e9f5b3a75ac04d2f.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_2bd79df6e9f5b3a75ac04d2f.png"
     },
     {
-      "artifact_key": "output.data.dashboard_indexes.visual_asset_index.csv",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/visual_asset_index.csv",
-      "artifact_type": "csv"
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_5edc8e3b35264c3eb7c7cc0f.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_5edc8e3b35264c3eb7c7cc0f.png"
     },
     {
-      "artifact_key": "output.data.dashboard_summary.json",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_summary.json",
-      "artifact_type": "json"
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_7304b40e06f18576a36c7c7a.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_7304b40e06f18576a36c7c7a.png"
     },
     {
-      "artifact_key": "output.data.dashboard_tables.compute_summary.csv",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/compute_summary.csv",
-      "artifact_type": "csv"
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_850159cae39b87a9b78d08a9.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_850159cae39b87a9b78d08a9.png"
     },
     {
-      "artifact_key": "output.data.dashboard_tables.headline_findings.csv",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/headline_findings.csv",
-      "artifact_type": "csv"
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_8ad8155f51d74392cb7cda40.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_8ad8155f51d74392cb7cda40.png"
     },
     {
-      "artifact_key": "output.data.dashboard_tables.metric_framework.csv",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/metric_framework.csv",
-      "artifact_type": "csv"
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_9c0af44d9f4e81df076921a5.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_9c0af44d9f4e81df076921a5.png"
     },
     {
-      "artifact_key": "output.data.dashboard_tables.performance_summary.csv",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/performance_summary.csv",
-      "artifact_type": "csv"
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_9effa11745bfa40c25381a4c.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_9effa11745bfa40c25381a4c.png"
     },
     {
-      "artifact_key": "output.data.dashboard_tables.research_question_coverage.csv",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/research_question_coverage.csv",
-      "artifact_type": "csv"
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_af2a6e08cc32dffbe5da0e60.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_af2a6e08cc32dffbe5da0e60.png"
     },
     {
-      "artifact_key": "output.data.dashboard_tables.sensitivity_summary.csv",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/sensitivity_summary.csv",
-      "artifact_type": "csv"
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_af41dd1516831fe6c4c397a1.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_af41dd1516831fe6c4c397a1.png"
     },
     {
-      "artifact_key": "output.data.dashboard_tables.study_design.csv",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/study_design.csv",
-      "artifact_type": "csv"
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_b1f9818350ae6d47e96b66a6.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_b1f9818350ae6d47e96b66a6.png"
     },
     {
-      "artifact_key": "output.data.dashboard_tables.trustworthiness_summary.csv",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/trustworthiness_summary.csv",
-      "artifact_type": "csv"
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_b80d4aa098018c989785b6f6.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_b80d4aa098018c989785b6f6.png"
     },
     {
-      "artifact_key": "output.data.dashboard_tables.uncertainty_summary.csv",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/uncertainty_summary.csv",
-      "artifact_type": "csv"
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_e0e6f99edacdcabf24192f1d.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_e0e6f99edacdcabf24192f1d.png"
+    },
+    {
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_e613344025c9f1dcd65be870.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_e613344025c9f1dcd65be870.png"
+    },
+    {
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_e659ca905745e333ed77f362.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_e659ca905745e333ed77f362.png"
+    },
+    {
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_f285ef2817befc7c39363f74.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_f285ef2817befc7c39363f74.png"
+    },
+    {
+      "artifact_key": "output.assets.renditions.diagnostic_preview.rendition_fcc52bb53c423d3b72d672ce.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/diagnostic_preview/rendition_fcc52bb53c423d3b72d672ce.png"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_170ee25d5826523e501b0fea.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_170ee25d5826523e501b0fea.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_302b417de8a803f2ae96f8c2.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_302b417de8a803f2ae96f8c2.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_336cae231387ffc51537da76.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_336cae231387ffc51537da76.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_3f8ca6463dc3dc5f3110ab6f.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_3f8ca6463dc3dc5f3110ab6f.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_4f6f8e5fa297dd539080ed5b.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_4f6f8e5fa297dd539080ed5b.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_530869ee1979b8a5c1073104.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_530869ee1979b8a5c1073104.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_64f001e84db28717225b3042.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_64f001e84db28717225b3042.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_74ba0a09b04cbaf821b07025.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_74ba0a09b04cbaf821b07025.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_7fafe31ad1ec07837762d213.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_7fafe31ad1ec07837762d213.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_83c6eb12ae5aa5af99f2420d.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_83c6eb12ae5aa5af99f2420d.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_85db68f91fcdfe92bddf4fd6.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_85db68f91fcdfe92bddf4fd6.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_b3ed5ef5668d93183898e87b.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_b3ed5ef5668d93183898e87b.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_c15b2f5a351b39cf844a4011.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_c15b2f5a351b39cf844a4011.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_c2b0098cf4829a54dd4a5767.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_c2b0098cf4829a54dd4a5767.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_ce2928a6fc1fa75349b2495b.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_ce2928a6fc1fa75349b2495b.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_d7fcd4cacbacdfe8929c38cb.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_d7fcd4cacbacdfe8929c38cb.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_d87f5059723b8b4fee7269c7.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_d87f5059723b8b4fee7269c7.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_dc76ff08b0caf2a43de1b2d7.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_dc76ff08b0caf2a43de1b2d7.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_e1012b93ac5ae47664b273ef.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_e1012b93ac5ae47664b273ef.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_ec402beb4d4a4840070d82db.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_ec402beb4d4a4840070d82db.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_f29e457e74220fe0b7d8f4b4.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_f29e457e74220fe0b7d8f4b4.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_fefed3a52088454343cb587e.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_fefed3a52088454343cb587e.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.standard.rendition_ff02c58392031efada645dae.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/standard/rendition_ff02c58392031efada645dae.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.thumb.rendition_00a28f368f17e8d30abd3214.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/thumb/rendition_00a28f368f17e8d30abd3214.png"
+    },
+    {
+      "artifact_key": "output.assets.renditions.thumb.rendition_8db1e7e79f5edd214d4ff6e9.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/thumb/rendition_8db1e7e79f5edd214d4ff6e9.png"
+    },
+    {
+      "artifact_key": "output.assets.renditions.thumb.rendition_b62ba60dc6ed65613b6935c7.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/thumb/rendition_b62ba60dc6ed65613b6935c7.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.thumb.rendition_b81d42129c07bb80495705b3.png",
+      "artifact_type": "png",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/thumb/rendition_b81d42129c07bb80495705b3.png"
+    },
+    {
+      "artifact_key": "output.assets.renditions.thumb.rendition_cfae8bcce7c4f547d496b84b.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/thumb/rendition_cfae8bcce7c4f547d496b84b.webp"
+    },
+    {
+      "artifact_key": "output.assets.renditions.thumb.rendition_d948969076f3827730558096.webp",
+      "artifact_type": "webp",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/assets/renditions/thumb/rendition_d948969076f3827730558096.webp"
+    },
+    {
+      "artifact_key": "output.data.bootstrap.bootstrap.json",
+      "artifact_type": "json",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/bootstrap/bootstrap.json"
+    },
+    {
+      "artifact_key": "output.data.bootstrap.filter_options.json",
+      "artifact_type": "json",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/bootstrap/filter_options.json"
+    },
+    {
+      "artifact_key": "output.data.bootstrap.glossary.json",
+      "artifact_type": "json",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/bootstrap/glossary.json"
+    },
+    {
+      "artifact_key": "output.data.bootstrap.painting_lookup.parquet",
+      "artifact_type": "parquet",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/bootstrap/painting_lookup.parquet"
+    },
+    {
+      "artifact_key": "output.data.bootstrap.room_catalogue.json",
+      "artifact_type": "json",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/bootstrap/room_catalogue.json"
+    },
+    {
+      "artifact_key": "output.data.derived.d02_hand_summary.parquet",
+      "artifact_type": "parquet",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/derived/d02_hand_summary.parquet"
+    },
+    {
+      "artifact_key": "output.data.derived.d02_lightness_summary.parquet",
+      "artifact_type": "parquet",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/derived/d02_lightness_summary.parquet"
+    },
+    {
+      "artifact_key": "output.data.derived.d02_r005_geometry.json",
+      "artifact_type": "json",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/derived/d02_r005_geometry.json"
+    },
+    {
+      "artifact_key": "output.data.derived.stability_trajectories.parquet",
+      "artifact_type": "parquet",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/derived/stability_trajectories.parquet"
+    },
+    {
+      "artifact_key": "output.data.derived.threshold_strata.parquet",
+      "artifact_type": "parquet",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/derived/threshold_strata.parquet"
+    },
+    {
+      "artifact_key": "output.data.paintings.p001.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p001.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p002.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p002.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p003.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p003.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p004.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p004.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p005.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p005.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p006.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p006.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p007.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p007.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p008.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p008.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p009.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p009.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p010.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p010.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p011.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p011.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p012.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p012.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p013.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p013.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p014.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p014.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p015.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p015.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p016.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p016.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p017.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p017.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p018.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p018.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p019.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p019.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p020.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p020.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p021.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p021.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p022.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p022.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p023.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p023.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p024.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p024.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p025.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p025.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p026.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p026.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p027.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p027.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p028.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p028.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p029.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p029.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p030.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p030.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p031.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p031.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p032.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p032.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p033.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p033.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p034.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p034.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p035.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p035.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p036.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p036.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p037.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p037.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p038.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p038.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p039.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p039.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p040.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p040.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p041.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p041.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p042.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p042.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p043.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p043.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p044.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p044.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p045.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p045.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p046.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p046.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p047.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p047.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p048.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p048.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p049.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p049.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p050.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p050.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p051.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p051.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p052.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p052.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p053.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p053.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p054.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p054.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p055.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p055.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p056.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p056.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p057.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p057.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p058.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p058.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p059.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p059.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p060.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p060.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p061.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p061.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p062.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p062.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p063.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p063.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p064.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p064.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p065.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p065.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p066.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p066.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p067.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p067.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p068.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p068.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p069.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p069.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p070.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p070.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p071.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p071.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p072.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p072.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p073.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p073.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p074.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p074.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p075.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p075.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p076.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p076.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p077.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p077.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p078.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p078.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p079.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p079.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p080.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p080.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p081.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p081.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p082.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p082.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p083.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p083.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p084.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p084.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p085.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p085.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p086.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p086.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p087.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p087.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p088.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p088.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p089.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p089.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p090.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p090.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p091.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p091.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p092.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p092.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p093.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p093.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p094.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p094.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p095.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p095.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p096.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p096.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p097.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p097.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p098.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p098.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p099.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p099.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p100.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p100.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p101.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p101.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p102.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p102.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p103.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p103.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p104.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p104.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p105.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p105.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p106.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p106.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p107.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p107.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p108.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p108.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p109.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p109.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p110.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p110.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p111.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p111.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p112.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p112.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p113.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p113.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p114.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p114.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p115.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p115.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p116.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p116.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p117.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p117.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p118.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p118.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p119.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p119.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p120.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p120.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p121.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p121.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p122.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p122.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p123.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p123.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p124.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p124.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p125.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p125.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p126.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p126.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p127.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p127.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p128.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p128.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p129.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p129.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p130.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p130.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p131.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p131.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p132.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p132.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p133.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p133.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p134.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p134.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p135.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p135.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p136.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p136.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p137.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p137.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p138.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p138.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p139.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p139.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p140.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p140.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p141.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p141.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p142.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p142.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p143.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p143.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p144.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p144.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p145.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p145.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p146.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p146.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p147.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p147.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p148.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p148.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p149.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p149.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p150.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p150.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p151.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p151.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p152.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p152.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p153.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p153.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p154.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p154.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p155.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p155.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p156.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p156.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p157.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p157.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p158.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p158.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p159.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p159.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p160.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p160.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p161.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p161.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p162.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p162.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p163.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p163.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p164.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p164.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p165.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p165.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p166.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p166.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p167.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p167.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p168.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p168.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p169.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p169.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p170.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p170.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p171.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p171.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p172.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p172.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p173.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p173.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p174.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p174.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p175.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p175.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p176.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p176.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p177.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p177.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p178.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p178.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p179.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p179.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p180.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p180.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p181.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p181.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p182.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p182.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p183.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p183.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p184.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p184.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p185.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p185.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p186.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p186.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p187.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p187.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p188.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p188.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p189.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p189.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p190.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p190.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p191.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p191.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p192.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p192.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p193.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p193.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p194.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p194.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p195.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p195.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p196.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p196.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p197.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p197.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p198.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p198.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p199.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p199.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p200.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p200.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p201.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p201.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p202.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p202.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p203.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p203.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p204.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p204.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p205.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p205.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p206.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p206.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p207.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p207.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p208.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p208.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p209.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p209.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p210.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p210.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p211.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p211.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p212.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p212.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p213.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p213.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p214.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p214.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p215.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p215.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p216.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p216.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p217.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p217.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p218.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p218.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p219.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p219.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p220.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p220.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p221.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p221.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p222.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p222.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p223.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p223.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p224.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p224.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p225.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p225.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p226.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p226.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p227.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p227.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p228.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p228.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p229.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p229.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p230.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p230.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p231.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p231.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p232.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p232.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p233.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p233.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p234.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p234.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p235.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p235.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p236.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p236.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p237.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p237.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p238.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p238.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p239.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p239.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p240.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p240.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p241.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p241.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p242.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p242.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p243.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p243.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p244.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p244.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p245.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p245.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p246.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p246.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p247.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p247.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p248.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p248.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p249.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p249.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p250.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p250.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p251.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p251.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p252.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p252.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p253.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p253.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p254.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p254.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p255.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p255.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p256.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p256.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p257.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p257.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p258.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p258.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p259.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p259.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p260.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p260.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p261.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p261.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p262.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p262.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p263.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p263.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p264.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p264.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p265.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p265.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p266.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p266.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p267.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p267.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p268.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p268.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p269.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p269.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p270.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p270.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p271.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p271.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p272.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p272.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p273.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p273.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p274.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p274.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p275.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p275.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p276.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p276.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p277.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p277.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p278.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p278.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p279.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p279.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p280.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p280.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p281.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p281.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p282.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p282.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p283.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p283.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p284.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p284.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p285.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p285.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p286.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p286.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p287.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p287.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p288.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p288.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p289.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p289.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p290.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p290.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p291.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p291.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p292.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p292.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p293.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p293.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p294.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p294.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p295.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p295.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p296.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p296.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p297.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p297.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p298.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p298.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p299.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p299.json.gz"
+    },
+    {
+      "artifact_key": "output.data.paintings.p300.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/paintings/p300.json.gz"
+    },
+    {
+      "artifact_key": "output.data.reports.index.json.gz",
+      "artifact_type": "gz",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/reports/index.json.gz"
+    },
+    {
+      "artifact_key": "output.data.rooms.case_explorer.parquet",
+      "artifact_type": "parquet",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/rooms/case_explorer.parquet"
+    },
+    {
+      "artifact_key": "output.data.rooms.exhibition_foyer.parquet",
+      "artifact_type": "parquet",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/rooms/exhibition_foyer.parquet"
+    },
+    {
+      "artifact_key": "output.data.rooms.focused_portrait_review.parquet",
+      "artifact_type": "parquet",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/rooms/focused_portrait_review.parquet"
+    },
+    {
+      "artifact_key": "output.data.rooms.metric_framework.parquet",
+      "artifact_type": "parquet",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/rooms/metric_framework.parquet"
+    },
+    {
+      "artifact_key": "output.data.rooms.model_gallery.parquet",
+      "artifact_type": "parquet",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/rooms/model_gallery.parquet"
+    },
+    {
+      "artifact_key": "output.data.rooms.research_archive.parquet",
+      "artifact_type": "parquet",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/rooms/research_archive.parquet"
+    },
+    {
+      "artifact_key": "output.data.rooms.stability_lab.parquet",
+      "artifact_type": "parquet",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/rooms/stability_lab.parquet"
+    },
+    {
+      "artifact_key": "output.data.rooms.study_design.parquet",
+      "artifact_type": "parquet",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/rooms/study_design.parquet"
+    },
+    {
+      "artifact_key": "output.data.rooms.trustworthiness.parquet",
+      "artifact_type": "parquet",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/data/rooms/trustworthiness.parquet"
     },
     {
       "artifact_key": "output.manifests.artifacts.csv",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/manifests/artifacts.csv",
-      "artifact_type": "csv"
+      "artifact_type": "csv",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/manifests/artifacts.csv"
     },
     {
-      "artifact_key": "output.manifests.dashboard_assets.csv",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_assets.csv",
-      "artifact_type": "csv"
+      "artifact_key": "output.manifests.asset_locators.parquet",
+      "artifact_type": "parquet",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/manifests/asset_locators.parquet"
+    },
+    {
+      "artifact_key": "output.manifests.dashboard_assets.parquet",
+      "artifact_type": "parquet",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_assets.parquet"
+    },
+    {
+      "artifact_key": "output.manifests.dashboard_runtime_manifest.json",
+      "artifact_type": "json",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_runtime_manifest.json"
+    },
+    {
+      "artifact_key": "output.manifests.display_components.csv",
+      "artifact_type": "csv",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/manifests/display_components.csv"
+    },
+    {
+      "artifact_key": "output.manifests.renditions.csv",
+      "artifact_type": "csv",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/manifests/renditions.csv"
+    },
+    {
+      "artifact_key": "output.manifests.room_partitions.csv",
+      "artifact_type": "csv",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/manifests/room_partitions.csv"
     },
     {
       "artifact_key": "output.manifests.run_manifest.json",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/manifests/run_manifest.json",
-      "artifact_type": "json"
+      "artifact_type": "json",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/manifests/run_manifest.json"
     },
     {
       "artifact_key": "output.validation.checks.csv",
-      "relative_path": "outputs/34_final_streamlit_dashboard_assets/validation/checks.csv",
-      "artifact_type": "csv"
+      "artifact_type": "csv",
+      "relative_path": "outputs/34_final_streamlit_dashboard_assets/validation/checks.csv"
     }
   ],
-  "expected_counts": {
-    "dashboard_tables": 9,
-    "dashboard_indexes": 5,
-    "dashboard_data_assets": 15,
-    "dashboard_asset_records": 15,
-    "artifact_records": 17,
-    "physical_output_files": 19,
-    "roadmap_responsibilities": 25,
-    "headline_findings": 8,
-    "study_design_rows": 35,
-    "metric_framework_rows": 178,
-    "performance_summary_rows": 1241,
-    "sensitivity_summary_rows": 18951,
-    "uncertainty_summary_rows": 1723,
-    "trustworthiness_summary_rows": 284,
-    "compute_summary_rows": 35,
-    "research_question_rows": 4,
-    "case_index_rows": 1785,
-    "painting_index_rows": 50,
-    "visual_asset_index_rows": 23964,
-    "report_index_rows": 104,
-    "filter_option_groups": 16
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "pandas": "2.3.3",
+    "pyarrow": "24.0.0"
   },
-  "observed_counts": {
-    "dashboard_tables": 9,
-    "dashboard_indexes": 5,
-    "dashboard_data_assets": 15,
-    "dashboard_asset_records": 15,
-    "artifact_records": 17,
-    "physical_output_files": 19,
-    "roadmap_responsibilities": 25,
-    "headline_findings": 8,
-    "study_design_rows": 35,
-    "metric_framework_rows": 178,
-    "performance_summary_rows": 1241,
-    "sensitivity_summary_rows": 18951,
-    "uncertainty_summary_rows": 1723,
-    "trustworthiness_summary_rows": 284,
-    "compute_summary_rows": 35,
-    "research_question_rows": 4,
-    "case_index_rows": 1785,
-    "painting_index_rows": 50,
-    "visual_asset_index_rows": 23964,
-    "report_index_rows": 104,
-    "filter_option_groups": 16,
-    "validation_rows": 410,
-    "manifest_inputs": 82,
-    "manifest_outputs": 19
-  },
-  "validation_summary": {
-    "check_count": 410,
-    "passed_count": 410,
-    "failed_count": 0,
-    "blocking_failure_count": 0,
-    "overall_passed": true,
-    "failed_check_ids": []
-  },
-  "known_limitations": [
-    "The dashboard summarizes a controlled synthetic-damage benchmark rather than real conservation interventions.",
-    "Rule-derived flags are diagnostic evidence and are not independent human or conservation ground truth.",
-    "Repeated-seed variability is empirical generative uncertainty, not calibrated confidence.",
-    "SDXL evidence is a bounded ten-case feasibility evaluation and is not directly comparable to the full core-model population.",
-    "Representative defaults support presentation; they do not replace complete indexed evidence access."
-  ],
-  "validation_status": "passed",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python_implementation": "CPython",
+  "python_version": "3.12.6",
   "refactor_status": "refactored",
-  "completion_gate_passed": true,
-  "creates_new_scientific_evidence": false,
-  "dashboard_page_count": 8,
-  "dashboard_table_count": 9,
-  "dashboard_index_count": 5,
-  "dashboard_asset_count": 15,
-  "roadmap_responsibility_count": 25,
-  "artifact_manifest_checksum": "cd3f150a410f03b42faaccfcaea701efc3f3231c037e88a6883c47198fc9798d",
-  "output_checksums": {
-    "dashboard.table.headline_findings": "02d16b6cae9b7a6594d2270faf15103a94107b6d9c8e964451e3ab64f7bac6ce",
-    "dashboard.table.study_design": "3a9ed2b892582746ec1c8aa42172bdb6f291f8301fa22da9ed8707af06443a3b",
-    "dashboard.table.metric_framework": "ce390b97d329e20db56f729ef7b5cf156db277b32620baf8bd9dc02a2f50f1ad",
-    "dashboard.table.performance_summary": "43319aa6e72dfe2d7f9c41ec723d28bd5204480f8b5df783c941d4595d400b06",
-    "dashboard.table.sensitivity_summary": "7d8a09353433c08759e59677dba22e37f08687eba4a6ddda2d6d78baeb195405",
-    "dashboard.table.uncertainty_summary": "068a7632f07fdad261c10c2b2c7f4a7a7e79291672f427c91da70a6eae2d96ff",
-    "dashboard.table.trustworthiness_summary": "4c79651663460f41bd4f499f3174c3cbf179497ac67467b8c15796dfa32a6365",
-    "dashboard.table.compute_summary": "7ab3f1fccf42a8da147931f4a8d0a535af59682bee883190fa8bffbbb353f9c1",
-    "dashboard.table.research_question_coverage": "a0f7f101147332add582d4f658f410d04c3e162f33a74313222b7bf1305ad4b4",
-    "dashboard.index.case_index": "9fbfa714adb4eb05acfa1709a2d81a533384bdb3294e625038f6c2ec09ca5aa5",
-    "dashboard.index.painting_index": "c0f54f7695e7c18600790cce94c283ccb6976a918455a6a2d79f0667b774b131",
-    "dashboard.index.visual_asset_index": "7346c818f9db7729febd79f61b13c200000f46d5d28c947b311e55a10a6465e4",
-    "dashboard.index.report_index": "f5e5a996c14417108e305a05bc314a7075b6d91b1b88faa86bdd0b2e2e33ce78",
-    "dashboard.index.filter_options": "6c57176f877db3f1b3f0b8954f8c8d2c920a9fbc4ae04943bd6e09ce3443e0de",
-    "dashboard.summary": "2772bced7fe2639009b6292e4796397a6b40027a1fae61418d7e4ae4acfe907e",
-    "dashboard.asset_manifest": "b45cd2317eb8be36582d118408b89e6897fe4c6e239c2e50e8f6febcd90c46e6",
-    "dashboard.validation": "317472db6624942fd15dce7181cfccf5bde2ec63c20a5927299cee43f14d58fb"
+  "run_id": "run_1e831de6e27f9ead0147bb30",
+  "run_status": "completed",
+  "started_at_utc": "2026-09-28T15:48:02Z",
+  "validation_status": "passed",
+  "validation_summary": {
+    "blocking_failure_count": 0,
+    "check_count": 916,
+    "failed_count": 0,
+    "overall_passed": true,
+    "passed_count": 916
   }
 }

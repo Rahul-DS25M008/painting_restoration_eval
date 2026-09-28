@@ -114,6 +114,16 @@ policy:
       routing: ordinary_git_no_lfs
       huggingface_release_required: false
       rationale: final_presentation_synthesis_contains_no_new_candidate_or_bulk_diagnostic_population
+    n34_final_streamlit_dashboard_assets:
+      status: completed_validation_passed
+      source_run_id: run_1e831de6e27f9ead0147bb30
+      release_id: release_c5edf0d0ec99affbfa403726
+      output_root: outputs/34_final_streamlit_dashboard_assets
+      physical_files: 377
+      total_bytes: 7978024
+      routing: ordinary_git_no_lfs
+      huggingface_release_required: false
+      rationale: deployment_ready_package_contains_compact_indexes_registered_renditions_and_pinned_remote_locators_without_new_bulk_evidence
 
   bundle_rationale:
     git_role: compact_scientific_record_not_bulk_map_or_large_metric_storage
@@ -173,12 +183,12 @@ archive_store:
 
 deployment:
   current_pilot_branch: pilot-50-dashboard
-  controlled_300_repository_status: deferred_until_dashboard_rebuild
+  controlled_300_repository_status: n34_package_ready_streamlit_implementation_and_n35_validation_pending
   lazy_remote_assets_required: true
   runtime_contract: docs/dashboard_design_finalists/controlled_300_runtime_loading_contract.md
   runtime_contract_status: approved_step4_2026_09_28
   n34_implementation_contract: docs/dashboard_design_finalists/controlled_300_n34_implementation_contract.md
-  n34_implementation_contract_status: approved_step5_2026_09_28
+  n34_implementation_contract_status: completed_validation_passed_2026_09_28
   controlled_300_dashboard_schemas:
     package: dashboard_package.v2
     runtime_manifest: dashboard_runtime_manifest.v1

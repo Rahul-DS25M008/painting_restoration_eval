@@ -1,0 +1,277 @@
+{
+  "release_id": "release_c5edf0d0ec99affbfa403726",
+  "schema_version": "dashboard_glossary.v1",
+  "status": "ok",
+  "terms": [
+    {
+      "boundary": "It is not the unknowable historical original.",
+      "definition": "The standardized pre-damage digital image used for controlled comparison.",
+      "issue": "",
+      "label": "Clean reference",
+      "source_notebook_ids": [
+        "02"
+      ],
+      "source_paths": [
+        "outputs/02_image_preprocessing/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "clean_reference"
+    },
+    {
+      "boundary": "It is not a historical style, period or claim of cultural representation.",
+      "definition": "One of five balanced study groupings based on visible content.",
+      "issue": "",
+      "label": "Broad visual category",
+      "source_notebook_ids": [
+        "01"
+      ],
+      "source_paths": [
+        "outputs/01_dataset_verification/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "broad_visual_category"
+    },
+    {
+      "boundary": "It does not reproduce every property of physical deterioration.",
+      "definition": "A repeatable digital mask or image change created for the experiment.",
+      "issue": "",
+      "label": "Controlled synthetic damage",
+      "source_notebook_ids": [
+        "03",
+        "04"
+      ],
+      "source_paths": [
+        "outputs/03_canonical_mask_generation/manifests/run_manifest.json",
+        "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "controlled_synthetic_damage"
+    },
+    {
+      "boundary": "Registration does not make the case eligible for every method.",
+      "definition": "One exact painting and controlled condition stored in the experiment registry.",
+      "issue": "",
+      "label": "Registered case",
+      "source_notebook_ids": [
+        "08"
+      ],
+      "source_paths": [
+        "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "registered_case"
+    },
+    {
+      "boundary": "Eligibility is computational, not conservation approval.",
+      "definition": "A case all four full-scope methods were configured to process.",
+      "issue": "",
+      "label": "Method-eligible case",
+      "source_notebook_ids": [
+        "08"
+      ],
+      "source_paths": [
+        "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "method_eligible_case"
+    },
+    {
+      "boundary": "It is a technical control, not historical ground truth.",
+      "definition": "A zero-damage case used to check whether a method changes content unnecessarily.",
+      "issue": "",
+      "label": "Unchanged control",
+      "source_notebook_ids": [
+        "03",
+        "04"
+      ],
+      "source_paths": [
+        "outputs/03_canonical_mask_generation/manifests/run_manifest.json",
+        "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "unchanged_control"
+    },
+    {
+      "boundary": "Candidate means available for inspection, not approved as correct.",
+      "definition": "One saved model output with an exact case and method identity.",
+      "issue": "",
+      "label": "Restoration candidate",
+      "source_notebook_ids": [
+        "09",
+        "10",
+        "11",
+        "12A"
+      ],
+      "source_paths": [
+        "outputs/09_opencv_telea_restoration/manifests/run_manifest.json",
+        "outputs/10_lama_restoration/manifests/run_manifest.json",
+        "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json",
+        "outputs/12a_hint_restoration/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "restoration_candidate"
+    },
+    {
+      "boundary": "Full scope does not mean the method is universally suitable.",
+      "definition": "A method evaluated across all 2,620 eligible cases.",
+      "issue": "",
+      "label": "Full-scope method",
+      "source_notebook_ids": [
+        "08",
+        "21"
+      ],
+      "source_paths": [
+        "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+        "outputs/21_multi_model_comparison/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "full_scope_method"
+    },
+    {
+      "boundary": "It is not a fifth full-scope comparison method.",
+      "definition": "A limited feasibility run with 35 scheduled cases and 24 completed outputs.",
+      "issue": "",
+      "label": "Bounded SDXL branch",
+      "source_notebook_ids": [
+        "12"
+      ],
+      "source_paths": [
+        "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "bounded_sdxl_branch"
+    },
+    {
+      "boundary": "Different metric families must not be merged into one universal score.",
+      "definition": "A group of measurements asking a related question about restoration behaviour.",
+      "issue": "",
+      "label": "Metric family",
+      "source_notebook_ids": [
+        "08",
+        "21"
+      ],
+      "source_paths": [
+        "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
+        "outputs/21_multi_model_comparison/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "metric_family"
+    },
+    {
+      "boundary": "A metric is defensible only in a compatible region.",
+      "definition": "The part of the image where a measurement is intended to be interpreted.",
+      "issue": "",
+      "label": "Evaluation region",
+      "source_notebook_ids": [
+        "08"
+      ],
+      "source_paths": [
+        "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "evaluation_region"
+    },
+    {
+      "boundary": "An anchor winner is not a universal best model.",
+      "definition": "One registered metric-and-region comparison used to compare methods.",
+      "issue": "",
+      "label": "Quality anchor",
+      "source_notebook_ids": [
+        "21"
+      ],
+      "source_paths": [
+        "outputs/21_multi_model_comparison/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "quality_anchor"
+    },
+    {
+      "boundary": "Their disagreement measures empirical variation, not calibrated confidence.",
+      "definition": "Four Stable Diffusion candidates sharing the same case and prompt but using different seeds.",
+      "issue": "",
+      "label": "Repeated-seed group",
+      "source_notebook_ids": [
+        "18",
+        "22"
+      ],
+      "source_paths": [
+        "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json",
+        "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "repeated_seed_group"
+    },
+    {
+      "boundary": "It is not a probability that a restoration is correct.",
+      "definition": "Observed variation among repeated supported Stable Diffusion outputs.",
+      "issue": "",
+      "label": "Empirical uncertainty",
+      "source_notebook_ids": [
+        "18",
+        "22"
+      ],
+      "source_paths": [
+        "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json",
+        "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "empirical_uncertainty"
+    },
+    {
+      "boundary": "The fitted boundary is a review rule, not a failure probability.",
+      "definition": "The matched evidence population used to fit one warning or critical boundary.",
+      "issue": "",
+      "label": "Threshold reference stratum",
+      "source_notebook_ids": [
+        "27"
+      ],
+      "source_paths": [
+        "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "threshold_reference_stratum"
+    },
+    {
+      "boundary": "It is not an expert verdict, trust score or conservation decision.",
+      "definition": "A rule-based signal showing which evidence needs closer inspection.",
+      "issue": "",
+      "label": "Review flag",
+      "source_notebook_ids": [
+        "27"
+      ],
+      "source_paths": [
+        "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "review_flag"
+    },
+    {
+      "boundary": "It is not race, ethnicity or identity.",
+      "definition": "A measured image-lightness property used in the focused portrait audit.",
+      "issue": "",
+      "label": "Rendered lightness",
+      "source_notebook_ids": [
+        "D02"
+      ],
+      "source_paths": [
+        "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "rendered_lightness"
+    },
+    {
+      "boundary": "A checksum confirms file identity, not scientific correctness.",
+      "definition": "A Git or Hugging Face object pinned by exact revision, size and checksum.",
+      "issue": "",
+      "label": "Immutable source",
+      "source_notebook_ids": [
+        "33"
+      ],
+      "source_paths": [
+        "outputs/33_final_evaluation_report/manifests/run_manifest.json"
+      ],
+      "status": "ok",
+      "term_id": "immutable_source"
+    }
+  ]
+}

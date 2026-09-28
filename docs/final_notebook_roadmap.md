@@ -8,13 +8,15 @@ This roadmap defines the final dependency order and detailed responsibility of e
 
 It consolidates the previously planned roadmap into 36 stages while preserving the supported methodological, experimental, engineering, reporting, explainability, and deployment scope.
 
-**Status as of 2026-09-26:** the validated 50-painting implementation is preserved
+**Status as of 2026-09-28:** the validated 50-painting implementation is preserved
 at Git tag `pilot-50-complete`. Notebooks 01–33, including Notebook 12A and
 supplemental D02, have completed their controlled minimal-delta reruns against
 the approved balanced 300-painting collection. Notebook 33 run
 `run_aef04267c2e44495a4e7a6249426bd4d` passed its completion gate and is now
-the canonical Controlled-300 final synthesis; Notebook 34 is held behind the
-approved storage/access and dashboard-design review before any refactoring.
+the canonical Controlled-300 final synthesis. Notebook 34 run
+`run_1e831de6e27f9ead0147bb30` has now completed and promoted the validated
+`dashboard_package.v2` Controlled-300 asset package. Notebook 35 application
+implementation and deployment validation are the next active stages.
 Existing notebook names, responsibilities, cell order, schemas,
 stable identifiers, and output roots remain the starting contract. Each later
 notebook becomes current only after its Controlled-300 outputs pass its gate;
@@ -3745,6 +3747,10 @@ validation/checks.csv
 
 **Notebook:** `34_final_streamlit_dashboard_assets.ipynb`\
 **Origin:** Consolidates Existing Previous Versions of Notebooks 29 and 34, Pre-refactor  
+**Refactor status:** Finished\
+**Validation status:** Finished\
+**Completion gate passed:** Yes\
+**Controlled-300 run:** `run_1e831de6e27f9ead0147bb30`\
 **Output root:** `outputs/34_final_streamlit_dashboard_assets/`\
 **Depends on:** Notebooks 01–33 plus the separately registered N12A, D01 and
 D02 records
@@ -3863,12 +3869,12 @@ The completed gate records:
   information hierarchy without trying to reproduce illustrative room scenery
   as one static background image.
 
-This approval now authorizes Step 6 to refactor the N34 configuration, helper,
-tests and notebook as one `v2` layer and execute its package batches. It does
-not authorize changing or redeploying the live pilot application; application
-implementation begins only after the N34 package passes.
+This approval authorized Step 6 to refactor the N34 configuration, helper,
+tests and notebook as one `v2` layer. That execution is now complete. It did
+not change or redeploy the live pilot application; application implementation
+begins from the promoted package in Step 7.
 
-### Step 6 preparation-layer status (2026-09-28)
+### Observed Controlled-300 completion (2026-09-28)
 
 The coherent Controlled-300 preparation layer is now implemented in
 `config/evaluation/dashboard_assets.yaml`,
@@ -3884,11 +3890,24 @@ declared producer tables covering 4,749,036 logical rows and 2,877,354,404
 bytes through the completed inventory, actual file-size and live-header checks,
 without retaining producer-scale dataframes. All 91 declared local inputs are
 also checked explicitly. The focused helper suite passes 10/10 tests, and the
-artifact and validation ledgers use the repository-wide canonical schemas. The
-notebook file remains user-controlled: the next execution action
-is to remove the historical N34 output root and paste/run the complete Batch 1
-replacement supplied in chat. No N34 v2 package artifact exists until those
-notebook batches run successfully.
+artifact and validation ledgers use the repository-wide canonical schemas.
+
+The user-controlled notebook completed all eight replacement batches and
+atomically promoted release `release_c5edf0d0ec99affbfa403726`. Its 916/916
+validation checks passed with zero blocking or warning failures. The canonical
+tree contains exactly 377 files and no disposable `work/` directory. It records
+300 painting partitions, nine room partitions (eight principal rooms plus the
+Focused Portrait Review child route), 100 approved display IDs, 170 display
+bindings, 56 logical assets, 48 local renditions, 95 immutable asset locators,
+and 12 registered artifact groups.
+
+The final physical tree is 7,978,024 bytes (7.61 MiB); the pre-promotion local
+package budget check observed 7,602,275 bytes against the blocking 67,108,864
+byte ceiling. Startup remains local and records zero network requests. All
+display-asset references, image-display bindings, immutable revisions,
+checksums, room partitions, rendition checksums and exact declared outputs
+passed their completion gates. The deterministic package checksum is
+`f1157c3086a6d827f08a9e936c509fdc23112ccf11f689688065a3791adf30a7`.
 
 The promoted N34 package has a blocking 64 MiB ceiling. Its bounded CSV, PNG
 and WebP files therefore use path-specific ordinary-Git attributes instead of
@@ -3919,11 +3938,14 @@ manifests/artifacts.csv
 validation/checks.csv
 ```
 
-The Streamlit application must be updated to read this notebook-owned `v2`
+The Streamlit application must now be updated to read this notebook-owned `v2`
 asset root rather than legacy `outputs/dashboard/` or the eager pilot package.
-Notebook 34 uses ten restart-safe batches: preflight, identity normalization,
-bootstrap, selector/routes, room partitions, required derivations, renditions,
-remote locators, trust manifests and atomic persistence/completion.
+Notebook 34 completed eight restart-safe batches: preflight, identity
+normalization, bootstrap, selector/routes, room partitions, required
+derivations, renditions/remote locators, and final binding plus atomic
+promotion. The next gate is Controlled-300 Streamlit implementation followed
+by Notebook 35 validation; the historical pilot N35 output remains comparison
+evidence until that rerun passes.
 
 ---
 

@@ -1,6 +1,6 @@
 # Controlled-300 Notebook 34 Implementation Contract
 
-**Status:** Pre-N34 Step 5 complete on 2026-09-28
+**Status:** Implemented and validated by Notebook 34 on 2026-09-28
 
 **Applies to:** Notebook 34, its configuration and helper module, the
 Controlled-300 dashboard package, the future Streamlit implementation, and the
@@ -8,7 +8,11 @@ Controlled-300 Notebook 35 validation run
 
 **Package boundary:** `dashboard_package.v2`
 
-**Next step:** refactor and execute Notebook 34 against this contract
+**Validated release:** `release_c5edf0d0ec99affbfa403726` from run
+`run_1e831de6e27f9ead0147bb30`
+
+**Next step:** implement the Controlled-300 Streamlit interface against the
+promoted package, then rerun Notebook 35 validation
 
 ## Decision in plain language
 
@@ -120,7 +124,7 @@ property, not race, ethnicity or identity.
 
 ## Input closure and versioning
 
-The Controlled-300 configuration introduced during Step 6 must use:
+The Controlled-300 configuration introduced and validated during Step 6 uses:
 
 - `dashboard_assets_config.v2`;
 - `dashboard_package.v2`;
@@ -131,15 +135,17 @@ The Controlled-300 configuration introduced during Step 6 must use:
 - `dashboard_rendition.v1`; and
 - `dashboard_room_partition.v1`.
 
-It must pin the completed manifests for N01–N33 and separately register N12A,
+It pins the completed manifests for N01–N33 and separately registers N12A,
 D01 and D02. D01, N12A and D02 are not invented as direct N33 upstream keys.
 Every input manifest path, run ID, size and SHA-256 is captured in the N34 root
 manifest.
 
-The current `config/evaluation/dashboard_assets.yaml`,
-`src/restoration_eval/dashboard_assets.py`, Notebook 34 outputs and Notebook 35
-configuration remain historical `v1` material until Step 6 replaces them as one
-coherent versioned layer. They must not be patched piecemeal.
+`config/evaluation/dashboard_assets.yaml`,
+`src/restoration_eval/dashboard_assets.py` and the Notebook 34 outputs now form
+the coherent validated `v2` layer. The saved Notebook 35 output and its old
+validation configuration remain historical pilot material until the
+Controlled-300 application and N35 contract are rebuilt together; they must not
+be relabelled or patched piecemeal.
 
 ## Required package layout
 
@@ -386,7 +392,7 @@ producer-mapping gate:
 
 ## Notebook 34 execution plan
 
-The refactored notebook uses ten restart-safe batches:
+The refactored notebook completed eight restart-safe batches:
 
 1. load the `v2` contract and validate every upstream manifest/checksum;
 2. normalize Controlled-300 identities, populations and availability;
@@ -394,11 +400,11 @@ The refactored notebook uses ten restart-safe batches:
 4. build selector, entity, applicability and per-painting route indexes;
 5. build the nine room/subroute display partitions;
 6. persist the threshold, stability and D02 derived tables;
-7. render and validate deterministic web renditions and D02 visuals;
-8. compile immutable remote locators and their checksum chains;
-9. build display bindings, asset records and the root trust manifest; and
-10. atomically promote the package and run schema, lineage, budget,
-    completeness and rerun-safety checks.
+7. render and validate deterministic web renditions and D02 visuals, then
+   compile immutable remote locators and their checksum chains; and
+8. build display bindings, asset records and the root trust manifest, then
+   atomically promote the package and run schema, lineage, budget,
+   completeness and rerun-safety checks.
 
 Large producer tables are read one at a time or in bounded chunks. Checkpoints
 contain normalized metadata only and may be resumed after a kernel restart.
@@ -507,13 +513,21 @@ Notebook 34 cannot complete unless all of the following pass:
     environment-independent; and
 20. the exact output set contains no undeclared work or stale pilot file.
 
-## Step 6 handoff
+## Step 6 completion and Step 7 handoff
 
-Step 6 may now modify the N34 configuration, helper, tests and notebook as one
-versioned preparation layer, then execute the ten batches above. It must first
-remove the old N34 output directory at the user-approved execution boundary;
-the frozen pilot remains recoverable from Git and the pilot dashboard branch.
+Step 6 completed as eight restart-safe batches and atomically promoted the
+Controlled-300 `dashboard_package.v2` tree. All 916 checks passed. The release
+contains 377 files, 300 painting partitions, nine room partitions, 100 display
+IDs, 170 bindings, 56 logical assets, 48 renditions and 95 immutable locators.
+The final tree is 7,978,024 bytes and has no remaining work directory. The
+frozen pilot remains recoverable from Git, the pilot dashboard branch and the
+pre-scale output mirror.
 
-The live Controlled-50 deployment remains unchanged throughout N34 packaging.
-The new interface is not deployed until Step 7 implementation and Step 8 N35
-validation both pass.
+The post-run portability sweep also normalized four validation-ledger values
+that had serialized the local repository/staging root. The retained ledger has
+916 passing rows and contains no machine-specific absolute path; this is a
+presentation-only normalization and does not change any scientific artifact.
+
+The live Controlled-50 deployment remained unchanged throughout N34 packaging.
+Step 7 may now implement the approved interface, but the new interface is not
+deployed until the Controlled-300 Notebook 35 validation gate passes.

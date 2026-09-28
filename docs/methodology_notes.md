@@ -1,7 +1,7 @@
 # Methodology Guide
 
-**Status:** historical completed-pipeline guide with Controlled-300 transition addendum, reviewed 2026-09-26\
-**Experimental scope:** historical `controlled_50`; active `controlled_300` completed through Notebook 33, with the pre-N34 dashboard/storage review next\
+**Status:** historical completed-pipeline guide with Controlled-300 transition addendum, reviewed 2026-09-28\
+**Experimental scope:** historical `controlled_50`; active `controlled_300` completed through Notebook 34, with application implementation and N35 validation next\
 **Pipeline:** historical 36-notebook pilot remains frozen; Controlled-300 rerun proceeds in dependency order\
 **Public interface:** [Streamlit dashboard](https://fhtw-painting-restoration.streamlit.app/)
 
@@ -18,7 +18,9 @@ Controlled-300 model-report layer. Notebook 32 run
 `run_0d4ae193602944dda511bf54199105b1` now supplies the validated 300-painting,
 30-deep-case and collection reporting layer. Notebook 33 run
 `run_aef04267c2e44495a4e7a6249426bd4d` supplies the validated final synthesis;
-Notebook 34 remains behind the approved dashboard/storage review gate.
+Notebook 34 run `run_1e831de6e27f9ead0147bb30` supplies the validated
+Controlled-300 `dashboard_package.v2` release. The public application remains
+the pilot until the new interface and Notebook 35 validation pass.
 
 - The detailed notebook sequence is in
   [`final_notebook_roadmap.md`](final_notebook_roadmap.md).

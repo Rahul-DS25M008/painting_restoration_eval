@@ -1,0 +1,372 @@
+{
+  "child_routes": [
+    {
+      "parent_room_id": "trustworthiness",
+      "room_id": "focused_portrait_review"
+    }
+  ],
+  "museum_name": "Painting Restoration Evidence Museum",
+  "principal_room_order": [
+    "exhibition_foyer",
+    "study_design",
+    "metric_framework",
+    "model_gallery",
+    "stability_lab",
+    "trustworthiness",
+    "case_explorer",
+    "research_archive"
+  ],
+  "release_id": "release_c5edf0d0ec99affbfa403726",
+  "rooms": [
+    {
+      "boundary": "Visual plausibility is not the same as restoration trustworthiness.",
+      "curated_opening": {
+        "painting_id": "p001"
+      },
+      "design_reference_path": "docs/dashboard_design_finalists/approved_current/03_exhibition_foyer_final.png",
+      "design_reference_role": "visual_only_not_runtime_evidence",
+      "display_name": "Exhibition Foyer",
+      "display_order": 1.0,
+      "foyer_preview_available": false,
+      "introduction": "This thesis tests digital restoration methods by applying controlled damage to 300 paintings. We compare the restored images, measure what changed and check whether the results stay consistent—but a convincing image is not automatically historically correct.",
+      "issue": "",
+      "loading_tier": "bootstrap",
+      "opening_binding_state": "pending_registered_rendition",
+      "opening_display_id": "exhibition_foyer.opening",
+      "parent_room_id": null,
+      "partition_loading_tier": "room_partition",
+      "partition_path": "data/rooms/exhibition_foyer.parquet",
+      "purpose": "Introduce the thesis and the eight-room evidence route.",
+      "question": "How should we judge an AI-restored painting?",
+      "room_id": "exhibition_foyer",
+      "room_record_id": "room_5ede6d46e186b88ffc69564d",
+      "route_kind": "principal",
+      "source_notebook_ids": [
+        "01",
+        "08",
+        "29",
+        "33"
+      ],
+      "source_paths": [
+        "docs/dashboard_design_finalists/controlled_300_page_contracts.md"
+      ],
+      "status": "ok",
+      "tour_stop": true
+    },
+    {
+      "boundary": "Equal category sizes make comparisons easier. They do not make the collection representative of every artistic period, culture or style.",
+      "curated_opening": {
+        "painting_id": "p001"
+      },
+      "design_reference_path": "docs/dashboard_design_finalists/approved_current/04_study_design_final.png",
+      "design_reference_role": "visual_only_not_runtime_evidence",
+      "display_name": "Study Design",
+      "display_order": 2.0,
+      "foyer_preview_available": true,
+      "introduction": "We started with 300 paintings, divided evenly across five broad visual categories. Every painting received the same core tests, while smaller balanced experiments examined damage size, mask placement and other image changes.",
+      "issue": "",
+      "loading_tier": "bootstrap",
+      "opening_binding_state": "pending_registered_rendition",
+      "opening_display_id": "study_design.opening",
+      "parent_room_id": null,
+      "partition_loading_tier": "room_partition",
+      "partition_path": "data/rooms/study_design.parquet",
+      "purpose": "Explain the collection, experiment branches and equal-treatment rules.",
+      "question": "What did we test, and how did we keep the comparison fair?",
+      "room_id": "study_design",
+      "room_record_id": "room_acdeae3589ed75527a44fbc9",
+      "route_kind": "principal",
+      "source_notebook_ids": [
+        "01",
+        "03",
+        "05",
+        "06",
+        "07",
+        "08",
+        "D02"
+      ],
+      "source_paths": [
+        "docs/dashboard_design_finalists/controlled_300_page_contracts.md"
+      ],
+      "status": "ok",
+      "tour_stop": true
+    },
+    {
+      "boundary": "Different metrics answer different questions. Disagreement is evidence to inspect—not noise to average away.",
+      "curated_opening": {
+        "candidate_id": "candidate__lama__canonical__p018__mixed_damage__c00",
+        "case_id": "canonical__p018__mixed_damage",
+        "model_id": "lama",
+        "painting_id": "p018"
+      },
+      "design_reference_path": "docs/dashboard_design_finalists/approved_current/05_metric_framework_final.png",
+      "design_reference_role": "visual_only_not_runtime_evidence",
+      "display_name": "Metric Framework",
+      "display_order": 3.0,
+      "foyer_preview_available": true,
+      "introduction": "No single number can judge a restoration. Different measurements examine pixels, structure, visual similarity, texture, colour, seams and unintended changes. Each measure is only meaningful in the regions it was designed to examine.",
+      "issue": "",
+      "loading_tier": "bootstrap",
+      "opening_binding_state": "pending_registered_rendition",
+      "opening_display_id": "metric_framework.opening",
+      "parent_room_id": null,
+      "partition_loading_tier": "room_partition",
+      "partition_path": "data/rooms/metric_framework.parquet",
+      "purpose": "Teach what each measurement asks and where it is valid.",
+      "question": "Why can the conclusion change when the metric or region changes?",
+      "room_id": "metric_framework",
+      "room_record_id": "room_c09f8d55660dcd1a0f75ee5b",
+      "route_kind": "principal",
+      "source_notebook_ids": [
+        "08",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "20",
+        "21"
+      ],
+      "source_paths": [
+        "docs/dashboard_design_finalists/controlled_300_page_contracts.md"
+      ],
+      "status": "ok",
+      "tour_stop": true
+    },
+    {
+      "boundary": "A convincing completion is a candidate to inspect—not recovered historical truth.",
+      "curated_opening": {
+        "case_id": "canonical__p018__mixed_damage",
+        "painting_id": "p018"
+      },
+      "design_reference_path": "docs/dashboard_design_finalists/approved_current/06_model_gallery_final.png",
+      "design_reference_role": "visual_only_not_runtime_evidence",
+      "display_name": "Model Gallery",
+      "display_order": 4.0,
+      "foyer_preview_available": true,
+      "introduction": "The four methods receive the same damaged painting and mask, but they rebuild the missing region in different ways. Compare the result, inspect the local evidence and then open the full model record when more detail is needed.",
+      "issue": "",
+      "loading_tier": "bootstrap",
+      "opening_binding_state": "pending_registered_rendition",
+      "opening_display_id": "model_gallery.opening",
+      "parent_room_id": null,
+      "partition_loading_tier": "room_partition",
+      "partition_path": "data/rooms/model_gallery.parquet",
+      "purpose": "Compare the four full-scope methods without collapsing them into one score.",
+      "question": "How do different restoration methods rebuild the same loss?",
+      "room_id": "model_gallery",
+      "room_record_id": "room_8d1485041145b1acabc38e1e",
+      "route_kind": "principal",
+      "source_notebook_ids": [
+        "09",
+        "10",
+        "11",
+        "12",
+        "12A",
+        "21",
+        "30",
+        "31"
+      ],
+      "source_paths": [
+        "docs/dashboard_design_finalists/controlled_300_page_contracts.md"
+      ],
+      "status": "ok",
+      "tour_stop": true
+    },
+    {
+      "boundary": "Stable here means less change under this controlled test—not historically correct, safe to conserve or certain.",
+      "curated_opening": {
+        "candidate_id": "candidate__lama__damage_size__p018__loss_large__size_20pct__c00",
+        "case_id": "damage_size__p018__loss_large__size_20pct",
+        "metric_id": "spatial_masked_error",
+        "model_id": "lama",
+        "painting_id": "p018"
+      },
+      "design_reference_path": "docs/dashboard_design_finalists/approved_current/07_stability_lab_final.png",
+      "design_reference_role": "visual_only_not_runtime_evidence",
+      "display_name": "Stability Lab",
+      "display_order": 5.0,
+      "foyer_preview_available": true,
+      "introduction": "A restoration may look convincing once but behave differently when the damaged area grows, the mask moves, the input changes or Stable Diffusion uses another seed. Select one test and see what stays consistent.",
+      "issue": "",
+      "loading_tier": "bootstrap",
+      "opening_binding_state": "pending_registered_rendition",
+      "opening_display_id": "stability_lab.opening",
+      "parent_room_id": null,
+      "partition_loading_tier": "room_partition",
+      "partition_path": "data/rooms/stability_lab.parquet",
+      "purpose": "Keep damage size, mask placement, degradation stress and repeated seeds separate.",
+      "question": "How much does a restoration change when we change the test?",
+      "room_id": "stability_lab",
+      "room_record_id": "room_237cc528c00e99b479fa945c",
+      "route_kind": "principal",
+      "source_notebook_ids": [
+        "18",
+        "22",
+        "23",
+        "24",
+        "25"
+      ],
+      "source_paths": [
+        "docs/dashboard_design_finalists/controlled_300_page_contracts.md"
+      ],
+      "status": "ok",
+      "tour_stop": true
+    },
+    {
+      "boundary": "A review flag is not a probability, expert verdict, universal score or conservation approval.",
+      "curated_opening": {
+        "candidate_id": "sd15__p00__s2026__29ff258ff921",
+        "case_id": "canonical__p002__loss_large",
+        "model_id": "stable_diffusion_inpainting",
+        "painting_id": "p002",
+        "seed": 2026
+      },
+      "design_reference_path": "docs/dashboard_design_finalists/approved_current/08_trustworthiness_final.png",
+      "design_reference_role": "visual_only_not_runtime_evidence",
+      "display_name": "Trustworthiness",
+      "display_order": 6.0,
+      "foyer_preview_available": true,
+      "introduction": "Flags help us decide what to inspect. They are not probabilities, expert verdicts, or proof that a restoration is right or wrong.",
+      "issue": "",
+      "loading_tier": "bootstrap",
+      "opening_binding_state": "pending_registered_rendition",
+      "opening_display_id": "trustworthiness.opening",
+      "parent_room_id": null,
+      "partition_loading_tier": "room_partition",
+      "partition_path": "data/rooms/trustworthiness.parquet",
+      "purpose": "Trace a review flag from evidence through its comparison group and threshold.",
+      "question": "Why did this restoration receive a review flag?",
+      "room_id": "trustworthiness",
+      "room_record_id": "room_a83a667218c30d1f2bb19218",
+      "route_kind": "principal",
+      "source_notebook_ids": [
+        "27",
+        "28",
+        "29",
+        "D02"
+      ],
+      "source_paths": [
+        "docs/dashboard_design_finalists/controlled_300_page_contracts.md"
+      ],
+      "status": "ok",
+      "tour_stop": true
+    },
+    {
+      "boundary": "Rendered lightness is an image property, not race, ethnicity or identity; this focused study does not establish a general bias claim.",
+      "curated_opening": {
+        "blind_review_code": "R005",
+        "candidate_id": "candidate__hint_places2__canonical__p269__mixed_damage__c00",
+        "case_id": "canonical__p269__mixed_damage",
+        "model_id": "hint_places2",
+        "painting_id": "p269"
+      },
+      "design_reference_path": "docs/dashboard_design_finalists/approved_current/09_focused_portrait_review_final.png",
+      "design_reference_role": "visual_only_not_runtime_evidence",
+      "display_name": "Focused Portrait Review",
+      "display_order": 6.1,
+      "foyer_preview_available": false,
+      "introduction": "This focused audit reuses existing restoration results to examine damaged visible hands and associations with rendered lightness.",
+      "issue": "",
+      "loading_tier": "bootstrap",
+      "opening_binding_state": "pending_registered_rendition",
+      "opening_display_id": "focused_portrait_review.opening",
+      "parent_room_id": "trustworthiness",
+      "partition_loading_tier": "room_partition",
+      "partition_path": "data/rooms/focused_portrait_review.parquet",
+      "purpose": "Present the separate D02 hand-restoration and rendered-lightness investigations.",
+      "question": "What did the focused portrait review find about hands and rendered lightness?",
+      "room_id": "focused_portrait_review",
+      "room_record_id": "room_e5fa0f28507d3a5de751ac40",
+      "route_kind": "child",
+      "source_notebook_ids": [
+        "D02"
+      ],
+      "source_paths": [
+        "docs/dashboard_design_finalists/controlled_300_page_contracts.md"
+      ],
+      "status": "ok",
+      "tour_stop": false
+    },
+    {
+      "boundary": "Case evidence measures agreement with a controlled digital reference—not historical correctness or material authenticity.",
+      "curated_opening": {
+        "candidate_id": "candidate__lama__canonical__p018__mixed_damage__c00",
+        "case_id": "canonical__p018__mixed_damage",
+        "model_id": "lama",
+        "painting_id": "p018"
+      },
+      "design_reference_path": "docs/dashboard_design_finalists/approved_current/10_case_explorer_final.png",
+      "design_reference_role": "visual_only_not_runtime_evidence",
+      "display_name": "Case Explorer",
+      "display_order": 7.0,
+      "foyer_preview_available": true,
+      "introduction": "Trace one restoration from controlled damage to measurements, warnings and source records.",
+      "issue": "",
+      "loading_tier": "bootstrap",
+      "opening_binding_state": "pending_registered_rendition",
+      "opening_display_id": "case_explorer.opening",
+      "parent_room_id": null,
+      "partition_loading_tier": "room_partition",
+      "partition_path": "data/rooms/case_explorer.parquet",
+      "purpose": "Follow one saved candidate from controlled damage to metrics, warnings and reports.",
+      "question": "What evidence supports this restoration conclusion?",
+      "room_id": "case_explorer",
+      "room_record_id": "room_15e978cfc6e398e0904cef1a",
+      "route_kind": "principal",
+      "source_notebook_ids": [
+        "16",
+        "17",
+        "19",
+        "20",
+        "27",
+        "29",
+        "32"
+      ],
+      "source_paths": [
+        "docs/dashboard_design_finalists/controlled_300_page_contracts.md"
+      ],
+      "status": "ok",
+      "tour_stop": true
+    },
+    {
+      "boundary": "A successful checksum confirms file identity, not scientific correctness.",
+      "curated_opening": {
+        "producer_notebook_id": "33",
+        "record_label": "Final evaluation"
+      },
+      "design_reference_path": "docs/dashboard_design_finalists/approved_current/11_research_archive_final.png",
+      "design_reference_role": "visual_only_not_runtime_evidence",
+      "display_name": "Research Archive",
+      "display_order": 8.0,
+      "foyer_preview_available": true,
+      "introduction": "The archive records what was used, what passed, what is missing and where each artifact lives.",
+      "issue": "",
+      "loading_tier": "bootstrap",
+      "opening_binding_state": "pending_registered_rendition",
+      "opening_display_id": "research_archive.opening",
+      "parent_room_id": null,
+      "partition_loading_tier": "room_partition",
+      "partition_path": "data/rooms/research_archive.parquet",
+      "purpose": "Expose provenance, validation, publication status and reproducibility records.",
+      "question": "Trace every conclusion to its saved evidence.",
+      "room_id": "research_archive",
+      "room_record_id": "room_da114b413858ca809f82db43",
+      "route_kind": "principal",
+      "source_notebook_ids": [
+        "01",
+        "12A",
+        "D01",
+        "D02",
+        "33"
+      ],
+      "source_paths": [
+        "docs/dashboard_design_finalists/controlled_300_page_contracts.md"
+      ],
+      "status": "ok",
+      "tour_stop": true
+    }
+  ],
+  "schema_version": "dashboard_room_catalogue.v1",
+  "status": "ok"
+}

@@ -21,10 +21,12 @@ Notebook D01. It remains frozen 12-case decision evidence. HINT is introduced to
 the full benchmark only through the new production Notebook 12A; D01 is not
 rerun or relabelled as a full evaluation.
 
-The approved eight-page dashboard remains publicly deployed at
+The approved eight-page pilot dashboard remains publicly deployed at
 [the Streamlit application](https://fhtw-painting-restoration.streamlit.app/),
-but it continues to represent the tagged 50-painting evidence until the entire
-controlled-300 dependency chain, dashboard validation, and package rerun pass.
+but it continues to represent the tagged 50-painting evidence. The new
+Controlled-300 Notebook 34 package has passed; the application implementation,
+Notebook 35 validation and later publication package must still pass before the
+public interface may claim Controlled-300 coverage.
 Mixed 50/300 claims must never be shown as one completed study.
 
 The central methodological boundary remains:
@@ -725,8 +727,9 @@ integrity, runtime-loading and final N34 implementation-contract gates completed
 on 2026-09-28. The binding `dashboard_package.v2`, manifest schema, derivations,
 execution batches and visual-fidelity rules are recorded in
 [`controlled_300_n34_implementation_contract.md`](dashboard_design_finalists/controlled_300_n34_implementation_contract.md).
-Step 6 may now refactor and execute N34; the Streamlit application is changed
-only after that package passes. Any borrowed alternative component must be
+Step 6 has now completed and promoted the validated Controlled-300 N34 package;
+the Streamlit application may now be implemented against that immutable package
+before the N35 validation rerun. Any borrowed alternative component must be
 explicitly named and must preserve one coherent navigation, typography,
 spacing, and interaction system. The traceability table must cite the applicable
 page-specific approved image and content contract for every major component and
@@ -749,6 +752,22 @@ only while its blocking 64 MiB package ceiling passes. Path-specific N34
 attributes override the broad CSV/PNG/WebP LFS rules, while `work/` remains
 ignored and disposable. Do not stage or publish a package that fails the size
 gate, and do not silently send it to an unapproved remote location.
+
+The observed N34 run `run_1e831de6e27f9ead0147bb30` passed 916/916 checks and
+atomically promoted release `release_c5edf0d0ec99affbfa403726`. The canonical
+tree contains 377 files (7,978,024 bytes), 300 painting partitions, nine room
+partitions, 100 display IDs, 170 bindings, 56 logical assets, 48 renditions and
+95 immutable locators. The budget-stage package size was 7,602,275 bytes, well
+below the 64 MiB hard ceiling. There is no promoted `work/` tree. These observed
+values, rather than the historical pilot's 19-file eager package, are the N35
+input contract. N35 must fail rather than fall back to legacy dashboard tables
+or silently mix the two packages.
+
+The final N34 sweep must also scan package text manifests for machine-specific
+absolute paths. Four passing validation rows originally serialized the local
+repository or staging root; they were normalized to `<PROJECT_ROOT>` while
+preserving all 916 passing results. Future package notebooks must perform this
+portability check before their final inventory refresh.
 
 The cross-page consistency gate completed on 2026-09-28. Its binding
 vocabulary, population definitions, identity-preserving route state and
