@@ -98,3 +98,6 @@ docs/supervisor/Next_Steps.docx
 # is paused. The failed N16 upload cache was removed after the policy change.
 /outputs/16_difference_maps_and_spatial_diagnostics/.cache/
 /outputs/17_local_consistency_metrics/.cache/
+
+# N34 build scratch is disposable and must be absent from the promoted package.
+/outputs/34_final_streamlit_dashboard_assets/work/

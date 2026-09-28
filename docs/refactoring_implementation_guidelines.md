@@ -732,6 +732,24 @@ spacing, and interaction system. The traceability table must cite the applicable
 page-specific approved image and content contract for every major component and
 separately identify any approved exception.
 
+The Step 6 preparation layer completed on 2026-09-28. The v2 dashboard config,
+helper and focused tests now form one versioned unit. They pin N01–N33 plus the
+separate N12A, D01 and D02 records, validate 70 source-table contracts through
+the completed inventory and live headers, and avoid the historical eager load
+of all producer tables. All declared local inputs must exist, and the N34
+artifact and validation outputs must reuse the repository-wide canonical
+schemas. A Batch 1 preflight must retain zero producer-scale
+dataframes and write zero N34 output files. The assistant must continue the
+normal notebook rule: never edit the `.ipynb` directly; provide complete
+replacement markdown/code cells for the user to paste and run. The live pilot
+application and `dashboard_application.py` remain unchanged until Step 7.
+
+Because Git LFS is exhausted, N34's promoted package may enter ordinary Git
+only while its blocking 64 MiB package ceiling passes. Path-specific N34
+attributes override the broad CSV/PNG/WebP LFS rules, while `work/` remains
+ignored and disposable. Do not stage or publish a package that fails the size
+gate, and do not silently send it to an unapproved remote location.
+
 The cross-page consistency gate completed on 2026-09-28. Its binding
 vocabulary, population definitions, identity-preserving route state and
 mockup-correction register live in

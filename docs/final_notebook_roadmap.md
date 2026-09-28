@@ -3868,6 +3868,34 @@ tests and notebook as one `v2` layer and execute its package batches. It does
 not authorize changing or redeploying the live pilot application; application
 implementation begins only after the N34 package passes.
 
+### Step 6 preparation-layer status (2026-09-28)
+
+The coherent Controlled-300 preparation layer is now implemented in
+`config/evaluation/dashboard_assets.yaml`,
+`src/restoration_eval/dashboard_assets.py`, and
+`tests/test_dashboard_assets.py`. It replaces the frozen eager
+`dashboard_package.v1` build contract with `dashboard_assets_config.v2` and
+`dashboard_package.v2`; it does not modify `streamlit_app.py` or the deployed
+pilot branch.
+
+The preflight pins 33 sequential N01–N33 manifests and separately registers
+N12A, D01 and D02, for 36 completed checksum-matched runs. It validates 70
+declared producer tables covering 4,749,036 logical rows and 2,877,354,404
+bytes through the completed inventory, actual file-size and live-header checks,
+without retaining producer-scale dataframes. All 91 declared local inputs are
+also checked explicitly. The focused helper suite passes 10/10 tests, and the
+artifact and validation ledgers use the repository-wide canonical schemas. The
+notebook file remains user-controlled: the next execution action
+is to remove the historical N34 output root and paste/run the complete Batch 1
+replacement supplied in chat. No N34 v2 package artifact exists until those
+notebook batches run successfully.
+
+The promoted N34 package has a blocking 64 MiB ceiling. Its bounded CSV, PNG
+and WebP files therefore use path-specific ordinary-Git attributes instead of
+the exhausted general LFS rules; disposable `work/` content is ignored and
+must be absent from the final package. A hard-budget failure blocks promotion
+rather than silently rerouting an oversized package.
+
 The dashboard consumes prepared assets and does not rerun experiments or
 reconstruct project state from arbitrary outputs.
 

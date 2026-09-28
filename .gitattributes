@@ -77,3 +77,10 @@ outputs/33_final_evaluation_report/figures/**/*.png -filter -diff -merge -text
 outputs/33_final_evaluation_report/manifests/artifacts.csv -filter diff -merge text
 outputs/33_final_evaluation_report/reports/final_evaluation.html -filter diff -merge text
 outputs/33_final_evaluation_report/validation/checks.csv -filter diff -merge text
+
+# Notebook 34 is a deliberately compact, deployment-ready package with a
+# blocking 64 MiB total-package ceiling. Keep its bounded CSV and web-rendition
+# handoff in ordinary Git so the exhausted LFS allowance is never invoked.
+outputs/34_final_streamlit_dashboard_assets/**/*.csv -filter diff -merge text
+outputs/34_final_streamlit_dashboard_assets/**/*.png -filter -diff -merge -text
+outputs/34_final_streamlit_dashboard_assets/**/*.webp -filter -diff -merge -text

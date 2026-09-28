@@ -1218,8 +1218,19 @@ pre-N34 design, producer mapping, immutable remote-integrity, runtime-loading
 and final implementation-contract gates completed on 2026-09-28. The binding
 `dashboard_package.v2` contract is
 `docs/dashboard_design_finalists/controlled_300_n34_implementation_contract.md`;
-Step 6 now refactors and executes N34. The historical N34–N36 outputs must not
-be relabelled as Controlled-300.
+Step 6 preparation is complete and execution now proceeds batch by batch. The
+v2 config/helper/test unit pins 36 completed manifests (N01–N33 plus separately
+registered N12A, D01 and D02) and passes 70 inventory-backed source-table
+contracts spanning 4,749,036 logical rows and 2,877,354,404 bytes without
+eager producer-frame retention. N34 Batch 1 and the remaining package batches
+are not yet executed. The live pilot is unchanged, and the historical N34–N36
+outputs must not be relabelled as Controlled-300.
+
+The preparation audit also requires all 91 declared local inputs, canonical
+repository artifact/validation ledger schemas, and a passing 64 MiB promoted
+package ceiling. N34's bounded CSV/PNG/WebP outputs use ordinary-Git overrides
+because the account-wide LFS allowance is exhausted; temporary `work/` content
+is ignored and cannot satisfy a published display binding.
 
 The completed Notebook 32 contract binds 25 upstream manifests and 41 input
 tables to 300 paintings, 2,620 evaluated cases and 13,879 approved candidates:
