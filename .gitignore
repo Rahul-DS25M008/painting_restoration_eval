@@ -101,3 +101,7 @@ docs/supervisor/Next_Steps.docx
 
 # N34 build scratch is disposable and must be absent from the promoted package.
 /outputs/34_final_streamlit_dashboard_assets/work/
+
+# Finished-room display companions and numeric archives are published as
+# immutable HF bundles. Keep the canonical local files; never stage this bulk.
+/streamlit_assets/evidence/metric_framework/

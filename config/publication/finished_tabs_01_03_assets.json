@@ -1,0 +1,92 @@
+{
+  "catalogue": {
+    "sha256": "c2a3a3196e0f250fbe321365d6c46ae2f91510e8c0659bb0dfcdd578f041b7e8",
+    "size_bytes": 267463
+  },
+  "excludes": [
+    "N35 notebook and outputs",
+    "application code",
+    "Streamlit deployment"
+  ],
+  "full_public_download_verification": "deferred_by_user",
+  "git_assets": [
+    {
+      "original_relative_path": "streamlit_assets/rooms/exhibition_foyer_shell.webp",
+      "sha256": "9863260cc04a7b664d7438564063b001a47dac2bf96bce4ed74726e6c7add630",
+      "size_bytes": 319226
+    },
+    {
+      "original_relative_path": "streamlit_assets/rooms/study_design_shell.png",
+      "sha256": "3e34fdb9645e01ce272a308d0b324862f87d2dbb750737706f1efb22b900c329",
+      "size_bytes": 2056255
+    },
+    {
+      "original_relative_path": "streamlit_assets/rooms/metric_framework_shell.png",
+      "sha256": "a5182c9f6eb136b1c4be215d5477a40a8eeb0b33e6f156214d8a350617b15d8a",
+      "size_bytes": 2023976
+    },
+    {
+      "original_relative_path": "streamlit_assets/ornaments/arrakis_desert.png",
+      "sha256": "bb6bbdfa038079a51aa5a5f3d9e9a76fb6fb56956c7bfd99af1a38f468d5df1e",
+      "size_bytes": 2488658
+    },
+    {
+      "original_relative_path": "streamlit_assets/ornaments/conservation_study.svg",
+      "sha256": "0ec3e60ebc544c55874d3d49f310026be62879b6cbd93f76b5cf3c8dbb66db9a",
+      "size_bytes": 2219
+    },
+    {
+      "original_relative_path": "streamlit_assets/ornaments/dune_archive_cover.svg",
+      "sha256": "00edde4880e7cc2d7f217f7de93564ca7cc92692b128ac59362b526d109d52b3",
+      "size_bytes": 1970
+    },
+    {
+      "original_relative_path": "streamlit_assets/ornaments/ledger_botanical.svg",
+      "sha256": "36df5f658b4fbdb373bf14a9fc299b87962902da08af07511081a797378238f0",
+      "size_bytes": 1422
+    },
+    {
+      "original_relative_path": "streamlit_assets/evidence/study_design/p001_loss_large.png",
+      "sha256": "95c2dca591d41cd5d5462a5f8d52e815a9d907698128f1ffe649b4b1ca0462fe",
+      "size_bytes": 627570
+    },
+    {
+      "original_relative_path": "streamlit_assets/evidence/study_design/p001_loss_small.png",
+      "sha256": "7683f8017f2d0f846e07ac5d4746564a233f681205650052f142f21df5030241",
+      "size_bytes": 705120
+    },
+    {
+      "original_relative_path": "streamlit_assets/evidence/study_design/p001_mixed_damage.png",
+      "sha256": "4272fe588bb1af895fc4da909794688fcb105353051720faad4652900aa57b52",
+      "size_bytes": 684703
+    },
+    {
+      "original_relative_path": "streamlit_assets/evidence/study_design/p001_scratch_thin.png",
+      "sha256": "aa28fe11ad325c143cb952d46883b2cbb1c1d5627e1f49d69f9eb3f58bc24cd9",
+      "size_bytes": 726195
+    },
+    {
+      "original_relative_path": "streamlit_assets/evidence/study_design/p001_zero_control.png",
+      "sha256": "b5852f0337c8342a1a70268f9e9f682534177581d238713f67bf28e0033482a2",
+      "size_bytes": 723881
+    }
+  ],
+  "note": "Asset checkpoint only; canonical producer publications unchanged; remote UI wiring deferred.",
+  "object_count": 901,
+  "painting_count": 300,
+  "prefix": "dashboard_assets/v1/finished_tabs_01_03/0cdec34d6b3057100b2cd019",
+  "release_id": "0cdec34d6b3057100b2cd019",
+  "repo_id": "RahulMaddineni264/painting-restoration-eval-diagnostics",
+  "revision": "7814540a3fd3bff7db166c35821f18d5023d4d35",
+  "schema_version": "finished_tab_assets.v1",
+  "scope": [
+    "exhibition_foyer",
+    "study_design",
+    "metric_framework"
+  ],
+  "source_file_count": 11400,
+  "status": "remote_metadata_verified",
+  "transport_bytes": 1335120700,
+  "verification": "Every staged object SHA-256 checked against the locally validated upload plan; every remote path, size and content identity matched using HF LFS SHA-256 or Git blob SHA-1",
+  "verified_at_utc": "2026-09-29T22:14:13.724977+00:00"
+}

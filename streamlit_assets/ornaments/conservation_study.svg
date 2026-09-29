@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 300" fill="none">
+  <title>A conservator's study: looking beneath the surface</title>
+  <g fill="#47311f" text-anchor="middle" font-family="Georgia,serif">
+    <text x="30" y="13" font-size="7" letter-spacing="1">THE ART</text>
+    <text x="30" y="24" font-size="7" letter-spacing=".8">OF LOOKING</text>
+  </g>
+  <g stroke="#503720" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 33h42M18 36h24" stroke-width=".7"/>
+    <!-- An engraved portrait fragment, crossed by an inspection glass. -->
+    <path d="M8 174q1-19 14-24l1-16q-9-7-10-28L11 86q-2-26 18-30 22-2 24 24l-3 28q-1 19-13 28l1 15q12 7 15 23" stroke-width="1.4"/>
+    <path d="M14 86q3-7 5-19 7 7 15 5 10 0 16 13M15 82q-5-17 8-23M19 69q12-15 24-4M24 65q12-5 20 5" stroke-width="1"/>
+    <path d="M18 96q5-5 10-1M36 94q6-4 11 1M20 101q4-3 7 0M37 100q4-3 7 0M32 100l-3 15 7 1M26 124q7 4 14-1M29 128h7M23 135q7 8 15 0" stroke-width="1.1"/>
+    <path d="M22 150l10 14 7-14M17 155l-3 14m7-10-3 12m6-7-2 9m19-15 4 12m-8-6 2 10M9 177h43M13 181h35" stroke-width=".8"/>
+    <path d="m35 60-4 18 4 9-5 8 4 12-2 10 7 13-2 12M31 78l-9 5-6-2M34 107l10 5 5 9" stroke-width=".7"/>
+    <circle cx="23" cy="100" r="17" stroke-width="2"/>
+    <circle cx="23" cy="100" r="14.3" stroke-width=".65"/>
+    <path d="m12 114-6 11m4-1-4 8" stroke-width="3"/>
+    <path d="M15 94q4-5 9-4" stroke-width=".6"/>
+    <path d="m45 83 4 4m-4 2 4 4m-4 2 3 4m-3 3 2 3m-3 3 2 3m-3 3 1 3M15 111l4 4m-3 1 4 4m-3 1 5 4m-3 1 5 4" stroke-width=".6"/>
+    <!-- Fine brush and pigment tests connect observation with restoration. -->
+    <path d="m17 232 23-35q7-7 9-4l-25 44Z" fill="#65482d" stroke-width=".7"/>
+    <path d="m17 232-5 4q1 10-6 15 13-4 18-14Z" fill="#39281c" stroke-width=".8"/>
+    <path d="m18 232 7 5m-9-3 7 5" stroke="#b18b55" stroke-width="1.4"/>
+    <path d="M34 229h16m-18 6h16m-19 6h15" stroke-width="3" opacity=".65"/>
+    <path d="M9 260h42" stroke-width=".7"/>
+  </g>
+  <g fill="#47311f" text-anchor="middle" font-family="Georgia,serif" font-size="6.3" letter-spacing=".5">
+    <text x="30" y="274">OBSERVE</text><text x="30" y="284">COMPARE</text><text x="30" y="294">UNDERSTAND</text>
+  </g>
+</svg>

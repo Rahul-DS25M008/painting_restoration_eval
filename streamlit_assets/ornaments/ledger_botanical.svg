@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 100" fill="none">
+  <!-- Sepia botanical engraving, designed as ink on the ledger's paper. -->
+  <g stroke="#68593f" stroke-linecap="round" stroke-linejoin="round">
+    <g fill="#8a7857" fill-opacity=".16" stroke-width="1.05">
+      <path d="M60 84Q38 82 24 63Q46 61 60 84Z"/>
+      <path d="M55 72Q28 63 21 44Q46 46 55 72Z"/>
+      <path d="M54 59Q34 47 34 25Q53 36 54 59Z"/>
+      <path d="M58 45Q45 25 54 10Q67 24 58 45Z"/>
+      <path d="M62 33Q59 16 68 5Q77 25 62 33Z"/>
+      <path d="M61 51Q64 27 85 19Q83 43 61 51Z"/>
+      <path d="M57 65Q71 39 94 38Q88 58 57 65Z"/>
+      <path d="M59 77Q76 57 103 59Q86 78 59 77Z"/>
+      <path d="M63 86Q82 74 97 81Q84 91 63 86Z"/>
+    </g>
+    <path stroke-width="1.7" d="M67 96Q48 70 58 43L66 18"/>
+    <g stroke-width=".75">
+      <path d="M60 84L29 67M55 72L25 48M54 59L37 31M58 45L54 15M61 51L80 26M57 65L88 42M59 77L97 62M63 86L92 82"/>
+      <path d="M49 78L40 68M42 74L31 73M46 64L40 50M39 59L26 56M48 49L47 39M44 43L37 39M63 43L63 36M70 37L79 36M69 58L72 49M76 53L86 51M72 72L80 63M80 69L90 68M77 83L86 85"/>
+    </g>
+    <g stroke-width=".45" opacity=".7">
+      <path d="M28 64L51 79M29 48L50 67M38 29L51 52M55 15L58 36M68 11L63 27M82 24L65 46M89 41L63 60M96 61L68 74M92 82L69 85"/>
+      <path d="M25 68L47 80M23 49L47 68M35 33L47 52M52 20L55 37M85 31L70 46M90 47L69 59M94 66L74 76"/>
+    </g>
+  </g>
+</svg>

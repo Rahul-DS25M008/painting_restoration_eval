@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 118" fill="none">
+  <title>Dune — an Arrakis archive binding</title>
+  <defs>
+    <linearGradient id="foil" x1="0" y1="0" x2="140" y2="118" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a77a38"/><stop offset=".4" stop-color="#dac089"/><stop offset=".7" stop-color="#a77b3d"/><stop offset="1" stop-color="#d0ad6c"/>
+    </linearGradient>
+  </defs>
+  <!-- Transparent foil engraving preserves the room's existing leather grain. -->
+  <g stroke="url(#foil)" stroke-width=".65">
+    <path d="M2 2h136v114H2zM5 5h130v108H5z"/>
+    <path d="M2 12 12 2M128 2l10 10M2 106l10 10m116 0 10-10"/>
+    <path d="M12 40h116M15 43h110"/>
+  </g>
+  <g fill="url(#foil)" text-anchor="middle" font-family="Georgia,serif">
+    <text x="71" y="16" font-size="6.5" letter-spacing="2">FRANK HERBERT</text>
+    <text x="72" y="36" font-size="25" letter-spacing="5">DUNE</text>
+  </g>
+  <!-- Shai-Hulud rising through the dunes, drawn as a small gilt engraving. -->
+  <g stroke="url(#foil)" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="26" cy="56" r="6" stroke-width=".8"/>
+    <circle cx="113" cy="51" r="3" stroke-width=".7"/>
+    <path d="M9 84q17-18 42-9M90 73q21-11 41 7M8 93q30-22 56-5t68-1M8 101q37-18 63-6t61 0" stroke-width="1"/>
+    <path d="M53 63q-3 14-9 22m43-22q-2 18 7 25" stroke-width="1.5"/>
+    <ellipse cx="70" cy="63" rx="18" ry="15" fill="#18201f" stroke-width="1.4"/>
+    <ellipse cx="70" cy="63" rx="14.5" ry="12" stroke-width=".6"/>
+    <path d="m70 48-1 9-5-8 1 10-9-6 6 10-10-3 9 6-8 4 11-1-6 6 11-5-2 8 5-9 4 9 1-10 7 7-5-10 8 5-6-8 8-1-10-2 6-7-9 5 1-9-5 8Z" stroke-width=".8"/>
+    <path d="m52 73 9 4m-11 1 12 4m-14 1 15 5m21-15-7 5m9 0-9 5m11 0-10 5" stroke-width=".7"/>
+    <path d="M15 105h24m62 0h24" stroke-width=".7"/>
+  </g>
+  <text x="70" y="109" fill="url(#foil)" font-family="Georgia,serif" font-size="7" letter-spacing="2" text-anchor="middle">ARRAKIS</text>
+</svg>

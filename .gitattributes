@@ -84,3 +84,8 @@ outputs/33_final_evaluation_report/validation/checks.csv -filter diff -merge tex
 outputs/34_final_streamlit_dashboard_assets/**/*.csv -filter diff -merge text
 outputs/34_final_streamlit_dashboard_assets/**/*.png -filter -diff -merge -text
 outputs/34_final_streamlit_dashboard_assets/**/*.webp -filter -diff -merge -text
+
+# Small finished-room artwork uses ordinary Git, never the exhausted Git LFS.
+streamlit_assets/rooms/* -filter -diff -merge -text
+streamlit_assets/ornaments/* -filter -diff -merge -text
+streamlit_assets/evidence/study_design/* -filter -diff -merge -text
