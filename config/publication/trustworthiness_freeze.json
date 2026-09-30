@@ -1,0 +1,184 @@
+{
+  "schema_version": "trustworthiness_freeze.v1",
+  "status": "user_approved_visual_freeze",
+  "approved_date": "2026-09-30",
+  "scope": "Tab 6 isolated source/artwork checkpoint; shared app wiring and hosted deployment deferred",
+  "base_git_revision": "d685601c0b5aac4c805b72ba91462faa4b3916ea",
+  "file_count": 28,
+  "new_hf_objects_required_for_checkpoint": 0,
+  "new_git_lfs_objects_allowed": 0,
+  "verification": {
+    "final_presentation_tests": 7,
+    "final_visual_preview": "docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_09.png",
+    "expensive_optional_checks": "not rerun; historical scientific results documented separately"
+  },
+  "publication_note": "No new producer data. N27/N28 bulk tables already published_verified according to the existing local external_artifact_publication.csv. No fresh remote audit or upload performed.",
+  "deployment_note": "Local-file adapter remains. Shared app integration is excluded from this commit because it mixes unrelated unfinished work. Focused Portrait Review remains a placeholder.",
+  "files": [
+    {
+      "path": "src/restoration_eval/trustworthiness.py",
+      "sha256": "4a500f023e9eea8bae74a0711106e0c8990b56d2c3bc9c9511a0465b351ae30b",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 8980
+    },
+    {
+      "path": "src/restoration_eval/trustworthiness_view.py",
+      "sha256": "7289fef5a08135f0a2992292fb885790b568b8b26d91163b73c90498afb388d9",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 13672
+    },
+    {
+      "path": "streamlit_assets/trustworthiness.css",
+      "sha256": "2aad3dc52e5cc2d28230c5e3b08f4b2a46144b8da44cd8f4fe094af34f5210b0",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 12669
+    },
+    {
+      "path": "streamlit_assets/trustworthiness_controller.js",
+      "sha256": "575f2c62e7baefaa85824609404fba1d5827002467c0d6b0155b125f4d187c0e",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 23079
+    },
+    {
+      "path": "streamlit_assets/rooms/trustworthiness_shell.png",
+      "sha256": "7d990047b5306b528e81a0073f550dea63ff41605ae3cded199e38956c985ef2",
+      "hash_mode": "binary",
+      "size_bytes": 2060376
+    },
+    {
+      "path": "streamlit_assets/rooms/trustworthiness_zhongli.png",
+      "sha256": "6f760aa28a2425223ab98e40b11c4458bddecffe7a30b82b7eda38f7f40c208d",
+      "hash_mode": "binary",
+      "size_bytes": 2613195
+    },
+    {
+      "path": "streamlit_assets/rooms/trustworthiness_evidence_reference.png",
+      "sha256": "f528498a94fe0c2aad844f3de7b8eff4b963f0ef672f2aa32901c5adc23977dc",
+      "hash_mode": "binary",
+      "size_bytes": 2303930
+    },
+    {
+      "path": "streamlit_assets/rooms/trustworthiness_archons_edit.png",
+      "sha256": "5b9b006c545751cb20676d98d54cf4526a81992b3c2bdcd65173fab979edcf89",
+      "hash_mode": "binary",
+      "size_bytes": 1990629
+    },
+    {
+      "path": "streamlit_assets/rooms/trustworthiness_archons_group.png",
+      "sha256": "2347387ddbf731de18d5b3065683b453123fafec1a0249b10220eec5ba7727bd",
+      "hash_mode": "binary",
+      "size_bytes": 1964548
+    },
+    {
+      "path": "tests/test_trustworthiness.py",
+      "sha256": "1728e1a348332255b94347fc33b8034878111f8bd7210fe3f407a5389e72cfb6",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 4973
+    },
+    {
+      "path": "tests/test_trustworthiness_presentation.py",
+      "sha256": "9aacb7e008d83cc3529ab720a9b9fd0778198053783ae702c6e9fb7c159f3a7b",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 5026
+    },
+    {
+      "path": "tests/test_trustworthiness_chart.cjs",
+      "sha256": "82a18c8c743ca6e5d129ececef5c5180fff74d2060f9872883b19ed8406a11ac",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 3003
+    },
+    {
+      "path": "docs/dashboard_design_finalists/trustworthiness_steps_01_02.md",
+      "sha256": "edab341883edfdbe2d35e4cb5d300c443b7e05dc06b3d8c455e3b0c93c3785b2",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 4365
+    },
+    {
+      "path": "docs/dashboard_design_finalists/trustworthiness_step03_verification.md",
+      "sha256": "fb71b735c6845943eb7800e26fa383e1b28224643b08c286bbd0fc4791e99b44",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 2776
+    },
+    {
+      "path": "docs/dashboard_design_finalists/trustworthiness_shell_prompt.txt",
+      "sha256": "3885fefde436fde12dcb097fab191a1e4058200343269fe884c13a60aa028b61",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 2350
+    },
+    {
+      "path": "docs/dashboard_design_finalists/trustworthiness_left_pass_01.md",
+      "sha256": "7f0f152c5f463ee85dd61bd4f1d70320b0d5d706d8f70a52b5d5d5e66127c3f8",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 1280
+    },
+    {
+      "path": "docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_02.md",
+      "sha256": "8ae458ec521eed0333642e40bdb1e1baab89d526a6d04922cf2f6b385a2ca1a9",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 1239
+    },
+    {
+      "path": "docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_03.md",
+      "sha256": "6a13fc0c6e0702c88c3d227e2d80f531c5eb7aeb595f7272ae3446f1c0bedcef",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 882
+    },
+    {
+      "path": "docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_04.md",
+      "sha256": "bb3f414352c4c2b926bce09deb5d32b0952d0b7396768e4662a0ce088985aaf6",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 2490
+    },
+    {
+      "path": "docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_05.md",
+      "sha256": "da87af00356bae6ab95249d8d02e32166f2fb67fe41147591b6fc157cbf4b106",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 1227
+    },
+    {
+      "path": "docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_06.md",
+      "sha256": "4e3ada1b86b1b1ddfaca0f72ca6344ffe2a1eed2c301da5bef9714672b85cf9f",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 1166
+    },
+    {
+      "path": "docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_07.md",
+      "sha256": "6c94112acab87f2fb879ec7e666111f3203370cacc453cce49e795310d7aefde",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 1071
+    },
+    {
+      "path": "docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_08.md",
+      "sha256": "bd5c6ffe89a95ab1c1bcf31c3bdfbb4dddcdc3a05119608ac72c8b11dbd07718",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 2960
+    },
+    {
+      "path": "docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_09.md",
+      "sha256": "a113c8262813d3493ae6e3b7764ccdc2f7b94c1ba168b2abd2008c2bd564e668",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 1306
+    },
+    {
+      "path": "docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_09.png",
+      "sha256": "4a0e50984d571a92c4e02a23e242dad404647bf22e3766cb716e113e03c26ef7",
+      "hash_mode": "binary",
+      "size_bytes": 88265
+    },
+    {
+      "path": "docs/trustworthiness_asset_checkpoint.md",
+      "sha256": "5f26a7ef9b441b47b1d8a7d763a6fed2c5713525fc1683d756ef288128badc04",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 5263
+    },
+    {
+      "path": "tools/check_trustworthiness_freeze.py",
+      "sha256": "446777671b49ed25fffbbf32c56cae0abf259b115397256146f43f64eba526ed",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 3563
+    }
+  ],
+  "support_paths": [
+    "config/publication/trustworthiness_freeze.json"
+  ]
+}
