@@ -117,10 +117,11 @@ def render_model_gallery(package, navigation):
         stroke = "#a6232c" if '0 0 40 40' in svg else "#0085bd"
         svg = svg.replace('<svg ', f'<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="{stroke}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" ', 1)
         return '<img alt="" src="data:image/svg+xml;base64,' + base64.b64encode(svg.encode()).decode() + '">'
-    st.html(re.sub(r"<svg\b.*?</svg>", svg_image, scene, flags=re.DOTALL))
+    from .room_runtime import room_html, room_controller
+    revision = room_html(re.sub(r"<svg\b.*?</svg>", svg_image, scene, flags=re.DOTALL))
     controller = (ROOT / "streamlit_assets/model_gallery_controller.js").read_text(encoding="utf-8")
     serialized = json.dumps(payload, ensure_ascii=True, allow_nan=False).replace("</", "<\\/")
-    components.html("<script>" + controller.replace("__GALLERY_PAYLOAD__", serialized) + "</script>", height=0, scrolling=False)
+    room_controller(controller.replace("__GALLERY_PAYLOAD__", serialized), revision)
     document = st.query_params.get("gallery_document")
     if document in cat["reports"] or document == "hint_decision":
         def dismiss_document():

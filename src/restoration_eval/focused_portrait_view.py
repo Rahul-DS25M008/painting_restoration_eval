@@ -158,7 +158,8 @@ def render_focused_portrait(package, navigation):
     css = (ROOT / "streamlit_assets/focused_portrait.css").read_text(encoding="utf-8")
     shell = image_uri(str(ROOT / "streamlit_assets/rooms/focused_portrait_review_shell.png"))
     reference = image_uri(str(ROOT / "streamlit_assets/rooms/focused_portrait_reference_details.png"))
-    st.html(f'<style>{css}</style>'+room_markup(data,navigation,shell,reference))
+    from .room_runtime import room_html, room_controller
+    revision = room_html(f'<style>{css}</style>'+room_markup(data,navigation,shell,reference))
     js = (ROOT / "streamlit_assets/focused_portrait_controller.js").read_text(encoding="utf-8")
     serialized = json.dumps(data,ensure_ascii=True,allow_nan=False).replace("</","<\\/")
-    components.html('<script>'+js.replace('__PORTRAIT_PAYLOAD__',serialized)+'</script>',height=0,scrolling=False)
+    room_controller(js.replace('__PORTRAIT_PAYLOAD__',serialized), revision)

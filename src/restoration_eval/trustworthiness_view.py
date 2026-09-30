@@ -164,7 +164,8 @@ def render_trustworthiness(package, navigation):
     parts.append(portrait_alcove(evidence_reference))
     parts.append(book_spines())
     parts.append('<dialog class="trust-dialog" aria-labelledby="trust-dialog-title"><header><div><span>THE REVIEW CHAMBER · RECORDED EVIDENCE</span><h2 id="trust-dialog-title"></h2></div><button data-action="close" aria-label="Close review record">Close ×</button></header><div class="trust-dialog-body"></div></dialog><span class="trust-live" role="status" aria-live="polite"></span></main>')
-    st.html(nav_images("".join(parts)))
+    from .room_runtime import room_html, room_controller
+    revision = room_html(nav_images("".join(parts)))
     js = (ROOT / "streamlit_assets/trustworthiness_controller.js").read_text(encoding="utf-8")
     serialized = json.dumps(data, ensure_ascii=True, allow_nan=False).replace("</", "<\\/")
-    components.html("<script>" + js.replace("__TRUST_PAYLOAD__", serialized) + "</script>", height=0, scrolling=False)
+    room_controller(js.replace("__TRUST_PAYLOAD__", serialized), revision)

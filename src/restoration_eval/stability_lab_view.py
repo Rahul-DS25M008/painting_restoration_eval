@@ -142,7 +142,8 @@ def render_stability_lab(package, navigation):
         stroke = "#a6232c" if '0 0 40 40' in svg else "#0085bd"
         svg = svg.replace('<svg ', f'<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="{stroke}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" ', 1)
         return '<img alt="" src="data:image/svg+xml;base64,' + base64.b64encode(svg.encode()).decode() + '">'
-    st.html(re.sub(r"<svg\b.*?</svg>", nav_svg, scene, flags=re.DOTALL))
+    from .room_runtime import room_html, room_controller
+    revision = room_html(re.sub(r"<svg\b.*?</svg>", nav_svg, scene, flags=re.DOTALL))
     controller = (ROOT / "streamlit_assets/stability_lab_controller.js").read_text(encoding="utf-8")
     serialized = json.dumps(data, ensure_ascii=True, allow_nan=False).replace("</", "<\\/")
-    components.html("<script>" + controller.replace("__STABILITY_PAYLOAD__", serialized) + "</script>", height=0, scrolling=False)
+    room_controller(controller.replace("__STABILITY_PAYLOAD__", serialized), revision)

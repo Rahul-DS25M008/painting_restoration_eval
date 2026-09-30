@@ -1,0 +1,7 @@
+Built-in image_gen edit, 2026-09-30.
+Input: streamlit_assets/rooms/case_explorer_shell.png
+Output: streamlit_assets/rooms/case_explorer_neutral_layer.png
+Only the window (1368, 207, 234, 76) is displayed over the original shell.
+
+Prompt:
+Use case: precise-object-edit. Edit target: supplied museum room blank UI background. Change ONLY the emerald green selected banner at the TOP ROW of the tall parchment board on the RIGHT (roughly x1370-1597, y212-280 in the original 1672x941). Remove its green fill and ornate gold outline/arrow; reconstruct a neutral light parchment row matching the five blank parchment rows directly below it. Preserve the board's outer frame, brass vertical binder rails and pins, row perspective and lighting. There must be no permanently selected/highlighted row anywhere on that board. Keep every other part of the entire image exactly unchanged, including all empty frames, cabinetry, room composition, sizes, positions, colors and perspective. No text, no new objects. Output same full-room composition/aspect ratio. This is a precise UI background repair, not a redesign.

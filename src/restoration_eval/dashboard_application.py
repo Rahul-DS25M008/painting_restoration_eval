@@ -45,7 +45,7 @@ from .manifests import sha256_file
 from .paths import find_project_root, resolve_repo_path
 
 
-DASHBOARD_APPLICATION_VERSION = "2.0.0"
+DASHBOARD_APPLICATION_VERSION = "2.1.0"
 DASHBOARD_VALIDATION_CONFIG_SCHEMA_VERSION = "dashboard_validation_config.v2"
 DASHBOARD_PACKAGE_SCHEMA_VERSION = DASHBOARD_PACKAGE_SCHEMA
 DASHBOARD_RUNTIME_MANIFEST_SCHEMA_VERSION = DASHBOARD_RUNTIME_MANIFEST_SCHEMA
@@ -74,6 +74,7 @@ FINAL_RECORD_PATHS = {
 }
 
 CHILD_ROOM_ID = "focused_portrait_review"
+CHILD_RETURN_ROOM_IDS = ("study_design", "trustworthiness", "case_explorer")
 ALL_ROOM_IDS = (*PRINCIPAL_ROOM_IDS, CHILD_ROOM_ID)
 SELECTION_FIELDS = (
     "room_id",
@@ -81,6 +82,7 @@ SELECTION_FIELDS = (
     "case_id",
     "candidate_id",
     "model_id",
+    "experiment_id",
     "seed",
     "prompt_variant_id",
     "metric_name",
@@ -93,9 +95,148 @@ SELECTION_FIELDS = (
     "blind_review_code",
 )
 
+# Scientific identity carried by a child binding. A binding with one of these
+# values must not survive merely because only a broader parent was selected.
+BINDING_IDENTITY_FIELDS = (
+    "painting_id",
+    "experiment_id",
+    "case_id",
+    "candidate_id",
+    "model_id",
+    "seed",
+    "prompt_variant_id",
+    "annotation_id",
+    "hand_control_id",
+    "review_unit_id",
+    "blind_review_code",
+)
+
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 _PAINTING_ID_RE = re.compile(r"^p(?:00[1-9]|0[1-9][0-9]|[12][0-9]{2}|300)$")
 _NULL_STRINGS = {"", "nan", "none", "null", "<na>"}
+
+# N34 room partitions are narrative/routing contracts. They deliberately do
+# not form a general metric store. Only these compact N34 tables and curated,
+# source-pinned opening examples may resolve to numerical payloads in N35.
+GENERAL_DYNAMIC_NUMERIC_PARITY = False
+
+_DERIVED_DISPLAY_SPECS: Mapping[str, Mapping[str, Any]] = {
+    "stability.damage.trajectory": {
+        "relative_path": "data/derived/stability_trajectories.parquet",
+        "schema_version": "dashboard_stability_trajectories.v1",
+        "row_id": "trajectory_id",
+    },
+    "trust.threshold.strata": {
+        "relative_path": "data/derived/threshold_strata.parquet",
+        "schema_version": "dashboard_threshold_strata.v1",
+        "row_id": "threshold_stratum_id",
+    },
+    "d02.hand.findings": {
+        "relative_path": "data/derived/d02_hand_summary.parquet",
+        "schema_version": "dashboard_d02_hand_summary.v1",
+        "row_id": "summary_id",
+    },
+    "d02.lightness.findings": {
+        "relative_path": "data/derived/d02_lightness_summary.parquet",
+        "schema_version": "dashboard_d02_lightness_summary.v1",
+        "row_id": "summary_id",
+    },
+}
+
+_CURATED_TYPED_PAYLOADS: Mapping[str, Mapping[str, Any]] = {
+    "case.metric.ssim": {
+        "identity": {
+            "painting_id": "p018",
+            "case_id": "canonical__p018__mixed_damage",
+            "candidate_id": "candidate__lama__canonical__p018__mixed_damage__c00",
+            "model_id": "lama",
+            "experiment_id": "canonical_missing_region",
+        },
+        "record": {
+            "metric_name": "ssim",
+            "region_id": "mask_bbox_crop",
+            "damaged_value": 0.8827221511372411,
+            "restored_value": 0.9685581155347863,
+            "improvement_value": 0.08583596439754526,
+            "improvement_direction": "restored_minus_damaged",
+            "direction": "higher_is_better",
+            "value_unit": "unitless",
+        },
+        "source_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+        "source_sha256": "a9a1250c7ecd1339dbb4150d8f42336ea3d1b0567648f6f03cf7f7e6f23e337c",
+        "source_row_id": "cm__5e9144459fba36c24db0",
+    },
+    "case.metric.lpips": {
+        "identity": {
+            "painting_id": "p018",
+            "case_id": "canonical__p018__mixed_damage",
+            "candidate_id": "candidate__lama__canonical__p018__mixed_damage__c00",
+            "model_id": "lama",
+            "experiment_id": "canonical_missing_region",
+        },
+        "record": {
+            "metric_name": "lpips",
+            "region_id": "mask_bbox_crop",
+            "damaged_value": 0.40980759263038635,
+            "restored_value": 0.019120559096336365,
+            "improvement_value": 0.39068703353405,
+            "improvement_direction": "damaged_minus_restored",
+            "direction": "lower_is_better",
+            "value_unit": "LPIPS_distance",
+        },
+        "source_path": "outputs/14_lpips_metrics/metrics/lpips_metrics.csv",
+        "source_sha256": "0d2b125a5045459db4d07648ac52af14faeb5c4ae9187328fce9fd31d492d129",
+        "source_row_id": "lp__124778c01f1b30a10f77",
+    },
+    "case.metric.colour": {
+        "identity": {
+            "painting_id": "p018",
+            "case_id": "canonical__p018__mixed_damage",
+            "candidate_id": "candidate__lama__canonical__p018__mixed_damage__c00",
+            "model_id": "lama",
+            "experiment_id": "canonical_missing_region",
+        },
+        "record": {
+            "metric_name": "delta_e_ciede2000_mean",
+            "region_id": "masked_region",
+            "damaged_value": 52.962928771972656,
+            "restored_value": 4.066130638122559,
+            "improvement_value": 48.8967981338501,
+            "improvement_direction": "damaged_minus_restored",
+            "direction": "lower_is_better",
+            "value_unit": "CIELAB_difference",
+        },
+        "source_path": "outputs/17_local_consistency_metrics/metrics/local_consistency.csv",
+        "source_sha256": "662dd76152d26a3b6e317067ac49d33eaca249bf724bbd44203c579d5fc44ecf",
+        "source_row_id": "lcmr_ade29e61f83f757bfee1",
+    },
+    "trust.threshold.example": {
+        "identity": {
+            "painting_id": "p002",
+            "case_id": "canonical__p002__loss_large",
+            "candidate_id": "sd15__p00__s2026__29ff258ff921",
+            "model_id": "stable_diffusion_inpainting",
+            "experiment_id": "canonical_missing_region",
+        },
+        "record": {
+            "metric_name": "local_texture_error_p95",
+            "region_id": "mask_bbox_crop",
+            "observed_value": 10.053275680541985,
+            "warning_threshold": 1.7923734879493693,
+            "critical_threshold": 4.8924025321006255,
+            "direction": "higher_is_worse",
+            "value_unit": "normalized_unitless",
+            "assignment_status": "triggered",
+            "rule_severity": "critical",
+        },
+        "source_path": (
+            "outputs/27_failure_taxonomy_and_trustworthiness_flags/"
+            "metrics/failure_assignments.csv"
+        ),
+        "source_sha256": "1c998f42fde3bacc22e0901ef264e99d085f85cc332ccfa3ad3626f34333f5f2",
+        "source_row_id": "failure_d414420486cfac9f2b57",
+    },
+}
 
 
 class DashboardContractError(RuntimeError):
@@ -202,6 +343,7 @@ class DashboardSelection:
     case_id: str | None = None
     candidate_id: str | None = None
     model_id: str | None = None
+    experiment_id: str | None = None
     seed: str | int | None = None
     prompt_variant_id: str | None = None
     metric_name: str | None = None
@@ -226,6 +368,32 @@ class DashboardSelection:
             if not _blank(value):
                 result[key] = int(value) if key == "seed" and str(value).isdigit() else value
         return result
+
+
+@dataclass(frozen=True)
+class TypedDisplayRecord:
+    """One immutable, machine-readable display record."""
+
+    fields: tuple[tuple[str, Any], ...]
+
+    def as_dict(self) -> dict[str, Any]:
+        return dict(self.fields)
+
+
+@dataclass(frozen=True)
+class ResolvedDisplayPayload:
+    """Fail-closed result of resolving one N35 display payload."""
+
+    display_id: str
+    status: str
+    payload_kind: str
+    records: tuple[TypedDisplayRecord, ...] = ()
+    selection: tuple[tuple[str, str], ...] = ()
+    source_path: str | None = None
+    source_sha256: str | None = None
+    source_row_ids: tuple[str, ...] = ()
+    message: str = ""
+    general_dynamic_numeric_parity: bool = GENERAL_DYNAMIC_NUMERIC_PARITY
 
 
 @dataclass(frozen=True)
@@ -423,22 +591,169 @@ class DashboardPackage:
             frame = frame.loc[frame["display_id"].astype(str).eq(str(display_id))]
         if room_id is not None:
             frame = frame.loc[frame["room_id"].astype(str).eq(str(room_id))]
+        target_room = str(room_id).strip() if room_id is not None else None
+        if target_room is None and display_id is not None:
+            display_rooms = frame["room_id"].dropna().astype(str).unique().tolist()
+            if len(display_rooms) == 1:
+                target_room = display_rooms[0]
+        if selection is None and target_room == "case_explorer":
+            selection = self.default_selection_for_room("case_explorer")
+        elif isinstance(selection, Mapping) and target_room is not None:
+            selection = dict(selection)
+            selection.setdefault("room_id", target_room)
         state = (
             selection
             if isinstance(selection, DashboardSelection)
             else DashboardSelection.from_mapping(selection)
         ) if selection is not None else None
         if state is not None:
+            if target_room is not None and str(state.room_id) != target_room:
+                raise DashboardSelectionError(
+                    f"Selection room {state.room_id!r} does not match requested room "
+                    f"{target_room!r}"
+                )
+            state = self.validate_selection(state)
             identities = state.as_identifiers()
-            for field in SELECTION_FIELDS:
-                if field not in frame.columns or field not in identities:
+            for field in BINDING_IDENTITY_FIELDS:
+                if field not in frame.columns:
                     continue
-                wanted = str(identities[field])
                 values = frame[field]
                 generic = values.map(_blank)
-                frame = frame.loc[generic | values.astype(str).eq(wanted)]
+                if field not in identities:
+                    frame = frame.loc[generic]
+                else:
+                    wanted = str(identities[field])
+                    frame = frame.loc[generic | values.astype(str).eq(wanted)]
+            for field in ("metric_name", "region_id", "evidence_layer"):
+                if field not in frame.columns or field not in identities:
+                    continue
+                values = frame[field]
+                frame = frame.loc[
+                    values.map(_blank) | values.astype(str).eq(str(identities[field]))
+                ]
+            frame = self._apply_case_explorer_applicability(frame, state)
         sort_columns = [column for column in ("display_order", "slot_id", "binding_id") if column in frame]
         return frame.sort_values(sort_columns, kind="stable").copy() if sort_columns else frame.copy()
+
+    def default_selection_for_room(self, room_id: str) -> DashboardSelection:
+        """Return the verified opening identity for a room.
+
+        Case Explorer has an exact p018 mixed-damage LaMa opening candidate.
+        It is derived from the unique restored-anchor binding so evidence from
+        another p018 experiment cannot be mistaken for the opening case.
+        """
+
+        normalized = str(room_id).strip()
+        if normalized not in ALL_ROOM_IDS:
+            raise DashboardSelectionError(f"Unknown dashboard room: {room_id!r}")
+        if normalized != "case_explorer":
+            return DashboardSelection(room_id=normalized)
+        matches = self.display_components.loc[
+            self.display_components["room_id"].astype(str).eq("case_explorer")
+            & self.display_components["slot_id"].astype(str).eq(
+                "case.anchor.views:restored"
+            )
+        ]
+        if len(matches) != 1:
+            raise DashboardContractError(
+                "Case Explorer must declare exactly one restored opening anchor"
+            )
+        record = matches.iloc[0]
+        identity: dict[str, Any] = {"room_id": "case_explorer"}
+        for field in BINDING_IDENTITY_FIELDS:
+            if field in record and not _blank(record[field]):
+                identity[field] = record[field]
+        required = {"painting_id", "experiment_id", "case_id", "candidate_id", "model_id"}
+        if not required.issubset(identity):
+            raise DashboardContractError(
+                "Case Explorer opening anchor lacks a complete scientific identity"
+            )
+        return self.validate_selection(DashboardSelection.from_mapping(identity))
+
+    def _apply_case_explorer_applicability(
+        self,
+        frame: pd.DataFrame,
+        state: DashboardSelection,
+    ) -> pd.DataFrame:
+        """Overlay exact candidate applicability without changing N34 evidence.
+
+        N34's parent display row is intentionally generic. For an exact LaMa
+        selection, N29 records uncertainty as not applicable rather than
+        missing: the candidate has neither an uncertainty group nor an
+        uncertainty asset route. Expose that distinction directly on the
+        surviving parent row after incompatible asset bindings are removed.
+        """
+
+        if (
+            state.room_id != "case_explorer"
+            or _blank(state.painting_id)
+            or _blank(state.candidate_id)
+        ):
+            return frame
+        uncertainty_parent = (
+            frame["room_id"].astype(str).eq("case_explorer")
+            & frame["slot_id"].astype(str).eq("case.anchor.uncertainty")
+        )
+        if not uncertainty_parent.any():
+            return frame
+
+        painting = self.load_painting(str(state.painting_id))
+        matches = [
+            row
+            for row in painting.get("candidates", [])
+            if str(row.get("candidate_id")) == str(state.candidate_id)
+        ]
+        if len(matches) != 1:
+            raise DashboardContractError(
+                "Selected Case Explorer candidate is not unique in its painting shard"
+            )
+        candidate = matches[0]
+        routes = candidate.get("asset_routes")
+        uncertainty_routes = routes.get("uncertainty", []) if isinstance(routes, Mapping) else []
+        if (
+            str(candidate.get("model_id")) != "lama"
+            or not _blank(candidate.get("uncertainty_group_id"))
+            or uncertainty_routes
+        ):
+            return frame
+
+        room_rows = self.load_room("case_explorer")
+        semantics = room_rows.loc[
+            room_rows["display_id"].astype(str).eq("case.anchor.uncertainty"),
+            "value_json",
+        ]
+        if len(semantics) != 1:
+            raise DashboardContractError(
+                "Case Explorer uncertainty semantics are not registered exactly once"
+            )
+        try:
+            producer_binding = str(json.loads(str(semantics.iloc[0]))["producer_binding"])
+        except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+            raise DashboardContractError(
+                "Case Explorer uncertainty producer semantics are malformed"
+            ) from exc
+        if "not_applicable_deterministic_method" not in producer_binding:
+            raise DashboardContractError(
+                "Case Explorer uncertainty N/A semantics are not provenance-backed"
+            )
+
+        result = frame.copy()
+        result.loc[
+            uncertainty_parent,
+            "applicability_state",
+        ] = "not_applicable_deterministic_method"
+        result.loc[
+            uncertainty_parent,
+            "applicability_reason",
+        ] = (
+            "Not applicable — deterministic method; the exact LaMa candidate "
+            "has no uncertainty group or uncertainty asset route."
+        )
+        result.loc[
+            uncertainty_parent,
+            "interpretation",
+        ] = "Not applicable — deterministic method"
+        return result
 
     def asset_record(self, asset_id: str) -> pd.Series:
         matches = self.dashboard_assets.loc[
@@ -528,6 +843,15 @@ class DashboardPackage:
             raise DashboardContractError(f"Local report checksum mismatch: {report_id}")
         return payload, path.name
 
+    def resolve_display_payload(
+        self,
+        display_id: str,
+        selection: DashboardSelection | Mapping[str, Any] | None = None,
+    ) -> ResolvedDisplayPayload:
+        """Resolve only explicitly typed N34 evidence or curated anchors."""
+
+        return resolve_display_payload(self, display_id, selection=selection)
+
     def validate_selection(
         self,
         selection: DashboardSelection | Mapping[str, Any],
@@ -536,6 +860,198 @@ class DashboardPackage:
 
 
 DashboardBundle = DashboardPackage
+
+
+def _payload_scalar(value: Any) -> Any:
+    if _blank(value):
+        return None
+    if hasattr(value, "item"):
+        try:
+            return value.item()
+        except (TypeError, ValueError):
+            pass
+    return value
+
+
+def _typed_record(values: Mapping[str, Any]) -> TypedDisplayRecord:
+    return TypedDisplayRecord(
+        fields=tuple((str(key), _payload_scalar(value)) for key, value in values.items())
+    )
+
+
+def _unavailable_payload(
+    display_id: str,
+    *,
+    payload_kind: str,
+    message: str,
+    selection: Mapping[str, Any] | None = None,
+) -> ResolvedDisplayPayload:
+    selected = tuple(
+        sorted(
+            (str(key), str(value))
+            for key, value in (selection or {}).items()
+            if not _blank(value)
+        )
+    )
+    return ResolvedDisplayPayload(
+        display_id=display_id,
+        status="unavailable",
+        payload_kind=payload_kind,
+        selection=selected,
+        message=message,
+    )
+
+
+def resolve_display_payload(
+    package: DashboardPackage,
+    display_id: str,
+    *,
+    selection: DashboardSelection | Mapping[str, Any] | None = None,
+) -> ResolvedDisplayPayload:
+    """Resolve a display without parsing room prose or scanning producer data.
+
+    General per-candidate numerical parity is intentionally unavailable. The
+    only numerical results exposed here are the four compact typed N34 tables
+    and four curated, immutable examples whose exact identities and producer
+    records are pinned below. Any identity mismatch returns ``unavailable``;
+    a neighbouring case or candidate is never substituted.
+    """
+
+    normalized = str(display_id).strip()
+    selected = (
+        selection.as_identifiers()
+        if isinstance(selection, DashboardSelection)
+        else DashboardSelection.from_mapping(selection).as_identifiers()
+        if selection is not None
+        else {}
+    )
+
+    curated = _CURATED_TYPED_PAYLOADS.get(normalized)
+    if curated is not None:
+        expected = dict(curated["identity"])
+        if any(str(selected.get(key, "")) != str(value) for key, value in expected.items()):
+            return _unavailable_payload(
+                normalized,
+                payload_kind="curated_typed_record",
+                selection=selected,
+                message=(
+                    "No packaged numeric record exists for this exact selection; "
+                    "general dynamic numeric parity is not provided."
+                ),
+            )
+
+        painting = package.load_painting(str(expected["painting_id"]))
+        case_matches = [
+            row for row in painting.get("cases", [])
+            if str(row.get("case_id")) == str(expected["case_id"])
+        ]
+        candidate_matches = [
+            row for row in painting.get("candidates", [])
+            if str(row.get("candidate_id")) == str(expected["candidate_id"])
+            and str(row.get("case_id")) == str(expected["case_id"])
+            and str(row.get("model_id")) == str(expected["model_id"])
+        ]
+        if len(case_matches) != 1 or len(candidate_matches) != 1:
+            raise DashboardContractError(
+                f"Curated payload identity is not unique in the N34 painting shard: {normalized}"
+            )
+
+        source_path = str(curated["source_path"])
+        source_sha256 = str(curated["source_sha256"])
+        source_row_id = str(curated["source_row_id"])
+        if not _SHA256_RE.fullmatch(source_sha256):
+            raise DashboardContractError(f"Invalid curated source checksum: {normalized}")
+        values = {
+            **expected,
+            **dict(curated["record"]),
+            "source_row_id": source_row_id,
+            "source_path": source_path,
+            "source_sha256": source_sha256,
+        }
+        return ResolvedDisplayPayload(
+            display_id=normalized,
+            status="available",
+            payload_kind="curated_typed_record",
+            records=(_typed_record(values),),
+            selection=tuple(sorted((key, str(value)) for key, value in expected.items())),
+            source_path=source_path,
+            source_sha256=source_sha256,
+            source_row_ids=(source_row_id,),
+            message="Exact curated record validated against the N34 painting allow-list.",
+        )
+
+    derived = _DERIVED_DISPLAY_SPECS.get(normalized)
+    if derived is not None:
+        relative_path = str(derived["relative_path"])
+        path = package.verify_relative_file(relative_path, checksum=True)
+        frame = _frame(path)
+        expected_schema = str(derived["schema_version"])
+        if "schema_version" not in frame or set(frame["schema_version"].astype(str)) != {
+            expected_schema
+        }:
+            raise DashboardContractError(f"Typed payload schema drift: {normalized}")
+        _require_ok(frame, f"typed payload[{normalized}]")
+        filtered = frame
+        for key, value in selected.items():
+            if key in filtered.columns and not _blank(value):
+                filtered = filtered.loc[filtered[key].astype(str).eq(str(value))]
+        if filtered.empty:
+            return _unavailable_payload(
+                normalized,
+                payload_kind="typed_parquet_selection",
+                selection=selected,
+                message="No typed N34 row matches the exact requested selection.",
+            )
+        row_id = str(derived["row_id"])
+        _require_unique(filtered, row_id, f"typed payload[{normalized}]")
+        records = tuple(
+            _typed_record(record)
+            for record in filtered.where(pd.notna(filtered), None).to_dict(orient="records")
+        )
+        artifact = package.artifact_index[relative_path]
+        return ResolvedDisplayPayload(
+            display_id=normalized,
+            status="available",
+            payload_kind="typed_parquet_selection",
+            records=records,
+            selection=tuple(
+                sorted(
+                    (str(key), str(value))
+                    for key, value in selected.items()
+                    if key in frame.columns and not _blank(value)
+                )
+            ),
+            source_path=relative_path,
+            source_sha256=str(artifact["sha256"]),
+            source_row_ids=tuple(filtered[row_id].astype(str)),
+            message="Typed N34 rows resolved without scientific recomputation.",
+        )
+
+    bindings = package.bindings_for(display_id=normalized)
+    if bindings.empty:
+        return _unavailable_payload(
+            normalized,
+            payload_kind="unknown",
+            selection=selected,
+            message="Display ID is not registered in the N34 package.",
+        )
+    if bindings["payload_ref"].astype(str).str.startswith("data/rooms/").any():
+        return ResolvedDisplayPayload(
+            display_id=normalized,
+            status="narrative",
+            payload_kind="narrative_or_routing_spec",
+            selection=tuple(sorted((key, str(value)) for key, value in selected.items())),
+            message=(
+                "N34 room rows are narrative/routing specifications, not typed "
+                "numeric observations."
+            ),
+        )
+    return _unavailable_payload(
+        normalized,
+        payload_kind="unsupported_registered_payload",
+        selection=selected,
+        message="This registered display has no approved typed resolver.",
+    )
 
 
 def _build_artifact_index(manifest: Mapping[str, Any]) -> dict[str, Mapping[str, Any]]:
@@ -758,11 +1274,15 @@ def validate_selection(
         raise DashboardSelectionError(f"Unknown dashboard room: {room_id!r}")
     if state.return_room is not None and str(state.return_room) not in PRINCIPAL_ROOM_IDS:
         raise DashboardSelectionError(f"Invalid return room: {state.return_room!r}")
-    if room_id == CHILD_ROOM_ID and state.return_room not in (None, "trustworthiness"):
-        raise DashboardSelectionError("Focused portrait review must return to Trustworthiness")
+    if room_id == CHILD_ROOM_ID and state.return_room not in (None, *CHILD_RETURN_ROOM_IDS):
+        allowed = ", ".join(CHILD_RETURN_ROOM_IDS)
+        raise DashboardSelectionError(
+            f"Focused portrait review return room must be one of: {allowed}"
+        )
 
     painting_id = _text_or_none(state.painting_id)
     dependent = (
+        state.experiment_id,
         state.case_id,
         state.candidate_id,
         state.model_id,
@@ -783,10 +1303,25 @@ def validate_selection(
     candidates = {str(row.get("candidate_id")): row for row in payload.get("candidates", [])}
     case_id = _text_or_none(state.case_id)
     candidate_id = _text_or_none(state.candidate_id)
+    experiment_id = _text_or_none(state.experiment_id)
+    if experiment_id is not None:
+        available_experiments = set(
+            map(str, payload.get("selectors", {}).get("experiment_ids", []))
+        )
+        if experiment_id not in available_experiments:
+            raise DashboardSelectionError(
+                f"Experiment {experiment_id!r} is unavailable for painting {painting_id}"
+            )
     if case_id is not None and case_id not in cases:
         raise DashboardSelectionError(
             f"Case {case_id!r} is unavailable for painting {painting_id}"
         )
+    if (
+        case_id is not None
+        and experiment_id is not None
+        and str(cases[case_id].get("experiment_id")) != experiment_id
+    ):
+        raise DashboardSelectionError("Case and experiment identities do not match")
     if candidate_id is not None:
         candidate = candidates.get(candidate_id)
         if candidate is None:
@@ -797,6 +1332,7 @@ def validate_selection(
             raise DashboardSelectionError("Candidate and case identities do not match")
         for field, requested in {
             "model_id": state.model_id,
+            "experiment_id": state.experiment_id,
             "seed": state.seed,
             "prompt_variant_id": state.prompt_variant_id,
         }.items():
@@ -1287,7 +1823,10 @@ def audit_streamlit_source(
     try:
         config = load_dashboard_validation_config(root)
         app_value = config["application"].get("entrypoint", "streamlit_app.py")
-        prohibited = config.get("scientific_boundaries", {}).get("prohibited_source_fragments", [])
+        prohibited = config.get("scientific_boundaries", {}).get(
+            "prohibited_runtime_source_fragments",
+            [],
+        )
     except (DashboardContractError, FileNotFoundError, KeyError):
         app_value = "streamlit_app.py"
         prohibited = []
@@ -1320,19 +1859,52 @@ def audit_streamlit_source(
             observed=present,
             passed=not present,
         )
+    external_font_fragments = (
+        "fonts.googleapis.com",
+        "fonts.gstatic.com",
+        "@import url(http",
+    )
+    observed_external_fonts = [
+        fragment
+        for fragment in external_font_fragments
+        if fragment in source.casefold()
+    ]
+    _check(
+        records,
+        stage="application_boundaries",
+        check_id="no_external_font_or_css_cdn",
+        description="Application styling is self-contained and starts without a font/CDN request",
+        expected=[],
+        observed=observed_external_fonts,
+        passed=not observed_external_fonts,
+    )
+
     writes: list[str] = []
     if tree is not None:
-        forbidden = {
-            "to_csv", "to_json", "to_parquet", "write_text", "write_bytes",
-            "mkdir", "makedirs", "remove", "unlink", "rename",
+        unconditional_writes = {
+            "write_text", "write_bytes", "mkdir", "makedirs", "remove",
+            "unlink", "rename",
         }
+        dataframe_serializers = {"to_csv", "to_json", "to_parquet"}
         for node in ast.walk(tree):
             if not isinstance(node, ast.Call):
                 continue
             name = node.func.attr if isinstance(node.func, ast.Attribute) else (
                 node.func.id if isinstance(node.func, ast.Name) else ""
             )
-            if name in forbidden:
+            is_write = name in unconditional_writes
+            if name in dataframe_serializers:
+                path_keywords = {"path_or_buf", "path", "buf"}
+                has_path_keyword = any(
+                    keyword.arg in path_keywords
+                    and not (
+                        isinstance(keyword.value, ast.Constant)
+                        and keyword.value.value is None
+                    )
+                    for keyword in node.keywords
+                )
+                is_write = bool(node.args) or has_path_keyword
+            if is_write:
                 writes.append(f"{name}@{getattr(node, 'lineno', '?')}")
     _check(
         records,
@@ -1356,13 +1928,15 @@ def configuration_checksum(project_root: str | Path | None = None) -> str:
 __all__ = [
     "ALL_ROOM_IDS", "CHILD_ROOM_ID", "DASHBOARD_APPLICATION_VERSION",
     "DASHBOARD_PACKAGE_SCHEMA_VERSION", "DASHBOARD_RUNTIME_MANIFEST_SCHEMA_VERSION",
-    "DASHBOARD_VALIDATION_CONFIG_SCHEMA_VERSION", "DashboardBundle",
+    "DASHBOARD_VALIDATION_CONFIG_SCHEMA_VERSION", "GENERAL_DYNAMIC_NUMERIC_PARITY",
+    "DashboardBundle",
     "DashboardContractError", "DashboardPackage", "DashboardSelection",
-    "DashboardSelectionError", "PRINCIPAL_ROOM_IDS", "audit_dashboard_package",
+    "DashboardSelectionError", "PRINCIPAL_ROOM_IDS", "ResolvedDisplayPayload",
+    "TypedDisplayRecord", "audit_dashboard_package",
     "audit_indexed_paths", "audit_streamlit_source", "case_visual_paths",
     "configuration_checksum", "default_case_rows", "display_label", "filter_frame",
     "json_list", "load_dashboard_package", "load_dashboard_validation_config",
     "open_dashboard_package", "report_bytes", "required_input_paths",
-    "safe_project_path", "stable_options", "truthy", "validate_selection",
+    "resolve_display_payload", "safe_project_path", "stable_options", "truthy", "validate_selection",
     "validate_input_path_templates",
 ]

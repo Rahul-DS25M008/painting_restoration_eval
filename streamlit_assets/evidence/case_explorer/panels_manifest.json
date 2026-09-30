@@ -1,0 +1,39 @@
+{
+  "schema": "case_explorer_saved_panels.v1",
+  "sources": [
+    {
+      "path": "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels",
+      "sha256": "226c15b618afdc9eb60050eb59f68edb698496c21b4c26779a736fb5181a0897"
+    },
+    {
+      "path": "outputs/29_explainable_ai_and_case_retrieval/figures/example_retrieval_panels",
+      "sha256": "f5d036698a186dab1284c0172a498b1a0e01edf1980db5ca18c146beec33896e"
+    }
+  ],
+  "panels": {
+    "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels/cf_cross_model_01.png": "bfab971e9d82e5ee6f40382a52019da0e6aea8482a746df643208220df1af4ce",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels/cf_cross_model_02.png": "696b63d397e187cdec9c84f851f90572e8c665d83603765d4cc64e0d1eb65fe4",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels/cf_damage_size_01.png": "cc209b6c7e86bc0c8af771d7e9749aefe17c26e3359b33347cb036eeef5bc62a",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels/cf_damage_size_02.png": "c15c37fb41bd5c1b2ac69a93a791fbbe50fab7ac7554a7f157de51e6dfd65905",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels/cf_diffusion_seed_01.png": "a997476148d08e0d50515a7a348dcba1119b79c0b45fd4e90b4c0bf25b7a10c9",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels/cf_diffusion_seed_02.png": "2a3d450e67a5f9c90a05eaff934ea208da44e99560e1d61a1a587cb50d31f0ec",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels/cf_evidence_family_removal_01.png": "bb6e1d1dadd195b4297200fff84bcbe1cfd97f85ced85e5e4c56f558f023247b",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels/cf_evidence_family_removal_02.png": "55ad8750a97ef19f466742a40303dfa55d50eccc70d36a195775ee03c884164c",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels/cf_mask_placement_01.png": "a5564778a286abf0074c70765d3a159f4ca8f898f5bdb6f949adc7acdac4417f",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels/cf_mask_placement_02.png": "bc2f436ac063d7a558fe9bf212c44e493e43b743530f0127a4dbf78e17e38b02",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels/cf_metric_subset_01.png": "c279a5d13c6b3331bb6ac7c293f5b76a562d6a7b8ef4faceb6b1f37bff50e593",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels/cf_metric_subset_02.png": "e9022f1b8ad364c7ab2d69ced0ce092af400af04e1c9e856dc7e2bb8d8e00256",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels/cf_prompt_policy_01.png": "676b47aced86f067106db1c2d3e6500858769738c36a5d32fa13e7e45a8f76be",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/counterfactual_panels/cf_prompt_policy_02.png": "042db7c5bcda4ef322e89cd6b463d073b87f495e83e7ef9ea5c9441647176831",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/example_retrieval_panels/query_01_portrait_figure_lower_risk.png": "c006ab46251225f08bde2a309053d16dadf9183d4170a7bd97ce2482b77a8da1",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/example_retrieval_panels/query_02_portrait_figure_flagged.png": "30523febbe7e12f987185f06a727836412c46e156ca3cb14fb3f98a0fe3bb2a1",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/example_retrieval_panels/query_03_landscape_natural_lower_risk.png": "5acbc5f5578c4ec3c33d98218f4c1a65e7e3e02cbb2f4a4ae8535de0493c5b3a",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/example_retrieval_panels/query_04_landscape_natural_flagged.png": "0a3d8336fdc42477f4165f6e0ed17a09cefd36d73b03c3d0e0e5bec93f113fc8",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/example_retrieval_panels/query_05_architecture_structured_lower_risk.png": "31803ef5783c27c5787a4d8864b6ba09083e205b4070bef69ededa5efec28b68",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/example_retrieval_panels/query_06_architecture_structured_flagged.png": "52817e30ecbabf7bbb9db198ece05837e8e6f003b7f8c5b70feb68efb9cc7d53",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/example_retrieval_panels/query_07_high_texture_brushwork_lower_risk.png": "812b88a5f362de87cbf2acb483b149f021eea977e4f5e583abe2f1482e38a6af",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/example_retrieval_panels/query_08_high_texture_brushwork_flagged.png": "eaea8ef437aaa64d5dd01e19cf0339304603f087879930dacf5f96707ef856b7",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/example_retrieval_panels/query_09_abstraction_surrealism_lower_risk.png": "b2bda17c28c5a337810562a19bda476b25336c7602552f9c6f2a18bcc4e89567",
+    "outputs/29_explainable_ai_and_case_retrieval/figures/example_retrieval_panels/query_10_abstraction_surrealism_flagged.png": "5ca00afb8e2552d70f8c343f3a96e68a60da42006576fcb3d5fd7a88bfe18a62"
+  }
+}

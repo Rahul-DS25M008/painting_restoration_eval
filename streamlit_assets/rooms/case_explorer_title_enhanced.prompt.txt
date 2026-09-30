@@ -1,0 +1,8 @@
+Built-in image_gen edit, 2026-09-30.
+Input: streamlit_assets/rooms/case_explorer_lettering.png
+Output: streamlit_assets/rooms/case_explorer_title_enhanced.png
+Only the normalized title window (612,115,450,64) is displayed.
+The returned image is 1668 x 943: this is a visual sharpening pass, not a verified 25% increase in pixel resolution.
+
+Prompt:
+Precise image enhancement, not redesign. Edit the supplied museum room reference. Improve clarity/resolution of ONLY the top-center title block by approximately 25%, recovering crisp serif letter edges with subtle sharpening, no halos. Text exactly: "Case Explorer" / "What evidence supports this restoration conclusion?" / "Follow one restoration from controlled damage to measurements, warnings and source records." Preserve exact position, scale, typography, line breaks, wall texture and colors. Keep the full 1672:941 image framing unchanged and return at higher resolution, approximately 2090x1176 or larger. Every other element stays unchanged. Only the title region will be used in the website; do not alter the spelling or add text.
