@@ -1,0 +1,768 @@
+{
+  "scope": "Model Gallery steps 1-2 only",
+  "default_case": "canonical__p018__mixed_damage",
+  "models": {
+    "opencv_telea": {
+      "scheduled_rows": 2620,
+      "completed_candidates": 2620,
+      "primary_rows": 2620,
+      "primary_cases": 2620,
+      "duplicate_primary_cases": 0,
+      "status_counts": {
+        "completed": 2620
+      },
+      "missing_outputs": [],
+      "inventory": "outputs/09_opencv_telea_restoration/data/restorations.csv",
+      "default_rows": 1
+    },
+    "lama": {
+      "scheduled_rows": 2620,
+      "completed_candidates": 2620,
+      "primary_rows": 2620,
+      "primary_cases": 2620,
+      "duplicate_primary_cases": 0,
+      "status_counts": {
+        "completed": 2620
+      },
+      "missing_outputs": [],
+      "inventory": "outputs/10_lama_restoration/data/restorations.csv",
+      "default_rows": 1
+    },
+    "hint_places2": {
+      "scheduled_rows": 2620,
+      "completed_candidates": 2620,
+      "primary_rows": 2620,
+      "primary_cases": 2620,
+      "duplicate_primary_cases": 0,
+      "status_counts": {
+        "completed": 2620
+      },
+      "missing_outputs": [],
+      "inventory": "outputs/12a_hint_restoration/data/restorations.csv",
+      "default_rows": 1
+    },
+    "stable_diffusion_inpainting": {
+      "scheduled_rows": 8520,
+      "completed_candidates": 8520,
+      "primary_rows": 2620,
+      "primary_cases": 2620,
+      "duplicate_primary_cases": 0,
+      "status_counts": {
+        "completed": 8520
+      },
+      "missing_outputs": [],
+      "inventory": "outputs/11_stable_diffusion_restoration/data/candidates.csv",
+      "default_rows": 1
+    },
+    "sdxl_inpainting": {
+      "scheduled_rows": 35,
+      "completed_candidates": 24,
+      "primary_rows": 24,
+      "primary_cases": 24,
+      "duplicate_primary_cases": 0,
+      "status_counts": {
+        "completed": 24,
+        "skipped": 10,
+        "timed_out": 1
+      },
+      "missing_outputs": [],
+      "inventory": "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv",
+      "failure_types": {
+        "none": 24,
+        "skipped_after_guardrail": 10,
+        "runtime_guardrail": 1
+      },
+      "completed_paintings": 19,
+      "default_rows": 1
+    }
+  },
+  "default_assets": [
+    {
+      "model_id": "opencv_telea",
+      "candidate_id": "candidate__opencv_telea__canonical__p018__mixed_damage__c00",
+      "path": "outputs/09_opencv_telea_restoration/images/restored/canonical_missing_region/canonical__p018__mixed_damage.png",
+      "size": [
+        768,
+        768
+      ],
+      "sha256_matches": true,
+      "seed": null,
+      "prompt_variant_id": null,
+      "configuration_id": "opencv_telea_r3_threshold_policy_v1"
+    },
+    {
+      "model_id": "lama",
+      "candidate_id": "candidate__lama__canonical__p018__mixed_damage__c00",
+      "path": "outputs/10_lama_restoration/images/restored/canonical_missing_region/canonical__p018__mixed_damage.png",
+      "size": [
+        768,
+        768
+      ],
+      "sha256_matches": true,
+      "seed": null,
+      "prompt_variant_id": null,
+      "configuration_id": "lama_iopaint_masked_composite_v1"
+    },
+    {
+      "model_id": "hint_places2",
+      "candidate_id": "candidate__hint_places2__canonical__p018__mixed_damage__c00",
+      "path": "outputs/12a_hint_restoration/images/restored/canonical_missing_region/canonical__p018__mixed_damage.png",
+      "size": [
+        768,
+        768
+      ],
+      "sha256_matches": true,
+      "seed": 2026,
+      "prompt_variant_id": null,
+      "configuration_id": "hint_places2_native_768_exact_composite_v1"
+    },
+    {
+      "model_id": "stable_diffusion_inpainting",
+      "candidate_id": "sd15__p00__s2026__d0cd65cf894a",
+      "path": "outputs/11_stable_diffusion_restoration/images/restored/canonical_missing_region/canonical__p018__mixed_damage/sd15__p00__s2026__d0cd65cf894a.png",
+      "size": [
+        768,
+        768
+      ],
+      "sha256_matches": true,
+      "seed": 2026,
+      "prompt_variant_id": "p00_generic",
+      "configuration_id": "sd15_inpaint_fixed_policy_v1"
+    },
+    {
+      "model_id": "sdxl_inpainting",
+      "candidate_id": "sdxl__5d3f1bc4bed2__p00_generic__seed2026",
+      "path": "outputs/12_sdxl_feasibility_or_restoration/images/restored/canonical_missing_region/canonical__p018__mixed_damage/sdxl__5d3f1bc4bed2__p00_generic__seed2026.png",
+      "size": [
+        768,
+        768
+      ],
+      "sha256_matches": true,
+      "seed": 2026,
+      "prompt_variant_id": "p00_generic",
+      "configuration_id": "sdxl_quality_preserving_partial_evaluation_v1"
+    },
+    {
+      "role": "reference",
+      "path": "outputs/02_image_preprocessing/images/clean/p018.png",
+      "size": [
+        768,
+        768
+      ],
+      "sha256": "3e223322b3ca2c6f52ebe54a266991be897dd8d6c670ad52393f3262e15574ac"
+    },
+    {
+      "role": "damaged",
+      "path": "outputs/04_canonical_damaged_image_generation/images/damaged/p018/mixed_damage.png",
+      "size": [
+        768,
+        768
+      ],
+      "sha256": "bb2cf0fa259c7fe58a959ad95f140bd37c64ecdf2c9f8c3b62970e38a9e14a98"
+    },
+    {
+      "role": "mask",
+      "path": "outputs/03_canonical_mask_generation/images/masks/p018/mixed_damage.png",
+      "size": [
+        768,
+        768
+      ],
+      "sha256": "d9be90cd5aa17e353c4ade7ade1448ff575c846f7e56f7669642e4e7a9b41163"
+    }
+  ],
+  "issues": [
+    "N34 room partition contains 12 display-contract records, not a ready all-painting selector catalogue; join producer tables in step 3.",
+    "Crop SSIM and most quality anchors exclude empty-mask zero controls; keep unavailable evidence disabled, never fabricate a value.",
+    "Legacy population_id core_three_model contains four model IDs; do not expose that internal name as a three-method claim.",
+    "SDXL availability must use exact case_id, not painting_id alone.",
+    "Static reference side inscription A CLEARER PAST conflicts with the historical-truth boundary; use approved cautious copy at implementation.",
+    "Only default exact assets have N34 registered renditions/locators; verify broader selection transport at the later deployment pass."
+  ],
+  "common_four_method_cases": 2620,
+  "same_case_sets": true,
+  "selector_paintings": 300,
+  "case_groups": {
+    "canonical_missing_region": 1500,
+    "damage_size_sensitivity": 245,
+    "mask_robustness": 525,
+    "synthetic_degradation": 350
+  },
+  "default_sd_identity": [
+    {
+      "candidate_id": "sd15__p00__s2026__d0cd65cf894a",
+      "seed": 2026,
+      "prompt_variant_id": "p00_generic",
+      "prompt": "a complete aged fine-art painting with seamless visual continuity, coherent composition, and a consistent colour palette, brushwork, canvas texture, lighting, and level of detail",
+      "input_image_path": "outputs/04_canonical_damaged_image_generation/images/damaged/p018/mixed_damage.png",
+      "clean_image_path": "outputs/02_image_preprocessing/images/clean/p018.png",
+      "mask_or_effect_path": "outputs/03_canonical_mask_generation/images/masks/p018/mixed_damage.png"
+    }
+  ],
+  "missing_selector_sources": {
+    "input_image_path": [],
+    "clean_image_path": [],
+    "mask_or_effect_path": []
+  },
+  "crop_ssim_coverage": {
+    "hint_places2": {
+      "ok": 2320
+    },
+    "lama": {
+      "ok": 2320
+    },
+    "opencv_telea": {
+      "ok": 2320
+    },
+    "sdxl_inpainting": {
+      "ok": 24
+    },
+    "stable_diffusion_inpainting": {
+      "ok": 8220
+    }
+  },
+  "default_crop_ssim": [
+    {
+      "candidate_id": "candidate__hint_places2__canonical__p018__mixed_damage__c00",
+      "model_id": "hint_places2",
+      "damaged_value": 0.8827221511372411,
+      "restored_value": 0.948996245581459,
+      "status": "ok"
+    },
+    {
+      "candidate_id": "candidate__lama__canonical__p018__mixed_damage__c00",
+      "model_id": "lama",
+      "damaged_value": 0.8827221511372411,
+      "restored_value": 0.9685581155347864,
+      "status": "ok"
+    },
+    {
+      "candidate_id": "candidate__opencv_telea__canonical__p018__mixed_damage__c00",
+      "model_id": "opencv_telea",
+      "damaged_value": 0.8827221511372411,
+      "restored_value": 0.9615461427377152,
+      "status": "ok"
+    },
+    {
+      "candidate_id": "sdxl__5d3f1bc4bed2__p00_generic__seed2026",
+      "model_id": "sdxl_inpainting",
+      "damaged_value": 0.8827221511372411,
+      "restored_value": 0.8919057218642528,
+      "status": "ok"
+    },
+    {
+      "candidate_id": "sd15__p00__s2026__d0cd65cf894a",
+      "model_id": "stable_diffusion_inpainting",
+      "damaged_value": 0.8827221511372411,
+      "restored_value": 0.932025893838095,
+      "status": "ok"
+    }
+  ],
+  "default_classical_evidence_options": [
+    {
+      "metric": "mae",
+      "region": "boundary_ring",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "mae",
+      "region": "content_region",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "mae",
+      "region": "full_image",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "mae",
+      "region": "inner_boundary_band",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "mae",
+      "region": "mask_bbox_crop",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "mae",
+      "region": "masked_region",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "mae",
+      "region": "outer_boundary_band",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "mae",
+      "region": "outside_boundary_ring",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "mae",
+      "region": "outside_mask_content",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "mse",
+      "region": "boundary_ring",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "mse",
+      "region": "content_region",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "mse",
+      "region": "full_image",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "mse",
+      "region": "inner_boundary_band",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "mse",
+      "region": "mask_bbox_crop",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "mse",
+      "region": "masked_region",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "mse",
+      "region": "outer_boundary_band",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "mse",
+      "region": "outside_boundary_ring",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "mse",
+      "region": "outside_mask_content",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "psnr",
+      "region": "boundary_ring",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "psnr",
+      "region": "content_region",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "psnr",
+      "region": "full_image",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "psnr",
+      "region": "inner_boundary_band",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "psnr",
+      "region": "mask_bbox_crop",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "psnr",
+      "region": "masked_region",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "psnr",
+      "region": "outer_boundary_band",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "psnr",
+      "region": "outside_boundary_ring",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "psnr",
+      "region": "outside_mask_content",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "ssim",
+      "region": "content_region",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "ssim",
+      "region": "full_image",
+      "status": "ok",
+      "rows": 5
+    },
+    {
+      "metric": "ssim",
+      "region": "mask_bbox_crop",
+      "status": "ok",
+      "rows": 5
+    }
+  ],
+  "overall_anchor_rows": [
+    {
+      "anchor_id": "classical_masked_mae",
+      "winner_model_id": "lama",
+      "model_rank_order": "lama|opencv_telea|hint_places2|stable_diffusion_inpainting",
+      "eligible_case_count": 2320,
+      "eligible_painting_count": 300
+    },
+    {
+      "anchor_id": "colour_masked_delta_e",
+      "winner_model_id": "lama",
+      "model_rank_order": "lama|opencv_telea|hint_places2|stable_diffusion_inpainting",
+      "eligible_case_count": 2320,
+      "eligible_painting_count": 300
+    },
+    {
+      "anchor_id": "feature_clip_crop",
+      "winner_model_id": "lama",
+      "model_rank_order": "lama|stable_diffusion_inpainting|hint_places2|opencv_telea",
+      "eligible_case_count": 2320,
+      "eligible_painting_count": 300
+    },
+    {
+      "anchor_id": "feature_dino_crop",
+      "winner_model_id": "lama",
+      "model_rank_order": "lama|stable_diffusion_inpainting|hint_places2|opencv_telea",
+      "eligible_case_count": 2320,
+      "eligible_painting_count": 300
+    },
+    {
+      "anchor_id": "perceptual_crop_lpips",
+      "winner_model_id": "lama",
+      "model_rank_order": "lama|hint_places2|stable_diffusion_inpainting|opencv_telea",
+      "eligible_case_count": 2320,
+      "eligible_painting_count": 300
+    },
+    {
+      "anchor_id": "seam_boundary_gradient",
+      "winner_model_id": "lama",
+      "model_rank_order": "lama|opencv_telea|hint_places2|stable_diffusion_inpainting",
+      "eligible_case_count": 2320,
+      "eligible_painting_count": 300
+    },
+    {
+      "anchor_id": "semantic_local_dino",
+      "winner_model_id": "lama",
+      "model_rank_order": "lama|hint_places2|stable_diffusion_inpainting|opencv_telea",
+      "eligible_case_count": 2320,
+      "eligible_painting_count": 300
+    },
+    {
+      "anchor_id": "spatial_masked_error",
+      "winner_model_id": "lama",
+      "model_rank_order": "lama|opencv_telea|hint_places2|stable_diffusion_inpainting",
+      "eligible_case_count": 2320,
+      "eligible_painting_count": 300
+    },
+    {
+      "anchor_id": "structural_affinity_correlation",
+      "winner_model_id": "lama",
+      "model_rank_order": "lama|hint_places2|stable_diffusion_inpainting|opencv_telea",
+      "eligible_case_count": 2620,
+      "eligible_painting_count": 300
+    },
+    {
+      "anchor_id": "structural_crop_ssim",
+      "winner_model_id": "opencv_telea",
+      "model_rank_order": "opencv_telea|lama|hint_places2|stable_diffusion_inpainting",
+      "eligible_case_count": 2320,
+      "eligible_painting_count": 300
+    },
+    {
+      "anchor_id": "texture_crop_p95",
+      "winner_model_id": "lama",
+      "model_rank_order": "lama|opencv_telea|hint_places2|stable_diffusion_inpainting",
+      "eligible_case_count": 2320,
+      "eligible_painting_count": 300
+    }
+  ],
+  "model_cards": [
+    {
+      "model_id": "opencv_telea",
+      "evaluated_case_count": 2620,
+      "completed_count": 2620,
+      "median_runtime_seconds": 0.519019749990548,
+      "software_license": "Apache-2.0",
+      "weight_license": "not_applicable_no_model_weights"
+    },
+    {
+      "model_id": "lama",
+      "evaluated_case_count": 2620,
+      "completed_count": 2620,
+      "median_runtime_seconds": 1.4508836346666552,
+      "software_license": "Apache-2.0_method_and_runtime_code",
+      "weight_license": "not_separately_verified_in_project_sources"
+    },
+    {
+      "model_id": "hint_places2",
+      "evaluated_case_count": 2620,
+      "completed_count": 2620,
+      "median_runtime_seconds": 6.677,
+      "software_license": "MIT",
+      "weight_license": "not_separately_verified_in_project_sources"
+    },
+    {
+      "model_id": "stable_diffusion_inpainting",
+      "evaluated_case_count": 2620,
+      "completed_count": 8520,
+      "median_runtime_seconds": 8.620315949985525,
+      "software_license": "CreativeML-OpenRAIL-M",
+      "weight_license": "CreativeML-OpenRAIL-M"
+    },
+    {
+      "model_id": "sdxl_inpainting",
+      "evaluated_case_count": 35,
+      "completed_count": 24,
+      "median_runtime_seconds": 198.0315,
+      "software_license": "CreativeML-OpenRAIL++-M",
+      "weight_license": "CreativeML-OpenRAIL++-M"
+    }
+  ],
+  "full_reports": [
+    {
+      "model_id": "opencv_telea",
+      "path": "outputs/31_model_report_generation/reports/opencv_telea.html",
+      "exists": true,
+      "sha256_matches": true
+    },
+    {
+      "model_id": "lama",
+      "path": "outputs/31_model_report_generation/reports/lama.html",
+      "exists": true,
+      "sha256_matches": true
+    },
+    {
+      "model_id": "hint_places2",
+      "path": "outputs/31_model_report_generation/reports/hint_places2.html",
+      "exists": true,
+      "sha256_matches": true
+    },
+    {
+      "model_id": "stable_diffusion_inpainting",
+      "path": "outputs/31_model_report_generation/reports/stable_diffusion_inpainting.html",
+      "exists": true,
+      "sha256_matches": true
+    },
+    {
+      "model_id": "sdxl_inpainting",
+      "path": "outputs/31_model_report_generation/reports/sdxl_inpainting.html",
+      "exists": true,
+      "sha256_matches": true
+    }
+  ],
+  "hint_decision": {
+    "schema_version": "hint_mat_selection_decision.v1",
+    "notebook_id": "37",
+    "notebook_stem": "37_hint_mat_method_selection",
+    "experiment_id": "hint_mat_method_selection",
+    "decision_status": "selected",
+    "selected_method": "hint",
+    "selected_model_id": "hint_places2",
+    "selected_model_label": "HINT",
+    "rejected_model_id": "mat_places_512_fulldata",
+    "rejected_model_label": "MAT",
+    "decision_owner": "researcher",
+    "decision_recorded_at_utc": "2026-09-06T02:12:12.204704Z",
+    "pilot_scope": {
+      "paintings": 5,
+      "cases": 12,
+      "candidates": 24,
+      "damage_families": 4,
+      "visual_categories": 5
+    },
+    "paired_evidence": {
+      "separate_anchor_count": 9,
+      "paired_comparison_count": 108,
+      "hint_case_anchor_wins": 96,
+      "mat_case_anchor_wins": 6,
+      "ties": 6,
+      "combined_score_constructed": false
+    },
+    "human_visual_assessment": [
+      "HINT removed thin scratches more cleanly and retained stronger local continuity.",
+      "MAT frequently retained thin lines or introduced pale fragmented structures.",
+      "HINT remained imperfect on some large and mixed losses."
+    ],
+    "selection_rationale": [
+      "HINT won all twelve paired cases on eight of the nine selected anchors.",
+      "Its advantage covered reference, perceptual, feature, colour, texture and boundary evidence.",
+      "HINT completed all cases at native 768 by 768 resolution.",
+      "HINT's MIT software license is simpler for continued research reuse."
+    ],
+    "limitations": [
+      "The purposive twelve-case pilot supports method selection, not a fourth full-benchmark claim.",
+      "Cases are nested within five paintings; painting is the independent unit.",
+      "Both released checkpoints are trained on photographic scene data rather than paintings.",
+      "The HINT 512 fallback and MAT 512 adapter introduce resampling into a 768-pixel benchmark.",
+      "Exact-mask compositing preserves observed pixels but can expose boundary mismatch.",
+      "Metrics are complementary diagnostic evidence; no universal quality or trustworthiness score is constructed.",
+      "Human visual review is required and may select neither method.",
+      "MAT carries a noncommercial research license; deployment or broader reuse requires license review.",
+      "Selection for expansion does not make HINT a conservation-approved method."
+    ],
+    "future_benchmark_role": "Selected additional learned inpainting method for the planned 300-painting expansion."
+  },
+  "hint_decision_files": [
+    "outputs/37_hint_mat_method_selection/metrics/decision_scorecard.csv",
+    "outputs/37_hint_mat_method_selection/reports/method_selection_report.html"
+  ],
+  "n34_room_records": 12,
+  "n34_bindings": [
+    {
+      "display_id": "models.anchor.input",
+      "slot_id": "models.anchor.input",
+      "payload_ref": "data/rooms/model_gallery.parquet#display_id=models.anchor.input",
+      "applicability_state": "available"
+    },
+    {
+      "display_id": "models.anchor.input",
+      "slot_id": "models.anchor.input:damaged",
+      "payload_ref": "asset:asset_719d76fbfd3cc7b1f3609b8d",
+      "applicability_state": "available"
+    },
+    {
+      "display_id": "models.anchor.input",
+      "slot_id": "models.anchor.input:mask",
+      "payload_ref": "asset:asset_0f72043d83c87782812e33c3",
+      "applicability_state": "available"
+    },
+    {
+      "display_id": "models.output.telea",
+      "slot_id": "models.output.telea",
+      "payload_ref": "data/rooms/model_gallery.parquet#display_id=models.output.telea",
+      "applicability_state": "available"
+    },
+    {
+      "display_id": "models.output.telea",
+      "slot_id": "models.output.telea:telea",
+      "payload_ref": "asset:asset_fba2feeee96655d14989710a",
+      "applicability_state": "available"
+    },
+    {
+      "display_id": "models.output.lama",
+      "slot_id": "models.output.lama",
+      "payload_ref": "data/rooms/model_gallery.parquet#display_id=models.output.lama",
+      "applicability_state": "available"
+    },
+    {
+      "display_id": "models.output.lama",
+      "slot_id": "models.output.lama:lama",
+      "payload_ref": "asset:asset_0b881fb2b09b7b805308cb18",
+      "applicability_state": "available"
+    },
+    {
+      "display_id": "models.output.hint",
+      "slot_id": "models.output.hint",
+      "payload_ref": "data/rooms/model_gallery.parquet#display_id=models.output.hint",
+      "applicability_state": "available"
+    },
+    {
+      "display_id": "models.output.hint",
+      "slot_id": "models.output.hint:hint",
+      "payload_ref": "asset:asset_121b75bc57d983ebdf7fd8c1",
+      "applicability_state": "available"
+    },
+    {
+      "display_id": "models.output.sd15",
+      "slot_id": "models.output.sd15",
+      "payload_ref": "data/rooms/model_gallery.parquet#display_id=models.output.sd15",
+      "applicability_state": "available"
+    },
+    {
+      "display_id": "models.output.sd15",
+      "slot_id": "models.output.sd15:sd15",
+      "payload_ref": "asset:asset_c4029ecd1d1d3c5fd5036d8c",
+      "applicability_state": "available"
+    },
+    {
+      "display_id": "models.output.sdxl",
+      "slot_id": "models.output.sdxl",
+      "payload_ref": "data/rooms/model_gallery.parquet#display_id=models.output.sdxl",
+      "applicability_state": "conditional"
+    },
+    {
+      "display_id": "models.output.sdxl",
+      "slot_id": "models.output.sdxl:sdxl",
+      "payload_ref": "asset:asset_e359abeb76ec8d64544acceb",
+      "applicability_state": "conditional"
+    },
+    {
+      "display_id": "models.records",
+      "slot_id": "models.records",
+      "payload_ref": "data/reports/index.json.gz#display_id=models.records",
+      "applicability_state": "available"
+    },
+    {
+      "display_id": "models.conclusion.anchors",
+      "slot_id": "models.conclusion.anchors",
+      "payload_ref": "data/rooms/model_gallery.parquet#display_id=models.conclusion.anchors",
+      "applicability_state": "available"
+    },
+    {
+      "display_id": "models.runtime",
+      "slot_id": "models.runtime",
+      "payload_ref": "data/rooms/model_gallery.parquet#display_id=models.runtime",
+      "applicability_state": "available"
+    },
+    {
+      "display_id": "models.sdxl.coverage",
+      "slot_id": "models.sdxl.coverage",
+      "payload_ref": "data/rooms/model_gallery.parquet#display_id=models.sdxl.coverage",
+      "applicability_state": "available"
+    },
+    {
+      "display_id": "models.hint.decision",
+      "slot_id": "models.hint.decision",
+      "payload_ref": "data/rooms/model_gallery.parquet#display_id=models.hint.decision",
+      "applicability_state": "available"
+    },
+    {
+      "display_id": "models.case.metric",
+      "slot_id": "models.case.metric",
+      "payload_ref": "data/rooms/model_gallery.parquet#display_id=models.case.metric",
+      "applicability_state": "available"
+    }
+  ]
+}

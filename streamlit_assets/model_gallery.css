@@ -1,0 +1,177 @@
+.model-stage { position:relative; width:min(100%,calc((100dvh - 16px) * 1.776833)); max-width:1920px; aspect-ratio:1672/941; margin:0 auto; background-size:100% 100%; container-type:inline-size; color:#251e14; font-family:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif; isolation:isolate; }
+.model-stage * {box-sizing:border-box}
+.model-stage button,.model-stage select {font:inherit;color:inherit;cursor:pointer}
+.model-stage button {background:none;border:0;padding:0}
+.model-stage button:focus-visible,.model-stage select:focus-visible {outline:2px solid #088ca1;outline-offset:3px}
+.model-stage .museum-nav a {text-decoration:none!important;font-weight:400!important}
+.model-stage .museum-mark img,.model-stage .museum-search img {width:100%;height:100%}
+.gallery-heading {position:absolute;left:25%;top:12.7%;width:50%;text-align:center}
+.gallery-heading h1 {font:700 3cqw/1.05 "Palatino Linotype",Georgia,serif;margin:0!important;padding:0!important;color:#17130e!important;letter-spacing:-.08cqw}
+.gallery-heading h2 {font:400 1.65cqw/1.15 "Palatino Linotype",Georgia,serif;margin:.1cqw -10% .4cqw!important;padding:0!important;color:#241c11!important}
+.gallery-heading p {font-size:1.04cqw;line-height:1.12;margin:0}
+.gallery-method-title {position:absolute;z-index:3;text-align:center;color:#ecd69b!important;line-height:1.04;filter:drop-shadow(0 1px 1px #241203)}
+.gallery-method-title strong {display:block;font-weight:400;font-size:1.8cqw}
+.gallery-method-title span {display:block;font-size:1.05cqw;margin-top:.25cqw}
+.gallery-method-title[aria-pressed=true] strong {color:#fff2c6;text-shadow:0 0 .6cqw #f9d078}
+.method-0 {left:10%;top:28.1%;width:11.3%;transform:rotate(4deg)}
+.method-1 {left:28.3%;top:31%;width:11.4%;transform:rotate(1deg)}
+.method-2 {left:60.1%;top:31.6%;width:12.5%;transform:rotate(-1.8deg)}
+.method-2 span {font-size:.85cqw}
+.method-3 {left:79.5%;top:29.1%;width:12.8%;transform:rotate(-4deg)}
+.gallery-projected {position:absolute;top:0;left:0;width:768px;height:768px;transform-origin:0 0;visibility:hidden;overflow:hidden;z-index:2;line-height:0}
+.gallery-projected img {display:block;width:100%;height:100%;object-fit:fill}
+.gallery-projected[aria-pressed=true] {box-shadow:inset 0 0 0 7px #efd99b}
+.gallery-projected[aria-pressed=true]::after {content:"";position:absolute;inset:0;border:5px solid #e0c17499;pointer-events:none}
+.gallery-case-caption {position:absolute;left:43.2%;top:55.3%;width:13.5%;height:2.4%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:.69cqw;line-height:1.05;overflow:hidden;padding:0 .25cqw}
+.gallery-model-plaque {position:absolute;left:48.15%;top:64.7%;width:14.35%;height:13.7%;transform:skewX(4deg);font-size:.83cqw;line-height:1.08;color:#241a0d}
+.gallery-model-plaque h3 {font:700 1.52cqw/1.02 "Palatino Linotype",Georgia,serif;margin:0 0 .2cqw!important;padding:0!important;color:inherit!important}
+.gallery-model-plaque p {font-size:inherit;line-height:inherit;margin:.12cqw 0}
+.gallery-model-plaque button {border:1px solid #725536;padding:.12cqw .45cqw;border-radius:.2cqw;margin:.15cqw 0;font-size:.84cqw}
+.gallery-model-plaque small {font-size:.6cqw;display:block}
+.gallery-hint-book {position:absolute;left:66.6%;top:68.9%;width:7.5%;height:7.2%;color:#ebce96!important;font-size:1cqw!important;line-height:1.12;transform:rotate(2deg) skewX(-5deg)}
+.gallery-hint-book span {display:block;font-size:.55cqw;margin-top:.6cqw}
+.gallery-drawer {position:absolute;top:81.8%;height:4.5%;font-size:.95cqw;line-height:1.05}
+.gallery-painting-drawer {left:28.6%;width:9.3%}.gallery-case-drawer {left:42.4%;width:11.5%}.gallery-evidence-drawer {left:58.35%;width:10.2%}
+.gallery-drawer img {position:absolute;left:0;top:0;width:24%;height:95%;object-fit:fill;border:1px solid #755731}
+.gallery-drawer label {display:block;margin-left:27%;text-align:center;font-size:.88cqw;font-family:inherit}
+.gallery-drawer select {display:block;position:absolute;left:26%;bottom:0;width:77%;height:60%;border:0;border-radius:0;background:transparent;text-align:center;font-size:1cqw;line-height:1;appearance:auto;text-overflow:ellipsis;padding:0 .15cqw;outline-offset:1px}
+.gallery-drawer option,.gallery-drawer optgroup {background:#e2cba7;color:#30271d;font:14px Georgia,serif}
+.gallery-magnifier {position:absolute;left:2%;top:-.6cqw;font:3.2cqw/1 Georgia,serif;color:#665334}
+.gallery-evidence-readout {position:absolute;left:29.8%;top:78.1%;width:15.2%;height:2.2%;text-align:center;color:#ebd098!important;text-shadow:0 1px 2px #000;font-size:.62cqw!important;line-height:1.05}
+.gallery-evidence-readout small {display:block;font-size:.45cqw}
+.gallery-sdxl-plaque {position:absolute;left:79.6%;top:74.2%;width:11.2%;text-align:center;transform:rotate(7deg) skewX(-5deg);font-size:.9cqw;line-height:1.08;color:#342316}
+.gallery-sdxl-plaque span {font-size:.78cqw}.gallery-sdxl-plaque small {font-size:.69cqw}
+.gallery-sdxl-drawer {position:absolute;left:79.8%;top:80.7%;width:10.1%;height:3%;transform:rotate(7deg) skewX(-5deg);font-size:.65cqw!important;line-height:1.05}
+.gallery-vitrine-closed {position:absolute;left:81.4%;top:64.5%;width:10.5%;height:5.5%;transform:rotate(7deg) skewX(-12deg);color:#d6c7af;text-align:center;font-size:.85cqw;line-height:1.2}
+.gallery-vitrine-closed small {font-size:.6cqw}
+.gallery-left-inscription,.gallery-right-inscription,.gallery-left-plinth,.gallery-right-plinth {position:absolute;font-size:.82cqw;line-height:1.43;color:#635440;text-shadow:0 1px 0 #f3dfbc66}
+.gallery-left-inscription {left:2.05%;top:31.5%;transform:skewY(4deg)}.gallery-right-inscription {left:95.1%;top:35.4%;font-size:.72cqw;transform:skewY(-5deg)}
+.gallery-left-plinth {left:3.1%;top:74.5%;transform:rotate(-9deg)}.gallery-right-plinth {left:95%;top:74%;font-size:.72cqw;transform:rotate(6deg)}
+.model-stage .gallery-conclusion {display:block!important;position:absolute;left:30%;top:91%;width:42%;color:#eed59a;text-align:center;font-size:1.28cqw;line-height:1.15;text-shadow:0 1px 2px #190d03;transform:rotate(1deg)}
+.gallery-conclusion span {display:block;font-size:.95cqw;margin-top:.25cqw}.gallery-conclusion small {display:block;font-size:.55cqw;margin-top:.22cqw}
+.gallery-live {position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+.gallery-dialog {position:fixed;inset:0;width:min(1120px,94vw);max-width:94vw;max-height:90vh;margin:auto;padding:20px;border:2px solid #99733f;border-radius:5px;background:#e9d8bb;color:#302619;box-shadow:0 18px 80px #0009;font:15px/1.45 Georgia,serif;z-index:999999;overflow:auto;container-type:normal}
+.gallery-dialog::backdrop {background:#06171bcc;backdrop-filter:blur(4px)}
+.gallery-dialog-top {display:flex;justify-content:space-between;gap:16px;align-items:center;border-bottom:1px solid #967443;padding-bottom:10px;margin-bottom:12px}
+.gallery-dialog h2 {color:#302619!important;font:24px/1.2 Georgia,serif!important;padding:0!important;margin:0!important}
+.gallery-dialog h3 {color:#302619!important;font:19px/1.2 Georgia,serif!important;padding:12px 0 4px!important;margin:0!important}
+.gallery-dialog button,.gallery-dialog a.gallery-report-link {border:1px solid #8b703f;background:#d6bd91;padding:6px 12px;border-radius:3px;font:14px Georgia,serif;color:#302619;cursor:pointer}
+.gallery-dialog button[data-close] {font-size:24px;padding:0 10px}
+.gallery-dialog p {font-size:15px;line-height:1.45;margin:8px 0}
+.gallery-inspection-controls {display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:12px 0}
+.gallery-inspection-controls button[aria-pressed=true] {background:#405647;color:#fff0d3}
+.gallery-inspection-image {display:block;max-width:100%;width:min(65vh,768px);height:auto;margin:12px auto;background:#292720;image-rendering:auto}
+.gallery-dialog table {border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}
+.gallery-dialog td,.gallery-dialog th {border-bottom:1px solid #c2aa83;padding:7px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.gallery-dialog code {font-size:12px;overflow-wrap:anywhere;white-space:normal;color:#554129;background:#dcc8a6}
+.gallery-dialog details {margin:10px 0}.gallery-dialog summary {cursor:pointer;font-weight:bold}
+.gallery-record-grid {display:grid;grid-template-columns:minmax(120px,1fr) 3fr;gap:4px 18px;font-size:13px}
+.gallery-record-grid dt {font-weight:bold}.gallery-record-grid dd {margin:0;overflow-wrap:anywhere}
+.gallery-dialog .gallery-boundary {border-left:3px solid #826132;padding-left:10px;color:#614a2a}
+@media (prefers-reduced-motion:reduce) {.model-stage * {scroll-behavior:auto}}
+
+/* Artwork is a display-only window onto recorded painting content. The outer
+   button is mapped to the inner frame corners; inspection keeps the full canvas. */
+.gallery-projected img {max-width:none;max-height:none}
+.model-stage .gallery-model-plaque,
+.model-stage .gallery-hint-book,
+.model-stage .gallery-sdxl-plaque,
+.model-stage .gallery-sdxl-drawer {left:0;top:0;transform-origin:0 0;font-family:Georgia,"Times New Roman",serif;}
+.model-stage .gallery-model-plaque {font-size:13.2px;line-height:1.04;color:#473322;text-shadow:0 .35px .2px #fff0d066;}
+.model-stage .gallery-model-plaque h3 {font:400 23px/1 Georgia,"Times New Roman",serif;margin:0!important;letter-spacing:-.4px;}
+.model-stage .gallery-model-plaque p {font:400 13.2px/1.04 Georgia,"Times New Roman",serif;margin:0;}
+.model-stage .gallery-model-plaque > button[data-action=record] {font:400 12px/1.1 Georgia,"Times New Roman",serif;padding:1px 6px;margin:2px 0 1px;border-color:#7b634a77;border-radius:3px;}
+.model-stage .gallery-model-plaque > small {font:400 10px/1 Georgia,"Times New Roman",serif;}
+.model-stage .gallery-evidence-readout {position:relative;left:auto;top:auto;width:100%;height:auto;display:block;margin-top:3px;padding-top:3px;border-top:1px solid #98744255;text-align:left;color:#493622!important;text-shadow:0 .3px #fff3d166;font:400 11.7px/1.08 Georgia,"Times New Roman",serif!important;}
+.model-stage .gallery-evidence-readout small {font:italic 9.5px/1 Georgia,"Times New Roman",serif;display:inline;margin-left:5px;}
+.model-stage .gallery-hint-book {font:400 17px/1.17 Georgia,"Times New Roman",serif!important;color:#cdb17d!important;letter-spacing:.05px;text-shadow:0 1px 1px #24170fd9,0 -.35px .2px #f6ddb347;}
+.model-stage .gallery-hint-book span {font:italic 9px/1.1 Georgia,"Times New Roman",serif;letter-spacing:.15px;margin-top:8px;color:#bfa273;}
+.model-stage .gallery-sdxl-plaque {font:400 14.5px/1.12 Georgia,"Times New Roman",serif;color:#533921;text-shadow:0 .4px #ffe6b966;}
+.model-stage .gallery-sdxl-plaque span {font-size:13px;line-height:1.1}.model-stage .gallery-sdxl-plaque small {font-size:12px;line-height:1.1;}
+.model-stage .gallery-sdxl-drawer {font:italic 11.8px/1.12 Georgia,"Times New Roman",serif!important;color:#513922;text-shadow:0 .4px #ffe6b955;}
+.model-stage .gallery-conclusion {left:28.1%;top:90.3%;width:44.9%;height:8.65%;transform:none;line-height:1;margin:0;}
+.model-stage .gallery-conclusion svg {display:block;width:100%;height:100%;overflow:visible;fill:#dfc17e;font-family:Georgia,"Times New Roman",serif;font-weight:400;filter:drop-shadow(0 1px 1px #190d03);}
+
+/* Lettering follows the masonry and brass planes; these rules are gallery-only. */
+.gallery-heading {left:24%;top:10.7%;width:52%;height:14.7%;}
+.gallery-heading svg {display:block;width:100%;height:100%;overflow:visible;fill:#37291d;font-family:Georgia,"Times New Roman",serif;filter:drop-shadow(0 .45px .2px #ffe8c577);}
+.gallery-heading .gallery-accessible-heading {position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%);white-space:nowrap;}
+.model-stage .gallery-method-title {font-family:Georgia,"Times New Roman",serif;line-height:1;transform-origin:center center;}
+.model-stage .gallery-method-title strong {font-size:1.8cqw;line-height:1.04;white-space:nowrap;}
+.model-stage .gallery-method-title span {font-size:.94cqw;line-height:1.1;margin-top:.32cqw;white-space:nowrap;}
+.model-stage .method-0 {left:9.4%;top:27%;width:12%;transform:rotate(5.7deg);}
+.model-stage .method-1 {left:27.8%;top:30.3%;width:12%;transform:rotate(1.3deg);}
+.model-stage .method-2 {left:59.2%;top:30.7%;width:14.5%;transform:rotate(-1deg);}
+.model-stage .method-2 span {font-size:.76cqw;}
+.model-stage .method-3 {left:78.5%;top:28.4%;width:14%;transform:rotate(-3.7deg);}
+.model-stage .gallery-model-plaque {color:#382719;-webkit-text-stroke:.12px currentColor;}
+.model-stage .gallery-sdxl-plaque,.model-stage .gallery-sdxl-drawer {display:flex;align-items:center;justify-content:center;text-align:center;padding:1px 4px;color:#382719;-webkit-text-stroke:.15px currentColor;}
+.model-stage .gallery-sdxl-plaque {line-height:1.02;}
+.model-stage .gallery-sdxl-plaque span,.model-stage .gallery-sdxl-plaque small {line-height:1.02;}
+.model-stage .gallery-sdxl-plaque > div {transform:translateY(-4px);}
+.model-stage .method-2 strong {font-size:1.7cqw;}
+.model-stage .method-2 span {font-size:.67cqw;}
+.model-stage .method-3 strong {font-size:1.64cqw;}
+.model-stage .method-3 span {font-size:.89cqw;}
+.gallery-left-inscription,.gallery-right-inscription,.gallery-left-plinth,.gallery-right-plinth {pointer-events:none;}
+.gallery-left-inscription {left:calc(1.25% - 3px);top:31.1%;width:4.9%;height:14.3%;transform:skewY(8deg);}
+.gallery-right-inscription {left:94.8%;top:35%;width:4.7%;height:12.1%;transform:skewY(-8deg);}
+.gallery-left-plinth {left:2.4%;top:73.8%;width:7.65%;height:10.2%;transform:skewY(-11deg);}
+.gallery-right-plinth {left:94.45%;top:73.9%;width:4.7%;height:10.2%;transform:skewY(10deg);}
+.gallery-stone-engraving {display:block;width:100%;height:100%;object-fit:contain;opacity:.9;mix-blend-mode:multiply;}
+
+/* Conservation dossiers: leather-green rail, parchment folios, brass dividers. */
+.model-stage .gallery-dialog {padding:0;border:1px solid #ae8a52;border-radius:8px;background:linear-gradient(115deg,#f1e7d4,#e5d2af);box-shadow:0 24px 90px #000a,inset 0 0 0 5px #c5aa7733;}
+.gallery-dialog .gallery-dialog-top {position:sticky;top:0;z-index:3;margin:0;padding:18px 24px;background:linear-gradient(110deg,#142d2c,#243b31);border-bottom:3px double #b5955d;box-shadow:0 3px 12px #49351922;}
+.gallery-dialog .gallery-dialog-top h2 {color:#ead6aa!important;font-size:23px!important;letter-spacing:.2px;}
+.gallery-dialog .gallery-dialog-top button {color:#e9d6af;background:#ffffff08;border-color:#a38b5e;}
+.gallery-dialog-body {padding:22px 28px 28px;}
+.gallery-dialog .gallery-dossier-kicker {font:11px/1.3 Georgia,serif;text-transform:uppercase;letter-spacing:2px;color:#80613d;margin:0 0 12px;}
+.gallery-dialog .gallery-dossier-identity {border-top:1px solid #a58a5c;border-bottom:1px solid #a58a5c;padding:5px 0 10px;margin-bottom:18px;}
+.gallery-dialog .gallery-dossier-identity h3 {font-size:21px!important;}
+.gallery-dialog .gallery-dossier-identity p {margin:4px 0;font-style:italic;}
+.gallery-dialog .gallery-dossier-identity details {font-size:12px;margin:8px 0 0;}
+.gallery-dialog .gallery-dossier-identity code {display:block;padding:8px;margin-top:7px;}
+.gallery-dialog .gallery-dossier-lead {font-size:17px;line-height:1.55;max-width:75ch;}
+.gallery-stat-strip {display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;background:#b3976533;border:1px solid #b3976577;margin:16px 0;}
+.gallery-stat {background:#f7edd8b3;text-align:center;padding:16px 9px;min-width:0;}
+.gallery-stat strong {display:block;font:400 26px/1.1 Georgia,serif;color:#294239;font-variant-numeric:tabular-nums;}
+.gallery-stat span {display:block;font-size:11px;line-height:1.35;text-transform:uppercase;letter-spacing:.75px;color:#79603d;margin-top:8px;}
+.gallery-dialog .gallery-dossier-footnote {font-size:12px;font-style:italic;color:#756144;margin-top:-7px;}
+.gallery-chapter-pair {display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.gallery-dossier-chapter {position:relative;padding:18px 22px;margin:16px 0;border:1px solid #b89b694d;background:#fbf1df66;box-shadow:2px 3px 0 #9f7a3e12;}
+.gallery-dialog .gallery-dossier-chapter h3 {padding:0 0 9px!important;margin-right:24px!important;}
+.gallery-chapter-number {position:absolute;right:14px;top:12px;font:italic 25px/1 Georgia,serif;color:#9c7d495e;}
+.gallery-dialog li {margin:8px 0;line-height:1.55;font-size:14px;}
+.gallery-dialog ul {padding-left:19px;margin:5px 0;}
+.gallery-dialog .gallery-boundary {border-left:3px solid #967448;padding:11px 14px;background:#b79a6120;font-size:13px;line-height:1.5;}
+.gallery-dialog details {border-bottom:1px solid #b397654d;padding:10px 0;}
+.gallery-dialog summary {font-size:13px;letter-spacing:.2px;color:#4c5945;}
+.gallery-dialog .gallery-report-link {display:inline-block;margin:18px 0 8px;text-decoration:none;background:#294239;color:#f4e4c4;border-color:#62724d;}
+.gallery-dialog button {border-color:#aa8b57;background:#eadab9;transition:background .12s;}
+.gallery-dialog button:hover {background:#d9c499;}
+.gallery-decision-seal {display:inline-block;border:3px double #68784f;color:#465b3d;padding:9px 15px;font:13px/1.3 Georgia,serif;letter-spacing:1px;text-transform:uppercase;transform:rotate(-1deg);margin:8px 0 12px;}
+.gallery-inspection-bench {display:grid;grid-template-columns:minmax(0,1.6fr) minmax(220px,1fr);gap:24px;align-items:start;}
+.gallery-inspection-figure {margin:0;min-width:0;}
+.gallery-inspection-figure .gallery-inspection-image {width:auto;max-width:100%;max-height:49vh;margin:12px auto;outline:1px solid #937747;outline-offset:5px;border:5px solid #433c2c;}
+.gallery-inspection-figure figcaption {font-size:12px;font-style:italic;color:#6f593b;text-align:center;padding:5px;}
+.gallery-inspection-controls {gap:6px;margin:0 0 14px;}
+.gallery-inspection-controls button {flex:1;padding:7px;font-size:13px;}
+.gallery-inspection-notes {border-left:1px solid #ae925d66;padding-left:20px;min-width:0;}
+.gallery-inspection-notes .gallery-stat-strip {grid-template-columns:1fr;}
+.gallery-inspection-notes .gallery-stat {display:flex;justify-content:space-between;gap:10px;align-items:center;text-align:left;padding:13px;}
+.gallery-inspection-notes .gallery-stat strong {font-size:22px;}
+.gallery-inspection-notes .gallery-stat span {font-size:10px;margin:0;text-align:right;max-width:90px;}
+.gallery-table-scroll {overflow-x:auto;}
+.gallery-dialog table {font-variant-numeric:tabular-nums;background:#faf0dd55;}
+.gallery-dialog th {background:#304638;color:#efdfbb;font-weight:400;font-size:12px;letter-spacing:.5px;padding:10px;}
+.gallery-dialog td {padding:11px 10px;}
+.gallery-selected-record {background:#c1cfb455;box-shadow:inset 3px 0 #6b7952;}
+@media (max-width:700px) {
+  .gallery-dialog-body {padding:18px;}
+  .gallery-dialog .gallery-dialog-top {padding:14px 18px;}
+  .gallery-inspection-bench,.gallery-chapter-pair {grid-template-columns:1fr;}
+  .gallery-inspection-notes {border-left:0;border-top:1px solid #ae925d66;padding:16px 0 0;}
+  .gallery-record-grid {grid-template-columns:1fr;gap:4px;}
+  .gallery-record-grid dd {margin-bottom:12px;}
+}

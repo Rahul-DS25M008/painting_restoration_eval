@@ -1,0 +1,44 @@
+{
+  "schema_version": "model_gallery_freeze.v1",
+  "status": "user_approved_visual_freeze",
+  "scope": "Tab 4 shell and isolated presentation/data adapter source; shared app wiring deferred",
+  "base_git_revision": "e5d733225718d27cec780d77ad43036d1cde8210",
+  "pilot_revision_observed": "125ea5653026ca5a17ccd991f8ef2d1f1363b62d",
+  "new_hf_objects_required": 0,
+  "new_git_lfs_objects_allowed": 0,
+  "evidence_inventory": {
+    "unique_gallery_images": 16044,
+    "existing_git_paths": 13400,
+    "existing_verified_hf_publication_records": 2644,
+    "unaccounted_paths": 0,
+    "verification_scope": "Complete local path/publication coverage; representative live remote metadata checks, not a fresh download of the full corpus",
+    "live_checks": [
+      "HF HINT p018 loss_large: pinned size and SHA-256 match",
+      "HF SDXL p018 mixed_damage: pinned size and SHA-256 match",
+      "HF N13 classical metrics: pinned size and SHA-256 match",
+      "GitHub LFS p018 clean and LaMa mixed_damage: HTTP 200 and matching hash ETags"
+    ]
+  },
+  "deployment_note": "Existing ZIP assets remain byte-exact and index-addressable. No new bulk assets are introduced here, so no new HF bundles are needed. Gallery currently reads local originals and scans N13 CSV; pinned lazy remote loading and compact metric lookup still need integration before cloud deployment. No Streamlit app creation or hosted test is authorized by this checkpoint.",
+  "files": [
+    {"path": "src/restoration_eval/model_gallery.py", "sha256": "715321d2f3b368f058cbbcf86d235871a52b8bfecb2da80046d12d7a3e7f709f", "hash_mode": "lf_normalized"},
+    {"path": "src/restoration_eval/model_gallery_view.py", "sha256": "486ea42cdca7bcb4c37c2f1a11deeb075013730fe9f0e0ddd3459354514c6128", "hash_mode": "lf_normalized"},
+    {"path": "streamlit_assets/model_gallery.css", "sha256": "e15922f2231df238a406b3818ddc7a966569f2d5132c6536e2f69b7953a9c3e4", "hash_mode": "lf_normalized"},
+    {"path": "streamlit_assets/model_gallery_controller.js", "sha256": "827fd2a683f6d722d7867e98c1a7bf49d76241a916a6a047d86684ab40324419", "hash_mode": "lf_normalized"},
+    {"path": "streamlit_assets/rooms/model_gallery_shell.png", "sha256": "54cafbe20c496e322700445063f3bab32d707462c0241aaace397f937b891dfd", "hash_mode": "binary"},
+    {"path": "tests/test_model_gallery.py", "sha256": "e4f1da85c4bd22f6a95280ea72122345b0995dc54e1e709107fad2ba3c027005", "hash_mode": "lf_normalized"},
+    {"path": "tools/audit_model_gallery_readiness.py", "sha256": "f3b99c99ab8ed6201eea351eb7950809875b9fdce80029aa568c9cde14629347", "hash_mode": "lf_normalized"}
+  ],
+  "support_paths": [
+    "docs/dashboard_design_finalists/model_gallery_steps_01_02.md",
+    "docs/dashboard_design_finalists/model_gallery_step03_verification.md",
+    "docs/dashboard_design_finalists/model_gallery_readiness_audit.json",
+    "docs/dashboard_design_finalists/model_gallery_shell_prompt.txt",
+    "docs/dashboard_design_finalists/model_gallery_cosmetic_pass_01.md",
+    "docs/dashboard_design_finalists/model_gallery_cosmetic_pass_02.md",
+    "docs/dashboard_design_finalists/model_gallery_cosmetic_pass_03.md",
+    "docs/model_gallery_asset_checkpoint.md",
+    "tools/check_model_gallery_freeze.py",
+    "config/publication/model_gallery_freeze.json"
+  ]
+}
