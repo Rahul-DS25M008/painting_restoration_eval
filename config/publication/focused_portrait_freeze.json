@@ -1,0 +1,181 @@
+{
+  "schema_version": "focused_portrait_freeze.v1",
+  "status": "user_approved_visual_freeze",
+  "approved_date": "2026-09-30",
+  "scope": "Focused Portrait Review isolated source/artwork checkpoint; shared app wiring and hosted deployment deferred",
+  "base_git_revision": "8f0c3a44190aae8097c16382bcae63870822b0f6",
+  "file_count": 25,
+  "new_hf_objects_required_for_checkpoint": 0,
+  "new_git_lfs_objects_allowed": 0,
+  "verification": {
+    "focused_python_tests": 11,
+    "javascript_syntax": "passed",
+    "node_chart_and_interaction_tests": "passed",
+    "trustworthiness_28_file_freeze": "unchanged",
+    "final_room_preview": "docs/dashboard_design_finalists/focused_portrait_selector_spacing.png",
+    "popup_preview": "docs/dashboard_design_finalists/focused_portrait_popup_methods.png",
+    "optional_remote_checks": "not rerun at user request",
+    "n35": "not run"
+  },
+  "final_presentation": "Includes category-specific observation views, class-preserving review navigation, metric-specific lightness interpretation, fitted prints, centred plaques, original D02 report display, redesigned evidence popups, and 5px selector spacing.",
+  "publication_note": "GitHub only for this checkpoint. Small room artwork remains ordinary Git. No new producer evidence or bulk assets were generated; no duplicate HF bundle or remote publication is required for the checkpoint.",
+  "deployment_note": "The adapter still requires local verified producer files and N34. streamlit_app.py and dashboard_application.py contain mixed unfinished changes and are deliberately excluded. This checkpoint is not a runnable hosted deployment or a completed shared-app integration.",
+  "excluded_paths": [
+    "streamlit_app.py",
+    "src/restoration_eval/dashboard_application.py",
+    "tests/test_dashboard_application.py",
+    "config/evaluation/dashboard_validation.yaml",
+    "notebooks/35_dashboard_and_deployment_validation.ipynb",
+    "outputs/35_dashboard_and_deployment_validation",
+    "outputs/inventory/inventory_run.json"
+  ],
+  "files": [
+    {
+      "path": "docs/dashboard_design_finalists/focused_portrait_blind_review_preview.png",
+      "sha256": "af171e8873f5230b2d78f29fc5e8b30c9f61fb2a989d69474c15863bfc46b4f1",
+      "hash_mode": "binary",
+      "size_bytes": 54966
+    },
+    {
+      "path": "docs/dashboard_design_finalists/focused_portrait_cosmetic_pass_01.png",
+      "sha256": "bcc473cad9445c5fc620e932a036ec0238d9518d9045ec699141e1177065e192",
+      "hash_mode": "binary",
+      "size_bytes": 82204
+    },
+    {
+      "path": "docs/dashboard_design_finalists/focused_portrait_cosmetic_pass_02.png",
+      "sha256": "8368c5f83eca4051dffc54b095fe847d691ece89f09a846490317a0d514968fc",
+      "hash_mode": "binary",
+      "size_bytes": 81913
+    },
+    {
+      "path": "docs/dashboard_design_finalists/focused_portrait_cosmetic_pass_03.png",
+      "sha256": "93ff6a57dd94e845645527233315ab9474aadba4e678c64de1ecd3bfbbc80e55",
+      "hash_mode": "binary",
+      "size_bytes": 82164
+    },
+    {
+      "path": "docs/dashboard_design_finalists/focused_portrait_cosmetic_pass_04.png",
+      "sha256": "ee7cf17cf609eba43d27449158be8f2278a6819747b7cfff721943d7c276ef1a",
+      "hash_mode": "binary",
+      "size_bytes": 81355
+    },
+    {
+      "path": "docs/dashboard_design_finalists/focused_portrait_cosmetic_pass_05.png",
+      "sha256": "f61003040747a57fc34de5d89deb46d94faeeab2c9f3d3ef900e8f8379c418c5",
+      "hash_mode": "binary",
+      "size_bytes": 80681
+    },
+    {
+      "path": "docs/dashboard_design_finalists/focused_portrait_initial_preview.png",
+      "sha256": "fdf2090f23efec1f458dd69ca33717590154472c4df2ce2855a25b3ed5118f61",
+      "hash_mode": "binary",
+      "size_bytes": 82953
+    },
+    {
+      "path": "docs/dashboard_design_finalists/focused_portrait_iteration_log.md",
+      "sha256": "b3cb8808d7bffd17fa62150f3bab44928402f13af981d66e47b3e47ffe27b3fd",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 7729
+    },
+    {
+      "path": "docs/dashboard_design_finalists/focused_portrait_popup_formation.png",
+      "sha256": "d7123842cb53d47e2a5f45a3727b0ec413f667d29e8ae6d376f9785d76def832",
+      "hash_mode": "binary",
+      "size_bytes": 46048
+    },
+    {
+      "path": "docs/dashboard_design_finalists/focused_portrait_popup_methods.png",
+      "sha256": "151875db6300eb42cea6ee19a6741718b3d08916d3efd82bfce8ae616cf42948",
+      "hash_mode": "binary",
+      "size_bytes": 63814
+    },
+    {
+      "path": "docs/dashboard_design_finalists/focused_portrait_report_preview.png",
+      "sha256": "049aee2b1710f11bd1eb5c52b9244521f754986c9e57255caa2f619abfee8cb2",
+      "hash_mode": "binary",
+      "size_bytes": 59820
+    },
+    {
+      "path": "docs/dashboard_design_finalists/focused_portrait_selector_spacing.png",
+      "sha256": "5eeeb0be63201363a3db05e01db40d639cbcd871ca8516b6b4eaa45d85add10c",
+      "hash_mode": "binary",
+      "size_bytes": 80741
+    },
+    {
+      "path": "docs/dashboard_design_finalists/focused_portrait_step03_verification.md",
+      "sha256": "1c86d3df65b29e59ce275e446cc65faa6826acd1d3a0721e0555ff719dc26dd7",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 3173
+    },
+    {
+      "path": "docs/dashboard_design_finalists/focused_portrait_steps_01_02.md",
+      "sha256": "be3e3ef27bf01cf86b446633d5e05825f2fa6f728fbbccaf5d53df9caad3fc3a",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 4455
+    },
+    {
+      "path": "docs/dashboard_design_finalists/focused_portrait_wrist_observation_preview.png",
+      "sha256": "57d39d4ce5f71ef5333d32681f22e1c44360956160bfb5de47aac6d81fc2dd76",
+      "hash_mode": "binary",
+      "size_bytes": 57398
+    },
+    {
+      "path": "src/restoration_eval/focused_portrait_view.py",
+      "sha256": "bd0d9e2a40f04722f2d984baca156bcf2a3213320777bfc4470ad3fa57625e34",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 13668
+    },
+    {
+      "path": "src/restoration_eval/focused_portrait.py",
+      "sha256": "c67eace606dfc2b451d500259dc3f2e83cd0684eb08c73e00c97355e07bccd98",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 9995
+    },
+    {
+      "path": "streamlit_assets/focused_portrait_controller.js",
+      "sha256": "e15b9e153e9dabca707195c982f0c482673acc4fbe14ca0ee7a096c41fe5b694",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 30535
+    },
+    {
+      "path": "streamlit_assets/focused_portrait.css",
+      "sha256": "2e2d4a39023e2a6fa6b5c0d5141bd6477a093c03d3759487177ac22ee700d23a",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 20558
+    },
+    {
+      "path": "streamlit_assets/rooms/focused_portrait_reference_details.png",
+      "sha256": "9dbf04cdc1d7171f72c969c34614475ab097fde86ad7b8f914ab0568fa334197",
+      "hash_mode": "binary",
+      "size_bytes": 2192885
+    },
+    {
+      "path": "streamlit_assets/rooms/focused_portrait_review_shell.png",
+      "sha256": "2e4514eb3a45f3d18cdfefa5f30ed0d4c3d7b27f6d17dc2458e722bdc1fc3ee7",
+      "hash_mode": "binary",
+      "size_bytes": 1904900
+    },
+    {
+      "path": "tests/test_focused_portrait_chart.cjs",
+      "sha256": "ba9ae18ded572139776397725799c14b92df4420e40a92781a6021c16b9c4d93",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 3641
+    },
+    {
+      "path": "tests/test_focused_portrait.py",
+      "sha256": "738e1cee3ab3c5e54c2ad2d0bb96664074dc406e99d51e24de45ee54cf7b6d92",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 8988
+    },
+    {
+      "path": "tools/check_focused_portrait_freeze.py",
+      "sha256": "694fac4fe7891612835818098ff4a5b4b033057498f3baf15f80aab5b55afb6e",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 3409
+    }
+  ],
+  "support_paths": [
+    "config/publication/focused_portrait_freeze.json"
+  ]
+}
