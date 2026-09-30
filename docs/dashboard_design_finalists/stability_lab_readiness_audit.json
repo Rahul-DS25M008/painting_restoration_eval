@@ -1,0 +1,75 @@
+{
+  "status": "ready_for_initial_preview",
+  "read_only": true,
+  "focused_paintings": 35,
+  "damage_cases": 245,
+  "mask_cases": 525,
+  "generated_degradations": 1155,
+  "eligible_degradations": 350,
+  "seed_groups": 1025,
+  "seed_memberships": 4100,
+  "seed_pairs": 6150,
+  "seed_prompts": [
+    "p00_generic",
+    "p05_scratch_aware"
+  ],
+  "opening_trajectory": [
+    {
+      "case_id": "damage_size__p018__loss_large__size_02pct",
+      "value": 4.1318695438,
+      "input_value": 88.265579496,
+      "source": "N16 · spatial_diagnostics.csv",
+      "row_id": "spd_e6bfae244dec7f87b16e"
+    },
+    {
+      "case_id": "damage_size__p018__loss_large__size_04pct",
+      "value": 6.3067950775,
+      "input_value": 95.416029959,
+      "source": "N16 · spatial_diagnostics.csv",
+      "row_id": "spd_d6ec2fc2fedab81efc36"
+    },
+    {
+      "case_id": "damage_size__p018__loss_large__size_06pct",
+      "value": 9.6465636489,
+      "input_value": 103.742113602,
+      "source": "N16 · spatial_diagnostics.csv",
+      "row_id": "spd_22a858cae51e3567aced"
+    },
+    {
+      "case_id": "damage_size__p018__loss_large__size_08pct",
+      "value": 9.5337827707,
+      "input_value": 111.0862386328,
+      "source": "N16 · spatial_diagnostics.csv",
+      "row_id": "spd_8b96994d02fe6f6c0a13"
+    },
+    {
+      "case_id": "damage_size__p018__loss_large__size_10pct",
+      "value": 13.2004297422,
+      "input_value": 118.3141147542,
+      "source": "N16 · spatial_diagnostics.csv",
+      "row_id": "spd_f5621c3a1d5aaf9edbfe"
+    },
+    {
+      "case_id": "damage_size__p018__loss_large__size_15pct",
+      "value": 30.9869134483,
+      "input_value": 132.4239861193,
+      "source": "N16 · spatial_diagnostics.csv",
+      "row_id": "spd_41a3f00ebd39295d777b"
+    },
+    {
+      "case_id": "damage_size__p018__loss_large__size_20pct",
+      "value": 39.3301701445,
+      "input_value": 140.4174809881,
+      "source": "N16 · spatial_diagnostics.csv",
+      "row_id": "spd_aa1fa0de9e69d71a0fbd"
+    }
+  ],
+  "shell_sha256": "81504d77921d84fe734ef5bc1a116e3dfc0602e56fe2c0fa5e2c1dd9a4b773a0",
+  "approved_reference_sha256": "738e9a11139b8bda96d7d2f0d7f5669be0b88b5e705a8120ac08de7a5559a57d",
+  "n35_sha256": "77dbfb840b22dd590321fe11f75c8e926dbc85f02dcb797bd8bfacafb1d7b673",
+  "caveats": [
+    "Canonical N18 groups have no per-case rendered overlay; numeric evidence remains available.",
+    "Fifth bottle opens excluded-task explanation, not a restoration ranking.",
+    "No hosted deployment has been created or tested."
+  ]
+}

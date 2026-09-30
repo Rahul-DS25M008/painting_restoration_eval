@@ -1,0 +1,147 @@
+{
+  "schema_version": "stability_lab_freeze.v1",
+  "status": "user_approved_visual_freeze",
+  "scope": "Tab 5 isolated source, shell, tests and final preview documentation; shared application wiring deferred",
+  "base_git_revision": "a2bf09e882a6f9f203105875af75c179e1d070de",
+  "pilot_revision_observed": "125ea5653026ca5a17ccd991f8ef2d1f1363b62d",
+  "new_hf_objects_required": 0,
+  "new_git_lfs_objects_allowed": 0,
+  "evidence_inventory": {
+    "unique_images": 12080,
+    "git_tracked": 9980,
+    "verified_hf_individual": 1120,
+    "verified_hf_bundle_members": 980,
+    "unaccounted": 0,
+    "source_tables_accounted": 17,
+    "audit": "config/publication/stability_lab_publication_audit.json"
+  },
+  "verification": {
+    "stability_tests": 13,
+    "model_gallery_tests": 11,
+    "dashboard_adapter_tests": 28,
+    "bundle_transport_tests": 8,
+    "controller_syntax": "pass",
+    "prior_gallery_freeze": "pass"
+  },
+  "deployment_note": "Existing immutable indexed ZIPs preserve original bytes and support bounded Streamlit caching. This adapter still uses local files/full metric CSV scans; lazy remote resolution, compact metric lookups and shared app wiring require a separate consolidated deployment checkpoint. No hosted test or upload performed.",
+  "files": [
+    {
+      "path": "src/restoration_eval/stability_lab.py",
+      "sha256": "f2f2a262435112729db30ba936c8fac1050df1f74c12171a74f58e639bc51069",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "src/restoration_eval/stability_lab_view.py",
+      "sha256": "f0d71ff21522696c6ba8d30925efe624ebb489b27d0c544d76bc2c52c9774047",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "streamlit_assets/stability_lab.css",
+      "sha256": "af9d9c185f6c91c8e501b5587011faa00b38bbb66f8128b55d6020ee57720ed1",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "streamlit_assets/stability_lab_controller.js",
+      "sha256": "80efc9f2ce57d7ae8f07e5975b718eb502f69cdf38c03e6d6af1664c4038e4b1",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "streamlit_assets/rooms/stability_lab_shell.png",
+      "sha256": "81504d77921d84fe734ef5bc1a116e3dfc0602e56fe2c0fa5e2c1dd9a4b773a0",
+      "hash_mode": "binary"
+    },
+    {
+      "path": "tests/test_stability_lab.py",
+      "sha256": "054dfbbadb12954926d842dc10b1deb7ed210df8b8af246f6a7b54894d94c7dc",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "tools/audit_stability_lab_readiness.py",
+      "sha256": "25f147a9bcbbf26398410d4e00e4ebb85c0cf1b62989a54792b48c11b359525d",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "tools/audit_stability_lab_publication.py",
+      "sha256": "946e0ad8150d0f5c537b766fc02d0bfc0e1a6643f6a2677e922ca0015f13f3f2",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "docs/dashboard_design_finalists/stability_lab_steps_01_02.md",
+      "sha256": "caa9b181bc8140d9c23536f8b2689e4b634a4b8806fc10cbbebd5802411408c1",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "docs/dashboard_design_finalists/stability_lab_step03_verification.md",
+      "sha256": "1399a22ae31ba2070da4122399e9888e52a0c398eb0f6833e3dffc743d8791dd",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "docs/dashboard_design_finalists/stability_lab_readiness_audit.json",
+      "sha256": "06de1927d1ef220c56df4f1cc795fe365cdbfab4963b37a4f13f98d3f8f5cff6",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "docs/dashboard_design_finalists/stability_lab_shell_prompt.txt",
+      "sha256": "283769871db268d76b668deacc91ed81b7e1949cf82a0040259b93ef6f6d5c76",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "docs/dashboard_design_finalists/stability_lab_cosmetic_pass_01.md",
+      "sha256": "2b8f98458c070306e69cc7db921fa8ccf95fa4250766994d5621fbcc715aa2f8",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "docs/dashboard_design_finalists/stability_lab_cosmetic_pass_02.md",
+      "sha256": "225f07f4e99899572a3c047cf65e0fce965feb2020881d9b33cb85b99cc30910",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "docs/dashboard_design_finalists/stability_lab_cosmetic_pass_03.md",
+      "sha256": "f3e275cfb86df48e7dc648a4fa2dd1b51a72d74997d5c311a50e151917fad1c4",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "docs/dashboard_design_finalists/stability_lab_cosmetic_pass_04.md",
+      "sha256": "5b68518fd3c69887c5763a6217f48a4efa03c81ff9d21af7a3349cea29047b18",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "docs/dashboard_design_finalists/stability_lab_cosmetic_pass_05.md",
+      "sha256": "2bbbcd9a8d121ef95760c4d5cb68a637fab866359471babe154db3d5ab3a64f0",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "docs/dashboard_design_finalists/stability_lab_cosmetic_pass_06.md",
+      "sha256": "c4eb3c81dc8555336d24028a991e30d46e9c7c82e6c67d9e6d5bc0882c85a7bd",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "docs/dashboard_design_finalists/stability_lab_cosmetic_pass_06.png",
+      "sha256": "70f843a08d9ac2a6f9821346ec8cd11696ac415a1664aacc8655deaf6e819e0a",
+      "hash_mode": "binary"
+    },
+    {
+      "path": "docs/dashboard_design_finalists/stability_lab_popup_pass_06.png",
+      "sha256": "c5fb50038a5c81f9fef6a8e69fe07ba790c202f9d10089720e66d28bb2928e48",
+      "hash_mode": "binary"
+    },
+    {
+      "path": "docs/stability_lab_asset_checkpoint.md",
+      "sha256": "87255cfb759280a78623b4262cab01d1d3262051c0c8b1aa4c0f0e04a234a752",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "config/publication/stability_lab_publication_audit.json",
+      "sha256": "e14952c95ffdc12220962c3102f01d6fc90e6be8ec837fce327df46ca49e4a9b",
+      "hash_mode": "lf_normalized"
+    },
+    {
+      "path": "tools/check_stability_lab_freeze.py",
+      "sha256": "183d2b57aa81a16785be9f71ae3cba73518ef472ea4f3f8fefa3bb6157c8164e",
+      "hash_mode": "lf_normalized"
+    }
+  ],
+  "support_paths": [
+    "config/publication/stability_lab_freeze.json"
+  ]
+}

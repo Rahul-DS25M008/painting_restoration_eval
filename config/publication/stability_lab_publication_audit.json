@@ -1,0 +1,78 @@
+{
+  "status": "pass",
+  "unique_images": 12080,
+  "coverage": {
+    "git_tracked": 9980,
+    "verified_hf_individual": 1120,
+    "verified_hf_bundle_member": 980
+  },
+  "unaccounted": [],
+  "table_coverage": {
+    "outputs/09_opencv_telea_restoration/data/restorations.csv": "git_tracked",
+    "outputs/10_lama_restoration/data/restorations.csv": "git_tracked",
+    "outputs/12a_hint_restoration/data/restorations.csv": "git_tracked",
+    "outputs/11_stable_diffusion_restoration/data/candidates.csv": "git_tracked",
+    "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv": "git_tracked",
+    "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv": "git_tracked",
+    "outputs/06_mask_robustness_dataset_generation/data/cases.csv": "git_tracked",
+    "outputs/07_synthetic_degradation_dataset_generation/data/cases.csv": "git_tracked",
+    "outputs/02_image_preprocessing/data/preprocessed_images.csv": "git_tracked",
+    "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv": "git_tracked",
+    "outputs/31_model_report_generation/data/report_index.csv": "git_tracked",
+    "outputs/13_classical_metrics/metrics/classical_metrics.csv": "verified_hf_individual",
+    "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv": "verified_pinned_hf_table",
+    "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_metrics.csv": "git_tracked",
+    "outputs/22_damage_size_diffusion_uncertainty_extension/metrics/damage_size_uncertainty.csv": "git_tracked",
+    "outputs/22_damage_size_diffusion_uncertainty_extension/data/candidates.csv": "git_tracked",
+    "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/map_images.csv": "git_tracked"
+  },
+  "releases": [
+    {
+      "name": "n22c",
+      "repo_id": "RahulMaddineni264/painting-restoration-eval-candidates",
+      "revision": "2d4ac6312c9b68db8377da0f591006eb07dc905a",
+      "prefix": "bundled_assets/v1/controlled_300/22_damage_size_diffusion_uncertainty_extension/candidates/4495e8c1e4641427",
+      "assets": 735,
+      "bundles": 35,
+      "bundle_cap_bytes": 33554432
+    },
+    {
+      "name": "n22d",
+      "repo_id": "RahulMaddineni264/painting-restoration-eval-diagnostics",
+      "revision": "6c3ee0b232b2a555d401142040bf337b5e54ab33",
+      "prefix": "bundled_assets/v1/controlled_300/22_damage_size_diffusion_uncertainty_extension/diagnostics/02ace444a2c8c4f3",
+      "assets": 245,
+      "bundles": 35,
+      "bundle_cap_bytes": 33554432
+    },
+    {
+      "name": "n16",
+      "repo_id": "RahulMaddineni264/painting-restoration-eval-diagnostics",
+      "revision": "8c22aa62c5be60d8a15c9c00d9bc9a6f81557b79",
+      "prefix": "bundled_assets/v1/controlled_300/16_difference_maps_and_spatial_diagnostics/a6377b18f9cef060",
+      "assets": 76034,
+      "bundles": 333,
+      "bundle_cap_bytes": 33554432
+    }
+  ],
+  "live_exact_byte_samples": [
+    {
+      "release": "n22c",
+      "path": "outputs/22_damage_size_diffusion_uncertainty_extension/images/restored/damage_size__p018__loss_large__size_02pct/sd15dsu__20f1a3ea4ae9bd34.png",
+      "sha256": "d2e91c350dcdb67cd6999299453f0109848d47fde25943d20f2a5d9a17e51f9c",
+      "bytes": 543851,
+      "downloaded_objects": 0,
+      "downloaded_bytes": 0
+    },
+    {
+      "release": "n22d",
+      "path": "outputs/22_damage_size_diffusion_uncertainty_extension/images/uncertainty/ug_ef51398630a9469e29.png",
+      "sha256": "5f99c85316265b6f7670d3d172621ce07e31f723db70b4722cf4e1084ed2740d",
+      "bytes": 1063932,
+      "downloaded_objects": 0,
+      "downloaded_bytes": 0
+    }
+  ],
+  "verification_scope": "Complete image path coverage against Git and verified publication records; live pinned N22 member indexes, table hashes and two exact-image roundtrips, not a fresh full-corpus download.",
+  "new_hf_upload_needed": false
+}
