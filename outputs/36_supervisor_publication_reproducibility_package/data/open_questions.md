@@ -1,42 +1,12 @@
-# Open Questions for Supervisor Review
+# Open questions for supervisor review
 
-**Generated:** `2026-09-03T21:13:24Z`  
-**Scope:** Decisions about interpretation, delivery, and future work—not unresolved computational failures.
+These are review decisions and future-work questions, not missing measurements
+that the present package claims to have completed.
 
-### Decision 1 — Thesis scope
-
-Is the balanced **50-painting controlled collection** sufficient for the bounded claims, or should broader real-world generalization remain an explicit limitation and future-work requirement?
-
-### Decision 2 — Central contribution
-
-Should the thesis foreground the **multi-metric, region-aware evaluation framework** as its main contribution, with the model ranking treated as an empirical demonstration?
-
-### Decision 3 — Model conclusion
-
-Is the wording **“LaMa is the strongest general baseline in this controlled benchmark”** acceptable given its **10-of-11 quality-anchor lead** and the retained metric disagreement?
-
-### Decision 4 — SDXL boundary
-
-Should SDXL remain a **ten-case feasibility study**, or is a future rerun on stronger hardware required outside the current completed benchmark?
-
-### Decision 5 — Human review
-
-Should expert or conservator assessment remain a clearly stated future validation stage rather than being added after completion of the computational pipeline?
-
-### Decision 6 — Delivery
-
-Is the validated local Streamlit demonstration sufficient for supervision and defence, or is a public deployment required?
-
-### Decision 7 — Publication focus
-
-Which combination should receive priority in a paper or defence:
-
-- the evaluation architecture;
-- conditional model comparison;
-- robustness and uncertainty;
-- trustworthiness flags and XAI;
-- the reproducible dashboard and report package?
-
-## Current recommendation
-
-Freeze the completed scientific scope, retain the limitations explicitly, and use supervisor feedback to prioritize writing and presentation rather than silently expanding the experiment.
+1. Does the thesis clearly distinguish reference fidelity from historical correctness?
+2. Which metric disagreements and cases best illustrate why multiple regions matter?
+3. Is the SDXL feasibility boundary sufficiently clear beside four fully evaluated methods?
+4. Should D01 and D02 remain separate supporting studies in the thesis structure?
+5. Which deployment qualifications need measurement for a future operational service?
+6. What expert annotation or real-conservation dataset would be needed for external validation?
+7. When should a versioned archival deposit be made after the final pipeline freeze?

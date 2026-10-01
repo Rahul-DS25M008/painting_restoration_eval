@@ -1,5 +1,5 @@
 config_schema_version: "failure_taxonomy_config.v1"
-config_version: "1.0.1"
+config_version: "1.1.0"
 
 failure_taxonomy:
   notebook_id: "27"
@@ -26,6 +26,7 @@ failure_taxonomy:
     artworks_path: "outputs/01_dataset_verification/data/artworks.csv"
     opencv_candidates_path: "outputs/09_opencv_telea_restoration/data/restorations.csv"
     lama_candidates_path: "outputs/10_lama_restoration/data/restorations.csv"
+    hint_candidates_path: "outputs/12a_hint_restoration/data/restorations.csv"
     stable_diffusion_candidates_path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
     sdxl_candidates_path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
     classical_metrics_path: "outputs/13_classical_metrics/metrics/classical_metrics.csv"
@@ -80,7 +81,7 @@ failure_taxonomy:
     validation_path: "validation/checks.csv"
 
   population:
-    dataset_source_levels: ["controlled_50"]
+    dataset_source_levels: ["controlled_300"]
     primary_population_id: "validated_primary_candidates.v1"
     uncertainty_population_id: "complete_supported_seed_groups.v1"
     union_population_id: "primary_plus_supported_uncertainty_candidates.v1"
@@ -89,7 +90,7 @@ failure_taxonomy:
       - "primary_and_uncertainty"
       - "uncertainty_only"
       - "bounded_sdxl"
-    primary_core_models: ["opencv_telea", "lama", "stable_diffusion_inpainting"]
+    primary_core_models: ["opencv_telea", "lama", "hint_places2", "stable_diffusion_inpainting"]
     bounded_model: "sdxl_inpainting"
     canonical_prompt_variant: "p00_generic"
     scratch_prompt_variant: "p05_scratch_aware"
@@ -229,21 +230,21 @@ failure_taxonomy:
     mock_to_final_traceability_required: true
 
   expected_counts:
-    primary_core_candidates: 1230
-    bounded_sdxl_candidates: 10
-    primary_candidates: 1240
-    canonical_uncertainty_groups: 130
-    canonical_uncertainty_candidates: 520
-    damage_size_uncertainty_groups: 35
-    damage_size_uncertainty_candidates: 140
-    repeated_seed_candidates: 660
-    primary_repeated_overlap: 115
-    uncertainty_only_candidates: 545
-    union_candidates: 1785
+    primary_core_candidates: 10480
+    bounded_sdxl_candidates: 24
+    primary_candidates: 10504
+    canonical_uncertainty_groups: 780
+    canonical_uncertainty_candidates: 3120
+    damage_size_uncertainty_groups: 245
+    damage_size_uncertainty_candidates: 980
+    repeated_seed_candidates: 4100
+    primary_repeated_overlap: 725
+    uncertainty_only_candidates: 3375
+    union_candidates: 13879
     failure_categories: 14
     trust_flags: 11
-    failure_assignment_rows: 24990
-    trustworthiness_flag_rows: 19635
+    failure_assignment_rows: 194306
+    trustworthiness_flag_rows: 152669
     canonical_output_files: 8
     artifact_records: 6
 
@@ -264,10 +265,10 @@ failure_taxonomy:
     - "Failure assignments are transparent operational screening rules, not human-labelled or conservation-validated failures."
     - "Warning and critical percentiles identify relative outliers and do not provide calibrated probabilities."
     - "Semantic, structural, repeated-texture, colour-bleeding, composition-change, and visible-boundary categories remain computational proxies."
-    - "The 1,785-candidate union contains primary-comparison and uncertainty-only roles that must not be pooled for ordinary model comparison."
+    - "The 13,879-candidate union contains primary-comparison and uncertainty-only roles that must not be pooled for ordinary model comparison."
     - "Prompt variants remain separate uncertainty populations and cannot be pooled as repeated seeds."
-    - "Telea and LaMa are deterministic, so stochastic uncertainty is not applicable rather than zero."
-    - "SDXL has one seed for ten selected cases, so stochastic uncertainty is insufficient rather than absent."
+    - "Telea, LaMa, and HINT are deterministic, so stochastic uncertainty is not applicable rather than zero."
+    - "SDXL has one seed for 24 technically valid cases, so stochastic uncertainty is insufficient rather than absent."
     - "The bounded SDXL population is incomplete and cannot support a general model ranking."
     - "Metric disagreement is informative evidence and must not be hidden by a combined score."
     - "No flag or recommendation establishes historical authenticity, conservation suitability, or museum approval."

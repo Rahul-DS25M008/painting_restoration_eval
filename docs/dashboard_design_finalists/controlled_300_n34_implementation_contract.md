@@ -14,7 +14,7 @@ Controlled-300 Notebook 35 validation run
 **Delivery update (2026-10-01):** the interface is implemented, frozen and
 [deployed](https://fhtw-painting-restoration-main.streamlit.app/). N35 closed
 with owner acceptance and disclosed limitations; see the current closeout in
-`../evidence_dependency_audit.md`. Next is N36 consolidation, retaining the
+`../evidence_dependency_audit.md`. N36 consolidation is complete, retaining the
 warnings and provenance caveats. The original N34 package contract below is
 unchanged.
 

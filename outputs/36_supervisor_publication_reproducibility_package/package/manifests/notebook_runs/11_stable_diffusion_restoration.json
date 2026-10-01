@@ -1,27 +1,27 @@
 {
   "manifest_schema_version": "run_manifest.v1",
-  "run_id": "run_82ee1e1c09524a5da3e6fe93016d0627",
+  "run_id": "run_4385124a0cca4d758d357de654a33f13",
   "notebook_id": "11",
   "notebook_name": "Stable Diffusion Restoration",
   "origin": "Existing Notebook 21; rebuilt against normalized Notebook 08 contracts with retained contextual and uncertainty designs plus the paired all-painting scratch-aware prompt ablation",
   "run_status": "completed",
-  "started_at_utc": "2026-08-26T15:18:58.208003Z",
-  "completed_at_utc": "2026-08-26T19:44:37.049171Z",
-  "git_commit": "96792053aac955f316edce1de096056de72091ee",
+  "started_at_utc": "2026-09-12T20:14:56.814654Z",
+  "completed_at_utc": "2026-09-12T20:47:02.280374Z",
+  "git_commit": "97bcbbd563072f69630c28f2871ddae89ec57b5c",
   "git_dirty": true,
   "git_branch": "main",
   "git_error": "",
-  "inventory_run_id": "inventory_20260826T143617Z_0a48130f",
+  "inventory_run_id": "inventory_20260911T185817Z_d65a6549",
   "dataset_versions": {
     "dataset_id": "painting_restoration_eval",
-    "dataset_version": "1.0.0",
-    "dataset_scope": "controlled_50",
+    "dataset_version": "2.0.0",
+    "dataset_scope": "controlled_300",
     "experiment_id": "cross_experiment_stable_diffusion",
     "base_configuration_schema": "stable_diffusion_config.v1",
-    "base_configuration_version": "1.1.0",
+    "base_configuration_version": "2.0.0",
     "scratch_configuration_schema": "stable_diffusion_scratch_prompt_ablation_config.v1",
-    "scratch_configuration_version": "1.0.0",
-    "effective_configuration_fingerprint": "29145a2dab75fe40e222860be2c9cd7f0068d3f3280a826d50695cac24bc250b",
+    "scratch_configuration_version": "2.0.0",
+    "effective_configuration_fingerprint": "957641861685a186f7d38a375ab1bfbe3c86efdf3fc5ffc3b65a0ff872f61ec1",
     "configuration_id": "sd15_inpaint_fixed_policy_v1",
     "methodological_role": "prompt_conditioned_stochastic_inpainting_baseline",
     "implementation": "Diffusers StableDiffusionInpaintPipeline",
@@ -87,13 +87,13 @@
     "prompt_policy_schema": "prompt_policy.v1",
     "prompt_design_schema": "prompt_ablation_design.v1",
     "upstream_notebook": "08_experiment_contracts_and_region_policy",
-    "upstream_run_id": "run_a3734bc2121f401b87de4894717366ab",
-    "upstream_manifest_checksum": "d1b62caa720194e666894afd276d0c6a8c973343b4a378bd787467273bbceb8a",
-    "inventory_checksum": "86e731425a54a57cba38dbc2f4e1ae8e6ba6c008139cc0653765b6cb3e37e07d",
-    "restoration_helper_sha256": "3cfdf4aed1b233efb41b6cb3cd2afe0435e89634dcd779ebf2f8019a8b538a89",
-    "scratch_prompt_helper_sha256": "340a01567dfcbbaac59178fa1f74b7052eacc82b03def8120549c24423a520f2",
+    "upstream_run_id": "run_b83466f07ebb4b55928229587922334a",
+    "upstream_manifest_checksum": "9104d4c949d02fd7e8f1d4bdec33fbf641af0a1e4aa647cc4fa9dd92cba6d711",
+    "inventory_checksum": "e4d782ecb99aab530bc226d10f418168314b473ae3f286593256de4539fc3eaf",
+    "restoration_helper_sha256": "d014b312500e5c92d97b3730b30adca04102c55fd644b930fd98717bdab1d2b3",
+    "scratch_prompt_helper_sha256": "31c82b3501f96641c5196ecc07927fb79f5aeb87650dd545f820fd645e182175",
     "scratch_contract_helper_sha256": "e7ec832e76ef2073cf860cb2b6a422057bcf2b56cebb15638db77f7030540dbd",
-    "schemas_helper_sha256": "900d21a5ca1b4ac1d1be47e4def6dea7e62ed2be0ec3f4e2130e330420819500"
+    "schemas_helper_sha256": "7d509262b3497f62054e8ed8ad3a658704d5e521c0bacd5c788280b4e336e7fa"
   },
   "configuration_paths": [
     "config/experiments/stable_diffusion.yaml",
@@ -102,19 +102,19 @@
     "config/experiments/synthetic_degradation.yaml"
   ],
   "configuration_checksums": {
-    "config/experiments/stable_diffusion.yaml": "394c66a4269b0584539141c409e278939762d065fbc122f2600b340cb8e58dbe",
-    "config/experiments/stable_diffusion_scratch_prompt_ablation.yaml": "be83ff685a5907359fb4858683fb840cf9b1fd34f67b215199232a0fac4a61f3",
-    "config/experiments/evaluation_contract.yaml": "ae977512636b0ea5eb16b4a3dff95c062f402c086430328a341c9d0bda6a3254",
-    "config/experiments/synthetic_degradation.yaml": "eaf2d11f3192e7271e11136f023022181bd4b5cfc4e0091316dc1c21a7255bf2"
+    "config/experiments/stable_diffusion.yaml": "e04296fb5c9af1349f64b5adb38a78004e477bab80e412c88e4564a07581bfdb",
+    "config/experiments/stable_diffusion_scratch_prompt_ablation.yaml": "a4bf6dd852752f5f1b8de927b3639ec939ab8825560b2e9fc7538e19bd9b27a9",
+    "config/experiments/evaluation_contract.yaml": "4db2fc27ba02559799b39ecdce73b1e828b812cb3972eaec970f53f34a385761",
+    "config/experiments/synthetic_degradation.yaml": "371349f4346a5b5dc69234bf3692e0c4407ddf3f5197af2d522f82a7eb6327d5"
   },
   "helper_versions": {
     "restoration_eval": "0.1.0",
     "paths": "1.0.0",
-    "schemas": "1.10.0",
+    "schemas": "1.18.0",
     "manifests": "1.0.0",
     "validation": "1.0.0",
-    "restoration_stable_diffusion": "5.1.0",
-    "scratch_prompt_extension": "1.0.0"
+    "restoration_stable_diffusion": "5.2.0",
+    "scratch_prompt_extension": "1.1.0"
   },
   "python_version": "3.12.6",
   "python_implementation": "CPython",
@@ -139,7 +139,7 @@
     "cuda_runtime_version": "12.1",
     "torch_version": "2.5.1+cu121",
     "execution_backend": "diffusers_stable_diffusion_inpaint",
-    "maximum_gpu_peak_bytes": 2821122560
+    "maximum_gpu_peak_bytes": 2809580032
   },
   "inputs": [
     {
@@ -150,7 +150,7 @@
       "format": "csv",
       "schema_version": "project_file_inventory.v1",
       "required_columns_or_keys": "inventory_schema_version, inventory_run_id, relative_path, file_kind, size_bytes, hash_value",
-      "expected_cardinality": 10121,
+      "expected_cardinality": 28732,
       "applicability": "repository"
     },
     {
@@ -172,7 +172,7 @@
       "format": "json",
       "schema_version": "project_paths.v1",
       "required_columns_or_keys": "registry_schema_version, artifacts",
-      "expected_cardinality": 70,
+      "expected_cardinality": 230,
       "applicability": "repository"
     },
     {
@@ -205,7 +205,7 @@
       "format": "csv",
       "schema_version": "artworks.v1",
       "required_columns_or_keys": "painting_id, title, artist, date_or_period, style_or_period, category",
-      "expected_cardinality": 50,
+      "expected_cardinality": 300,
       "applicability": "prompt_metadata"
     },
     {
@@ -216,7 +216,7 @@
       "format": "csv",
       "schema_version": "case_registry.v1",
       "required_columns_or_keys": "case_id, dataset_id, dataset_scope, experiment_id, painting_id, input_image_path, clean_image_path, mask_or_effect_id, mask_or_effect_path, damage_or_degradation_type, target_damage_fraction, realized_damage_fraction, source_manifest_path, status",
-      "expected_cardinality": 525,
+      "expected_cardinality": 3425,
       "applicability": "all_cases"
     },
     {
@@ -227,7 +227,7 @@
       "format": "csv",
       "schema_version": "model_eligibility.v1",
       "required_columns_or_keys": "case_id, model_id, eligible, eligibility_reason, input_semantics, mask_semantics, restoration_objective",
-      "expected_cardinality": 2100,
+      "expected_cardinality": 17125,
       "applicability": "all_case_model_pairs"
     },
     {
@@ -291,7 +291,7 @@
       "relative_path": "src/restoration_eval/restoration_stable_diffusion.py",
       "required": true,
       "format": "python",
-      "schema_version": "5.1.0",
+      "schema_version": "5.2.0",
       "required_columns_or_keys": "configuration, design, execution, resume, validation",
       "expected_cardinality": 1,
       "applicability": "stable_diffusion_base"
@@ -302,7 +302,7 @@
       "relative_path": "src/restoration_eval/restoration_stable_diffusion_scratch_prompt.py",
       "required": true,
       "format": "python",
-      "schema_version": "1.0.0",
+      "schema_version": "1.1.0",
       "required_columns_or_keys": "effective configuration, paired case selection, prompt policy, design, candidate plan",
       "expected_cardinality": 1,
       "applicability": "scratch_prompt_ablation"
@@ -313,7 +313,7 @@
       "relative_path": "src/restoration_eval/restoration_stable_diffusion_scratch_prompt_contract.py",
       "required": true,
       "format": "python",
-      "schema_version": "1.0.0",
+      "schema_version": "1.1.0",
       "required_columns_or_keys": "schema-compatible roles and normalized damage semantics",
       "expected_cardinality": 1,
       "applicability": "scratch_prompt_ablation"
@@ -324,7 +324,7 @@
       "relative_path": "src/restoration_eval/schemas.py",
       "required": true,
       "format": "python",
-      "schema_version": "1.10.0",
+      "schema_version": "1.18.0",
       "required_columns_or_keys": "stable_diffusion_candidates, prompt_policy, prompt_ablation_design",
       "expected_cardinality": 1,
       "applicability": "normalized_contracts"
@@ -370,7 +370,7 @@
       "artifact_role": "primary",
       "format": "csv",
       "schema_version": "stable_diffusion_candidates.v1",
-      "expected_cardinality": 1330,
+      "expected_cardinality": 8520,
       "downstream_consumers": "Notebooks 13-21 and later reporting"
     },
     {
@@ -388,7 +388,7 @@
       "artifact_role": "primary",
       "format": "png_directory",
       "schema_version": "restored_images.stable_diffusion.v1",
-      "expected_cardinality": 1330,
+      "expected_cardinality": 8520,
       "downstream_consumers": "Notebooks 13-21"
     },
     {
@@ -406,7 +406,7 @@
       "artifact_role": "method_contract",
       "format": "csv",
       "schema_version": "prompt_ablation_design.v1",
-      "expected_cardinality": 210,
+      "expected_cardinality": 1355,
       "downstream_consumers": "Prompt and uncertainty analyses"
     },
     {
@@ -465,60 +465,60 @@
     }
   ],
   "expected_counts": {
-    "artwork_count": 50,
-    "case_registry_rows": 525,
-    "model_eligibility_rows": 2100,
-    "eligible_case_count": 410,
-    "eligible_nonzero_case_count": 360,
-    "zero_control_case_count": 50,
-    "prompt_ablation_case_count": 120,
-    "prompt_context_candidate_count": 680,
-    "uncertainty_case_count": 40,
-    "uncertainty_extension_candidate_count": 240,
-    "primary_candidate_count": 410,
-    "candidate_count": 1330,
-    "model_inference_candidate_count": 1280,
-    "restored_file_count": 1330,
+    "artwork_count": 300,
+    "case_registry_rows": 3425,
+    "model_eligibility_rows": 17125,
+    "eligible_case_count": 2620,
+    "eligible_nonzero_case_count": 2320,
+    "zero_control_case_count": 300,
+    "prompt_ablation_case_count": 815,
+    "prompt_context_candidate_count": 4460,
+    "uncertainty_case_count": 240,
+    "uncertainty_extension_candidate_count": 1440,
+    "primary_candidate_count": 2620,
+    "candidate_count": 8520,
+    "model_inference_candidate_count": 8220,
+    "restored_file_count": 8520,
     "prompt_policy_row_count": 6,
-    "prompt_ablation_design_row_count": 210,
+    "prompt_ablation_design_row_count": 1355,
     "artifact_record_count": 9,
-    "total_output_file_count_without_failure_logs": 1340,
-    "scratch_prompt_case_count": 50,
-    "scratch_seed_control_extension_candidate_count": 120,
-    "scratch_damage_prompt_candidate_count": 200,
-    "scratch_prompt_paired_outcome_count": 400,
+    "total_output_file_count_without_failure_logs": 8530,
+    "scratch_prompt_case_count": 300,
+    "scratch_seed_control_extension_candidate_count": 720,
+    "scratch_damage_prompt_candidate_count": 1200,
+    "scratch_prompt_paired_outcome_count": 2400,
     "runtime_summary_row_count": 14,
     "consolidated_validation_rows": 176,
     "blocking_validation_failures": 0,
     "warning_validation_failures": 0,
-    "canonical_output_files": 1340,
+    "canonical_output_files": 8530,
     "temporary_work_files_before_completion": 9,
     "selected_visual_candidate_count": 48
   },
   "observed_counts": {
-    "artwork_count": 50,
-    "case_registry_rows": 525,
-    "model_eligibility_rows": 2100,
-    "eligible_case_count": 410,
-    "primary_candidate_count": 410,
-    "prompt_context_candidate_count": 680,
-    "uncertainty_extension_candidate_count": 240,
-    "scratch_prompt_case_count": 50,
-    "scratch_seed_control_extension_candidate_count": 120,
-    "scratch_damage_prompt_candidate_count": 200,
-    "scratch_prompt_paired_outcome_count": 400,
-    "candidate_count": 1330,
-    "model_inference_candidate_count": 1280,
-    "zero_control_case_count": 50,
-    "restored_file_count": 1330,
+    "artwork_count": 300,
+    "case_registry_rows": 3425,
+    "model_eligibility_rows": 17125,
+    "eligible_case_count": 2620,
+    "primary_candidate_count": 2620,
+    "prompt_context_candidate_count": 4460,
+    "uncertainty_extension_candidate_count": 1440,
+    "scratch_prompt_case_count": 300,
+    "scratch_seed_control_extension_candidate_count": 720,
+    "scratch_damage_prompt_candidate_count": 1200,
+    "scratch_prompt_paired_outcome_count": 2400,
+    "candidate_count": 8520,
+    "model_inference_candidate_count": 8220,
+    "zero_control_case_count": 300,
+    "restored_file_count": 8520,
     "prompt_policy_row_count": 6,
     "runtime_summary_row_count": 14,
-    "prompt_ablation_design_row_count": 210,
+    "prompt_ablation_design_row_count": 1355,
     "artifact_record_count": 9,
     "consolidated_validation_rows": 176,
     "blocking_validation_failures": 0,
     "warning_validation_failures": 0,
-    "canonical_output_files": 1340,
+    "canonical_output_files": 8530,
     "temporary_work_files_before_completion": 9,
     "selected_visual_candidate_count": 48,
     "temporary_work_files_after_completion": 0,
@@ -589,7 +589,7 @@
     "The scratch-aware prompt is a controlled semantic-conditioning treatment and does not change the model, mask, seed, scheduler, inference resolution, compositing policy, or any other generation setting.",
     "Thin scratch masks can lose or fragment spatial support during 512-pixel and latent-grid downsampling; prompting cannot be assumed to resolve that geometric limitation.",
     "Literal scratch terminology is concentrated in the negative prompt because text encoders may not reliably interpret negation in positive prompts.",
-    "The 200 painting-seed pairs are repeated observations nested within 50 paintings; downstream inference must not treat all seed-level pairs as independent paintings."
+    "The 1,200 painting-seed pairs are repeated observations nested within 300 paintings; downstream inference must not treat all seed-level pairs as independent paintings."
   ],
   "refactor_status": "complete",
   "validation_status": "passed",
@@ -604,7 +604,7 @@
     "project_paths_registry"
   ],
   "applicable_dataset_scopes": [
-    "controlled_50"
+    "controlled_300"
   ],
   "applicable_experiment_scopes": [
     "canonical_missing_region",
@@ -618,8 +618,8 @@
   "temporary_work_evidence": [
     {
       "relative_path": "work/candidate_checkpoint.csv",
-      "size_bytes": 2437928,
-      "sha256": "e91ea6c89d492a6850df8b3cd099c463fc8cb86bfda7bdba34db478f3b125353"
+      "size_bytes": 15643669,
+      "sha256": "62f5a0391723e5086efb44bc9469f043c50c137ce4314ac810b99ab301de340b"
     },
     {
       "relative_path": "work/smoke/alternate_seed.png",

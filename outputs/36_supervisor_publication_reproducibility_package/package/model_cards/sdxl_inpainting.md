@@ -2,17 +2,17 @@
 
 **Evaluation status:** Partial Evaluation  
 **Method role:** bounded higher capacity diffusion candidate  
-**Dataset scope:** controlled_50  
+**Dataset scope:** controlled_300  
 **Decision boundary:** Digital restoration candidate method, not a conservation authority
 
 <a id="at-a-glance"></a>
 ## 1. At a glance
 
-SDXL completed a bounded ten-case partial evaluation, providing direct local feasibility evidence without supporting a full-dataset ranking.
+SDXL completed 24 of 35 scheduled cases in a bounded partial evaluation, providing local feasibility and cost evidence without supporting a full-dataset ranking.
 
-- Completed candidates: **10 of 10**.
-- Mean runtime: **378.47 seconds per candidate**.
-- Observed notebook-owned storage: **6.86 MiB**.
+- Completed candidates: **24 of 35**.
+- Mean runtime: **199.52 seconds per candidate**.
+- Observed notebook-owned storage: **16.19 MiB**.
 - Validated anchor wins in the applicable population: **0 of 11**.
 
 **Conclusion:** The compute and quality evidence support this method only within its declared evaluation scope. Anchor wins are descriptive Notebook 21 outcomes, not a combined quality score or conservation verdict.
@@ -26,7 +26,7 @@ SDXL completed a bounded ten-case partial evaluation, providing direct local fea
 | Family | prompt conditioned sdxl latent diffusion inpainting |
 | Original purpose | Higher-capacity text-conditioned image generation and masked image modification. |
 | Project implementation | Diffusers StableDiffusionXLInpaintPipeline |
-| Implementation version | 3.0.0 |
+| Implementation version | 3.1.0 |
 | Model identifier | `diffusers/stable-diffusion-xl-1.0-inpainting-0.1` |
 | Model revision | `115134f363124c53c7d878647567d04daf26e41e` |
 | Software licence | CreativeML-OpenRAIL++-M |
@@ -74,7 +74,7 @@ The inpainting checkpoint was initialized from SDXL base and trained for 40k ste
 | Precision | float16 |
 | Inference resolution | 768 x 768 |
 | Output resolution | 768 x 768 |
-| Input constraints | Normalized 768 x 768 RGB painting input in the predeclared ten-case bounded scope. |
+| Input constraints | Normalized 768 x 768 RGB painting input in the predeclared 35-case bounded scope across 30 paintings. |
 | Mask constraints | Single-channel case-semantic missing-region mask using threshold 128; exact outside-mask compositing; no empty-mask controls in the partial evaluation. |
 | Deterministic | False |
 | Prompt dependent | True |
@@ -87,10 +87,10 @@ The project used a fixed predeclared configuration and exact outside-mask compos
 
 | Coverage field | Recorded count |
 |---|---:|
-| Paintings | 5 |
-| Unique cases | 10 |
-| Candidates | 10 |
-| Model-inference candidates | 10 |
+| Paintings | 30 |
+| Unique cases | 35 |
+| Candidates | 35 |
+| Model-inference candidates | 35 |
 | Identity zero controls | 0 |
 
 Cases and repeated candidates remain nested within paintings. Candidate rows are not treated as independent artworks.
@@ -100,40 +100,40 @@ Cases and repeated candidates remain nested within paintings. Candidate rows are
 
 | Measure | Observed result |
 |---|---:|
-| Total runtime | 63.1 minutes |
-| Mean runtime | 378.469 s |
-| Median runtime | 294.916 s |
-| p95 runtime | 595.271 s |
-| Failed candidates | 0 |
-| Failure rate | 0.00% |
+| Total runtime | 79.8 minutes |
+| Mean runtime | 199.519 s |
+| Median runtime | 198.031 s |
+| p95 runtime | 206.559 s |
+| Failed candidates | 11 |
+| Failure rate | 31.43% |
 | Retries | 0 |
-| Throughput | 0.0026 candidates/second |
+| Throughput | 0.0050 candidates/second |
 | Candidate multiplier | 1.0000 candidates per evaluated case |
 | Recorded peak GPU allocation | 5.25 GiB |
 | Recorded total GPU memory | 6.00 GiB |
-| Output files | 16 |
-| Output storage | 6.86 MiB |
+| Output files | 30 |
+| Output storage | 16.19 MiB |
 
 **Conclusion:** These measurements describe the recorded workstation and software environment. They are project evidence, not universal hardware benchmarks.
 
 <a id="quality-evidence"></a>
 ## 8. Quality evidence
 
-Applicable population: `sdxl_four_model_subset` (10 cases nested within 5 paintings).
+Applicable population: `sdxl_four_model_subset` (24 cases nested within 19 paintings).
 
 | Validated anchor | Restored mean | Rank | Winner |
 |---|---:|---:|---|
-| classical_masked_mae | 79.803 | 4 | lama |
-| colour_masked_delta_e | 32.597 | 4 | lama |
-| feature_clip_crop | 0.82359 | 3 | stable_diffusion_inpainting |
-| feature_dino_crop | 0.74495 | 2 | stable_diffusion_inpainting |
-| perceptual_crop_lpips | 0.40265 | 4 | lama |
-| seam_boundary_gradient | 0.050275 | 4 | lama |
-| semantic_local_dino | 0.49961 | 3 | lama |
-| spatial_masked_error | 79.803 | 4 | lama |
-| structural_affinity_correlation | 0.63095 | 4 | lama |
-| structural_crop_ssim | 0.67774 | 4 | opencv_telea |
-| texture_crop_p95 | 5.0656 | 4 | lama |
+| classical_masked_mae | 72.627 | 5 | lama |
+| colour_masked_delta_e | 29.611 | 5 | lama |
+| feature_clip_crop | 0.86598 | 4 | stable_diffusion_inpainting |
+| feature_dino_crop | 0.77602 | 3 | stable_diffusion_inpainting |
+| perceptual_crop_lpips | 0.31078 | 5 | lama |
+| seam_boundary_gradient | 0.046617 | 5 | lama |
+| semantic_local_dino | 0.51293 | 5 | lama |
+| spatial_masked_error | 72.627 | 5 | lama |
+| structural_affinity_correlation | 0.67215 | 5 | lama |
+| structural_crop_ssim | 0.75834 | 5 | opencv_telea |
+| texture_crop_p95 | 3.5998 | 5 | lama |
 
 The method won 0 of 11 validated anchors in this population. Its strongest displayed anchor was `feature_dino_crop`.
 
@@ -151,10 +151,10 @@ Low variability or deterministic repetition does not prove that a reconstructed 
 
 | Scenario | Candidate outputs | Central runtime projection | Output-storage projection |
 |---|---:|---:|---:|
-| projected_300_canonical_primary | 1,500 | 133.3 hours | 1,014.51 MiB |
-| projected_300_current_design_mix | not applicable | not applicable | not applicable: bounded SDXL scope has no full current-design equivalent |
+| projected_600_current_design_mix | not applicable | not applicable | not applicable to this model-specific projection scenario |
+| projected_300_sdxl_full_design | 2,620 | 128.6 hours | 1.71 GiB |
 
-Raw observed median, mean, and p95 runtimes are retained in the compute table. The displayed sensitivity envelope uses the smaller of scaled median and mean as its lower value, scaled mean as its central value, and the larger of scaled p95 and mean as its upper value. These are not confidence intervals. No 300-painting experiment was executed.
+Raw observed median, mean, and p95 runtimes are retained in the compute table. The displayed sensitivity envelope uses the smaller of scaled median and mean as its lower value, scaled mean as its central value, and the larger of scaled p95 and mean as its upper value. These are not confidence intervals. The controlled 300-painting study was executed; only rows explicitly labelled as projections are extrapolations.
 
 <a id="strengths-and-weaknesses"></a>
 ## 11. Strengths and weaknesses
@@ -167,23 +167,23 @@ Strengths:
 
 Weaknesses:
 
-- only ten purposively selected cases
+- only 35 purposively selected cases, of which 24 completed
 - very high runtime on recorded hardware
 - no repeated-seed uncertainty coverage
 
 Known project limitations:
 
 - Runtime and memory observations describe one recorded local workstation and software environment.
-- The 300-painting values are transparent linear projections, not executed experiments.
+- The controlled 300-painting values are executed observations; only the explicitly labelled 600-painting and full-design SDXL values are projections.
 - Projected storage covers notebook-owned output artifacts and excludes model caches, environments, Git history, and downstream metric outputs.
-- SDXL has ten completed candidates nested within five paintings and cannot support a full-scope ranking.
+- SDXL scheduled 35 bounded cases across 30 paintings; 24 completed, one timed out and ten were skipped under the declared budget, so it cannot support a full-scope ranking.
 - LaMa per-case runtime includes transparent allocation from IOPaint batch wall-clock measurements.
 - Quality-anchor wins are descriptive validated Notebook 21 evidence, not a universal quality or conservation score.
-- The ten cases are a predeclared purposive partial scope and do not represent a full SDXL evaluation.
-- The ten case observations are nested within five paintings; downstream inference must treat painting as the independent unit.
+- The 35 cases are a predeclared balanced purposive scope and do not represent a full SDXL evaluation.
+- The 35 case observations span 30 paintings; repeated cases from five retained pilot anchors are nested observations.
 - A timeout or CUDA out-of-memory failure is hardware/runtime evidence and must not be interpreted as poor restoration quality.
 - Only technically validated completed candidates may enter downstream metric computation.
-- The global two-hour budget can leave later scheduled cases explicitly unexecuted.
+- The global seven-hour budget can leave later scheduled cases explicitly unexecuted.
 - SDXL outputs are plausible prompt-conditioned inpaintings, not historically verified reconstructions or conservation recommendations.
 
 <a id="human-decision-support-interpretation"></a>
@@ -212,4 +212,4 @@ Primary and runtime sources:
 
 ### Final scoped verdict
 
-SDXL completed a bounded ten-case partial evaluation, providing direct local feasibility evidence without supporting a full-dataset ranking. This conclusion remains limited to the controlled evidence and the recorded compute environment.
+SDXL completed 24 of 35 scheduled cases in a bounded partial evaluation, providing local feasibility and cost evidence without supporting a full-dataset ranking. This conclusion remains limited to the controlled evidence and the recorded compute environment.

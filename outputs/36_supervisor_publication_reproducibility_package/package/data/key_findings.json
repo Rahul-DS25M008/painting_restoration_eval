@@ -1,189 +1,317 @@
 {
-  "schema_version": "supervisor_key_findings.v1",
-  "notebook_id": "36",
-  "notebook_stem": "36_supervisor_publication_reproducibility_package",
-  "generated_at_utc": "2026-09-03T21:13:24Z",
-  "creates_new_scientific_evidence": false,
-  "dataset_scope": "controlled_50",
-  "finding_count": 8,
-  "findings": [
+  "schema_version": "supervisor_key_findings.v2",
+  "dataset_scope": "controlled_300",
+  "population": {
+    "upstream_notebooks": 38,
+    "paintings": 300,
+    "registered_cases": 3425,
+    "restoration_cases": 2620,
+    "primary_candidates": 10480,
+    "approved_candidates": 13879,
+    "uncertainty_groups": 1025,
+    "sdxl_scheduled_cases": 35,
+    "sdxl_completed_candidates": 24,
+    "thesis_figures": 18,
+    "publication_figures": 6,
+    "model_reports": 5,
+    "model_cards": 5,
+    "case_report_records": 30,
+    "painting_report_records": 300,
+    "quality_anchors": 11
+  },
+  "model_coverage": [
     {
-      "finding_key": "controlled_collection",
-      "finding_id": "finding_56068361a2fed88952587082",
-      "display_order": 1,
-      "title": "Controlled painting collection",
-      "value": 50.0,
-      "value_unit": "paintings",
-      "conclusion": "The evaluation covers a balanced 50-painting collection with ten paintings in each of five visual categories.",
-      "plain_implication": "The balanced collection supports controlled within-benchmark comparisons, but conclusions must remain limited to this collection.",
-      "evidence_strength": "validated_scope",
-      "scope": "controlled_50 dataset",
-      "denominator": "50",
+      "model_id": "opencv_telea",
+      "evaluation_status": "fully_evaluated",
+      "evaluated_case_count": 2620,
+      "evaluated_candidate_count": 2620,
+      "completed_count": 2620,
+      "failed_count": 0,
+      "median_runtime_seconds": 0.51901975,
+      "quality_anchor_wins": 1.0
+    },
+    {
+      "model_id": "lama",
+      "evaluation_status": "fully_evaluated",
+      "evaluated_case_count": 2620,
+      "evaluated_candidate_count": 2620,
+      "completed_count": 2620,
+      "failed_count": 0,
+      "median_runtime_seconds": 1.4508836347,
+      "quality_anchor_wins": 10.0
+    },
+    {
+      "model_id": "hint_places2",
+      "evaluation_status": "fully_evaluated",
+      "evaluated_case_count": 2620,
+      "evaluated_candidate_count": 2620,
+      "completed_count": 2620,
+      "failed_count": 0,
+      "median_runtime_seconds": 6.677,
+      "quality_anchor_wins": 0.0
+    },
+    {
+      "model_id": "stable_diffusion_inpainting",
+      "evaluation_status": "fully_evaluated",
+      "evaluated_case_count": 2620,
+      "evaluated_candidate_count": 8520,
+      "completed_count": 8520,
+      "failed_count": 0,
+      "median_runtime_seconds": 8.62031595,
+      "quality_anchor_wins": 0.0
+    },
+    {
+      "model_id": "sdxl_inpainting",
+      "evaluation_status": "partial_evaluation",
+      "evaluated_case_count": 35,
+      "evaluated_candidate_count": 35,
+      "completed_count": 24,
+      "failed_count": 11,
+      "median_runtime_seconds": 198.0315,
+      "quality_anchor_wins": null
+    }
+  ],
+  "research_questions": [
+    {
+      "question_id": "rq1",
+      "question": "What additional evidence does a region-aware, multi-metric evaluation framework provide beyond traditional image-similarity metrics when evaluating AI-assisted painting restoration?",
+      "answer": "Complementary region-aware metrics expose disagreements; no single or combined score establishes restoration trustworthiness.",
+      "limitation": "Metrics and feature similarity are not conservation approval.",
+      "source_table_path": "outputs/33_final_evaluation_report/data/thesis_tables.csv",
+      "source_table_sha256": "9232ab7e09c1d3b1e9ce36201676c2289f46c86d99a1f894f1fdd080336eb058",
+      "source_row_ids": [
+        "thesis_a8f0c14c046391941956e083",
+        "thesis_6e79105b296588e027242ee7",
+        "thesis_c3a2bea1ed7e5f187e41e710",
+        "thesis_f00d174b974be35fbeab5749",
+        "thesis_f44610a64b059fbd8bc15f94",
+        "thesis_c344269026871c63debf1d1a",
+        "thesis_4347af255c6fd6b1efe4982c",
+        "thesis_89fea44c3bfc973be4630016",
+        "thesis_54560b2094a72288021e0f37",
+        "thesis_a74db719732ce16f41ebc367",
+        "thesis_e2cd518b3517dea268b785a6",
+        "thesis_a7b4783a43159c5478acec60",
+        "thesis_b40c77a493769b0f38c5379f",
+        "thesis_5c8fe9c376018107cfbca98a",
+        "thesis_4694379a2c5cdde18b975319",
+        "thesis_f1cfd09de39ed68336ab10ca",
+        "thesis_9dd06a8bab3c3336338e717a",
+        "thesis_e2f41111bec2e928df9aaede",
+        "thesis_08a43f098f2c2403f47f67ff",
+        "thesis_72f05773a6570cb8d4bf16ae",
+        "thesis_2b8837e417b445c789372c92",
+        "thesis_7229e0709eb7c98017628b33",
+        "thesis_469cc165076aea6f6715bf0b",
+        "thesis_4fd581ef30a4e466587bdf1e",
+        "thesis_fd1a49566ded10702916d6de",
+        "thesis_f57cbc2cd6e0ace41290e3a6",
+        "thesis_3241a6186adfe8224033c84e",
+        "thesis_279c4ac2de4201af7d68db57",
+        "thesis_a66d3bdb6137f80b82b5626c",
+        "thesis_0318134108403e08f78b0419",
+        "thesis_7ffeaf78fa335f5995f9fcdc",
+        "thesis_0d18f7a80d7899fc4514c42f",
+        "thesis_04f831fef533a440667644cb",
+        "thesis_d0ae140ca752ed883df6c6b1"
+      ],
+      "source_paths": [
+        "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv",
+        "outputs/28_metric_and_region_policy_ablation/metrics/ablation_results.csv",
+        "outputs/28_metric_and_region_policy_ablation/metrics/flag_stability.csv"
+      ]
+    },
+    {
+      "question_id": "rq2",
+      "question": "How do selected inpainting methods differ in restoration quality across controlled artificial damage conditions, and how consistent are these differences across the evaluated paintings?",
+      "answer": "LaMa leads 10 of 11 saved quality anchors and Telea leads crop SSIM. HINT is a full deterministic method; SDXL remains bounded. Conclusions apply to this controlled benchmark.",
+      "limitation": "No universal model superiority or independently established art-historical style effect.",
+      "source_table_path": "outputs/33_final_evaluation_report/data/thesis_tables.csv",
+      "source_table_sha256": "9232ab7e09c1d3b1e9ce36201676c2289f46c86d99a1f894f1fdd080336eb058",
+      "source_row_ids": [
+        "thesis_c19430e9b49df088d406afff",
+        "thesis_fa5fb7a67d85ce23ed0e9f03",
+        "thesis_ec8a1f17d907ebcb9ab9a830",
+        "thesis_5d54e3d4081a6162dcd8c76a",
+        "thesis_1189145352084c0a7852a218",
+        "thesis_a7139152855eddcb5f6d8322",
+        "thesis_1d693eba9a5b9b91d8d83297",
+        "thesis_487118084ef9743d6225aa99",
+        "thesis_585290478d4111ea965a113d",
+        "thesis_6863d6ca2c356042dfaf4c67",
+        "thesis_b88621bfeac551ee0799b5e1",
+        "thesis_c9fb5e3042867bf77efd3947",
+        "thesis_6c7e7b887f45a1ea79669172",
+        "thesis_0b244a5f27e655ae3fddb914",
+        "thesis_758c99ff409d9274b5f4f82d",
+        "thesis_34b81a319ec71c5dcc225eb1",
+        "thesis_e5144c4df1e967a874e22202",
+        "thesis_e965e5f3c4643713d6d007d4",
+        "thesis_3886cccc20be57c776ececd7",
+        "thesis_cfa8df113db0e366d030f324",
+        "thesis_18c2ecb234a02210f10a421d",
+        "thesis_1bc3dc60005ea6e06ff7f321",
+        "thesis_1cdcfda9a20edf7a16a97938",
+        "thesis_ee72a4ef02bb0d3a2e9902ba",
+        "thesis_c7064a867b24f8ded206d852",
+        "thesis_80f1acad0f9dc2a1bfe437af",
+        "thesis_f8d45a183798982074cd7ee3",
+        "thesis_39337463f5f45bf32f472f24",
+        "thesis_4d23a5d9c79148927236d442",
+        "thesis_4ab8a5c0d1677bed1cd26191",
+        "thesis_5ba5a62637ddfc6a92df97cd",
+        "thesis_12512f1e33f5a8daf5427997",
+        "thesis_67fb4045ba3ff923b78236de",
+        "thesis_a2fd4c0471f547b61743d64b",
+        "thesis_7cebde89428d7dd5ecebcb97",
+        "thesis_668b36b211f9ec2b198ffe5d",
+        "thesis_a9e805ab31870d6ea765eb7f",
+        "thesis_d37046555367b43847b4d63d",
+        "thesis_39ad82fc95c7d4a6831bf4ea",
+        "thesis_79c700f053e9ee839289d73b",
+        "thesis_ef65bc2b61fc9b177716bb2b",
+        "thesis_fa44998613603980d1877435",
+        "thesis_b1ed3217ed3a58835f337065",
+        "thesis_3fb06a6e22717bbafd0926a7",
+        "thesis_dff9673ac3ffbb384ae78fee",
+        "thesis_9f7bbb44463e1b33c80d8257",
+        "thesis_e19498fd273cb45be8ec7b74",
+        "thesis_9d2509b9772e89736fbc0236",
+        "thesis_89fa7d4e053c54480e0d3aae"
+      ],
+      "source_paths": [
+        "outputs/21_multi_model_comparison/metrics/model_comparison.csv",
+        "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv"
+      ]
+    },
+    {
+      "question_id": "rq3",
+      "question": "How can repeated-candidate disagreement be used to characterize the stability of stochastic painting restorations, and how does it relate to other restoration-quality diagnostics?",
+      "answer": "The 780 canonical and 245 damage-size groups characterize repeated-seed variation. Disagreement supports inspection, not calibrated confidence or historical correctness.",
+      "limitation": "Only supported repeated-seed groups; deterministic methods do not acquire seed uncertainty.",
+      "source_table_path": "outputs/33_final_evaluation_report/data/thesis_tables.csv",
+      "source_table_sha256": "9232ab7e09c1d3b1e9ce36201676c2289f46c86d99a1f894f1fdd080336eb058",
+      "source_row_ids": [
+        "thesis_a5d734c42d0d1f19f81d5b65",
+        "thesis_45bce0902cb28b3a321e4151",
+        "thesis_fad2addbce62e2ada45dc608",
+        "thesis_42e8fd6508b8d7f429b1039e",
+        "thesis_32e8a6444509100a280dce27",
+        "thesis_9abeda97b47af66e61b521b3",
+        "thesis_d04a472908bbd2f4c378c019",
+        "thesis_d236afe8706ef2b79b542461"
+      ],
+      "source_paths": [
+        "outputs/22_damage_size_diffusion_uncertainty_extension/metrics/damage_size_uncertainty.csv",
+        "outputs/26_grouped_and_statistical_analysis/metrics/statistical_results.csv"
+      ]
+    }
+  ],
+  "headline_findings": [
+    {
+      "finding_id": "balanced_collection",
+      "limitation": "This does not represent every artistic tradition, period or conservation condition.",
       "source_notebook_ids": [
         "01"
       ],
-      "source_paths": [
-        "outputs/01_dataset_verification/data/artworks.csv"
-      ],
-      "limitation": "The controlled collection does not establish real-world conservation generality."
+      "statement": "The collection contains 300 paintings, with 60 in each of five broad visual categories.",
+      "title": "Balanced controlled collection"
     },
     {
-      "finding_key": "approved_candidates",
-      "finding_id": "finding_ff63dfd683e8020e1c767d2d",
-      "display_order": 2,
-      "title": "Approved restoration evidence",
-      "value": 1785.0,
-      "value_unit": "candidates",
-      "conclusion": "All 1,785 approved candidates remain available for filtering and case-level inspection.",
-      "plain_implication": "The complete candidate catalog remains available for inspection; the report does not rely only on its selected examples.",
-      "evidence_strength": "validated_complete_catalog",
-      "scope": "approved candidate population",
-      "denominator": "1785",
+      "finding_id": "comparison_population",
+      "limitation": "Eligibility and metric performance do not establish historical correctness.",
       "source_notebook_ids": [
-        "29",
-        "34"
+        "08",
+        "21"
       ],
-      "source_paths": [
-        "outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv"
-      ],
-      "limitation": "Candidate count is not an independent sample-size claim because repeated seeds and models share cases."
+      "statement": "The four full-scope methods were compared on 2,620 eligible cases, producing 10,480 primary candidates.",
+      "title": "Matched four-method evidence"
     },
     {
-      "finding_key": "lama_anchor_lead",
-      "finding_id": "finding_d57ce83c3ee8f0ab3b3ad70a",
-      "display_order": 3,
-      "title": "Strongest general benchmark result",
-      "value": 10.0,
-      "value_unit": "of 11 quality anchors",
-      "conclusion": "LaMa ranks first on 10 of 11 quality anchors. Within this controlled benchmark, it is the strongest general restoration baseline across error, colour, perceptual, feature, seam, texture, and structural-affinity evidence.",
-      "plain_implication": "LaMa is the best default baseline among the three fully evaluated methods when several forms of evidence are considered together.",
-      "evidence_strength": "validated_comparative",
-      "scope": "three fully evaluated models across 410 cases",
-      "denominator": "11",
+      "finding_id": "metric_disagreement",
+      "limitation": "No combined or universal quality score was created.",
       "source_notebook_ids": [
         "21",
         "33"
       ],
-      "source_paths": [
-        "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv",
-        "outputs/33_final_evaluation_report/data/thesis_tables.csv"
-      ],
-      "limitation": "Anchor wins are metric-specific benchmark results, not conservation approval or historical authenticity."
+      "statement": "LaMa led 10 of 11 separate quality anchors; Telea led crop SSIM.",
+      "title": "Different measurements can prefer different methods"
     },
     {
-      "finding_key": "metric_disagreement",
-      "finding_id": "finding_be0ba692aeac9c0494a5df23",
-      "display_order": 4,
-      "title": "One metric changes the winner",
-      "value": 1.0,
-      "value_unit": "of 11 quality anchors",
-      "conclusion": "OpenCV Telea narrowly leads crop SSIM, while LaMa leads the other ten anchors. SSIM alone would therefore give an incomplete account of restoration quality.",
-      "plain_implication": "A conclusion based only on SSIM would favour Telea and conceal LaMa's broader advantage. Metric choice materially changes the verdict.",
-      "evidence_strength": "validated_metric_disagreement",
-      "scope": "quality-anchor comparison",
-      "denominator": "11",
-      "source_notebook_ids": [
-        "21",
-        "33"
-      ],
-      "source_paths": [
-        "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv",
-        "outputs/33_final_evaluation_report/data/thesis_tables.csv"
-      ],
-      "limitation": "The result demonstrates metric disagreement; it does not make either model universally correct."
-    },
-    {
-      "finding_key": "uncertainty_coverage",
-      "finding_id": "finding_ff1f99bcdade39cf8ed81b9e",
-      "display_order": 5,
-      "title": "Repeated-run uncertainty coverage",
-      "value": 165.0,
-      "value_unit": "uncertainty groups",
-      "conclusion": "Repeated-seed evidence covers 130 canonical groups and 35 damage-size groups for Stable Diffusion.",
-      "plain_implication": "Stable Diffusion outputs that change more across seeds should receive closer visual inspection.",
-      "evidence_strength": "validated_supported_population",
-      "scope": "supported Stable Diffusion repeated-seed groups",
-      "denominator": "165",
+      "finding_id": "repeated_seed_evidence",
+      "limitation": "This is empirical variation, not calibrated confidence.",
       "source_notebook_ids": [
         "18",
         "22"
       ],
-      "source_paths": [
-        "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_calibration_inputs.csv",
-        "outputs/22_damage_size_diffusion_uncertainty_extension/metrics/damage_size_uncertainty.csv"
-      ],
-      "limitation": "Seed variability is an empirical uncertainty proxy, not calibrated confidence."
+      "statement": "Stable Diffusion has 1,025 supported four-seed groups covering 4,100 candidate memberships.",
+      "title": "Repeated outputs reveal variation"
     },
     {
-      "finding_key": "sdxl_boundary",
-      "finding_id": "finding_4549a08b17e791b97d59ba89",
-      "display_order": 6,
-      "title": "SDXL remains bounded evidence",
-      "value": 10.0,
-      "value_unit": "candidates",
-      "conclusion": "SDXL contributes ten completed cases for qualitative and bounded comparison, not a fourth full benchmark.",
-      "plain_implication": "SDXL can be discussed as a feasibility result, but it cannot be ranked as a fully evaluated fourth model.",
-      "evidence_strength": "validated_partial_coverage",
-      "scope": "partial SDXL feasibility population",
-      "denominator": "410",
-      "source_notebook_ids": [
-        "12",
-        "30",
-        "33"
-      ],
-      "source_paths": [
-        "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv",
-        "outputs/33_final_evaluation_report/data/thesis_tables.csv"
-      ],
-      "limitation": "SDXL results must not be generalized to all 410 restoration-eligible cases."
-    },
-    {
-      "finding_key": "human_review",
-      "finding_id": "finding_3b9d3b11c0241b5a7624f94a",
-      "display_order": 7,
-      "title": "Human review remains central",
-      "value": 95.4,
-      "value_unit": "% of candidates",
-      "conclusion": "1,703 of 1,785 candidates trigger conservative review guidance. Automated restoration should support inspection, not replace expert judgement.",
-      "plain_implication": "The conservative flag rate makes automated restoration unsuitable for unsupervised acceptance.",
-      "evidence_strength": "validated_computational_flags",
-      "scope": "approved candidate population",
-      "denominator": "1785",
+      "finding_id": "review_flags",
+      "limitation": "A flag is not a probability, expert verdict or conservation decision.",
       "source_notebook_ids": [
         "27",
-        "29",
-        "33"
+        "28",
+        "29"
       ],
-      "source_paths": [
-        "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv",
-        "outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv"
-      ],
-      "limitation": "Computational review flags are diagnostic rules, not expert annotations or conservation ground truth."
+      "statement": "Operational thresholds point to evidence that deserves closer inspection.",
+      "title": "Flags organize review rather than replace it"
     },
     {
-      "finding_key": "no_combined_score",
-      "finding_id": "finding_0463745ce8b0a315e377b4a5",
-      "display_order": 8,
-      "title": "No universal restoration score",
-      "value": 0.0,
-      "value_unit": "approved combined scores",
-      "conclusion": "The evaluation keeps metric families, regions, uncertainty, and failure evidence separate so that important disagreements remain visible.",
-      "plain_implication": "Keeping evidence separate prevents a convenient single number from hiding metric and regional disagreement.",
-      "evidence_strength": "approved_methodological_boundary",
-      "scope": "complete evaluation framework",
-      "denominator": "0",
+      "finding_id": "focused_portrait_audit",
+      "limitation": "Rendered lightness is not race or identity, and the audit does not establish demographic bias.",
       "source_notebook_ids": [
-        "08",
-        "21",
-        "28",
-        "33"
+        "D02"
       ],
-      "source_paths": [
-        "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv",
-        "outputs/28_metric_and_region_policy_ablation/metrics/ablation_results.csv",
-        "outputs/33_final_evaluation_report/data/thesis_tables.csv"
-      ],
-      "limitation": "The dashboard supports evidence review and does not produce conservation approval."
+      "statement": "D02 found hands harder to restore in its matched audit, while rendered lightness did not show a consistent overall association.",
+      "title": "The focused portrait audit remains separate"
     }
-  ]
+  ],
+  "headline_source": {
+    "path": "outputs/34_final_streamlit_dashboard_assets/data/bootstrap/bootstrap.json",
+    "sha256": "1a01223cf6c8ed290e42fd52291dbe97fe50fc0a3e3844a79e580970f7eeea52"
+  },
+  "scientific_boundaries": {
+    "no_scientific_recomputation": true,
+    "no_restoration_inference": true,
+    "no_universal_combined_score": true,
+    "controlled_synthetic_scope_only": true,
+    "uncertainty_is_not_calibrated_confidence": true,
+    "sdxl_is_bounded_feasibility_only": true,
+    "computational_flags_are_not_expert_ground_truth": true,
+    "statements": [
+      "The package republishes validated evidence; it does not recompute metrics or restoration candidates.",
+      "The benchmark uses controlled synthetic damage and does not establish real-world conservation generality.",
+      "Visual plausibility is not historical correctness, restoration trustworthiness, or conservation approval.",
+      "Four methods have full coverage; SDXL has 24 completed candidates from a bounded 35-case schedule and is not a fifth full benchmark method.",
+      "D01 is separate 12-case HINT/MAT decision evidence; D02 is a separate focused portrait audit, not demographic-bias ground truth.",
+      "The N35 live deployment was accepted with 14 warning nonpasses and a disclosed notebook-source mismatch; unmeasured qualifications remain unmeasured.",
+      "The N29 historical artifact-manifest discrepancy is retained and disclosed, not silently repaired.",
+      "Repeated-seed variability is an uncertainty proxy, not calibrated confidence.",
+      "Computational flags, retrieval results, and recommendations are decision support, not expert ground truth.",
+      "No universal combined quality, uncertainty, or trustworthiness score is constructed."
+    ]
+  },
+  "provenance_exceptions": {
+    "n29": {
+      "manifest_path": "outputs/29_explainable_ai_and_case_retrieval/manifests/run_manifest.json",
+      "recorded_artifact_manifest_sha256": "5df62a9675e9b6ad214475887378d29043312ca792f33ab0c5c24a7e2ac08a60",
+      "permitted_observed_artifact_manifest_sha256": [
+        "9ec4a9f68a49f724b4f56ed3cf259971013378c39961be2065ce13f5a0438dfa",
+        "c239549fe5e2a2d36ceeef746cd9a7249ef6b11c389816e35d77323fd3f4490f"
+      ],
+      "disposition": "Disclose the historical metadata discrepancy; verify all six payload groups independently, never rewrite the upstream record."
+    },
+    "n35": {
+      "notebook_path": "notebooks/35_dashboard_and_deployment_validation.ipynb",
+      "recorded_source_sha256": "1802be0d85d014a204ad15570f6a754ede279034458054201d046f1016f16b29",
+      "accepted_saved_source_sha256": "0013ed457a6869d7d5c10425d94d94d0771c4f842a2014c59a91e029158c7eaa",
+      "expected_passed_checks": 519,
+      "expected_warning_nonpasses": 14,
+      "expected_dependency_warnings": 4,
+      "expected_unmeasured_qualifications": 10,
+      "disposition": "Owner accepted proceeding without rerun; preserve source mismatch and all unmeasured qualifications as limitations, not passes."
+    }
+  }
 }

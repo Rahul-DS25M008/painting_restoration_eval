@@ -1,5 +1,5 @@
 config_schema_version: "diffusion_uncertainty_config.v1"
-config_version: "1.0.0"
+config_version: "1.1.0"
 
 diffusion_uncertainty:
   notebook_id: "18"
@@ -196,22 +196,23 @@ diffusion_uncertainty:
     work_cleanup_policy: "remove_notebook_owned_checkpoints_after_canonical_outputs_validate"
 
   expected_counts:
-    uncertainty_groups: 130
-    unique_cases: 80
-    candidates: 520
+    uncertainty_groups: 780
+    unique_cases: 480
+    candidates: 3120
     seeds_per_group: 4
     unordered_pairs_per_group: 6
-    unordered_candidate_pairs: 780
-    generic_prompt_groups: 80
-    scratch_aware_prompt_groups: 50
-    pixel_group_summary_rows: 1560
-    pixel_pair_rows: 9360
-    lpips_pair_rows: 1560
-    feature_pair_rows: 3120
-    seed_reference_rows: 5200
-    uncertainty_metric_rows: 20800
-    calibration_rows: 130
-    sdxl_candidates: 10
+    unordered_candidate_pairs: 4680
+    generic_prompt_groups: 480
+    scratch_aware_prompt_groups: 300
+    pixel_group_summary_rows: 9360
+    pixel_pair_rows: 56160
+    lpips_pair_rows: 9360
+    feature_pair_rows: 18720
+    seed_reference_rows: 31200
+    uncertainty_metric_rows: 124800
+    calibration_rows: 780
+    sdxl_attempts: 35
+    sdxl_candidates: 24
     sdxl_distinct_seeds: 1
 
   evidence_policy:
@@ -224,7 +225,7 @@ diffusion_uncertainty:
     spatial_map_owner: "Notebook 19"
 
   known_limitations:
-    - "The eligible population is Stable Diffusion 1.5 only; SDXL has one seed per case and cannot support empirical seed uncertainty."
+    - "The eligible population is Stable Diffusion 1.5 only; SDXL completed 24 of 35 bounded attempts with one seed per case and cannot support empirical seed uncertainty."
     - "All eligible cases are canonical binary missing-region experiments; generalization to synthetic degradations is not established."
     - "Artwork style_or_period metadata is incomplete; missing values are retained as the explicit unclassified label while category remains complete."
     - "Repeated seeds are candidate-level observations nested within cases, not independent paintings."

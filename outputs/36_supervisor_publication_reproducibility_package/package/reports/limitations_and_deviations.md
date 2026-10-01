@@ -1,134 +1,138 @@
-# Limitations and Deviations
+# Limitations and deviations
 
-**Notebook:** `36_supervisor_publication_reproducibility_package.ipynb`  
-**Recorded:** `2026-09-03T21:13:25Z`  
-**Purpose:** Keep the limits of the final evidence visible.
+## The 18 limitations retained from N33
 
-## 1. Controlled synthetic scope
+- controlled artificial damage not real material treatment (source row: thesis_725624b4eb27cc8e027bf683).
+- no paired real damaged undamaged conservation dataset (source row: thesis_51c77cbe996a5cd4c0598614).
+- controlled 300 balanced collection does not represent all painting traditions or conservation conditions (source row: thesis_82a27ee7468b11300fab3664).
+- style or period documented for 268 of 300 paintings (source row: thesis_32f12c2ed229f5b5956d001f).
+- thirty five painting extensions do not separate category from painting identity (source row: thesis_1b8b4918bb9419296cb48a63).
+- sdxl bounded 35 case schedule has 24 completed candidates across 30 paintings (source row: thesis_574b0fe3ee854259e97ac0a4).
+- uncertainty only for supported repeated seed populations (source row: thesis_da0ceb3d5b0a2c33e5910f69).
+- uncertainty is not calibrated confidence (source row: thesis_0f33307bea5e7ea2d43a4638).
+- telea lama and hint are deterministic (source row: thesis_baf9903b8385ddb298068fab).
+- no human or expert rating dataset (source row: thesis_412bc378afa849c0aae6b073).
+- computational flags are not expert ground truth (source row: thesis_6df3e6d569d4707119103776).
+- retrieval similarity is not restoration correctness (source row: thesis_66b84b94a2a5db40b34260d2).
+- feature similarity is not historical authenticity (source row: thesis_b46244f4faac917626aaaf7e).
+- runtime and memory describe one workstation (source row: thesis_f979ba9751c80e014784770a).
+- scaling projections are not executed results or confidence intervals (source row: thesis_e7d716e9e72ff10d9b33180f).
+- context prompt candidates p01 to p04 lack complete downstream flag coverage (source row: thesis_3632f0e4400d5d4bf16a08c5).
+- no combined universal quality or trust score (source row: thesis_f634f29172af1ef833160693).
+- no conservation approval or physical treatment recommendation (source row: thesis_670c850d97329cc78ee66db7).
 
-The study uses **50 paintings** and controlled synthetic damage. This supports repeatable comparison because a clean reference is available.
+These are preserved from the [thesis tables](../tables/thesis_tables.csv).
+The complete producer records and limitations remain in the provenance snapshot.
 
-It does not establish performance on naturally aged, physically damaged, previously restored, or materially complex paintings. Results remain bounded to the evaluated collection and damage contracts.
+## Scope separation
 
-## 2. Statistical independence
+D01 is a separate 12-case method-selection study. D02 is a focused portrait audit,
+not demographic-bias ground truth. Rendered lightness is not race or identity.
+SDXL's 35-case schedule yielded 24 completed candidates; it is not a fifth
+fully evaluated benchmark method.
 
-Paintings—not candidate rows—are the independent unit for grouped inference.
+## Historical provenance exceptions
 
-Repeated models, seeds, regions, masks, prompts, and damage levels remain nested within paintings or cases. These repeated observations are **not independent paintings**. Treating all **1,785 candidates** as independent paintings would overstate the evidence.
+- N29: historical artifact-manifest mismatch, with all six payload groups checked.
+- N35: recorded notebook-source hash differs from the accepted saved source.
+  The exact cause was not established; the owner accepted proceeding without rerun.
 
-## 3. Metric limits
+These exceptions are disclosed, not repaired or converted into passed checks.
+Exact recorded/observed digests appear in the
+[provenance snapshot](../provenance/reproducibility_snapshot.json).
 
-The framework intentionally keeps metric families and regions separate.
+## The 14 inherited N35 warning nonpasses
 
-- Reference metrics measure pixel or structural similarity to the controlled clean image.
-- LPIPS measures learned perceptual distance.
-- CLIP and DINOv2 provide general feature-affinity evidence.
-- Texture, colour, and seam metrics are diagnostic proxies.
-- Semantic similarity is not historical authenticity.
-- No universal combined score is reported.
+### batch_1_dependency_versions / version__pillow
 
-A model can perform well on one metric while performing poorly on another. One metric must not be treated as a complete definition of restoration quality.
+Observed: 9.5.0
 
-## 4. Model-specific limits
+Details: Development may continue, but the deployment environment must be reconciled before the final N35 readiness claim.
 
-### OpenCV Telea
+### batch_1_dependency_versions / version__plotly
 
-Telea is fast, deterministic, and effective for some thin or local regions. It has no semantic understanding and is not expected to reconstruct large missing structures faithfully.
+Observed: 6.8.0
 
-### LaMa
+Details: Development may continue, but the deployment environment must be reconciled before the final N35 readiness claim.
 
-LaMa is the strongest general benchmark baseline in this controlled study, leading **10 of 11 quality anchors**.
+### batch_1_dependency_versions / version__pyarrow
 
-Its learned priors can still smooth texture or create plausible but unsupported structure. The exact licence of the downloaded converted weight artifact was not separately verified by the project.
+Observed: 24.0.0
 
-### Stable Diffusion
+Details: Development may continue, but the deployment environment must be reconciled before the final N35 readiness claim.
 
-Stable Diffusion produces prompt-conditioned candidates rather than historically verified reconstructions. It is more variable across metrics and seeds, and thin scratch geometry remains difficult even after the scratch-aware prompt ablation.
+### batch_1_dependency_versions / version__streamlit
 
-The **1,330 executed candidates** include supporting prompt and repeated-seed evidence. The comparative catalog retains **955 approved Stable Diffusion candidates**.
+Observed: 1.59.0
 
-### SDXL
+Details: Development may continue, but the deployment environment must be reconciled before the final N35 readiness claim.
 
-SDXL is a **ten-case feasibility study**, not a fourth complete benchmark. It is much slower on the recorded hardware, covers five paintings, and has only one seed per case.
+### batch_11_qualification / desktop_1672x941_all_rooms
 
-## 5. Uncertainty limits
+Observed: owner_accepted_without_measurement
 
-The **165 repeated-seed groups** measure empirical Stable Diffusion variability:
+Details: {"original_record": {"validation_stage": "batch_11_qualification", "check_id": "desktop_1672x941_all_rooms", "check_description": "Browser/platform qualification; required before N35 closeout", "severity": "blocking", "expected": "Verified direct observation/measurement", "observed": "pending_not_verified", "passed": false, "details": "{\"check_id\": \"desktop_1672x941_all_rooms\", \"evidence\": \"\", \"observed_at_utc\": \"\", \"passed\": false}"}, "disposition": "Owner explicitly accepts delivery without completing this measurement; NOT a test pass."}
 
-- 130 canonical groups;
-- 35 damage-size groups;
-- four seeds per group.
+### batch_11_qualification / tablet_1024x1366_all_rooms
 
-This is an inspection signal, **not calibrated confidence**. Low variability can occur when all candidates are consistently wrong. High variability does not by itself prove that every candidate is unusable.
+Observed: owner_accepted_without_measurement
 
-Telea and LaMa are deterministic under their fixed contracts. Their input variation is therefore described as robustness or sensitivity rather than generative uncertainty.
+Details: {"original_record": {"validation_stage": "batch_11_qualification", "check_id": "tablet_1024x1366_all_rooms", "check_description": "Browser/platform qualification; required before N35 closeout", "severity": "blocking", "expected": "Verified direct observation/measurement", "observed": "pending_not_verified", "passed": false, "details": "{\"check_id\": \"tablet_1024x1366_all_rooms\", \"evidence\": \"\", \"observed_at_utc\": \"\", \"passed\": false}"}, "disposition": "Owner explicitly accepts delivery without completing this measurement; NOT a test pass."}
 
-## 6. Trustworthiness and explainability limits
+### batch_11_qualification / mobile_390x844_all_rooms
 
-Computational flags, counterfactuals, neighbours, saliency-style evidence, and spatial maps help identify where closer review is needed.
+Observed: owner_accepted_without_measurement
 
-They are **not expert ground truth**.
+Details: {"original_record": {"validation_stage": "batch_11_qualification", "check_id": "mobile_390x844_all_rooms", "check_description": "Browser/platform qualification; required before N35 closeout", "severity": "blocking", "expected": "Verified direct observation/measurement", "observed": "pending_not_verified", "passed": false, "details": "{\"check_id\": \"mobile_390x844_all_rooms\", \"evidence\": \"\", \"observed_at_utc\": \"\", \"passed\": false}"}, "disposition": "Owner explicitly accepts delivery without completing this measurement; NOT a test pass."}
 
-The **1,703 of 1,785 candidates** receiving conservative review guidance should not be described as 1,703 objectively failed restorations. The rules are intentionally cautious and require expert interpretation.
+### batch_11_qualification / keyboard_focus_and_dialogs
 
-Retrieval neighbours provide visual or semantic context. They do not prove that a restoration is correct.
+Observed: owner_accepted_without_measurement
 
-## 7. Hardware and software deviations
+Details: {"original_record": {"validation_stage": "batch_11_qualification", "check_id": "keyboard_focus_and_dialogs", "check_description": "Browser/platform qualification; required before N35 closeout", "severity": "blocking", "expected": "Verified direct observation/measurement", "observed": "pending_not_verified", "passed": false, "details": "{\"check_id\": \"keyboard_focus_and_dialogs\", \"evidence\": \"\", \"observed_at_utc\": \"\", \"passed\": false}"}, "disposition": "Owner explicitly accepts delivery without completing this measurement; NOT a test pass."}
 
-- Notebook 36 ran under Python `3.12.6`.
-- Python 3.11 remains the recommended fresh environment.
-- Python 3.11 and 3.12 are both accepted by the project contract.
-- Notebook 35 tested Streamlit `1.59.0`, while the deployment pin is `1.56.0`.
-- Pillow, Plotly, PyArrow, and Streamlit differed from the declared Notebook 35 deployment pins.
-- All eight dashboard pages nevertheless passed the recorded local smoke test.
-- CUDA inference may not be byte-identical across GPUs, drivers, CUDA versions, or library builds.
-- Observed runtimes describe one local workstation and are not universal benchmarks.
+### batch_11_qualification / firefox_reload_and_second_monitor
 
-These are transparent reproducibility deviations, not hidden validation passes.
+Observed: owner_accepted_without_measurement
 
-## 8. Deployment status
+Details: {"original_record": {"validation_stage": "batch_11_qualification", "check_id": "firefox_reload_and_second_monitor", "check_description": "Browser/platform qualification; required before N35 closeout", "severity": "blocking", "expected": "Verified direct observation/measurement", "observed": "pending_not_verified", "passed": false, "details": "{\"check_id\": \"firefox_reload_and_second_monitor\", \"evidence\": \"\", \"observed_at_utc\": \"\", \"passed\": false}"}, "disposition": "Owner explicitly accepts delivery without completing this measurement; NOT a test pass."}
 
-The Streamlit application is ready for local supervisor demonstration.
+### batch_11_qualification / same_room_no_document_reload
 
-Public deployment is **not completed**. No external platform or public URL is recorded, so the project must not claim completed public availability.
+Observed: owner_accepted_without_measurement
 
-## 9. Portable-package boundary
+Details: {"original_record": {"validation_stage": "batch_11_qualification", "check_id": "same_room_no_document_reload", "check_description": "Browser/platform qualification; required before N35 closeout", "severity": "blocking", "expected": "Verified direct observation/measurement", "observed": "pending_not_verified", "passed": false, "details": "{\"check_id\": \"same_room_no_document_reload\", \"evidence\": \"\", \"observed_at_utc\": \"\", \"passed\": false}"}, "disposition": "Owner explicitly accepts delivery without completing this measurement; NOT a test pass."}
 
-The portable package bundles compact material required for efficient review. Large or redundant collections are **indexed but not bundled**, including:
+### batch_11_qualification / cross_room_links_and_guided_tour
 
-- all restoration candidates;
-- raw and processed painting images;
-- complete difference-map and uncertainty-map collections;
-- 30 case reports and 50 painting reports;
-- 30 selected-case grids;
-- the complete Notebook 34 dashboard visual collection;
-- model weights and local caches;
-- the full executable notebook repository;
-- dataset, preprocessing, mask, and experiment YAML files outside `config/evaluation`.
+Observed: owner_accepted_without_measurement
 
-The reproducibility snapshot records canonical paths and checksums for critical source configurations. A full experimental rerun still requires the repository and its input data.
+Details: {"original_record": {"validation_stage": "batch_11_qualification", "check_id": "cross_room_links_and_guided_tour", "check_description": "Browser/platform qualification; required before N35 closeout", "severity": "blocking", "expected": "Verified direct observation/measurement", "observed": "pending_not_verified", "passed": false, "details": "{\"check_id\": \"cross_room_links_and_guided_tour\", \"evidence\": \"\", \"observed_at_utc\": \"\", \"passed\": false}"}, "disposition": "Owner explicitly accepts delivery without completing this measurement; NOT a test pass."}
 
-## 10. Compute and scalability boundary
+### batch_11_qualification / downloaded_reports_open_self_contained
 
-Observed runtime and storage values come from the completed local runs.
+Observed: owner_accepted_without_measurement
 
-Any 300-painting scalability scenario is a linear projection. It is not an executed experiment, performance guarantee, confidence interval, or cloud-cost estimate.
+Details: {"original_record": {"validation_stage": "batch_11_qualification", "check_id": "downloaded_reports_open_self_contained", "check_description": "Browser/platform qualification; required before N35 closeout", "severity": "blocking", "expected": "Verified direct observation/measurement", "observed": "pending_not_verified", "passed": false, "details": "{\"check_id\": \"downloaded_reports_open_self_contained\", \"evidence\": \"\", \"observed_at_utc\": \"\", \"passed\": false}"}, "disposition": "Owner explicitly accepts delivery without completing this measurement; NOT a test pass."}
 
-## 11. Conservation boundary
+### batch_11_qualification / browser_warm_navigation_p95
 
-The project does not:
+Observed: owner_accepted_without_measurement
 
-- authenticate artworks;
-- establish original artistic intent;
-- verify historical reconstruction;
-- prescribe physical conservation treatment;
-- replace conservator review;
-- provide automatic approval for restored candidates.
+Details: {"original_record": {"validation_stage": "batch_11_qualification", "check_id": "browser_warm_navigation_p95", "check_description": "Browser/platform qualification; required before N35 closeout", "severity": "blocking", "expected": "Verified direct observation/measurement", "observed": "pending_not_verified", "passed": false, "details": "{\"check_id\": \"browser_warm_navigation_p95\", \"evidence\": \"\", \"observed_at_utc\": \"\", \"passed\": false}"}, "disposition": "Owner explicitly accepts delivery without completing this measurement; NOT a test pass."}
 
-Visual plausibility is not the same as restoration trustworthiness.
+### batch_11_qualification / remote_action_budget_and_peak_memory
 
-## 12. Final limitation conclusion
+Observed: owner_accepted_without_measurement
 
-The evidence supports a transparent, region-aware, multi-metric comparison of selected pretrained methods under controlled synthetic damage.
+Details: {"original_record": {"validation_stage": "batch_11_qualification", "check_id": "remote_action_budget_and_peak_memory", "check_description": "Browser/platform qualification; required before N35 closeout", "severity": "blocking", "expected": "Verified direct observation/measurement", "observed": "pending_not_verified", "passed": false, "details": "{\"check_id\": \"remote_action_budget_and_peak_memory\", \"evidence\": \"\", \"observed_at_utc\": \"\", \"passed\": false}"}, "disposition": "Owner explicitly accepts delivery without completing this measurement; NOT a test pass."}
 
-It does not support universal model ranking, real-world conservation generality, calibrated confidence, automatic acceptance, or conservation approval.
+## Delivery boundaries
+
+Only selected upstream payloads were rehashed. Remote availability was not
+retested here. The recorded checker revision is not proof of the deployed
+server revision. Case/painting reports and bulk collections are indexed, not
+duplicated. Source snapshots do not make this a runnable application clone.
+
+Visual plausibility is not historical correctness, expert truth or conservation
+approval. No universal combined quality or trustworthiness score is constructed.

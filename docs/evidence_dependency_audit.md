@@ -13,7 +13,64 @@ The machine-readable YAML is authoritative for automated preflight. This file
 explains the scientific meaning of that registry and records the decisions that
 must not be silently reversed during later notebook planning.
 
-**Maintenance review: 2026-09-04.** All 36 saved run manifests record
+### N36 Controlled-300 closeout — 2026-10-01
+
+The Controlled-300 pipeline through N36 is complete, including production N12A;
+D01 remains separate 12-case method-selection evidence and D02 remains a
+supplemental portrait audit. No next numbered notebook is pending.
+
+N36 run `run_e3133aca48134968896bcd1b97af72c4` records completed status and a passed
+completion gate. Independent read-only closeout verification confirmed:
+
+- 875 validation rows: 859 passed, 16 warning nonpasses, zero blocking failures;
+- 134 physical delivery files, 14 output roles and 12 warning-status artifact records;
+- 123 package files / 36,741,656 bytes (35.04 MiB), including 115 exact source copies
+  and eight N36-generated package files;
+- 693 artifact-index records: 115 copied, 14 generated (including standalone
+  documents), and 564 indexed-not-bundled records;
+- six self-contained scientific HTML reports, 24 figures, five model cards,
+  eight compact tables, 26 evaluation configurations and 38 upstream manifests;
+- all 12 artifact checksums, the package manifest/index/tree, all 167 locked source
+  files and 27 selected payload-group hashes matched before administrative edits;
+- package tree SHA-256
+  `8a4f054def65714504ed46f6b553073654f2969c2cccf1182c362497328cd2c9`;
+- 29 saved notebook cells, no saved error outputs, completed opening status and a
+  matching normalized source fingerprint
+  `eede3f999056ee2eab13c2b4c76c17db0f8ad028f76f65f98b9096b1fd36263a`;
+- no residual notebook work directory and no new scientific computation or uploads.
+
+The 16 nonpasses are N35's four dependency warnings and ten unmeasured
+qualifications plus the N29 historical manifest and N35 notebook-source
+discrepancies. They remain limitations, not passes. Availability checks do not
+establish performance budgets, exhaustive browser coverage, clean Linux
+reproduction or an independently attested server revision.
+
+The original nine-step plan was executed in eight batches at the owner's request,
+combining final indexing/portability and completion/promotion. The frozen opening
+Markdown retains the original nine-step wording; the executed eight-batch sequence,
+run manifest and package appendix are authoritative. This minor descriptive lag
+does not alter the matching source fingerprint or completed gates; the notebook
+was not edited during this administrative closeout.
+
+All pilot artifact families remain represented: package files increased 114→123
+and physical files 125→134, explained by two HINT files, three additional upstream
+manifests, one configuration and three provenance copies. The tagged pilot remains
+the recovery baseline. Active computation time was not measured separately from
+manual/idle time; no inferred runtime claim is made.
+
+The complete bounded delivery (37,249,478 bytes, approximately 35.52 MiB) stays in
+ordinary Git with byte-preserving, non-LFS attributes. No individual file exceeds
+15,302,443 bytes. No new HF bundle is needed; existing bulk publications remain
+on their immutable routes. Zenodo publication is still planned, not completed.
+
+Closeout replaces only N36's 12 registry records with its current canonical
+artifact ledger, retaining warning status and all 233 other records (245 total).
+Current documentation/coverage and the global inventory may change after this
+audit; execution-time package snapshots and checksummed outputs remain immutable.
+The following dated preparation, transition and pilot entries are historical and
+are superseded by this closeout where they describe current delivery status.
+
+**Historical maintenance review: 2026-09-04.** All 36 saved run manifests record
 `run_status: completed` and `completion_gate_passed: true`. All completed
 notebooks and their canonical outputs are now frozen. Sections 2–4 preserve the
 original Notebook 01–21 baseline; Sections 5–6 record completed extensions and
@@ -161,11 +218,48 @@ navigation checks, offline opening of all reports, live peak memory and
 aggregate action budgets remain unmeasured. Availability maintenance remains
 best-effort, not an uptime guarantee.
 
-N36 may consolidate this accepted delivery, preserving these limitations and
-the prior scientific evidence. Existing N36 outputs are still historical pilot
-material; no Controlled-300 N36 completion or publication is claimed here.
+At this N35 closeout, N36 was eligible to consolidate the accepted delivery while
+preserving these limitations. Its subsequent Controlled-300 completion is recorded
+in the N36 closeout above; this paragraph preserves the earlier handoff boundary.
 This dated record supersedes earlier current/pending deployment statements,
 while the historical pilot sections below remain unchanged.
+
+### N36 Controlled-300 preparation — 2026-10-01
+
+Configuration `supervisor_package.yaml` version 2.0.0 prepares the first three
+of nine batches. This is preparation, not an executed N36 completion claim.
+The first three batches read and validate metadata and selected compact evidence
+in memory; the existing historical N36 output tree is not removed or overwritten.
+Later writes require isolated staging and verified promotion within N36 ownership.
+Notebook cells are delivered directly in chat for user execution; no new HTML
+renderer or Python preparation script is created.
+
+The upstream contract contains 38 manifests: N01–N35, N12A, D02 and D01's
+original `37` manifest. D01 remains Controlled-50 method-selection decision
+evidence and D02 remains a separate focused audit. Neither is pooled into the
+300-painting benchmark. The synthesis uses N33's typed tables and N34's v2
+bootstrap, not the removed pilot `dashboard_tables`/`dashboard_indexes` paths.
+It distinguishes 13,879 retained report candidates, 10,480 matched primary
+candidates, all executed method candidates, and SDXL's 24 completions from its
+35 scheduled cases. Six N34 headline findings are retained without inventing
+the old pilot's eight findings or treating computational flags as expert labels.
+
+Preparation reconciled only N34/N35 global path-registry entries against their
+canonical artifact ledgers: 14 current records replaced 19 stale entries;
+231 other entries, including historical N36, remain unchanged. The registry now
+contains 245 records. This does not modify either producer's outputs. N35's two
+warning artifacts remain warnings. The selected compact scientific input groups
+and all six N29 payload groups match their saved checksums. Early producers
+without a run-level artifact-ledger checksum are labelled as having no such
+declaration, never reported as having passed a nonexistent hash comparison.
+
+The package must retain the exact N29 discrepancy, N35's 14 nonpasses and accepted
+notebook-source mismatch, and the distinction between live owner acceptance,
+availability smoke checks and unmeasured performance/platform coverage. Any new
+or different mismatch remains blocking. The fixed copy plan stays below the
+existing 50 MiB ceiling and is a review bundle, not a runnable dashboard clone.
+Publication and any new HF bundle decision occur only after N36's completion
+audit. No scientific outputs or dashboard layout are changed by preparation.
 
 **Git LFS capacity guard: 2026-09-21.** GitHub reported 9.01 GiB used from the
 10.0 GiB included LFS allowance, with a `$0` hard budget and reset date of
@@ -1599,7 +1693,7 @@ not alter or recompute the scientific results.
 |---|---|---|
 | 36 Reproducibility package | 35 completed manifests; N30 model cards; N31 model reports; N32 report indexes; N33 report, figures, and tables; N34 indexes; N35 deployment readiness | package only validated evidence; distinguish copied material from indexed omissions; do not recompute or strengthen scientific claims |
 
-### Notebook 36 approved contract and completion
+### Notebook 36 historical Controlled-50 contract and completion
 
 Notebook 36 is a delivery and traceability consumer. It creates no new
 scientific evidence. The approved population is fixed at 50 paintings, 525

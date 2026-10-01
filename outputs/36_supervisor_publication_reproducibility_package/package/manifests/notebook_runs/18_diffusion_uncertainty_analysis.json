@@ -1,52 +1,52 @@
 {
   "manifest_schema_version": "run_manifest.v1",
-  "run_id": "run_a660cfa509e643a39708d762f18cae2b",
+  "run_id": "run_7c1d7195ed8447c1a878259360b1f5f2",
   "notebook_id": "18",
   "notebook_name": "18_diffusion_uncertainty_analysis",
   "origin": "Existing Previous Version of Notebook 27, Pre-refactor",
   "run_status": "completed",
-  "started_at_utc": "2026-08-29T22:30:08.339274Z",
-  "completed_at_utc": "2026-08-29T22:36:27.058080Z",
-  "git_commit": "8cb85c260e438a9d69af79e8861f7689448f44b3",
+  "started_at_utc": "2026-09-17T22:40:07.009610Z",
+  "completed_at_utc": "2026-09-17T23:19:02.810249Z",
+  "git_commit": "b3abd04e2b9d34b960a188772b8eb390a3163bdb",
   "git_dirty": true,
   "git_branch": "main",
   "git_error": "",
-  "inventory_run_id": "inventory_20260829T222511Z_f144b551",
+  "inventory_run_id": "inventory_20260917T220545Z_756377aa",
   "dataset_versions": {
     "notebook_01": {
-      "run_id": "run_424a69cf0c2c4a228d0919dc2d66258a",
+      "run_id": "run_49a7e3c485394878ab4323ce661f3ef5",
       "run_status": "completed"
     },
     "notebook_02": {
-      "run_id": "run_5e54b2de32934e1c9303e7250b932404",
+      "run_id": "run_ca94012bb1e54bf5bf57c1fdabb01480",
       "run_status": "completed"
     },
     "notebook_08": {
-      "run_id": "run_a3734bc2121f401b87de4894717366ab",
+      "run_id": "run_b83466f07ebb4b55928229587922334a",
       "run_status": "completed"
     },
     "notebook_11": {
-      "run_id": "run_82ee1e1c09524a5da3e6fe93016d0627",
+      "run_id": "run_4385124a0cca4d758d357de654a33f13",
       "run_status": "completed"
     },
     "notebook_12": {
-      "run_id": "run_1daaf4a3dcb34b5599b0ff89bb7034d3",
+      "run_id": "run_1f7af9d329354a56b4275c4af3cd3f75",
       "run_status": "completed"
     },
     "notebook_13": {
-      "run_id": "run_5bbeb9a089d044fab465d5078aedab39",
+      "run_id": "run_41b9c87a3c034f19b6f28868127b3c89",
       "run_status": "completed"
     },
     "notebook_14": {
-      "run_id": "run_4ffd061c775a46f3944ad9e405613b34",
+      "run_id": "run_27cb11ae9aa94133ad474b2f38cab122",
       "run_status": "completed"
     },
     "notebook_15": {
-      "run_id": "run_2b08762834b1423b8a61ef159c2679dc",
+      "run_id": "run_50c1bb5f25b44111a76df998329d69ed",
       "run_status": "completed"
     },
     "notebook_17": {
-      "run_id": "run_a322000b2a0445c9b5b71a2e0502fdf0",
+      "run_id": "run_ed15508895b542e6ac0733c49704ad26",
       "run_status": "completed"
     }
   },
@@ -56,9 +56,9 @@
     "config/experiments/evaluation_contract.yaml"
   ],
   "configuration_checksums": {
-    "config/evaluation/diffusion_uncertainty.yaml": "444523318a19f6cc2536537bb56701abfa37305819d1b8a057008066f24c6bc1",
-    "config/evaluation/lpips.yaml": "83cb97d9876f1039aae244f21368a9e0077e27fca7b4060e1e24889c7b4d6ada",
-    "config/experiments/evaluation_contract.yaml": "ae977512636b0ea5eb16b4a3dff95c062f402c086430328a341c9d0bda6a3254"
+    "config/evaluation/diffusion_uncertainty.yaml": "8763d8ce133151ad0363a4299ee6b9f0c01008f6bb645085d82cc9b9faf42bc9",
+    "config/evaluation/lpips.yaml": "6e008486b50996ea8594542fee3b95ac894623db6731d88dac1b31f33203659d",
+    "config/experiments/evaluation_contract.yaml": "4db2fc27ba02559799b39ecdce73b1e828b812cb3972eaec970f53f34a385761"
   },
   "helper_versions": {
     "diffusion_uncertainty": "1.0.3",
@@ -66,8 +66,8 @@
     "feature_similarity": "3.0.1",
     "lpips": "3.0.0",
     "regions": "1.1.0",
-    "schemas": "1.15.0",
-    "paths": "1.0.0",
+    "schemas": "1.19.0",
+    "paths": "1.1.0",
     "manifests": "1.0.0",
     "validation": "1.0.0"
   },
@@ -98,7 +98,7 @@
       "relative_path": "outputs/inventory/project_file_inventory.csv",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 9319875.0
+      "size_bytes": 67993472.0
     },
     {
       "input_key": "inventory_run_path",
@@ -108,7 +108,7 @@
       "relative_path": "outputs/inventory/inventory_run.json",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 2659.0
+      "size_bytes": 2823.0
     },
     {
       "input_key": "project_paths_path",
@@ -118,7 +118,7 @@
       "relative_path": "outputs/inventory/project_paths.json",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 62746.0
+      "size_bytes": 152654.0
     },
     {
       "input_key": "artworks_path",
@@ -128,7 +128,7 @@
       "relative_path": "outputs/01_dataset_verification/data/artworks.csv",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 29822.0
+      "size_bytes": 280991.0
     },
     {
       "input_key": "artworks_run_manifest_path",
@@ -138,7 +138,7 @@
       "relative_path": "outputs/01_dataset_verification/manifests/run_manifest.json",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 8981.0
+      "size_bytes": 9107.0
     },
     {
       "input_key": "geometry_path",
@@ -148,7 +148,7 @@
       "relative_path": "outputs/02_image_preprocessing/data/preprocessed_images.csv",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 32706.0
+      "size_bytes": 193763.0
     },
     {
       "input_key": "geometry_run_manifest_path",
@@ -158,7 +158,7 @@
       "relative_path": "outputs/02_image_preprocessing/manifests/run_manifest.json",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 10754.0
+      "size_bytes": 10881.0
     },
     {
       "input_key": "case_registry_path",
@@ -168,7 +168,7 @@
       "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 263890.0
+      "size_bytes": 1734032.0
     },
     {
       "input_key": "model_eligibility_path",
@@ -178,7 +178,7 @@
       "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 600509.0
+      "size_bytes": 4942499.0
     },
     {
       "input_key": "region_policy_path",
@@ -208,7 +208,7 @@
       "relative_path": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 16592.0
+      "size_bytes": 16624.0
     },
     {
       "input_key": "evaluation_contract_config_path",
@@ -218,7 +218,7 @@
       "relative_path": "config/experiments/evaluation_contract.yaml",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 9799.0
+      "size_bytes": 9912.0
     },
     {
       "input_key": "stable_diffusion_candidates_path",
@@ -228,7 +228,7 @@
       "relative_path": "outputs/11_stable_diffusion_restoration/data/candidates.csv",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 2436507.0
+      "size_bytes": 15634741.0
     },
     {
       "input_key": "stable_diffusion_output_root",
@@ -248,7 +248,7 @@
       "relative_path": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 27662.0
+      "size_bytes": 27699.0
     },
     {
       "input_key": "sdxl_candidates_path",
@@ -258,7 +258,7 @@
       "relative_path": "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 20267.0
+      "size_bytes": 66981.0
     },
     {
       "input_key": "sdxl_run_manifest_path",
@@ -268,7 +268,7 @@
       "relative_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 18784.0
+      "size_bytes": 18795.0
     },
     {
       "input_key": "classical_metrics_path",
@@ -278,7 +278,7 @@
       "relative_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 18773255.0
+      "size_bytes": 144373655.0
     },
     {
       "input_key": "classical_run_manifest_path",
@@ -288,7 +288,7 @@
       "relative_path": "outputs/13_classical_metrics/manifests/run_manifest.json",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 16986.0
+      "size_bytes": 18542.0
     },
     {
       "input_key": "lpips_config_path",
@@ -298,7 +298,7 @@
       "relative_path": "config/evaluation/lpips.yaml",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 6226.0
+      "size_bytes": 7071.0
     },
     {
       "input_key": "lpips_metrics_path",
@@ -308,7 +308,7 @@
       "relative_path": "outputs/14_lpips_metrics/metrics/lpips_metrics.csv",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 1821849.0
+      "size_bytes": 13939180.0
     },
     {
       "input_key": "lpips_run_manifest_path",
@@ -318,7 +318,7 @@
       "relative_path": "outputs/14_lpips_metrics/manifests/run_manifest.json",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 16276.0
+      "size_bytes": 17677.0
     },
     {
       "input_key": "feature_metrics_path",
@@ -328,7 +328,7 @@
       "relative_path": "outputs/15_feature_similarity/metrics/feature_metrics.csv",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 5248929.0
+      "size_bytes": 40043594.0
     },
     {
       "input_key": "feature_embedding_manifest_path",
@@ -338,7 +338,7 @@
       "relative_path": "outputs/15_feature_similarity/manifests/embeddings.csv",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 6072209.0
+      "size_bytes": 44897353.0
     },
     {
       "input_key": "feature_embeddings_path",
@@ -348,7 +348,7 @@
       "relative_path": "outputs/15_feature_similarity/data/embeddings.npz",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 15047163.0
+      "size_bytes": 111901977.0
     },
     {
       "input_key": "feature_run_manifest_path",
@@ -358,7 +358,7 @@
       "relative_path": "outputs/15_feature_similarity/manifests/run_manifest.json",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 21182.0
+      "size_bytes": 22579.0
     },
     {
       "input_key": "local_consistency_metrics_path",
@@ -368,7 +368,7 @@
       "relative_path": "outputs/17_local_consistency_metrics/metrics/local_consistency.csv",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 150969091.0
+      "size_bytes": 1146504203.0
     },
     {
       "input_key": "local_consistency_run_manifest_path",
@@ -378,7 +378,7 @@
       "relative_path": "outputs/17_local_consistency_metrics/manifests/run_manifest.json",
       "path_kind": "file",
       "exists": true,
-      "size_bytes": 25710.0
+      "size_bytes": 27388.0
     }
   ],
   "outputs": [
@@ -388,7 +388,7 @@
       "artifact_type": "table",
       "artifact_role": "primary_downstream_evidence",
       "schema_version": "diffusion_uncertainty.v1",
-      "expected_row_count": 20800
+      "expected_row_count": 124800
     },
     {
       "artifact_key": "diffusion_uncertainty.calibration_inputs",
@@ -396,7 +396,7 @@
       "artifact_type": "table",
       "artifact_role": "calibration_ready_evidence",
       "schema_version": "uncertainty_calibration_inputs.v1",
-      "expected_row_count": 130
+      "expected_row_count": 780
     },
     {
       "artifact_key": "diffusion_uncertainty.distributions_figure",
@@ -440,22 +440,23 @@
     }
   ],
   "expected_counts": {
-    "uncertainty_groups": 130,
-    "unique_cases": 80,
-    "candidates": 520,
+    "uncertainty_groups": 780,
+    "unique_cases": 480,
+    "candidates": 3120,
     "seeds_per_group": 4,
     "unordered_pairs_per_group": 6,
-    "unordered_candidate_pairs": 780,
-    "generic_prompt_groups": 80,
-    "scratch_aware_prompt_groups": 50,
-    "pixel_group_summary_rows": 1560,
-    "pixel_pair_rows": 9360,
-    "lpips_pair_rows": 1560,
-    "feature_pair_rows": 3120,
-    "seed_reference_rows": 5200,
-    "uncertainty_metric_rows": 20800,
-    "calibration_rows": 130,
-    "sdxl_candidates": 10,
+    "unordered_candidate_pairs": 4680,
+    "generic_prompt_groups": 480,
+    "scratch_aware_prompt_groups": 300,
+    "pixel_group_summary_rows": 9360,
+    "pixel_pair_rows": 56160,
+    "lpips_pair_rows": 9360,
+    "feature_pair_rows": 18720,
+    "seed_reference_rows": 31200,
+    "uncertainty_metric_rows": 124800,
+    "calibration_rows": 780,
+    "sdxl_attempts": 35,
+    "sdxl_candidates": 24,
     "sdxl_distinct_seeds": 1,
     "canonical_file_count": 7,
     "artifact_record_count": 5,
@@ -465,15 +466,21 @@
     "warning_validation_failures": 0
   },
   "observed_counts": {
-    "uncertainty_groups": 130,
-    "unique_cases": 80,
-    "candidates": 520,
-    "unordered_candidate_pairs": 780,
-    "uncertainty_metric_rows": 20800,
-    "calibration_rows": 130,
-    "generic_prompt_groups": 80,
-    "scratch_aware_prompt_groups": 50,
-    "sdxl_candidates": 10,
+    "uncertainty_groups": 780,
+    "unique_cases": 480,
+    "candidates": 3120,
+    "unordered_candidate_pairs": 4680,
+    "pixel_group_summary_rows": 9360,
+    "pixel_pair_rows": 56160,
+    "lpips_pair_rows": 9360,
+    "feature_pair_rows": 18720,
+    "seed_reference_rows": 31200,
+    "uncertainty_metric_rows": 124800,
+    "calibration_rows": 780,
+    "generic_prompt_groups": 480,
+    "scratch_aware_prompt_groups": 300,
+    "sdxl_attempts": 35,
+    "sdxl_candidates": 24,
     "sdxl_distinct_seeds": 1,
     "canonical_figure_count": 2,
     "artifact_record_count": 5,
@@ -548,7 +555,7 @@
     ]
   },
   "known_limitations": [
-    "The eligible population is Stable Diffusion 1.5 only; SDXL has one seed per case and cannot support empirical seed uncertainty.",
+    "The eligible population is Stable Diffusion 1.5 only; SDXL completed 24 of 35 bounded attempts with one seed per case and cannot support empirical seed uncertainty.",
     "All eligible cases are canonical binary missing-region experiments; generalization to synthetic degradations is not established.",
     "Artwork style_or_period metadata is incomplete; missing values are retained as the explicit unclassified label while category remains complete.",
     "Repeated seeds are candidate-level observations nested within cases, not independent paintings.",
@@ -566,8 +573,8 @@
     "lpips_helper": "489d55d55300fb2b51aa9620ddc03990e78dba60f7f9490532948ff35e26a633",
     "feature_similarity_helper": "3d35cef889c390cadd0a1e7bc8a442f769c31293757fa9e70f7fe684a466976c",
     "regions_helper": "8b0c9d413ecba9e5056b3b8f6cd89147d4cfd044291290e31ebc78b882a16e9d",
-    "schemas_helper": "e2adb67aa39f0f9a17a170178687f4f29d1b8de0a0997f6d14a84939d032be4b",
-    "paths_helper": "bab56054d466d44bc43cc8709542240a690d461cc1be4829a2d67f4a1d8e9806",
+    "schemas_helper": "ae2f7a847a9227a25c7baaf6c52873b8f314126f4e4f9732dd1caf05e5036a35",
+    "paths_helper": "47138acd291dd781a307db77a0cf53a45f1419a9063708d3748f41f88f7152d5",
     "manifests_helper": "8ba9846539a63ca14becdf5bb5488204917476169e847233489f0012d5703217",
     "validation_helper": "1311f816879b60e8314364686e2136eb906ff3718ccf7b6106a3e73f04e09a10"
   },
@@ -576,5 +583,5 @@
   "spatial_map_owner": "Notebook 19",
   "semantic_evidence_owner": "Notebook 20",
   "human_and_failure_evidence_owner": "Notebook 26",
-  "artifact_manifest_checksum": "ecffd0120b571e71041ec49a602de0134332cd5f580469b8ac574f659c1ad21c"
+  "artifact_manifest_checksum": "fe423328e71e48f9439da1436191bd2cfce3bb68f2c3688641691da1dbf4bb49"
 }

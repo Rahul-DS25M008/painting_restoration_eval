@@ -17,8 +17,10 @@ the canonical Controlled-300 final synthesis. Notebook 34 run
 `run_1e831de6e27f9ead0147bb30` has now completed and promoted the validated
 `dashboard_package.v2` Controlled-300 asset package. Notebook 35 has completed
 its owner-accepted deployment closeout with disclosed limitations: 519 passes,
-14 warning nonpasses and zero blocking failures. Notebook 36 consolidation is
-next; its existing outputs still describe the historical pilot.
+14 warning nonpasses and zero blocking failures. Notebook 36 run
+`run_e3133aca48134968896bcd1b97af72c4` has completed the Controlled-300 delivery
+with 859 passes, 16 disclosed warning nonpasses and zero blockers. The numbered
+pipeline is complete; no next notebook is pending. D01 remains separate evidence.
 Existing notebook names, responsibilities, cell order, schemas,
 stable identifiers, and output roots remain the starting contract. Each later
 notebook becomes current only after its Controlled-300 outputs pass its gate;
@@ -3939,14 +3941,14 @@ manifests/artifacts.csv
 validation/checks.csv
 ```
 
-The Streamlit application must now be updated to read this notebook-owned `v2`
-asset root rather than legacy `outputs/dashboard/` or the eager pilot package.
+The deployed Streamlit application reads this notebook-owned `v2` asset root
+rather than legacy `outputs/dashboard/` or the eager pilot package.
 Notebook 34 completed eight restart-safe batches: preflight, identity
 normalization, bootstrap, selector/routes, room partitions, required
 derivations, renditions/remote locators, and final binding plus atomic
-promotion. The next gate is Controlled-300 Streamlit implementation followed
-by Notebook 35 validation; the historical pilot N35 output remains comparison
-evidence until that rerun passes.
+promotion. Controlled-300 Streamlit implementation and N35's qualified deployment
+closeout subsequently completed; N36 has consolidated that accepted delivery.
+Historical pilot records remain comparison evidence only.
 
 ---
 
@@ -4110,10 +4112,35 @@ evidence is recorded in `docs/evidence_dependency_audit.md`.
 **Notebook:** `36_supervisor_publication_reproducibility_package.ipynb`\
 **Origin:** Consolidates Existing Previous Versions of Notebooks 30 and 35, Pre-refactor  
 **Historical Controlled-50 status:** Finished with inherited non-blocking dependency warning\
-**Controlled-300 status:** Pending consolidation after the accepted N35 closeout\
-**Controlled-300 completion gate passed:** No\
+**Controlled-300 status:** Finished with disclosed inherited warnings and provenance exceptions\
+**Controlled-300 completion gate passed:** Yes\
 **Output root:** `outputs/36_supervisor_publication_reproducibility_package/`\
-**Depends on:** Notebooks 01–35
+**Depends on:** Notebooks 01–35 including N12A, supplemental D02 and separate D01/37
+
+**Completion update (2026-10-01):** run `run_e3133aca48134968896bcd1b97af72c4`
+passed all 859 blocking checks and retains 16 warning nonpasses. The final delivery
+has 134 physical files, 12 artifact records, a 693-row index and 123 package files
+(35.04 MiB). All 16 responsibilities are mapped to evidence. The original nine-step
+plan was delivered as eight batches without omitting checks; the frozen opening
+Markdown retains the original planning wording. Active runtime was not separately
+measured. No upstream evidence or dashboard layout changed. The complete bounded
+delivery uses ordinary Git without LFS or a duplicate HF release.
+
+**Historical preparation update (2026-10-01):** the version 2.0.0 package configuration
+now covers Controlled-300. Nine batches retain the original delivery sequence:
+contract; upstream audit; synthesis; supervisor documents; reproducibility;
+assembly; indexes/manifests; portability; completion and promotion. Batches 1–3
+are read-only and leave the historical N36 output tree intact. Cells are supplied
+directly in chat; no HTML cell renderer or preparation Python script is created.
+Estimated active runtime is 5–20 minutes for the complete package, with 1–3
+minutes for the first three batches, excluding inventory and human review.
+The estimate is based on roughly 34 MiB of selected copy inputs, 38 compact
+manifests and compact synthesis tables; copying and integrity/portability checks
+are the longest stage. The prior pilot recorded 27 seconds between its manifest
+start and end timestamps, which is not a reliable measure of all manual batches.
+No model loading, inference, scientific recomputation or full-corpus rehash is
+planned. Existing helpers handle configuration/copy plans; inline notebook code
+will explicitly audit nested producer summaries and the N35 acceptance record.
 
 ### Purpose
 
@@ -4122,24 +4149,23 @@ delivery from already validated evidence. Notebook 36 is a packaging and
 traceability stage: it does not rerun restoration models, recompute scientific
 metrics, change upstream conclusions, or invent unavailable evidence.
 
-### Historical pilot evidence population (replace on Controlled-300 rerun)
+### Completed Controlled-300 evidence population
 
-- 35 completed upstream notebook manifests;
-- 50 paintings, 525 registered cases, and 410 restoration cases;
-- 1,785 approved comparison candidates;
+- 38 accepted upstream manifests, including N35's qualified closeout;
+- 300 paintings, 3,425 registered cases and 2,620 restoration-eligible cases;
+- 10,480 matched primary candidates and 13,879 retained report candidates;
 - 11 separate quality anchors;
-- 165 repeated-seed uncertainty groups, comprising 130 canonical groups and 35
+- 1,025 repeated-seed uncertainty groups, comprising 780 canonical groups and 245
   damage-size groups;
-- 23,964 indexed visual records and 104 indexed reports;
-- ten bounded SDXL feasibility cases;
+- 693 delivery-index records with explicit copied/generated/omitted distinctions;
+- 24 completed SDXL candidates from a bounded 35-case schedule;
 - 18 thesis figures and six publication figures;
 - five self-contained model reports and one self-contained final report;
-- 30 case-report records and 50 painting-report records.
+- 30 case-report records and 300 painting-report records; five model cards.
 
-The Controlled-300 rerun must derive its exact package population from the
-completed producer manifests rather than copying these pilot counts. It must
-include all 300 paintings, the five N30 method cards, five N31 model reports,
-and the final validated N32–N35 indexes available at execution time. Large
+The package population is derived from completed producer manifests rather than
+pilot constants. The bundle includes the five N30 cards, five N31 model reports
+and the final validated N32–N35 handoffs available at execution time. Large
 candidate and diagnostic collections remain indexed to their verified external
 releases instead of being duplicated into the package.
 
@@ -4150,14 +4176,16 @@ The portable package bundles the material required for efficient review:
 - the final self-contained HTML report and five self-contained model reports;
 - all 24 Notebook 33 thesis/publication figures;
 - five model cards and the approved compact tables or report indexes;
-- all 35 upstream run manifests and all evaluation-configuration YAML snapshots;
+- 38 run manifests (N01–N35, N12A, supplemental D02, and separate D01/37
+  decision evidence) and all evaluation-configuration YAML snapshots;
 - the two declared requirements files;
 - the Notebook 35 deployment-readiness report;
 - the Streamlit entry point and its read-only application helper; and
 - Notebook 36 reports, indexes, manifest, and provenance snapshot.
 
-The package indexes but does not duplicate the 30 case reports, 50 painting
-reports, 30 selected-case grids, the 23,964-record dashboard visual collection,
+The Controlled-300 package indexes but does not duplicate the 30 case reports,
+300 painting reports, 30 selected-case grids, the producer-backed dashboard
+visual collections,
 restoration candidates, raw/map collections, model weights, or caches. Their
 canonical repository-relative paths and checksums remain auditable. This keeps
 the package useful when copied without duplicating the much larger report and
@@ -4211,8 +4239,9 @@ Produce the final delivery package containing:
 
 Additionally:
 
-- audit every Notebook 01–35 manifest for completed status, completion gate,
-  unique notebook identity, and zero blocking failures;
+- audit the 38 declared manifests for completed status, explicit completion
+  evidence, unique notebook identity, and zero blocking failures; N35 uses its
+  accepted closeout rather than an invented legacy completion-gate field;
 - reconcile the package copy plan against fixed paths rather than discovering
   arbitrary files from output directories;
 - preserve source bytes and verify source-to-package checksums;

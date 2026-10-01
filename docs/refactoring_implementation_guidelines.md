@@ -26,12 +26,14 @@ As of 2026-10-01, the approved Controlled-300 dashboard is publicly deployed at
 from this repository's `main` branch. N34 is complete and N35 has closed with
 owner acceptance and disclosed limitations: 519 passes, 14 retained warning
 nonpasses and zero blocking failures. The application layout remains frozen.
-N36's Controlled-300 consolidation is next; its existing outputs still describe
-the historical pilot. The pilot app and `pilot-50-complete` baseline are retained
+N36's Controlled-300 consolidation is complete: 859 passed checks, 16 disclosed
+warning nonpasses and zero blockers under run `run_e3133aca48134968896bcd1b97af72c4`.
+The 134-file delivery includes a 123-file, 35.04 MiB review package. No numbered
+notebook remains pending. The pilot app and `pilot-50-complete` baseline are retained
 separately. Mixed 50/300 claims must never be shown as one completed study.
 
 The N35 closeout supersedes earlier pending-deployment instructions in this
-document, not its original measurement targets. N36 must preserve the four
+document, not its original measurement targets. N36 preserves the four
 dependency warnings, ten unmeasured owner-accepted qualifications, historical
 N29 discrepancy and distinction between checker revision and unattested server
 revision. Successful availability runs do not prove performance budgets or a
@@ -1114,12 +1116,16 @@ checksums, limitations, and downstream eligibility.
 | 31 Model Report Generation | Finished | Finished | Yes | Five self-contained reports; 75 sections; 79 embedded images; 374 embedded tiles; five index rows; seven artifact records; 346/346 checks; 13/13 roadmap responsibilities; nine canonical files | All eight pilot paths retained; HINT report added as the sole new path; reports/sections/images/tiles increased 4→5, 60→75, 63→79 and 298→374; compact ~13 MiB handoff stays in ordinary Git without LFS or a Hugging Face release |
 | 32 Case and Painting Report Generation | Finished | Finished | Yes | 25 manifests; 41 input tables; 300 paintings; 2,620 cases; 13,879 approved candidates; 30 bounded deep-case reports; 300 painting reports; 331 total reports; 30 grids; 2,132 embedded images; 10,622 tiles; 5,819/5,819 checks; 367 files; 5-hour-38-minute execution window | All seven pilot artifact classes, eight artifact keys/types and CSV schemas retained; the painting-report role label correctly scales from `fifty_complete_painting_reports` to `three_hundred_complete_painting_reports`; deterministic selection intentionally supersedes 42 pilot-only report/grid paths while adding 292 paths; the 361-file, 326.94 MiB reports/grids package routes to Hugging Face diagnostics and compact indexes/manifests/validation stay in ordinary Git without LFS |
 | 33 Final Evaluation Report | Finished | Finished | Yes | 32 upstream manifests; 33 current input tables; 300 paintings; 3,425 registered cases; 2,620 evaluated cases; 10,480 four-method primary candidates; 13,879 approved report candidates; 1,025 uncertainty groups; 15 tables/352 rows; 24 figures; 49 claims; 18 limitations; 536/536 checks; 32 canonical files; 17-minute-18.552-second execution window | All 32 pilot paths, eight artifact roles and CSV schemas retained; table/catalogue/claim/traceability/check rows increased 293→352, 106→107, 48→49, 125→126 and 535→536; HINT is included wherever applicable, bounded SDXL remains separate, and the compact 17.69 MiB handoff stays in ordinary Git without a duplicate Hugging Face release |
+| 34 Final Streamlit Dashboard Assets | Finished | Finished | Yes | Controlled-300 dashboard_package.v2; 300 painting partitions; 377 package files; 916 passing validation checks | Eight-room implementation is frozen and deployed; subsequent accepted delivery is recorded by N35 |
+| 35 Dashboard and Deployment Validation | Finished | Finished with limitations | Accepted closeout | 533 checks: 519 passed, 14 warning nonpasses, zero blockers | Owner-accepted live delivery; unmeasured qualifications and source discrepancy remain explicit |
+| 36 Supervisor, Publication, and Reproducibility Package | Finished | Finished with warnings | Yes | 875 checks: 859 passed, 16 warning nonpasses; 134 files; 123 package files; 693 index rows; 12 artifact records; 38 upstream manifests | Eight delivered batches; all 14 pilot output roles retained; ordinary Git, exact-byte checkout and no duplicate HF release |
 
-Notebooks 01–33, including Notebook 12A and supplemental D02, are completed
-Controlled-300 producers. Notebook 33 is the canonical Controlled-300 final
-synthesis; Notebooks 34–36 remain historical Controlled-50 evidence until
-individually reopened and rerun after the pre-N34 storage/access and dashboard-
-design approval gate. Notebook 20's producer-specific diagnostics bundle
+Notebooks 01–36, including Notebook 12A and supplemental D02, are completed
+Controlled-300 producers/consumers. Notebook 33 is the canonical final synthesis;
+N34 supplies the dashboard, N35 its qualified deployment acceptance, and N36 the
+completed review delivery. D01 remains a separate decision study. Historical
+Controlled-50 evidence is retained at the pilot tag, not presented as current.
+Notebook 20's producer-specific diagnostics bundle
 and compact Git handoff are remotely and locally verified. Notebook 21 passed
 its completion gate for 10,504 selected candidates, 3,160,618 normalized
 evidence rows, 277,319 comparison rows and 2,181 family-balanced disagreement

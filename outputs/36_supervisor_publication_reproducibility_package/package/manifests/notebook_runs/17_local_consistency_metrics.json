@@ -1,17 +1,17 @@
 {
   "manifest_schema_version": "run_manifest.v1",
-  "run_id": "run_a322000b2a0445c9b5b71a2e0502fdf0",
+  "run_id": "run_ed15508895b542e6ac0733c49704ad26",
   "notebook_id": "17",
   "notebook_name": "17_local_consistency_metrics",
   "origin": "Existing Previous Version of Notebook 31, Pre-refactor, expanded with colour and seam requirements",
   "run_status": "completed",
-  "started_at_utc": "2026-08-29T11:15:21.297028Z",
-  "completed_at_utc": "2026-08-29T18:18:25.091956Z",
-  "git_commit": "f7f08c78ec8257ef66dc70c0adec04ebbc8e85cd",
+  "started_at_utc": "2026-09-15T08:44:55.301562Z",
+  "completed_at_utc": "2026-09-16T22:29:19.323012Z",
+  "git_commit": "7a747276460ab67cd0d17620a7c6010b6e49b9b1",
   "git_dirty": true,
   "git_branch": "main",
   "git_error": "",
-  "inventory_run_id": "inventory_20260829T103017Z_5eeec6b9",
+  "inventory_run_id": "inventory_20260914T181754Z_e464522c",
   "dataset_versions": {
     "artworks": "artworks.v1",
     "preprocessed_images": "preprocessed_images.v1",
@@ -30,19 +30,19 @@
     "config/experiments/evaluation_contract.yaml"
   ],
   "configuration_checksums": {
-    "config/evaluation/local_consistency.yaml": "17346e2e38bd79c08ebc59ffd73effade3b93e2896ed800b11e7a7e28fad0f99",
-    "config/experiments/evaluation_contract.yaml": "ae977512636b0ea5eb16b4a3dff95c062f402c086430328a341c9d0bda6a3254"
+    "config/evaluation/local_consistency.yaml": "2057eeb29e23641b24998d14fed28ca5059d419dfcd52c99904a2539f18b94c8",
+    "config/experiments/evaluation_contract.yaml": "4db2fc27ba02559799b39ecdce73b1e828b812cb3972eaec970f53f34a385761"
   },
   "helper_versions": {
     "restoration_eval": "0.1.0",
-    "local_consistency": "1.0.3",
+    "local_consistency": "1.1.0",
     "local_consistency_metric": "local_consistency_metrics.v1",
     "local_consistency_renderer": "local_consistency_map_renderer.v1",
     "evaluation_inputs": "1.0.1",
     "manifests": "1.0.0",
-    "paths": "1.0.0",
+    "paths": "1.1.0",
     "regions": "1.1.0",
-    "schemas": "1.14.0",
+    "schemas": "1.19.0",
     "validation": "1.0.0"
   },
   "python_version": "3.12.6",
@@ -69,7 +69,7 @@
       "relative_path": "outputs/inventory/project_file_inventory.csv",
       "format": "csv",
       "schema_version": "project_file_inventory.v1",
-      "expected_cardinality": 14296,
+      "expected_cardinality": 29846,
       "role": "repository discovery and path verification",
       "required": true
     },
@@ -89,7 +89,7 @@
       "relative_path": "outputs/inventory/project_paths.json",
       "format": "json",
       "schema_version": "project_paths.v1",
-      "expected_cardinality": 89,
+      "expected_cardinality": 235,
       "role": "artifact discovery",
       "required": true
     },
@@ -99,7 +99,7 @@
       "relative_path": "outputs/01_dataset_verification/data/artworks.csv",
       "format": "csv",
       "schema_version": "artworks.v1",
-      "expected_cardinality": 50,
+      "expected_cardinality": 300,
       "role": "category, style, and artwork metadata",
       "required": true
     },
@@ -109,7 +109,7 @@
       "relative_path": "outputs/02_image_preprocessing/data/preprocessed_images.csv",
       "format": "csv",
       "schema_version": "preprocessed_images.v1",
-      "expected_cardinality": 50,
+      "expected_cardinality": 300,
       "role": "content geometry and colour-space policy",
       "required": true
     },
@@ -119,7 +119,7 @@
       "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
       "format": "csv",
       "schema_version": "case_registry.v1",
-      "expected_cardinality": 525,
+      "expected_cardinality": 3425,
       "role": "normalized evaluation cases",
       "required": true
     },
@@ -129,7 +129,7 @@
       "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
       "format": "csv",
       "schema_version": "model_eligibility.v1",
-      "expected_cardinality": 2100,
+      "expected_cardinality": 17125,
       "role": "model and case routing",
       "required": true
     },
@@ -254,12 +254,22 @@
       "required": true
     },
     {
+      "input_key": "notebook_12a_hint_run_manifest",
+      "producer": "notebook_12a_hint",
+      "relative_path": "outputs/12a_hint_restoration/manifests/run_manifest.json",
+      "format": "json",
+      "schema_version": "run_manifest.v1",
+      "expected_cardinality": 1,
+      "role": "upstream execution provenance",
+      "required": true
+    },
+    {
       "input_key": "notebook_09_opencv_telea_table",
       "producer": "notebook_09_opencv_telea",
       "relative_path": "outputs/09_opencv_telea_restoration/data/restorations.csv",
       "format": "csv",
       "schema_version": "restorations.v1",
-      "expected_cardinality": 410,
+      "expected_cardinality": 2620,
       "role": "completed restoration candidates for opencv_telea",
       "required": true
     },
@@ -269,7 +279,7 @@
       "relative_path": "outputs/10_lama_restoration/data/restorations.csv",
       "format": "csv",
       "schema_version": "restorations.v1",
-      "expected_cardinality": 410,
+      "expected_cardinality": 2620,
       "role": "completed restoration candidates for lama",
       "required": true
     },
@@ -279,7 +289,7 @@
       "relative_path": "outputs/11_stable_diffusion_restoration/data/candidates.csv",
       "format": "csv",
       "schema_version": "stable_diffusion_candidates.v1",
-      "expected_cardinality": 1330,
+      "expected_cardinality": 8520,
       "role": "completed restoration candidates for stable_diffusion_inpainting",
       "required": true
     },
@@ -289,8 +299,18 @@
       "relative_path": "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv",
       "format": "csv",
       "schema_version": "sdxl_partial_candidates.v1",
-      "expected_cardinality": 10,
+      "expected_cardinality": 35,
       "role": "completed restoration candidates for sdxl_inpainting",
+      "required": true
+    },
+    {
+      "input_key": "notebook_12a_hint_table",
+      "producer": "notebook_12a_hint",
+      "relative_path": "outputs/12a_hint_restoration/data/restorations.csv",
+      "format": "csv",
+      "schema_version": "restorations.v1",
+      "expected_cardinality": 2620,
+      "role": "completed restoration candidates for hint_places2",
       "required": true
     }
   ],
@@ -301,7 +321,7 @@
       "artifact_type": "table",
       "artifact_role": "primary_downstream_evidence",
       "schema_version": "local_consistency.v1",
-      "expected_row_count": 271988
+      "expected_row_count": 2060667
     },
     {
       "artifact_key": "local_consistency.candidate_maps",
@@ -309,7 +329,7 @@
       "artifact_type": "image_collection",
       "artifact_role": "reusable_local_consistency_maps",
       "schema_version": "local_consistency_map_renderer.v1",
-      "expected_row_count": 3270
+      "expected_row_count": 27912
     },
     {
       "artifact_key": "local_consistency.summary_figure",
@@ -325,7 +345,7 @@
       "artifact_type": "figure_collection",
       "artifact_role": "deterministic_human_review_figures",
       "schema_version": "local_consistency_map_renderer.v1",
-      "expected_row_count": 12
+      "expected_row_count": 14
     },
     {
       "artifact_key": "local_consistency.map_manifest",
@@ -333,7 +353,7 @@
       "artifact_type": "table",
       "artifact_role": "normalized_local_consistency_image_index",
       "schema_version": "local_consistency_map_images.v1",
-      "expected_row_count": 3282
+      "expected_row_count": 27926
     },
     {
       "artifact_key": "validation.17_local_consistency_metrics",
@@ -341,7 +361,7 @@
       "artifact_type": "validation_table",
       "artifact_role": "validation_evidence",
       "schema_version": "validation_checks.v1",
-      "expected_row_count": 176
+      "expected_row_count": 179
     },
     {
       "artifact_key": "local_consistency.artifacts",
@@ -361,88 +381,98 @@
     }
   ],
   "expected_counts": {
-    "artwork_rows": 50,
-    "geometry_rows": 50,
-    "case_registry_rows": 525,
-    "model_eligibility_rows": 2100,
+    "artwork_rows": 300,
+    "geometry_rows": 300,
+    "case_registry_rows": 3425,
+    "model_eligibility_rows": 17125,
     "region_policy_rows": 143,
-    "evaluated_unique_cases": 410,
-    "evaluated_candidates": 2160,
-    "nonzero_candidates": 2010,
-    "zero_control_candidates": 150,
-    "synthetic_degradation_candidates": 356,
-    "primary_candidates": 1240,
-    "mapped_primary_candidates": 1090,
-    "texture_descriptor_rows": 16080,
-    "texture_map_rows": 49664,
-    "texture_rows_total": 65744,
-    "colour_rows": 170064,
-    "seam_rows": 36180,
-    "total_metric_rows": 271988,
-    "candidate_map_images": 3270,
-    "selected_candidate_panels": 8,
+    "evaluated_unique_cases": 2620,
+    "evaluated_candidates": 16404,
+    "excluded_candidates": 11,
+    "nonzero_candidates": 15204,
+    "zero_control_candidates": 1200,
+    "synthetic_degradation_candidates": 2811,
+    "primary_candidates": 10504,
+    "mapped_primary_candidates": 9304,
+    "texture_descriptor_rows": 121632,
+    "texture_map_rows": 376140,
+    "texture_rows_total": 497772,
+    "colour_rows": 1289223,
+    "seam_rows": 273672,
+    "total_metric_rows": 2060667,
+    "candidate_map_images": 27912,
+    "selected_candidate_panels": 10,
     "selected_cross_model_panels": 4,
-    "selected_panels_total": 12,
-    "map_manifest_rows": 3282,
+    "selected_panels_total": 14,
+    "map_manifest_rows": 27926,
     "candidates_by_model": {
-      "opencv_telea": 410,
-      "lama": 410,
-      "stable_diffusion_inpainting": 1330,
-      "sdxl_inpainting": 10
+      "opencv_telea": 2620,
+      "lama": 2620,
+      "hint_places2": 2620,
+      "stable_diffusion_inpainting": 8520,
+      "sdxl_inpainting": 24
+    },
+    "source_rows_by_model": {
+      "opencv_telea": 2620,
+      "lama": 2620,
+      "hint_places2": 2620,
+      "stable_diffusion_inpainting": 8520,
+      "sdxl_inpainting": 35
     },
     "summary_figure_count": 1,
-    "canonical_file_count": 3288,
+    "canonical_file_count": 27932,
     "artifact_record_count": 6,
-    "validation_row_count": 176,
+    "validation_row_count": 179,
     "temporary_work_file_count": 0,
     "blocking_validation_failures": 0,
     "warning_validation_failures": 0
   },
   "observed_counts": {
-    "evaluated_unique_cases": 410,
-    "evaluated_candidates": 2160,
-    "total_metric_rows": 271988,
+    "evaluated_unique_cases": 2620,
+    "evaluated_candidates": 16404,
+    "total_metric_rows": 2060667,
     "metric_rows_by_family": {
-      "colour": 170064,
-      "texture_map": 49664,
-      "seam": 36180,
-      "texture_descriptor": 16080
+      "colour": 1289223,
+      "texture_map": 376140,
+      "seam": 273672,
+      "texture_descriptor": 121632
     },
     "metric_rows_by_status": {
-      "ok": 268680,
-      "not_applicable": 3308
+      "ok": 2027698,
+      "not_applicable": 32969
     },
     "candidates_by_model": {
-      "stable_diffusion_inpainting": 1330,
-      "lama": 410,
-      "opencv_telea": 410,
-      "sdxl_inpainting": 10
+      "stable_diffusion_inpainting": 8520,
+      "hint_places2": 2620,
+      "lama": 2620,
+      "opencv_telea": 2620,
+      "sdxl_inpainting": 24
     },
-    "candidate_map_images": 3270,
-    "selected_panels_total": 12,
-    "selected_candidate_panels": 8,
+    "candidate_map_images": 27912,
+    "selected_panels_total": 14,
+    "selected_candidate_panels": 10,
     "selected_cross_model_panels": 4,
-    "map_manifest_rows": 3282,
+    "map_manifest_rows": 27926,
     "map_rows_by_type": {
-      "colour": 1090,
-      "seam": 1090,
-      "texture": 1090,
-      "local_consistency_candidate_panel": 8,
+      "colour": 9304,
+      "seam": 9304,
+      "texture": 9304,
+      "local_consistency_candidate_panel": 10,
       "cross_model_local_consistency_panel": 4
     },
     "summary_figure_count": 1,
-    "grouped_summary_rows": 556,
+    "grouped_summary_rows": 2468,
     "grouped_summary_dimensions": 6,
-    "canonical_file_count": 3288,
+    "canonical_file_count": 27932,
     "artifact_record_count": 6,
-    "validation_row_count": 176,
+    "validation_row_count": 179,
     "temporary_work_file_count": 0,
     "blocking_validation_failures": 0,
     "warning_validation_failures": 0
   },
   "validation_summary": {
-    "check_count": 176,
-    "passed_count": 176,
+    "check_count": 179,
+    "passed_count": 179,
     "failed_count": 0,
     "blocking_failure_count": 0,
     "overall_passed": true,
@@ -459,8 +489,8 @@
       },
       {
         "validation_stage": "batch_2_input_loading",
-        "check_count": 46,
-        "passed_count": 46,
+        "check_count": 49,
+        "passed_count": 49,
         "failed_count": 0,
         "blocking_failure_count": 0,
         "warning_failure_count": 0
@@ -529,10 +559,11 @@
     "Texture, smoothing, repetition, hallucinated-detail, and brushstroke-like measures are diagnostic image-processing proxies, not authentication or semantic brushstroke recognition.",
     "Visible-seam metrics are continuous comparative evidence; no universal perceptual or conservation threshold is asserted.",
     "Stable Diffusion prompt and seed candidates are repeated candidate-level observations, not independent paintings.",
-    "SDXL is limited to a predeclared technically validated ten-case partial evaluation.",
-    "Only primary non-zero candidates receive saved local-consistency maps; all 2,160 candidates retain numeric evidence.",
+    "HINT is a full controlled-300 comparison method with 2,620 completed candidates.",
+    "SDXL contributes 24 completed candidates from a predeclared 35-case bounded feasibility attempt; ten cases were skipped and one timed out.",
+    "Only primary non-zero candidates receive saved local-consistency maps; all 16,404 candidates retain numeric evidence.",
     "Selected median and extreme panels are deterministic diagnostic examples, not population-average performance estimates.",
-    "SDXL evidence is restricted to its predeclared technically validated ten-case partial scope.",
+    "SDXL evidence is restricted to 24 completed candidates from its bounded 35-case attempt.",
     "Repeated Stable Diffusion prompt and seed candidates are candidate-level observations rather than independent paintings."
   ],
   "refactor_status": "refactored",
@@ -546,10 +577,11 @@
     "09_opencv_telea_restoration",
     "10_lama_restoration",
     "11_stable_diffusion_restoration",
-    "12_sdxl_feasibility_or_restoration"
+    "12_sdxl_feasibility_or_restoration",
+    "12a_hint_restoration"
   ],
   "applicable_dataset_scopes": [
-    "controlled_50"
+    "controlled_300"
   ],
   "applicable_experiment_scopes": [
     "canonical_missing_region",
@@ -561,7 +593,7 @@
     {
       "map_type": "texture",
       "vmin": 0.0,
-      "vmax": 274.9808816528,
+      "vmax": 103.1973556519,
       "center": 0.0,
       "error_cmap": "magma",
       "improvement_cmap": "RdBu_r",
@@ -570,7 +602,7 @@
     {
       "map_type": "colour",
       "vmin": 0.0,
-      "vmax": 100.0,
+      "vmax": 96.278213501,
       "center": 0.0,
       "error_cmap": "magma",
       "improvement_cmap": "RdBu_r",
@@ -579,7 +611,7 @@
     {
       "map_type": "seam",
       "vmin": 0.0,
-      "vmax": 0.1748580039,
+      "vmax": 0.1664233059,
       "center": 0.0,
       "error_cmap": "magma",
       "improvement_cmap": "RdBu_r",
@@ -590,39 +622,51 @@
     "candidate_panels": [
       {
         "selection_role": "model_highest_seam_error",
+        "model_id": "hint_places2",
+        "case_id": "canonical__p237__loss_large",
+        "candidate_id": "candidate__hint_places2__canonical__p237__loss_large__c00"
+      },
+      {
+        "selection_role": "model_median_texture_error",
+        "model_id": "hint_places2",
+        "case_id": "canonical__p164__loss_small",
+        "candidate_id": "candidate__hint_places2__canonical__p164__loss_small__c00"
+      },
+      {
+        "selection_role": "model_highest_seam_error",
         "model_id": "lama",
-        "case_id": "canonical__p016__loss_large",
-        "candidate_id": "candidate__lama__canonical__p016__loss_large__c00"
+        "case_id": "canonical__p237__loss_large",
+        "candidate_id": "candidate__lama__canonical__p237__loss_large__c00"
       },
       {
         "selection_role": "model_median_texture_error",
         "model_id": "lama",
-        "case_id": "canonical__p010__loss_large",
-        "candidate_id": "candidate__lama__canonical__p010__loss_large__c00"
+        "case_id": "damage_size__p198__loss_large__size_06pct",
+        "candidate_id": "candidate__lama__damage_size__p198__loss_large__size_06pct__c00"
       },
       {
         "selection_role": "model_highest_seam_error",
         "model_id": "opencv_telea",
-        "case_id": "canonical__p016__loss_large",
-        "candidate_id": "candidate__opencv_telea__canonical__p016__loss_large__c00"
+        "case_id": "canonical__p237__loss_large",
+        "candidate_id": "candidate__opencv_telea__canonical__p237__loss_large__c00"
       },
       {
         "selection_role": "model_median_texture_error",
         "model_id": "opencv_telea",
-        "case_id": "damage_size__p001__loss_large__size_10pct",
-        "candidate_id": "candidate__opencv_telea__damage_size__p001__loss_large__size_10pct__c00"
+        "case_id": "canonical__p171__mixed_damage",
+        "candidate_id": "candidate__opencv_telea__canonical__p171__mixed_damage__c00"
       },
       {
         "selection_role": "model_highest_seam_error",
         "model_id": "sdxl_inpainting",
-        "case_id": "canonical__p001__loss_large",
-        "candidate_id": "sdxl__a502c0783c0a__p00_generic__seed2026"
+        "case_id": "canonical__p111__scratch_thin",
+        "candidate_id": "sdxl__028c615db1d3__p00_generic__seed2026"
       },
       {
         "selection_role": "model_median_texture_error",
         "model_id": "sdxl_inpainting",
-        "case_id": "canonical__p039__loss_large",
-        "candidate_id": "sdxl__37161b5099c0__p00_generic__seed2026"
+        "case_id": "canonical__p161__scratch_thin",
+        "candidate_id": "sdxl__2fade6809e99__p00_generic__seed2026"
       },
       {
         "selection_role": "model_highest_seam_error",
@@ -633,8 +677,8 @@
       {
         "selection_role": "model_median_texture_error",
         "model_id": "stable_diffusion_inpainting",
-        "case_id": "synthetic_degradation__p018__water_stain_dirt__moderate",
-        "candidate_id": "sd15__p00__s2026__9b665738d67f"
+        "case_id": "canonical__p266__loss_small",
+        "candidate_id": "sd15__p00__s2026__fd46a2e3f692"
       }
     ],
     "cross_model_panels": [
@@ -644,26 +688,26 @@
         "painting_id": "p036",
         "metric_name": "local_texture_error_p95",
         "region_id": "masked_region",
-        "model_count": 3,
-        "model_spread": 160.8625400603
+        "model_count": 4,
+        "model_spread": 161.0346368134
       },
       {
         "selection_role": "largest_colour_model_spread",
-        "case_id": "synthetic_degradation__p018__dirt_dust__severe",
-        "painting_id": "p018",
+        "case_id": "canonical__p111__scratch_thin",
+        "painting_id": "p111",
         "metric_name": "delta_e_ciede2000_mean",
         "region_id": "masked_region",
-        "model_count": 4,
-        "model_spread": 41.5990686417
+        "model_count": 5,
+        "model_spread": 49.6754510403
       },
       {
         "selection_role": "largest_seam_model_spread",
-        "case_id": "canonical__p036__scratch_thin",
-        "painting_id": "p036",
+        "case_id": "canonical__p111__scratch_thin",
+        "painting_id": "p111",
         "metric_name": "boundary_gradient_mismatch",
         "region_id": "boundary_ring",
-        "model_count": 3,
-        "model_spread": 0.0770323602
+        "model_count": 5,
+        "model_spread": 0.1008915233
       },
       {
         "selection_role": "largest_high_texture_category_spread",
@@ -671,7 +715,7 @@
         "painting_id": "p050",
         "metric_name": "local_texture_error_p95",
         "region_id": "masked_region",
-        "model_count": 3,
+        "model_count": 4,
         "model_spread": 69.6469881415
       }
     ]
@@ -679,44 +723,44 @@
   "grouped_summary_dimensions": [
     {
       "grouping_dimension": "category",
-      "represented_metric_rows": 4360,
-      "summary_rows": 80,
+      "represented_metric_rows": 37216,
+      "summary_rows": 100,
       "groups": 5,
       "row_count_matches": true
     },
     {
       "grouping_dimension": "damage_percentage",
-      "represented_metric_rows": 4360,
-      "summary_rows": 144,
+      "represented_metric_rows": 37216,
+      "summary_rows": 196,
       "groups": 11,
       "row_count_matches": true
     },
     {
       "grouping_dimension": "damage_type",
-      "represented_metric_rows": 4360,
-      "summary_rows": 80,
+      "represented_metric_rows": 37216,
+      "summary_rows": 100,
       "groups": 5,
       "row_count_matches": true
     },
     {
       "grouping_dimension": "experiment",
-      "represented_metric_rows": 4360,
-      "summary_rows": 56,
+      "represented_metric_rows": 37216,
+      "summary_rows": 72,
       "groups": 4,
       "row_count_matches": true
     },
     {
       "grouping_dimension": "model",
-      "represented_metric_rows": 4360,
-      "summary_rows": 16,
-      "groups": 4,
+      "represented_metric_rows": 37216,
+      "summary_rows": 20,
+      "groups": 5,
       "row_count_matches": true
     },
     {
       "grouping_dimension": "style_or_period",
-      "represented_metric_rows": 4360,
-      "summary_rows": 180,
-      "groups": 14,
+      "represented_metric_rows": 37216,
+      "summary_rows": 1980,
+      "groups": 120,
       "row_count_matches": true
     }
   ],

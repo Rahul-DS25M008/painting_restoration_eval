@@ -1,8 +1,8 @@
 # Methodology Guide
 
-**Status:** historical completed-pipeline guide with Controlled-300 transition addendum, reviewed 2026-10-01\
-**Experimental scope:** historical `controlled_50`; active `controlled_300` completed through Notebook 35 with disclosed deployment limitations; N36 consolidation pending\
-**Pipeline:** historical 36-notebook pilot remains frozen; Controlled-300 rerun proceeds in dependency order\
+**Status:** completed Controlled-300 pipeline with explicitly labelled historical methodology, reviewed 2026-10-01\
+**Experimental scope:** `controlled_300` completed through Notebook 36 with disclosed deployment/provenance limitations; `controlled_50` retained as historical evidence\
+**Pipeline:** completed N01–N36 including N12A; separate D01 and supplemental D02; pilot baseline remains frozen\
 **Public interface:** [Controlled-300 Streamlit dashboard](https://fhtw-painting-restoration-main.streamlit.app/)
 
 This guide explains the main scientific and engineering decisions in the
@@ -22,9 +22,11 @@ Notebook 34 run `run_1e831de6e27f9ead0147bb30` supplies the validated
 Controlled-300 `dashboard_package.v2` release. The new interface is now deployed
 from `main`; N35 records owner acceptance and successful availability checks,
 with 519 passes and 14 retained warning/nonpass records. Unmeasured performance,
-platform and browser qualifications are not inferred from acceptance. N36 must
-carry these distinctions into the final Controlled-300 package; its existing
-outputs remain historical pilot evidence until that consolidation.
+platform and browser qualifications are not inferred from acceptance. N36 run
+`run_e3133aca48134968896bcd1b97af72c4` completed the final Controlled-300 package:
+859 checks passed, 16 warning nonpasses remain and there are zero blockers.
+Its 134-file delivery preserves these distinctions, including both provenance
+exceptions, without rerunning scientific experiments.
 
 - The detailed notebook sequence is in
   [`final_notebook_roadmap.md`](final_notebook_roadmap.md).
@@ -251,7 +253,7 @@ uncertainty values. SDXL has insufficient seed coverage.
 
 Comparisons are case-paired whenever models share the same case. Repeated masks,
 seeds, prompts and cases nested within paintings are not treated as independent
-paintings. Focused five-painting experiments support within-study trajectories
+paintings. Focused extension experiments support within-study trajectories
 and sensitivity descriptions, not independent category effects.
 
 Downstream analyses preserve metric disagreement and include, where their
@@ -300,7 +302,10 @@ producer metrics as documented in
 [`dashboard_numeric_metrics.md`](dashboard_numeric_metrics.md). The app does not
 run restoration inference or recompute scientific metrics.
 
-Notebook 36 assembles a checksum-verified supervisor and reproducibility package.
+Notebook 36 completed a checksum-verified supervisor and reproducibility package:
+123 package files (35.04 MiB), 115 byte-preserved copies, eight generated package
+files, 38 upstream manifests and a 693-row delivery/omission index. The original
+nine-step plan was delivered in eight batches at the owner's request.
 It copies a bounded review set and indexes larger collections; it is not a full
 repository clone. Historical notebook manifests and package snapshots describe
 the versions actually executed or packaged and are not rewritten after later

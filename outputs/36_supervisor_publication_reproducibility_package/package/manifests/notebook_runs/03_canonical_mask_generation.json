@@ -1,28 +1,28 @@
 {
   "manifest_schema_version": "run_manifest.v1",
-  "run_id": "run_16536d2f39c54081b0dd58a00b5e9f01",
+  "run_id": "run_dd51e1b1ca374f3aad16d22b0cd12c99",
   "notebook_id": "03",
   "notebook_name": "Canonical Mask Generation",
   "origin": "Existing Notebook 03",
   "run_status": "completed",
-  "started_at_utc": "2026-08-18T11:12:50.552543Z",
-  "completed_at_utc": "2026-08-18T11:19:24.263197Z",
-  "git_commit": "e897fb5632b244abd5b5bd51a4751475d57fce71",
+  "started_at_utc": "2026-09-09T20:38:00.413429Z",
+  "completed_at_utc": "2026-09-09T22:03:46.827723Z",
+  "git_commit": "6a118e9c21e2472aa89f98d22d3bf8df2c09f337",
   "git_dirty": true,
   "git_branch": "main",
   "git_error": "",
-  "inventory_run_id": "inventory_20260818T085309Z_86038434",
+  "inventory_run_id": "inventory_20260909T203243Z_1f066123",
   "dataset_versions": {
     "dataset_id": "painting_restoration_eval",
-    "dataset_version": "1.0.0",
-    "dataset_scope": "controlled_50",
-    "execution_profile": "controlled_50",
+    "dataset_version": "2.0.0",
+    "dataset_scope": "controlled_300",
+    "execution_profile": "controlled_300",
     "experiment_id": "canonical_missing_region",
-    "content_fingerprint": "9c1717b89d6adc4182736c7c879c2d941ebfbf4999870abc14249bb1869c0d47",
+    "content_fingerprint": "5c8797aebe0c5aced37a274854a8f2584bb7d4fd9babff1fc6ba37f316b2f6b1",
     "fingerprint_version": "dataset_fingerprint.v1",
-    "upstream_run_id": "run_5e54b2de32934e1c9303e7250b932404",
-    "upstream_preprocessed_images_sha256": "b6f29c2c71450403042b1bb6c522ea6e50942a940428918b89dac466e0b7152f",
-    "upstream_clean_images_sha256": "287a4a24bcbc1ff6c2aca29e0900cf592ac67ceed920bd997a8dcf531bad347a",
+    "upstream_run_id": "run_ca94012bb1e54bf5bf57c1fdabb01480",
+    "upstream_preprocessed_images_sha256": "a2e769ae44facfec955642a0e4ab8825b4468a2e68d70d6c9a968b7b131cc934",
+    "upstream_clean_images_sha256": "b370b81e0e3b5121fe6e0617fb157a6df1d2bec05a9bd7aa45eea2ee826690b9",
     "upstream_preprocessed_images_schema": "preprocessed_images.v1",
     "canonical_masks_schema": "canonical_masks.v1",
     "mask_audit_schema": "mask_audit.v1",
@@ -37,16 +37,16 @@
     "config/masks/canonical_binary.yaml"
   ],
   "configuration_checksums": {
-    "config/masks/canonical_binary.yaml": "167269a57e45df5295ceba09825ade4b739f566785f4eb579204b4f2d390ef3b"
+    "config/masks/canonical_binary.yaml": "e37a08599005ac1a1913c06b81d52af1ffcfce18716c441bde1d71e3da80c4b2"
   },
   "helper_versions": {
     "restoration_eval": "0.1.0",
     "paths": "1.0.0",
-    "schemas": "1.1.0",
+    "schemas": "1.18.0",
     "manifests": "1.0.0",
     "validation": "1.0.0",
-    "regions": "1.0.0",
-    "masks": "3.0.0"
+    "regions": "1.1.0",
+    "masks": "3.1.0"
   },
   "python_version": "3.12.6",
   "python_implementation": "CPython",
@@ -79,7 +79,7 @@
       "required": true,
       "format": "csv",
       "schema_version": "preprocessed_images.v1",
-      "expected_cardinality": 50
+      "expected_cardinality": 300
     },
     {
       "input_key": "clean_images",
@@ -88,7 +88,7 @@
       "required": true,
       "format": "png_collection",
       "schema_version": "clean_image_collection.v1",
-      "expected_cardinality": 50
+      "expected_cardinality": 300
     },
     {
       "input_key": "upstream_artifact_manifest",
@@ -115,7 +115,7 @@
       "required": true,
       "format": "csv",
       "schema_version": "project_file_inventory.v1",
-      "expected_cardinality": 10771
+      "expected_cardinality": 19592
     },
     {
       "input_key": "inventory_run",
@@ -142,7 +142,7 @@
       "relative_path": "outputs/03_canonical_mask_generation/data/masks.csv",
       "format": "csv",
       "schema_version": "canonical_masks.v1",
-      "expected_cardinality": 250,
+      "expected_cardinality": 1500,
       "artifact_role": "primary_downstream"
     },
     {
@@ -150,7 +150,7 @@
       "relative_path": "outputs/03_canonical_mask_generation/images/masks",
       "format": "png_collection",
       "schema_version": "canonical_mask_collection.v1",
-      "expected_cardinality": 250,
+      "expected_cardinality": 1500,
       "artifact_role": "primary_downstream"
     },
     {
@@ -211,10 +211,10 @@
     }
   ],
   "expected_counts": {
-    "painting_rows": 50,
+    "painting_rows": 300,
     "mask_families": 5,
-    "canonical_mask_rows": 250,
-    "mask_image_files": 250,
+    "canonical_mask_rows": 1500,
+    "mask_image_files": 1500,
     "mask_audit_rows": 105,
     "validation_rows": 50,
     "artifact_records": 7,
@@ -222,21 +222,21 @@
     "methodology_reports": 1
   },
   "observed_counts": {
-    "painting_rows": 50,
+    "painting_rows": 300,
     "mask_families": 5,
-    "canonical_mask_rows": 250,
-    "mask_image_files": 250,
+    "canonical_mask_rows": 1500,
+    "mask_image_files": 1500,
     "mask_audit_rows": 105,
     "validation_rows": 50,
     "artifact_records": 7,
     "canonical_figures": 2,
     "methodology_reports": 1,
     "family_counts": {
-      "zero_control": 50,
-      "scratch_thin": 50,
-      "loss_small": 50,
-      "loss_large": 50,
-      "mixed_damage": 50
+      "zero_control": 300,
+      "scratch_thin": 300,
+      "loss_small": 300,
+      "loss_large": 300,
+      "mixed_damage": 300
     },
     "failed_generations": 0,
     "missing_masks": 0,
@@ -247,9 +247,9 @@
     "area_tolerance_failures": 0,
     "family_morphology_failures": 0,
     "deterministic_replay_failures": 0,
-    "total_runtime_seconds": 159.7996728004655,
-    "mean_runtime_seconds": 0.6391986912018619,
-    "maximum_generation_attempts_observed": 10,
+    "total_runtime_seconds": 1124.4315012000006,
+    "mean_runtime_seconds": 0.7496210008000004,
+    "maximum_generation_attempts_observed": 30,
     "registered_project_artifacts": 7
   },
   "validation_summary": {
@@ -309,10 +309,10 @@
     }
   },
   "known_limitations": [
-    "The controlled subset contains works from only three institutions, with 60 percent sourced from The Metropolitan Museum of Art.",
+    "The controlled collection includes 32 recorded source labels, but the largest source contributes 109 of 300 paintings; source coverage is therefore broader but still concentrated.",
     "Restricting acquisition to public-domain or open-access material favors institutions and works with suitable digitization and rights metadata.",
-    "The five balanced visual categories are a purposive evaluation design and are not a population-representative sample of painting history.",
-    "Optional date, style, and medium metadata is concentrated in portrait and high-texture records and is absent from three categories.",
+    "The five balanced visual categories are a purposive evaluation design and are not independently validated art-historical styles or a population-representative sample of painting history.",
+    "Date or period, style or period, and medium are recorded for 268 of 300 paintings; visual category remains the complete grouping variable.",
     "Historical and geographic representation cannot be quantified reliably from the current fields and requires explicit enrichment before population-level claims.",
     "Dataset verification establishes technical and metadata suitability; it does not certify historical representativeness or conservation suitability.",
     "Images without embedded ICC profiles are processed under the configured sRGB assumption without pixel conversion.",
@@ -337,7 +337,7 @@
     "project paths registry"
   ],
   "applicable_dataset_scopes": [
-    "controlled_50"
+    "controlled_300"
   ],
   "applicable_experiment_scopes": [
     "canonical_missing_region"

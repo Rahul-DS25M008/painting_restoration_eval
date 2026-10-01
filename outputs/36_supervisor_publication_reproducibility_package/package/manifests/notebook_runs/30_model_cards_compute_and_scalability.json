@@ -1,47 +1,48 @@
 {
   "manifest_schema_version": "run_manifest.v1",
-  "run_id": "run_99fc7daf6af54d5992ef6c26f05bd901",
+  "run_id": "run_605de239145a46e9a202fd63bbbb4e9c",
   "notebook_id": "30",
   "notebook_name": "30_model_cards_compute_and_scalability",
   "origin": "New Notebook; incorporates existing model-audit documentation",
   "run_status": "completed",
-  "started_at_utc": "2026-09-02T12:15:08.861667Z",
-  "completed_at_utc": "2026-09-02T13:17:31.517191Z",
-  "git_commit": "20b6815c1dc558a3f1cf9eceeda1c1d51be54119",
+  "started_at_utc": "2026-09-25T09:16:38.738302Z",
+  "completed_at_utc": "2026-09-25T10:16:47.735741Z",
+  "git_commit": "f1e4a460b64755c3ae945d8392e55ba3074bcfb6",
   "git_dirty": true,
   "git_branch": "main",
   "git_error": "",
-  "inventory_run_id": "inventory_20260902T120343Z_a44d7fe6",
+  "inventory_run_id": "inventory_20260925T081918Z_41379f75",
   "dataset_versions": {
     "dataset_id": "painting_restoration_eval",
-    "dataset_version": "1.0.0",
-    "dataset_scope": "controlled_50",
-    "configuration_version": "1.0.0",
+    "dataset_version": "2.0.0",
+    "dataset_scope": "controlled_300",
+    "configuration_version": "2.0.0",
     "configuration_schema_version": "model_cards_compute_config.v1",
     "model_card_schema_version": "model_cards.v1",
     "compute_schema_version": "compute_scalability.v1",
     "upstream_run_ids": {
-      "09": "run_eafa3b4f805e472688f1df65b894b96e",
-      "10": "run_25e38d80461643fb91ba60cb551a9a2f",
-      "11": "run_82ee1e1c09524a5da3e6fe93016d0627",
-      "12": "run_1daaf4a3dcb34b5599b0ff89bb7034d3",
-      "13": "run_5bbeb9a089d044fab465d5078aedab39",
-      "14": "run_4ffd061c775a46f3944ad9e405613b34",
-      "15": "run_2b08762834b1423b8a61ef159c2679dc",
-      "16": "run_1181febbbd3d4e63bbd60bc565b2d0c9",
-      "17": "run_a322000b2a0445c9b5b71a2e0502fdf0",
-      "18": "run_a660cfa509e643a39708d762f18cae2b",
-      "19": "run_bddab70b2b2c46aaa013f8c45a91fc23",
-      "20": "run_cb24def4d3134cc3bb6d679d390b777e",
-      "21": "run_2acbdc178f9a470f9c3a0ac4212956bb",
-      "22": "run_383fd03e2665485fb49c460866865b72",
-      "23": "run_85d5f0e0228b4e918632433f86493ff0",
-      "24": "run_2002f9ec00144db083fe2af421c3199d",
-      "25": "run_65a5abfcedde48f9aa823f60cd6f8baf",
-      "26": "run_b223a228966647a291fe71b2df8dee82",
-      "27": "run_e8c3d7bdf26b4f7e945cab79c71635ea",
-      "28": "run_25d4e0d032c84f0c9508578091a807b0",
-      "29": "run_3163029edceb4fb385cf818d29a36a6f"
+      "09": "run_350786ea88014b67b0cf9efec7fac23c",
+      "10": "run_6f81083a17804d36b1495e4932db4e03",
+      "11": "run_4385124a0cca4d758d357de654a33f13",
+      "12": "run_1f7af9d329354a56b4275c4af3cd3f75",
+      "12a": "run_f6c9353c31ce4ed9be5e5502571d635d",
+      "13": "run_41b9c87a3c034f19b6f28868127b3c89",
+      "14": "run_27cb11ae9aa94133ad474b2f38cab122",
+      "15": "run_50c1bb5f25b44111a76df998329d69ed",
+      "16": "run_99b0d8d1af1b43bd8e8cb3d6ae754868",
+      "17": "run_ed15508895b542e6ac0733c49704ad26",
+      "18": "run_7c1d7195ed8447c1a878259360b1f5f2",
+      "19": "run_7384c7fb8d4c4efe98264a660ac12a75",
+      "20": "run_8c94e988fd4c4d7cae0acd8c3a64fbe6",
+      "21": "run_86f7f46183634889aa050ee2a9f33b56",
+      "22": "run_d0276a6859f74fada266936f43b7499f",
+      "23": "run_e93288fc3ac847ccb699241b4b4c8be0",
+      "24": "run_bbf68684c3ca47e5827c2b8b4b666351",
+      "25": "run_cf89ebe972364c7b8ccfefc6bf2a63ca",
+      "26": "run_efc978dd6d504cdb9b138a750f6dca83",
+      "27": "run_bef567ee35c1409dbcecfb71f1b4f8b4",
+      "28": "run_4325bb483fbc4ccda670df125c40731d",
+      "29": "run_ad7603b6bdb14156a140351f6ac1f241"
     }
   },
   "configuration_paths": [
@@ -49,23 +50,25 @@
     "config/evaluation/evidence_coverage.yaml",
     "config/experiments/opencv_telea.yaml",
     "config/experiments/lama.yaml",
+    "config/experiments/hint.yaml",
     "config/experiments/stable_diffusion.yaml",
     "config/experiments/stable_diffusion_scratch_prompt_ablation.yaml",
     "config/experiments/sdxl.yaml"
   ],
   "configuration_checksums": {
-    "config/evaluation/model_cards_compute.yaml": "5b01b06bd8aa07fba8d40aa0953a92f4c6e909ce5f931c93feee5acd135cdae0",
-    "config/evaluation/evidence_coverage.yaml": "5294c2c3a1268f482232abcb12a2d114e8df256e4a75429197b957d351b96aca",
-    "config/experiments/opencv_telea.yaml": "9295858e27461b90cca89b467a04c6e2d4a076b8d6e74b9b6293541fb5525624",
-    "config/experiments/lama.yaml": "7c606eb3c860bbae4ef782ac5f2b7bd31c9dc5d70be8d1eebe2d3fbe6779eb9a",
-    "config/experiments/stable_diffusion.yaml": "394c66a4269b0584539141c409e278939762d065fbc122f2600b340cb8e58dbe",
-    "config/experiments/stable_diffusion_scratch_prompt_ablation.yaml": "be83ff685a5907359fb4858683fb840cf9b1fd34f67b215199232a0fac4a61f3",
-    "config/experiments/sdxl.yaml": "e17ae845f5daeefdacda288751befd42b07362a919ac59b93bf038b5d3871f1c"
+    "config/evaluation/model_cards_compute.yaml": "22426c87b2b57719b0457f1dd9f803706317d546108bc4fe0e6275703d1928b3",
+    "config/evaluation/evidence_coverage.yaml": "e1d8fb2fc62f584432c434f4d1dea688b4cfc8dc54366be5d1fd9ead01854b52",
+    "config/experiments/opencv_telea.yaml": "83b8e8af77238dc3b69047fe87aeffd226214f93ca502fe2c753b8a1924c4252",
+    "config/experiments/lama.yaml": "b95d6d7f6ea69d435f8a44995043aac8d0c47e0f44f515d77664c362f2c56887",
+    "config/experiments/hint.yaml": "3a4ac3844491ffce7ad784e6ad454ecac5fa6dbf5089b5bc8e91fb329bcf7aed",
+    "config/experiments/stable_diffusion.yaml": "e04296fb5c9af1349f64b5adb38a78004e477bab80e412c88e4564a07581bfdb",
+    "config/experiments/stable_diffusion_scratch_prompt_ablation.yaml": "a4bf6dd852752f5f1b8de927b3639ec939ab8825560b2e9fc7538e19bd9b27a9",
+    "config/experiments/sdxl.yaml": "73beb5eaaabf61599c206d22d5b6c31eb6775a7e8c9f5c5a2dca79d2f55260bd"
   },
   "helper_versions": {
-    "model_cards_compute": "1.0.0",
+    "model_cards_compute": "2.0.0",
     "manifests": "1.0.0",
-    "paths": "1.0.0",
+    "paths": "1.1.1",
     "validation": "1.0.0"
   },
   "python_version": "3.12.6",
@@ -90,315 +93,343 @@
       "producer": "global_inventory",
       "relative_path": "outputs/inventory/project_file_inventory.csv",
       "required": true,
-      "size_bytes": 9924452
+      "size_bytes": 74336707
     },
     {
       "input_key": "inventory_run_path",
       "producer": "global_inventory",
       "relative_path": "outputs/inventory/inventory_run.json",
       "required": true,
-      "size_bytes": 2632
+      "size_bytes": 2937
     },
     {
       "input_key": "project_paths_path",
       "producer": "global_project_path_registry",
       "relative_path": "outputs/inventory/project_paths.json",
       "required": true,
-      "size_bytes": 114740
+      "size_bytes": 161588
     },
     {
       "input_key": "proposal_path",
       "producer": "repository_source",
       "relative_path": "docs/proposal/Rahul_Thesis_Proposal.docx",
       "required": true,
-      "size_bytes": 1850918
+      "size_bytes": 989561
     },
     {
       "input_key": "implementation_guidelines_path",
       "producer": "repository_source",
       "relative_path": "docs/refactoring_implementation_guidelines.md",
       "required": true,
-      "size_bytes": 63223
+      "size_bytes": 138589
     },
     {
       "input_key": "notebook_roadmap_path",
       "producer": "repository_source",
       "relative_path": "docs/final_notebook_roadmap.md",
       "required": true,
-      "size_bytes": 80148
+      "size_bytes": 207800
     },
     {
       "input_key": "evidence_dependency_audit_path",
       "producer": "repository_source",
       "relative_path": "docs/evidence_dependency_audit.md",
       "required": true,
-      "size_bytes": 29966
+      "size_bytes": 121353
     },
     {
       "input_key": "evidence_coverage_path",
       "producer": "repository_source",
       "relative_path": "config/evaluation/evidence_coverage.yaml",
       "required": true,
-      "size_bytes": 49425
+      "size_bytes": 141624
     },
     {
       "input_key": "model_audit_notes_path",
       "producer": "repository_source",
       "relative_path": "docs/model_audit_notes.md",
       "required": true,
-      "size_bytes": 12148
+      "size_bytes": 20710
     },
     {
       "input_key": "telea_config_path",
       "producer": "repository_source",
       "relative_path": "config/experiments/opencv_telea.yaml",
       "required": true,
-      "size_bytes": 4533
+      "size_bytes": 4545
     },
     {
       "input_key": "lama_config_path",
       "producer": "repository_source",
       "relative_path": "config/experiments/lama.yaml",
       "required": true,
-      "size_bytes": 6136
+      "size_bytes": 6150
+    },
+    {
+      "input_key": "hint_config_path",
+      "producer": "repository_source",
+      "relative_path": "config/experiments/hint.yaml",
+      "required": true,
+      "size_bytes": 6071
     },
     {
       "input_key": "stable_diffusion_config_path",
       "producer": "repository_source",
       "relative_path": "config/experiments/stable_diffusion.yaml",
       "required": true,
-      "size_bytes": 7260
+      "size_bytes": 7273
     },
     {
       "input_key": "scratch_prompt_config_path",
       "producer": "repository_source",
       "relative_path": "config/experiments/stable_diffusion_scratch_prompt_ablation.yaml",
       "required": true,
-      "size_bytes": 2755
+      "size_bytes": 2765
     },
     {
       "input_key": "sdxl_config_path",
       "producer": "repository_source",
       "relative_path": "config/experiments/sdxl.yaml",
       "required": true,
-      "size_bytes": 10017
+      "size_bytes": 12853
     },
     {
       "input_key": "telea_candidates_path",
       "producer": "repository_source",
       "relative_path": "outputs/09_opencv_telea_restoration/data/restorations.csv",
       "required": true,
-      "size_bytes": 345159
+      "size_bytes": 2212716
     },
     {
       "input_key": "telea_runtime_path",
       "producer": "repository_source",
       "relative_path": "outputs/09_opencv_telea_restoration/metrics/runtime_summary.csv",
       "required": true,
-      "size_bytes": 1019
+      "size_bytes": 1025
     },
     {
       "input_key": "lama_candidates_path",
       "producer": "repository_source",
       "relative_path": "outputs/10_lama_restoration/data/restorations.csv",
       "required": true,
-      "size_bytes": 457518
+      "size_bytes": 2930181
     },
     {
       "input_key": "lama_runtime_path",
       "producer": "repository_source",
       "relative_path": "outputs/10_lama_restoration/metrics/runtime_summary.csv",
       "required": true,
-      "size_bytes": 1009
+      "size_bytes": 1022
+    },
+    {
+      "input_key": "hint_candidates_path",
+      "producer": "repository_source",
+      "relative_path": "outputs/12a_hint_restoration/data/restorations.csv",
+      "required": true,
+      "size_bytes": 1974624
+    },
+    {
+      "input_key": "hint_runtime_path",
+      "producer": "repository_source",
+      "relative_path": "outputs/12a_hint_restoration/metrics/runtime_summary.csv",
+      "required": true,
+      "size_bytes": 692
     },
     {
       "input_key": "stable_diffusion_candidates_path",
       "producer": "repository_source",
       "relative_path": "outputs/11_stable_diffusion_restoration/data/candidates.csv",
       "required": true,
-      "size_bytes": 2436507
+      "size_bytes": 15634741
     },
     {
       "input_key": "stable_diffusion_runtime_path",
       "producer": "repository_source",
       "relative_path": "outputs/11_stable_diffusion_restoration/metrics/runtime_summary.csv",
       "required": true,
-      "size_bytes": 2445
+      "size_bytes": 2459
     },
     {
       "input_key": "sdxl_candidates_path",
       "producer": "repository_source",
       "relative_path": "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv",
       "required": true,
-      "size_bytes": 20267
+      "size_bytes": 66981
     },
     {
       "input_key": "sdxl_runtime_path",
       "producer": "repository_source",
       "relative_path": "outputs/12_sdxl_feasibility_or_restoration/metrics/runtime_summary.csv",
       "required": true,
-      "size_bytes": 595
+      "size_bytes": 606
     },
     {
       "input_key": "model_comparison_path",
       "producer": "repository_source",
       "relative_path": "outputs/21_multi_model_comparison/metrics/model_comparison.csv",
       "required": true,
-      "size_bytes": 45983163
+      "size_bytes": 152814687
     },
     {
       "input_key": "metric_disagreement_path",
       "producer": "repository_source",
       "relative_path": "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv",
       "required": true,
-      "size_bytes": 324082
+      "size_bytes": 882903
     },
     {
       "input_key": "manifest_09_path",
       "producer": "upstream_notebook_09",
       "relative_path": "outputs/09_opencv_telea_restoration/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 12991
+      "size_bytes": 13017
     },
     {
       "input_key": "manifest_10_path",
       "producer": "upstream_notebook_10",
       "relative_path": "outputs/10_lama_restoration/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 23476
+      "size_bytes": 23514
     },
     {
       "input_key": "manifest_11_path",
       "producer": "upstream_notebook_11",
       "relative_path": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 27662
+      "size_bytes": 27699
     },
     {
       "input_key": "manifest_12_path",
       "producer": "upstream_notebook_12",
       "relative_path": "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 18784
+      "size_bytes": 18795
+    },
+    {
+      "input_key": "manifest_12a_path",
+      "producer": "upstream_notebook_12a",
+      "relative_path": "outputs/12a_hint_restoration/manifests/run_manifest.json",
+      "required": true,
+      "size_bytes": 11373
     },
     {
       "input_key": "manifest_13_path",
       "producer": "upstream_notebook_13",
       "relative_path": "outputs/13_classical_metrics/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 16986
+      "size_bytes": 18542
     },
     {
       "input_key": "manifest_14_path",
       "producer": "upstream_notebook_14",
       "relative_path": "outputs/14_lpips_metrics/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 16276
+      "size_bytes": 17677
     },
     {
       "input_key": "manifest_15_path",
       "producer": "upstream_notebook_15",
       "relative_path": "outputs/15_feature_similarity/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 21182
+      "size_bytes": 22579
     },
     {
       "input_key": "manifest_16_path",
       "producer": "upstream_notebook_16",
       "relative_path": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 24887
+      "size_bytes": 27100
     },
     {
       "input_key": "manifest_17_path",
       "producer": "upstream_notebook_17",
       "relative_path": "outputs/17_local_consistency_metrics/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 25710
+      "size_bytes": 27388
     },
     {
       "input_key": "manifest_18_path",
       "producer": "upstream_notebook_18",
       "relative_path": "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 21218
+      "size_bytes": 21497
     },
     {
       "input_key": "manifest_19_path",
       "producer": "upstream_notebook_19",
       "relative_path": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 21609
+      "size_bytes": 21778
     },
     {
       "input_key": "manifest_20_path",
       "producer": "upstream_notebook_20",
       "relative_path": "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 27894
+      "size_bytes": 28659
     },
     {
       "input_key": "manifest_21_path",
       "producer": "upstream_notebook_21",
       "relative_path": "outputs/21_multi_model_comparison/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 19579
+      "size_bytes": 21816
     },
     {
       "input_key": "manifest_22_path",
       "producer": "upstream_notebook_22",
       "relative_path": "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 19576
+      "size_bytes": 19707
     },
     {
       "input_key": "manifest_23_path",
       "producer": "upstream_notebook_23",
       "relative_path": "outputs/23_damage_size_sensitivity_analysis/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 17344
+      "size_bytes": 18237
     },
     {
       "input_key": "manifest_24_path",
       "producer": "upstream_notebook_24",
       "relative_path": "outputs/24_mask_robustness_analysis/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 16857
+      "size_bytes": 17557
     },
     {
       "input_key": "manifest_25_path",
       "producer": "upstream_notebook_25",
       "relative_path": "outputs/25_synthetic_degradation_analysis/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 20441
+      "size_bytes": 21157
     },
     {
       "input_key": "manifest_26_path",
       "producer": "upstream_notebook_26",
       "relative_path": "outputs/26_grouped_and_statistical_analysis/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 24549
+      "size_bytes": 25209
     },
     {
       "input_key": "manifest_27_path",
       "producer": "upstream_notebook_27",
       "relative_path": "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 22443
+      "size_bytes": 22731
     },
     {
       "input_key": "manifest_28_path",
       "producer": "upstream_notebook_28",
       "relative_path": "outputs/28_metric_and_region_policy_ablation/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 22403
+      "size_bytes": 23009
     },
     {
       "input_key": "manifest_29_path",
       "producer": "upstream_notebook_29",
       "relative_path": "outputs/29_explainable_ai_and_case_retrieval/manifests/run_manifest.json",
       "required": true,
-      "size_bytes": 23159
+      "size_bytes": 24147
     }
   ],
   "outputs": [
@@ -444,45 +475,49 @@
     }
   ],
   "expected_counts": {
-    "upstream_manifest_count": 21,
-    "telea_candidate_rows": 410,
-    "lama_candidate_rows": 410,
-    "stable_diffusion_candidate_rows": 1330,
-    "sdxl_candidate_rows": 10,
+    "upstream_manifest_count": 22,
+    "telea_candidate_rows": 2620,
+    "lama_candidate_rows": 2620,
+    "hint_candidate_rows": 2620,
+    "stable_diffusion_candidate_rows": 8520,
+    "sdxl_candidate_rows": 35,
+    "sdxl_completed_rows": 24,
+    "sdxl_noncompleted_rows": 11,
     "telea_runtime_rows": 5,
     "lama_runtime_rows": 5,
+    "hint_runtime_rows": 5,
     "stable_diffusion_runtime_rows": 14,
     "sdxl_runtime_rows": 3,
-    "observed_compute_rows": 27,
-    "projection_rows": 8,
-    "compute_rows": 35,
-    "model_card_rows": 4,
+    "observed_compute_rows": 32,
+    "projection_rows": 10,
+    "compute_rows": 42,
+    "model_card_rows": 5,
     "quality_populations": 2,
     "quality_anchor_rows": 22,
-    "model_card_report_count": 4,
+    "model_card_report_count": 5,
     "canonical_figure_count": 2,
     "artifact_record_count": 6,
-    "canonical_file_count": 11,
-    "minimum_validation_rows": 120
+    "canonical_file_count": 12,
+    "minimum_validation_rows": 130
   },
   "observed_counts": {
-    "model_card_rows": 4,
-    "compute_rows": 35,
-    "observed_compute_rows": 27,
-    "projection_rows": 8,
-    "applicable_projection_rows": 7,
+    "model_card_rows": 5,
+    "compute_rows": 42,
+    "observed_compute_rows": 32,
+    "projection_rows": 10,
+    "applicable_projection_rows": 5,
     "quality_anchor_count": 11,
     "quality_population_count": 2,
-    "model_card_report_count": 4,
+    "model_card_report_count": 5,
     "canonical_figure_count": 2,
     "roadmap_responsibility_count": 13,
     "artifact_record_count": 6,
-    "validation_row_count": 165,
-    "canonical_file_count": 11
+    "validation_row_count": 178,
+    "canonical_file_count": 12
   },
   "validation_summary": {
-    "check_count": 165,
-    "passed_count": 165,
+    "check_count": 178,
+    "passed_count": 178,
     "failed_count": 0,
     "blocking_failure_count": 0,
     "overall_passed": true,
@@ -490,9 +525,9 @@
   },
   "known_limitations": [
     "Runtime and memory observations describe one recorded local workstation and software environment.",
-    "The 300-painting values are transparent linear projections, not executed experiments.",
+    "The controlled 300-painting values are executed observations; only the explicitly labelled 600-painting and full-design SDXL values are projections.",
     "Projected storage covers notebook-owned output artifacts and excludes model caches, environments, Git history, and downstream metric outputs.",
-    "SDXL has ten completed candidates nested within five paintings and cannot support a full-scope ranking.",
+    "SDXL scheduled 35 bounded cases across 30 paintings; 24 completed, one timed out and ten were skipped under the declared budget, so it cannot support a full-scope ranking.",
     "LaMa per-case runtime includes transparent allocation from IOPaint batch wall-clock measurements.",
     "Quality-anchor wins are descriptive validated Notebook 21 evidence, not a universal quality or conservation score."
   ],
@@ -500,14 +535,14 @@
   "refactor_status": "refactored",
   "completion_gate_passed": true,
   "output_checksums": {
-    "model_cards_compute.model_cards": "34900309628ea968c8b82931bfd3f37af2862201f8a969d36108ddb5c36b3b35",
-    "model_cards_compute.compute_scalability": "16e87f3d73c57e5624e9c31b22c0215e1feb558f4f3179b2669fe2a0bd108caf",
-    "model_cards_compute.model_card_reports": "c9ed2a2ec5aef4267f012524fab16bab72f649c8814a4e124dd2a87e815b8dda",
-    "model_cards_compute.quality_vs_compute_figure": "e524aa63094659129cc99cdfc8249e87b9852c655741bd5e2c22ef065964485b",
-    "model_cards_compute.scaling_projection_figure": "0542eb1dee9e3751a92f5d42c7332d8ae7ad3a01d6172317f53598287ae14b3a",
-    "validation.30_model_cards_compute_and_scalability": "944624bbe73efca2d24d042e59e1f687b3e63a090432902f8d99fa939d322b95"
+    "model_cards_compute.model_cards": "ab99e55304f8c57422de9a200e88fd8af4d903e4deed7a05d611d0476ba12e8d",
+    "model_cards_compute.compute_scalability": "3fa8452dca2de59152f1214b1609853d8d8bb23ecdb4143e1124a500baa134c1",
+    "model_cards_compute.model_card_reports": "b46bfc7d492581afd27ea64472a2a2fd417a32eab07c81f234ad44dc162788e9",
+    "model_cards_compute.quality_vs_compute_figure": "306ec5b8fa9a7a5900b44b388255c8f3f3ca3f77a01d5ffef674d77ede8ce443",
+    "model_cards_compute.scaling_projection_figure": "7c6192e1b0534e3370a303b3942cefe7303831b1bda2b9e63238dbdee779583b",
+    "validation.30_model_cards_compute_and_scalability": "f6e3ad3f2754996251de99460bfe1309ffe89cd83928bae1c7dc82f8b0ed5b9f"
   },
-  "artifact_manifest_checksum": "d094a51eb3692c4d505bd5a39f7b5f136d5c7dc261fbb20b18e486db37c9652d",
+  "artifact_manifest_checksum": "3fd776f3616f47a96b1946f3e6b4fbf3caeffc8ea249dd7ab5d3fb815ae7a735",
   "roadmap_requirement_count": 13,
   "roadmap_traceability_failures": 0,
   "projections_are_executed_results": false,
@@ -520,7 +555,7 @@
   "energy_or_carbon_measured": false,
   "report_contract": {
     "format": "markdown",
-    "model_cards": 4,
+    "model_cards": 5,
     "sections_per_card": 13,
     "anchors_per_card": 11,
     "external_image_dependencies": 0

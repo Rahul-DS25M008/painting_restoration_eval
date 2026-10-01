@@ -1,5 +1,5 @@
 config_schema_version: "spatial_explanations_config.v1"
-config_version: "1.0.1"
+config_version: "1.1.0"
 
 spatial_explanations:
   notebook_id: "19"
@@ -104,7 +104,7 @@ spatial_explanations:
     cmap: "magma"
     vmin: 0.0
     percentile: 99.5
-    scale_population: "all 130 eligible prompt-specific uncertainty groups"
+    scale_population: "all 780 eligible prompt-specific uncertainty groups"
     scale_region: "content_region"
     maximum_sampled_pixels_per_group: 8192
     deterministic_sampling_seed: 190019
@@ -154,24 +154,24 @@ spatial_explanations:
     work_cleanup_policy: "remove notebook-owned temporary state after all canonical outputs reload and validate"
 
   expected_counts:
-    uncertainty_groups: 130
-    unique_cases: 80
-    candidates: 520
+    uncertainty_groups: 780
+    unique_cases: 480
+    candidates: 3120
     seeds_per_group: 4
-    generic_groups: 80
-    scratch_aware_groups: 50
-    representative_candidates: 130
-    spatial_explanation_rows: 780
-    numeric_map_archive_entries: 130
-    uncertainty_panels: 130
-    overlay_panels: 130
-    upstream_error_component_links: 260
-    upstream_generic_local_component_links: 240
-    owned_scratch_aware_local_component_maps: 150
+    generic_groups: 480
+    scratch_aware_groups: 300
+    representative_candidates: 780
+    spatial_explanation_rows: 4680
+    numeric_map_archive_entries: 780
+    uncertainty_panels: 780
+    overlay_panels: 780
+    upstream_error_component_links: 1560
+    upstream_generic_local_component_links: 1440
+    owned_scratch_aware_local_component_maps: 900
     selected_panels: 15
-    map_manifest_rows: 1055
+    map_manifest_rows: 6255
     artifact_records: 8
-    canonical_file_count: 431
+    canonical_file_count: 2481
 
   evidence_policy:
     interpretation: "empirical_seed_variability_spatial_proxy_not_calibrated_confidence"
@@ -184,10 +184,12 @@ spatial_explanations:
   downstream_consumers:
     - "20_semantic_and_structural_consistency"
     - "21_multi_model_comparison"
-    - "26_failure_detection_and_trustworthiness_flags"
-    - "30_model_report_generation"
-    - "32_painting_level_case_reports"
-    - "34_streamlit_dashboard_and_deployment_validation"
+    - "26_grouped_and_statistical_analysis"
+    - "27_failure_taxonomy_and_trustworthiness_flags"
+    - "29_explainable_ai_and_case_retrieval"
+    - "31_model_report_generation"
+    - "32_case_and_painting_report_generation"
+    - "34_final_streamlit_dashboard_assets"
 
   known_limitations:
     - "The uncertainty maps cover Stable Diffusion 1.5 only; SDXL has one seed per case and cannot support empirical seed variability maps."

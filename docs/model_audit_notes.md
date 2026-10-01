@@ -1,8 +1,8 @@
 # Model Audit Notes
 
-**Status:** Controlled-300 audit notes with completed HINT selection, execution,
-validated Notebook 30 method-card/compute handoff, and prepared five-method
-Notebook 31 reporting contract; reviewed 2026-09-25.
+**Status:** Controlled-300 audit notes with completed HINT selection/execution,
+validated N30 method cards, five N31 model reports and completed N36 delivery;
+reviewed 2026-10-01.
 
 This document records model selection, implementation provenance, evidence
 boundaries and reproducibility risks. Notebook 30's earlier Controlled-50 cards
@@ -333,7 +333,11 @@ Canonical cards:
 Notebook 31 now owns the completed five-report Controlled-300 model-report
 layer (Telea, LaMa, HINT, Stable Diffusion and bounded SDXL). Notebook 32 owns
 case- and painting-level reports. Notebook 34 owns final dashboard assets.
-Notebook 36 owns the supervisor/publication/reproducibility package.
+Notebook 36 completed the supervisor/publication/reproducibility package under
+run `run_e3133aca48134968896bcd1b97af72c4`. It preserves all five cards and reports,
+recorded model revisions, seed and compute evidence, and the bounded SDXL scope.
+Its 16 warning nonpasses disclose inherited qualifications and provenance
+exceptions; packaging does not create new model-performance evidence.
 
 ## 12. Reproducibility and risk checks
 

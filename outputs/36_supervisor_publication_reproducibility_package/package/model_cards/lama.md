@@ -2,7 +2,7 @@
 
 **Evaluation status:** Fully Evaluated  
 **Method role:** learned deterministic inpainting baseline  
-**Dataset scope:** controlled_50  
+**Dataset scope:** controlled_300  
 **Decision boundary:** Digital restoration candidate method, not a conservation authority
 
 <a id="at-a-glance"></a>
@@ -10,9 +10,9 @@
 
 LaMa provided the strongest broad reference-based baseline under the validated full-scope anchor policy.
 
-- Completed candidates: **410 of 410**.
-- Mean runtime: **1.60 seconds per candidate**.
-- Observed notebook-owned storage: **284.69 MiB**.
+- Completed candidates: **2,620 of 2,620**.
+- Mean runtime: **1.36 seconds per candidate**.
+- Observed notebook-owned storage: **1.76 GiB**.
 - Validated anchor wins in the applicable population: **10 of 11**.
 
 **Conclusion:** The compute and quality evidence support this method only within its declared evaluation scope. Anchor wins are descriptive Notebook 21 outcomes, not a combined quality score or conservation verdict.
@@ -87,11 +87,11 @@ The project used a fixed predeclared configuration and exact outside-mask compos
 
 | Coverage field | Recorded count |
 |---|---:|
-| Paintings | 50 |
-| Unique cases | 410 |
-| Candidates | 410 |
-| Model-inference candidates | 360 |
-| Identity zero controls | 50 |
+| Paintings | 300 |
+| Unique cases | 2,620 |
+| Candidates | 2,620 |
+| Model-inference candidates | 2,320 |
+| Identity zero controls | 300 |
 
 Cases and repeated candidates remain nested within paintings. Candidate rows are not treated as independent artworks.
 
@@ -100,40 +100,40 @@ Cases and repeated candidates remain nested within paintings. Candidate rows are
 
 | Measure | Observed result |
 |---|---:|
-| Total runtime | 10.9 minutes |
-| Mean runtime | 1.598 s |
-| Median runtime | 1.567 s |
-| p95 runtime | 2.395 s |
+| Total runtime | 59.5 minutes |
+| Mean runtime | 1.363 s |
+| Median runtime | 1.451 s |
+| p95 runtime | 1.586 s |
 | Failed candidates | 0 |
 | Failure rate | 0.00% |
 | Retries | 0 |
-| Throughput | 0.6259 candidates/second |
+| Throughput | 0.7338 candidates/second |
 | Candidate multiplier | 1.0000 candidates per evaluated case |
 | Recorded peak GPU allocation | not applicable |
 | Recorded total GPU memory | not applicable |
-| Output files | 416 |
-| Output storage | 284.69 MiB |
+| Output files | 2,626 |
+| Output storage | 1.76 GiB |
 
 **Conclusion:** These measurements describe the recorded workstation and software environment. They are project evidence, not universal hardware benchmarks.
 
 <a id="quality-evidence"></a>
 ## 8. Quality evidence
 
-Applicable population: `core_three_model` (410 cases nested within 50 paintings).
+Applicable population: `core_three_model` (2620 cases nested within 300 paintings).
 
 | Validated anchor | Restored mean | Rank | Winner |
 |---|---:|---:|---|
-| classical_masked_mae | 14.537 | 1 | lama |
-| colour_masked_delta_e | 6.931 | 1 | lama |
-| feature_clip_crop | 0.95654 | 1 | lama |
-| feature_dino_crop | 0.87159 | 1 | lama |
-| perceptual_crop_lpips | 0.1251 | 1 | lama |
-| seam_boundary_gradient | 0.0064142 | 1 | lama |
-| semantic_local_dino | 0.79993 | 1 | lama |
-| spatial_masked_error | 14.537 | 1 | lama |
-| structural_affinity_correlation | 0.95578 | 1 | lama |
-| structural_crop_ssim | 0.8704 | 2 | opencv_telea |
-| texture_crop_p95 | 0.43333 | 1 | lama |
+| classical_masked_mae | 14.83 | 1 | lama |
+| colour_masked_delta_e | 6.8834 | 1 | lama |
+| feature_clip_crop | 0.95714 | 1 | lama |
+| feature_dino_crop | 0.87116 | 1 | lama |
+| perceptual_crop_lpips | 0.12915 | 1 | lama |
+| seam_boundary_gradient | 0.007027 | 1 | lama |
+| semantic_local_dino | 0.8008 | 1 | lama |
+| spatial_masked_error | 14.83 | 1 | lama |
+| structural_affinity_correlation | 0.9424 | 1 | lama |
+| structural_crop_ssim | 0.8577 | 2 | opencv_telea |
+| texture_crop_p95 | 0.41157 | 1 | lama |
 
 The method won 10 of 11 validated anchors in this population. Its strongest displayed anchor was `classical_masked_mae`.
 
@@ -151,10 +151,10 @@ Low variability or deterministic repetition does not prove that a reconstructed 
 
 | Scenario | Candidate outputs | Central runtime projection | Output-storage projection |
 |---|---:|---:|---:|
-| projected_300_canonical_primary | 1,500 | 33.2 minutes | 1,023.50 MiB |
-| projected_300_current_design_mix | 2,460 | 65.5 minutes | 1.63 GiB |
+| projected_600_current_design_mix | 5,240 | 115.4 minutes | 3.52 GiB |
+| projected_300_sdxl_full_design | not applicable | not applicable | not applicable to this model-specific projection scenario |
 
-Raw observed median, mean, and p95 runtimes are retained in the compute table. The displayed sensitivity envelope uses the smaller of scaled median and mean as its lower value, scaled mean as its central value, and the larger of scaled p95 and mean as its upper value. These are not confidence intervals. No 300-painting experiment was executed.
+Raw observed median, mean, and p95 runtimes are retained in the compute table. The displayed sensitivity envelope uses the smaller of scaled median and mean as its lower value, scaled mean as its central value, and the larger of scaled p95 and mean as its upper value. These are not confidence intervals. The controlled 300-painting study was executed; only rows explicitly labelled as projections are extrapolations.
 
 <a id="strengths-and-weaknesses"></a>
 ## 11. Strengths and weaknesses
@@ -174,9 +174,9 @@ Weaknesses:
 Known project limitations:
 
 - Runtime and memory observations describe one recorded local workstation and software environment.
-- The 300-painting values are transparent linear projections, not executed experiments.
+- The controlled 300-painting values are executed observations; only the explicitly labelled 600-painting and full-design SDXL values are projections.
 - Projected storage covers notebook-owned output artifacts and excludes model caches, environments, Git history, and downstream metric outputs.
-- SDXL has ten completed candidates nested within five paintings and cannot support a full-scope ranking.
+- SDXL scheduled 35 bounded cases across 30 paintings; 24 completed, one timed out and ten were skipped under the declared budget, so it cannot support a full-scope ranking.
 - LaMa per-case runtime includes transparent allocation from IOPaint batch wall-clock measurements.
 - Quality-anchor wins are descriptive validated Notebook 21 evidence, not a universal quality or conservation score.
 - LaMa produces plausible learned inpainting, not historically verified reconstruction.

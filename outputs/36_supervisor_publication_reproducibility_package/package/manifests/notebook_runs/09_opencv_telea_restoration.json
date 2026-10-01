@@ -1,35 +1,35 @@
 {
   "manifest_schema_version": "run_manifest.v1",
-  "run_id": "run_eafa3b4f805e472688f1df65b894b96e",
+  "run_id": "run_350786ea88014b67b0cf9efec7fac23c",
   "notebook_id": "09",
   "notebook_name": "OpenCV Telea Restoration",
   "origin": "Existing Notebook 08; rebuilt against normalized Notebook 08 contracts",
   "run_status": "completed",
-  "started_at_utc": "2026-08-23T22:30:31.561818Z",
-  "completed_at_utc": "2026-08-23T23:31:50.568852Z",
-  "git_commit": "c46feee50144854d0b7598df7cb24450ed4e98e8",
+  "started_at_utc": "2026-09-11T10:59:45.088808Z",
+  "completed_at_utc": "2026-09-11T12:29:01.269080Z",
+  "git_commit": "a57f155264fa77bdb34d723f27c18bc4ed384e99",
   "git_dirty": true,
   "git_branch": "main",
   "git_error": "",
-  "inventory_run_id": "inventory_20260823T221607Z_81ea1ca9",
+  "inventory_run_id": "inventory_20260911T104231Z_c074d5ac",
   "dataset_versions": {
     "dataset_id": "painting_restoration_eval",
-    "dataset_version": "1.0.0",
-    "dataset_scope": "controlled_50",
+    "dataset_version": "2.0.0",
+    "dataset_scope": "controlled_300",
     "experiment_id": "cross_experiment_opencv_telea",
     "configuration_schema": "opencv_telea_config.v1",
-    "configuration_version": "1.0.0",
+    "configuration_version": "2.0.0",
     "configuration_id": "opencv_telea_r3_threshold_policy_v1",
     "algorithm": "cv2.INPAINT_TELEA",
     "inpaint_radius": 3,
     "restorations_schema": "restorations.v1",
     "runtime_summary_schema": "restoration_runtime_summary.v1",
     "upstream_notebook": "08_experiment_contracts_and_region_policy",
-    "upstream_run_id": "run_a3734bc2121f401b87de4894717366ab",
-    "upstream_manifest_checksum": "d1b62caa720194e666894afd276d0c6a8c973343b4a378bd787467273bbceb8a",
-    "inventory_checksum": "a9af8179bf21e4a986858e1d8fcdce40ff0a83db34e9ee815280bd2b5bbf6225",
+    "upstream_run_id": "run_b83466f07ebb4b55928229587922334a",
+    "upstream_manifest_checksum": "9104d4c949d02fd7e8f1d4bdec33fbf641af0a1e4aa647cc4fa9dd92cba6d711",
+    "inventory_checksum": "2930ac9865a4cf46057e5fc910b485a465f36c7fbeaf1f53c793ab4533afd044",
     "restoration_helper_sha256": "85279e42cb1ae222a3d5714af616d952923f3344065658eb1cba60e963d641fc",
-    "schemas_helper_sha256": "d63b7ab9cd8796222f6dcd083f8329d5805cf1a6d71c623d9ee46640377892a4"
+    "schemas_helper_sha256": "7d509262b3497f62054e8ed8ad3a658704d5e521c0bacd5c788280b4e336e7fa"
   },
   "configuration_paths": [
     "config/experiments/opencv_telea.yaml",
@@ -37,14 +37,14 @@
     "config/experiments/synthetic_degradation.yaml"
   ],
   "configuration_checksums": {
-    "config/experiments/opencv_telea.yaml": "9295858e27461b90cca89b467a04c6e2d4a076b8d6e74b9b6293541fb5525624",
-    "config/experiments/evaluation_contract.yaml": "ae977512636b0ea5eb16b4a3dff95c062f402c086430328a341c9d0bda6a3254",
-    "config/experiments/synthetic_degradation.yaml": "eaf2d11f3192e7271e11136f023022181bd4b5cfc4e0091316dc1c21a7255bf2"
+    "config/experiments/opencv_telea.yaml": "83b8e8af77238dc3b69047fe87aeffd226214f93ca502fe2c753b8a1924c4252",
+    "config/experiments/evaluation_contract.yaml": "4db2fc27ba02559799b39ecdce73b1e828b812cb3972eaec970f53f34a385761",
+    "config/experiments/synthetic_degradation.yaml": "371349f4346a5b5dc69234bf3692e0c4407ddf3f5197af2d522f82a7eb6327d5"
   },
   "helper_versions": {
     "restoration_eval": "0.1.0",
     "paths": "1.0.0",
-    "schemas": "1.7.0",
+    "schemas": "1.18.0",
     "manifests": "1.0.0",
     "validation": "1.0.0",
     "restoration_opencv": "3.0.0"
@@ -74,7 +74,7 @@
       "required": true,
       "format": "csv",
       "schema_version": "project_file_inventory.v1",
-      "expected_cardinality": 10717,
+      "expected_cardinality": 25652,
       "applicability": "repository"
     },
     {
@@ -94,7 +94,7 @@
       "required": true,
       "format": "json",
       "schema_version": "project_paths.v1",
-      "expected_cardinality": 48,
+      "expected_cardinality": 230,
       "applicability": "repository"
     },
     {
@@ -114,7 +114,7 @@
       "required": true,
       "format": "csv",
       "schema_version": "case_registry.v1",
-      "expected_cardinality": 525,
+      "expected_cardinality": 3425,
       "applicability": "all_cases"
     },
     {
@@ -124,7 +124,7 @@
       "required": true,
       "format": "csv",
       "schema_version": "model_eligibility.v1",
-      "expected_cardinality": 2100,
+      "expected_cardinality": 17125,
       "applicability": "all_case_model_pairs"
     },
     {
@@ -185,7 +185,7 @@
       "artifact_role": "primary",
       "format": "csv",
       "schema_version": "restorations.v1",
-      "expected_cardinality": 410,
+      "expected_cardinality": 2620,
       "downstream_consumers": "Notebooks 13-17 and later comparisons/reports"
     },
     {
@@ -194,7 +194,7 @@
       "artifact_role": "primary",
       "format": "png_directory",
       "schema_version": "restored_images.opencv_telea.v1",
-      "expected_cardinality": 410,
+      "expected_cardinality": 2620,
       "downstream_consumers": "Notebooks 13-17 and later visual diagnostics"
     },
     {
@@ -244,37 +244,37 @@
     }
   ],
   "expected_counts": {
-    "case_registry_rows": 525,
-    "model_eligibility_rows": 2100,
-    "eligible_case_count": 410,
+    "case_registry_rows": 3425,
+    "model_eligibility_rows": 17125,
+    "eligible_case_count": 2620,
     "eligible_case_count_by_experiment": {
-      "canonical_missing_region": 250,
-      "damage_size_sensitivity": 35,
-      "mask_robustness": 75,
-      "synthetic_degradation": 50
+      "canonical_missing_region": 1500,
+      "damage_size_sensitivity": 245,
+      "mask_robustness": 525,
+      "synthetic_degradation": 350
     },
-    "unique_clean_image_count": 50,
-    "restored_file_count": 410,
-    "restorations_row_count": 410,
+    "unique_clean_image_count": 300,
+    "restored_file_count": 2620,
+    "restorations_row_count": 2620,
     "runtime_summary_row_count": 5,
     "representative_case_count": 8,
     "artifact_record_count": 5,
-    "total_output_file_count": 416,
+    "total_output_file_count": 2626,
     "consolidated_validation_rows": 72,
-    "canonical_output_files": 416,
+    "canonical_output_files": 2626,
     "temporary_work_files_before_completion": 5
   },
   "observed_counts": {
-    "case_registry_rows": 525,
-    "model_eligibility_rows": 2100,
-    "eligible_case_count": 410,
-    "restored_file_count": 410,
-    "restorations_row_count": 410,
+    "case_registry_rows": 3425,
+    "model_eligibility_rows": 17125,
+    "eligible_case_count": 2620,
+    "restored_file_count": 2620,
+    "restorations_row_count": 2620,
     "runtime_summary_row_count": 5,
     "representative_case_count": 8,
     "artifact_record_count": 5,
     "consolidated_validation_rows": 72,
-    "canonical_output_files": 416,
+    "canonical_output_files": 2626,
     "temporary_work_files_before_completion": 5,
     "temporary_work_files_after_completion": 0,
     "registered_project_artifacts": 5
@@ -321,7 +321,7 @@
     "work_cleanup": {
       "status": "passed",
       "passed": true,
-      "files_before": 5,
+      "files_before": 0,
       "files_after": 0
     },
     "final_completion_gate": {
@@ -351,7 +351,7 @@
     "project_paths_registry"
   ],
   "applicable_dataset_scopes": [
-    "controlled_50"
+    "controlled_300"
   ],
   "applicable_experiment_scopes": [
     "canonical_missing_region",

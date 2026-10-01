@@ -1,24 +1,24 @@
 {
   "manifest_schema_version": "run_manifest.v1",
-  "run_id": "run_a3734bc2121f401b87de4894717366ab",
+  "run_id": "run_b83466f07ebb4b55928229587922334a",
   "notebook_id": "08",
   "notebook_name": "Experiment Contracts and Region Policy",
   "origin": "New Notebook; incorporates the methodological responsibility of Previous Notebook 26",
   "run_status": "completed",
-  "started_at_utc": "2026-08-23T20:28:36.937996Z",
-  "completed_at_utc": "2026-08-23T21:41:54.470397Z",
-  "git_commit": "2af42ac0ecf72fb716398a7a2cea6f299b8caf95",
+  "started_at_utc": "2026-09-11T02:38:14.686758Z",
+  "completed_at_utc": "2026-09-11T03:37:07.832416Z",
+  "git_commit": "7c0eb3f9df509b72f3e51ab59d8fe5849bf594c7",
   "git_dirty": true,
   "git_branch": "main",
   "git_error": "",
-  "inventory_run_id": "inventory_20260823T202539Z_8395ec5d",
+  "inventory_run_id": "inventory_20260911T021343Z_10554e42",
   "dataset_versions": {
     "dataset_id": "painting_restoration_eval",
-    "dataset_version": "1.0.0",
-    "dataset_scope": "controlled_50",
+    "dataset_version": "2.0.0",
+    "dataset_scope": "controlled_300",
     "experiment_id": "cross_experiment_evaluation",
     "evaluation_config_schema": "evaluation_contract_config.v1",
-    "evaluation_config_version": "1.0.0",
+    "evaluation_config_version": "2.0.0",
     "case_registry_schema": "case_registry.v1",
     "model_eligibility_schema": "model_eligibility.v1",
     "region_policy_schema": "region_policy.v1",
@@ -26,40 +26,40 @@
     "eligibility_policy_version": "model_eligibility_policy.v1",
     "region_policy_version": "evaluation_region_policy.v1",
     "upstream_run_ids": {
-      "01_dataset_verification": "run_424a69cf0c2c4a228d0919dc2d66258a",
-      "02_image_preprocessing": "run_5e54b2de32934e1c9303e7250b932404",
-      "03_canonical_mask_generation": "run_16536d2f39c54081b0dd58a00b5e9f01",
-      "04_canonical_damaged_image_generation": "run_bf312c29726843a4b3c5319e05bf49f0",
-      "05_damage_size_sensitivity_dataset_generation": "run_519fd38cca4c45d69dc8f43e90cae621",
-      "06_mask_robustness_dataset_generation": "run_3d910e4c145e44d18ba19233125634d6",
-      "07_synthetic_degradation_dataset_generation": "run_306a79f17cfb48edb73fa90d174317f0"
+      "01_dataset_verification": "run_49a7e3c485394878ab4323ce661f3ef5",
+      "02_image_preprocessing": "run_ca94012bb1e54bf5bf57c1fdabb01480",
+      "03_canonical_mask_generation": "run_dd51e1b1ca374f3aad16d22b0cd12c99",
+      "04_canonical_damaged_image_generation": "run_92d2030511e14f108bd9ef46f8c3110a",
+      "05_damage_size_sensitivity_dataset_generation": "run_fb717ad978394227944ef6bf99919f08",
+      "06_mask_robustness_dataset_generation": "run_cd2601a25a2d4794aba0745ec6beed5c",
+      "07_synthetic_degradation_dataset_generation": "run_ad90292d5fb8462eb6241b8123a779d6"
     },
     "upstream_content_fingerprints": [
-      "9c1717b89d6adc4182736c7c879c2d941ebfbf4999870abc14249bb1869c0d47"
+      "5c8797aebe0c5aced37a274854a8f2584bb7d4fd9babff1fc6ba37f316b2f6b1"
     ],
     "source_manifest_checksums": {
-      "canonical_missing_region": "f9e95b91dd72440c36f07c56853b971022a64def824579daeb8c6e484875e6bc",
-      "damage_size_sensitivity": "a5bad621639729fc4ba7b3dd4ff7551be2f9f4696d341ec146bda1afea792f8d",
-      "mask_robustness": "9678fc918324a51023bd705ab6cb7c398ccf6771f1910083cce6f00a2dd02ed9",
-      "synthetic_degradation": "9eb03a79f9faeb0cfe159950642a5fda2f2c0c79b6c230c5a097186458f99d1e"
+      "canonical_missing_region": "a393cf9b75d29e3cf09465b943f61d26f711dc837477a0040d7ed4834da691a9",
+      "damage_size_sensitivity": "c542b22cbc3186a06a7eabf1693e1c5a40cdb1a1449b117463e7a7c6172b4e00",
+      "mask_robustness": "891e137b62e49a8454de05b141ba0f3baaee46169b0aa1e34082721a6744924d",
+      "synthetic_degradation": "81303b0c9031ff18eefb4b8e86454e3f338f2af7f3cd461524d2ed303084321f"
     },
-    "experiment_contract_helper_sha256": "5d893cb02ab39202f0ba12c6b3b5342cf9202fc06cdfe4c26c98d7f3aef9a3b6",
+    "experiment_contract_helper_sha256": "040095c1c3c4a7eb9d25c9db42608e9c0a55d8956a3faba4dcefa939bbb18434",
     "region_helper_sha256": "8b0c9d413ecba9e5056b3b8f6cd89147d4cfd044291290e31ebc78b882a16e9d"
   },
   "configuration_paths": [
     "config/experiments/evaluation_contract.yaml"
   ],
   "configuration_checksums": {
-    "config/experiments/evaluation_contract.yaml": "ae977512636b0ea5eb16b4a3dff95c062f402c086430328a341c9d0bda6a3254"
+    "config/experiments/evaluation_contract.yaml": "4db2fc27ba02559799b39ecdce73b1e828b812cb3972eaec970f53f34a385761"
   },
   "helper_versions": {
     "restoration_eval": "0.1.0",
     "paths": "1.0.0",
-    "schemas": "1.6.0",
+    "schemas": "1.18.0",
     "regions": "1.1.0",
     "manifests": "1.0.0",
     "validation": "1.0.0",
-    "experiment_contracts": "1.0.0"
+    "experiment_contracts": "1.1.0"
   },
   "python_version": "3.12.6",
   "python_implementation": "CPython",
@@ -93,7 +93,7 @@
       "required": true,
       "format": "csv",
       "schema_version": "project_file_inventory.v1",
-      "expected_cardinality": 11129,
+      "expected_cardinality": 25652,
       "applicability": "repository"
     },
     {
@@ -123,7 +123,7 @@
       "required": true,
       "format": "csv",
       "schema_version": "preprocessed_images.v1",
-      "expected_cardinality": 50,
+      "expected_cardinality": 300,
       "applicability": "all_cases"
     },
     {
@@ -133,7 +133,7 @@
       "required": true,
       "format": "csv",
       "schema_version": "canonical_masks.v1",
-      "expected_cardinality": 250,
+      "expected_cardinality": 1500,
       "applicability": "canonical_missing_region"
     },
     {
@@ -143,7 +143,7 @@
       "required": true,
       "format": "csv",
       "schema_version": "canonical_damage_cases.v1",
-      "expected_cardinality": 250,
+      "expected_cardinality": 1500,
       "applicability": "canonical_missing_region"
     },
     {
@@ -163,7 +163,7 @@
       "required": true,
       "format": "csv",
       "schema_version": "damage_size_cases.v1",
-      "expected_cardinality": 35,
+      "expected_cardinality": 245,
       "applicability": "damage_size_sensitivity"
     },
     {
@@ -183,7 +183,7 @@
       "required": true,
       "format": "csv",
       "schema_version": "mask_robustness_cases.v1",
-      "expected_cardinality": 75,
+      "expected_cardinality": 525,
       "applicability": "mask_robustness"
     },
     {
@@ -203,7 +203,7 @@
       "required": true,
       "format": "csv",
       "schema_version": "synthetic_degradation_cases.v1",
-      "expected_cardinality": 165,
+      "expected_cardinality": 1155,
       "applicability": "synthetic_degradation"
     },
     {
@@ -223,7 +223,7 @@
       "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv",
       "format": "csv",
       "schema_version": "case_registry.v1",
-      "expected_cardinality": 525,
+      "expected_cardinality": 3425,
       "artifact_role": "primary_cross_experiment_registry"
     },
     {
@@ -231,7 +231,7 @@
       "relative_path": "outputs/08_experiment_contracts_and_region_policy/data/model_eligibility.csv",
       "format": "csv",
       "schema_version": "model_eligibility.v1",
-      "expected_cardinality": 2100,
+      "expected_cardinality": 17125,
       "artifact_role": "authoritative_model_routing"
     },
     {
@@ -293,14 +293,14 @@
   ],
   "expected_counts": {
     "source_experiments": 4,
-    "cases": 525,
-    "binary_cases": 360,
-    "synthetic_degradation_cases": 165,
-    "zero_controls": 50,
-    "models": 4,
-    "model_eligibility_decisions": 2100,
-    "eligible_decisions": 1640,
-    "ineligible_decisions": 460,
+    "cases": 3425,
+    "binary_cases": 2270,
+    "synthetic_degradation_cases": 1155,
+    "zero_controls": 300,
+    "models": 5,
+    "model_eligibility_decisions": 17125,
+    "eligible_decisions": 13100,
+    "ineligible_decisions": 4025,
     "regions": 11,
     "metric_families": 13,
     "region_policy_rows": 143,
@@ -315,14 +315,14 @@
   },
   "observed_counts": {
     "source_experiments": 4,
-    "cases": 525,
-    "binary_cases": 360,
-    "synthetic_degradation_cases": 165,
-    "zero_controls": 50,
-    "models": 4,
-    "model_eligibility_decisions": 2100,
-    "eligible_decisions": 1640,
-    "ineligible_decisions": 460,
+    "cases": 3425,
+    "binary_cases": 2270,
+    "synthetic_degradation_cases": 1155,
+    "zero_controls": 300,
+    "models": 5,
+    "model_eligibility_decisions": 17125,
+    "eligible_decisions": 13100,
+    "ineligible_decisions": 4025,
     "regions": 11,
     "metric_families": 13,
     "region_policy_rows": 143,
@@ -392,7 +392,7 @@
     "Algorithmic region masks are not expert conservation annotations or material-damage ground truth.",
     "Sparse masked-pixel SSIM is prohibited because SSIM requires image-like rectangular support.",
     "Metric-region compatibility prevents invalid routing but does not establish that any metric measures historical correctness or conservation readiness.",
-    "The controlled-50 dataset and balanced five-painting subsets are not population-representative samples of artists, periods, materials, or conservation states.",
+    "The controlled-300 dataset and balanced 35-painting focused subsets are not population-representative samples of artists, periods, materials, or conservation states.",
     "No universal trust score is defined; disagreements between evidence families must remain visible.",
     "Visual plausibility is not equivalent to historical correctness, conservation approval, or restoration trustworthiness; human review remains necessary."
   ],
@@ -418,7 +418,7 @@
     "project paths registry"
   ],
   "applicable_dataset_scopes": [
-    "controlled_50"
+    "controlled_300"
   ],
   "applicable_experiment_scopes": [
     "canonical_missing_region",

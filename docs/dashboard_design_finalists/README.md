@@ -2,7 +2,7 @@
 
 **Delivery update (2026-10-01):** all approved rooms are implemented and frozen
 in the [Controlled-300 deployment](https://fhtw-painting-restoration-main.streamlit.app/).
-N35 has closed with disclosed limitations; N36 consolidation is next. The
+N35 and N36 have closed with disclosed limitations; the numbered pipeline is complete. The
 planning and design records below remain the historical visual authorities.
 See `../evidence_dependency_audit.md` for the current acceptance and provenance
 boundaries.
@@ -18,7 +18,7 @@ presentation references only
 
 ## Approved current direction
 
-The two boards below are the current design authority for the future
+The two boards below are the current design authority for the delivered
 Controlled-300 dashboard:
 
 1. [Interactive Museum Rooms 01–04](approved_current/01_interactive_museum_rooms_01_to_04.png):

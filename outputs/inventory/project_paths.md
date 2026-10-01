@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-09-26T00:27:28.074996Z`
-- Registered artifacts: 250
+- Updated: `2026-10-01T21:39:40.409546Z`
+- Registered artifacts: 245
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -52,25 +52,20 @@
 | damage_size_diffusion_uncertainty.overlays | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/images/uncertainty` | readable_spatial_uncertainty_evidence | passed |
 | damage_size_diffusion_uncertainty.restored_images | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/images/restored` | notebook_22_generated_candidates | passed |
 | damage_size_diffusion_uncertainty.summary_figure | 22_damage_size_diffusion_uncertainty_extension | `outputs/22_damage_size_diffusion_uncertainty_extension/figures/uncertainty_extension_summary.png` | painting_trajectory_uncertainty_summary | passed |
-| dashboard.asset_manifest | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_assets.csv` | dashboard_input_file_registry | passed |
-| dashboard.deployment_readiness | 35_dashboard_and_deployment_validation | `outputs/35_dashboard_and_deployment_validation/reports/deployment_readiness.md` | dashboard_deployment_decision | warning |
-| dashboard.deployment_validation | 35_dashboard_and_deployment_validation | `outputs/35_dashboard_and_deployment_validation/validation/dashboard_checks.csv` | consolidated_dashboard_checks | warning |
-| dashboard.index.case_index | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/case_index.csv` | dashboard_index_case_index | passed |
-| dashboard.index.filter_options | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/filter_options.json` | dashboard_index_filter_options | passed |
-| dashboard.index.painting_index | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/painting_index.csv` | dashboard_index_painting_index | passed |
-| dashboard.index.report_index | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/report_index.csv` | dashboard_index_report_index | passed |
-| dashboard.index.visual_asset_index | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes/visual_asset_index.csv` | dashboard_index_visual_asset_index | passed |
-| dashboard.summary | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_summary.json` | dashboard_summary | passed |
-| dashboard.table.compute_summary | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/compute_summary.csv` | dashboard_table_compute_summary | passed |
-| dashboard.table.headline_findings | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/headline_findings.csv` | dashboard_table_headline_findings | passed |
-| dashboard.table.metric_framework | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/metric_framework.csv` | dashboard_table_metric_framework | passed |
-| dashboard.table.performance_summary | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/performance_summary.csv` | dashboard_table_performance_summary | passed |
-| dashboard.table.research_question_coverage | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/research_question_coverage.csv` | dashboard_table_research_question_coverage | passed |
-| dashboard.table.sensitivity_summary | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/sensitivity_summary.csv` | dashboard_table_sensitivity_summary | passed |
-| dashboard.table.study_design | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/study_design.csv` | dashboard_table_study_design | passed |
-| dashboard.table.trustworthiness_summary | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/trustworthiness_summary.csv` | dashboard_table_trustworthiness_summary | passed |
-| dashboard.table.uncertainty_summary | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables/uncertainty_summary.csv` | dashboard_table_uncertainty_summary | passed |
-| dashboard.validation | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/validation/checks.csv` | consolidated_dashboard_asset_checks | passed |
+| dashboard.asset_locators | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/manifests/asset_locators.parquet` | immutable_local_and_remote_routes | passed |
+| dashboard.assets | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_assets.parquet` | logical_asset_registry | passed |
+| dashboard.bootstrap | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/bootstrap` | zero_network_bootstrap | passed |
+| dashboard.deployment_readiness | 35_dashboard_and_deployment_validation | `outputs/35_dashboard_and_deployment_validation/reports/deployment_readiness.md` | accepted_deployment_with_limitations | warning |
+| dashboard.deployment_validation | 35_dashboard_and_deployment_validation | `outputs/35_dashboard_and_deployment_validation/validation/dashboard_checks.csv` | accepted_deployment_with_limitations | warning |
+| dashboard.derived | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/derived` | governed_display_derivatives | passed |
+| dashboard.display_components | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/manifests/display_components.csv` | approved_display_binding_closure | passed |
+| dashboard.paintings | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/paintings` | painting_route_partitions | passed |
+| dashboard.rendition_manifest | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/manifests/renditions.csv` | rendition_lineage_and_budgets | passed |
+| dashboard.renditions | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/assets/renditions` | local_web_renditions | passed |
+| dashboard.reports | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/reports/index.json.gz` | verified_report_routes | passed |
+| dashboard.room_partitions | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/manifests/room_partitions.csv` | room_partition_checksums | passed |
+| dashboard.rooms | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/data/rooms` | room_display_partitions | passed |
+| dashboard.runtime_manifest | 34_final_streamlit_dashboard_assets | `outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_runtime_manifest.json` | runtime_trust_root | passed |
 | dataset.artworks | 01_dataset_verification | `outputs/01_dataset_verification/data/artworks.csv` | primary_downstream | passed |
 | dataset.audit | 01_dataset_verification | `outputs/01_dataset_verification/metrics/dataset_audit.csv` | audit_reporting | passed |
 | dataset.figure_distribution | 01_dataset_verification | `outputs/01_dataset_verification/figures/dataset_distribution.png` | reporting | passed |

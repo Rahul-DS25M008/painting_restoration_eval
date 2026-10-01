@@ -64,6 +64,11 @@ already selected for the chart. No aggregate estimates or intervals are computed
 
 ## Historical notebook records
 
+This section describes the original pilot-era UI maintenance. The later
+Controlled-300 N34–N36 rerun is now complete (2026-10-01); N36's current source
+snapshots correspond to that accepted delivery. The historical statements below
+do not mean that the current N36 package excludes the later accepted interface.
+
 Notebooks 01–36, all notebook-owned outputs, N34's fixed package, N35's historical
 validation record, and N36's copied application snapshot remain unchanged.
 N35 and N36 describe the versions they tested or packaged, not this later UI

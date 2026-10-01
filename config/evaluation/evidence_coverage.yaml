@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.24"
+config_version: "1.1.25"
 
 evidence_coverage:
   authority:
@@ -11,6 +11,7 @@ evidence_coverage:
 
   # Administrative delivery metadata, not a replacement for producer run facts.
   post_completion_maintenance:
+    record_scope: "historical_controlled_50_maintenance"
     recorded_on: "2026-09-04"
     completed_through_notebook_id: "36"
     completed_post_pipeline_extensions_through_notebook_id: "37"
@@ -51,13 +52,20 @@ evidence_coverage:
   # Incremental transition ledger; update only after each notebook passes its
   # completion gate and read-only pilot-output comparison.
   controlled_300_rerun:
-    recorded_on: "2026-09-25"
+    recorded_on: "2026-10-01"
     recovery_tag: "pilot-50-complete"
     authoritative_recovery_source: "git_tag"
     external_read_only_output_comparison_root: "E:/outputs"
     active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
-    completed_through_notebook_id: "31"
-    next_eligible_notebook_id: "32"
+    completed_through_notebook_id: "36"
+    next_eligible_notebook_id: null
+    status: "completed_with_disclosed_limitations"
+    deployment_url: "https://fhtw-painting-restoration-main.streamlit.app/"
+    dashboard_layout_frozen: true
+    decision_notebook_d01_remains_separate: true
+    n36_run_id: "run_e3133aca48134968896bcd1b97af72c4"
+    n36_validation: {checks: 875, passed: 859, warning_nonpasses: 16, blocking_failures: 0}
+    n36_storage: "ordinary_git_exact_bytes_no_lfs_no_duplicate_hf_release"
     new_bulk_publication_policy: "verified_indexed_bundles_by_artifact_class_with_n22_split_candidate_diagnostic_release"
     completed_notebooks:
       - notebook_id: "01"
@@ -942,6 +950,22 @@ evidence_coverage:
         external_publication_required: false
         publication_status: "compact_git_lfs_handoff"
         unexplained_missing_or_reduced_evidence: false
+
+      - {"notebook_id":"22","stem":"22_damage_size_diffusion_uncertainty_extension","manifest_path":"outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json","run_id":"run_d0276a6859f74fada266936f43b7499f","run_status":"completed","completion_gate_passed":true,"completion_basis":"producer_gate","dataset_scope":"controlled_300"}
+      - {"notebook_id":"23","stem":"23_damage_size_sensitivity_analysis","manifest_path":"outputs/23_damage_size_sensitivity_analysis/manifests/run_manifest.json","run_id":"run_e93288fc3ac847ccb699241b4b4c8be0","run_status":"completed","completion_gate_passed":true,"completion_basis":"producer_gate","dataset_scope":"controlled_300"}
+      - {"notebook_id":"24","stem":"24_mask_robustness_analysis","manifest_path":"outputs/24_mask_robustness_analysis/manifests/run_manifest.json","run_id":"run_bbf68684c3ca47e5827c2b8b4b666351","run_status":"completed","completion_gate_passed":true,"completion_basis":"producer_gate","dataset_scope":"controlled_300"}
+      - {"notebook_id":"25","stem":"25_synthetic_degradation_analysis","manifest_path":"outputs/25_synthetic_degradation_analysis/manifests/run_manifest.json","run_id":"run_cf89ebe972364c7b8ccfefc6bf2a63ca","run_status":"completed","completion_gate_passed":true,"completion_basis":"producer_gate","dataset_scope":"controlled_300"}
+      - {"notebook_id":"26","stem":"26_grouped_and_statistical_analysis","manifest_path":"outputs/26_grouped_and_statistical_analysis/manifests/run_manifest.json","run_id":"run_efc978dd6d504cdb9b138a750f6dca83","run_status":"completed","completion_gate_passed":true,"completion_basis":"producer_gate","dataset_scope":"controlled_300"}
+      - {"notebook_id":"27","stem":"27_failure_taxonomy_and_trustworthiness_flags","manifest_path":"outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json","run_id":"run_bef567ee35c1409dbcecfb71f1b4f8b4","run_status":"completed","completion_gate_passed":true,"completion_basis":"producer_gate","dataset_scope":"controlled_300"}
+      - {"notebook_id":"28","stem":"28_metric_and_region_policy_ablation","manifest_path":"outputs/28_metric_and_region_policy_ablation/manifests/run_manifest.json","run_id":"run_4325bb483fbc4ccda670df125c40731d","run_status":"completed","completion_gate_passed":true,"completion_basis":"producer_gate","dataset_scope":"controlled_300"}
+      - {"notebook_id":"29","stem":"29_explainable_ai_and_case_retrieval","manifest_path":"outputs/29_explainable_ai_and_case_retrieval/manifests/run_manifest.json","run_id":"run_ad7603b6bdb14156a140351f6ac1f241","run_status":"completed","completion_gate_passed":true,"completion_basis":"producer_gate","dataset_scope":"controlled_300"}
+      - {"notebook_id":"30","stem":"30_model_cards_compute_and_scalability","manifest_path":"outputs/30_model_cards_compute_and_scalability/manifests/run_manifest.json","run_id":"run_605de239145a46e9a202fd63bbbb4e9c","run_status":"completed","completion_gate_passed":true,"completion_basis":"producer_gate","dataset_scope":"controlled_300"}
+      - {"notebook_id":"31","stem":"31_model_report_generation","manifest_path":"outputs/31_model_report_generation/manifests/run_manifest.json","run_id":"run_430fd1355d3a4011bedc55b571d9544c","run_status":"completed","completion_gate_passed":true,"completion_basis":"producer_gate","dataset_scope":"controlled_300"}
+      - {"notebook_id":"32","stem":"32_case_and_painting_report_generation","manifest_path":"outputs/32_case_and_painting_report_generation/manifests/run_manifest.json","run_id":"run_0d4ae193602944dda511bf54199105b1","run_status":"completed","completion_gate_passed":true,"completion_basis":"producer_gate","dataset_scope":"controlled_300"}
+      - {"notebook_id":"33","stem":"33_final_evaluation_report","manifest_path":"outputs/33_final_evaluation_report/manifests/run_manifest.json","run_id":"run_aef04267c2e44495a4e7a6249426bd4d","run_status":"completed","completion_gate_passed":true,"completion_basis":"producer_gate","dataset_scope":"controlled_300"}
+      - {"notebook_id":"34","stem":"34_final_streamlit_dashboard_assets","manifest_path":"outputs/34_final_streamlit_dashboard_assets/manifests/run_manifest.json","run_id":"run_1e831de6e27f9ead0147bb30","run_status":"completed","completion_gate_passed":true,"completion_basis":"producer_gate","dataset_scope":"controlled_300"}
+      - {"notebook_id":"35","stem":"35_dashboard_and_deployment_validation","manifest_path":"outputs/35_dashboard_and_deployment_validation/manifests/run_manifest.json","run_id":"run_3d52ae7863c44fb1b7f56a99ea0c01fa","run_status":"completed","completion_gate_passed":true,"completion_basis":"accepted_closeout","dataset_scope":"controlled_300"}
+      - {"notebook_id":"36","stem":"36_supervisor_publication_reproducibility_package","manifest_path":"outputs/36_supervisor_publication_reproducibility_package/manifests/run_manifest.json","run_id":"run_e3133aca48134968896bcd1b97af72c4","run_status":"completed","completion_gate_passed":true,"completion_basis":"producer_gate","dataset_scope":"controlled_300"}
 
   frozen_baseline:
     through_notebook_id: "21"
@@ -2937,6 +2961,50 @@ evidence_coverage:
 
     - notebook_id: "36"
       stem: "36_supervisor_publication_reproducibility_package"
+      # Current scope-specific completion is below; subsequent legacy fields
+      # retain the explicitly labelled pilot record and are not current counts.
+      execution_scope: "historical_controlled_50"
+      controlled_300_rerun_required: false
+      controlled_300_target:
+        status: "completed_with_disclosed_limitations"
+        completion_gate_passed: true
+        run_id: "run_e3133aca48134968896bcd1b97af72c4"
+        run_status: "completed"
+        validation_status: "warning"
+        configuration_version: "2.0.0"
+        upstream_manifests: 38
+        originally_planned_batches: 9
+        batch_count: 8
+        validation_checks: 875
+        passed_checks: 859
+        warning_nonpasses: 16
+        blocking_failures: 0
+        physical_output_files: 134
+        canonical_output_roles: 14
+        artifact_records: 12
+        artifact_index_records: 693
+        copied_files: 115
+        generated_package_files: 8
+        indexed_not_bundled_records: 564
+        package_files: 123
+        package_size_bytes: 36741656
+        package_tree_sha256: "8a4f054def65714504ed46f6b553073654f2969c2cccf1182c362497328cd2c9"
+        completion_normalized_source_sha256: "eede3f999056ee2eab13c2b4c76c17db0f8ad028f76f65f98b9096b1fd36263a"
+        notebook_source_match: true
+        opening_plan_wording: "original_nine_step_plan_retained_actual_eight_batches_recorded_in_manifest"
+        self_contained_html_reports: 6
+        validated_png_files: 24
+        model_cards: 5
+        bundled_evaluation_configurations: 26
+        storage: "ordinary_git_exact_bytes_no_lfs"
+        new_hf_release_required: false
+        active_runtime_measured: false
+        first_three_batches_read_only: true
+        historical_recovery_tag: "pilot-50-complete"
+        all_pilot_artifact_roles_retained: true
+        remaining_work_files: 0
+        n35_acceptance_and_provenance_exceptions_retained: true
+        cell_delivery: "inline_chat_only"
       status: "completed_validation_warning"
       completion_gate_passed: true
       run_id: "run_4e221aa9405d4d5cbeb7ae120dfad71a"

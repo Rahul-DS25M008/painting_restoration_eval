@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.0.0"
+config_version: "1.1.24"
 
 evidence_coverage:
   authority:
@@ -8,6 +8,940 @@ evidence_coverage:
     notebook_roadmap: "docs/final_notebook_roadmap.md"
     inventory_path: "outputs/inventory/project_file_inventory.csv"
     project_paths_path: "outputs/inventory/project_paths.json"
+
+  # Administrative delivery metadata, not a replacement for producer run facts.
+  post_completion_maintenance:
+    recorded_on: "2026-09-04"
+    completed_through_notebook_id: "36"
+    completed_post_pipeline_extensions_through_notebook_id: "37"
+    all_saved_run_manifests_completed: true
+    all_saved_completion_gates_passed: true
+    completed_notebook_sources_and_outputs: "frozen_read_only"
+    scientific_coverage_changed: false
+    historical_completion_contracts_preserved: true
+    historical_dependency_warnings_preserved: true
+    notebook_35_and_36_deployment_flags_scope: "original_execution_time_not_current_hosting"
+    public_application:
+      url: "https://fhtw-painting-restoration.streamlit.app/"
+      user_approved_deployment_recorded: true
+      principal_pages: 8
+      evidence_note: "docs/evidence_dependency_audit.md"
+      numerical_views_contract: "docs/dashboard_numeric_metrics.md"
+      candidate_allow_list_producer: "34"
+      additional_metric_producers: ["13", "14", "15", "17", "20"]
+      candidate_identity_producers: ["11", "12", "22"]
+      recomputes_scientific_metrics: false
+      changes_frozen_notebook_outputs: false
+    availability_workflow:
+      path: ".github/workflows/streamlit-availability.yml"
+      schedule_source: "workflow_file_on_default_branch"
+      schedule_revision_commit: "e111bbf3"
+      previously_verified_manual_run_url: "https://github.com/Rahul-DS25M008/painting_restoration_eval/actions/runs/33819253480"
+      previously_verified_manual_run_conclusion: "success"
+      scheduled_execution_status: "not_yet_verified_at_this_maintenance_review"
+      uptime_guaranteed: false
+    environments:
+      dashboard_python_series: "3.12"
+      dashboard_requirements: "requirements.txt"
+      saved_notebook_python_version: "3.12.6"
+      experimental_requirements: "requirements_experiments.txt"
+      experimental_requirements_scope: "legacy_recipe_not_exact_executed_environment_lock"
+      clean_experimental_install_verified_by_this_review: false
+
+  # Incremental transition ledger; update only after each notebook passes its
+  # completion gate and read-only pilot-output comparison.
+  controlled_300_rerun:
+    recorded_on: "2026-09-25"
+    recovery_tag: "pilot-50-complete"
+    authoritative_recovery_source: "git_tag"
+    external_read_only_output_comparison_root: "E:/outputs"
+    active_working_tree_policy: "one_notebook_at_a_time_minimal_delta"
+    completed_through_notebook_id: "31"
+    next_eligible_notebook_id: "32"
+    new_bulk_publication_policy: "verified_indexed_bundles_by_artifact_class_with_n22_split_candidate_diagnostic_release"
+    completed_notebooks:
+      - notebook_id: "01"
+        stem: "01_dataset_verification"
+        output_root: "outputs/01_dataset_verification"
+        manifest_path: "outputs/01_dataset_verification/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        artwork_rows: 300
+        referenced_image_rows: 300
+        dataset_audit_rows: 448
+        validation_rows: 50
+        artifact_records: 5
+        canonical_figures: 2
+        baseline_output_root: "E:/outputs/01_dataset_verification"
+        baseline_artwork_rows: 50
+        baseline_dataset_audit_rows: 101
+        baseline_validation_rows: 50
+        baseline_artifact_records: 5
+        baseline_canonical_figures: 2
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "02"
+        stem: "02_image_preprocessing"
+        output_root: "outputs/02_image_preprocessing"
+        manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        preprocessing_version: "2.1.0"
+        preprocessed_image_rows: 300
+        clean_image_files: 300
+        preprocessing_audit_rows: 45
+        validation_rows: 50
+        artifact_records: 5
+        canonical_figures: 1
+        output_file_count: 306
+        baseline_output_root: "E:/outputs/02_image_preprocessing"
+        baseline_preprocessed_image_rows: 50
+        baseline_clean_image_files: 50
+        baseline_preprocessing_audit_rows: 45
+        baseline_validation_rows: 50
+        baseline_artifact_records: 5
+        baseline_canonical_figures: 1
+        baseline_output_file_count: 56
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_first_50_clean_images_byte_identical: true
+        baseline_preview_byte_identical: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "03"
+        stem: "03_canonical_mask_generation"
+        output_root: "outputs/03_canonical_mask_generation"
+        manifest_path: "outputs/03_canonical_mask_generation/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        mask_configuration_version: "1.1.0"
+        mask_helper_version: "3.1.0"
+        mask_generator_version: "3.0.0"
+        painting_rows: 300
+        mask_families: 5
+        canonical_mask_rows: 1500
+        mask_image_files: 1500
+        masks_per_family: 300
+        mask_audit_rows: 105
+        validation_rows: 50
+        artifact_records: 7
+        canonical_figures: 2
+        methodology_reports: 1
+        completion_requirements: 24
+        output_file_count: 1508
+        baseline_output_root: "E:/outputs/03_canonical_mask_generation"
+        baseline_painting_rows: 50
+        baseline_canonical_mask_rows: 250
+        baseline_mask_image_files: 250
+        baseline_mask_audit_rows: 105
+        baseline_validation_rows: 50
+        baseline_artifact_records: 7
+        baseline_canonical_figures: 2
+        baseline_methodology_reports: 1
+        baseline_output_file_count: 258
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_first_250_mask_images_byte_identical: true
+        baseline_key_scientific_rows_identical: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "04"
+        stem: "04_canonical_damaged_image_generation"
+        output_root: "outputs/04_canonical_damaged_image_generation"
+        manifest_path: "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        canonical_damage_configuration_version: "1.1.0"
+        damage_helper_version: "3.1.0"
+        damage_generator_version: "3.0.0"
+        painting_rows: 300
+        mask_families: 5
+        canonical_case_rows: 1500
+        damaged_image_files: 1500
+        cases_per_family: 300
+        damage_audit_rows: 1500
+        validation_rows: 60
+        artifact_records: 5
+        canonical_figures: 1
+        final_completion_requirements: 28
+        output_file_count: 1506
+        baseline_output_root: "E:/outputs/04_canonical_damaged_image_generation"
+        baseline_painting_rows: 50
+        baseline_canonical_case_rows: 250
+        baseline_damaged_image_files: 250
+        baseline_damage_audit_rows: 250
+        baseline_validation_rows: 60
+        baseline_artifact_records: 5
+        baseline_canonical_figures: 1
+        baseline_output_file_count: 256
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_first_250_damaged_images_byte_identical: true
+        baseline_stable_scientific_fields_identical: true
+        canonical_figure_updated_for_expanded_representative: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "05"
+        stem: "05_damage_size_sensitivity_dataset_generation"
+        output_root: "outputs/05_damage_size_sensitivity_dataset_generation"
+        manifest_path: "outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        damage_size_config_schema: "damage_size_sensitivity_config.v2"
+        damage_size_generator_version: "3.1.0"
+        damage_size_helper_version: "3.1.0"
+        painting_rows: 35
+        paintings_per_visual_category: 7
+        target_levels: 7
+        damage_size_case_rows: 245
+        mask_image_files: 245
+        damaged_image_files: 245
+        generation_audit_rows: 245
+        validation_rows: 96
+        artifact_records: 6
+        canonical_figures: 1
+        completion_requirements: 27
+        output_file_count: 496
+        baseline_output_root: "E:/outputs/05_damage_size_sensitivity_dataset_generation"
+        baseline_painting_rows: 5
+        baseline_damage_size_case_rows: 35
+        baseline_mask_image_files: 35
+        baseline_damaged_image_files: 35
+        baseline_generation_audit_rows: 35
+        baseline_validation_rows: 96
+        baseline_artifact_records: 6
+        baseline_canonical_figures: 1
+        baseline_completion_requirements: 27
+        baseline_output_file_count: 76
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_shared_mask_and_damaged_images_byte_identical: true
+        canonical_figure_updated_for_expanded_representatives: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "06"
+        stem: "06_mask_robustness_dataset_generation"
+        output_root: "outputs/06_mask_robustness_dataset_generation"
+        manifest_path: "outputs/06_mask_robustness_dataset_generation/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        mask_robustness_config_schema: "mask_robustness_config.v2"
+        mask_robustness_config_version: "2.0.1"
+        mask_robustness_generator_version: "3.1.1"
+        mask_robustness_helper_version: "3.1.1"
+        painting_rows: 35
+        paintings_per_visual_category: 7
+        mask_families: 3
+        robustness_groups: 105
+        variants_per_group: 5
+        robustness_case_rows: 525
+        mask_image_files: 525
+        damaged_image_files: 525
+        generation_audit_rows: 525
+        validation_rows: 102
+        artifact_records: 6
+        canonical_figures: 1
+        completion_requirements: 21
+        output_file_count: 1056
+        baseline_output_root: "E:/outputs/06_mask_robustness_dataset_generation"
+        baseline_painting_rows: 5
+        baseline_mask_families: 3
+        baseline_robustness_groups: 15
+        baseline_variants_per_group: 5
+        baseline_robustness_case_rows: 75
+        baseline_mask_image_files: 75
+        baseline_damaged_image_files: 75
+        baseline_generation_audit_rows: 75
+        baseline_validation_rows: 102
+        baseline_artifact_records: 6
+        baseline_canonical_figures: 1
+        baseline_completion_requirements: 21
+        baseline_output_file_count: 156
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_shared_png_files: 151
+        baseline_shared_png_files_byte_identical: 148
+        loss_small_variant_updated_for_family_morphology_enforcement: true
+        canonical_figure_updated_for_corrected_variant: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "07"
+        stem: "07_synthetic_degradation_dataset_generation"
+        output_root: "outputs/07_synthetic_degradation_dataset_generation"
+        manifest_path: "outputs/07_synthetic_degradation_dataset_generation/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        synthetic_degradation_config_schema: "synthetic_degradation_config.v2"
+        synthetic_degradation_generator_version: "2.1.0"
+        synthetic_degradation_helper_version: "2.1.0"
+        painting_rows: 35
+        paintings_per_visual_category: 7
+        single_families: 10
+        combined_families: 3
+        severity_levels: 3
+        single_case_rows: 1050
+        combined_case_rows: 105
+        total_case_rows: 1155
+        effect_mask_files: 1155
+        degraded_image_files: 1155
+        generation_audit_rows: 1155
+        validation_rows: 66
+        artifact_records: 7
+        canonical_figures: 1
+        protocol_reports: 1
+        completion_requirements: 20
+        output_file_count: 2317
+        baseline_output_root: "E:/outputs/07_synthetic_degradation_dataset_generation"
+        baseline_painting_rows: 5
+        baseline_single_case_rows: 150
+        baseline_combined_case_rows: 15
+        baseline_total_case_rows: 165
+        baseline_effect_mask_files: 165
+        baseline_degraded_image_files: 165
+        baseline_generation_audit_rows: 165
+        baseline_validation_rows: 66
+        baseline_artifact_records: 7
+        baseline_canonical_figures: 1
+        baseline_protocol_reports: 1
+        baseline_completion_requirements: 20
+        baseline_output_file_count: 337
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_case_ids_retained: 165
+        baseline_audit_case_ids_retained: 165
+        baseline_shared_generated_png_files: 330
+        baseline_shared_generated_png_files_byte_identical: 330
+        canonical_figure_updated_for_expanded_representatives: true
+        protocol_updated_for_expanded_cohort: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "08"
+        stem: "08_experiment_contracts_and_region_policy"
+        output_root: "outputs/08_experiment_contracts_and_region_policy"
+        manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        evaluation_contract_config_version: "2.0.0"
+        experiment_contract_helper_version: "1.1.0"
+        canonical_region_helper_version: "1.1.0"
+        source_experiments: 4
+        case_registry_rows: 3425
+        model_count: 5
+        model_eligibility_rows: 17125
+        eligible_cases_per_model: 2620
+        eligible_decisions: 13100
+        ineligible_decisions: 4025
+        region_policy_rows: 143
+        compatible_policy_rows: 86
+        prohibited_policy_rows: 57
+        schema_records: 5
+        validation_rows: 101
+        artifact_records: 7
+        canonical_figures: 1
+        methodology_reports: 1
+        completion_requirements: 20
+        output_file_count: 9
+        baseline_output_root: "E:/outputs/08_experiment_contracts_and_region_policy"
+        baseline_case_registry_rows: 525
+        baseline_model_eligibility_rows: 2100
+        baseline_region_policy_rows: 143
+        baseline_schema_records: 5
+        baseline_validation_rows: 101
+        baseline_artifact_records: 7
+        baseline_output_file_count: 9
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_case_rows_retained: 525
+        baseline_case_stable_fields_identical_except_dataset_scope: true
+        baseline_shared_model_eligibility_rows_identical: 2100
+        baseline_region_policy_byte_identical: true
+        baseline_schema_definitions_identical: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "09"
+        stem: "09_opencv_telea_restoration"
+        output_root: "outputs/09_opencv_telea_restoration"
+        manifest_path: "outputs/09_opencv_telea_restoration/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        opencv_telea_config_version: "2.0.0"
+        restoration_generator_version: "3.0.0"
+        eligible_case_rows: 2620
+        eligible_case_rows_by_experiment:
+          canonical_missing_region: 1500
+          damage_size_sensitivity: 245
+          mask_robustness: 525
+          synthetic_degradation: 350
+        zero_control_rows: 300
+        nonzero_case_rows: 2320
+        restored_image_files: 2620
+        restoration_rows: 2620
+        runtime_summary_rows: 5
+        representative_cases: 8
+        validation_rows: 72
+        artifact_records: 5
+        completion_requirements: 15
+        canonical_output_file_count: 2626
+        work_file_count_after_completion: 0
+        recorded_runtime_seconds: 1446.7409158993396
+        baseline_output_root: "E:/outputs/09_opencv_telea_restoration"
+        baseline_restoration_rows: 410
+        baseline_restored_image_files: 410
+        baseline_runtime_summary_rows: 5
+        baseline_validation_rows: 72
+        baseline_artifact_records: 5
+        baseline_output_file_count: 416
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_shared_restored_images: 410
+        baseline_shared_restored_images_byte_identical: 409
+        baseline_changed_shared_image: "images/restored/mask_robustness/mask_robustness__p039__loss_small__target_04p5pct__variant_04.png"
+        baseline_changed_image_reason: "inherited_notebook_06_helper_v3_1_1_morphology_correction"
+        baseline_representative_figure_byte_identical: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "10"
+        stem: "10_lama_restoration"
+        output_root: "outputs/10_lama_restoration"
+        manifest_path: "outputs/10_lama_restoration/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        lama_config_version: "2.0.0"
+        restoration_helper_version: "3.1.0"
+        iopaint_version: "1.6.0"
+        eligible_case_rows: 2620
+        eligible_case_rows_by_experiment:
+          canonical_missing_region: 1500
+          damage_size_sensitivity: 245
+          mask_robustness: 525
+          synthetic_degradation: 350
+        zero_control_rows: 300
+        nonzero_case_rows: 2320
+        restored_image_files: 2620
+        restoration_rows: 2620
+        runtime_summary_rows: 5
+        representative_cases: 8
+        validation_rows: 80
+        persistence_checks: 7
+        manifest_handoff_checks: 5
+        registry_update_checks: 4
+        final_completion_checks: 8
+        artifact_records: 5
+        completion_requirements: 16
+        canonical_output_file_count: 2626
+        work_file_count_after_completion: 0
+        full_execution_wall_clock_seconds: 4594.223
+        runtime_summary_total_seconds: 3570.4867356999603
+        baseline_output_root: "E:/outputs/10_lama_restoration"
+        baseline_restoration_rows: 410
+        baseline_restored_image_files: 410
+        baseline_runtime_summary_rows: 5
+        baseline_validation_rows: 80
+        baseline_artifact_records: 5
+        baseline_output_file_count: 416
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_shared_restored_images: 410
+        baseline_shared_restored_images_byte_identical: 409
+        baseline_changed_shared_image: "images/restored/mask_robustness/mask_robustness__p039__loss_small__target_04p5pct__variant_04.png"
+        baseline_changed_image_reason: "inherited_notebook_06_helper_v3_1_1_morphology_correction"
+        baseline_representative_figure_byte_identical: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "11"
+        stem: "11_stable_diffusion_restoration"
+        output_root: "outputs/11_stable_diffusion_restoration"
+        manifest_path: "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        candidate_rows: 8520
+        candidate_rows_by_role:
+          primary: 2620
+          prompt_context: 4460
+          uncertainty_extension: 1440
+        model_inference_rows: 8220
+        zero_control_rows: 300
+        restored_image_files: 8520
+        prompt_policy_rows: 6
+        prompt_ablation_design_rows: 1355
+        formal_scratch_cases: 300
+        formal_scratch_painting_seed_pairs: 1200
+        formal_scratch_outcomes: 2400
+        runtime_summary_rows: 14
+        runtime_summary_total_seconds: 71737.585875
+        validation_rows: 176
+        persistence_checks: 9
+        manifest_handoff_checks: 5
+        registry_update_checks: 4
+        final_completion_checks: 7
+        artifact_records: 9
+        completion_requirements: 23
+        canonical_output_file_count: 8530
+        work_file_count_after_completion: 0
+        baseline_output_root: "E:/outputs/11_stable_diffusion_restoration"
+        baseline_candidate_rows: 1330
+        baseline_restored_image_files: 1330
+        baseline_prompt_policy_rows: 6
+        baseline_prompt_ablation_design_rows: 210
+        baseline_runtime_summary_rows: 14
+        baseline_validation_rows: 176
+        baseline_artifact_records: 9
+        baseline_output_file_count: 1340
+        baseline_nonimage_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        baseline_candidate_identities_retained: 1298
+        baseline_shared_restored_images_byte_identical: 1297
+        baseline_changed_shared_image: "images/restored/mask_robustness/mask_robustness__p039__loss_small__target_04p5pct__variant_04/sd15__p00__s2026__56164773356e.png"
+        baseline_changed_image_reason: "inherited_notebook_06_helper_v3_1_1_morphology_correction"
+        baseline_exploratory_prompt_context_rows_displaced: 32
+        baseline_displacement_reason: "approved_nonmetric_hash_stratified_selection_recomputed_over_controlled_300"
+        primary_formal_scratch_and_base_uncertainty_responsibilities_preserved: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "12"
+        stem: "12_sdxl_feasibility_or_restoration"
+        output_root: "outputs/12_sdxl_feasibility_or_restoration"
+        manifest_path: "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        availability_state: "partial_evaluation"
+        scheduled_candidate_rows: 35
+        painting_rows: 30
+        canonical_case_rows: 20
+        synthetic_case_rows: 15
+        completed_candidate_rows: 24
+        timed_out_rows: 1
+        skipped_rows: 10
+        technically_valid_candidate_rows: 24
+        restored_image_files: 24
+        runtime_summary_rows: 3
+        validation_rows: 241
+        artifact_records: 5
+        completion_requirements: 19
+        canonical_output_file_count: 30
+        work_file_count_after_completion: 0
+        parent_execution_seconds: 5741.061
+        global_budget_seconds: 25200
+        per_case_timeout_seconds: 900
+        baseline_output_root: "E:/outputs/12_sdxl_feasibility_or_restoration"
+        baseline_candidate_rows: 10
+        baseline_painting_rows: 5
+        baseline_restored_image_files: 10
+        baseline_runtime_summary_rows: 3
+        baseline_validation_rows: 236
+        baseline_artifact_records: 5
+        baseline_output_file_count: 16
+        baseline_candidate_ids_retained: 10
+        baseline_output_paths_retained: 10
+        baseline_candidate_statuses_retained: 10
+        baseline_shared_restored_images_byte_identical: 10
+        baseline_table_schema_preserved: true
+        runtime_omissions_excluded_from_quality_evidence: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "12A"
+        stem: "12a_hint_restoration"
+        output_root: "outputs/12a_hint_restoration"
+        manifest_path: "outputs/12a_hint_restoration/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        dataset_version: "2.0.0"
+        hint_config_version: "1.0.0"
+        hint_helper_version: "1.0.1"
+        eligible_case_rows: 2620
+        eligible_case_rows_by_experiment:
+          canonical_missing_region: 1500
+          damage_size_sensitivity: 245
+          mask_robustness: 525
+          synthetic_degradation: 350
+        model_inference_rows: 2320
+        zero_control_rows: 300
+        restored_image_files: 2620
+        restoration_rows: 2620
+        runtime_summary_rows: 5
+        runtime_summary_total_seconds: 16025.750
+        representative_cases: 8
+        validation_rows: 82
+        artifact_records: 5
+        canonical_output_file_count: 2626
+        work_file_count_after_completion: 0
+        decision_baseline_notebook_id: "D01"
+        historical_output_counterpart: false
+        selected_method_adapter_contract_preserved: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "13"
+        stem: "13_classical_metrics"
+        output_root: "outputs/13_classical_metrics"
+        manifest_path: "outputs/13_classical_metrics/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        metric_schema_version: "classical_metrics.v1"
+        evaluated_case_rows: 2620
+        evaluated_candidate_rows: 16404
+        candidates_by_model:
+          opencv_telea: 2620
+          lama: 2620
+          hint_places2: 2620
+          stable_diffusion_inpainting: 8520
+          sdxl_inpainting: 24
+        metric_rows: 477753
+        metric_rows_by_metric:
+          mse: 143247
+          mae: 143247
+          psnr: 143247
+          ssim: 48012
+        zero_control_candidates: 1200
+        zero_control_metric_rows: 13200
+        positive_infinity_values: 85564
+        negative_infinity_values: 0
+        unexpected_numeric_missing_values: 0
+        validation_rows: 262
+        artifact_records: 4
+        canonical_figures: 2
+        canonical_output_file_count: 6
+        work_file_count_after_completion: 0
+        full_execution_seconds: 28705.153
+        baseline_output_root: "E:/outputs/13_classical_metrics"
+        baseline_evaluated_case_rows: 410
+        baseline_evaluated_candidate_rows: 2160
+        baseline_metric_rows: 63018
+        baseline_validation_rows: 251
+        baseline_artifact_records: 4
+        baseline_canonical_figures: 2
+        baseline_output_file_count: 6
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "14"
+        stem: "14_lpips_metrics"
+        output_root: "outputs/14_lpips_metrics"
+        manifest_path: "outputs/14_lpips_metrics/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        metric_schema_version: "lpips_metrics.v1"
+        evaluated_case_rows: 2620
+        evaluated_candidate_rows: 16404
+        candidates_by_model:
+          opencv_telea: 2620
+          lama: 2620
+          hint_places2: 2620
+          stable_diffusion_inpainting: 8520
+          sdxl_inpainting: 24
+        metric_rows: 31608
+        metric_rows_by_model:
+          opencv_telea: 4940
+          lama: 4940
+          hint_places2: 4940
+          stable_diffusion_inpainting: 16740
+          sdxl_inpainting: 48
+        content_region_rows: 16404
+        mask_bbox_crop_rows: 15204
+        zero_control_candidates: 1200
+        scratch_prompt_matched_pairs: 2400
+        validation_rows: 261
+        artifact_records: 3
+        canonical_figures: 1
+        canonical_output_file_count: 5
+        work_file_count_after_completion: 0
+        full_execution_seconds: 3341.795
+        baseline_output_root: "E:/outputs/14_lpips_metrics"
+        baseline_evaluated_candidate_rows: 2160
+        baseline_metric_rows: 4170
+        baseline_validation_rows: 253
+        baseline_artifact_records: 3
+        baseline_canonical_figures: 1
+        baseline_output_file_count: 5
+        retained_baseline_metric_id_rows: 4106
+        displaced_baseline_metric_id_rows: 64
+        baseline_displacement_reason: "32_approved_notebook_11_context_candidate_displacements_times_two_lpips_regions"
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        external_publication_required: false
+        external_publication_reason: "compact_metric_table_below_50_mib_threshold"
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "15"
+        stem: "15_feature_similarity"
+        output_root: "outputs/15_feature_similarity"
+        manifest_path: "outputs/15_feature_similarity/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        metric_schema_version: "feature_metrics.v1"
+        embedding_manifest_schema_version: "feature_embedding_manifest.v1"
+        embedding_bundle_schema_version: "feature_embedding_bundle.v1"
+        evaluated_case_rows: 2620
+        evaluated_candidate_rows: 16404
+        candidates_by_model:
+          opencv_telea: 2620
+          lama: 2620
+          hint_places2: 2620
+          stable_diffusion_inpainting: 8520
+          sdxl_inpainting: 24
+        candidate_region_evaluations: 31608
+        metric_rows: 63216
+        embedding_rows: 78336
+        embedding_rows_by_role:
+          clean: 5240
+          damaged: 9880
+          restored: 63216
+        scratch_prompt_paired_comparisons: 4800
+        positive_improvement_rows: 46538
+        negative_improvement_rows: 14256
+        validation_rows: 247
+        blocking_validation_failures: 0
+        nonblocking_warning_failures: 1
+        nonblocking_warning_id: "cuda_bitwise_repeatability"
+        artifact_records: 5
+        canonical_figures: 1
+        canonical_output_file_count: 7
+        work_file_count_after_completion: 0
+        model_load_seconds: 41.159
+        full_extraction_seconds: 6270.909
+        metric_construction_seconds: 199.564
+        baseline_output_root: "E:/outputs/15_feature_similarity"
+        baseline_metric_rows: 8340
+        baseline_embedding_rows: 10700
+        baseline_validation_rows: 240
+        baseline_artifact_records: 5
+        baseline_canonical_figures: 1
+        baseline_output_file_count: 7
+        retained_baseline_metric_id_rows: 8212
+        displaced_baseline_metric_id_rows: 128
+        baseline_displacement_reason: "32_approved_notebook_11_context_candidate_displacements_times_four_feature_records"
+        inherited_notebook_06_changed_metric_rows: 12
+        best_effort_cuda_roundoff_rows: 6
+        best_effort_cuda_max_absolute_difference: 1.19209289550781e-07
+        baseline_artifact_paths_preserved: true
+        baseline_table_schemas_preserved: true
+        external_publication_required: true
+        external_publication_tier: "diagnostics"
+        external_publication_artifact: "outputs/15_feature_similarity/data/embeddings.npz"
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "16"
+        stem: "16_difference_maps_and_spatial_diagnostics"
+        output_root: "outputs/16_difference_maps_and_spatial_diagnostics"
+        manifest_path: "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        metric_schema_version: "spatial_diagnostics.v1"
+        evaluated_case_rows: 2620
+        evaluated_candidate_rows: 16404
+        metric_rows: 143247
+        candidate_map_images: 76020
+        selected_panels: 14
+        map_manifest_rows: 76034
+        validation_rows: 137
+        artifact_records: 5
+        canonical_output_file_count: 76039
+        work_file_count_after_completion: 0
+        baseline_output_root: "E:/outputs/16_difference_maps_and_spatial_diagnostics"
+        baseline_metric_rows: 18896
+        baseline_candidate_map_images: 10050
+        baseline_artifact_paths_and_schemas_preserved: true
+        publication_status: "complete_local_and_full_bundle_remote_verified"
+        publication_record: "outputs/inventory/bundled_publication_n16_full.json"
+        remote_revision: "8c22aa62c5be60d8a15c9c00d9bc9a6f81557b79"
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "17"
+        stem: "17_local_consistency_metrics"
+        output_root: "outputs/17_local_consistency_metrics"
+        manifest_path: "outputs/17_local_consistency_metrics/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        metric_schema_version: "local_consistency.v1"
+        evaluated_case_rows: 2620
+        evaluated_candidate_rows: 16404
+        metric_rows: 2060667
+        candidate_map_images: 27912
+        selected_panels: 14
+        map_manifest_rows: 27926
+        validation_rows: 179
+        artifact_records: 6
+        canonical_output_file_count: 27932
+        work_file_count_after_completion: 0
+        baseline_output_root: "E:/outputs/17_local_consistency_metrics"
+        baseline_metric_rows: 271988
+        baseline_candidate_map_images: 3270
+        baseline_artifact_paths_and_schemas_preserved: true
+        publication_status: "complete_local_and_full_bundle_remote_verified"
+        publication_record: "outputs/inventory/bundled_publication_n17_full.json"
+        remote_revision: "ceac6a5aa67fe2a0f8c840c46f22306e7f606749"
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "18"
+        stem: "18_diffusion_uncertainty_analysis"
+        output_root: "outputs/18_diffusion_uncertainty_analysis"
+        manifest_path: "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        uncertainty_groups: 780
+        candidates: 3120
+        unique_seed_pairs: 4680
+        uncertainty_metric_rows: 124800
+        calibration_rows: 780
+        validation_rows: 150
+        canonical_output_file_count: 7
+        baseline_output_root: "E:/outputs/18_diffusion_uncertainty_analysis"
+        baseline_uncertainty_groups: 130
+        baseline_metric_rows: 20800
+        baseline_calibration_rows: 130
+        baseline_artifact_classes_preserved: true
+        external_publication_required: false
+        publication_reason: "seven_file_compact_git_handoff"
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "19"
+        stem: "19_uncertainty_and_spatial_explanation_maps"
+        output_root: "outputs/19_uncertainty_and_spatial_explanation_maps"
+        manifest_path: "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        uncertainty_groups: 780
+        numeric_archive_entries: 780
+        spatial_explanation_rows: 4680
+        owned_png_files: 2475
+        owned_png_bytes: 1284143895
+        upstream_link_rows: 3000
+        map_manifest_rows: 6255
+        validation_rows: 149
+        artifact_records: 8
+        canonical_output_file_count: 2481
+        work_file_count_after_completion: 0
+        baseline_output_root: "E:/outputs/19_uncertainty_and_spatial_explanation_maps"
+        baseline_numeric_archive_entries: 130
+        baseline_spatial_explanation_rows: 780
+        baseline_owned_png_files: 425
+        baseline_map_manifest_rows: 1055
+        baseline_canonical_output_file_count: 431
+        shared_numeric_arrays_exact: 130
+        shared_regional_mean_rows_exact: 780
+        baseline_table_schemas_and_artifact_roles_preserved: true
+        changed_shared_png_paths: 411
+        changed_shared_png_reason: "expanded_population_global_render_scales_and_selected_panel_layout"
+        superseded_selected_panel_paths: 14
+        publication_status: "full_remote_verified_compact_git_handoff_pending"
+        publication_target: "RahulMaddineni264/painting-restoration-eval-diagnostics"
+        publication_record: "outputs/inventory/bundled_publication_n19_full.json"
+        publication_prefix: "bundled_assets/v1/controlled_300/19_uncertainty_and_spatial_explanation_maps/40b468a3712044dc"
+        pinned_remote_revision: "e080704d57d2a10ebe09d0395f348b9da85ea8f7"
+        remote_verified_objects: 609
+        remote_verified_bytes: 1329281895
+        public_sample_assets_verified: 4
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "20"
+        stem: "20_semantic_and_structural_consistency"
+        output_root: "outputs/20_semantic_and_structural_consistency"
+        manifest_path: "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        evaluated_cases: 2620
+        evaluated_candidates: 16404
+        semantic_metric_rows: 447312
+        numeric_map_bundles: 63216
+        rendered_semantic_panels: 9304
+        rendered_panel_bytes: 13567464318
+        map_manifest_rows: 72520
+        representative_cases: 15
+        validation_rows: 181
+        artifact_records: 6
+        canonical_output_file_count: 9311
+        work_file_count_after_completion: 0
+        baseline_output_root: "E:/outputs/20_semantic_and_structural_consistency"
+        baseline_semantic_metric_rows: 58980
+        baseline_numeric_map_bundles: 8340
+        baseline_rendered_semantic_panels: 1090
+        baseline_map_manifest_rows: 9430
+        baseline_validation_rows: 177
+        baseline_table_schemas_and_artifact_paths_preserved: true
+        publication_status: "full_remote_verified_compact_git_committed"
+        publication_target: "RahulMaddineni264/painting-restoration-eval-diagnostics"
+        publication_record: "outputs/inventory/bundled_publication_n20_full.json"
+        publication_prefix: "bundled_assets/v1/controlled_300/20_semantic_and_structural_consistency/b29a25d740c9dea4"
+        pinned_remote_revision: "8f849ea89e0fa6cabf309481d63c44bb3878edc3"
+        remote_verified_objects: 823
+        remote_verified_bytes: 14066563594
+        public_sample_assets_verified: 4
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "21"
+        stem: "21_multi_model_comparison"
+        output_root: "outputs/21_multi_model_comparison"
+        manifest_path: "outputs/21_multi_model_comparison/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        selected_candidates: 10504
+        core_paired_cases: 2620
+        core_paired_candidates: 10480
+        bounded_sdxl_cases: 24
+        bounded_sdxl_candidates: 120
+        normalized_evidence_rows: 3160618
+        model_comparison_rows: 277319
+        metric_disagreement_rows: 2181
+        representative_rows: 168
+        report_embedded_images: 58
+        validation_rows: 187
+        artifact_records: 7
+        canonical_output_file_count: 9
+        work_file_count_after_completion: 0
+        baseline_output_root: "E:/outputs/21_multi_model_comparison"
+        baseline_model_comparison_rows: 86531
+        baseline_metric_disagreement_rows: 839
+        baseline_representative_rows: 76
+        baseline_artifact_paths_and_table_schemas_preserved: true
+        external_publication_required: true
+        external_publication_tier: "diagnostics"
+        external_publication_artifact: "outputs/21_multi_model_comparison/metrics/model_comparison.csv"
+        publication_status: "external_publication_registry_authoritative"
+        unexplained_missing_or_reduced_evidence: false
+      - notebook_id: "D02"
+        stem: "d02_portrait_skin_tone_and_hand_restoration_audit"
+        output_root: "outputs/d02_portrait_skin_tone_and_hand_restoration_audit"
+        manifest_path: "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/manifests/run_manifest.json"
+        run_status: "completed"
+        completion_gate_passed: true
+        dataset_scope: "controlled_300"
+        portrait_screening_rows: 60
+        anatomical_annotation_rows: 91
+        anatomical_overlap_rows: 1265
+        eligible_case_rows: 292
+        hand_control_cases: 45
+        hand_control_paintings: 20
+        hand_region_comparison_rows: 1638
+        skin_tone_audit_rows: 2760
+        skin_profile_paintings: 30
+        skin_context_matches: 10
+        manual_review_rows: 32
+        report_embedded_visuals: 20
+        report_embedded_csv_tables: 17
+        validation_rows: 99
+        artifact_records: 14
+        canonical_output_file_count: 16
+        work_file_count_after_completion: 0
+        baseline_output_root: null
+        baseline_comparison_status: "not_applicable_new_supplemental_analysis"
+        external_publication_required: false
+        publication_status: "compact_git_lfs_handoff"
+        unexplained_missing_or_reduced_evidence: false
 
   frozen_baseline:
     through_notebook_id: "21"
@@ -33,6 +967,9 @@ evidence_coverage:
   frozen_notebooks:
     - notebook_id: "01"
       stem: "01_dataset_verification"
+      record_scope: "pilot_50_historical_at_git_tag"
+      recovery_tag: "pilot-50-complete"
+      active_working_tree_replaced_by_controlled_300: true
       output_root: "outputs/01_dataset_verification"
       manifest_path: "outputs/01_dataset_verification/manifests/run_manifest.json"
       status: "frozen_supported"
@@ -49,6 +986,9 @@ evidence_coverage:
 
     - notebook_id: "02"
       stem: "02_image_preprocessing"
+      record_scope: "pilot_50_historical_at_git_tag"
+      recovery_tag: "pilot-50-complete"
+      active_working_tree_replaced_by_controlled_300: true
       output_root: "outputs/02_image_preprocessing"
       manifest_path: "outputs/02_image_preprocessing/manifests/run_manifest.json"
       status: "frozen_supported"
@@ -57,6 +997,9 @@ evidence_coverage:
 
     - notebook_id: "03"
       stem: "03_canonical_mask_generation"
+      record_scope: "pilot_50_historical_at_git_tag"
+      recovery_tag: "pilot-50-complete"
+      active_working_tree_replaced_by_controlled_300: true
       output_root: "outputs/03_canonical_mask_generation"
       manifest_path: "outputs/03_canonical_mask_generation/manifests/run_manifest.json"
       status: "frozen_supported"
@@ -65,6 +1008,9 @@ evidence_coverage:
 
     - notebook_id: "04"
       stem: "04_canonical_damaged_image_generation"
+      record_scope: "pilot_50_historical_at_git_tag"
+      recovery_tag: "pilot-50-complete"
+      active_working_tree_replaced_by_controlled_300: true
       output_root: "outputs/04_canonical_damaged_image_generation"
       manifest_path: "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json"
       status: "frozen_supported"
@@ -103,6 +1049,9 @@ evidence_coverage:
 
     - notebook_id: "07"
       stem: "07_synthetic_degradation_dataset_generation"
+      record_scope: "pilot_50_historical_at_git_tag"
+      recovery_tag: "pilot-50-complete"
+      active_working_tree_replaced_by_controlled_300: true
       output_root: "outputs/07_synthetic_degradation_dataset_generation"
       manifest_path: "outputs/07_synthetic_degradation_dataset_generation/manifests/run_manifest.json"
       status: "frozen_supported"
@@ -295,9 +1244,13 @@ evidence_coverage:
   planned_notebooks:
     - notebook_id: "22"
       stem: "22_damage_size_diffusion_uncertainty_extension"
-      status: "completed_validation_passed"
+      status: "controlled_300_complete_validated"
       completion_gate_passed: true
+      dataset_scope: "controlled_300"
+      dataset_version: "2.0.0"
       output_root: "outputs/22_damage_size_diffusion_uncertainty_extension"
+      manifest_path: "outputs/22_damage_size_diffusion_uncertainty_extension/manifests/run_manifest.json"
+      run_id: "run_d0276a6859f74fada266936f43b7499f"
       required_inputs:
         - "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv"
         - "outputs/11_stable_diffusion_restoration/data/candidates.csv"
@@ -307,17 +1260,36 @@ evidence_coverage:
         - "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv"
         - "outputs/17_local_consistency_metrics/metrics/local_consistency.csv"
         - "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv"
-      expected_population:
-        cases: 35
-        paintings: 5
+      observed_population:
+        cases: 245
+        paintings: 35
         seeds_per_group: 4
-        referenced_seed_2026_candidates: 35
-        new_candidates: 105
-        uncertainty_groups: 35
-        unordered_seed_pairs: 210
+        referenced_seed_2026_candidates: 245
+        new_candidates: 735
+        total_candidates: 980
+        uncertainty_groups: 245
+        unordered_seed_pairs: 1470
+        metric_rows: 33320
+        uncertainty_maps: 245
+        restoration_images: 735
+        uncertainty_overlays: 245
+        validation_checks: 236
+        roadmap_requirements: 12
+        canonical_files: 988
       owns_new_inference: true
       may_write_frozen_outputs: false
-      observed_population:
+      storage_boundary:
+        canonical_local_tree_complete: true
+        github_bulk_images_excluded: true
+        github_numeric_map_archive_excluded: true
+        external_publication_status: "split_candidate_and_diagnostic_releases_remotely_verified"
+        candidate_asset_class: "candidates"
+        candidate_repository: "RahulMaddineni264/painting-restoration-eval-candidates"
+        candidate_verification_record: "outputs/inventory/bundled_publication_n22c_full.json"
+        uncertainty_asset_class: "diagnostics"
+        diagnostics_repository: "RahulMaddineni264/painting-restoration-eval-diagnostics"
+        diagnostics_verification_record: "outputs/inventory/bundled_publication_n22d_full.json"
+      historical_pilot_population:
         cases: 35
         paintings: 5
         seeds_per_group: 4
@@ -330,7 +1302,7 @@ evidence_coverage:
         uncertainty_overlays: 35
         validation_checks: 234
         roadmap_requirements: 12
-      primary_artifacts:
+      historical_pilot_artifacts:
         - path: "outputs/22_damage_size_diffusion_uncertainty_extension/data/candidates.csv"
           rows: 105
         - path: "outputs/22_damage_size_diffusion_uncertainty_extension/metrics/damage_size_uncertainty.csv"
@@ -344,20 +1316,40 @@ evidence_coverage:
 
     - notebook_id: "23"
       stem: "23_damage_size_sensitivity_analysis"
-      status: "completed_validation_passed"
+      status: "controlled_300_complete_validated"
       completion_gate_passed: true
       output_root: "outputs/23_damage_size_sensitivity_analysis"
       manifest_path: "outputs/23_damage_size_sensitivity_analysis/manifests/run_manifest.json"
-      required_evidence: ["n05_damage_size", "n09_n11_primary_candidates", "n13_n20_metric_families", "n22_damage_size_uncertainty"]
-      independent_unit: "five_painting_trajectories"
-      observed_population:
+      run_id: "run_e93288fc3ac847ccb699241b4b4c8be0"
+      required_evidence: ["n05_damage_size", "n09_n12a_primary_candidates", "n13_n20_metric_families", "n22_damage_size_uncertainty"]
+      independent_unit: "painting_trajectory"
+      expected_population:
+        paintings: 35
+        paintings_per_category: 7
+        damage_levels: 7
+        cases: 245
+        primary_candidates: 980
+        primary_models: ["opencv_telea", "lama", "hint_places2", "stable_diffusion_inpainting"]
+        quality_anchors: 11
+        primary_inferential_anchors: 7
+        uncertainty_groups: 245
+        seeds_per_uncertainty_group: 4
+        unordered_seed_pairs: 1470
+      bounded_inference:
+        cluster_bootstrap_resamples: 5000
+        cluster_bootstrap_seed: 23001
+        monte_carlo_sign_flip_assignments: 100000
+        sign_flip_seed: 23002
+        finite_simulation_correction: "plus_one"
+        fdr_method: "benjamini_hochberg"
+      historical_pilot_population:
+        dataset_scope: "controlled_50"
+        completion_gate_passed: true
         paintings: 5
         damage_levels: 7
         cases: 35
         primary_candidates: 105
-        quality_anchors: 11
         uncertainty_groups: 35
-        seeds_per_uncertainty_group: 4
         unordered_seed_pairs: 210
         analysis_rows: 1901
         inferential_rows: 646
@@ -369,16 +1361,35 @@ evidence_coverage:
         report_external_images: 0
         report_tile_count: 95
         canonical_output_files: 8
+      observed_population:
+        paintings: 35
+        paintings_per_category: 7
+        damage_levels: 7
+        cases: 245
+        primary_candidates: 980
+        quality_anchors: 11
+        primary_inferential_anchors: 7
+        uncertainty_groups: 245
+        unordered_seed_pairs: 1470
+        analysis_rows: 7035
+        inferential_rows: 494
+        validation_checks: 124
+        roadmap_requirements: 10
+        analytical_report_views: 10
+        report_visual_panels: 8
+        report_embedded_images: 18
+        report_external_images: 0
+        report_tile_count: 110
+        artifact_records: 6
+        canonical_output_files: 8
       primary_artifacts:
         - path: "outputs/23_damage_size_sensitivity_analysis/metrics/damage_size_analysis.csv"
-          rows: 1901
-          schema_version: "damage_size_analysis.v1"
+          schema_version: "damage_size_analysis.v2"
         - path: "outputs/23_damage_size_sensitivity_analysis/figures/performance_vs_damage.png"
         - path: "outputs/23_damage_size_sensitivity_analysis/figures/ranking_vs_damage.png"
         - path: "outputs/23_damage_size_sensitivity_analysis/figures/uncertainty_vs_damage.png"
         - path: "outputs/23_damage_size_sensitivity_analysis/reports/damage_size_analysis.html"
         - path: "outputs/23_damage_size_sensitivity_analysis/validation/checks.csv"
-          rows: 115
       supported_scope:
         - "target_and_realized_damage_size_trends"
         - "matched_painting_quality_slopes_and_adjacent_changes"
@@ -396,44 +1407,62 @@ evidence_coverage:
         - "retain_target_and_realized_exposure_definitions"
         - "retain_painting_as_the_independent_unit"
         - "do_not_convert_seed_variability_to_calibrated_confidence"
+        - "do_not_enumerate_35_power_35_bootstrap_samples_or_2_power_35_sign_assignments"
       prohibited_claims: ["independent_category_effect", "independent_style_effect", "universal_damage_threshold"]
 
     - notebook_id: "24"
       stem: "24_mask_robustness_analysis"
       status: "completed_validation_passed"
       completion_gate_passed: true
-      required_evidence: ["n06_robustness_groups", "n09_n11_primary_candidates", "n13_n20_metric_families"]
+      output_root: "outputs/24_mask_robustness_analysis"
+      manifest_path: "outputs/24_mask_robustness_analysis/manifests/run_manifest.json"
+      run_id: "run_bbf68684c3ca47e5827c2b8b4b666351"
+      required_evidence: ["n06_robustness_groups", "n09_n12a_primary_candidates", "n13_n21_metric_families"]
       terminology: "input_mask_robustness"
-      validated_population:
-        paintings: 5
+      planned_population:
+        paintings: 35
+        paintings_per_category: 7
         mask_families: 3
-        robustness_groups: 15
+        robustness_groups: 105
         variants_per_group: 5
-        cases: 75
-        primary_candidates: 225
+        cases: 525
+        primary_candidates: 2100
         candidates_by_model:
-          opencv_telea: 75
-          lama: 75
-          stable_diffusion_inpainting: 75
+          opencv_telea: 525
+          lama: 525
+          hint_places2: 525
+          stable_diffusion_inpainting: 525
         quality_anchors: 11
-        canonical_analysis_rows: 5373
-        validation_checks: 136
+        primary_inferential_anchors: 7
+        bootstrap_resamples: 5000
+        sign_flip_assignments: 100000
+        canonical_analysis_rows: 44847
+        canonical_output_files: 7
+      observed_population:
+        paintings: 35
+        paintings_per_category: 7
+        mask_families: 3
+        robustness_groups: 105
+        variants_per_group: 5
+        cases: 525
+        primary_candidates: 2100
+        analysis_rows: 44847
+        validation_checks: 139
         roadmap_requirements: 9
         analytical_report_views: 10
         report_visual_panels: 8
         report_embedded_images: 18
         report_external_images: 0
-        report_tile_count: 149
+        report_tile_count: 100
+        artifact_records: 5
         canonical_output_files: 7
-      primary_artifacts:
-        - path: "outputs/24_mask_robustness_analysis/metrics/mask_robustness_analysis.csv"
-          rows: 5373
-          schema_version: "mask_robustness_analysis.v1"
-        - path: "outputs/24_mask_robustness_analysis/figures/robustness_variance.png"
-        - path: "outputs/24_mask_robustness_analysis/figures/ranking_stability.png"
-        - path: "outputs/24_mask_robustness_analysis/reports/mask_robustness_analysis.html"
-        - path: "outputs/24_mask_robustness_analysis/validation/checks.csv"
-          rows: 136
+      historical_pilot_baseline:
+        paintings: 5
+        cases: 75
+        primary_candidates: 225
+        canonical_analysis_rows: 5373
+        validation_checks: 136
+        canonical_output_files: 7
       supported_scope:
         - "matched_five_variant_input_mask_robustness"
         - "within_group_quality_dispersion"
@@ -454,6 +1483,8 @@ evidence_coverage:
         - "do_not_interpret_input_mask_robustness_as_stochastic_uncertainty_or_calibrated_confidence"
         - "do_not_separate_mask_family_from_its_fixed_target_damage_fraction"
         - "keep_runtime_out_of_quality_ranking"
+        - "use_5000_seeded_cluster_bootstrap_draws_and_100000_seeded_batched_sign_flips"
+        - "do_not_enumerate_35_power_35_bootstrap_samples_or_2_power_35_sign_assignments"
       prohibited_claims:
         - "mask_variation_is_generative_uncertainty"
         - "independent_mask_family_effect"
@@ -470,10 +1501,11 @@ evidence_coverage:
       completion_gate_passed: true
       output_root: "outputs/25_synthetic_degradation_analysis"
       manifest_path: "outputs/25_synthetic_degradation_analysis/manifests/run_manifest.json"
-      required_evidence: ["n07_degradation_cases", "n08_model_eligibility", "n09_n21_evidence"]
+      run_id: "run_cf89ebe972364c7b8ccfefc6bf2a63ca"
+      required_evidence: ["n07_degradation_cases", "n08_model_eligibility", "n09_n12a_primary_candidates", "n13_n21_evidence"]
       population_rule: "eligibility_approved_combinations_only"
-      independent_unit: "five_paintings_with_cases_nested_within_painting"
-      observed_population:
+      independent_unit: "thirty_five_paintings_with_cases_nested_within_painting"
+      historical_pilot_population:
         generated_cases: 165
         eligible_cases: 50
         paintings: 5
@@ -495,22 +1527,47 @@ evidence_coverage:
         report_external_images: 0
         report_tile_count: 238
         canonical_output_files: 7
+      controlled_300_population:
+        generated_cases: 1155
+        eligible_cases: 350
+        paintings: 35
+        primary_core_candidates: 1400
+        candidates_by_core_model:
+          opencv_telea: 350
+          lama: 350
+          hint_places2: 350
+          stable_diffusion_inpainting: 350
+        bounded_sdxl_candidates: 11
+        selected_candidates: 1411
+        quality_anchors: 11
+        canonical_analysis_rows: 34977
+        analysis_kinds: 17
+        bootstrap_resamples: 5000
+        sign_flip_assignments: 100000
+        validation_checks: 129
+        roadmap_requirements: 9
+        analytical_report_views: 14
+        report_visual_panels: 9
+        report_embedded_images: 23
+        report_external_images: 0
+        report_tile_count: 298
+        artifact_records: 5
+        canonical_output_files: 7
       primary_artifacts:
         - path: "outputs/25_synthetic_degradation_analysis/metrics/degradation_analysis.csv"
-          rows: 4695
+          observed_rows: 34977
           schema_version: "synthetic_degradation_analysis.v1"
         - path: "outputs/25_synthetic_degradation_analysis/figures/degradation_performance.png"
         - path: "outputs/25_synthetic_degradation_analysis/figures/degradation_failure_examples.png"
         - path: "outputs/25_synthetic_degradation_analysis/reports/synthetic_degradation_analysis.html"
         - path: "outputs/25_synthetic_degradation_analysis/validation/checks.csv"
-          rows: 125
       supported_scope:
         - "eligibility_gated_localized_synthetic_degradation_analysis"
         - "degradation_family_severity_affected_area_and_painting_profiles"
         - "painting_level_slopes_and_paired_core_model_contrasts"
         - "ordered_combined_component_comparisons"
         - "quality_failure_spillover_rank_and_runtime_evidence"
-        - "bounded_six_case_sdxl_description"
+        - "bounded_eleven_case_sdxl_description"
       report_contract:
         section_count: 15
         self_contained: true
@@ -523,6 +1580,8 @@ evidence_coverage:
         - "keep_metric_families_separate_and_preserve_disagreement"
         - "keep_runtime_out_of_quality_ranking"
         - "treat_sdxl_as_a_bounded_descriptive_subset"
+        - "use_5000_seeded_cluster_bootstrap_draws_and_100000_seeded_batched_sign_flips"
+        - "do_not_enumerate_35_power_35_bootstrap_samples_or_2_power_35_sign_assignments"
         - "do_not_create_synthetic_degradation_uncertainty_without_repeated_seed_evidence"
       prohibited_claims:
         - "procedural_degradation_is_exact_conservation_damage"
@@ -545,23 +1604,24 @@ evidence_coverage:
       test_path: "tests/test_grouped_statistical_analysis.py"
       required_evidence:
         - "n08_case_registry_and_region_policy"
-        - "n09_n12_metric_independent_primary_candidates"
+        - "n09_n12a_metric_independent_primary_candidates"
         - "n13_n17_and_n20_normalized_quality_evidence"
-        - "n18_canonical_prompt_specific_uncertainty_130_groups"
+        - "n18_canonical_prompt_specific_uncertainty_780_groups"
         - "n21_comparison_disagreement_and_representative_cases"
-        - "n22_damage_size_uncertainty_35_groups"
+        - "n22_damage_size_uncertainty_245_groups"
         - "n23_n25_focused_experiment_analysis_tables"
       population_contract:
-        dataset_sources: ["controlled_50"]
-        evaluated_cases: 410
-        primary_core_candidates: 1230
-        quality_cases_excluding_canonical_zero_controls: 360
-        quality_core_candidates: 1080
-        bounded_sdxl_candidates: 10
-        supported_uncertainty_groups: 165
+        dataset_sources: ["controlled_300"]
+        evaluated_cases: 2620
+        primary_core_candidates: 10480
+        quality_cases_excluding_canonical_zero_controls: 2320
+        quality_core_candidates: 9280
+        bounded_sdxl_candidates: 24
+        supported_uncertainty_groups: 1025
       independent_unit: "painting"
       nested_units: ["case", "candidate", "mask_variant", "seed", "region", "metric"]
-      observed_population:
+      historical_pilot_population:
+        dataset_sources: ["controlled_50"]
         evaluated_cases: 410
         selected_candidates: 1240
         primary_core_candidates: 1230
@@ -583,22 +1643,47 @@ evidence_coverage:
         report_external_images: 0
         report_tile_count: 132
         canonical_output_files: 10
+      planned_population:
+        case_registry_rows: 3425
+        evaluated_cases: 2620
+        selected_candidates: 10504
+        primary_core_candidates: 10480
+        quality_core_candidates: 9280
+        bounded_sdxl_candidates: 24
+        quality_anchors: 11
+        supported_uncertainty_groups: 1025
+        normalized_quality_rows: 3150114
+        damage_size_analysis_rows: 7035
+        mask_robustness_analysis_rows: 44847
+        degradation_analysis_rows: 34977
+        canonical_output_files: 10
+      observed_outputs:
+        statistical_result_rows: 13272
+        statistical_result_kinds: 14
+        metric_correlation_rows: 694
+        correlation_kinds: 5
+        ranking_stability_rows: 1344
+        ranking_stability_kinds: 6
+        validation_checks: 111
+        roadmap_requirements: 12
+        analytical_report_views: 12
+        report_visual_panels: 36
+        report_embedded_images: 48
+        report_external_images: 0
+        report_tile_count: 252
+        canonical_output_files: 10
       primary_artifacts:
         - path: "outputs/26_grouped_and_statistical_analysis/metrics/statistical_results.csv"
-          rows: 4174
           schema_version: "grouped_statistical_results.v1"
         - path: "outputs/26_grouped_and_statistical_analysis/metrics/metric_correlations.csv"
-          rows: 504
           schema_version: "grouped_metric_correlations.v1"
         - path: "outputs/26_grouped_and_statistical_analysis/metrics/ranking_stability.csv"
-          rows: 258
           schema_version: "grouped_ranking_stability.v1"
         - path: "outputs/26_grouped_and_statistical_analysis/figures/correlation_matrix.png"
         - path: "outputs/26_grouped_and_statistical_analysis/figures/grouped_performance.png"
         - path: "outputs/26_grouped_and_statistical_analysis/figures/effect_sizes.png"
         - path: "outputs/26_grouped_and_statistical_analysis/reports/statistical_analysis.html"
         - path: "outputs/26_grouped_and_statistical_analysis/validation/checks.csv"
-          rows: 111
       supported_scope:
         - "painting_level_core_model_descriptions_paired_tests_and_effect_sizes"
         - "balanced_canonical_category_and_damage_type_analysis"
@@ -607,12 +1692,16 @@ evidence_coverage:
         - "canonical_and_damage_size_repeated_seed_uncertainty_associations"
         - "ranking_stability_and_sensitivity_without_a_combined_score"
         - "quality_compute_associations_with_runtime_separate_from_quality"
-        - "bounded_ten_case_sdxl_description"
+        - "bounded_twenty_four_candidate_sdxl_description"
       report_contract:
         section_count: 15
         self_contained: true
         mock_to_final_traceability_passed: true
         required_visuals_depend_on_external_links: false
+        report_visual_panels: 36
+        report_embedded_images: 48
+        report_external_images: 0
+        report_tile_count: 252
       downstream_contract:
         - "use_the_three_notebook_26_metric_tables_as_canonical_grouped_statistical_sources"
         - "retain_painting_as_the_independent_unit_and_within_painting_trajectories_as_nested_evidence"
@@ -622,8 +1711,8 @@ evidence_coverage:
         - "treat_sdxl_as_a_bounded_descriptive_subset"
         - "do_not_construct_a_combined_quality_efficiency_uncertainty_or_trust_score"
       scope_constraints:
-        - "category_inference_only_for_balanced_canonical_50"
-        - "focused_five_painting_experiments_are_painting_specific"
+        - "category_inference_only_for_balanced_canonical_300"
+        - "focused_thirty_five_painting_experiments_are_exploratory_with_painting_as_the_independent_unit"
         - "dataset_source_comparison_not_applicable_single_dataset"
         - "uncertainty_only_for_canonical_and_damage_size_groups"
         - "generic_and_scratch_aware_prompt_arms_remain_separate"
@@ -644,22 +1733,25 @@ evidence_coverage:
 
     - notebook_id: "27"
       stem: "27_failure_taxonomy_and_trustworthiness_flags"
-      status: "completed_validation_passed"
+      status: "controlled_300_complete_validated"
       completion_gate_passed: true
+      run_id: "run_bef567ee35c1409dbcecfb71f1b4f8b4"
+      dataset_scope: "controlled_300"
+      dataset_version: "2.0.0"
       output_root: "outputs/27_failure_taxonomy_and_trustworthiness_flags"
       manifest_path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/manifests/run_manifest.json"
       config_path: "config/evaluation/failure_taxonomy.yaml"
       helper_path: "src/restoration_eval/failure_taxonomy.py"
       test_path: "tests/test_failure_taxonomy.py"
       candidate_population:
-        primary_candidates: 1240
-        repeated_seed_candidates: 660
-        primary_repeated_overlap: 115
-        uncertainty_only_candidates: 545
-        union_candidates: 1785
+        primary_candidates: 10504
+        repeated_seed_candidates: 4100
+        primary_repeated_overlap: 725
+        uncertainty_only_candidates: 3375
+        union_candidates: 13879
       required_evidence: ["reference_metrics", "spatial", "texture", "colour", "seam", "semantic_proxies", "canonical_uncertainty", "damage_size_uncertainty", "metric_disagreement"]
       required_outputs: ["failure_taxonomy", "complete_failure_assignment_grid", "complete_trustworthiness_flag_grid", "self_contained_flag_report", "taxonomy_figure", "run_manifest", "artifact_manifest", "validation_checks"]
-      observed_population:
+      historical_pilot_population:
         primary_candidates: 1240
         primary_core_candidates: 1230
         repeated_seed_candidates: 660
@@ -680,20 +1772,38 @@ evidence_coverage:
         report_external_images: 0
         report_tile_count: 49
         canonical_output_files: 8
+      observed_population:
+        primary_candidates: 10504
+        primary_core_candidates: 10480
+        repeated_seed_candidates: 4100
+        primary_repeated_overlap: 725
+        uncertainty_only_candidates: 3375
+        bounded_sdxl_candidates: 24
+        supported_uncertainty_groups: 1025
+        union_candidates: 13879
+        failure_categories: 14
+        failure_assignment_rows: 194306
+        trust_flags: 11
+        trustworthiness_flag_rows: 152669
+        supported_uncertainty_groups: 1025
+        analytical_report_views: 7
+        diagnostic_report_panels: 7
+        report_embedded_images: 56
+        report_external_images: 0
+        report_tile_count: 49
+        validation_checks: 167
+        artifact_records: 6
+        canonical_output_files: 8
       primary_artifacts:
         - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/data/failure_taxonomy.csv"
-          rows: 14
           schema_version: "failure_taxonomy.v1"
         - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/failure_assignments.csv"
-          rows: 24990
           schema_version: "failure_assignments.v1"
         - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/metrics/trustworthiness_flags.csv"
-          rows: 19635
           schema_version: "trustworthiness_flags.v1"
         - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/figures/failure_taxonomy.png"
         - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/reports/flag_definitions.html"
         - path: "outputs/27_failure_taxonomy_and_trustworthiness_flags/validation/checks.csv"
-          rows: 167
       supported_scope:
         - "complete_candidate_by_category_and_candidate_by_flag_screening_ledgers"
         - "transparent_operational_warning_and_critical_thresholds"
@@ -702,14 +1812,17 @@ evidence_coverage:
         - "canonical_and_damage_size_repeated_seed_uncertainty_evidence"
         - "metric_disagreement_and_flag_cooccurrence"
         - "candidate_level_review_recommendations"
-        - "bounded_ten_case_sdxl_description"
+        - "bounded_twenty_four_candidate_sdxl_description"
       report_contract:
         section_count: 15
         self_contained: true
         mock_to_final_traceability_passed: true
         required_visuals_depend_on_external_links: false
-        embedded_images: 56
-        image_decode_failures: 0
+        minimum_embedded_images: 42
+        observed_embedded_images: 56
+        observed_external_images: 0
+        observed_diagnostic_panels: 7
+        observed_tile_count: 49
       downstream_contract:
         - "use_the_complete_notebook_27_taxonomy_assignment_and_flag_tables_as_canonical_sources"
         - "preserve_population_roles_and_prompt_arm_separation"
@@ -722,8 +1835,11 @@ evidence_coverage:
 
     - notebook_id: "28"
       stem: "28_metric_and_region_policy_ablation"
-      status: "completed_validation_passed"
+      status: "controlled_300_complete_validated"
       completion_gate_passed: true
+      run_id: "run_4325bb483fbc4ccda670df125c40731d"
+      completed_at_utc: "2026-09-24T22:09:21.501988Z"
+      observed_runtime_seconds: 44406.151
       output_root: "outputs/28_metric_and_region_policy_ablation"
       manifest_path: "outputs/28_metric_and_region_policy_ablation/manifests/run_manifest.json"
       config_path: "config/evaluation/metric_region_ablation.yaml"
@@ -738,40 +1854,50 @@ evidence_coverage:
         aggregation_scenarios: 3
         total_scenarios: 23
         ranking_applicable_scenarios: 18
-      observed_population:
-        core_primary_candidates: 1230
-        matched_cases: 410
-        flag_candidates: 1785
-        bounded_sdxl_candidates: 10
+      expected_population:
+        core_primary_candidates: 10480
+        matched_cases: 2620
+        flag_candidates: 13879
+        bounded_sdxl_candidates: 24
         trust_flags: 11
         failure_categories: 14
-        ablation_result_rows: 7710
-        model_rank_rows: 54
-        case_rank_rows: 7380
+        minimum_ablation_result_rows: 47508
+        model_rank_rows: 72
+        case_rank_rows: 47160
         scenario_flag_summary_rows: 253
         scenario_summary_rows: 23
-        flag_stability_rows: 41055
-        validation_checks: 122
-        roadmap_requirements: 13
+        flag_stability_rows: 319217
         report_sections: 12
-        analytical_report_views: 5
+        minimum_analytical_report_views: 5
         diagnostic_report_panels: 6
-        report_embedded_images: 23
         report_external_images: 0
-        report_tile_count: 18
+        report_tile_count: 24
         canonical_output_files: 8
-      primary_artifacts:
+      observed_population:
+        core_primary_candidates: 10480
+        matched_cases: 2620
+        flag_candidates: 13879
+        bounded_sdxl_candidates: 24
+        model_rank_rows: 72
+        case_rank_rows: 47160
+        scenario_flag_summary_rows: 253
+        scenario_summary_rows: 23
+        ablation_result_rows: 47508
+        flag_stability_rows: 319217
+        subgroup_summary_rows: 759
+        validation_checks: 122
+        validation_failures: 0
+        artifact_records: 6
+        canonical_output_files: 8
+      planned_artifacts:
         - path: "outputs/28_metric_and_region_policy_ablation/metrics/ablation_results.csv"
-          rows: 7710
           schema_version: "metric_region_ablation_results.v1"
         - path: "outputs/28_metric_and_region_policy_ablation/metrics/flag_stability.csv"
-          rows: 41055
           schema_version: "ablation_flag_stability.v1"
         - path: "outputs/28_metric_and_region_policy_ablation/figures/ablation_ranking_changes.png"
         - path: "outputs/28_metric_and_region_policy_ablation/figures/ablation_flag_changes.png"
         - path: "outputs/28_metric_and_region_policy_ablation/reports/ablation_study.html"
         - path: "outputs/28_metric_and_region_policy_ablation/validation/checks.csv"
-          rows: 122
       supported_scope:
         - "controlled_metric_family_region_threshold_and_aggregation_sensitivity"
         - "transparent_model_and_case_rank_sensitivity_without_a_continuous_combined_score"
@@ -782,31 +1908,33 @@ evidence_coverage:
       report_contract:
         section_count: 12
         self_contained: true
-        mock_to_final_traceability_passed: true
+        mock_to_final_traceability_required: true
         required_visuals_depend_on_external_links: false
-        embedded_images: 23
-        image_decode_failures: 0
+        minimum_embedded_images: 26
+        observed_embedded_images: 29
+        observed_external_images: 0
       downstream_contract:
         - "use_notebook_28_canonical_tables_for_evaluation_policy_sensitivity"
         - "preserve_metric_family_and_region_specific_disagreement"
         - "distinguish_stable_model_winner_from_policy_sensitive_case_priority_and_flags"
         - "retain_insufficient_evidence_states_when_evidence_is_removed"
         - "treat_ranks_as_transparent_ordinal_diagnostics_not_quality_or_trust_scores"
-        - "retain_painting_as_the_independent_unit_and_report_five_painting_confounding"
+        - "retain_painting_as_the_independent_unit_and_report_focused_cohort_confounding"
       scope_rules: ["runtime_remains_outside_quality_ranking", "uncertainty_remains_outside_deterministic_cross_model_ranking", "missing_evidence_is_not_improvement", "rank_changes_are_policy_sensitivity_not_universal_superiority", "operational_thresholds_are_not_calibrated_probabilities", "bounded_sdxl_is_not_a_full_comparison"]
       prohibited_claims: ["universal_trust_score", "continuous_combined_quality_score", "continuous_case_trust_score", "calibrated_failure_probability", "independent_style_effect", "historical_authenticity", "conservation_approval", "full_sdxl_comparison"]
 
     - notebook_id: "29"
       stem: "29_explainable_ai_and_case_retrieval"
-      status: "completed_validation_passed"
+      status: "controlled_300_complete"
       completion_gate_passed: true
+      run_id: "run_ad7603b6bdb14156a140351f6ac1f241"
       output_root: "outputs/29_explainable_ai_and_case_retrieval"
       manifest_path: "outputs/29_explainable_ai_and_case_retrieval/manifests/run_manifest.json"
       config_path: "config/evaluation/explainable_case_retrieval.yaml"
       helper_path: "src/restoration_eval/explainable_case_retrieval.py"
       test_path: "tests/test_explainable_case_retrieval.py"
       required_evidence: ["n15_embeddings", "n16_n20_maps", "n18_n22_uncertainty", "n23_n25_counterfactual_structures", "n27_flags", "n28_ablations"]
-      observed_population:
+      historical_pilot_population:
         explanation_catalog_candidates: 1785
         explanation_catalog_cases: 410
         explanation_catalog_paintings: 50
@@ -833,9 +1961,32 @@ evidence_coverage:
         report_external_images: 0
         physical_output_files: 30
         artifact_records: 6
+      expected_population:
+        explanation_catalog_candidates: 13879
+        explanation_catalog_cases: 2620
+        explanation_catalog_paintings: 300
+        primary_candidates: 10480
+        primary_nonzero_spatial_candidates: 9280
+        bounded_sdxl_candidates: 24
+        dual_feature_embedding_candidates_per_view: 16404
+        dual_feature_retrieval_eligible_candidates: 13144
+        retrieval_ineligible_extension_candidates: 735
+        repeated_seed_candidate_members: 4100
+        repeated_seed_groups: 1025
+        lower_risk_candidates: 757
+        retrieval_queries: 10
+        retrieval_neighbor_rows: 100
+        lower_risk_neighbor_rows: 50
+        flagged_neighbor_rows: 50
+        counterfactual_types: 7
+        counterfactual_panels: 14
+        retrieval_panels: 10
+        selected_report_units: 24
+        physical_output_files: 30
+        artifact_records: 6
       primary_artifacts:
         - path: "outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv"
-          rows: 1785
+          expected_rows: 13879
           schema_version: "explanation_cases.v1"
         - path: "outputs/29_explainable_ai_and_case_retrieval/data/case_neighbors.csv"
           rows: 100
@@ -846,7 +1997,7 @@ evidence_coverage:
           files: 10
         - path: "outputs/29_explainable_ai_and_case_retrieval/reports/explanation_catalog.html"
         - path: "outputs/29_explainable_ai_and_case_retrieval/validation/checks.csv"
-          rows: 145
+          rows: 146
       supported_scope:
         - "complete_candidate_level_explanation_catalog_for_the_notebook_27_union"
         - "candidate_level_rule_region_evidence_missingness_and_action_traceability"
@@ -872,7 +2023,7 @@ evidence_coverage:
         external_images: 0
         required_visuals_depend_on_external_links: false
       downstream_contract:
-        - "use_the_complete_1785_row_explanation_catalog_for_case_level_discovery"
+        - "use_the_complete_13879_row_explanation_catalog_for_case_level_discovery"
         - "use_all_100_neighbor_rows_with_dinov2_and_clip_as_separate_views"
         - "treat_the_24_visual_report_units_as_examples_not_the_persisted_population"
         - "preserve_retrieval_leakage_exclusions_and_explicit_embedding_ineligibility"
@@ -883,11 +2034,14 @@ evidence_coverage:
 
     - notebook_id: "30"
       stem: "30_model_cards_compute_and_scalability"
-      status: "completed_validation_passed"
+      status: "controlled_300_complete_validated"
+      run_status: "completed"
       completion_gate_passed: true
       output_root: "outputs/30_model_cards_compute_and_scalability"
       manifest_path: "outputs/30_model_cards_compute_and_scalability/manifests/run_manifest.json"
-      run_id: "run_99fc7daf6af54d5992ef6c26f05bd901"
+      run_id: "run_605de239145a46e9a202fd63bbbb4e9c"
+      dataset_scope: "controlled_300"
+      dataset_version: "2.0.0"
       config_path: "config/evaluation/model_cards_compute.yaml"
       helper_path: "src/restoration_eval/model_cards_compute.py"
       test_path: "tests/test_model_cards_compute.py"
@@ -896,7 +2050,7 @@ evidence_coverage:
         config: "config/evaluation/model_cards_compute.yaml"
         helper: "src/restoration_eval/model_cards_compute.py"
         tests: "tests/test_model_cards_compute.py"
-        upstream_manifest_range: "09-29"
+        upstream_manifest_range: "09-29_plus_12a"
       output_contract:
         model_cards: "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv"
         compute_scalability: "outputs/30_model_cards_compute_and_scalability/metrics/compute_scalability.csv"
@@ -905,71 +2059,87 @@ evidence_coverage:
         model_card_report_format: "portable_text_native_markdown"
         external_image_dependencies: 0
       expected_counts:
-        model_cards: 4
-        observed_compute_rows: 27
-        projection_rows: 8
-        compute_rows: 35
+        model_cards: 5
+        observed_compute_rows: 32
+        projection_rows: 10
+        compute_rows: 42
         quality_anchors_per_population: 11
-        physical_canonical_files: 11
-      observed_population:
-        model_cards: 4
-        telea_candidates: 410
-        lama_candidates: 410
-        stable_diffusion_candidates: 1330
-        sdxl_candidates: 10
-        observed_compute_rows: 27
-        projection_rows: 8
-        applicable_projection_rows: 7
-        compute_rows: 35
+        physical_canonical_files: 12
+      binding_population:
+        model_cards: 5
+        telea_candidates: 2620
+        lama_candidates: 2620
+        hint_candidates: 2620
+        stable_diffusion_candidates: 8520
+        sdxl_scheduled_candidates: 35
+        sdxl_completed_candidates: 24
+        observed_compute_rows: 32
+        projection_rows: 10
+        applicable_projection_rows: 5
+        compute_rows: 42
         quality_anchors: 11
         quality_populations: 2
-        standalone_markdown_cards: 4
+        standalone_markdown_cards: 5
         report_sections_per_card: 13
         canonical_figures: 2
-        validation_checks: 165
-        roadmap_requirements: 13
         artifact_records: 6
-        physical_output_files: 11
-      primary_artifacts:
+        validation_rows: 178
+        roadmap_responsibilities: 13
+        physical_output_files: 12
+      canonical_primary_artifacts:
         - path: "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv"
-          rows: 4
+          rows: 5
           schema_version: "model_cards.v1"
         - path: "outputs/30_model_cards_compute_and_scalability/metrics/compute_scalability.csv"
-          rows: 35
+          rows: 42
           schema_version: "compute_scalability.v1"
         - path: "outputs/30_model_cards_compute_and_scalability/reports/model_cards"
-          files: 4
+          files: 5
         - path: "outputs/30_model_cards_compute_and_scalability/figures/quality_vs_compute.png"
         - path: "outputs/30_model_cards_compute_and_scalability/figures/scaling_projection.png"
-        - path: "outputs/30_model_cards_compute_and_scalability/validation/checks.csv"
-          rows: 165
+      baseline_comparison:
+        root: "E:/outputs/30_model_cards_compute_and_scalability"
+        pilot_model_cards: 4
+        controlled_300_model_cards: 5
+        pilot_compute_rows: 35
+        controlled_300_compute_rows: 42
+        pilot_validation_rows: 165
+        controlled_300_validation_rows: 178
+        pilot_physical_files: 11
+        controlled_300_physical_files: 12
+        all_pilot_relative_paths_retained: true
+        added_relative_paths: ["reports/model_cards/hint_places2.md"]
+        unexplained_missing_or_reduced_evidence: false
       supported_scope:
-        - "four_complete_machine_readable_and_portable_markdown_method_cards"
+        - "five_machine_readable_and_portable_markdown_method_cards"
         - "observed_runtime_throughput_failure_retry_memory_storage_and_geometry_evidence"
-        - "transparent_300_painting_runtime_and_storage_projection_sensitivity"
-        - "separate_core_three_model_and_bounded_sdxl_quality_compute_views"
+        - "observed_controlled_300_compute_for_four_full_scope_methods"
+        - "transparent_600_painting_and_full_design_sdxl_projection_sensitivity"
+        - "separate_core_four_method_and_bounded_five_method_sdxl_quality_compute_views"
         - "eleven_descriptive_quality_anchors_without_a_combined_score"
       downstream_contract:
         - "use_notebook_30_cards_as_the_canonical_method_disclosure_source"
         - "use_observed_compute_rows_only_for_executed_runtime_and_resource_claims"
-        - "label_all_300_painting_values_as_linear_projections"
-        - "preserve_the_complete_three_model_and_bounded_sdxl_population_split"
+        - "label_only_explicit_projection_rows_as_extrapolations"
+        - "preserve_the_complete_four_method_and_bounded_sdxl_population_split"
         - "keep_quality_anchors_separate_and_runtime_outside_the_quality_vote"
         - "use_notebook_31_for_image_heavy_per_model_reports"
       scope_rules:
-        - "telea_lama_and_stable_diffusion_use_complete_controlled_50_scope"
-        - "sdxl_is_ten_case_five_painting_partial_evaluation"
+        - "telea_lama_hint_and_stable_diffusion_use_complete_controlled_300_scope"
+        - "sdxl_is_35_scheduled_case_30_painting_partial_evaluation_with_24_completions"
         - "quality_anchor_wins_remain_descriptive_not_a_combined_score"
         - "observed_compute_and_projected_compute_are_separate_record_types"
-        - "sdxl_current_design_projection_is_not_applicable"
+        - "full_design_sdxl_cost_is_projected_from_24_completed_bounded_cases"
         - "notebook_31_owns_image_heavy_model_reports"
-      prohibited_claims: ["projected_300_painting_cost_is_executed_result", "full_sdxl_evaluation", "runtime_is_universal_benchmark", "projection_sensitivity_is_confidence_interval", "anchor_wins_are_universal_quality_score", "model_card_is_conservation_approval"]
+      prohibited_claims: ["projected_600_painting_cost_is_executed_result", "projected_full_design_sdxl_is_executed_result", "full_sdxl_evaluation", "runtime_is_universal_benchmark", "projection_sensitivity_is_confidence_interval", "anchor_wins_are_universal_quality_score", "model_card_is_conservation_approval"]
 
     - notebook_id: "31"
       stem: "31_model_report_generation"
-      status: "completed_validation_passed"
+      status: "controlled_300_complete"
       completion_gate_passed: true
-      run_id: "run_86faee4c15ee49cbbc5b85a649cdc1b4"
+      run_id: "run_430fd1355d3a4011bedc55b571d9544c"
+      dataset_scope: "controlled_300"
+      dataset_version: "2.0.0"
       output_root: "outputs/31_model_report_generation"
       manifest_path: "outputs/31_model_report_generation/manifests/run_manifest.json"
       preparation_contract:
@@ -978,16 +2148,56 @@ evidence_coverage:
         test_path: "tests/test_model_report_generation.py"
         approved_mock_structure_locked: true
         creates_new_scientific_evidence: false
-        upstream_manifest_range: "09-30"
-        upstream_manifest_count: 22
-        model_count: 4
-        report_count: 4
-        report_index_rows: 4
-        artifact_records: 6
-        physical_output_files: 8
+        upstream_manifest_range: "09-30_plus_12a"
+        upstream_manifest_count: 23
+        model_count: 5
+        report_count: 5
+        report_index_rows: 5
+        artifact_records: 7
+        physical_output_files: 9
         required_sections_per_report: 15
         mock_traceability_rows: 39
-      completion_contract:
+        explanation_catalog_rows: 13879
+        input_table_contracts: 40
+        hydrated_external_input: "outputs/29_explainable_ai_and_case_retrieval/data/explanation_cases.csv"
+        hydrated_external_input_sha256: "4118b8c573dcb7013751de2e3b1279d8824176eb05ad7656c4007ab24ae37f8b"
+      binding_population:
+        reports: 5
+        report_index_rows: 5
+        sections: 75
+        embedded_images: 79
+        embedded_tiles: 374
+        analytical_views: 29
+        representative_panels: 40
+        visual_atlases: 10
+        validation_rows: 346
+        blocking_failures: 0
+        warning_failures: 0
+        roadmap_responsibilities: 13
+        mock_traceability_rows: 39
+        artifact_records: 7
+        physical_output_files: 9
+        external_image_dependencies: 0
+      baseline_comparison:
+        root: "E:/outputs/31_model_report_generation"
+        pilot_reports: 4
+        controlled_300_reports: 5
+        pilot_sections: 60
+        controlled_300_sections: 75
+        pilot_embedded_images: 63
+        controlled_300_embedded_images: 79
+        pilot_embedded_tiles: 298
+        controlled_300_embedded_tiles: 374
+        pilot_validation_rows: 324
+        controlled_300_validation_rows: 346
+        pilot_artifact_records: 6
+        controlled_300_artifact_records: 7
+        pilot_physical_files: 8
+        controlled_300_physical_files: 9
+        all_pilot_relative_paths_retained: true
+        added_relative_paths: ["reports/hint_places2.html"]
+        unexplained_missing_or_reduced_evidence: false
+      historical_pilot_completion_contract:
         run_status: "completed"
         validation_status: "passed"
         creates_new_scientific_evidence: false
@@ -1013,16 +2223,19 @@ evidence_coverage:
         physical_output_files: 8
         external_image_dependencies: 0
       required_evidence:
-        - "n09_n12_candidates_runtime_and_scope"
+        - "n09_n12_and_n12a_candidates_runtime_and_scope"
         - "n13_n20_reference_local_uncertainty_and_semantic_evidence"
         - "n21_n28_comparison_robustness_statistics_failures_and_ablation"
         - "n29_complete_explanation_catalog_and_selected_retrieval_evidence"
         - "n30_model_cards_compute_and_scalability"
-      primary_outputs:
+      planned_primary_outputs:
         - path: "outputs/31_model_report_generation/reports/opencv_telea.html"
           files: 1
           schema_version: "self_contained_model_report.v1"
         - path: "outputs/31_model_report_generation/reports/lama.html"
+          files: 1
+          schema_version: "self_contained_model_report.v1"
+        - path: "outputs/31_model_report_generation/reports/hint_places2.html"
           files: 1
           schema_version: "self_contained_model_report.v1"
         - path: "outputs/31_model_report_generation/reports/stable_diffusion_inpainting.html"
@@ -1032,25 +2245,22 @@ evidence_coverage:
           files: 1
           schema_version: "self_contained_model_report.v1"
         - path: "outputs/31_model_report_generation/data/report_index.csv"
-          rows: 4
+          rows: 5
           schema_version: "model_report_index.v1"
-        - path: "outputs/31_model_report_generation/validation/checks.csv"
-          rows: 324
-          schema_version: "validation_checks.v1"
       supported_scope:
-        - "four_parameterized_self_contained_model_reports"
-        - "complete_three_model_and_bounded_sdxl_scope_preserved"
+        - "five_parameterized_self_contained_model_reports"
+        - "complete_four_model_and_bounded_sdxl_scope_preserved"
         - "model_specific_quality_local_semantic_failure_explanation_and_compute_evidence"
         - "stable_diffusion_canonical_and_damage_size_seed_variability"
         - "stable_diffusion_scratch_prompt_ablation"
         - "deterministic_representative_success_failure_selection"
         - "approved_mock_fidelity_and_embedded_visual_density"
       applicability_rules:
-        - "telea_and_lama_repeated_seed_uncertainty_is_not_applicable_deterministic_method"
+        - "telea_lama_and_hint_repeated_seed_uncertainty_is_not_applicable_deterministic_method"
         - "stable_diffusion_uncertainty_covers_canonical_and_damage_size_populations"
         - "sdxl_uncertainty_is_not_applicable_insufficient_seed_coverage"
-        - "sdxl_is_ten_case_five_painting_partial_evaluation"
-        - "damage_size_mask_robustness_and_synthetic_extensions_use_painting_as_independent_unit"
+        - "sdxl_is_a_bounded_35_case_30_painting_schedule_with_24_completed_candidates"
+        - "damage_size_mask_robustness_and_synthetic_extensions_use_the_controlled_35_painting_cohort_and_painting_as_independent_unit"
         - "report_examples_are_illustrative_not_independent_evidence"
       downstream_contract:
         - "consume_report_index_for_report_discovery_and_provenance"
@@ -1069,9 +2279,11 @@ evidence_coverage:
 
     - notebook_id: "32"
       stem: "32_case_and_painting_report_generation"
-      status: "completed_validation_passed"
+      status: "controlled_300_complete"
       completion_gate_passed: true
-      run_id: "run_7a508c540ae74af1ad2bd3c59928e94e"
+      run_id: "run_0d4ae193602944dda511bf54199105b1"
+      dataset_scope: "controlled_300"
+      dataset_version: "2.0.0"
       output_root: "outputs/32_case_and_painting_report_generation"
       manifest_path: "outputs/32_case_and_painting_report_generation/manifests/run_manifest.json"
       preparation_contract:
@@ -1080,22 +2292,56 @@ evidence_coverage:
         test_path: "tests/test_case_painting_reports.py"
         approved_mock_structure_locked: true
         creates_new_scientific_evidence: false
-        upstream_manifest_count: 24
-        approved_candidate_count: 1785
-        evaluated_case_count: 410
-        uncertainty_case_count: 115
-        uncertainty_group_count: 165
-        painting_count: 50
+        upstream_manifest_count: 25
+        input_table_count: 41
+        approved_candidate_count: 13879
+        evaluated_case_count: 2620
+        uncertainty_case_count: 725
+        uncertainty_group_count: 1025
+        painting_count: 300
         selected_case_count: 30
         case_report_count: 30
-        painting_report_count: 50
+        painting_report_count: 300
         collection_index_count: 1
-        report_count: 81
+        report_count: 331
         selected_case_grid_count: 30
         artifact_records: 8
-        physical_output_files: 117
+        physical_output_files: 367
         mock_traceability_rows: 67
-      completion_contract:
+        deterministic_full_methods: ["telea", "lama", "hint"]
+        stable_diffusion_candidate_count: 5995
+        bounded_sdxl_completed_candidate_count: 24
+        metadata_style_date_medium_populated_paintings: 268
+        extension_painting_count: 35
+      controlled_300_completion_contract:
+        run_status: "completed"
+        validation_status: "passed"
+        creates_new_scientific_evidence: false
+        paintings: 300
+        evaluated_cases: 2620
+        approved_candidates: 13879
+        selected_cases: 30
+        case_reports: 30
+        painting_reports: 300
+        collection_indexes: 1
+        reports: 331
+        selected_case_grids: 30
+        embedded_images: 2132
+        embedded_tiles: 10622
+        validation_checks: 5819
+        blocking_failures: 0
+        warning_failures: 0
+        roadmap_requirements: 12
+        mock_traceability_rows: 67
+        artifact_records: 8
+        physical_output_files: 367
+        external_image_dependencies: 0
+        observed_runtime_seconds: 20274
+        output_size_mib: 329.94
+        historical_pilot_shared_paths: 75
+        controlled_300_added_paths: 292
+        superseded_pilot_selection_paths: 42
+      historical_pilot_completion_contract:
         run_status: "completed"
         validation_status: "passed"
         creates_new_scientific_evidence: false
@@ -1134,13 +2380,13 @@ evidence_coverage:
           rows: 30
           schema_version: "case_report_index.v1"
         - path: "outputs/32_case_and_painting_report_generation/data/painting_report_index.csv"
-          rows: 50
+          rows: 300
           schema_version: "painting_report_index.v1"
         - path: "outputs/32_case_and_painting_report_generation/reports/cases"
           files: 30
           schema_version: "case_report_collection.v1"
         - path: "outputs/32_case_and_painting_report_generation/reports/paintings"
-          files: 50
+          files: 300
           schema_version: "painting_report_collection.v1"
         - path: "outputs/32_case_and_painting_report_generation/reports/index.html"
           files: 1
@@ -1149,12 +2395,12 @@ evidence_coverage:
           files: 30
           schema_version: "selected_case_grid_collection.v1"
         - path: "outputs/32_case_and_painting_report_generation/validation/checks.csv"
-          rows: 1806
+          rows: 5819
           schema_version: "validation_checks.v1"
       supported_scope:
         - "thirty_deterministically_selected_deep_case_reports"
-        - "fifty_painting_reports_covering_all_410_evaluated_cases"
-        - "one_thousand_seven_hundred_eighty_five_approved_candidates"
+        - "three_hundred_painting_reports_covering_all_2620_evaluated_cases"
+        - "thirteen_thousand_eight_hundred_seventy_nine_approved_candidates"
         - "all_approved_candidates_for_each_selected_case"
         - "case_specific_classical_perceptual_feature_local_semantic_spatial_and_flag_evidence"
         - "diffusion_uncertainty_and_prompt_sensitivity_only_where_applicable"
@@ -1162,19 +2408,25 @@ evidence_coverage:
         - "report_collection_index_for_package_navigation"
       applicability_rules:
         - "detailed_case_reports_are_selected_illustrations_not_complete_case_population"
-        - "all_410_cases_are_retained_in_the_fifty_painting_report_tables"
-        - "telea_and_lama_uncertainty_is_not_applicable_deterministic_method"
+        - "all_2620_cases_are_retained_in_the_three_hundred_painting_report_tables"
+        - "telea_lama_and_hint_uncertainty_is_not_applicable_deterministic_method"
         - "stable_diffusion_uncertainty_covers_canonical_and_damage_size_populations"
         - "sdxl_uncertainty_is_not_applicable_insufficient_seed_coverage"
-        - "sdxl_remains_ten_case_five_painting_partial_evaluation"
-        - "only_eighteen_paintings_have_documented_style_or_period"
-        - "five_extension_paintings_support_descriptive_within_painting_evidence"
+        - "sdxl_remains_bounded_to_35_scheduled_cases_with_24_completed_candidates"
+        - "style_date_and_medium_are_populated_for_268_of_300_paintings"
+        - "thirty_five_extension_paintings_support_descriptive_within_painting_evidence"
         - "computational_review_actions_are_not_conservation_recommendations"
       excluded_evidence:
-        completed_candidate_count: 480
+        completed_candidate_count: 3260
         source: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
         prompt_variants: ["p01_category", "p02_artist", "p03_artist_category", "p04_full_context"]
         reason: "no_complete_notebook_27_and_29_failure_flag_and_explanation_contract"
+      publication_plan:
+        local_canonical_scope: "complete_self_contained_report_and_selected_grid_tree"
+        hugging_face_repository: "RahulMaddineni264/painting-restoration-eval-diagnostics"
+        hugging_face_strategy: "verified_indexed_bundle_after_controlled_300_completion"
+        github_scope: "compact_indexes_manifests_validation_and_configuration_in_ordinary_git"
+        streamlit_note: "pre_notebook_34_audit_will_select_web_consumed_report_indexes_and_bundles"
       downstream_contract:
         - "consume_case_report_index_for_selected_case_report_discovery"
         - "consume_painting_report_index_for_complete_painting_report_discovery"
@@ -1198,7 +2450,9 @@ evidence_coverage:
       stem: "33_final_evaluation_report"
       status: "completed_validation_passed"
       completion_gate_passed: true
-      run_id: "run_ffab0ce2624e43608c3c21764b7f6f1b"
+      run_id: "run_aef04267c2e44495a4e7a6249426bd4d"
+      dataset_scope: "controlled_300"
+      dataset_version: "2.0.0"
       output_root: "outputs/33_final_evaluation_report"
       manifest_path: "outputs/33_final_evaluation_report/manifests/run_manifest.json"
       preparation_contract:
@@ -1209,20 +2463,26 @@ evidence_coverage:
         creates_new_scientific_evidence: false
         upstream_manifest_count: 32
         input_table_count: 33
-        painting_count: 50
-        unified_case_count: 525
-        eligible_restoration_case_count: 410
-        approved_report_candidate_count: 1785
-        primary_core_candidate_count: 1230
+        painting_count: 300
+        unified_case_count: 3425
+        eligible_restoration_case_count: 2620
+        approved_report_candidate_count: 13879
+        primary_core_candidate_count: 10480
+        primary_nonzero_core_candidate_count: 9280
+        model_count: 5
+        full_method_count: 4
+        bounded_sdxl_completed_candidate_count: 24
         quality_anchor_count: 11
-        canonical_uncertainty_group_count: 130
-        damage_size_uncertainty_group_count: 35
+        canonical_uncertainty_group_count: 780
+        damage_size_uncertainty_group_count: 245
+        total_supported_uncertainty_group_count: 1025
+        extension_painting_count: 35
         ablation_scenario_count: 23
         table_definition_count: 15
-        thesis_table_rows: 293
+        thesis_table_rows: 352
         latex_table_rows: 15
-        evidence_catalog_rows: 106
-        evidence_claim_count: 48
+        evidence_catalog_rows: 107
+        evidence_claim_count: 49
         limitation_record_count: 18
         report_section_count: 19
         thesis_figure_count: 18
@@ -1231,10 +2491,49 @@ evidence_coverage:
         selected_case_grid_count: 12
         minimum_embedded_image_count: 64
         minimum_embedded_tile_count: 260
-        mock_traceability_rows: 125
+        mock_traceability_rows: 126
         artifact_records: 8
         physical_output_files: 32
       completion_contract:
+        run_status: "completed"
+        validation_status: "passed"
+        creates_new_scientific_evidence: false
+        upstream_manifest_count: 32
+        input_table_count: 33
+        paintings: 300
+        unified_cases: 3425
+        eligible_restoration_cases: 2620
+        approved_report_candidates: 13879
+        primary_core_candidates: 10480
+        primary_nonzero_core_candidates: 9280
+        bounded_sdxl_completed_candidates: 24
+        canonical_uncertainty_groups: 780
+        damage_size_uncertainty_groups: 245
+        total_supported_uncertainty_groups: 1025
+        thesis_table_rows: 352
+        thesis_tables: 15
+        latex_tables: 15
+        evidence_catalog_rows: 107
+        report_sections: 19
+        evidence_claims: 49
+        limitations: 18
+        thesis_figures: 18
+        publication_figures: 6
+        persisted_figures: 24
+        selected_case_grids: 12
+        embedded_images: 68
+        embedded_tiles: 281
+        external_image_dependencies: 0
+        validation_checks: 536
+        blocking_failures: 0
+        warning_failures: 0
+        roadmap_requirements: 21
+        mock_traceability_rows: 126
+        artifact_records: 8
+        physical_output_files: 32
+        execution_seconds: 1038.552
+        publication_tier: "ordinary_git_compact_final_synthesis"
+      historical_pilot_completion_contract:
         run_status: "completed"
         validation_status: "passed"
         creates_new_scientific_evidence: false
@@ -1280,13 +2579,13 @@ evidence_coverage:
         - "n32_selected_case_and_complete_painting_report_discovery"
       primary_outputs:
         - path: "outputs/33_final_evaluation_report/data/thesis_tables.csv"
-          rows: 293
+          rows: 352
           schema_version: "thesis_tables.v1"
         - path: "outputs/33_final_evaluation_report/data/latex_tables.csv"
           rows: 15
           schema_version: "latex_tables.v1"
         - path: "outputs/33_final_evaluation_report/data/report_evidence_catalog.csv"
-          rows: 106
+          rows: 107
           schema_version: "final_report_evidence_catalog.v1"
         - path: "outputs/33_final_evaluation_report/figures/thesis"
           files: 18
@@ -1301,12 +2600,12 @@ evidence_coverage:
           files: 1
           schema_version: "final_evaluation_limitations.v1"
         - path: "outputs/33_final_evaluation_report/validation/checks.csv"
-          rows: 535
+          rows: 536
           schema_version: "validation_checks.v1"
       supported_scope:
         - "proposal_research_question_oriented_final_synthesis"
-        - "controlled_50_dataset_and_410_eligible_case_evidence"
-        - "complete_three_model_comparison_and_bounded_sdxl_evidence"
+        - "controlled_300_dataset_and_2620_evaluated_case_evidence"
+        - "complete_four_method_comparison_and_bounded_sdxl_evidence"
         - "separate_classical_perceptual_feature_texture_colour_seam_semantic_and_uncertainty_evidence"
         - "damage_size_mask_robustness_and_synthetic_degradation_extensions"
         - "metric_disagreement_grouped_statistics_and_ranking_stability"
@@ -1317,10 +2616,10 @@ evidence_coverage:
       applicability_rules:
         - "candidate_case_and_painting_observations_remain_nested"
         - "painting_is_the_independent_unit_for_grouped_inference"
-        - "five_painting_extensions_do_not_estimate_independent_category_or_style_effects"
-        - "telea_and_lama_repeated_seed_uncertainty_is_not_applicable_deterministic_method"
+        - "thirty_five_painting_extensions_do_not_estimate_independent_category_or_style_effects"
+        - "telea_lama_and_hint_repeated_seed_uncertainty_is_not_applicable_deterministic_method"
         - "stable_diffusion_uncertainty_covers_canonical_and_damage_size_populations_only"
-        - "sdxl_is_ten_case_five_painting_partial_evaluation"
+        - "sdxl_is_a_bounded_35_case_30_painting_schedule_with_24_completed_candidates"
         - "runtime_is_operational_evidence_outside_quality_ranking"
         - "report_examples_are_illustrative_not_independent_evidence"
         - "report_layer_performs_presentation_only_transformations"
@@ -1342,59 +2641,55 @@ evidence_coverage:
       stem: "34_final_streamlit_dashboard_assets"
       status: "completed_validation_passed"
       completion_gate_passed: true
-      run_id: "run_a8d0c877315947ff84d76d93e29c547c"
+      run_id: "run_1e831de6e27f9ead0147bb30"
       output_root: "outputs/34_final_streamlit_dashboard_assets"
       manifest_path: "outputs/34_final_streamlit_dashboard_assets/manifests/run_manifest.json"
       creates_new_scientific_evidence: false
       preparation_contract:
         config_path: "config/evaluation/dashboard_assets.yaml"
         helper_path: "src/restoration_eval/dashboard_assets.py"
-        upstream_manifest_count: 33
-        input_table_count: 41
-        principal_page_count: 8
+        sequential_upstream_manifest_count: 33
+        separately_registered_manifest_count: 3
+        total_upstream_manifest_count: 36
+        input_table_count: 70
+        declared_local_input_count: 91
+        principal_room_count: 8
+        child_route_count: 1
         principal_page_limit: 10
-        dashboard_table_count: 9
-        dashboard_index_count: 5
-        painting_index_rows: 50
-        candidate_index_rows: 1785
-        model_report_count: 4
-        case_report_count: 30
-        painting_report_count: 50
-        canonical_uncertainty_groups: 130
-        damage_size_uncertainty_groups: 35
+        approved_display_id_count: 100
+        package_schema_version: "dashboard_package.v2"
       completion_contract:
         run_status: "completed"
         validation_status: "passed"
         creates_new_scientific_evidence: false
-        principal_pages: 8
-        dashboard_tables: 9
-        dashboard_indexes: 5
-        dashboard_data_assets: 15
-        headline_findings: 8
-        study_design_rows: 35
-        metric_framework_rows: 178
-        performance_summary_rows: 1241
-        sensitivity_and_statistical_rows: 18951
-        grouped_statistical_rows: 4174
-        correlation_measure_rows: 1008
-        ranking_stability_measure_rows: 1800
-        uncertainty_summary_rows: 1723
-        trustworthiness_summary_rows: 284
-        compute_summary_rows: 35
-        research_question_rows: 4
-        candidate_index_rows: 1785
-        painting_index_rows: 50
-        visual_asset_index_rows: 23964
-        report_index_rows: 104
-        filter_option_groups: 16
-        validation_checks: 410
+        release_id: "release_c5edf0d0ec99affbfa403726"
+        package_schema_version: "dashboard_package.v2"
+        paintings: 300
+        principal_rooms: 8
+        child_routes: 1
+        room_partitions: 9
+        painting_partitions: 300
+        display_ids: 100
+        display_bindings: 170
+        logical_assets: 56
+        local_renditions: 48
+        immutable_asset_locators: 95
+        validation_checks: 916
         blocking_failures: 0
         warning_failures: 0
-        roadmap_requirements: 25
-        dashboard_asset_records: 15
-        artifact_records: 17
-        physical_output_files: 19
+        artifact_records: 12
+        physical_output_files: 377
+        physical_output_bytes: 7978024
+        package_budget_observed_bytes: 7602275
+        package_budget_hard_bytes: 67108864
+        startup_network_requests: 0
+        disposable_work_files: 0
+        deterministic_package_sha256: "f1157c3086a6d827f08a9e936c509fdc23112ccf11f689688065a3791adf30a7"
       required_evidence:
+        - "n01_n33_completed_controlled_300_manifests"
+        - "n12a_full_scope_hint_restoration"
+        - "d01_method_selection_record"
+        - "d02_focused_portrait_review"
         - "n01_n08_dataset_damage_experiment_and_region_contracts"
         - "n16_n20_spatial_local_uncertainty_and_semantic_map_manifests"
         - "n21_model_comparison_disagreement_and_representatives"
@@ -1406,24 +2701,44 @@ evidence_coverage:
         - "n30_model_cards_compute_and_scalability"
         - "n31_n33_model_case_painting_and_final_reports"
       primary_outputs:
-        - path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_summary.json"
-          files: 1
-          schema_version: "dashboard_package.v1"
-        - path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_tables"
-          files: 9
-          schema_version: "dashboard_package.v1"
-        - path: "outputs/34_final_streamlit_dashboard_assets/data/dashboard_indexes"
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/bootstrap"
           files: 5
-          schema_version: "dashboard_package.v1"
-        - path: "outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_assets.csv"
-          rows: 15
-          schema_version: "dashboard_assets_manifest.v1"
+          schema_version: "dashboard_package.v2"
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/rooms"
+          files: 9
+          schema_version: "dashboard_room_partition.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/paintings"
+          files: 300
+          schema_version: "dashboard_painting_partition.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/reports/index.json.gz"
+          files: 1
+          schema_version: "dashboard_report_index.v2"
+        - path: "outputs/34_final_streamlit_dashboard_assets/data/derived"
+          files: 5
+          schema_version: "dashboard_package.v2"
+        - path: "outputs/34_final_streamlit_dashboard_assets/assets/renditions"
+          files: 48
+          schema_version: "dashboard_rendition.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_assets.parquet"
+          rows: 56
+          schema_version: "dashboard_asset.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/manifests/asset_locators.parquet"
+          rows: 95
+          schema_version: "dashboard_locator.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/manifests/display_components.csv"
+          rows: 170
+          schema_version: "dashboard_display_binding.v1"
+        - path: "outputs/34_final_streamlit_dashboard_assets/manifests/dashboard_runtime_manifest.json"
+          files: 1
+          schema_version: "dashboard_runtime_manifest.v1"
         - path: "outputs/34_final_streamlit_dashboard_assets/validation/checks.csv"
-          rows: 410
+          rows: 916
           schema_version: "validation_checks.v1"
       supported_scope:
-        - "eight_page_manifest_driven_dashboard_package"
-        - "complete_1785_candidate_case_index_and_50_painting_index"
+        - "eight_room_manifest_driven_controlled_300_dashboard_package"
+        - "focused_portrait_review_child_route"
+        - "complete_300_painting_partition_index"
+        - "one_hundred_approved_display_contracts"
         - "representative_defaults_with_complete_filterable_evidence_access"
         - "separate_metric_region_model_robustness_uncertainty_xai_and_report_views"
         - "bounded_sdxl_feasibility_labels"
@@ -1433,11 +2748,12 @@ evidence_coverage:
         - "dashboard_does_not_recompute_metrics_or_run_restoration_inference"
         - "candidate_case_and_painting_observations_remain_nested"
         - "painting_is_the_independent_unit_for_grouped_inference"
-        - "five_painting_extensions_do_not_estimate_independent_category_or_style_effects"
-        - "uncertainty_is_stable_diffusion_repeated_seed_variation_only"
-        - "sdxl_is_ten_case_five_painting_partial_evaluation"
+        - "focused_extensions_do_not_estimate_independent_category_or_style_effects"
+        - "uncertainty_is_empirical_repeated_seed_variation_not_calibrated_confidence"
+        - "sdxl_is_a_bounded_24_candidate_feasibility_population"
         - "retrieval_and_feature_affinity_are_supporting_context_not_proof"
         - "representative_defaults_do_not_limit_complete_indexed_access"
+        - "startup_uses_zero_network_requests_and_remote_assets_load_on_demand"
       prohibited_claims:
         - "dashboard_is_restoration_or_experiment_tool"
         - "dashboard_recomputes_scientific_metrics"
@@ -1451,7 +2767,55 @@ evidence_coverage:
 
     - notebook_id: "35"
       stem: "35_dashboard_and_deployment_validation"
+      # Legacy top-level contract below is retained as historical pilot evidence.
+      # controlled_300_target is the current scope-specific closeout record.
       status: "completed_validation_warning"
+      execution_scope: "historical_controlled_50"
+      controlled_300_rerun_required: false
+      controlled_300_target:
+        status: "completed_with_disclosed_limitations"
+        completion_gate_passed: true
+        completion_basis: "owner_accepted_delivery_with_explicit_unmeasured_qualification_exceptions"
+        all_planned_checks_verified: false
+        run_id: "run_3d52ae7863c44fb1b7f56a99ea0c01fa"
+        validation_status: "warning"
+        validation_checks: 533
+        passed_checks: 519
+        warning_nonpasses: 14
+        blocking_failures: 0
+        dependency_warnings: 4
+        owner_accepted_unmeasured_qualifications: 10
+        deployment_url: "https://fhtw-painting-restoration-main.streamlit.app/"
+        deployment_branch: "main"
+        checker_reference_revision: "e2b54a695a99ace715adbaee8a7ff21f7a407780"
+        server_revision_verified: false
+        successful_actions_runs: [36858527530, 36859028102]
+        n36_may_start: true
+        n36_condition: "Preserve disclosed limitations, acceptance exceptions, post-save notebook-source mismatch and historical scientific records."
+        post_save_notebook_source_match: false
+        post_save_disposition: "Owner accepted commit without rerunning; execution-time hash retained unchanged."
+        closeout_record: "docs/evidence_dependency_audit.md#n35-controlled-300-closeout--2026-10-01"
+        input_package_schema_version: "dashboard_package.v2"
+        input_runtime_manifest_schema_version: "dashboard_runtime_manifest.v1"
+        input_run_id: "run_1e831de6e27f9ead0147bb30"
+        input_release_id: "release_c5edf0d0ec99affbfa403726"
+        principal_rooms: 8
+        child_routes: 1
+        room_order:
+          - "exhibition_foyer"
+          - "study_design"
+          - "metric_framework"
+          - "model_gallery"
+          - "stability_lab"
+          - "trustworthiness"
+          - "case_explorer"
+          - "research_archive"
+        child_route_ids:
+          - "focused_portrait_review"
+        implementation_rule: "approve_each_live_room_before_implementing_the_next"
+        startup_network_requests: 0
+        creates_new_scientific_evidence: false
+        canonical_output_count: 4
       completion_gate_passed: true
       run_id: "run_e04d0dfa163b4a15966c5420b01d74c7"
       output_root: "outputs/35_dashboard_and_deployment_validation"
@@ -1573,9 +2937,66 @@ evidence_coverage:
 
     - notebook_id: "36"
       stem: "36_supervisor_publication_reproducibility_package"
-      status: "planned_supported"
+      controlled_300_target:
+        status: "first_three_batches_prepared_not_executed"
+        completion_gate_passed: false
+        configuration_version: "2.0.0"
+        upstream_manifests: 38
+        batch_count: 9
+        first_three_batches_read_only: true
+        historical_outputs_preserved: true
+        n35_acceptance_and_provenance_exceptions_retained: true
+        cell_delivery: "inline_chat_only"
+      status: "completed_validation_warning"
+      completion_gate_passed: true
+      run_id: "run_4e221aa9405d4d5cbeb7ae120dfad71a"
+      output_root: "outputs/36_supervisor_publication_reproducibility_package"
+      manifest_path: "outputs/36_supervisor_publication_reproducibility_package/manifests/run_manifest.json"
       evidence_kind: "delivery_packaging_and_traceability"
       creates_new_scientific_evidence: false
+      completion_contract:
+        run_status: "completed"
+        validation_status: "warning"
+        opening_refactor_status: "Finished"
+        opening_validation_status: "Finished"
+        validation_checks: 182
+        passed_checks: 181
+        blocking_failures: 0
+        inherited_warning_records: 1
+        warning_scope: "n35_dependency_alignment_local_demonstration_passed"
+        roadmap_requirements: 16
+        physical_output_files: 125
+        canonical_output_roles: 14
+        artifact_records: 12
+        artifact_index_records: 120
+        copied_files: 106
+        generated_package_files: 8
+        indexed_not_bundled_collections: 6
+        package_files: 114
+        package_size_bytes: 29021450
+        package_tree_sha256: "3b9585408666f56f2cab02e8b2dc5b3296af605dcffdec8b43b6573e4d06ba03"
+        self_contained_html_reports: 5
+        validated_png_files: 24
+        validated_local_markdown_links: 22
+        bundled_evaluation_configurations: 25
+        indexed_source_configurations: 13
+        upstream_notebooks: 35
+        local_application_ready: true
+        external_deployment_recorded: false
+        snapshot_policy: "preserve_execution_time_snapshots_when_post_completion_audit_and_registry_are_updated"
+      canonical_artifacts:
+        - "reports/supervisor_summary.md"
+        - "reports/reproducibility_appendix.md"
+        - "reports/limitations_and_deviations.md"
+        - "data/artifact_index.csv"
+        - "data/key_findings.json"
+        - "data/open_questions.md"
+        - "data/feedback_agenda.md"
+        - "package/"
+        - "package/README.md"
+        - "package/provenance/reproducibility_snapshot.json"
+        - "manifests/package_manifest.json"
+        - "validation/checks.csv"
       required_evidence:
         - "35_completed_upstream_run_manifests"
         - "n30_model_cards_and_compute_scalability"
@@ -1616,6 +3037,108 @@ evidence_coverage:
         - "computational_flags_or_retrieval_are_expert_ground_truth"
         - "visual_plausibility_establishes_historical_correctness_or_conservation_approval"
         - "a_universal_combined_quality_uncertainty_or_trustworthiness_score_exists"
+
+  post_pipeline_extensions:
+    - notebook_id: "37"
+      stem: "37_hint_mat_method_selection"
+      status: "completed"
+      completion_gate_passed: true
+      output_root: "outputs/37_hint_mat_method_selection"
+      manifest_path: "outputs/37_hint_mat_method_selection/manifests/run_manifest.json"
+      contract_path: "config/experiments/hint_mat_selection.yaml"
+      evidence_kind: "additional_method_selection_pilot"
+      creates_new_scientific_evidence: true
+      frozen_upstream_boundary: "notebooks_01_through_36_read_only"
+      selected_method: "hint_places2"
+      selection_report_path: "outputs/37_hint_mat_method_selection/reports/method_selection_report.html"
+      selection_decision_path: "outputs/37_hint_mat_method_selection/reports/selection_decision.json"
+      required_inputs:
+        - "outputs/01_dataset_verification/data/artworks.csv"
+        - "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+        - "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
+        - "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv"
+        - "config/evaluation/metrics.yaml"
+      external_dependencies:
+        - model_id: "hint_places2"
+          repository_url: "https://github.com/ChrisChen1023/HINT"
+          repository_revision: "15e867d8c8689b9d5050383fc3884537ae876145"
+          checkpoint_id: "hint_places2_official"
+          license: "MIT"
+        - model_id: "mat_places_512_fulldata"
+          repository_url: "https://github.com/fenglinglwb/MAT"
+          repository_revision: "d273d891ecdad2e1df106516423a75bc45b2d800"
+          checkpoint_id: "mat_places_512_fulldata_official"
+          license: "CC-BY-NC-4.0"
+      observed_population:
+        paintings: 5
+        canonical_nonzero_cases: 12
+        methods: 2
+        candidates: 24
+        cases_per_damage_family: 3
+        minimum_cases_per_visual_category: 2
+        zero_control_qa_cases_excluded_from_candidate_count: 1
+        metric_rows: 15552
+        case_level_metric_anchors: 108
+        hint_anchor_wins: 96
+        mat_anchor_wins: 6
+        anchor_ties: 6
+        consolidated_validation_checks: 94
+        blocking_failures: 0
+        warning_failures: 0
+      independent_unit: "painting"
+      repeated_unit: "case_nested_within_painting"
+      source_selection_policy: "predeclared_balanced_canonical_non_metric.v1"
+      canonical_artifacts:
+        - "data/selection_scope.csv"
+        - "data/candidates.csv"
+        - "images/restored/hint/"
+        - "images/restored/mat/"
+        - "metrics/metric_values.csv"
+        - "metrics/runtime_summary.csv"
+        - "metrics/decision_scorecard.csv"
+        - "figures/smoke_comparison.png"
+        - "figures/metric_comparison.png"
+        - "figures/selection_atlas.png"
+        - "reports/method_selection_report.html"
+        - "reports/selection_decision.json"
+        - "manifests/run_manifest.json"
+        - "manifests/artifacts.csv"
+        - "validation/checks.csv"
+      supported_claims:
+        - "paired_descriptive_hint_mat_behavior_on_the_predeclared_twelve_cases"
+        - "relative_runtime_memory_and_technical_feasibility_on_recorded_hardware"
+        - "evidence_backed_selection_of_hint_for_future_expansion"
+        - "hint_adds_a_second_deterministic_learned_mask_aware_transformer_family"
+      prohibited_claims:
+        - "notebook_37_is_a_full_fourth_model_benchmark"
+        - "twelve_cases_establish_painting_domain_generality"
+        - "single_metric_or_combined_score_selects_the_method"
+        - "metric_results_establish_conservation_suitability_or_historical_correctness"
+        - "notebook_37_modifies_or_reinterprets_frozen_notebooks_01_through_36"
+      observed_execution:
+        hint_actual_resolution: 768
+        mat_actual_resolution: 512
+        mat_runtime_fallback: "supported_pytorch_fallback_for_optional_cuda_extension"
+        hint_mean_inference_seconds: 8.258333
+        mat_mean_inference_seconds: 10.001250
+        hint_parent_process_seconds_per_case: 10.598833
+        mat_parent_process_seconds_per_case: 13.237250
+        hint_peak_gpu_memory_gib: 5.059851
+        mat_peak_gpu_memory_gib: 1.233452
+      selection_rationale:
+        - "hint_led_96_of_108_case_level_metric_anchors"
+        - "complete_visual_review_favored_hint_across_thin_scratches_and_large_losses"
+        - "hint_preserved_the_native_768_evaluation_canvas"
+        - "hint_mit_license_is_more_suitable_for_later_reuse_than_mat_noncommercial_license"
+        - "hint_adds_mask_aware_transformer_and_long_range_context_evidence_beyond_the_frozen_stack"
+      completion_requirements_met:
+        official_source_and_checkpoint_identity_recorded: true
+        twenty_four_paired_outputs_complete: true
+        actual_adapter_and_fallback_behavior_recorded: true
+        exact_outside_mask_preservation: true
+        finite_required_metrics: true
+        complete_paired_visual_atlas_reviewed_by_user: true
+        human_decision_recorded: "hint"
 
   removed_unsupported_requirements:
     - requirement_id: "focused_experiment_inferential_category_style_interactions"

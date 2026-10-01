@@ -1,5 +1,7 @@
 schema_version: supervisor_package_config.v1
-configuration_version: 1.0.0
+configuration_version: 2.0.0
+dataset_scope: controlled_300
+preparation_status: first_three_batches_ready_not_executed
 
 notebook:
   id: "36"
@@ -9,8 +11,8 @@ notebook:
   purpose: "Assemble and validate the final supervisor, publication, and reproducibility delivery package without recomputing scientific evidence."
 
 runtime:
-  provisional_python: "3.11"
-  accepted_python_minor_versions: ["3.11", "3.12"]
+  provisional_python: "3.12"
+  accepted_python_minor_versions: ["3.12"]
   packages: [pandas, numpy, pyyaml, pillow]
 
 governing_inputs:
@@ -23,6 +25,8 @@ governing_inputs:
   evidence_audit: "docs/evidence_dependency_audit.md"
   evidence_coverage: "config/evaluation/evidence_coverage.yaml"
   proposal: "docs/proposal/Rahul_Thesis_Proposal.docx"
+  n29_discrepancy: "docs/n35_n29_manifest_discrepancy.md"
+  n35_acceptance: "config/publication/n35_live_acceptance.json"
 
 upstream_run_manifests:
   - "outputs/01_dataset_verification/manifests/run_manifest.json"
@@ -37,6 +41,7 @@ upstream_run_manifests:
   - "outputs/10_lama_restoration/manifests/run_manifest.json"
   - "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
   - "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+  - "outputs/12a_hint_restoration/manifests/run_manifest.json"
   - "outputs/13_classical_metrics/manifests/run_manifest.json"
   - "outputs/14_lpips_metrics/manifests/run_manifest.json"
   - "outputs/15_feature_similarity/manifests/run_manifest.json"
@@ -60,29 +65,88 @@ upstream_run_manifests:
   - "outputs/33_final_evaluation_report/manifests/run_manifest.json"
   - "outputs/34_final_streamlit_dashboard_assets/manifests/run_manifest.json"
   - "outputs/35_dashboard_and_deployment_validation/manifests/run_manifest.json"
+  - "outputs/d02_portrait_skin_tone_and_hand_restoration_audit/manifests/run_manifest.json"
+  - "outputs/37_hint_mat_method_selection/manifests/run_manifest.json"
+
+# D01 retains its original manifest notebook_id 37 and separate decision scope.
+upstream_identity:
+  additional_ids: ["12A", "D02", "37"]
+  decision_only_ids: ["37"]
+  supplemental_ids: ["D02"]
+  n35_completion_basis: "closeout.n35_delivery_complete_and_n36_may_start"
+  require_explicit_zero_blocking_summary: true
+  preserve_nested_validation_summaries: true
+
+batch_plan:
+  - "1: contract, environment, inventory and read-only copy-plan preflight"
+  - "2: upstream completion, producer-backed artifact registry and provenance exceptions"
+  - "3: Controlled-300 population, model coverage, headline findings and RQ synthesis"
+  - "4: supervisor summary and meeting documents in isolated staging"
+  - "5: reproducibility appendix, limitations and publication references"
+  - "6: byte-preserving curated package assembly"
+  - "7: artifact index, omission ledger and package manifest"
+  - "8: portability, links, checksum and package-boundary validation"
+  - "9: final completion gate, guarded promotion, registry and inventory handoff"
+
+execution_plan:
+  estimated_active_minutes: [5, 20]
+  first_three_batches_estimated_minutes: [1, 3]
+  basis: "Approximately 35 MiB of selected copy inputs; 38 small manifests; compact N30-N34 synthesis tables. No model loading or full-corpus rehash."
+  longest_stage: "Byte-preserving copy, HTML portability and repeated package checksum verification"
+  exclude_from_estimate: ["manual review", "inventory refresh", "remote publication", "idle notebook time"]
+  first_three_batches_write_canonical_outputs: false
+  historical_output_policy: "Preserve current pilot output tree until verified staging is ready for guarded replacement."
+
+evidence_inputs:
+  bootstrap: "outputs/34_final_streamlit_dashboard_assets/data/bootstrap/bootstrap.json"
+  thesis_tables: "outputs/33_final_evaluation_report/data/thesis_tables.csv"
+  model_cards: "outputs/30_model_cards_compute_and_scalability/data/model_cards.csv"
+  compute: "outputs/30_model_cards_compute_and_scalability/metrics/compute_scalability.csv"
+  model_reports: "outputs/31_model_report_generation/data/report_index.csv"
+  case_reports: "outputs/32_case_and_painting_report_generation/data/case_report_index.csv"
+  painting_reports: "outputs/32_case_and_painting_report_generation/data/painting_report_index.csv"
+  n35_checks: "outputs/35_dashboard_and_deployment_validation/validation/dashboard_checks.csv"
+
+provenance_exceptions:
+  n29:
+    manifest_path: "outputs/29_explainable_ai_and_case_retrieval/manifests/run_manifest.json"
+    recorded_artifact_manifest_sha256: "5df62a9675e9b6ad214475887378d29043312ca792f33ab0c5c24a7e2ac08a60"
+    permitted_observed_artifact_manifest_sha256:
+      - "9ec4a9f68a49f724b4f56ed3cf259971013378c39961be2065ce13f5a0438dfa"
+      - "c239549fe5e2a2d36ceeef746cd9a7249ef6b11c389816e35d77323fd3f4490f"
+    disposition: "Disclose the historical metadata discrepancy; verify all six payload groups independently, never rewrite the upstream record."
+  n35:
+    notebook_path: "notebooks/35_dashboard_and_deployment_validation.ipynb"
+    recorded_source_sha256: "1802be0d85d014a204ad15570f6a754ede279034458054201d046f1016f16b29"
+    accepted_saved_source_sha256: "0013ed457a6869d7d5c10425d94d94d0771c4f842a2014c59a91e029158c7eaa"
+    expected_passed_checks: 519
+    expected_warning_nonpasses: 14
+    expected_dependency_warnings: 4
+    expected_unmeasured_qualifications: 10
+    disposition: "Owner accepted proceeding without rerun; preserve source mismatch and all unmeasured qualifications as limitations, not passes."
 
 expected_population:
-  upstream_notebooks: 35
-  paintings: 50
-  registered_cases: 525
-  restoration_cases: 410
-  approved_candidates: 1785
+  upstream_notebooks: 38
+  paintings: 300
+  registered_cases: 3425
+  restoration_cases: 2620
+  primary_candidates: 10480
+  approved_candidates: 13879
   quality_anchors: 11
-  uncertainty_groups: 165
-  visual_records: 23964
-  indexed_reports: 104
-  sdxl_cases: 10
+  uncertainty_groups: 1025
+  sdxl_scheduled_cases: 35
+  sdxl_completed_candidates: 24
   thesis_figures: 18
   publication_figures: 6
-  model_reports: 4
-  model_cards: 4
+  model_reports: 5
+  model_cards: 5
   case_report_records: 30
-  painting_report_records: 50
+  painting_report_records: 300
 
 research_questions:
-  rq1: "How can a multi-metric evaluation framework be designed to assess AI-generated painting restorations beyond traditional image similarity metrics?"
-  rq2: "How do selected pretrained inpainting models differ in restoration quality across artistic styles and artificial damage types?"
-  rq3: "To what extent can uncertainty estimation from multiple restoration candidates identify speculative or unreliable restored regions?"
+  rq1: "What additional evidence does a region-aware, multi-metric evaluation framework provide beyond traditional image-similarity metrics when evaluating AI-assisted painting restoration?"
+  rq2: "How do selected inpainting methods differ in restoration quality across controlled artificial damage conditions, and how consistent are these differences across the evaluated paintings?"
+  rq3: "How can repeated-candidate disagreement be used to characterize the stability of stochastic painting restorations, and how does it relate to other restoration-quality diagnostics?"
 
 package_policy:
   self_contained_html: true
@@ -93,30 +157,43 @@ package_policy:
   maximum_relative_path_characters: 220
   bundled:
     - "final self-contained HTML report"
-    - "four self-contained model reports"
+    - "five self-contained model reports"
     - "18 thesis figures and six publication figures"
-    - "four model cards"
+    - "five model cards"
     - "eight compact tables and indexes"
-    - "35 upstream run manifests"
+    - "38 upstream run manifests, with D01 decision evidence kept separate"
     - "all declared evaluation YAML snapshots"
     - "two requirements files"
     - "Notebook 35 deployment-readiness report"
     - "Notebook 36 reports, meeting documents, indexes, and provenance snapshot"
   indexed_not_bundled:
     - "30 self-contained case reports"
-    - "50 self-contained painting reports"
+    - "300 self-contained painting reports"
     - "30 selected case grids"
     - "Notebook 34 complete dashboard visual package"
     - "restoration candidates, maps, and raw image collections"
     - "model weights and caches"
 
 copy_plan:
+  provenance:
+    - source: "config/publication/n35_live_acceptance.json"
+      destination: "package/provenance/n35_live_acceptance.json"
+      role: "owner_accepted_deployment_evidence"
+    - source: "docs/n35_n29_manifest_discrepancy.md"
+      destination: "package/provenance/n29_manifest_discrepancy.md"
+      role: "historical_manifest_exception"
+    - source: "docs/evidence_dependency_audit.md"
+      destination: "package/provenance/evidence_dependency_audit.md"
+      role: "dated_evidence_and_acceptance_ledger"
   reports:
     - source: "outputs/33_final_evaluation_report/reports/final_evaluation.html"
       destination: "package/reports/final_evaluation.html"
       role: "final_self_contained_report"
     - source: "outputs/31_model_report_generation/reports/lama.html"
       destination: "package/reports/models/lama.html"
+      role: "model_report"
+    - source: "outputs/31_model_report_generation/reports/hint_places2.html"
+      destination: "package/reports/models/hint_places2.html"
       role: "model_report"
     - source: "outputs/31_model_report_generation/reports/opencv_telea.html"
       destination: "package/reports/models/opencv_telea.html"
@@ -158,6 +235,9 @@ copy_plan:
   model_cards:
     - source: "outputs/30_model_cards_compute_and_scalability/reports/model_cards/lama.md"
       destination: "package/model_cards/lama.md"
+      role: "model_card"
+    - source: "outputs/30_model_cards_compute_and_scalability/reports/model_cards/hint_places2.md"
+      destination: "package/model_cards/hint_places2.md"
       role: "model_card"
     - source: "outputs/30_model_cards_compute_and_scalability/reports/model_cards/opencv_telea.md"
       destination: "package/model_cards/opencv_telea.md"
@@ -220,7 +300,10 @@ scientific_boundaries:
     - "The package republishes validated evidence; it does not recompute metrics or restoration candidates."
     - "The benchmark uses controlled synthetic damage and does not establish real-world conservation generality."
     - "Visual plausibility is not historical correctness, restoration trustworthiness, or conservation approval."
-    - "SDXL is a bounded ten-case feasibility study, not a fourth fully evaluated benchmark model."
+    - "Four methods have full coverage; SDXL has 24 completed candidates from a bounded 35-case schedule and is not a fifth full benchmark method."
+    - "D01 is separate 12-case HINT/MAT decision evidence; D02 is a separate focused portrait audit, not demographic-bias ground truth."
+    - "The N35 live deployment was accepted with 14 warning nonpasses and a disclosed notebook-source mismatch; unmeasured qualifications remain unmeasured."
+    - "The N29 historical artifact-manifest discrepancy is retained and disclosed, not silently repaired."
     - "Repeated-seed variability is an uncertainty proxy, not calibrated confidence."
     - "Computational flags, retrieval results, and recommendations are decision support, not expert ground truth."
     - "No universal combined quality, uncertainty, or trustworthiness score is constructed."

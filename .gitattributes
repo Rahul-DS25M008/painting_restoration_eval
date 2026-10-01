@@ -100,3 +100,15 @@ outputs/35_dashboard_and_deployment_validation/validation/dashboard_checks.csv -
 outputs/35_dashboard_and_deployment_validation/reports/deployment_readiness.md -filter diff -merge -text
 outputs/35_dashboard_and_deployment_validation/manifests/run_manifest.json -filter diff -merge -text
 outputs/35_dashboard_and_deployment_validation/manifests/artifacts.csv -filter diff -merge -text
+
+# N36's complete review delivery is bounded (~35.52 MiB; largest file ~14.59 MiB).
+# Preserve every recorded byte and bypass legacy LFS rules. Most copied content
+# already exists in ordinary Git; no duplicate HF publication is required.
+outputs/36_supervisor_publication_reproducibility_package/** -filter -diff -merge -text
+outputs/36_supervisor_publication_reproducibility_package/**/*.md diff
+outputs/36_supervisor_publication_reproducibility_package/**/*.json diff
+outputs/36_supervisor_publication_reproducibility_package/**/*.csv diff
+outputs/36_supervisor_publication_reproducibility_package/**/*.yaml diff
+outputs/36_supervisor_publication_reproducibility_package/**/*.yml diff
+outputs/36_supervisor_publication_reproducibility_package/**/*.py diff
+outputs/36_supervisor_publication_reproducibility_package/**/*.html diff

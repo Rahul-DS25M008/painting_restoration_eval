@@ -1,0 +1,179 @@
+config_schema_version: "portrait_anatomy_audit_config.v1"
+config_version: "1.0.0"
+
+portrait_anatomy_audit:
+  notebook_id: "D02"
+  notebook_stem: "d02_portrait_skin_tone_and_hand_restoration_audit"
+  origin: "New approved supplemental analysis arising from supervisor feedback"
+  dataset_scope: "controlled_300"
+  annotation_schema_version: "portrait_anatomy_annotations.v1"
+  screening_schema_version: "portrait_anatomy_screening.v1"
+  overlap_schema_version: "portrait_anatomy_overlap.v1"
+  hand_comparison_schema_version: "hand_region_comparison.v1"
+  skin_tone_schema_version: "depicted_skin_tone_audit.v1"
+  report_policy_id: "self_contained_portrait_anatomy_audit.v1"
+
+  inputs:
+    inventory_path: "outputs/inventory/project_file_inventory.csv"
+    inventory_run_path: "outputs/inventory/inventory_run.json"
+    project_paths_path: "outputs/inventory/project_paths.json"
+    implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+    notebook_roadmap_path: "docs/final_notebook_roadmap.md"
+    artworks_path: "outputs/01_dataset_verification/data/artworks.csv"
+    preprocessing_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"
+    canonical_masks_path: "outputs/03_canonical_mask_generation/data/masks.csv"
+    canonical_cases_path: "outputs/04_canonical_damaged_image_generation/data/cases.csv"
+    damage_size_cases_path: "outputs/05_damage_size_sensitivity_dataset_generation/data/cases.csv"
+    robustness_cases_path: "outputs/06_mask_robustness_dataset_generation/data/cases.csv"
+    degradation_cases_path: "outputs/07_synthetic_degradation_dataset_generation/data/cases.csv"
+    opencv_candidates_path: "outputs/09_opencv_telea_restoration/data/restorations.csv"
+    lama_candidates_path: "outputs/10_lama_restoration/data/restorations.csv"
+    stable_diffusion_candidates_path: "outputs/11_stable_diffusion_restoration/data/candidates.csv"
+    sdxl_candidates_path: "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv"
+    hint_candidates_path: "outputs/12a_hint_restoration/data/restorations.csv"
+    classical_metrics_path: "outputs/13_classical_metrics/metrics/classical_metrics.csv"
+    lpips_metrics_path: "outputs/14_lpips_metrics/metrics/lpips_metrics.csv"
+    feature_metrics_path: "outputs/15_feature_similarity/metrics/feature_metrics.csv"
+    spatial_metrics_path: "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv"
+    local_metrics_path: "outputs/17_local_consistency_metrics/metrics/local_consistency.csv"
+    uncertainty_metrics_path: "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_metrics.csv"
+    spatial_explanations_path: "outputs/19_uncertainty_and_spatial_explanation_maps/metrics/spatial_explanations.csv"
+    semantic_metrics_path: "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv"
+    comparison_metrics_path: "outputs/21_multi_model_comparison/metrics/model_comparison.csv"
+    upstream_manifest_paths:
+      "01": "outputs/01_dataset_verification/manifests/run_manifest.json"
+      "02": "outputs/02_image_preprocessing/manifests/run_manifest.json"
+      "03": "outputs/03_canonical_mask_generation/manifests/run_manifest.json"
+      "04": "outputs/04_canonical_damaged_image_generation/manifests/run_manifest.json"
+      "05": "outputs/05_damage_size_sensitivity_dataset_generation/manifests/run_manifest.json"
+      "06": "outputs/06_mask_robustness_dataset_generation/manifests/run_manifest.json"
+      "07": "outputs/07_synthetic_degradation_dataset_generation/manifests/run_manifest.json"
+      "08": "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
+      "09": "outputs/09_opencv_telea_restoration/manifests/run_manifest.json"
+      "10": "outputs/10_lama_restoration/manifests/run_manifest.json"
+      "11": "outputs/11_stable_diffusion_restoration/manifests/run_manifest.json"
+      "12": "outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json"
+      "12A": "outputs/12a_hint_restoration/manifests/run_manifest.json"
+      "13": "outputs/13_classical_metrics/manifests/run_manifest.json"
+      "14": "outputs/14_lpips_metrics/manifests/run_manifest.json"
+      "15": "outputs/15_feature_similarity/manifests/run_manifest.json"
+      "16": "outputs/16_difference_maps_and_spatial_diagnostics/manifests/run_manifest.json"
+      "17": "outputs/17_local_consistency_metrics/manifests/run_manifest.json"
+      "18": "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json"
+      "19": "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json"
+      "20": "outputs/20_semantic_and_structural_consistency/manifests/run_manifest.json"
+      "21": "outputs/21_multi_model_comparison/manifests/run_manifest.json"
+
+  output:
+    root: "outputs/d02_portrait_skin_tone_and_hand_restoration_audit"
+    portrait_screening_path: "data/portrait_screening.csv"
+    annotations_path: "data/anatomical_annotations.csv"
+    overlap_audit_path: "data/anatomical_overlap_audit.csv"
+    eligible_cases_path: "data/eligible_cases.csv"
+    manual_review_path: "data/manual_anatomy_review.csv"
+    hand_comparison_path: "metrics/hand_region_comparison.csv"
+    skin_tone_audit_path: "metrics/skin_tone_audit.csv"
+    screening_atlas_path: "figures/portrait_screening_atlas.png"
+    annotation_qa_path: "figures/anatomical_annotation_qa.png"
+    hand_comparison_figure_path: "figures/hand_vs_control.png"
+    failure_atlas_path: "figures/anatomical_failure_atlas.png"
+    skin_tone_figure_path: "figures/skin_tone_audit.png"
+    report_path: "reports/portrait_skin_tone_and_hand_audit.html"
+    run_manifest_path: "manifests/run_manifest.json"
+    artifacts_path: "manifests/artifacts.csv"
+    validation_path: "validation/checks.csv"
+    work_root: "work"
+
+  population:
+    portrait_category: "portrait_figure"
+    exact_portrait_count: 60
+    exact_canonical_case_count: 300
+    exact_nonzero_canonical_case_count: 240
+    exact_damage_size_case_count: 49
+    exact_robustness_case_count: 105
+    exact_degradation_case_count: 231
+    focused_painting_ids: ["p001", "p009", "p256", "p259", "p267", "p284", "p294"]
+    preliminary_case_shortlist:
+      p001: ["scratch_thin", "loss_large", "mixed_damage"]
+      p006: ["scratch_thin", "loss_small", "mixed_damage"]
+      p007: ["scratch_thin", "mixed_damage"]
+      p008: ["loss_small"]
+      p009: ["scratch_thin", "loss_small", "loss_large", "mixed_damage"]
+      p251: ["scratch_thin", "mixed_damage"]
+      p252: ["scratch_thin", "mixed_damage"]
+      p254: ["scratch_thin", "loss_large"]
+      p255: ["scratch_thin", "loss_large"]
+      p256: ["mixed_damage"]
+      p259: ["scratch_thin", "loss_small", "loss_large", "mixed_damage"]
+      p267: ["scratch_thin", "mixed_damage"]
+      p284: ["scratch_thin", "loss_large"]
+      p294: ["loss_small", "mixed_damage"]
+
+  annotations:
+    canvas_width: 768
+    canvas_height: 768
+    coordinate_convention: "xy_zero_based_canvas_pixels"
+    geometry_encoding: "polygon_json_or_binary_mask_path"
+    allowed_region_types: ["face", "visible_skin", "left_hand", "right_hand", "other_exposed_body_part"]
+    allowed_review_statuses: ["approved", "approved_with_ambiguity", "excluded"]
+    required_columns: ["annotation_id", "painting_id", "region_type", "polygon_json", "binary_mask_path", "visible_pixel_count", "ambiguity_level", "occlusion_status", "annotator", "reviewer", "review_status", "notes"]
+
+  overlap_gate:
+    mask_threshold: 128
+    minimum_damaged_anatomical_pixels: 256
+    minimum_anatomical_fraction_affected: 0.05
+    minimum_independent_hand_paintings: 12
+    minimum_usable_hand_cases: 20
+    minimum_hand_damage_families: 2
+    require_within_case_non_hand_control: true
+    stop_if_failed: true
+
+  models:
+    primary: ["opencv_telea", "lama", "hint_places2", "stable_diffusion_inpainting"]
+    stable_diffusion_primary_role: "primary"
+    stable_diffusion_primary_prompt_variant: "p00_generic"
+    collapse_stable_diffusion_seeds_before_painting_inference: true
+    sdxl_model_id: "sdxl_inpainting"
+    sdxl_role: "descriptive_exact_case_overlap_only"
+
+  analysis:
+    primary_region_types: ["left_hand", "right_hand"]
+    skin_region_types: ["face", "visible_skin", "other_exposed_body_part"]
+    sparse_metrics: ["mae", "rmse", "psnr", "delta_e_ciede2000_mean", "lightness_error_mean", "chroma_error_mean"]
+    contiguous_crop_metrics: ["ssim", "lpips", "clip_cosine_distance", "dinov2_cosine_distance"]
+    independent_unit: "painting_id"
+    primary_estimand: "within_case_hand_minus_matched_non_hand_control"
+    multiple_testing_method: "benjamini_hochberg"
+    interval_method: "painting_cluster_bootstrap"
+    bootstrap_replicates: 2000
+    random_seed: 20260920
+    manual_review_fields: ["digit_count_error", "missing_digits", "duplicated_digits", "fused_digits", "contour_failure", "articulation_failure", "wrist_or_arm_discontinuity", "non_anatomical_texture", "overall_anatomy_failure", "reviewer_confidence", "review_notes"]
+
+  skin_tone:
+    measurement: "median_clean_region_cielab_lstar"
+    secondary_context: ["median_chroma", "local_contrast"]
+    presentation_bins: 3
+    minimum_matched_paintings_for_comparative_claim: 6
+    prohibit_race_or_ethnicity_inference: true
+    prohibit_inherent_model_bias_claim: true
+    darker_rendered_context_examples: ["p001", "p251", "p252", "p254", "p255"]
+
+  report:
+    self_contained_html: true
+    title: "Portrait Anatomy and Depicted Skin-Tone Restoration Audit"
+    subtitle: "A controlled, outcome-gated audit of hand difficulty and rendered-skin-tone disparities"
+    minimum_embedded_visuals: 18
+    maximum_representative_cases: 12
+    include_complete_numeric_tables: true
+    central_boundary: "Computational evidence supports inspection, not identity inference, historical correctness, or conservation approval."
+
+  evidence_policy:
+    annotation_independent_of_damage_masks: true
+    outcome_blind_screening_required: true
+    new_masks_or_restoration_inference_authorized: false
+    no_combined_quality_score: true
+    no_race_or_ethnicity_classification: true
+    no_conservation_approval_claim: true
+    no_historical_correctness_claim: true
+
+  downstream_consumers: ["26_grouped_and_statistical_analysis", "27_failure_taxonomy_and_trustworthiness_flags", "29_explainable_ai_and_case_retrieval", "31_model_report_generation", "32_case_and_painting_report_generation", "33_final_evaluation_report", "34_final_streamlit_dashboard_assets"]

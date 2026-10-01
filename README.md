@@ -8,7 +8,7 @@ The framework combines controlled artificial damage, complementary inpainting me
 
 [Explore the dashboard](https://fhtw-painting-restoration-main.streamlit.app/) · [Full evaluation report — HTML](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/33_final_evaluation_report/reports/final_evaluation.html) · [Case and painting reports — pinned HF package](https://huggingface.co/datasets/RahulMaddineni264/painting-restoration-eval-diagnostics/blob/c33bbd87e65fe96f9a81c1c794fd4a70f7226874/report_packages/v1/controlled_300/32_case_and_painting_report_generation/run_0d4ae193602944dda511bf54199105b1/reports/index.html)
 
-**Status (2026-10-01):** Controlled-300 Notebooks 01–35, Decision Notebook D01, and supplemental Notebook D02 are complete. The eight-room dashboard is deployed from this repository's `main` branch, and its approved layout is frozen. N35 closed with owner acceptance and disclosed limitations: 519 checks passed, 14 warning/nonpass records remain, and there are no blocking failures. Live availability checks passed, including the scheduled dispatch; unmeasured browser/performance qualifications are not claimed as passes. **Notebook 36 consolidation remains pending.** See the [deployment closeout](docs/evidence_dependency_audit.md#n35-controlled-300-closeout--2026-10-01).
+**Status (2026-10-01):** The Controlled-300 pipeline through **Notebook 36**, including production HINT (N12A), is complete. D01 remains separate method-selection evidence and D02 remains a supplemental portrait audit. The eight-room dashboard is deployed from this repository's `main` branch, and its approved layout is frozen. N36 passed its completion gate with **859 passed checks, 16 disclosed warning nonpasses and zero blockers**. Its 134-file delivery contains a 123-file, 35.04 MiB review package. N35's 14 qualifications and the N29/N35 provenance exceptions remain explicit; unmeasured browser/performance checks are not claimed as passes. See the [N36 closeout](docs/evidence_dependency_audit.md#n36-controlled-300-closeout--2026-10-01).
 
 For interactive inspection, open the dashboard. For standalone reports, download the HTML file and open it in a browser; its presentation images are embedded.
 
@@ -141,21 +141,21 @@ python -m pip install -r requirements.txt
 python -m streamlit run streamlit_app.py
 ```
 
-The dashboard does not require a GPU. Full experimental reproduction uses a separate environment and additional model/data prerequisites. The existing [reproducibility appendix](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/36_supervisor_publication_reproducibility_package/reports/reproducibility_appendix.md) is historical pilot material until the Controlled-300 N36 consolidation is completed.
+The dashboard does not require a GPU. Full experimental reproduction uses a separate environment and additional model/data prerequisites. The completed Controlled-300 [reproducibility appendix](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/36_supervisor_publication_reproducibility_package/reports/reproducibility_appendix.md) records source identities, environments, model revisions, scope boundaries and disclosed exceptions; it does not claim a fresh reproduction of all experiments.
 
 Repository navigation:
 
-- `notebooks/` — the Controlled-300 pipeline through Notebook 35, Decision Notebook D01, supplemental Notebook D02, and historical N36 pending consolidation; see the [notebook roadmap](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/docs/final_notebook_roadmap.md).
+- `notebooks/` — the completed Controlled-300 pipeline through Notebook 36, including N12A, with separate D01 and supplemental D02; see the [notebook roadmap](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/docs/final_notebook_roadmap.md).
 - `src/restoration_eval/` — reusable implementation modules.
 - `config/` — versioned experiment and evaluation contracts.
 - `outputs/<notebook_name>/` — notebook-owned evidence, reports, and validation.
 - `outputs/inventory/` — global file inventory and artifact registry.
 
-The existing [review package](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/36_supervisor_publication_reproducibility_package/package/README.md) is the historical pilot package, not the final Controlled-300 delivery. N36 will consolidate current reports, figures, compact tables, model cards and provenance while retaining N35's disclosed limitations. Neither package is a complete executable copy of the repository.
+The completed [review package](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/36_supervisor_publication_reproducibility_package/package/README.md) contains six self-contained scientific HTML reports, 24 figures, five model cards, compact tables and 38 upstream run manifests. Start with the [supervisor summary](outputs/36_supervisor_publication_reproducibility_package/reports/supervisor_summary.md). Distribute the complete N36 output directory, including its sibling manifests, data, reports and validation folders—not `package/` alone. Its 693-row artifact index distinguishes copied, generated and intentionally unbundled evidence. This is a review bundle, **not a runnable repository clone**. The bounded delivery uses ordinary Git without LFS; no duplicate HF release is required. The pilot remains recoverable at `pilot-50-complete`; a Zenodo deposit remains planned, not completed.
 
 ## Interpretation limits
 
-The study uses controlled synthetic damage, not verified physical conservation treatments. Broad visual categories are not independently established art-historical style effects; the focused five-painting experiments support within-study sensitivity analysis.
+The study uses controlled synthetic damage, not verified physical conservation treatments. Broad visual categories are not independently established art-historical style effects; the focused extension experiments support within-study sensitivity analysis.
 
 Uncertainty is not calibrated confidence, computational flags are not expert annotations, and feature similarity is not historical authenticity. SDXL remains a bounded feasibility study. Decision Notebook D01 is a 12-case method-selection study; HINT is now a full deterministic benchmark method, but the D01 comparison does not establish universal superiority over MAT.
 

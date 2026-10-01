@@ -1,44 +1,74 @@
 {
   "manifest_schema_version": "run_manifest.v1",
-  "run_id": "run_306a79f17cfb48edb73fa90d174317f0",
+  "run_id": "run_ad90292d5fb8462eb6241b8123a779d6",
   "notebook_id": "07",
   "notebook_name": "Synthetic Degradation Dataset Generation",
   "origin": "Existing Notebook 07",
   "run_status": "completed",
-  "started_at_utc": "2026-08-19T22:46:25.551938Z",
-  "completed_at_utc": "2026-08-19T23:27:38.596096Z",
-  "git_commit": "f15a4881ac53b04e530f44d444450323e79eade3",
+  "started_at_utc": "2026-09-11T00:22:53.772485Z",
+  "completed_at_utc": "2026-09-11T01:39:21.606684Z",
+  "git_commit": "43c005589d60893bd8d068cb4c8dbe82401dc5e7",
   "git_dirty": true,
   "git_branch": "main",
   "git_error": "",
-  "inventory_run_id": "inventory_20260819T223532Z_13bced7b",
+  "inventory_run_id": "inventory_20260911T000656Z_724d981b",
   "dataset_versions": {
     "dataset_id": "painting_restoration_eval",
-    "dataset_version": "1.0.0",
-    "dataset_scope": "controlled_50",
-    "execution_profile": "controlled_50",
+    "dataset_version": "2.0.0",
+    "dataset_scope": "controlled_300",
+    "execution_profile": "controlled_300",
     "experiment_id": "synthetic_degradation",
-    "content_fingerprint": "9c1717b89d6adc4182736c7c879c2d941ebfbf4999870abc14249bb1869c0d47",
+    "content_fingerprint": "5c8797aebe0c5aced37a274854a8f2584bb7d4fd9babff1fc6ba37f316b2f6b1",
     "fingerprint_version": "dataset_fingerprint.v1",
-    "preprocessing_run_id": "run_5e54b2de32934e1c9303e7250b932404",
-    "preprocessed_images_sha256": "b6f29c2c71450403042b1bb6c522ea6e50942a940428918b89dac466e0b7152f",
-    "clean_images_sha256": "287a4a24bcbc1ff6c2aca29e0900cf592ac67ceed920bd997a8dcf531bad347a",
+    "preprocessing_run_id": "run_ca94012bb1e54bf5bf57c1fdabb01480",
+    "preprocessed_images_sha256": "a2e769ae44facfec955642a0e4ab8825b4468a2e68d70d6c9a968b7b131cc934",
+    "clean_images_sha256": "b370b81e0e3b5121fe6e0617fb157a6df1d2bec05a9bd7aa45eea2ee826690b9",
     "synthetic_degradation_cases_schema": "synthetic_degradation_cases.v1",
     "synthetic_degradation_audit_schema": "synthetic_degradation_generation_audit.v1",
-    "synthetic_degradation_config_schema": "synthetic_degradation_config.v1",
+    "synthetic_degradation_config_schema": "synthetic_degradation_config.v2",
     "effect_mask_collection_schema": "synthetic_effect_mask_collection.v1",
     "degraded_image_collection_schema": "synthetic_degraded_image_collection.v1",
     "generator_name": "synthetic_degradation_generator",
-    "generator_version": "2.0.0",
+    "generator_version": "2.1.0",
     "seed_scheme_version": "synthetic_degradation_seed.v2",
     "global_seed": 20260707,
-    "synthetic_helper_sha256": "2e62b4205d50d8c7d28d024e116a24237a47d7d6f47b5b77fd1681f012b3d8f8",
+    "synthetic_helper_sha256": "f563d2eb11084bbbcc82a78cdb4133e2eea9f71023b7739d1b58b101f1d452f8",
     "cohort_painting_ids": [
       "p001",
+      "p267",
+      "p294",
+      "p259",
+      "p009",
+      "p284",
+      "p256",
       "p018",
+      "p157",
+      "p178",
+      "p198",
+      "p181",
+      "p173",
+      "p199",
       "p026",
+      "p124",
+      "p139",
+      "p123",
+      "p115",
+      "p140",
+      "p107",
       "p039",
-      "p043"
+      "p100",
+      "p089",
+      "p077",
+      "p093",
+      "p052",
+      "p073",
+      "p043",
+      "p208",
+      "p223",
+      "p235",
+      "p246",
+      "p220",
+      "p210"
     ],
     "single_families": [
       "gaussian_blur",
@@ -68,15 +98,15 @@
     "config/experiments/synthetic_degradation.yaml"
   ],
   "configuration_checksums": {
-    "config/experiments/synthetic_degradation.yaml": "eaf2d11f3192e7271e11136f023022181bd4b5cfc4e0091316dc1c21a7255bf2"
+    "config/experiments/synthetic_degradation.yaml": "371349f4346a5b5dc69234bf3692e0c4407ddf3f5197af2d522f82a7eb6327d5"
   },
   "helper_versions": {
     "restoration_eval": "0.1.0",
     "paths": "1.0.0",
-    "schemas": "1.5.0",
+    "schemas": "1.18.0",
     "manifests": "1.0.0",
     "validation": "1.0.0",
-    "synthetic_degradation": "2.0.0"
+    "synthetic_degradation": "2.1.0"
   },
   "python_version": "3.12.6",
   "python_implementation": "CPython",
@@ -99,7 +129,7 @@
       "relative_path": "config/experiments/synthetic_degradation.yaml",
       "required": true,
       "format": "yaml",
-      "schema_version": "synthetic_degradation_config.v1",
+      "schema_version": "synthetic_degradation_config.v2",
       "expected_cardinality": 1,
       "applicability": "synthetic_degradation"
     },
@@ -110,8 +140,8 @@
       "required": true,
       "format": "csv",
       "schema_version": "preprocessed_images.v1",
-      "expected_cardinality": 50,
-      "applicability": "controlled_50"
+      "expected_cardinality": 300,
+      "applicability": "controlled_300"
     },
     {
       "input_key": "clean_images",
@@ -120,8 +150,8 @@
       "required": true,
       "format": "png_collection",
       "schema_version": "clean_image_collection.v1",
-      "expected_cardinality": 50,
-      "applicability": "controlled_50"
+      "expected_cardinality": 300,
+      "applicability": "controlled_300"
     },
     {
       "input_key": "preprocessing_artifacts",
@@ -131,7 +161,7 @@
       "format": "csv",
       "schema_version": "artifact_manifest.v1",
       "expected_cardinality": 5,
-      "applicability": "controlled_50"
+      "applicability": "controlled_300"
     },
     {
       "input_key": "preprocessing_run_manifest",
@@ -141,7 +171,7 @@
       "format": "json",
       "schema_version": "run_manifest.v1",
       "expected_cardinality": 1,
-      "applicability": "controlled_50"
+      "applicability": "controlled_300"
     },
     {
       "input_key": "project_inventory",
@@ -150,7 +180,7 @@
       "required": true,
       "format": "csv",
       "schema_version": "project_file_inventory.v1",
-      "expected_cardinality": 10789,
+      "expected_cardinality": 23673,
       "applicability": "repository"
     },
     {
@@ -180,7 +210,7 @@
       "relative_path": "outputs/07_synthetic_degradation_dataset_generation/data/cases.csv",
       "format": "csv",
       "schema_version": "synthetic_degradation_cases.v1",
-      "expected_cardinality": 165,
+      "expected_cardinality": 1155,
       "artifact_role": "primary_case_manifest"
     },
     {
@@ -188,7 +218,7 @@
       "relative_path": "outputs/07_synthetic_degradation_dataset_generation/images/effect_masks",
       "format": "png_collection",
       "schema_version": "synthetic_effect_mask_collection.v1",
-      "expected_cardinality": 165,
+      "expected_cardinality": 1155,
       "artifact_role": "primary_spatial_support"
     },
     {
@@ -196,7 +226,7 @@
       "relative_path": "outputs/07_synthetic_degradation_dataset_generation/images/degraded",
       "format": "png_collection",
       "schema_version": "synthetic_degraded_image_collection.v1",
-      "expected_cardinality": 165,
+      "expected_cardinality": 1155,
       "artifact_role": "primary_degraded_images"
     },
     {
@@ -204,7 +234,7 @@
       "relative_path": "outputs/07_synthetic_degradation_dataset_generation/metrics/generation_audit.csv",
       "format": "csv",
       "schema_version": "synthetic_degradation_generation_audit.v1",
-      "expected_cardinality": 165,
+      "expected_cardinality": 1155,
       "artifact_role": "generation_audit"
     },
     {
@@ -249,33 +279,33 @@
     }
   ],
   "expected_counts": {
-    "paintings": 5,
+    "paintings": 35,
     "visual_categories": 5,
     "single_families": 10,
     "combined_families": 3,
-    "single_cases": 150,
-    "combined_cases": 15,
-    "total_cases": 165,
-    "effect_mask_files": 165,
-    "degraded_image_files": 165,
-    "generation_audit_rows": 165,
+    "single_cases": 1050,
+    "combined_cases": 105,
+    "total_cases": 1155,
+    "effect_mask_files": 1155,
+    "degraded_image_files": 1155,
+    "generation_audit_rows": 1155,
     "validation_rows": 66,
     "artifact_records": 7,
     "canonical_figures": 1,
     "protocol_reports": 1,
-    "total_output_files": 337
+    "total_output_files": 2317
   },
   "observed_counts": {
-    "paintings": 5,
+    "paintings": 35,
     "visual_categories": 5,
     "single_families": 10,
     "combined_families": 3,
-    "single_cases": 150,
-    "combined_cases": 15,
-    "total_cases": 165,
-    "effect_mask_files": 165,
-    "degraded_image_files": 165,
-    "generation_audit_rows": 165,
+    "single_cases": 1050,
+    "combined_cases": 105,
+    "total_cases": 1155,
+    "effect_mask_files": 1155,
+    "degraded_image_files": 1155,
+    "generation_audit_rows": 1155,
     "validation_rows": 66,
     "artifact_records": 7,
     "canonical_figures": 1,
@@ -284,9 +314,9 @@
     "missing_outputs": 0,
     "stale_outputs": 0,
     "orphan_outputs": 0,
-    "generation_runtime_seconds": 161.62290209997445,
-    "reload_validation_seconds": 17.458583600004204,
-    "total_output_files": 337,
+    "generation_runtime_seconds": 1055.966155000002,
+    "reload_validation_seconds": 114.08995540000615,
+    "total_output_files": 2317,
     "registered_project_artifacts": 7
   },
   "validation_summary": {
@@ -338,17 +368,17 @@
     }
   },
   "known_limitations": [
-    "The controlled subset contains works from only three institutions, with 60 percent sourced from The Metropolitan Museum of Art.",
+    "The controlled collection includes 32 recorded source labels, but the largest source contributes 109 of 300 paintings; source coverage is therefore broader but still concentrated.",
     "Restricting acquisition to public-domain or open-access material favors institutions and works with suitable digitization and rights metadata.",
-    "The five balanced visual categories are a purposive evaluation design and are not a population-representative sample of painting history.",
-    "Optional date, style, and medium metadata is concentrated in portrait and high-texture records and is absent from three categories.",
+    "The five balanced visual categories are a purposive evaluation design and are not independently validated art-historical styles or a population-representative sample of painting history.",
+    "Date or period, style or period, and medium are recorded for 268 of 300 paintings; visual category remains the complete grouping variable.",
     "Historical and geographic representation cannot be quantified reliably from the current fields and requires explicit enrichment before population-level claims.",
     "Dataset verification establishes technical and metadata suitability; it does not certify historical representativeness or conservation suitability.",
     "Images without embedded ICC profiles are processed under the configured sRGB assumption without pixel conversion.",
     "Median-RGB padding is technical model-canvas content and must be excluded from region-sensitive evaluation through the recorded content bounding box.",
     "Preprocessing verifies deterministic technical geometry; it does not certify historical, aesthetic, or conservation validity.",
     "Recorded preprocessing runtimes are specific to the current CPU, storage, Python environment, and system load.",
-    "The synthetic-degradation cohort contains five explicitly pinned paintings, one per controlled visual category; it is not a population-representative art-historical sample.",
+    "The synthetic-degradation cohort contains 35 explicitly pinned paintings, balanced at seven paintings per controlled visual category; it is not a population-representative art-historical sample.",
     "Procedural RGB-domain effects are controlled evaluation proxies and are not exact simulations of conservation damage.",
     "Effect-support masks encode operator influence and are not binary missing-region masks, physical damage segmentations, or expert conservation annotations.",
     "Configured severity levels are ordinal experimental settings rather than calibrated conservation-condition grades.",
@@ -369,7 +399,7 @@
     "project paths registry"
   ],
   "applicable_dataset_scopes": [
-    "controlled_50"
+    "controlled_300"
   ],
   "applicable_experiment_scopes": [
     "synthetic_degradation"
