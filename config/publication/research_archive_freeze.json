@@ -1,0 +1,321 @@
+{
+  "schema_version": "research_archive_freeze.v1",
+  "status": "user_approved_visual_freeze",
+  "scope": "Research Archive final local presentation and saved metadata. Shared app wiring and opt-in museum-tour overlay are separate.",
+  "base_git_revision": "e88feea5e0deb6d5e48cb12378d69ff5d63b2e11",
+  "deployment_note": "Visual completion is not N35 deployment validation. No publication or scientific recomputation performed.",
+  "files": [
+    {
+      "path": "docs/dashboard_design_finalists/research_archive_seal_complete.png",
+      "sha256": "b84d1cf3bd71323da4229db562441f4e90248ef36513c7668e79341dcc677637",
+      "hash_mode": "binary",
+      "size_bytes": 103591
+    },
+    {
+      "path": "docs/dashboard_design_finalists/research_archive_steps_1_to_3.md",
+      "sha256": "a3ccf7c67e37ffa241e545624c9a899106598aabff9ddbb6521f8c7973aa79d4",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 6990
+    },
+    {
+      "path": "src/restoration_eval/research_archive.py",
+      "sha256": "9055c3416154c278359d5fa9155d6dbf51b1729dcaf3f3c7eca54b321ac4aca8",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 4542
+    },
+    {
+      "path": "src/restoration_eval/research_archive_view.py",
+      "sha256": "cdd5328fbcefd56f391eae162561ad1410b01047141f5c2d23c5cfd803977d9c",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 11047
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/catalogue.json.gz",
+      "sha256": "910a7f6c5ea99c335e8e3f174994c1802b9d6c8217869e16ec6175d8c6b74035",
+      "hash_mode": "binary",
+      "size_bytes": 71482
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/D01.json.gz",
+      "sha256": "4d86da0492dcd9ecea57408d80458c996c5cdc39460164f177f6fc7d07a735c3",
+      "hash_mode": "binary",
+      "size_bytes": 5139
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/D02.json.gz",
+      "sha256": "fd1ba85c09ef651947dfe1b6d9fe1cfd38687dacf76acbe9a021632ca676f253",
+      "hash_mode": "binary",
+      "size_bytes": 6285
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/manifest.json",
+      "sha256": "f7028ca7424c608f625815fe6017dd489db8a1989a9809c124ad1eebf1e844df",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 21816
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N01.json.gz",
+      "sha256": "2846b5842288b88d0e5304d1f5a883b765d27d8369fd7daed287e4f76bcfaa03",
+      "hash_mode": "binary",
+      "size_bytes": 3267
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N02.json.gz",
+      "sha256": "7a6b5027010b0f3df5bd02839eb10ccb9a59c38e49bc011f15d13a6e34139578",
+      "hash_mode": "binary",
+      "size_bytes": 3738
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N03.json.gz",
+      "sha256": "17fd215a63993a95293c8d0d97539a521b07aee56e7079b12459e88b0dc4fd0e",
+      "hash_mode": "binary",
+      "size_bytes": 4511
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N04.json.gz",
+      "sha256": "66e718e6358bb1390153760d4bf2350a1d09d61140ee6a57c2c820feca9ef8be",
+      "hash_mode": "binary",
+      "size_bytes": 4663
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N05.json.gz",
+      "sha256": "29f72a7948bd148f64d9e46c7b06de54a11f07bd2d127684f28ba049ef963560",
+      "hash_mode": "binary",
+      "size_bytes": 6421
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N06.json.gz",
+      "sha256": "d245a3bbeea7a09d59decf68fcbb88bcf35ff3b71cb265bb1600952f95c3b26d",
+      "hash_mode": "binary",
+      "size_bytes": 5455
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N07.json.gz",
+      "sha256": "2b947ac0b8519d51c453f745481baff94b18826ceb2c3634738417459807dd2e",
+      "hash_mode": "binary",
+      "size_bytes": 4998
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N08.json.gz",
+      "sha256": "ae617ae28662f2ccadf6de2085869a058ebabb328bc99e040533acfe35da2642",
+      "hash_mode": "binary",
+      "size_bytes": 4871
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N09.json.gz",
+      "sha256": "7875d1b78b00bbd0a49befaf62d965d2edb200ad1f4da26efb2a1a1cc078effe",
+      "hash_mode": "binary",
+      "size_bytes": 3971
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N10.json.gz",
+      "sha256": "411675d8522eea94b910ea4d219df167fb10ed4e71fdd7c7d687b730a80bf3e1",
+      "hash_mode": "binary",
+      "size_bytes": 6247
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N11.json.gz",
+      "sha256": "83f435c84372dab65a021f219e7a2f1d7919052eddecd1b28d114ffc13743275",
+      "hash_mode": "binary",
+      "size_bytes": 7708
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N12.json.gz",
+      "sha256": "bc86dfa5033b5470befc9cc2869d08abc6dadee31cafc2b383f3674bb88618bc",
+      "hash_mode": "binary",
+      "size_bytes": 4996
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N12A.json.gz",
+      "sha256": "2a781524f7b15095adf22efab369aff9a3b3a1bd561a1ca51b69dce80d75fb5c",
+      "hash_mode": "binary",
+      "size_bytes": 4142
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N13.json.gz",
+      "sha256": "77951d5e8c1e20ffb741b5609f38fae4a76c520f6849a3ac5403fe8f122a8341",
+      "hash_mode": "binary",
+      "size_bytes": 4275
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N14.json.gz",
+      "sha256": "29f5bb39221af6db3babcb8a9faca6856b780cb18db1ab24d467ce379a703a13",
+      "hash_mode": "binary",
+      "size_bytes": 4208
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N15.json.gz",
+      "sha256": "d37154552ac7f4193dd8006ed5076d5d51feac4c112dd276cd806c9b76b93b38",
+      "hash_mode": "binary",
+      "size_bytes": 5389
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N16.json.gz",
+      "sha256": "c1aa7489deb49df60011e2772c45341b3ce6f9f515d1ac1070eafa560718bfef",
+      "hash_mode": "binary",
+      "size_bytes": 5844
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N17.json.gz",
+      "sha256": "5a0f2aed99329033c5bf87f187f8adac0a0243f7a6673488722a2ef953cd6a02",
+      "hash_mode": "binary",
+      "size_bytes": 5925
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N18.json.gz",
+      "sha256": "bb47c279489ee6861111a6846777aa89240dd0d3b482004a02eb53f64c77148c",
+      "hash_mode": "binary",
+      "size_bytes": 5153
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N19.json.gz",
+      "sha256": "6324579937062881c7a77e0b650a8b89ccc6c135fb6e0023db4791d2a3814400",
+      "hash_mode": "binary",
+      "size_bytes": 5581
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N20.json.gz",
+      "sha256": "89ab218e70892192a60fd6f11e3e2ba3d3d7364dfdf0827fcd3378f8fa613058",
+      "hash_mode": "binary",
+      "size_bytes": 6254
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N21.json.gz",
+      "sha256": "494fbb7a923f7a7f40029d921721c54c1136ebf174d48c3742ecf8c665a9d30a",
+      "hash_mode": "binary",
+      "size_bytes": 5865
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N22.json.gz",
+      "sha256": "a3f16f34bbd6852f92962da7cab49baab01e9792b8079021f3fa653a201827a6",
+      "hash_mode": "binary",
+      "size_bytes": 6018
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N23.json.gz",
+      "sha256": "818d0f5ce94f1e98564ccf6efa69ab0f6a76d41e5cc5e3d32b7ba8c6929c3796",
+      "hash_mode": "binary",
+      "size_bytes": 4880
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N24.json.gz",
+      "sha256": "b3789857120ef3bf68d3585c8a1e4a4386e803ed3670fd3c5dec006bb93bacf2",
+      "hash_mode": "binary",
+      "size_bytes": 4772
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N25.json.gz",
+      "sha256": "1c3855c47e911ef89e5ec49acc35a63a5e6bfb22d56813db565b7d1e4932a8c7",
+      "hash_mode": "binary",
+      "size_bytes": 5438
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N26.json.gz",
+      "sha256": "539b44cbdad55204d26f95593d539afe7d2f9668f1c12a8be24daf7fd524b80a",
+      "hash_mode": "binary",
+      "size_bytes": 6133
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N27.json.gz",
+      "sha256": "1f009b495d97ee29a415129a25e3d55100d7dacb2c433afd2a736ae1ee73c234",
+      "hash_mode": "binary",
+      "size_bytes": 5511
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N28.json.gz",
+      "sha256": "fd7642f9223a4eaf6d6b496d842abf3aade753b1465d7ffdf08e321e30e24156",
+      "hash_mode": "binary",
+      "size_bytes": 5544
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N29.json.gz",
+      "sha256": "02f9cc724c17ba5d70c06fd86c29c71d7bfe7890dfa7e1b8773418bdbafa1560",
+      "hash_mode": "binary",
+      "size_bytes": 5494
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N30.json.gz",
+      "sha256": "067eb003c2d0018e68a0744b98c6a9c0435c541033601940ae1d888b6c7110b7",
+      "hash_mode": "binary",
+      "size_bytes": 5636
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N31.json.gz",
+      "sha256": "932c372fe5d82f0dcc896b7b1cb5fbea05ec73384a6183d60510c2b9556f69b8",
+      "hash_mode": "binary",
+      "size_bytes": 8018
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N32.json.gz",
+      "sha256": "f79f3e371f0d60473c7afb12d500629398c54e9888bd81628b597c943e3f5c66",
+      "hash_mode": "binary",
+      "size_bytes": 11713
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/N33.json.gz",
+      "sha256": "c41be7bbb6fda871d7e5f94214c92ead8fe48eca338967592dea49edc348605a",
+      "hash_mode": "binary",
+      "size_bytes": 10911
+    },
+    {
+      "path": "streamlit_assets/evidence/research_archive/publications.json.gz",
+      "sha256": "34f575c0ff35644d042acbfe21043638eff4df8547cb5a99a63aa2b89a5a4c3e",
+      "hash_mode": "binary",
+      "size_bytes": 217206
+    },
+    {
+      "path": "streamlit_assets/research_archive.css",
+      "sha256": "5e136d3002eeaf87f0f0c1c0f16eaa5d944b904d1377846d89f50039a24b8891",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 14414
+    },
+    {
+      "path": "streamlit_assets/research_archive_controller.js",
+      "sha256": "156373e66dcaa824c3fc1c0939d0334b926dcd3c0dd341879ee68e77aed39121",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 23786
+    },
+    {
+      "path": "streamlit_assets/rooms/research_archive_lettering.png",
+      "sha256": "a76f6c91d5e74081d2150d4fd8705cfbfc1fdc0fc49eb80e575f9999e03eb794",
+      "hash_mode": "binary",
+      "size_bytes": 2542240
+    },
+    {
+      "path": "streamlit_assets/rooms/research_archive_shell.png",
+      "sha256": "3e17215943f37aef36829ecc5dce602d83e43b73ff877b794d401280a9c2f6d6",
+      "hash_mode": "binary",
+      "size_bytes": 2234946
+    },
+    {
+      "path": "streamlit_assets/rooms/research_archive_shell.prompt.txt",
+      "sha256": "eb157c234b1aceaa8d6b4aa92fe808d36e98aa4dcc0b17a096f5752e1e28817b",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 1313
+    },
+    {
+      "path": "tests/research_archive_controller.test.cjs",
+      "sha256": "2f975f400b8acb69c41896ffe85ec245e38897016a8eb3b6970f84f5d907c068",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 1197
+    },
+    {
+      "path": "tests/test_research_archive.py",
+      "sha256": "01794d8b44767c47e1c1845e3c7cae8b68138ee08c36522e6cb2bab5efd6ce9d",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 8369
+    },
+    {
+      "path": "tools/build_research_archive.py",
+      "sha256": "8690c847dc5081231542456b1019e46977990edaa00c62b3aee3302b2464b3a7",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 12026
+    },
+    {
+      "path": "tools/check_research_archive_freeze.py",
+      "sha256": "5b0e8f96525b30d3b8c3a3e0151aa48cc59ad096c5de4de7b23fa9bb42cea88a",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 2658
+    }
+  ]
+}

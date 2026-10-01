@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "title": "From a convincing image to a defensible conclusion",
+  "subtitle": "Eight rooms. Six minutes. A different way of looking.",
+  "stops": [
+    {"room":"exhibition_foyer","label":"Exhibition Foyer","chapter":"Begin with a question","seconds":25,"question":"Would you trust a restoration just because it looks convincing?","look":"Take in the painting and the question on the wall. This museum separates visual plausibility from evidence of a trustworthy restoration.","takeaway":"A beautiful result is a starting point, not a verdict.","stamp":"LOOK"},
+    {"room":"study_design","label":"Study Design","chapter":"Meet the experiment","seconds":45,"question":"What makes a comparison fair?","look":"Open an experimental path and look at what changes—and what stays controlled. Notice that the portrait review is a linked study, not a replacement for the main experiment.","takeaway":"Understand the test before interpreting its result.","stamp":"FRAME"},
+    {"room":"metric_framework","label":"Metric Framework","chapter":"Change the lens","seconds":55,"question":"Can two measurements disagree and both be useful?","look":"Try two evidence lenses on the same restoration, then change the inspected region. Read what each measurement can and cannot tell you.","takeaway":"Different measurements answer different questions; there is no universal quality score.","stamp":"MEASURE"},
+    {"room":"model_gallery","label":"Model Gallery","chapter":"Compare, don’t crown","seconds":40,"question":"What changes when the restoration method changes?","look":"Open a method’s evidence and compare its capabilities, saved results, and limitations. Keep the experiment and candidate identity in view.","takeaway":"A method’s strengths do not make it the winner of every case.","stamp":"COMPARE"},
+    {"room":"stability_lab","label":"Stability Lab","chapter":"Ask what holds up","seconds":45,"question":"Would the conclusion survive a different seed or condition?","look":"Inspect one saved stability comparison. Notice which repeated runs or perturbations exist, and where uncertainty evidence is unavailable.","takeaway":"Stability evidence is population-specific, not calibrated confidence.","stamp":"TEST"},
+    {"room":"trustworthiness","label":"Trustworthiness","chapter":"Read the warning signs","seconds":45,"question":"What should make a human reviewer pause?","look":"Open a review flag and trace its meaning and evidence. The Focused Portrait Review is an optional side room if you want to look more closely at faces and hands.","takeaway":"Review flags guide attention; they are not conservation approval.","stamp":"QUESTION"},
+    {"room":"case_explorer","label":"Case Explorer","chapter":"Follow one restoration","seconds":65,"question":"Can you connect the image, the numbers, and the caution?","look":"Compare the clean reference, damaged input, mask, and restoration. Switch an evidence layer, then open a saved measurement or report for that exact candidate.","takeaway":"Keep every conclusion attached to the exact painting, case, and candidate.","stamp":"CONNECT"},
+    {"room":"research_archive","label":"Research Archive","chapter":"Leave a trace","seconds":40,"question":"Could someone else find the evidence behind your conclusion?","look":"Open the final report, trace a source, or inspect a checksum record. Then visit a limitation drawer: what the study cannot claim belongs in the archive too.","takeaway":"Traceable evidence—and explicit limits—make a conclusion defensible.","stamp":"TRACE"}
+  ],
+  "detour":{"room":"focused_portrait_review","label":"Focused Portrait Review","question":"What changes when you look closely at faces and hands?","look":"This shared side room examines recorded portrait observations. It is an optional detour, outside the six-minute route.","returnRoom":"trustworthiness"},
+  "invitations":[
+    {"room":"case_explorer","label":"I want to look closely","text":"Begin with one painting. Compare the damage, restoration, and evidence layers.","mark":"01"},
+    {"room":"model_gallery","label":"I’m curious about the methods","text":"Meet the restoration approaches through their saved results and limitations.","mark":"02"},
+    {"room":"trustworthiness","label":"Show me the reasons to pause","text":"Read the warning signs and the questions they leave for human review.","mark":"03"},
+    {"room":"research_archive","label":"Take me to the source","text":"Browse original reports, provenance, and the limits behind the claims.","mark":"04"}
+  ]
+}

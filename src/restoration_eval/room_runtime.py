@@ -16,7 +16,7 @@ PREFIXES = {
     "metric_framework": ("metric_",), "model_gallery": ("gallery_",),
     "stability_lab": ("stability_",), "trustworthiness": ("trust_",),
     "focused_portrait_review": ("portrait_",), "case_explorer": ("ce_",),
-    "research_archive": (),
+    "research_archive": ("ar_",),
 }
 
 

@@ -715,23 +715,6 @@ def route_html(package: DashboardPackage) -> str:
 """
 
 
-def guided_tour_html(package: DashboardPackage) -> str:
-    if scalar_query("tour", "0") != "1":
-        return ""
-    opening = package.bootstrap["opening"]
-    return f"""
-<aside class="tour-card" role="dialog" aria-label="Guided tour, stop one of eight">
-  <div class="tour-step">Guided tour · 1 / 8</div>
-  <strong>{html.escape(str(opening['question']))}</strong>
-  <p>Start with the study design, then follow the same evidence through measurements, methods, stability and review flags.</p>
-  <div class="tour-actions">
-    <a href="?room=study_design&amp;tour=1" target="_self">Next: Study Design →</a>
-    <a class="quiet" href="?room=exhibition_foyer" target="_self">Exit tour</a>
-  </div>
-</aside>
-"""
-
-
 def room_catalogue_record(
     package: DashboardPackage,
     room_id: str,
@@ -2062,11 +2045,11 @@ def render_exhibition_foyer(package: DashboardPackage) -> None:
   <figcaption class="hero-caption">{caption}</figcaption>
   <div class="foyer-slogan">Same<br>paintings.<br>Different<br>methods.<br>Clearer<br>evidence.</div>
   <div class="foyer-actions" aria-label="Foyer actions">
-    <a class="foyer-action" href="?room=exhibition_foyer&amp;tour=1" target="_self">
+    <a class="foyer-action" href="?room=exhibition_foyer&amp;tour=1" target="_self" data-museum-visit="tour" aria-haspopup="dialog">
       <span class="action-medallion" aria-hidden="true">▶</span>
       <span>Take the guided tour<small>about 6 min</small></span><span class="action-arrow" aria-hidden="true">→</span>
     </a>
-    <a class="foyer-action" href="#museum-route" target="_self">
+    <a class="foyer-action" href="#museum-route" target="_self" data-museum-visit="free" aria-haspopup="dialog">
       <span class="action-medallion" aria-hidden="true">⌁</span>
       <span>Explore freely</span><span class="action-arrow" aria-hidden="true">→</span>
     </a>
@@ -2077,7 +2060,6 @@ def render_exhibition_foyer(package: DashboardPackage) -> None:
     {collection_html(package)}
     {route_html(package)}
   </div>
-  {guided_tour_html(package)}
 </main>
 """
     st.markdown(scene, unsafe_allow_html=True)
@@ -2520,6 +2502,17 @@ def main() -> None:
             importlib.reload(case_view)
             case_view._loaded_source_signature = signature
         case_view.render_case_explorer(package, navigation_html("case_explorer"))
+    elif room_id == "research_archive":
+        import importlib
+        from restoration_eval import research_archive as archive_data
+        from restoration_eval import research_archive_view as archive_view
+        signature = tuple(Path(module.__file__).stat().st_mtime_ns
+                          for module in (archive_data, archive_view))
+        if getattr(archive_view, "_loaded_source_signature", None) != signature:
+            importlib.reload(archive_data)
+            importlib.reload(archive_view)
+            archive_view._loaded_source_signature = signature
+        archive_view.render_research_archive(package, navigation_html("research_archive"))
     elif room_id == "focused_portrait_review":
         import importlib
         from restoration_eval import focused_portrait as portrait_data
@@ -2533,6 +2526,9 @@ def main() -> None:
         portrait_view.render_focused_portrait(package, navigation_html("trustworthiness"))
     else:
         render_pending_room(package, room_id)
+
+    from restoration_eval.museum_visit import render_museum_visit
+    render_museum_visit(room_id, scalar_query("tour", "0") == "1")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,76 @@
+{
+  "schema_version": "museum_visit_freeze.v1",
+  "status": "user_approved_visual_freeze",
+  "scope": "Approved six-minute museum passport, free exploration popup, and shared app integration. Room layouts remain unchanged.",
+  "research_archive_freeze": "config/publication/research_archive_freeze.json",
+  "base_git_revision": "e88feea5e0deb6d5e48cb12378d69ff5d63b2e11",
+  "deployment_note": "Presentation approval only; not N35 deployment validation or publication.",
+  "files": [
+    {
+      "path": "docs/dashboard_design_finalists/explore_freely_preview.png",
+      "sha256": "21c5d45d248668c5fe0494f48f7b59efc39e4065bd3e11c4ebcf5bd40a550dd5",
+      "hash_mode": "binary",
+      "size_bytes": 52007
+    },
+    {
+      "path": "docs/dashboard_design_finalists/museum_passport_completed.png",
+      "sha256": "0e390ef72532264db450d197dd5a50a72536fecfb082ba173971168384e80c5f",
+      "hash_mode": "binary",
+      "size_bytes": 49669
+    },
+    {
+      "path": "docs/dashboard_design_finalists/museum_passport_preview.png",
+      "sha256": "482e8926bca0eff2c516d9d3201b48080d74d5bd61fae045340b2f5961899a53",
+      "hash_mode": "binary",
+      "size_bytes": 60263
+    },
+    {
+      "path": "src/restoration_eval/museum_visit.py",
+      "sha256": "1633327079215c8543b0d525408a9900b4fa6823da0485be54e3680b6e36328b",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 806
+    },
+    {
+      "path": "src/restoration_eval/room_runtime.py",
+      "sha256": "16d7110776c7f2d97365eddb397e5fc1056f8bbdfc493c637bb2dbd355f43a28",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 3160
+    },
+    {
+      "path": "streamlit_app.py",
+      "sha256": "00744900effe8fbdf1b8cb16b52079cdfd0db7f6adb56302d483bcd85fe57259",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 159228
+    },
+    {
+      "path": "streamlit_assets/museum_visit/controller.js",
+      "sha256": "955e39cde0e79a8b7f873ffae3f9a1d9db126d982578aa02c8aaef74456b48c5",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 13320
+    },
+    {
+      "path": "streamlit_assets/museum_visit/tour.json",
+      "sha256": "0d2c1f589801a52e8a2d07cc3749258f27c0965cccb051cbaa77f110c1806dd1",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 4538
+    },
+    {
+      "path": "streamlit_assets/museum_visit/visit.css",
+      "sha256": "bf6de1fb52bf9a92db0d37dbc309526f31fad2a879ba27b060a8dd0c82fe7414",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 8356
+    },
+    {
+      "path": "tests/museum_visit.test.cjs",
+      "sha256": "de34cc6f23c42164e82bc871ea17f35e78f6ab6f0ab4966b3e9321f945f5c1ab",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 2641
+    },
+    {
+      "path": "tools/check_museum_visit_freeze.py",
+      "sha256": "ebe81482b988e80dee2c1e29af2b995a91750be7af7e52c38232aa8f3fb5c7d9",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 2295
+    }
+  ]
+}

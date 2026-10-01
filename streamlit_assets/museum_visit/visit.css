@@ -1,0 +1,78 @@
+#museum-visit-root { display: contents; }
+#museum-visit-root *, #museum-visit-root *::before, #museum-visit-root *::after { box-sizing: border-box; }
+#museum-visit-root [hidden] { display: none !important; }
+#museum-visit-root { --mv-ink: #183d38; --mv-gold: #9c7229; --mv-paper: #f7f0df; }
+#museum-visit-root button { cursor: pointer; font: inherit; }
+#museum-visit-root button:focus-visible, #museum-visit-root summary:focus-visible { outline: 3px solid #bd8b35; outline-offset: 4px; }
+#museum-visit-root .mv-dialog, #museum-visit-root .mv-guide { color: var(--mv-ink); background: var(--mv-paper); font: 14px/1.55 Georgia, 'Times New Roman', serif; border: 1px solid #b79961; box-shadow: 0 24px 85px #0008; }
+#museum-visit-root .mv-dialog { position: fixed; inset: 0; width: min(690px, calc(100vw - 32px)); max-height: calc(100dvh - 40px); margin: auto; padding: 0; border-radius: 14px; overflow: auto; }
+#museum-visit-root .mv-dialog::backdrop { background: #051c23bb; backdrop-filter: blur(5px); }
+#museum-visit-root .mv-dialog header { display: flex; gap: 20px; justify-content: space-between; padding: 19px 30px 17px; color: #fff1cf; background: radial-gradient(ellipse at top right, #35635b, #143c37 65%); border-bottom: 3px double #c9a660; }
+#museum-visit-root h2 { margin: 5px 0 8px; font: normal 29px/1.12 Georgia, serif; color: inherit; letter-spacing: -.6px; }
+#museum-visit-root p { margin: 0 0 12px; font-size: inherit; }
+#museum-visit-root .mv-eyebrow { margin: 0; font: 10px/1.5 Arial, sans-serif; letter-spacing: 1.8px; text-transform: uppercase; }
+#museum-visit-root header .mv-eyebrow { color: #d7bd81; }
+#museum-visit-root .mv-subtitle { margin: 10px 0 0; font-size: 14px; color: #ddd7c7; }
+#museum-visit-root .mv-close, #museum-visit-root .mv-minimize { flex: none; background: transparent; border: 1px solid #b7996180; color: inherit; width: 30px; height: 30px; border-radius: 50%; line-height: 1; font: 22px Georgia, serif; }
+#museum-visit-root .mv-body { padding: 16px 30px 18px; }
+#museum-visit-root .mv-ticket { display: grid; grid-template-columns: 1fr 1.4fr 1.4fr; padding: 13px 0; margin-bottom: 17px; border-top: 1px dashed #b79961; border-bottom: 1px dashed #b79961; }
+#museum-visit-root .mv-ticket div { text-align: center; border-right: 1px solid #d6c5a4; }
+#museum-visit-root .mv-ticket div:last-child { border: 0; }
+#museum-visit-root .mv-ticket strong, #museum-visit-root .mv-ticket span { display: block; }
+#museum-visit-root .mv-ticket strong { font-size: 24px; line-height: 1.2; font-weight: normal; }
+#museum-visit-root .mv-ticket span { font: 10px/1.8 Arial, sans-serif; color: #776346; }
+#museum-visit-root .mv-intro { font-size: 15px; }
+#museum-visit-root .mv-route { list-style: none; padding: 0; margin: 10px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 22px; }
+#museum-visit-root .mv-route li { position: relative; display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid #dbcdb1; }
+#museum-visit-root .mv-route-number { flex: none; width: 26px; height: 26px; display: grid; place-items: center; color: #87632d; border: 1px solid #c7b28c; border-radius: 50%; font: 11px Arial, sans-serif; }
+#museum-visit-root .is-visited .mv-route-number { background: #214e45; color: #fff1cf; border-color: #214e45; }
+#museum-visit-root .mv-route strong, #museum-visit-root .mv-route small { display: block; }
+#museum-visit-root .mv-route strong { font-size: 13px; font-weight: normal; }
+#museum-visit-root .mv-route small { font-size: 10px; color: #79684d; }
+#museum-visit-root .mv-route-time { margin-left: auto; white-space: nowrap; color: #79684d; font: 10px Arial, sans-serif; }
+#museum-visit-root .mv-route-jump { position: absolute; inset: 0; color: transparent; background: transparent; border: 0; font-size: 0; }
+#museum-visit-root .mv-route-jump:hover { background: #9c722910; }
+#museum-visit-root .mv-note { color: #73644e; font-size: 12px; }
+#museum-visit-root .mv-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+#museum-visit-root .mv-button { border: 1px solid #b9a987; background: #fff9ee; color: #214e45; border-radius: 5px; padding: 10px 14px; font: 12px/1.4 Arial, sans-serif; }
+#museum-visit-root .mv-primary { background: #214e45; color: #fff5da; border-color: #214e45; }
+#museum-visit-root .mv-button:hover { box-shadow: inset 0 0 0 2px #b7996170; }
+#museum-visit-root .mv-quiet { border-color: transparent; background: transparent; }
+#museum-visit-root .mv-footnote { margin: 15px 0 0; color: #8b7d67; font: 10px/1.5 Arial, sans-serif; }
+#museum-visit-root .mv-invitations { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+#museum-visit-root .mv-invitation { text-align: left; border: 1px solid #c9b68e; border-radius: 7px; padding: 16px; background: #fff9ed; color: #183d38; }
+#museum-visit-root .mv-invitation:hover { background: #e9eadb; border-color: #214e45; }
+#museum-visit-root .mv-invitation strong { display: block; margin: 5px 0 9px; font: normal 20px/1.15 Georgia, serif; }
+#museum-visit-root .mv-invitation p { font-size: 12px; color: #73644e; }
+#museum-visit-root .mv-destination { font: 11px/1.5 Arial, sans-serif; color: #42665a; }
+#museum-visit-root .mv-guide { position: fixed; z-index: 99990; right: 20px; bottom: 20px; width: 330px; max-width: calc(100vw - 24px); max-height: calc(100dvh - 30px); overflow-y: auto; padding: 20px; border-radius: 10px; border-top: 4px solid #9c7229; }
+#museum-visit-root .mv-guide-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+#museum-visit-root .mv-guide h2 { font-size: 23px; margin: 12px 0; }
+#museum-visit-root .mv-question { font-size: 17px; font-style: italic; }
+#museum-visit-root .mv-guide-meta { color: #89662e; font: 10px/1.6 Arial, sans-serif; text-transform: uppercase; letter-spacing: .7px; }
+#museum-visit-root .mv-look { font-size: 13px; }
+#museum-visit-root details { border-top: 1px solid #d8c9a9; padding-top: 10px; font-size: 12px; }
+#museum-visit-root summary { cursor: pointer; color: #755d32; }
+#museum-visit-root details p { margin-top: 9px; }
+#museum-visit-root .mv-progress { display: flex; gap: 6px; margin: 17px 0; }
+#museum-visit-root .mv-progress span { width: 25px; height: 25px; display: grid; place-items: center; border: 1px solid #bca980; border-radius: 50%; font: 10px Arial, sans-serif; }
+#museum-visit-root .mv-progress .is-visited { color: #fff4d4; background: #214e45; border-color: #214e45; }
+#museum-visit-root .mv-progress .is-current { outline: 2px solid #b38b43; outline-offset: 2px; }
+#museum-visit-root .mv-guide-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+#museum-visit-root .mv-guide-actions .mv-primary { flex: 1 0 100%; }
+#museum-visit-root .mv-guide-footer { display: flex; justify-content: space-between; gap: 10px; margin-top: 15px; }
+#museum-visit-root .mv-text-button { padding: 0; border: 0; color: #6b6656; background: transparent; text-decoration: underline; text-underline-offset: 3px; font: 10px/1.5 Arial, sans-serif; }
+#museum-visit-root .mv-dock { position: fixed; z-index: 99990; bottom: 18px; right: 18px; padding: 13px 18px; border: 1px solid #c9a660; border-radius: 30px; background: #183d38; color: #fff1cf; box-shadow: 0 8px 24px #0005; font: 12px/1.4 Arial, sans-serif; }
+#museum-visit-root .mv-stamps { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin: 8px 0 22px; }
+#museum-visit-root .mv-stamps span { text-align: center; color: #54715c; border: 2px double #8b9c82; padding: 12px 3px; font: 10px/1.5 Arial, sans-serif; letter-spacing: 1px; transform: rotate(-3deg); }
+#museum-visit-root .mv-stamps span:nth-child(even) { transform: rotate(3deg); color: #8f7341; border-color: #bcaa80; }
+#museum-visit-root blockquote { margin: 20px 0; padding: 10px 20px; border-left: 3px solid #b79961; font: italic 24px/1.35 Georgia, serif; color: #214e45; }
+@media (max-width: 560px) {
+  #museum-visit-root .mv-dialog header { padding: 22px 20px; }
+  #museum-visit-root .mv-body { padding: 18px 20px; }
+  #museum-visit-root h2 { font-size: 25px; }
+  #museum-visit-root .mv-route { grid-template-columns: 1fr; }
+  #museum-visit-root .mv-invitations { grid-template-columns: 1fr; }
+  #museum-visit-root .mv-guide { right: 12px; bottom: 12px; }
+  #museum-visit-root .mv-stamps { grid-template-columns: repeat(2, 1fr); }
+}
