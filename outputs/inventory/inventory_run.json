@@ -1,15 +1,15 @@
 {
   "run_schema_version": "inventory_run.v1",
   "inventory_schema_version": "project_file_inventory.v1",
-  "inventory_run_id": "inventory_20261001T222639Z_a0214d9a",
+  "inventory_run_id": "inventory_20261001T225900Z_419ef18c",
   "status": "completed",
-  "generated_at_utc": "2026-10-01T22:26:39.970083Z",
-  "completed_at_utc": "2026-10-01T22:27:33.317103Z",
-  "duration_seconds": 53.593,
+  "generated_at_utc": "2026-10-01T22:59:00.112276Z",
+  "completed_at_utc": "2026-10-01T23:00:00.467561Z",
+  "duration_seconds": 60.557,
   "repository_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
   "inventory_relative_path": "outputs/inventory/project_file_inventory.csv",
-  "inventory_sha256": "dd952ebe1e23779ed8ad52f3838cefb812667e5bbb8be7d608707831e890c556",
-  "inventory_size_bytes": 79966242,
+  "inventory_sha256": "689cf2129a1bea4bf059b542a1e8ab84e4a75b2ca7231511eefc1279f0e72982",
+  "inventory_size_bytes": 79970413,
   "hash_configuration": {
     "mode": "partial",
     "algorithm": "sha256_first_n_bytes",
@@ -18,9 +18,9 @@
   "incremental_reuse": {
     "enabled": true,
     "cache_status": "verified",
-    "source_run_id": "inventory_20261001T214107Z_55b3158d",
-    "reused_file_count": 155685,
-    "inspected_file_count": 8
+    "source_run_id": "inventory_20261001T222639Z_a0214d9a",
+    "reused_file_count": 155690,
+    "inspected_file_count": 13
   },
   "scan_configuration": {
     "skipped_directory_names": [
@@ -48,8 +48,8 @@
     "platform": "Windows-11-10.0.26200-SP0"
   },
   "summary": {
-    "file_count": 155693,
-    "total_size_bytes": 43380570827,
+    "file_count": 155703,
+    "total_size_bytes": 43391616714,
     "read_error_file_count": 0,
     "read_error_count": 0,
     "counts_by_format": {
@@ -69,9 +69,9 @@
       "npz": 304,
       "parquet": 16,
       "pdf": 3,
-      "png": 151582,
+      "png": 151591,
       "pptx": 1,
-      "python": 169,
+      "python": 170,
       "svg": 3,
       "text": 14,
       "webp": 27,
@@ -82,7 +82,7 @@
       "damaged_image": 22299,
       "figure_image": 172,
       "html": 354,
-      "image": 24367,
+      "image": 24376,
       "json": 420,
       "manifest_table": 50,
       "markdown": 83,
@@ -90,7 +90,7 @@
       "metric_table": 42,
       "notebook": 39,
       "other": 2444,
-      "python": 169,
+      "python": 170,
       "restored_image": 81282,
       "summary_table": 2,
       "table": 59,
@@ -114,9 +114,9 @@
       ".npz": 304,
       ".parquet": 16,
       ".pdf": 3,
-      ".png": 151582,
+      ".png": 151591,
       ".pptx": 1,
-      ".py": 169,
+      ".py": 170,
       ".svg": 3,
       ".txt": 14,
       ".webp": 27,

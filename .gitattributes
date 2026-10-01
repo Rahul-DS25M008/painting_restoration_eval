@@ -112,3 +112,6 @@ outputs/36_supervisor_publication_reproducibility_package/**/*.yaml diff
 outputs/36_supervisor_publication_reproducibility_package/**/*.yml diff
 outputs/36_supervisor_publication_reproducibility_package/**/*.py diff
 outputs/36_supervisor_publication_reproducibility_package/**/*.html diff
+
+# Supervisor PDFs are binary documents in ordinary Git; preserve their bytes.
+docs/supervisor/*.pdf -filter -diff -merge -text
