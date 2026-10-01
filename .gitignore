@@ -40,11 +40,13 @@ docs/proposal/Rahul_Thesis_Proposal_Old.docx
 /docs/thesis/
 
 # Supervisor-meeting materials. Keep editable sources and assets local,
-# but version the two approved, self-contained PDF guides.
+# but version the historical and current self-contained PDF guides.
 docs/supervisor/*
 docs/supervisor/Next_Steps.docx
 !docs/supervisor/Supervisor_Dashboard_Walkthrough_Guide.pdf
 !docs/supervisor/Next_Steps.pdf
+!docs/supervisor/Supervisor_Dashboard_Walkthrough_Controlled_300.pdf
+!docs/supervisor/Study_Completion_and_Review_Brief.pdf
 .codex_tmp/
 
 # Controlled-300 storage boundary (Notebook 12 onward).

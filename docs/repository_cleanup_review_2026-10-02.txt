@@ -1,0 +1,594 @@
+REPOSITORY CLEANUP REVIEW - 2026-10-02
+Baseline: 453b4bfa1acb453a369b99cd09b74dd539a53064
+Status: REVIEW ONLY. No files deleted, moved, staged, committed or pushed.
+
+Reader-facing updates prepared after the baseline sweep:
+- README.md redesigned around finalized RQs, results, scope and interpretation limits.
+- docs/supervisor/Supervisor_Dashboard_Walkthrough_Controlled_300.pdf (7 pages).
+- docs/supervisor/Study_Completion_and_Review_Brief.pdf (2 pages).
+- .gitignore permits those two new PDFs; old guides remain pending approval.
+- The editable PDF builder remains local/ignored under docs/supervisor/build_final_guides.py.
+- New disposable PDF render checks are under .codex_tmp/cleanup_review_20261002_pdfqa/.
+Inventory refresh and final cleanup commit instructions follow approval/execution of deletions.
+
+SCOPE
+Reviewed all 24,513 tracked paths; the completed local inventory covers 155,738 non-cache files.
+Scanned source/configuration/test/document references and notebook source cells (not saved outputs).
+Separately enumerated ignored .codex_tmp entries and their recursive file counts/sizes.
+Scientific outputs were classified by ownership and preservation contract, not by filename age or byte duplication.
+Not a fresh download/verification of every remote HF object. Cache/staging deletions remain conditional.
+Private docs/thesis and supervisor assets were identified as protected; not disposable simply because ignored.
+
+RECOMMENDATION
+Delete only the approved exact candidate lists, after removing any stale live-document links.
+Keep all completed notebooks, canonical data/outputs, src, streamlit_assets, configuration, required tests and operational tools.
+Keep .git, the active .venv, model environments, credentials/configuration, proposal records and private thesis drafts.
+Deletion from a later Git commit removes files from the current GitHub tree, not history, HF or old LFS storage.
+
+1. TRACKED REMOVAL CANDIDATES (16; OPTIONAL DESIGN HISTORY, NOT SCIENTIFIC EVIDENCE)
+These have no direct active code/config/notebook-source reference detected. Their documentary links are listed.
+Keep if visual-development history is valuable. Remove together where candidate documents link to each other.
+docs/dashboard_design_finalists/alternatives/01_evidence_newsroom.png
+  2008581 bytes; links: docs/dashboard_design_finalists/README.md
+docs/dashboard_design_finalists/alternatives/02_evidence_mobile.png
+  2118277 bytes; links: docs/dashboard_design_finalists/README.md
+docs/dashboard_design_finalists/alternatives/03_geometric_evidence_composition.png
+  1866434 bytes; links: docs/dashboard_design_finalists/README.md
+docs/dashboard_design_finalists/alternatives/04_quiet_kintsugi_trace.png
+  2480360 bytes; links: docs/dashboard_design_finalists/README.md
+docs/dashboard_design_finalists/alternatives/05_question_journey_decision_trace.png
+  2456366 bytes; links: docs/dashboard_design_finalists/README.md
+docs/dashboard_design_finalists/alternatives/06_exhibition_gallery.png
+  1996698 bytes; links: docs/dashboard_design_finalists/README.md
+docs/dashboard_design_finalists/alternatives/07_conservation_light_table.png
+  2613771 bytes; links: docs/dashboard_design_finalists/README.md
+docs/dashboard_design_finalists/alternatives/08_pipeline_alternate_futures_replay.png
+  1990335 bytes; links: docs/dashboard_design_finalists/README.md
+docs/dashboard_design_finalists/alternatives/09_living_pigment_museum_selected_direction.png
+  2646489 bytes; links: docs/dashboard_design_finalists/README.md
+docs/dashboard_design_finalists/alternatives/10_live_evidence_content_layout_mock.png
+  2634863 bytes; links: docs/dashboard_design_finalists/README.md
+docs/dashboard_design_finalists/case_explorer_runtime_verified.png
+  102579 bytes; links: none detected
+docs/dashboard_design_finalists/case_explorer_steps_1_to_3.md
+  10273 bytes; links: none detected
+docs/dashboard_design_finalists/metric_framework_inspection_guide.md
+  11687 bytes; links: docs/dashboard_design_finalists/metric_framework_verification.md
+docs/dashboard_design_finalists/metric_framework_iteration_log.md
+  17187 bytes; links: docs/dashboard_design_finalists/metric_framework_inspection_guide.md
+docs/dashboard_design_finalists/metric_framework_verification.md
+  6741 bytes; links: docs/dashboard_design_finalists/metric_framework_iteration_log.md
+docs/report_structure_mock_lama.md
+  12139 bytes; links: docs/refactoring_implementation_guidelines.md
+
+2. LOCAL-ONLY UNTRACKED DESIGN PREVIEWS (31)
+No GitHub deletion results: these files were never tracked. They are not automatically backed up by Git.
+docs/dashboard_design_finalists/case_explorer_cosmetic_pass_02.png
+docs/dashboard_design_finalists/case_explorer_cosmetic_pass_03.png
+docs/dashboard_design_finalists/case_explorer_left_alignment_preview.png
+docs/dashboard_design_finalists/case_explorer_neighbour_popup_preview.png
+docs/dashboard_design_finalists/case_explorer_neutral_layer_preview.png
+docs/dashboard_design_finalists/case_explorer_single_picker_preview.png
+docs/dashboard_design_finalists/case_explorer_step3_preview.png
+docs/dashboard_design_finalists/case_explorer_visual_iteration_preview.png
+docs/dashboard_design_finalists/research_archive_cosmetic_final.png
+docs/dashboard_design_finalists/research_archive_record_dialog_final.png
+docs/dashboard_design_finalists/research_archive_step3_preview.png
+docs/dashboard_design_finalists/research_archive_wall_blend.png
+docs/dashboard_design_finalists/stability_lab_cosmetic_pass_01.png
+docs/dashboard_design_finalists/stability_lab_cosmetic_pass_01_2pct.png
+docs/dashboard_design_finalists/stability_lab_cosmetic_pass_02.png
+docs/dashboard_design_finalists/stability_lab_cosmetic_pass_03.png
+docs/dashboard_design_finalists/stability_lab_cosmetic_pass_04.png
+docs/dashboard_design_finalists/stability_lab_cosmetic_pass_05.png
+docs/dashboard_design_finalists/stability_lab_initial_preview.png
+docs/dashboard_design_finalists/stability_lab_seed_preview.png
+docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_02.png
+docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_03.png
+docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_04.png
+docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_05.png
+docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_06.png
+docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_07.png
+docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_08.png
+docs/dashboard_design_finalists/trustworthiness_initial_preview.png
+docs/dashboard_design_finalists/trustworthiness_left_pass_01.png
+docs/dashboard_design_finalists/trustworthiness_left_pass_01_p256.png
+docs/dashboard_design_finalists/trustworthiness_threshold_preview.png
+
+3. SUPERVISOR MATERIALS
+Current old walkthrough describes 50 paintings and old room names/URL; Next_Steps contains pre-run 300-painting projections.
+Replace the reader-facing PDFs with completed-study versions before removing the old tracked PDFs.
+Retain or archive ignored DOCX originals unless the owner explicitly approves their deletion.
+docs/supervisor/Next_Steps.docx | local/ignored | 456126 bytes
+docs/supervisor/Next_Steps.pdf | tracked | 786228 bytes
+docs/supervisor/Supervisor_Dashboard_Walkthrough_Guide.docx | local/ignored | 4695656 bytes
+docs/supervisor/Supervisor_Dashboard_Walkthrough_Guide.pdf | tracked | 5528401 bytes
+
+4. IGNORED SCRATCH - EXACT TOP-LEVEL TARGETS
+LOCAL_DELETE_CANDIDATE: generated replacement-cell HTML/text, smoke receipts, screenshots, logs and disposable test outputs.
+Delete only after relevant local processes are stopped; no GitHub change. n35_persistence contains prior run backups.
+VERIFY_PUBLICATION_STAGING_BEFORE_REMOVAL: staging packages can be rebuilt, but publication tooling reads these paths.
+Confirm retained originals plus pinned remote release integrity before reclaiming them. No blanket .codex_tmp deletion.
+KEEP_PRIVATE_WORK_OR_RECOVERY: thesis drafts or Git-repair recovery copies; explicit owner decision/backup needed.
+LOCAL_DELETE_CANDIDATE | .codex_tmp/__pycache__ | 3 files | 133063 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/availability-env | 1275 files | 124863604 bytes
+VERIFY_PUBLICATION_STAGING_BEFORE_REMOVAL | .codex_tmp/bundled_assets | 2783 files | 23867337235 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/check_n35_later_contracts.py | 1 files | 4800 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/check_n35_later_smoke.py | 1 files | 3842 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/check_n35_metric_coverage.py | 1 files | 1491 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/check_n35_room_smoke.py | 1 files | 2578 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/explain_n35_missing_metrics.py | 1 files | 3237 bytes
+VERIFY_PUBLICATION_STAGING_BEFORE_REMOVAL | .codex_tmp/finished_tabs_01_03 | 904 files | 1338131489 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/finished_tabs_scientific_audit.json | 1 files | 34017 bytes
+KEEP_PRIVATE_WORK_OR_RECOVERY | .codex_tmp/git-object-repair-20260923 | 3 files | 29821029 bytes
+KEEP_PRIVATE_WORK_OR_RECOVERY | .codex_tmp/git_object_recovery | 1 files | 2888994 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_arrakis_tooltip_20260929.png | 1 files | 87375 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_browser_validation_20260929.json | 1 files | 60969 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_cosmetic_batch1_20260929.png | 1 files | 101391 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_cosmetic_batch2_20260929.png | 1 files | 84639 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_cosmetic_batch3_20260929.png | 1 files | 86111 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_cosmetic_batch3_checks.json | 1 files | 14334 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_cosmetic_batch4_20260929.png | 1 files | 86534 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_cosmetic_batch4_checks.json | 1 files | 2575 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_cosmetic_batch5_20260929.png | 1 files | 86629 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_cosmetic_batch6_20260929.png | 1 files | 86281 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_dune_cover_20260929.png | 1 files | 86932 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_dune_cover_tilt_20260929.png | 1 files | 86925 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_final_sample_audit.json | 1 files | 563 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_final_server.stderr.log | 1 files | 28945 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_final_server.stdout.log | 1 files | 182 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_final_sweep_20260929.png | 1 files | 87465 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_first150_audit.json | 1 files | 17067 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_framework_verified_20260929.png | 1 files | 102989 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_grayscale_regions_20260929.png | 1 files | 87373 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_last150_audit.json | 1 files | 17067 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_p018_audit.json | 1 files | 224 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_plaque_final_angle_20260929.png | 1 files | 86208 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_server.stderr.log | 1 files | 59 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/metric_server.stdout.log | 1 files | 182 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/model-gallery-server.stderr.log | 1 files | 1460 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/model-gallery-server.stdout.log | 1 files | 0 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/model_gallery_arrakis_3px.png | 1 files | 94467 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/model_gallery_arrakis_final.png | 1 files | 94439 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/model_gallery_cosmetic_pass01.png | 1 files | 94195 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/model_gallery_cosmetic_pass02.png | 1 files | 94214 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/model_gallery_cosmetic_pass03.png | 1 files | 94179 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/model_gallery_dossier_pass02.png | 1 files | 51344 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/model_gallery_engravings_final.png | 1 files | 94404 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/model_gallery_final_nudges.png | 1 files | 94424 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/model_gallery_step03.png | 1 files | 94932 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_batch6_final_replacement_cells.py | 1 files | 44509 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_batch7_replacement_cells.py | 1 files | 68047 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_batch7_test_package | 53 files | 1836712 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_batch8_replacement_cells.py | 1 files | 57841 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_batch8_test_output | 376 files | 7589422 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_00.txt | 1 files | 2634 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_01.txt | 1 files | 955 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_02.txt | 1 files | 3405 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_03.txt | 1 files | 6587 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_04.txt | 1 files | 7539 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_05.txt | 1 files | 3794 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_06.txt | 1 files | 5174 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_08.txt | 1 files | 4805 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_10.txt | 1 files | 7311 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_11.txt | 1 files | 11909 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_12.txt | 1 files | 11828 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_14.txt | 1 files | 7019 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_15.txt | 1 files | 16351 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_16.txt | 1 files | 19609 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_17.txt | 1 files | 11048 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_19.txt | 1 files | 3814 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_21.txt | 1 files | 9129 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_22.txt | 1 files | 4007 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_23.txt | 1 files | 7355 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_25.txt | 1 files | 6474 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_26.txt | 1 files | 6902 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_27.txt | 1 files | 5014 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_28.txt | 1 files | 6455 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_30.txt | 1 files | 12798 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_34.txt | 1 files | 2636 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_35.txt | 1 files | 10319 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_37.txt | 1 files | 7790 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_38.txt | 1 files | 14781 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_39.txt | 1 files | 11075 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_40.txt | 1 files | 11052 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_41.txt | 1 files | 14614 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_42.txt | 1 files | 1800 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_cell_43.txt | 1 files | 8144 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n34_portability_fix.py | 1 files | 1491 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n35_batch10 | 5 files | 89010 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n35_batch10_audit | 41 files | 143241136 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n35_batch11 | 1 files | 15717 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n35_batches_1_2 | 3 files | 380854 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n35_batches_3_5 | 3 files | 285638 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n35_batches_6_9 | 3 files | 152336 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/n35_persistence | 4 files | 468234 bytes
+VERIFY_PUBLICATION_STAGING_BEFORE_REMOVAL | .codex_tmp/stability_lab_release_check | 6 files | 18862247 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/study_books_crop.png | 1 files | 136813 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/study_books_reference_crop.png | 1 files | 151759 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/study_books_reference_crop_2x.png | 1 files | 197889 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/test_n34_batch7_replacement.py | 1 files | 7428 bytes
+LOCAL_DELETE_CANDIDATE | .codex_tmp/test_n34_batch8_replacement.py | 1 files | 3135 bytes
+KEEP_PRIVATE_WORK_OR_RECOVERY | .codex_tmp/thesis_exercise | 109 files | 34126451 bytes
+
+Scratch totals by classification (bytes):
+LOCAL_DELETE_CANDIDATE: 282145807
+VERIFY_PUBLICATION_STAGING_BEFORE_REMOVAL: 25224330971
+KEEP_PRIVATE_WORK_OR_RECOVERY: 66836474
+
+5. N35 HELPERS AND TESTS - RETAIN IN THIS CLEANUP
+Notebook 35 imports n35_room_validation, n35_batch10, n35_deployment_checks and n35_batch11.
+n35_batch10 imports n35_backend_delta and n35_final_audit; test_dashboard_application also uses n35_backend_delta.
+Notebook 35 explicitly executes test_n35_batch10.py and test_n35_batch11.py; those import their cell builders.
+Builders depend on prepare_n35_batch2_cells.render. Batch 6-9 tests also import the Batch 3-5 builder.
+n35_batch10.fingerprint includes all n35*.py and prepare_n35*.py files; the frozen run retains their identities.
+Removing the generators and their tests is possible only as a separately approved reproducibility/validation refactor,
+not as a zero-impact deletion. Keep the original notebook and completed outputs frozen.
+prepare_n35_deployment.py remains the deployment-record rebuild utility, not the deployed app entry point.
+All other tests protect scientific contracts or the implemented dashboard; completion does not make regression tests obsolete.
+
+TOOLS REVIEWED (retain; future refactor is separate)
+tools/audit_metric_inspection.py
+tools/audit_model_gallery_readiness.py
+tools/audit_stability_lab_publication.py
+tools/audit_stability_lab_readiness.py
+tools/build_case_explorer_choices.py
+tools/build_case_explorer_index.py
+tools/build_metric_inspection.py
+tools/build_project_inventory.py
+tools/build_research_archive.py
+tools/bundled_artifact_publication.py
+tools/bundled_assets_smoke_app.py
+tools/check_focused_portrait_freeze.py
+tools/check_model_gallery_freeze.py
+tools/check_museum_visit_freeze.py
+tools/check_research_archive_freeze.py
+tools/check_stability_lab_freeze.py
+tools/check_streamlit_availability.py
+tools/check_trustworthiness_freeze.py
+tools/external_artifact_publication.py
+tools/n35_backend_delta.py
+tools/n35_batch10.py
+tools/n35_batch11.py
+tools/n35_deployment_checks.py
+tools/n35_final_audit.py
+tools/n35_room_validation.py
+tools/prepare_n35_batch10_cells.py
+tools/prepare_n35_batch11_cells.py
+tools/prepare_n35_batch2_cells.py
+tools/prepare_n35_batches3_5_cells.py
+tools/prepare_n35_batches6_9_cells.py
+tools/prepare_n35_deployment.py
+tools/publish_finished_tab_assets.py
+tools/streamlit_scheduler/.gitignore
+tools/streamlit_scheduler/README.md
+tools/streamlit_scheduler/worker.mjs
+tools/streamlit_scheduler/worker.test.mjs
+
+TESTS REVIEWED (retain)
+tests/__init__.py
+tests/case_explorer_controller.test.cjs
+tests/museum_visit.test.cjs
+tests/research_archive_controller.test.cjs
+tests/room_runtime.test.cjs
+tests/test_bundled_assets.py
+tests/test_case_explorer.py
+tests/test_case_painting_reports.py
+tests/test_damage.py
+tests/test_damage_sensitivity.py
+tests/test_damage_size_analysis.py
+tests/test_damage_size_diffusion_uncertainty.py
+tests/test_dashboard_application.py
+tests/test_dashboard_assets.py
+tests/test_dashboard_metrics.py
+tests/test_dataset_verification.py
+tests/test_diffusion_uncertainty.py
+tests/test_error_maps.py
+tests/test_evaluation_inputs.py
+tests/test_evidence_transport.py
+tests/test_experiment_contracts.py
+tests/test_explainable_case_retrieval.py
+tests/test_failure_taxonomy.py
+tests/test_final_evaluation_report.py
+tests/test_finished_tab_publication.py
+tests/test_focused_portrait.py
+tests/test_focused_portrait_chart.cjs
+tests/test_foundation.py
+tests/test_grouped_statistical_analysis.py
+tests/test_hint_mat_selection.py
+tests/test_local_consistency.py
+tests/test_mask_robustness.py
+tests/test_mask_robustness_analysis.py
+tests/test_masks.py
+tests/test_metric_inspection.py
+tests/test_metric_region_ablation.py
+tests/test_metrics_classical.py
+tests/test_metrics_feature_similarity.py
+tests/test_metrics_lpips.py
+tests/test_model_cards_compute.py
+tests/test_model_gallery.py
+tests/test_model_report_generation.py
+tests/test_multi_model_comparison.py
+tests/test_n35_batch10.py
+tests/test_n35_batch11.py
+tests/test_n35_batches3_5_cells.py
+tests/test_n35_batches6_9_cells.py
+tests/test_n35_replacement_cells.py
+tests/test_preprocessing.py
+tests/test_research_archive.py
+tests/test_restoration_hint.py
+tests/test_restoration_lama.py
+tests/test_restoration_opencv.py
+tests/test_restoration_sdxl.py
+tests/test_restoration_stable_diffusion.py
+tests/test_restoration_stable_diffusion_scratch_prompt.py
+tests/test_room_runtime.py
+tests/test_semantic_structural.py
+tests/test_spatial_explanations.py
+tests/test_stability_lab.py
+tests/test_streamlit_availability.py
+tests/test_synthetic_degradation.py
+tests/test_synthetic_degradation_analysis.py
+tests/test_trustworthiness.py
+tests/test_trustworthiness_chart.cjs
+tests/test_trustworthiness_presentation.py
+
+6. DOCUMENT-BY-DOCUMENT DISPOSITION
+KEEP includes governing contracts, freeze-bound previews, scientific methods/provenance, proposal and defence material.
+refactoring_implementation_guidelines.md is not merely assistant scratch: many configs/notebooks depend on it.
+final_notebook_roadmap.md and evidence_dependency_audit.md remain the authoritative completion/provenance record.
+N29 discrepancy and all publication/freeze records remain required, even when their historical wording is old.
+An unreferenced defence guide or proposal is still useful authored material, not safe-delete evidence.
+REMOVE_AFTER_LINK_UPDATES | docs/dashboard_design_finalists/alternatives/01_evidence_newsroom.png | tracked | 2008581 bytes
+REMOVE_AFTER_LINK_UPDATES | docs/dashboard_design_finalists/alternatives/02_evidence_mobile.png | tracked | 2118277 bytes
+REMOVE_AFTER_LINK_UPDATES | docs/dashboard_design_finalists/alternatives/03_geometric_evidence_composition.png | tracked | 1866434 bytes
+REMOVE_AFTER_LINK_UPDATES | docs/dashboard_design_finalists/alternatives/04_quiet_kintsugi_trace.png | tracked | 2480360 bytes
+REMOVE_AFTER_LINK_UPDATES | docs/dashboard_design_finalists/alternatives/05_question_journey_decision_trace.png | tracked | 2456366 bytes
+REMOVE_AFTER_LINK_UPDATES | docs/dashboard_design_finalists/alternatives/06_exhibition_gallery.png | tracked | 1996698 bytes
+REMOVE_AFTER_LINK_UPDATES | docs/dashboard_design_finalists/alternatives/07_conservation_light_table.png | tracked | 2613771 bytes
+REMOVE_AFTER_LINK_UPDATES | docs/dashboard_design_finalists/alternatives/08_pipeline_alternate_futures_replay.png | tracked | 1990335 bytes
+REMOVE_AFTER_LINK_UPDATES | docs/dashboard_design_finalists/alternatives/09_living_pigment_museum_selected_direction.png | tracked | 2646489 bytes
+REMOVE_AFTER_LINK_UPDATES | docs/dashboard_design_finalists/alternatives/10_live_evidence_content_layout_mock.png | tracked | 2634863 bytes
+KEEP | docs/dashboard_design_finalists/approved_current/01_interactive_museum_rooms_01_to_04.png | tracked | 2646797 bytes
+KEEP | docs/dashboard_design_finalists/approved_current/02_interactive_museum_rooms_05_to_08.png | tracked | 2545484 bytes
+KEEP | docs/dashboard_design_finalists/approved_current/03_exhibition_foyer_final.png | tracked | 2404500 bytes
+  Code/config/notebook references: config/evaluation/dashboard_validation.yaml, notebooks/34_final_streamlit_dashboard_assets.ipynb
+KEEP | docs/dashboard_design_finalists/approved_current/04_study_design_final.png | tracked | 2352312 bytes
+  Code/config/notebook references: config/evaluation/dashboard_validation.yaml, notebooks/34_final_streamlit_dashboard_assets.ipynb
+KEEP | docs/dashboard_design_finalists/approved_current/05_metric_framework_final.png | tracked | 2376282 bytes
+  Code/config/notebook references: config/evaluation/dashboard_validation.yaml, notebooks/34_final_streamlit_dashboard_assets.ipynb
+KEEP | docs/dashboard_design_finalists/approved_current/06_model_gallery_final.png | tracked | 2368746 bytes
+  Code/config/notebook references: config/evaluation/dashboard_validation.yaml, notebooks/34_final_streamlit_dashboard_assets.ipynb
+KEEP | docs/dashboard_design_finalists/approved_current/07_stability_lab_final.png | tracked | 2491903 bytes
+  Code/config/notebook references: tools/audit_stability_lab_readiness.py, config/evaluation/dashboard_validation.yaml, notebooks/34_final_streamlit_dashboard_assets.ipynb
+KEEP | docs/dashboard_design_finalists/approved_current/08_trustworthiness_final.png | tracked | 2303930 bytes
+  Code/config/notebook references: config/evaluation/dashboard_validation.yaml, notebooks/34_final_streamlit_dashboard_assets.ipynb
+KEEP | docs/dashboard_design_finalists/approved_current/09_focused_portrait_review_final.png | tracked | 2192885 bytes
+  Code/config/notebook references: tests/test_focused_portrait.py, config/evaluation/dashboard_validation.yaml, notebooks/34_final_streamlit_dashboard_assets.ipynb
+KEEP | docs/dashboard_design_finalists/approved_current/10_case_explorer_final.png | tracked | 2279176 bytes
+  Code/config/notebook references: tests/test_case_explorer.py, config/evaluation/dashboard_validation.yaml, notebooks/34_final_streamlit_dashboard_assets.ipynb
+KEEP | docs/dashboard_design_finalists/approved_current/11_research_archive_final.png | tracked | 2542240 bytes
+  Code/config/notebook references: tests/test_research_archive.py, config/evaluation/dashboard_validation.yaml, notebooks/34_final_streamlit_dashboard_assets.ipynb
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/case_explorer_cosmetic_pass_02.png | local/ignored | 102975 bytes
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/case_explorer_cosmetic_pass_03.png | local/ignored | 102585 bytes
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/case_explorer_left_alignment_preview.png | local/ignored | 103548 bytes
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/case_explorer_neighbour_popup_preview.png | local/ignored | 56336 bytes
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/case_explorer_neutral_layer_preview.png | local/ignored | 102796 bytes
+REMOVE_AFTER_LINK_UPDATES | docs/dashboard_design_finalists/case_explorer_runtime_verified.png | tracked | 102579 bytes
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/case_explorer_single_picker_preview.png | local/ignored | 36245 bytes
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/case_explorer_step3_preview.png | local/ignored | 93110 bytes
+REMOVE_AFTER_LINK_UPDATES | docs/dashboard_design_finalists/case_explorer_steps_1_to_3.md | tracked | 10273 bytes
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/case_explorer_visual_iteration_preview.png | local/ignored | 103713 bytes
+KEEP | docs/dashboard_design_finalists/controlled_300_n34_implementation_contract.md | tracked | 23492 bytes
+  Code/config/notebook references: config/evaluation/dashboard_assets.yaml, config/publication/external_storage.yaml, notebooks/34_final_streamlit_dashboard_assets.ipynb
+KEEP | docs/dashboard_design_finalists/controlled_300_page_contracts.md | tracked | 61303 bytes
+  Code/config/notebook references: config/evaluation/dashboard_assets.yaml, notebooks/34_final_streamlit_dashboard_assets.ipynb
+KEEP | docs/dashboard_design_finalists/controlled_300_producer_artifact_map.md | tracked | 31172 bytes
+  Code/config/notebook references: config/evaluation/dashboard_assets.yaml, notebooks/34_final_streamlit_dashboard_assets.ipynb
+KEEP | docs/dashboard_design_finalists/controlled_300_remote_asset_audit.md | tracked | 11310 bytes
+  Code/config/notebook references: config/evaluation/dashboard_assets.yaml, config/publication/external_storage.yaml, notebooks/34_final_streamlit_dashboard_assets.ipynb
+KEEP | docs/dashboard_design_finalists/controlled_300_runtime_loading_contract.md | tracked | 19067 bytes
+  Code/config/notebook references: config/evaluation/dashboard_assets.yaml, config/publication/external_storage.yaml, notebooks/34_final_streamlit_dashboard_assets.ipynb
+KEEP | docs/dashboard_design_finalists/explore_freely_preview.png | tracked | 52007 bytes
+  Code/config/notebook references: tools/check_museum_visit_freeze.py, config/publication/museum_visit_freeze.json
+KEEP | docs/dashboard_design_finalists/focused_portrait_blind_review_preview.png | tracked | 54966 bytes
+  Code/config/notebook references: config/publication/focused_portrait_freeze.json
+KEEP | docs/dashboard_design_finalists/focused_portrait_cosmetic_pass_01.png | tracked | 82204 bytes
+  Code/config/notebook references: config/publication/focused_portrait_freeze.json
+KEEP | docs/dashboard_design_finalists/focused_portrait_cosmetic_pass_02.png | tracked | 81913 bytes
+  Code/config/notebook references: config/publication/focused_portrait_freeze.json
+KEEP | docs/dashboard_design_finalists/focused_portrait_cosmetic_pass_03.png | tracked | 82164 bytes
+  Code/config/notebook references: config/publication/focused_portrait_freeze.json
+KEEP | docs/dashboard_design_finalists/focused_portrait_cosmetic_pass_04.png | tracked | 81355 bytes
+  Code/config/notebook references: config/publication/focused_portrait_freeze.json
+KEEP | docs/dashboard_design_finalists/focused_portrait_cosmetic_pass_05.png | tracked | 80681 bytes
+  Code/config/notebook references: config/publication/focused_portrait_freeze.json
+KEEP | docs/dashboard_design_finalists/focused_portrait_initial_preview.png | tracked | 82953 bytes
+  Code/config/notebook references: config/publication/focused_portrait_freeze.json
+KEEP | docs/dashboard_design_finalists/focused_portrait_iteration_log.md | tracked | 7729 bytes
+  Code/config/notebook references: config/publication/focused_portrait_freeze.json
+KEEP | docs/dashboard_design_finalists/focused_portrait_popup_formation.png | tracked | 46048 bytes
+  Code/config/notebook references: config/publication/focused_portrait_freeze.json
+KEEP | docs/dashboard_design_finalists/focused_portrait_popup_methods.png | tracked | 63814 bytes
+  Code/config/notebook references: config/publication/focused_portrait_freeze.json
+KEEP | docs/dashboard_design_finalists/focused_portrait_report_preview.png | tracked | 59820 bytes
+  Code/config/notebook references: config/publication/focused_portrait_freeze.json
+KEEP | docs/dashboard_design_finalists/focused_portrait_selector_spacing.png | tracked | 80741 bytes
+  Code/config/notebook references: config/publication/focused_portrait_freeze.json
+KEEP | docs/dashboard_design_finalists/focused_portrait_step03_verification.md | tracked | 3173 bytes
+  Code/config/notebook references: config/publication/focused_portrait_freeze.json
+KEEP | docs/dashboard_design_finalists/focused_portrait_steps_01_02.md | tracked | 4455 bytes
+  Code/config/notebook references: config/publication/focused_portrait_freeze.json
+KEEP | docs/dashboard_design_finalists/focused_portrait_wrist_observation_preview.png | tracked | 57398 bytes
+  Code/config/notebook references: config/publication/focused_portrait_freeze.json
+REMOVE_AFTER_LINK_UPDATES | docs/dashboard_design_finalists/metric_framework_inspection_guide.md | tracked | 11687 bytes
+REMOVE_AFTER_LINK_UPDATES | docs/dashboard_design_finalists/metric_framework_iteration_log.md | tracked | 17187 bytes
+REMOVE_AFTER_LINK_UPDATES | docs/dashboard_design_finalists/metric_framework_verification.md | tracked | 6741 bytes
+KEEP | docs/dashboard_design_finalists/model_gallery_cosmetic_pass_01.md | tracked | 3209 bytes
+  Code/config/notebook references: config/publication/model_gallery_freeze.json
+KEEP | docs/dashboard_design_finalists/model_gallery_cosmetic_pass_02.md | tracked | 2291 bytes
+  Code/config/notebook references: config/publication/model_gallery_freeze.json
+KEEP | docs/dashboard_design_finalists/model_gallery_cosmetic_pass_03.md | tracked | 1046 bytes
+  Code/config/notebook references: config/publication/model_gallery_freeze.json
+KEEP | docs/dashboard_design_finalists/model_gallery_readiness_audit.json | tracked | 24693 bytes
+  Code/config/notebook references: tools/audit_model_gallery_readiness.py, config/publication/model_gallery_freeze.json
+KEEP | docs/dashboard_design_finalists/model_gallery_shell_prompt.txt | tracked | 2006 bytes
+  Code/config/notebook references: config/publication/model_gallery_freeze.json
+KEEP | docs/dashboard_design_finalists/model_gallery_step03_verification.md | tracked | 5940 bytes
+  Code/config/notebook references: config/publication/model_gallery_freeze.json
+KEEP | docs/dashboard_design_finalists/model_gallery_steps_01_02.md | tracked | 7844 bytes
+  Code/config/notebook references: config/publication/model_gallery_freeze.json
+KEEP | docs/dashboard_design_finalists/museum_passport_completed.png | tracked | 49669 bytes
+  Code/config/notebook references: tools/check_museum_visit_freeze.py, config/publication/museum_visit_freeze.json
+KEEP | docs/dashboard_design_finalists/museum_passport_preview.png | tracked | 60263 bytes
+  Code/config/notebook references: tools/check_museum_visit_freeze.py, config/publication/museum_visit_freeze.json
+KEEP | docs/dashboard_design_finalists/README.md | tracked | 13764 bytes
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/research_archive_cosmetic_final.png | local/ignored | 103596 bytes
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/research_archive_record_dialog_final.png | local/ignored | 36370 bytes
+KEEP | docs/dashboard_design_finalists/research_archive_seal_complete.png | tracked | 103591 bytes
+  Code/config/notebook references: tools/check_research_archive_freeze.py, config/publication/research_archive_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/research_archive_step3_preview.png | local/ignored | 102439 bytes
+KEEP | docs/dashboard_design_finalists/research_archive_steps_1_to_3.md | tracked | 6990 bytes
+  Code/config/notebook references: tools/check_research_archive_freeze.py, config/publication/research_archive_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/research_archive_wall_blend.png | local/ignored | 103558 bytes
+KEEP | docs/dashboard_design_finalists/stability_lab_cosmetic_pass_01.md | tracked | 1760 bytes
+  Code/config/notebook references: config/publication/stability_lab_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/stability_lab_cosmetic_pass_01.png | local/ignored | 92145 bytes
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/stability_lab_cosmetic_pass_01_2pct.png | local/ignored | 92112 bytes
+KEEP | docs/dashboard_design_finalists/stability_lab_cosmetic_pass_02.md | tracked | 1678 bytes
+  Code/config/notebook references: config/publication/stability_lab_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/stability_lab_cosmetic_pass_02.png | local/ignored | 92448 bytes
+KEEP | docs/dashboard_design_finalists/stability_lab_cosmetic_pass_03.md | tracked | 1010 bytes
+  Code/config/notebook references: config/publication/stability_lab_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/stability_lab_cosmetic_pass_03.png | local/ignored | 92310 bytes
+KEEP | docs/dashboard_design_finalists/stability_lab_cosmetic_pass_04.md | tracked | 1175 bytes
+  Code/config/notebook references: config/publication/stability_lab_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/stability_lab_cosmetic_pass_04.png | local/ignored | 91738 bytes
+KEEP | docs/dashboard_design_finalists/stability_lab_cosmetic_pass_05.md | tracked | 1059 bytes
+  Code/config/notebook references: config/publication/stability_lab_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/stability_lab_cosmetic_pass_05.png | local/ignored | 91442 bytes
+KEEP | docs/dashboard_design_finalists/stability_lab_cosmetic_pass_06.md | tracked | 1366 bytes
+  Code/config/notebook references: config/publication/stability_lab_freeze.json
+KEEP | docs/dashboard_design_finalists/stability_lab_cosmetic_pass_06.png | tracked | 91446 bytes
+  Code/config/notebook references: config/publication/stability_lab_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/stability_lab_initial_preview.png | local/ignored | 92288 bytes
+KEEP | docs/dashboard_design_finalists/stability_lab_popup_pass_06.png | tracked | 50934 bytes
+  Code/config/notebook references: config/publication/stability_lab_freeze.json
+KEEP | docs/dashboard_design_finalists/stability_lab_readiness_audit.json | tracked | 2532 bytes
+  Code/config/notebook references: config/publication/stability_lab_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/stability_lab_seed_preview.png | local/ignored | 59267 bytes
+KEEP | docs/dashboard_design_finalists/stability_lab_shell_prompt.txt | tracked | 2366 bytes
+  Code/config/notebook references: config/publication/stability_lab_freeze.json
+KEEP | docs/dashboard_design_finalists/stability_lab_step03_verification.md | tracked | 4728 bytes
+  Code/config/notebook references: config/publication/stability_lab_freeze.json
+KEEP | docs/dashboard_design_finalists/stability_lab_steps_01_02.md | tracked | 5063 bytes
+  Code/config/notebook references: config/publication/stability_lab_freeze.json
+KEEP | docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_02.md | tracked | 1239 bytes
+  Code/config/notebook references: config/publication/trustworthiness_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_02.png | local/ignored | 86704 bytes
+KEEP | docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_03.md | tracked | 882 bytes
+  Code/config/notebook references: config/publication/trustworthiness_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_03.png | local/ignored | 86348 bytes
+KEEP | docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_04.md | tracked | 2490 bytes
+  Code/config/notebook references: config/publication/trustworthiness_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_04.png | local/ignored | 87447 bytes
+KEEP | docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_05.md | tracked | 1227 bytes
+  Code/config/notebook references: config/publication/trustworthiness_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_05.png | local/ignored | 88104 bytes
+KEEP | docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_06.md | tracked | 1166 bytes
+  Code/config/notebook references: config/publication/trustworthiness_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_06.png | local/ignored | 86798 bytes
+KEEP | docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_07.md | tracked | 1071 bytes
+  Code/config/notebook references: config/publication/trustworthiness_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_07.png | local/ignored | 87337 bytes
+KEEP | docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_08.md | tracked | 2960 bytes
+  Code/config/notebook references: config/publication/trustworthiness_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_08.png | local/ignored | 88406 bytes
+KEEP | docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_09.md | tracked | 1306 bytes
+  Code/config/notebook references: config/publication/trustworthiness_freeze.json
+KEEP | docs/dashboard_design_finalists/trustworthiness_cosmetic_pass_09.png | tracked | 88265 bytes
+  Code/config/notebook references: config/publication/trustworthiness_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/trustworthiness_initial_preview.png | local/ignored | 84585 bytes
+KEEP | docs/dashboard_design_finalists/trustworthiness_left_pass_01.md | tracked | 1280 bytes
+  Code/config/notebook references: config/publication/trustworthiness_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/trustworthiness_left_pass_01.png | local/ignored | 84939 bytes
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/trustworthiness_left_pass_01_p256.png | local/ignored | 86079 bytes
+KEEP | docs/dashboard_design_finalists/trustworthiness_shell_prompt.txt | tracked | 2350 bytes
+  Code/config/notebook references: config/publication/trustworthiness_freeze.json
+KEEP | docs/dashboard_design_finalists/trustworthiness_step03_verification.md | tracked | 2776 bytes
+  Code/config/notebook references: config/publication/trustworthiness_freeze.json
+KEEP | docs/dashboard_design_finalists/trustworthiness_steps_01_02.md | tracked | 4365 bytes
+  Code/config/notebook references: config/publication/trustworthiness_freeze.json
+LOCAL_DELETE_CANDIDATE | docs/dashboard_design_finalists/trustworthiness_threshold_preview.png | local/ignored | 42905 bytes
+KEEP | docs/dashboard_numeric_metrics.md | tracked | 5229 bytes
+  Code/config/notebook references: config/evaluation/evidence_coverage.yaml
+KEEP | docs/evidence_dependency_audit.md | tracked | 144980 bytes
+  Code/config/notebook references: config/evaluation/case_and_painting_reports.yaml, config/evaluation/damage_size_analysis.yaml, config/evaluation/damage_size_diffusion_uncertainty_extension.yaml, config/evaluation/dashboard_assets.yaml, config/evaluation/evidence_coverage.yaml, config/evaluation/explainable_case_retrieval.yaml, config/evaluation/failure_taxonomy.yaml, config/evaluation/final_evaluation_report.yaml, config/evaluation/grouped_statistical_analysis.yaml, config/evaluation/mask_robustness_analysis.yaml, config/evaluation/metric_region_ablation.yaml, config/evaluation/model_cards_compute.yaml, config/evaluation/model_report_generation.yaml, config/evaluation/supervisor_package.yaml, config/evaluation/synthetic_degradation_analysis.yaml, config/experiments/hint_mat_selection.yaml, notebooks/26_grouped_and_statistical_analysis.ipynb, notebooks/27_failure_taxonomy_and_trustworthiness_flags.ipynb, notebooks/28_metric_and_region_policy_ablation.ipynb, notebooks/29_explainable_ai_and_case_retrieval.ipynb, notebooks/30_model_cards_compute_and_scalability.ipynb, notebooks/31_model_report_generation.ipynb, notebooks/34_final_streamlit_dashboard_assets.ipynb, notebooks/35_dashboard_and_deployment_validation.ipynb
+KEEP | docs/final_notebook_roadmap.md | tracked | 228612 bytes
+  Code/config/notebook references: config/evaluation/case_and_painting_reports.yaml, config/evaluation/damage_size_analysis.yaml, config/evaluation/damage_size_diffusion_uncertainty_extension.yaml, config/evaluation/dashboard_assets.yaml, config/evaluation/evidence_coverage.yaml, config/evaluation/explainable_case_retrieval.yaml, config/evaluation/failure_taxonomy.yaml, config/evaluation/final_evaluation_report.yaml, config/evaluation/grouped_statistical_analysis.yaml, config/evaluation/mask_robustness_analysis.yaml, config/evaluation/metric_region_ablation.yaml, config/evaluation/model_cards_compute.yaml, config/evaluation/model_report_generation.yaml, config/evaluation/multi_model_comparison.yaml, config/evaluation/portrait_anatomy_audit.yaml, config/evaluation/semantic_structural.yaml, config/evaluation/spatial_explanations.yaml, config/evaluation/supervisor_package.yaml, config/evaluation/synthetic_degradation_analysis.yaml, config/experiments/hint_mat_selection.yaml, notebooks/13_classical_metrics.ipynb, notebooks/14_lpips_metrics.ipynb, notebooks/15_feature_similarity.ipynb, notebooks/18_diffusion_uncertainty_analysis.ipynb, notebooks/26_grouped_and_statistical_analysis.ipynb, notebooks/27_failure_taxonomy_and_trustworthiness_flags.ipynb, notebooks/28_metric_and_region_policy_ablation.ipynb, notebooks/29_explainable_ai_and_case_retrieval.ipynb, notebooks/30_model_cards_compute_and_scalability.ipynb, notebooks/31_model_report_generation.ipynb, notebooks/34_final_streamlit_dashboard_assets.ipynb, notebooks/35_dashboard_and_deployment_validation.ipynb
+KEEP | docs/finished_tabs_asset_checkpoint.md | tracked | 8800 bytes
+  Code/config/notebook references: tools/publish_finished_tab_assets.py
+KEEP | docs/literature_reference_log.md | tracked | 59914 bytes
+  Code/config/notebook references: notebooks/30_model_cards_compute_and_scalability.ipynb, notebooks/31_model_report_generation.ipynb
+KEEP | docs/methodology_notes.md | tracked | 19377 bytes
+  Code/config/notebook references: notebooks/31_model_report_generation.ipynb
+KEEP | docs/model_audit_notes.md | tracked | 21868 bytes
+  Code/config/notebook references: config/evaluation/model_cards_compute.yaml, notebooks/30_model_cards_compute_and_scalability.ipynb, notebooks/31_model_report_generation.ipynb
+KEEP | docs/model_gallery_asset_checkpoint.md | tracked | 5917 bytes
+  Code/config/notebook references: config/publication/model_gallery_freeze.json
+KEEP | docs/n35_n29_manifest_discrepancy.md | tracked | 1697 bytes
+  Code/config/notebook references: config/evaluation/supervisor_package.yaml
+KEEP | docs/notebook_11_scratch_prompt_ablation_contract.md | tracked | 7688 bytes
+KEEP | docs/notebook_12_partial_evaluation_contract.md | tracked | 11536 bytes
+KEEP | docs/notebook_revision_and_defence_qa.md | tracked | 168217 bytes
+KEEP | docs/proposal/Rahul_Thesis_Proposal.docx | tracked | 989561 bytes
+  Code/config/notebook references: config/evaluation/case_and_painting_reports.yaml, config/evaluation/damage_size_analysis.yaml, config/evaluation/explainable_case_retrieval.yaml, config/evaluation/failure_taxonomy.yaml, config/evaluation/final_evaluation_report.yaml, config/evaluation/grouped_statistical_analysis.yaml, config/evaluation/mask_robustness_analysis.yaml, config/evaluation/metric_region_ablation.yaml, config/evaluation/model_cards_compute.yaml, config/evaluation/model_report_generation.yaml, config/evaluation/multi_model_comparison.yaml, config/evaluation/supervisor_package.yaml, config/evaluation/synthetic_degradation_analysis.yaml
+OWNER_REVIEW_PRIVATE_DRAFT | docs/proposal/Rahul_Thesis_Proposal_Old.docx | local/ignored | 1850918 bytes
+KEEP | docs/proposal/Rahul_Thesis_Proposal_Presentation.pdf | tracked | 492009 bytes
+KEEP | docs/proposal/Rahul_Thesis_Proposal_Presentation.pptx | tracked | 6708054 bytes
+KEEP | docs/refactoring_implementation_guidelines.md | tracked | 153900 bytes
+  Code/config/notebook references: config/evaluation/case_and_painting_reports.yaml, config/evaluation/damage_size_analysis.yaml, config/evaluation/damage_size_diffusion_uncertainty_extension.yaml, config/evaluation/dashboard_assets.yaml, config/evaluation/evidence_coverage.yaml, config/evaluation/explainable_case_retrieval.yaml, config/evaluation/failure_taxonomy.yaml, config/evaluation/final_evaluation_report.yaml, config/evaluation/grouped_statistical_analysis.yaml, config/evaluation/mask_robustness_analysis.yaml, config/evaluation/metric_region_ablation.yaml, config/evaluation/model_cards_compute.yaml, config/evaluation/model_report_generation.yaml, config/evaluation/multi_model_comparison.yaml, config/evaluation/portrait_anatomy_audit.yaml, config/evaluation/semantic_structural.yaml, config/evaluation/spatial_explanations.yaml, config/evaluation/supervisor_package.yaml, config/evaluation/synthetic_degradation_analysis.yaml, config/experiments/hint_mat_selection.yaml, notebooks/13_classical_metrics.ipynb, notebooks/14_lpips_metrics.ipynb, notebooks/15_feature_similarity.ipynb, notebooks/18_diffusion_uncertainty_analysis.ipynb, notebooks/29_explainable_ai_and_case_retrieval.ipynb, notebooks/30_model_cards_compute_and_scalability.ipynb, notebooks/31_model_report_generation.ipynb, notebooks/34_final_streamlit_dashboard_assets.ipynb, notebooks/35_dashboard_and_deployment_validation.ipynb
+REMOVE_AFTER_LINK_UPDATES | docs/report_structure_mock_lama.md | tracked | 12139 bytes
+KEEP | docs/stability_lab_asset_checkpoint.md | tracked | 6819 bytes
+  Code/config/notebook references: config/publication/stability_lab_freeze.json
+REPLACE_THEN_ARCHIVE_OR_REMOVE | docs/supervisor/Next_Steps.docx | local/ignored | 456126 bytes
+REPLACE_THEN_ARCHIVE_OR_REMOVE | docs/supervisor/Next_Steps.pdf | tracked | 786228 bytes
+REPLACE_THEN_ARCHIVE_OR_REMOVE | docs/supervisor/Supervisor_Dashboard_Walkthrough_Guide.docx | local/ignored | 4695656 bytes
+REPLACE_THEN_ARCHIVE_OR_REMOVE | docs/supervisor/Supervisor_Dashboard_Walkthrough_Guide.pdf | tracked | 5528401 bytes
+KEEP | docs/trustworthiness_asset_checkpoint.md | tracked | 5263 bytes
+  Code/config/notebook references: tools/check_trustworthiness_freeze.py, config/publication/trustworthiness_freeze.json
+
+7. REST OF THE REPOSITORY
+.devcontainer: 1 inventoried files
+.gitattributes: 1 inventoried files
+.github: 1 inventoried files
+.gitignore: 1 inventoried files
+README.md: 1 inventoried files
+config: 52 inventoried files
+data: 301 inventoried files
+docs: 207 inventoried files
+notebooks: 39 inventoried files
+outputs: 141697 inventoried files
+requirements.txt: 1 inventoried files
+requirements_12a.txt: 1 inventoried files
+requirements_d01.txt: 1 inventoried files
+requirements_experiments.txt: 1 inventoried files
+requirements_publication.txt: 1 inventoried files
+src: 73 inventoried files
+streamlit_app.py: 1 inventoried files
+streamlit_assets: 13256 inventoried files
+tests: 66 inventoried files
+tools: 36 inventoried files
+No /work/, /tmp/, /temp/, /cache/, /.cache/, .log, .bak or .tmp paths were found in the non-cache inventory.
+Normal __pycache__ directories and .pyc files are regenerable, but avoid traversing/deleting inside .venv or .git.
+Jupyter checkpoints are not assumed disposable until compared with the saved notebook; they may contain unsaved work.
+Do not delete ignored scientific bulk under outputs or streamlit_assets/evidence: ignored does not mean unused.
+N36/package duplicates are intentional, manifest-owned portable evidence. Preserve all 134 N36 files byte-for-byte.
+
+8. EXECUTION / COMMIT SEQUENCE AFTER APPROVAL
+1. Approve exact groups, preserve private/recovery work, stop only relevant local processes.
+2. Remove approved paths using literal, workspace-contained targets; update live doc links only.
+3. Verify no protected file changed; rerun focused dependency/link tests; refresh inventory once.
+4. Stage exact tracked deletions plus documentation updates; inspect staged diff; commit and push main.
+5. Do not rewrite historical commits or delete HF/LFS objects as part of this cleanup.
+

@@ -701,7 +701,7 @@ Before notebook completion, validate at minimum:
   failures.
 
 The illustrative LaMa model-performance mock-up in
-[`report_structure_mock_lama.md`](report_structure_mock_lama.md) is a design
+[`report_structure_mock_lama.md`](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/453b4bfa1acb453a369b99cd09b74dd539a53064/docs/report_structure_mock_lama.md) is a historical design
 reference for narrative quality and information density. It is not a mandatory
 section template for model reports or for other report categories.
 
