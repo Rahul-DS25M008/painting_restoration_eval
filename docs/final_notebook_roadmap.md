@@ -4009,6 +4009,18 @@ scientific dashboard inputs or deployable page backgrounds. Notebook 35
 validates mock-to-application traceability against their interaction and visual
 roles without serving the mockup rasters as the interface.
 
+Batch 1 also establishes two fail-closed evidence rules. First, every child
+binding must match the active painting, experiment, case, candidate and model;
+the opening LaMa Case Explorer candidate keeps its uncertainty panel explicitly
+`not_applicable_deterministic_method` and receives no unrelated Stable Diffusion
+overlay. Second, the N34 room rows are treated as presentation/routing records,
+not as typed analytical tables. Numerical UI components may consume only typed
+packaged derivatives or exact source-pinned rows with metric, region, direction,
+unit, row ID and checksum. General dynamic numerical parity is false after
+Batch 1; Batches 4 and 8 complete the deployment-safe numerical resolvers for
+Metric Framework and Case Explorer, and Batch 10 treats unresolved required
+numeric parity as blocking. N34 remains immutable and need not be rerun.
+
 ### Responsibilities
 
 - Validate every dashboard input path and schema.
@@ -4026,6 +4038,10 @@ roles without serving the mockup rasters as the interface.
   sample actual public image rendering across producer repositories without
   redownloading the complete corpus.
 - Validate filter values and ID relationships.
+- Validate component-to-candidate/experiment identity and preserve explicit
+  not-applicable states without cross-case asset substitution.
+- Validate that every numerical component receives typed records rather than
+  parsing values from display-contract prose.
 - Validate that the dashboard does not recompute scientific metrics.
 - Run safe import/static checks.
 - Run an application smoke test when authorized.

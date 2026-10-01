@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from functools import lru_cache
 import pandas as pd
+from .evidence_transport import table
 
 from .model_gallery import (ROOT, MAIN_MODELS, LABELS, catalogue, image_uri,
                             project_path, painting_geometry, records, candidate_metrics)
@@ -49,7 +50,7 @@ def test_catalogue():
 def spatial_index():
     columns = ["spatial_diagnostic_id", "candidate_id", "region_id", "restored_error_mean", "damaged_error_mean", "status"]
     selected = []
-    for chunk in pd.read_csv(ROOT / "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv", usecols=columns, chunksize=100000):
+    for chunk in table("tables/spatial.csv.gz", usecols=columns, chunksize=100000):
         selected.extend(records(chunk[chunk.region_id.isin(["masked_region", "boundary_ring"])]))
     index = {}
     for row in selected:
@@ -78,7 +79,8 @@ def seed_catalogue():
     groups = {}
     for stem, filename in zip(SEED_STEMS, ("uncertainty_metrics.csv", "damage_size_uncertainty.csv")):
         cols = ["uncertainty_group_id", "case_id", "painting_id", "prompt_variant_id", "observation_level", "metric_name", "region_id", "value", "value_unit", "status", "candidate_id_a", "candidate_id_b", "seed_a", "seed_b", "uncertainty_metric_id"]
-        for chunk in pd.read_csv(ROOT / "outputs" / stem / "metrics" / filename, usecols=cols, chunksize=50000):
+        name = "seed18" if stem == SEED_STEMS[0] else "seed22"
+        for chunk in table(f"tables/{name}.csv.gz", usecols=cols, chunksize=50000):
             keep = chunk.region_id.eq("masked_region") & chunk.metric_name.isin(["pairwise_rgb_mae", "pixel_rgb_std_mean"])
             for row in records(chunk[keep]):
                 gid = row["uncertainty_group_id"]

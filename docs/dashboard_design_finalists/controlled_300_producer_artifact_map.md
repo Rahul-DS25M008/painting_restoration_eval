@@ -103,6 +103,11 @@ The architecture, collection furniture and floor map in the approved raster are
 design references only. They have no scientific producer and must not be
 catalogued as evidence.
 
+For N35, the Foyer may use the checksum-pinned decorative shell declared in
+`dashboard_validation.yaml`. The shell carries only ambience and geometry;
+the p001 painting, wording, counts, actions and seven previews remain separate
+live components resolved from this map.
+
 ## 02 — Study Design
 
 The production default is `p001`, selected because it has registered examples

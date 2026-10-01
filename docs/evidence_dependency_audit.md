@@ -77,6 +77,43 @@ must start offline, load only the active room, preserve exact artifact identity,
 and expose explicit unavailable/integrity states instead of substitutions. The
 live pilot deployment remains unchanged until the new N35 gate passes.
 
+The Batch 1 consumer audit found and closed a presentation-binding defect
+without rewriting N34. The raw N34 manifest associates the Case Explorer
+uncertainty slot with an available Stable Diffusion overlay from a different
+p018 experiment, although the opening candidate is the deterministic LaMa
+mixed-damage case. The N35 helper now filters child bindings by full scientific
+identity and preserves the producer-backed
+`not_applicable_deterministic_method` state with no image. The same audit
+confirmed that N34 room partitions are routing/display records rather than
+general typed numerical tables. N35 therefore exposes only typed packaged
+derivatives and exact source-pinned opening records at this stage, never parses
+`producer_binding` prose for values, and records general dynamic numerical
+parity as false until the Metric Framework and Case Explorer batches add their
+deployment-safe resolvers. Final parity is a blocking Batch 10 gate.
+
+**N35 Batch 10 local checkpoint and publication handoff: 2026-10-01.**
+User-executed run `run_c284ad17ddde4b89928cfad7c153d393` saved four canonical
+files with `run_status: partial`: 516 checks passed, four dependency-version
+warnings remain, and ten browser/platform qualifications are explicitly
+pending, blocking and not passed. This is not a live-deployment certificate.
+The two recorded artifact hashes and artifact-manifest hash match the saved
+bytes, and the recorded application/helper fingerprints show no subsequent drift.
+Batch 11 must resolve those qualifications, verify the pinned dependency
+environment on Linux, and record the actual hosted revision and URL before N36.
+
+The user explicitly selected the **existing scientific repository's `main`
+branch** for deployment, superseding the earlier separate-lightweight-repository
+plan below. The user confirmed that the current Streamlit app watches
+`pilot-50`, not `main`: pushing this checkpoint to `main` leaves the pilot
+deployment untouched. Switching the app's configured branch to `main` is a
+separate, deliberate deployment step before Batch 11 live testing. Existing
+immutable HF image/report bundles are reused; no new HF upload is required by
+this checkpoint. The 1,162-file deployment companion (55,330,954 bytes including
+its manifest) and the four compact N35 outputs use ordinary Git. The latter
+retain exact bytes across platforms so their recorded hashes remain valid.
+No dashboard source, layout, reference artwork or scientific output was changed
+by this publication handoff.
+
 **Git LFS capacity guard: 2026-09-21.** GitHub reported 9.01 GiB used from the
 10.0 GiB included LFS allowance, with a `$0` hard budget and reset date of
 2026-10-01. Post-N11 bulk evidence must therefore remain local or use a

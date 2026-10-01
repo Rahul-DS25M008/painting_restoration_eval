@@ -8,6 +8,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from .model_gallery import ROOT, LABELS, image_uri
+from .evidence_transport import available
 
 OPENING = "candidate__lama__canonical__p018__mixed_damage__c00"
 INDEX = ROOT / "streamlit_assets/evidence/case_explorer"
@@ -170,9 +171,9 @@ def payload(package, painting_id="p018", candidate_id=None, layer="difference", 
     shard, candidate, case = select_record(package, painting_id, candidate_id)
     layers = [layer_state(candidate, key) for key in LAYERS]
     for item in layers:
-        if item["paths"] and not any((ROOT / path).is_file() for path in item["paths"]):
+        if item["paths"] and not any(available(path) for path in item["paths"]):
             item["available"] = False
-            item["reason"] = "Registered evidence is not available locally"
+            item["reason"] = "Registered evidence has no available exact asset route"
     chosen = unique(layers, "key", layer)
     if image_path is not None and image_path not in chosen["paths"]:
         raise ValueError("Map does not belong to the selected candidate and layer")

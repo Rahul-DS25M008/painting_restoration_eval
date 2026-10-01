@@ -135,11 +135,14 @@ def render_model_gallery(package, navigation):
             else:
                 record = cat["reports"][document]
                 path = project_path(record["report_path"])
-                if hashlib.sha256(path.read_bytes()).hexdigest() != record["report_sha256"]:
+                from .evidence_transport import read_bytes
+                if hashlib.sha256(read_bytes(path, record["report_sha256"])).hexdigest() != record["report_sha256"]:
                     st.error("Source report checksum mismatch; download withheld.")
                     return
             st.write("Download the original, self-contained HTML report. It includes the full recorded evidence and can be opened in your browser. No analysis is recomputed here.")
-            st.download_button("Download original HTML report", path.read_bytes(), file_name=path.name, mime="text/html")
+            from .evidence_transport import read_bytes
+            raw = read_bytes(path, record["report_sha256"] if document != "hint_decision" else None)
+            st.download_button("Download original HTML report", raw, file_name=path.name, mime="text/html")
             if st.button("Return to gallery"):
                 dismiss_document()
                 st.rerun()

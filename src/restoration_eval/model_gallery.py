@@ -9,6 +9,7 @@ from functools import lru_cache
 from pathlib import Path
 
 import pandas as pd
+from .evidence_transport import read_bytes, table, image_cache
 
 ROOT = Path(__file__).resolve().parents[2]
 SPECS = {
@@ -77,7 +78,7 @@ def catalogue():
 def metric_index():
     columns = ["candidate_id", "metric_name", "region_id", "damaged_value", "restored_value", "improvement_value", "status", "issue", "region_pixel_count"]
     selected = []
-    for chunk in pd.read_csv(ROOT / "outputs/13_classical_metrics/metrics/classical_metrics.csv", usecols=columns, chunksize=100000):
+    for chunk in table("tables/gallery.csv.gz", usecols=columns, chunksize=100000):
         keep = pd.Series(False, index=chunk.index)
         for spec in EVIDENCE.values():
             keep |= chunk.metric_name.eq(spec["metric"]) & chunk.region_id.eq(spec["region"])
@@ -118,12 +119,12 @@ def selected_case(painting_id: str, case_id: str | None):
     return case_id
 
 
-@lru_cache(maxsize=40)
+@image_cache
 def image_uri(path: str, expected_hash: str | None = None):
     resolved = Path(path).resolve()
     if not resolved.is_relative_to(ROOT.resolve()):
         raise ValueError("Image outside project")
-    data = resolved.read_bytes()
+    data = read_bytes(resolved, expected_hash)
     if expected_hash and hashlib.sha256(data).hexdigest() != expected_hash:
         raise ValueError(f"Recorded image checksum mismatch: {resolved.name}")
     mime = mimetypes.guess_type(resolved.name)[0] or "application/octet-stream"

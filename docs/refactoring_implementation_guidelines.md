@@ -778,6 +778,26 @@ edit the notebook file: complete notebook markdown and code replacements remain
 user-pasted and user-executed. Keep the public pilot branch unchanged until the
 final Controlled-300 validation gate passes.
 
+The N35 trust boundary must preserve scientific identity, not merely asset
+availability. Child bindings are filtered by painting, experiment, case,
+candidate and model (plus seed or annotation identifiers where present). The
+default Case Explorer LaMa candidate therefore exposes uncertainty as
+`not_applicable_deterministic_method` with no image; an uncertainty overlay from
+a different Stable Diffusion experiment must never be substituted. Regression
+tests must verify both exact identity and preservation of explicit N/A states.
+
+N34 room partitions are display and routing specifications, not a universal
+numerical-table replacement. N35 must never parse `producer_binding` prose to
+recover values. A numerical component may render only a typed packaged table or
+an exact source-pinned record carrying its selection identity, metric, region,
+direction, unit, source row and checksum. Batch 1 exposes the four compact N34
+derived tables and the approved source-pinned opening examples; general dynamic
+numerical parity remains explicitly false. Batches 4 and 8 must add the
+deployment-safe Metric Framework and Case Explorer numerical bridge, and Batch
+10 must block final parity/deployment if any required numerical view is still
+only narrative. This correction is an N35 consumer-layer safeguard and does not
+rewrite or require a rerun of the immutable N34 package.
+
 Room approval requires real N34 evidence, readable controls and labels, the
 approved dominant composition and negative space, a nearby limitation, no
 overlap or clipping, and acceptable desktop/tablet/mobile reflow. A mock PNG

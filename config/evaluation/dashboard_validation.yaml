@@ -88,6 +88,8 @@ application:
     identity_substitution_allowed: false
     external_font_or_cdn_request_allowed: false
     mockup_rasters_as_page_backgrounds_allowed: false
+    checksum_verified_decorative_shells_allowed: true
+    decorative_shells_are_scientific_evidence: false
 
 supported_application_schemas:
   artifacts: "artifact_manifest.v1"
@@ -366,6 +368,38 @@ presentation:
     - "real registered evidence replaces illustrative mockup values"
   screenshot_approval_required_before_deployment: true
   mockup_rasters_are_runtime_assets: false
+  decorative_shells:
+    exhibition_foyer:
+      path: "streamlit_assets/rooms/exhibition_foyer_shell.webp"
+      sha256: "9863260cc04a7b664d7438564063b001a47dac2bf96bce4ed74726e6c7add630"
+      classification: "n35_decorative_ambience_only"
+      source_reference: "docs/dashboard_design_finalists/approved_current/03_exhibition_foyer_final.png"
+      scientific_content_allowed: false
+      live_overlay_required: true
+    study_design:
+      path: "streamlit_assets/rooms/study_design_shell.png"
+      sha256: "3e34fdb9645e01ce272a308d0b324862f87d2dbb750737706f1efb22b900c329"
+      classification: "n35_decorative_ambience_only"
+      source_reference: "docs/dashboard_design_finalists/approved_current/04_study_design_final.png"
+      scientific_content_allowed: false
+      live_overlay_required: true
+    metric_framework:
+      path: "streamlit_assets/rooms/metric_framework_shell.png"
+      sha256: "a5182c9f6eb136b1c4be215d5477a40a8eeb0b33e6f156214d8a350617b15d8a"
+      classification: "n35_decorative_ambience_only"
+      source_reference: "docs/dashboard_design_finalists/approved_current/05_metric_framework_final.png"
+      scientific_content_allowed: false
+      live_overlay_required: true
+  study_design_exact_opening_assets:
+    painting_id: "p001"
+    source_notebook_id: "04"
+    evidence_classification: "exact_byte_copy_not_generated"
+    assets:
+      zero_control: {path: "streamlit_assets/evidence/study_design/p001_zero_control.png", source_path: "outputs/04_canonical_damaged_image_generation/images/damaged/p001/zero_control.png", sha256: "b5852f0337c8342a1a70268f9e9f682534177581d238713f67bf28e0033482a2"}
+      scratch_thin: {path: "streamlit_assets/evidence/study_design/p001_scratch_thin.png", source_path: "outputs/04_canonical_damaged_image_generation/images/damaged/p001/scratch_thin.png", sha256: "aa28fe11ad325c143cb952d46883b2cbb1c1d5627e1f49d69f9eb3f58bc24cd9"}
+      loss_small: {path: "streamlit_assets/evidence/study_design/p001_loss_small.png", source_path: "outputs/04_canonical_damaged_image_generation/images/damaged/p001/loss_small.png", sha256: "7683f8017f2d0f846e07ac5d4746564a233f681205650052f142f21df5030241"}
+      loss_large: {path: "streamlit_assets/evidence/study_design/p001_loss_large.png", source_path: "outputs/04_canonical_damaged_image_generation/images/damaged/p001/loss_large.png", sha256: "95c2dca591d41cd5d5462a5f8d52e815a9d907698128f1ffe649b4b1ca0462fe"}
+      mixed_damage: {path: "streamlit_assets/evidence/study_design/p001_mixed_damage.png", source_path: "outputs/04_canonical_damaged_image_generation/images/damaged/p001/mixed_damage.png", sha256: "4272fe588bb1af895fc4da909794688fcb105353051720faad4652900aa57b52"}
   approved_implementation_screenshots_become_regression_baseline: true
 
 validation_matrix:
@@ -396,6 +430,11 @@ implementation_batches:
   - {batch: 8, scope: "Case Explorer room", visual_checkpoint: "case_explorer"}
   - {batch: 9, scope: "Research Archive room", visual_checkpoint: "research_archive"}
   - {batch: 10, scope: "Integration, remote/cache/failure tests, deep links, responsive/accessibility checks, all-route smoke, readiness assessment and canonical persistence", visual_checkpoint: "all_routes_three_viewports_and_final_user_approval"}
+
+post_deployment_validation:
+  batch: 11
+  scope: "Post-commit live deployment verification, clean Linux runtime, tested revision and URL, final N35 closeout before N36"
+  live_site_pass_may_be_inferred_from_local_checks: false
 
 scientific_boundaries:
   mandatory_statement: "Visual plausibility is not equivalent to historical correctness, conservation approval, or restoration trustworthiness."

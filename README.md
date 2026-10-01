@@ -8,7 +8,7 @@ The framework combines controlled artificial damage, complementary inpainting me
 
 [Explore the dashboard](https://fhtw-painting-restoration.streamlit.app/) · [Full evaluation report — HTML](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/33_final_evaluation_report/reports/final_evaluation.html) · [Case and painting reports — pinned HF package](https://huggingface.co/datasets/RahulMaddineni264/painting-restoration-eval-diagnostics/blob/c33bbd87e65fe96f9a81c1c794fd4a70f7226874/report_packages/v1/controlled_300/32_case_and_painting_report_generation/run_0d4ae193602944dda511bf54199105b1/reports/index.html)
 
-**Status:** Controlled-300 Notebooks 01–33, Decision Notebook D01, and supplemental Notebook D02 are complete and validated. Notebooks 34–36 and the public Streamlit deployment still represent the frozen 50-painting pilot until the approved dashboard/storage review is completed.
+**Status:** Controlled-300 Notebooks 01–34, Decision Notebook D01, and supplemental Notebook D02 are complete. The dashboard's local visual implementation is frozen and approved. Notebook 35 has a saved Batch 10 partial checkpoint; browser/platform qualifications and live deployment validation remain pending in Batch 11. The deployment target is this repository's `main` branch. The public link is not yet certified for this Controlled-300 revision; Notebook 36 remains pending.
 
 For interactive inspection, open the dashboard. For standalone reports, download the HTML file and open it in a browser; its presentation images are embedded.
 

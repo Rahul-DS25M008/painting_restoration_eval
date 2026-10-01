@@ -155,13 +155,21 @@ class StudyDesignInPlaceBridgeTests(unittest.TestCase):
                 self.assertNotIn(forbidden, bridge)
 
     def test_approved_foyer_and_study_visual_source_is_byte_stable(self) -> None:
+        # The approved visitor overlay changed only the two link attributes and
+        # removed the old server-rendered tour card. Normalize that exact delta
+        # before comparing the original Foyer layout fingerprint; do not bless
+        # arbitrary new layout bytes by regenerating the baseline.
+        foyer = _source_function(self.source, "render_exhibition_foyer")
+        for mode in ("tour", "free"):
+            hook = f' data-museum-visit="{mode}" aria-haspopup="dialog"'
+            self.assertEqual(foyer.count(hook), 1)
+            foyer = foyer.replace(hook, "", 1)
+        self.assertEqual(foyer.count("</main>"), 1)
+        foyer = foyer.replace("</main>", "  {guided_tour_html(package)}\n</main>", 1)
         protected_regions = {
             "navigation_html": _source_function(self.source, "navigation_html"),
             "route_html": _source_function(self.source, "route_html"),
-            "guided_tour_html": _source_function(self.source, "guided_tour_html"),
-            "render_exhibition_foyer": _source_function(
-                self.source, "render_exhibition_foyer"
-            ),
+            "render_exhibition_foyer": foyer,
             "foyer_desktop_css": _source_between(
                 self.source, ".foyer-stage {", ".study-stage {"
             ),
@@ -177,7 +185,6 @@ class StudyDesignInPlaceBridgeTests(unittest.TestCase):
         approved_sha256 = {
             "navigation_html": "6484f2e74ce29f0e91c009227c011d28510d0dd6b3e95e652bcf63e113398f89",
             "route_html": "65a68fedd2ecfc433123dc93977ec36b6161ebaec63b324a1d8cdd688a4fcee8",
-            "guided_tour_html": "a06929f3fab1c1ff5b328aed8aec284e1426e1ea3f0a8bc536ba89de4cb4a503",
             "render_exhibition_foyer": "6d00ec07764a8c4cafc7d64458899741afaeed4af1a4fa89976f324e778ee917",
             "foyer_desktop_css": "0ee3b70a03d939aedfa16ed7455f80480fb5da8c23beed3f6354a01843d6c921",
             "study_desktop_css": "b0c067e5beaff2b31b1dc67548b8aace4f039471694987798206c38215282657",
@@ -187,6 +194,29 @@ class StudyDesignInPlaceBridgeTests(unittest.TestCase):
             with self.subTest(region=name):
                 observed = hashlib.sha256(region.encode("utf-8")).hexdigest()
                 self.assertEqual(observed, approved_sha256[name])
+
+    def test_approved_visitor_overlay_replaces_legacy_tour_without_source_drift(self) -> None:
+        self.assertNotIn("def guided_tour_html(", self.source)
+        self.assertIn('render_museum_visit(room_id, scalar_query("tour", "0") == "1")', self.source)
+        freeze = json.loads((ROOT / "config/publication/museum_visit_freeze.json").read_text(encoding="utf-8"))
+        self.assertEqual(freeze["status"], "user_approved_visual_freeze")
+        files = {r["path"]: r for r in freeze["files"]}
+        for relative in (
+            "streamlit_app.py", "src/restoration_eval/museum_visit.py",
+            "streamlit_assets/museum_visit/controller.js",
+            "streamlit_assets/museum_visit/tour.json",
+            "streamlit_assets/museum_visit/visit.css",
+        ):
+            with self.subTest(path=relative):
+                record = files[relative]
+                raw = (ROOT / relative).read_bytes()
+                if record["hash_mode"] == "lf_normalized":
+                    raw = raw.replace(b"\r\n", b"\n")
+                if relative == "streamlit_app.py":
+                    sys.path.insert(0, str(ROOT / "tools"))
+                    from n35_backend_delta import baseline_source
+                    raw = baseline_source(ROOT, relative).encode()
+                self.assertEqual(hashlib.sha256(raw).hexdigest(), record["sha256"])
 
 
 class MetricFrameworkSelectionContractTests(unittest.TestCase):

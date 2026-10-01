@@ -58,6 +58,11 @@ live components backed by registered assets. Where illustrative text differs
 from this contract or a producer record, the producer record and this corrected
 contract take precedence.
 
+A checksum-pinned N35 decorative shell may reproduce architecture and lighting
+only after all mock text, controls and scientific-looking content are removed.
+The shell is hidden from assistive technology and all meaningful page content
+is rendered as live, accessible, evidence-bound components above it.
+
 ### Fixed navigation and route state
 
 The primary navigation is always, in this order: `Exhibition Foyer`, `Study
@@ -336,7 +341,7 @@ their corresponding later rooms.
 
 ## 03 — Metric Framework
 
-**Status:** Approved and frozen on 2026-09-28  
+**Status:** Approved on 2026-09-28; three-selection flow amended on 2026-09-29
 **Visual authority:**
 [05_metric_framework_final.png](approved_current/05_metric_framework_final.png)
 
@@ -364,25 +369,25 @@ Disagreement is evidence to inspect—not noise to average away.*
 
 The central painting remains the dominant exhibit. A movable inspection lens
 reveals one selected diagnostic map over the same painting while the visitor
-chooses, in order:
+chooses exactly three public dimensions, in order:
 
 1. a painting;
-2. an available damage case;
-3. a restoration method or candidate;
-4. an evidence lens; and
-5. a region for which that measurement is valid.
+2. an evidence lens; and
+3. a region for which that measurement is valid.
 
-`p018 · mixed damage · LaMa` is the curated opening example, not a fixed case.
-`Change painting` provides searchable access to all 300 paintings and
-`Surprise me` selects another real available case. The interface must expose
-only evidence that actually exists: focused 35-painting experiments and the
-bounded SDXL branch must not appear as though they cover the full collection.
-Large diagnostic bundles may be fetched lazily and cached per painting.
+`p018 · mixed damage · LaMa` is the curated opening example. For every selected
+painting, this room deterministically resolves the exact canonical mixed-damage
+case and its canonical LaMa `c00` candidate. `Change painting` provides
+searchable access to all 300 paintings and `Surprise me` advances to another
+registered painting while preserving that same teaching-case rule. Resolution
+is fail-closed: the room must never silently substitute another case, model or
+asset.
 
-The compact `Damage / case` and `Method / candidate` selectors must remain
-visible alongside `Change painting`; the final implementation must not rely on
-the inspection lens to imply those selections. Unavailable combinations are
-disabled with a reason rather than hidden or replaced.
+Damage-case and model/candidate names are provenance in the `Featured case`
+plaque, not additional selectors. `binary_missing_region` is internal benchmark
+metadata rather than a public filter. Model comparisons such as Telea, LaMa,
+HINT, Stable Diffusion and SDXL belong in Model Gallery or Case Explorer. Large
+diagnostic bundles may be fetched lazily and cached per painting.
 
 The painting itself must not carry a permanent colour scale. Interpretation
 lives in the compact selected-metric plaque beside the exhibit so that the

@@ -368,7 +368,8 @@ def file_data_uri(path_text: str, expected_sha256: str) -> str:
     """Return one checksum-verified local file as a data URI."""
 
     path = Path(path_text)
-    payload = path.read_bytes()
+    from restoration_eval.evidence_transport import read_bytes
+    payload = read_bytes(path, expected_sha256)
     observed_sha256 = hashlib.sha256(payload).hexdigest()
     if observed_sha256.casefold() != expected_sha256.casefold():
         raise DashboardContractError(
@@ -409,11 +410,12 @@ def recorded_study_image_uri(path_text: str) -> str:
         raise DashboardContractError(
             f"Study Design image is outside the approved producer roots: {path_text}"
         )
-    if path.suffix.casefold() != ".png" or not path.is_file():
+    if path.suffix.casefold() != ".png":
         raise DashboardContractError(
             f"Exact Study Design image is unavailable: {path_text}"
         )
-    observed_sha256 = hashlib.sha256(path.read_bytes()).hexdigest()
+    from restoration_eval.evidence_transport import read_bytes
+    observed_sha256 = hashlib.sha256(read_bytes(path)).hexdigest()
     return file_data_uri(str(path), observed_sha256)
 
 
@@ -444,11 +446,12 @@ def recorded_metric_image_uri(path_text: str) -> str:
         raise DashboardContractError(
             f"Metric Framework image is outside approved producer roots: {path_text}"
         )
-    if path.suffix.casefold() not in {".png", ".webp", ".jpg", ".jpeg"} or not path.is_file():
+    if path.suffix.casefold() not in {".png", ".webp", ".jpg", ".jpeg"}:
         raise DashboardContractError(
             f"Exact Metric Framework image is unavailable: {path_text}"
         )
-    return file_data_uri(str(path), hashlib.sha256(path.read_bytes()).hexdigest())
+    from restoration_eval.evidence_transport import read_bytes
+    return file_data_uri(str(path), hashlib.sha256(read_bytes(path)).hexdigest())
 
 
 def advance_metric_painting(painting_ids: tuple[str, ...]) -> None:

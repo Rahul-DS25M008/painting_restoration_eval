@@ -6,6 +6,7 @@ import json
 from functools import lru_cache
 from pathlib import Path
 from urllib.parse import urlencode
+from .evidence_transport import read_bytes
 
 ROOT=Path(__file__).resolve().parents[2]
 INDEX=ROOT/'streamlit_assets/evidence/research_archive'
@@ -73,9 +74,7 @@ def selected_file(package, identity, relative):
     if item['size_bytes']>32*1024*1024: raise ValueError('Large evidence is outside the bounded local download limit; inspect publication metadata')
     path=(ROOT/relative).resolve()
     if not path.is_relative_to(ROOT.resolve()): raise ValueError('Invalid artifact path')
-    if not path.is_file(): raise FileNotFoundError('The exact artifact is unavailable locally; no substitute used')
-    if path.stat().st_size!=item['size_bytes']: raise ValueError('Saved artifact size mismatch')
-    raw=path.read_bytes()
+    raw=read_bytes(path,item['sha256'],item['size_bytes'],root=ROOT)
     if hashlib.sha256(raw).hexdigest()!=item['sha256']: raise ValueError('Saved artifact checksum mismatch')
     return raw,item
 

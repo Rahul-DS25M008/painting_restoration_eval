@@ -3,23 +3,32 @@ from __future__ import annotations
 import base64
 import hashlib
 import json
+import io
 from pathlib import Path
 from PIL import Image
 from .metric_inspection import VERSION, LENSES, REGIONS, public_contract
+from .evidence_transport import read_bytes, EvidenceUnavailable
 
 
 def load_inspection(root: Path, painting_id: str) -> dict:
     if not (len(painting_id)==4 and painting_id.startswith('p') and painting_id[1:].isdigit()):
         raise ValueError('Invalid painting identity')
     directory = (root/'streamlit_assets/evidence/metric_framework'/painting_id).resolve()
-    manifest = json.loads((directory/'manifest.json').read_text(encoding='utf-8'))
+    try:
+        manifest = json.loads((directory/'manifest.json').read_text(encoding='utf-8'))
+    except FileNotFoundError:
+        manifest = json.loads(read_bytes(directory/'manifest.json', root=root))
     if manifest['painting_id'] != painting_id or manifest['version'] != VERSION:
         raise ValueError('Inspection identity/version mismatch')
     for source in manifest['sources'].values():
         path=(root/source['path']).resolve()
         if not path.is_relative_to(root.resolve()):
             raise ValueError('Inspection source outside the local package')
-        if hashlib.sha256(path.read_bytes()).hexdigest()!=source['sha256']:
+        try:
+            source_bytes = read_bytes(path, source['sha256'], root=root)
+        except EvidenceUnavailable as exc:
+            raise ValueError(f'Inspection source changed or unavailable: {path.name}: {exc}') from None
+        if hashlib.sha256(source_bytes).hexdigest()!=source['sha256']:
             raise ValueError(f'Inspection source changed: {path.name}')
     contract = public_contract()
     if set(manifest['regions']) != set(REGIONS):
@@ -42,13 +51,14 @@ def load_inspection(root: Path, painting_id: str) -> dict:
             path=(root/asset['path']).resolve()
             if not path.is_relative_to(directory) or path.suffix != '.png':
                 raise ValueError('Inspection asset outside its registered exhibit')
-            data=path.read_bytes()
+            data=read_bytes(path, asset['sha256'], root=root)
             if hashlib.sha256(data).hexdigest()!=asset['sha256']:
                 raise ValueError(f'Inspection checksum mismatch: {path.name}')
             asset['uri']='data:image/png;base64,'+base64.b64encode(data).decode('ascii')
     manifest['lenses']={k:dict(label=v[0],metrics=v[1],summary=v[2]) for k,v in LENSES.items()}
     manifest['loader_version']='metric_view.v2'
-    with Image.open(root/manifest['regions']['content']['path']) as support:
+    content = manifest['regions']['content']
+    with Image.open(io.BytesIO(read_bytes(root/content['path'], content['sha256'], root=root))) as support:
         if support.size != tuple(reversed(manifest['shape'])) or support.getbbox() is None:
             raise ValueError('Invalid painting-content geometry')
         manifest['content_bbox']=list(support.getbbox())

@@ -11,6 +11,7 @@ import math
 from functools import lru_cache
 
 import pandas as pd
+from .evidence_transport import table
 
 from .model_gallery import ROOT, MAIN_MODELS, LABELS, catalogue, project_path, image_uri, painting_geometry
 
@@ -41,7 +42,7 @@ def verified(relative):
 
 @lru_cache(maxsize=1)
 def candidate_index():
-    frame = pd.read_csv(verified("metrics/trustworthiness_flags.csv"), usecols=list(IDENTITY), dtype=str).fillna("")
+    frame = table("tables/identities.csv.gz", usecols=list(IDENTITY), dtype=str).fillna("")
     frame = frame.drop_duplicates()
     if frame.candidate_id.duplicated().any() or len(frame) != 13879:
         raise ValueError("N27 union identity/count drift")
@@ -79,7 +80,8 @@ def assignment_records(candidate_id):
         ("flags", "trustworthiness_flags.csv", 11, "flag_id"),
     ):
         selected = []
-        for chunk in pd.read_csv(verified("metrics/" + filename), chunksize=40000, keep_default_na=False):
+        painting = candidate_index()[candidate_id]["painting_id"]
+        for chunk in table(f"tables/{kind}/{painting}.csv.gz", chunksize=40000, keep_default_na=False):
             selected.extend(rows(chunk[chunk.candidate_id.eq(candidate_id)]))
         if len(selected) != expected or len({r[idkey] for r in selected}) != expected:
             raise ValueError("Incomplete or duplicate N27 assignment set")
@@ -104,10 +106,14 @@ def threshold_record(category, indicator, frame):
     # N34's compact table omits experiment/prompt columns. Never guess them from
     # counts: require the exact indicator AND both full-precision N27 cutoffs to
     # identify one and only one registered stratum, otherwise disclose absence.
-    match = frame[frame.indicator_id.eq(indicator)]
-    match = match[match.apply(lambda r: math.isclose(r.warning_threshold, cutoff["warning"], abs_tol=1e-12, rel_tol=1e-12)
-                             and math.isclose(r.critical_threshold, cutoff["critical"], abs_tol=1e-12, rel_tol=1e-12), axis=1)]
-    stratum = rows(match)[0] if len(match) == 1 else None
+    # Reuse the exact 137 saved rows during this payload render. Repeated pandas
+    # row-wise apply calls needlessly dominated warm filter latency.
+    if "n35_saved_strata" not in frame.attrs:
+        frame.attrs["n35_saved_strata"] = rows(frame)
+    match = [r for r in frame.attrs["n35_saved_strata"] if r["indicator_id"] == indicator
+             and math.isclose(r["warning_threshold"], cutoff["warning"], abs_tol=1e-12, rel_tol=1e-12)
+             and math.isclose(r["critical_threshold"], cutoff["critical"], abs_tol=1e-12, rel_tol=1e-12)]
+    stratum = match[0] if len(match) == 1 else None
     return {"indicator": indicator, "observed": observed, **cutoff,
             "state": category["indicator_states"].get(indicator, "missing"),
             "stratum": stratum, "experiment_id": category["experiment_id"],
@@ -119,8 +125,8 @@ def threshold_record(category, indicator, frame):
 @lru_cache(maxsize=12)
 def policy_records(candidate_id):
     selected = []
-    path = ROOT / "outputs/28_metric_and_region_policy_ablation/metrics/flag_stability.csv"
-    for chunk in pd.read_csv(path, chunksize=50000, keep_default_na=False):
+    painting = candidate_index()[candidate_id]["painting_id"]
+    for chunk in table(f"tables/policy/{painting}.csv.gz", chunksize=50000, keep_default_na=False):
         selected.extend(rows(chunk[chunk.candidate_id.eq(candidate_id)]))
     return selected
 

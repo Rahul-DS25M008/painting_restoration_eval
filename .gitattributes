@@ -89,3 +89,14 @@ outputs/34_final_streamlit_dashboard_assets/**/*.webp -filter -diff -merge -text
 streamlit_assets/rooms/* -filter -diff -merge -text
 streamlit_assets/ornaments/* -filter -diff -merge -text
 streamlit_assets/evidence/study_design/* -filter -diff -merge -text
+
+# N35 lossless compact row projections and pinned path indexes are ordinary Git.
+# Existing scientific image/report publications stay on their immutable HF routes.
+streamlit_assets/evidence/deployment/**/*.gz -filter -diff -merge -text
+
+# N35's compact checkpoint is ordinary Git. Preserve exact recorded bytes
+# across Windows/Linux checkouts; do not route its CSVs through Git LFS.
+outputs/35_dashboard_and_deployment_validation/validation/dashboard_checks.csv -filter diff -merge -text
+outputs/35_dashboard_and_deployment_validation/reports/deployment_readiness.md -filter diff -merge -text
+outputs/35_dashboard_and_deployment_validation/manifests/run_manifest.json -filter diff -merge -text
+outputs/35_dashboard_and_deployment_validation/manifests/artifacts.csv -filter diff -merge -text

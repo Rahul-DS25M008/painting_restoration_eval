@@ -10,6 +10,7 @@ import json
 import pandas as pd
 
 from .model_gallery import ROOT, LABELS, image_uri
+from .evidence_transport import verified_path
 
 D02 = "outputs/d02_portrait_skin_tone_and_hand_restoration_audit"
 OPENING = "R005"
@@ -31,11 +32,7 @@ def verified_source(relative):
     match = ledger[ledger.relative_path.eq(relative)]
     if len(match) != 1 or match.iloc[0].validation_status != "passed":
         raise ValueError(f"Unregistered source: {relative}")
-    with path.open("rb") as handle:
-        digest = hashlib.file_digest(handle, "sha256").hexdigest()
-    if digest != match.iloc[0].checksum:
-        raise ValueError(f"Source checksum mismatch: {relative}")
-    return path
+    return verified_path(path, match.iloc[0].checksum, int(match.iloc[0].size_bytes))
 
 
 @lru_cache(maxsize=16)

@@ -434,6 +434,13 @@ visual references. The implementation recreates them with real HTML/CSS,
 Streamlit controls and registered evidence; the PNGs are never used as a page
 background or passed off as the application.
 
+N35 may use a separately generated, checksum-pinned **decorative shell** to
+preserve room architecture, lighting and material atmosphere. Such a shell
+must contain no labels, controls, measurements, scientific images or claims;
+it is marked `aria-hidden`, registered in `dashboard_validation.yaml`, and
+overlaid with live semantic HTML plus exact N34 evidence. It is decorative
+ambience, not a mockup background and never a scientific artifact.
+
 | Route | Approved desktop reference |
 |---|---|
 | Exhibition Foyer | [`03_exhibition_foyer_final.png`](approved_current/03_exhibition_foyer_final.png) |

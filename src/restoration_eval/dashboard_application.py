@@ -827,18 +827,23 @@ class DashboardPackage:
         return dict(matches[0])
 
     def local_report_bytes(self, report_id: str) -> tuple[bytes, str] | None:
-        """Read one explicitly selected local report and verify its producer hash."""
+        """Read one explicitly selected report, locally or by its pinned route."""
 
         record = self.report_record(report_id)
         path = safe_project_path(
             record.get("report_path"),
             self.project_root,
+            must_exist=False,
             allowed_suffixes={".html", ".md", ".pdf", ".csv", ".json"},
         )
         if path is None:
             return None
-        payload = path.read_bytes()
         expected_sha = str(record.get("report_sha256", "")).casefold()
+        from .evidence_transport import read_bytes, EvidenceUnavailable
+        try:
+            payload = read_bytes(path, expected_sha, root=self.project_root)
+        except EvidenceUnavailable as exc:
+            raise DashboardContractError(str(exc)) from None
         if not _SHA256_RE.fullmatch(expected_sha) or _hash_bytes(payload) != expected_sha:
             raise DashboardContractError(f"Local report checksum mismatch: {report_id}")
         return payload, path.name
