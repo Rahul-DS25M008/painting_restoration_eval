@@ -16,6 +16,33 @@ schedule. The owner subsequently changed Cloudflare to a 30-minute interval;
 that interval is owner-reported, not independently verified here. The repository
 now removes the canary and native GitHub schedule, retaining the dispatch workflow.
 
+## Controlled-300 target update — 2026-10-01
+
+The workflow on `main` now targets
+https://fhtw-painting-restoration-main.streamlit.app/. The checked-in Worker
+already sets `const REF = "main"`, but observed scheduled runs
+36849582831, 36852661968 and 36855812029 still used `pilot-50-dashboard`.
+Update that one branch constant in the **deployed Cloudflare Worker** to `main`
+and deploy the edit. A GitHub push does not update dashboard-managed Worker code.
+Keep its existing secret, cron interval and permissions unchanged. The Worker
+dispatches the workflow; the Python checker owns the app URL.
+
+The checker waits for the full-version Foyer, all eight room links and a decoded
+painting, opens/dismisses the visitor guide, then follows Case Explorer and
+requires five decoded evidence images plus its model/metric controls. It retains
+the public wake button, stable-ready interval and bounded timeout. It does not
+download reports, sweep all filters, compute science, or certify N35. Recurring
+visits remain best-effort, not an indefinite uptime guarantee.
+
+Changes to the workflow/checker/tests on `main` also trigger a one-off `push`
+verification. This does not add another periodic schedule. A successful push
+run proves Actions and the new target work; the next Cloudflare-triggered
+`workflow_dispatch` run separately verifies continuing scheduled dispatch.
+
+Retargeting this monitor does **not** redirect or rename the old public app.
+The `pilot-50-dashboard` branch and old Streamlit deployment are left intact;
+URL promotion is a separate owner-controlled step.
+
 ## Files
 
 - `worker.mjs`: complete Worker code to paste into the Cloudflare editor.
@@ -33,7 +60,7 @@ into Cloudflare Builds; only the Worker code is needed. UI labels may vary sligh
 Keep `.github/workflows/streamlit-availability.yml` enabled on `main` with
 `workflow_dispatch`. The Worker calls this exact workflow in
 `Rahul-DS25M008/painting_restoration_eval`. The workflow already checks the fixed
-public app URL: https://fhtw-painting-restoration.streamlit.app/.
+public app URL: https://fhtw-painting-restoration-main.streamlit.app/.
 
 Do not delete or disable the availability workflow after setup. It remains the
 execution engine. The canary and native GitHub cron were removed and committed
