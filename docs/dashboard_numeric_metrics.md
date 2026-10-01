@@ -1,5 +1,11 @@
 # Post-notebook dashboard addition: numerical metrics
 
+Historical pilot extension record. The current Controlled-300 dashboard is at
+[the main deployment](https://fhtw-painting-restoration-main.streamlit.app/);
+its N35 closeout and limitations are recorded in `evidence_dependency_audit.md`.
+The dated URLs and package counts below describe the earlier pilot, not the
+current application's scope.
+
 Approved scope (2026-09-04): add exact numerical evidence to Case Explorer and
 Model Performance while preserving all other page functions and existing layouts.
 This is an application-only, read-only extension. It creates no scientific

@@ -1,5 +1,12 @@
 # Controlled-300 Dashboard Design Direction
 
+**Delivery update (2026-10-01):** all approved rooms are implemented and frozen
+in the [Controlled-300 deployment](https://fhtw-painting-restoration-main.streamlit.app/).
+N35 has closed with disclosed limitations; N36 consolidation is next. The
+planning and design records below remain the historical visual authorities.
+See `../evidence_dependency_audit.md` for the current acceptance and provenance
+boundaries.
+
 **Status:** All eight top-level rooms and the `D02` mini room approved;
 cross-page consistency, producer-artifact mapping, remote integrity, runtime
 loading and the final implementation contract are complete; Notebook 34 release

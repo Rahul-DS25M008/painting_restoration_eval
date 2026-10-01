@@ -98,8 +98,10 @@ warnings remain, and ten browser/platform qualifications are explicitly
 pending, blocking and not passed. This is not a live-deployment certificate.
 The two recorded artifact hashes and artifact-manifest hash match the saved
 bytes, and the recorded application/helper fingerprints show no subsequent drift.
-Batch 11 must resolve those qualifications, verify the pinned dependency
-environment on Linux, and record the actual hosted revision and URL before N36.
+At this checkpoint, Batch 11 was intended to resolve those qualifications,
+verify the pinned Linux environment and record the hosted revision and URL.
+The owner-accepted closeout below explicitly discloses which targets remain
+unmeasured; it does not retroactively turn them into measured passes.
 
 The user explicitly selected the **existing scientific repository's `main`
 branch** for deployment, superseding the earlier separate-lightweight-repository
@@ -113,6 +115,57 @@ its manifest) and the four compact N35 outputs use ordinary Git. The latter
 retain exact bytes across platforms so their recorded hashes remain valid.
 No dashboard source, layout, reference artwork or scientific output was changed
 by this publication handoff.
+
+### N35 Controlled-300 closeout — 2026-10-01
+
+User-executed Batch 11 run `run_3d52ae7863c44fb1b7f56a99ea0c01fa` closes N35
+as `completed_with_disclosed_limitations`: **533 checks, 519 passes, 14 warning
+nonpasses and zero blocking failures**. The four canonical files and their
+recorded artifact hashes were checked. Both artifacts retain
+`validation_status: warning`; `all_planned_checks_verified` is false.
+The four dependency-version warnings remain. Ten known unmeasured qualifications
+retain `passed: false`, their original records, and explicit owner-acceptance
+exceptions; actual automated failures were not waived. The historical Batch 10
+record and N29 discrepancy remain disclosed.
+
+**Post-save provenance caveat:** the current saved notebook's source digest is
+`0013ed457a6869d7d5c10425d94d94d0771c4f842a2014c59a91e029158c7eaa`,
+whereas the execution-time manifest records
+`1802be0d85d014a204ad15570f6a754ede279034458054201d046f1016f16b29`.
+The exact cause has not been established. The saved notebook has 66 cells and
+no saved error outputs; Batch 11 code cells 61–64 exactly match the supplied
+cells, and source text for cells 0–59 is unchanged from the preceding commit.
+Cell 60 contains Markdown cleanup, but that alone did not reconstruct the
+recorded digest. The owner explicitly accepted proceeding without rerunning.
+The manifest hash was not rewritten, and output artifact checksums still match.
+N36 must preserve this source-snapshot discrepancy as a provenance limitation,
+not claim that the final saved notebook exactly matches its execution snapshot.
+
+The accepted [Controlled-300 application](https://fhtw-painting-restoration-main.streamlit.app/)
+uses the existing repository's `main` branch. The owner tested its functionality
+and requested no further interactive sweep. The separate pilot app was not
+renamed or redirected. Existing immutable HF bundles are reused; no new HF
+bundle is required for this closeout.
+
+Availability checks succeeded in GitHub Actions runs
+[36858527530 (push)](https://github.com/Rahul-DS25M008/painting_restoration_eval/actions/runs/36858527530)
+and [36859028102 (workflow dispatch)](https://github.com/Rahul-DS25M008/painting_restoration_eval/actions/runs/36859028102).
+Both ran on `main` at `e2b54a695a99ace715adbaee8a7ff21f7a407780` and observed
+ready Foyer and Case Explorer states. The owner confirms the latter was the
+scheduled Cloudflare invocation after retargeting its Worker to `main`.
+This is a repository/checker reference, not attestation of the server checkout.
+The 43.7-second checker duration includes stable-ready waits; it is not navigation
+p95. Linux browser execution does not establish clean Linux application
+reproduction. Exact viewport/accessibility coverage, exhaustive Firefox and
+navigation checks, offline opening of all reports, live peak memory and
+aggregate action budgets remain unmeasured. Availability maintenance remains
+best-effort, not an uptime guarantee.
+
+N36 may consolidate this accepted delivery, preserving these limitations and
+the prior scientific evidence. Existing N36 outputs are still historical pilot
+material; no Controlled-300 N36 completion or publication is claimed here.
+This dated record supersedes earlier current/pending deployment statements,
+while the historical pilot sections below remain unchanged.
 
 **Git LFS capacity guard: 2026-09-21.** GitHub reported 9.01 GiB used from the
 10.0 GiB included LFS allowance, with a `$0` hard budget and reset date of

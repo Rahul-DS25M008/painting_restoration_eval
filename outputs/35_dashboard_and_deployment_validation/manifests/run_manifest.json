@@ -1,13 +1,13 @@
 {
   "manifest_schema_version": "run_manifest.v1",
-  "run_id": "run_c284ad17ddde4b89928cfad7c153d393",
+  "run_id": "run_3d52ae7863c44fb1b7f56a99ea0c01fa",
   "notebook_id": "35",
   "notebook_name": "35_dashboard_and_deployment_validation",
-  "origin": "user_executed_batch_10",
-  "run_status": "partial",
-  "started_at_utc": "2026-10-01T10:58:46.353953+00:00",
-  "completed_at_utc": "2026-10-01T10:58:46.353953+00:00",
-  "git_commit": "cf64ab2b4e8b3b90598dbd4b3b6a7ee983eb35f8",
+  "origin": "user_executed_batch_11",
+  "run_status": "completed",
+  "started_at_utc": "2026-10-01T12:18:34.373627+00:00",
+  "completed_at_utc": "2026-10-01T12:18:34.373627+00:00",
+  "git_commit": "e2b54a695a99ace715adbaee8a7ff21f7a407780",
   "git_dirty": true,
   "git_branch": "main",
   "git_error": "",
@@ -23,7 +23,8 @@
     "config/evaluation/dashboard_validation.yaml": "7dcd490c3d3cb3cc5b8f804026b7dc15e503ee53e7e9173de0feb27513badad2"
   },
   "helper_versions": {
-    "n35_batch10": "2"
+    "n35_batch10": "2",
+    "n35_batch11": "1"
   },
   "python_version": "3.12.6",
   "python_implementation": "CPython",
@@ -427,6 +428,10 @@
       "lf_sha256": "b161b504970c3e5013bb2d29309eaf1bfee2149b73de19e289f7efd49019bf90"
     },
     {
+      "path": "tools/n35_batch11.py",
+      "lf_sha256": "65b14c73afb7f3bf3e296849d78aa352c8b4df1d7e04ee1e750023ce973c0975"
+    },
+    {
       "path": "tools/n35_deployment_checks.py",
       "lf_sha256": "b4de0b92ad45f1fd3c0ca068d01601749910dab6e1b616404c2a21d10cc1d082"
     },
@@ -441,6 +446,10 @@
     {
       "path": "tools/prepare_n35_batch10_cells.py",
       "lf_sha256": "c89cb430459a676a2115b273e3f483015d8fd65feb42155cdb8eccee838ebbe0"
+    },
+    {
+      "path": "tools/prepare_n35_batch11_cells.py",
+      "lf_sha256": "09d4a241da9ee2a583c70c7f16602d40951ddd34aff9dfe81ddac3af60a5bca1"
     },
     {
       "path": "tools/prepare_n35_batch2_cells.py",
@@ -465,15 +474,23 @@
     {
       "path": "tests/test_n35_batch10.py",
       "lf_sha256": "17227a72ab8d7d745f81f75ce7cf389019324c67a3c08315393fbfc2a8627680"
+    },
+    {
+      "path": "tests/test_n35_batch11.py",
+      "lf_sha256": "1ca7ef2c1c605a0d0cfca92783c44704f168e0cfc74451c20ee6d911339178b3"
+    },
+    {
+      "path": "config/publication/n35_live_acceptance.json",
+      "lf_sha256": "353f204123a97d0e033a2be08251645a4b417c43ee115b46c56d16fb33fbfb75"
     }
   ],
   "outputs": [
     {
-      "artifact_id": "artifact_73b02f1095658f664950",
+      "artifact_id": "artifact_b1df61cb70e2ebb978a2",
       "artifact_key": "dashboard_checks",
       "producer_notebook": "35",
       "artifact_type": "validation",
-      "artifact_role": "local_checkpoint",
+      "artifact_role": "accepted_deployment_with_limitations",
       "relative_path": "outputs/35_dashboard_and_deployment_validation/validation/dashboard_checks.csv",
       "format": "csv",
       "dataset_scope": "controlled_300",
@@ -481,16 +498,16 @@
       "schema_version": "validation_checks.v1",
       "row_count": "",
       "file_count": 1,
-      "size_bytes": 366647,
-      "checksum": "eaec5b9f142a57ce9449e24711ca662d811d014efc08425737f05afdffafb2dc",
-      "validation_status": "pending"
+      "size_bytes": 375574,
+      "checksum": "c58c5fcbc95c731cb5ddc11f4e5b70fa0365fbdac1db65220a088b6a6cdd9426",
+      "validation_status": "warning"
     },
     {
-      "artifact_id": "artifact_db92a648439ef842143b",
+      "artifact_id": "artifact_e33cb676f63c206bd854",
       "artifact_key": "deployment_readiness",
       "producer_notebook": "35",
       "artifact_type": "report",
-      "artifact_role": "local_checkpoint",
+      "artifact_role": "accepted_deployment_with_limitations",
       "relative_path": "outputs/35_dashboard_and_deployment_validation/reports/deployment_readiness.md",
       "format": "md",
       "dataset_scope": "controlled_300",
@@ -498,9 +515,9 @@
       "schema_version": "deployment_readiness_report.v2",
       "row_count": "",
       "file_count": 1,
-      "size_bytes": 78374,
-      "checksum": "0a2527ca2a3ccce176b953c9f7e2845e5f8a776182a607710e758bdb10d8f0d7",
-      "validation_status": "pending"
+      "size_bytes": 83629,
+      "checksum": "8131676cb1b7a18f550c0f4b9b6dee5d8d5affb3c5e70d0866061784c93b1266",
+      "validation_status": "warning"
     }
   ],
   "expected_counts": {
@@ -514,11 +531,11 @@
     "canonical_files": 4
   },
   "validation_summary": {
-    "check_count": 530,
-    "passed_count": 516,
+    "check_count": 533,
+    "passed_count": 519,
     "failed_count": 14,
-    "blocking_failure_count": 10,
-    "overall_passed": false,
+    "blocking_failure_count": 0,
+    "overall_passed": true,
     "failed_check_ids": [
       "batch_1_dependency_versions:version__pillow",
       "batch_1_dependency_versions:version__plotly",
@@ -537,18 +554,55 @@
     ]
   },
   "known_limitations": [
-    "Live deployment and clean Linux runtime untested; Batch 11 pending.",
-    "Pending required qualifications: ['desktop_1672x941_all_rooms', 'tablet_1024x1366_all_rooms', 'mobile_390x844_all_rooms', 'keyboard_focus_and_dialogs', 'firefox_reload_and_second_monitor', 'same_room_no_document_reload', 'cross_room_links_and_guided_tour', 'downloaded_reports_open_self_contained', 'browser_warm_navigation_p95', 'remote_action_budget_and_peak_memory']",
+    "Exact desktop/tablet/mobile viewport and accessibility coverage was not completed independently; owner reports functional acceptance.",
+    "Firefox/second-monitor and complete same-room/cross-room behavior are owner-accepted, not exhaustively independently verified.",
+    "All downloaded reports were not independently opened offline in the live acceptance check.",
+    "Browser warm-navigation p95, live server peak memory and aggregate per-action remote budgets were not measured.",
+    "GitHub used Linux Chromium to visit the hosted app; that does not establish a clean Linux application environment reproduction or exact installed server dependency versions.",
+    "The four Batch 1 local dependency-version warnings remain historical facts.",
+    "Server checkout SHA was not independently read; repository reference and checker revision are recorded separately.",
+    "Availability maintenance is best-effort, not an indefinite uptime guarantee.",
+    "The pilot public URL was not redirected or renamed; the accepted live URL is the full-version URL above.",
     "Historical manifest discrepancy retained. All six payload groups independently verified; no historical checksum rewritten.",
     "Computational evidence is not conservation approval or historical truth."
   ],
-  "artifact_manifest_checksum": "fa65c982dfd100305b6bc4f1058b6ce25c9883aba53cf978e8f2278f70f3049b",
-  "notebook_source_sha256": "4a4e12eca57c7063813b9228234d4f47d50ffef851faf533d08c41fde2da4847",
+  "artifact_manifest_checksum": "c426b7b717eb2d5b452d908917e03e02ad77110de9bfa526e1bceaf35916d452",
+  "notebook_source_sha256": "1802be0d85d014a204ad15570f6a754ede279034458054201d046f1016f16b29",
   "deployment": {
-    "state": "not_yet_validated",
-    "url": "",
+    "state": "owner_accepted_live_smoke_verified",
+    "url": "https://fhtw-painting-restoration-main.streamlit.app/",
     "tested_revision": "",
-    "next_batch": 11
+    "reference_revision": "e2b54a695a99ace715adbaee8a7ff21f7a407780",
+    "server_revision_verified": false,
+    "revision_basis": "Repository revision used by the checker; application main-branch deployment reported by owner. Server checkout SHA not independently attested.",
+    "actions_runs": [
+      {
+        "id": 36858527530,
+        "event": "push",
+        "branch": "main",
+        "head_sha": "e2b54a695a99ace715adbaee8a7ff21f7a407780",
+        "conclusion": "success",
+        "url": "https://github.com/Rahul-DS25M008/painting_restoration_eval/actions/runs/36858527530",
+        "checked_at_utc": "2026-10-01T11:57:50.178671+00:00",
+        "checker_status": "ready",
+        "case_status": "ready",
+        "elapsed_seconds": 43.7
+      },
+      {
+        "id": 36859028102,
+        "event": "workflow_dispatch",
+        "branch": "main",
+        "head_sha": "e2b54a695a99ace715adbaee8a7ff21f7a407780",
+        "conclusion": "success",
+        "url": "https://github.com/Rahul-DS25M008/painting_restoration_eval/actions/runs/36859028102",
+        "checked_at_utc": "2026-10-01T12:02:36.254580+00:00",
+        "checker_status": "ready",
+        "case_status": "ready",
+        "elapsed_seconds": 43.7,
+        "schedule_attribution": "Owner reports automatic Cloudflare invocation; GitHub independently confirms workflow_dispatch on main."
+      }
+    ],
+    "all_planned_checks_verified": false
   },
   "local_checkpoint": {
     "state": "local_checkpoint_pending_qualification",
@@ -566,6 +620,24 @@
       "remote_action_budget_and_peak_memory"
     ],
     "n35_complete": false,
-    "n36_may_start": false
+    "n36_may_start": false,
+    "historical_only": true
+  },
+  "previous_run": {
+    "run_id": "run_c284ad17ddde4b89928cfad7c153d393",
+    "manifest_sha256": "2ed9019378450be83f7adab98750573e06063504dd4b4025558f40d359d536b4",
+    "run_status": "partial"
+  },
+  "closeout": {
+    "state": "completed_with_disclosed_limitations",
+    "owner_acceptance": {
+      "functional_report": "I checked and played around myself and for me, everything seems fully in placce.",
+      "stop_further_checks": "its okay stop the check and assume everything works, take my word for it",
+      "scheduled_run_report": "a scheduled automated run finished just now successfully so consider this closed",
+      "disposition": "Owner accepts delivery with the unmeasured qualifications disclosed; not a claim of measured compliance."
+    },
+    "n35_delivery_complete": true,
+    "n36_may_start": true,
+    "n36_condition": "Preserve warnings, explicit acceptance exceptions and historical records; do not upgrade to full validation."
   }
 }

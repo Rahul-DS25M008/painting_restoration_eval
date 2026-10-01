@@ -20,11 +20,15 @@ now removes the canary and native GitHub schedule, retaining the dispatch workfl
 
 The workflow on `main` now targets
 https://fhtw-painting-restoration-main.streamlit.app/. The checked-in Worker
-already sets `const REF = "main"`, but observed scheduled runs
-36849582831, 36852661968 and 36855812029 still used `pilot-50-dashboard`.
-Update that one branch constant in the **deployed Cloudflare Worker** to `main`
-and deploy the edit. A GitHub push does not update dashboard-managed Worker code.
-Keep its existing secret, cron interval and permissions unchanged. The Worker
+already sets `const REF = "main"`. The owner also changed the deployed Worker to
+`main` and confirmed a successful scheduled invocation. GitHub records successful
+push run [36858527530](https://github.com/Rahul-DS25M008/painting_restoration_eval/actions/runs/36858527530)
+and workflow-dispatch run [36859028102](https://github.com/Rahul-DS25M008/painting_restoration_eval/actions/runs/36859028102),
+both at `e2b54a695a99ace715adbaee8a7ff21f7a407780`. The latter's automatic
+Cloudflare attribution is owner-confirmed; GitHub verifies the dispatch event
+and successful result. No further branch migration is pending.
+A GitHub push does not update dashboard-managed Worker code. Its existing
+secret, cron interval and permissions remain unchanged. The Worker
 dispatches the workflow; the Python checker owns the app URL.
 
 The checker waits for the full-version Foyer, all eight room links and a decoded

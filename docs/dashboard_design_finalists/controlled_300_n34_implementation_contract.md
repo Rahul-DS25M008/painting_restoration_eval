@@ -3,7 +3,7 @@
 **Status:** Implemented and validated by Notebook 34 on 2026-09-28
 
 **Applies to:** Notebook 34, its configuration and helper module, the
-Controlled-300 dashboard package, the future Streamlit implementation, and the
+Controlled-300 dashboard package, the Streamlit implementation, and the
 Controlled-300 Notebook 35 validation run
 
 **Package boundary:** `dashboard_package.v2`
@@ -11,8 +11,12 @@ Controlled-300 Notebook 35 validation run
 **Validated release:** `release_c5edf0d0ec99affbfa403726` from run
 `run_1e831de6e27f9ead0147bb30`
 
-**Next step:** implement the Controlled-300 Streamlit interface against the
-promoted package, then rerun Notebook 35 validation
+**Delivery update (2026-10-01):** the interface is implemented, frozen and
+[deployed](https://fhtw-painting-restoration-main.streamlit.app/). N35 closed
+with owner acceptance and disclosed limitations; see the current closeout in
+`../evidence_dependency_audit.md`. Next is N36 consolidation, retaining the
+warnings and provenance caveats. The original N34 package contract below is
+unchanged.
 
 ## Decision in plain language
 

@@ -6,9 +6,9 @@ The framework combines controlled artificial damage, complementary inpainting me
 
 > **Visual plausibility is not the same as restoration trustworthiness.**
 
-[Explore the dashboard](https://fhtw-painting-restoration.streamlit.app/) · [Full evaluation report — HTML](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/33_final_evaluation_report/reports/final_evaluation.html) · [Case and painting reports — pinned HF package](https://huggingface.co/datasets/RahulMaddineni264/painting-restoration-eval-diagnostics/blob/c33bbd87e65fe96f9a81c1c794fd4a70f7226874/report_packages/v1/controlled_300/32_case_and_painting_report_generation/run_0d4ae193602944dda511bf54199105b1/reports/index.html)
+[Explore the dashboard](https://fhtw-painting-restoration-main.streamlit.app/) · [Full evaluation report — HTML](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/33_final_evaluation_report/reports/final_evaluation.html) · [Case and painting reports — pinned HF package](https://huggingface.co/datasets/RahulMaddineni264/painting-restoration-eval-diagnostics/blob/c33bbd87e65fe96f9a81c1c794fd4a70f7226874/report_packages/v1/controlled_300/32_case_and_painting_report_generation/run_0d4ae193602944dda511bf54199105b1/reports/index.html)
 
-**Status:** Controlled-300 Notebooks 01–34, Decision Notebook D01, and supplemental Notebook D02 are complete. The dashboard's local visual implementation is frozen and approved. Notebook 35 has a saved Batch 10 partial checkpoint; browser/platform qualifications and live deployment validation remain pending in Batch 11. The deployment target is this repository's `main` branch. The public link is not yet certified for this Controlled-300 revision; Notebook 36 remains pending.
+**Status (2026-10-01):** Controlled-300 Notebooks 01–35, Decision Notebook D01, and supplemental Notebook D02 are complete. The eight-room dashboard is deployed from this repository's `main` branch, and its approved layout is frozen. N35 closed with owner acceptance and disclosed limitations: 519 checks passed, 14 warning/nonpass records remain, and there are no blocking failures. Live availability checks passed, including the scheduled dispatch; unmeasured browser/performance qualifications are not claimed as passes. **Notebook 36 consolidation remains pending.** See the [deployment closeout](docs/evidence_dependency_audit.md#n35-controlled-300-closeout--2026-10-01).
 
 For interactive inspection, open the dashboard. For standalone reports, download the HTML file and open it in a browser; its presentation images are embedded.
 
@@ -109,17 +109,19 @@ Conservative computational rules produce **152,669 candidate-by-flag records acr
 
 ## Explore the evidence
 
-The [currently deployed pilot Streamlit dashboard](https://fhtw-painting-restoration.streamlit.app/) provides eight views:
+The [Controlled-300 Streamlit dashboard](https://fhtw-painting-restoration-main.streamlit.app/) provides eight principal rooms:
 
-**Overview · Study Design · Metric Framework · Model Performance · Robustness & Uncertainty · Trustworthiness & XAI · Case Explorer · Reports & Reproducibility**
+**Exhibition Foyer · Study Design · Metric Framework · Model Gallery · Stability Lab · Trustworthiness · Case Explorer · Research Archive**
 
-Compare original, damaged, and restored images alongside diagnostic maps and exact numerical measurements. Case Explorer supports model, metric, region, seed, and prompt filtering, with damaged values, restored values, improvement, applicability, and CSV downloads. Model Performance also exposes the numerical estimates and intervals behind its aggregate plots.
+Trustworthiness also links to the D02 Focused Portrait Review. The Foyer offers a guided tour and free exploration.
+
+Compare original, damaged, and restored images alongside diagnostic maps and exact numerical measurements. Case Explorer supports model, metric, region, seed, and prompt filtering, with damaged values, restored values, improvement, applicability, and CSV downloads. Model Gallery also exposes the numerical estimates and intervals behind its aggregate plots.
 
 Measurements are shown only where they were computed. Additional damage-size seed candidates retain their uncertainty evidence without inheriting the reference-quality scores of another candidate.
 
 The dashboard reads existing evidence; it does not run restoration models or recompute scientific metrics.
 
-Reports show selected examples for readability. The complete retained candidate catalog and indexed visual evidence remain available separately. The current Controlled-300 report package covers **30 selected cases and all 300 paintings**; the public pilot dashboard is not yet rebuilt against that package.
+Reports show selected examples for readability. The complete retained candidate catalog and indexed visual evidence remain available separately. The deployed Controlled-300 dashboard uses the report package covering **30 selected cases and all 300 paintings**, with checksum-pinned remote evidence loaded as needed. The former pilot deployment remains separate; its URL has not been redirected.
 
 **Reading HTML reports:** Repository links open the report files on GitHub. Download an HTML report and open it locally to view its embedded figures and images, or access it through the dashboard.
 
@@ -139,17 +141,17 @@ python -m pip install -r requirements.txt
 python -m streamlit run streamlit_app.py
 ```
 
-The dashboard does not require a GPU. Full experimental reproduction uses a separate environment and additional model/data prerequisites; see the [reproducibility appendix](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/36_supervisor_publication_reproducibility_package/reports/reproducibility_appendix.md).
+The dashboard does not require a GPU. Full experimental reproduction uses a separate environment and additional model/data prerequisites. The existing [reproducibility appendix](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/36_supervisor_publication_reproducibility_package/reports/reproducibility_appendix.md) is historical pilot material until the Controlled-300 N36 consolidation is completed.
 
 Repository navigation:
 
-- `notebooks/` — the Controlled-300 pipeline through Notebook 33, Decision Notebook D01, supplemental Notebook D02, and the retained historical downstream notebooks; see the [notebook roadmap](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/docs/final_notebook_roadmap.md).
+- `notebooks/` — the Controlled-300 pipeline through Notebook 35, Decision Notebook D01, supplemental Notebook D02, and historical N36 pending consolidation; see the [notebook roadmap](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/docs/final_notebook_roadmap.md).
 - `src/restoration_eval/` — reusable implementation modules.
 - `config/` — versioned experiment and evaluation contracts.
 - `outputs/<notebook_name>/` — notebook-owned evidence, reports, and validation.
 - `outputs/inventory/` — global file inventory and artifact registry.
 
-The [review package](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/36_supervisor_publication_reproducibility_package/package/README.md) bundles reports, final figures, compact tables, model cards, and provenance. It is not a complete executable copy of the repository.
+The existing [review package](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/36_supervisor_publication_reproducibility_package/package/README.md) is the historical pilot package, not the final Controlled-300 delivery. N36 will consolidate current reports, figures, compact tables, model cards and provenance while retaining N35's disclosed limitations. Neither package is a complete executable copy of the repository.
 
 ## Interpretation limits
 

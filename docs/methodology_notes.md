@@ -1,9 +1,9 @@
 # Methodology Guide
 
-**Status:** historical completed-pipeline guide with Controlled-300 transition addendum, reviewed 2026-09-28\
-**Experimental scope:** historical `controlled_50`; active `controlled_300` completed through Notebook 34, with application implementation and N35 validation next\
+**Status:** historical completed-pipeline guide with Controlled-300 transition addendum, reviewed 2026-10-01\
+**Experimental scope:** historical `controlled_50`; active `controlled_300` completed through Notebook 35 with disclosed deployment limitations; N36 consolidation pending\
 **Pipeline:** historical 36-notebook pilot remains frozen; Controlled-300 rerun proceeds in dependency order\
-**Public interface:** [Streamlit dashboard](https://fhtw-painting-restoration.streamlit.app/)
+**Public interface:** [Controlled-300 Streamlit dashboard](https://fhtw-painting-restoration-main.streamlit.app/)
 
 This guide explains the main scientific and engineering decisions in the
 completed painting-restoration evaluation framework. It is a navigation and
@@ -19,8 +19,12 @@ Controlled-300 model-report layer. Notebook 32 run
 30-deep-case and collection reporting layer. Notebook 33 run
 `run_aef04267c2e44495a4e7a6249426bd4d` supplies the validated final synthesis;
 Notebook 34 run `run_1e831de6e27f9ead0147bb30` supplies the validated
-Controlled-300 `dashboard_package.v2` release. The public application remains
-the pilot until the new interface and Notebook 35 validation pass.
+Controlled-300 `dashboard_package.v2` release. The new interface is now deployed
+from `main`; N35 records owner acceptance and successful availability checks,
+with 519 passes and 14 retained warning/nonpass records. Unmeasured performance,
+platform and browser qualifications are not inferred from acceptance. N36 must
+carry these distinctions into the final Controlled-300 package; its existing
+outputs remain historical pilot evidence until that consolidation.
 
 - The detailed notebook sequence is in
   [`final_notebook_roadmap.md`](final_notebook_roadmap.md).

@@ -2767,12 +2767,34 @@ evidence_coverage:
 
     - notebook_id: "35"
       stem: "35_dashboard_and_deployment_validation"
+      # Legacy top-level contract below is retained as historical pilot evidence.
+      # controlled_300_target is the current scope-specific closeout record.
       status: "completed_validation_warning"
       execution_scope: "historical_controlled_50"
-      controlled_300_rerun_required: true
+      controlled_300_rerun_required: false
       controlled_300_target:
-        status: "preparation_in_progress"
-        completion_gate_passed: false
+        status: "completed_with_disclosed_limitations"
+        completion_gate_passed: true
+        completion_basis: "owner_accepted_delivery_with_explicit_unmeasured_qualification_exceptions"
+        all_planned_checks_verified: false
+        run_id: "run_3d52ae7863c44fb1b7f56a99ea0c01fa"
+        validation_status: "warning"
+        validation_checks: 533
+        passed_checks: 519
+        warning_nonpasses: 14
+        blocking_failures: 0
+        dependency_warnings: 4
+        owner_accepted_unmeasured_qualifications: 10
+        deployment_url: "https://fhtw-painting-restoration-main.streamlit.app/"
+        deployment_branch: "main"
+        checker_reference_revision: "e2b54a695a99ace715adbaee8a7ff21f7a407780"
+        server_revision_verified: false
+        successful_actions_runs: [36858527530, 36859028102]
+        n36_may_start: true
+        n36_condition: "Preserve disclosed limitations, acceptance exceptions, post-save notebook-source mismatch and historical scientific records."
+        post_save_notebook_source_match: false
+        post_save_disposition: "Owner accepted commit without rerunning; execution-time hash retained unchanged."
+        closeout_record: "docs/evidence_dependency_audit.md#n35-controlled-300-closeout--2026-10-01"
         input_package_schema_version: "dashboard_package.v2"
         input_runtime_manifest_schema_version: "dashboard_runtime_manifest.v1"
         input_run_id: "run_1e831de6e27f9ead0147bb30"

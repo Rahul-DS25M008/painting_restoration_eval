@@ -21,13 +21,24 @@ Notebook D01. It remains frozen 12-case decision evidence. HINT is introduced to
 the full benchmark only through the new production Notebook 12A; D01 is not
 rerun or relabelled as a full evaluation.
 
-The approved eight-page pilot dashboard remains publicly deployed at
-[the Streamlit application](https://fhtw-painting-restoration.streamlit.app/),
-but it continues to represent the tagged 50-painting evidence. The new
-Controlled-300 Notebook 34 package has passed; the application implementation,
-Notebook 35 validation and later publication package must still pass before the
-public interface may claim Controlled-300 coverage.
-Mixed 50/300 claims must never be shown as one completed study.
+As of 2026-10-01, the approved Controlled-300 dashboard is publicly deployed at
+[the Streamlit application](https://fhtw-painting-restoration-main.streamlit.app/)
+from this repository's `main` branch. N34 is complete and N35 has closed with
+owner acceptance and disclosed limitations: 519 passes, 14 retained warning
+nonpasses and zero blocking failures. The application layout remains frozen.
+N36's Controlled-300 consolidation is next; its existing outputs still describe
+the historical pilot. The pilot app and `pilot-50-complete` baseline are retained
+separately. Mixed 50/300 claims must never be shown as one completed study.
+
+The N35 closeout supersedes earlier pending-deployment instructions in this
+document, not its original measurement targets. N36 must preserve the four
+dependency warnings, ten unmeasured owner-accepted qualifications, historical
+N29 discrepancy and distinction between checker revision and unattested server
+revision. Successful availability runs do not prove performance budgets or a
+clean Linux application reproduction. See the dated closeout in
+`docs/evidence_dependency_audit.md`. No new HF publication is required for the
+N35 closeout; reuse the existing immutable bundles. Notebook changes and
+execution remain user-only, and `.codex_tmp` remains ignored local working data.
 
 The central methodological boundary remains:
 

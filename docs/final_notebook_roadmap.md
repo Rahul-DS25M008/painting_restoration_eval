@@ -8,15 +8,17 @@ This roadmap defines the final dependency order and detailed responsibility of e
 
 It consolidates the previously planned roadmap into 36 stages while preserving the supported methodological, experimental, engineering, reporting, explainability, and deployment scope.
 
-**Status as of 2026-09-28:** the validated 50-painting implementation is preserved
+**Status as of 2026-10-01:** the validated 50-painting implementation is preserved
 at Git tag `pilot-50-complete`. Notebooks 01–33, including Notebook 12A and
 supplemental D02, have completed their controlled minimal-delta reruns against
 the approved balanced 300-painting collection. Notebook 33 run
 `run_aef04267c2e44495a4e7a6249426bd4d` passed its completion gate and is now
 the canonical Controlled-300 final synthesis. Notebook 34 run
 `run_1e831de6e27f9ead0147bb30` has now completed and promoted the validated
-`dashboard_package.v2` Controlled-300 asset package. Notebook 35 application
-implementation and deployment validation are the next active stages.
+`dashboard_package.v2` Controlled-300 asset package. Notebook 35 has completed
+its owner-accepted deployment closeout with disclosed limitations: 519 passes,
+14 warning nonpasses and zero blocking failures. Notebook 36 consolidation is
+next; its existing outputs still describe the historical pilot.
 Existing notebook names, responsibilities, cell order, schemas,
 stable identifiers, and output roots remain the starting contract. Each later
 notebook becomes current only after its Controlled-300 outputs pass its gate;
@@ -28,12 +30,11 @@ frozen decision evidence. A new production stage, **Notebook 12A**, will run the
 selected HINT method across the full eligible 300-painting benchmark without
 renumbering Notebooks 13–36.
 
-The approved eight-page dashboard is publicly deployed at
-[the Streamlit application](https://fhtw-painting-restoration.streamlit.app/).
-Current application delivery is recorded separately from the historical N35
-validation and N36 package in the dated addendum to
-`docs/evidence_dependency_audit.md`. The approved application-only numerical
-views are documented in `docs/dashboard_numeric_metrics.md`.
+The approved eight-room Controlled-300 dashboard is publicly deployed from `main`
+at [the Streamlit application](https://fhtw-painting-restoration-main.streamlit.app/).
+The N35 closeout, successful availability runs and unmeasured qualifications are
+recorded in the dated addendum to `docs/evidence_dependency_audit.md`.
+`docs/dashboard_numeric_metrics.md` retains the earlier pilot extension record.
 
 All notebooks follow `docs/refactoring_implementation_guidelines.md`.
 
@@ -3954,8 +3955,8 @@ evidence until that rerun passes.
 **Notebook:** `35_dashboard_and_deployment_validation.ipynb`\
 **Origin:** New Notebook  
 **Historical Controlled-50 status:** Finished with non-blocking dependency warnings\
-**Controlled-300 implementation status:** Preparation layer in progress; room implementation and validation pending\
-**Controlled-300 completion gate passed:** No\
+**Controlled-300 implementation status:** Completed with disclosed limitations; approved interface frozen and live\
+**Controlled-300 closeout gate:** Accepted delivery; zero blocking failures, not all planned qualifications measured\
 **Output root:** `outputs/35_dashboard_and_deployment_validation/`\
 **Depends on:** Notebook 34, `streamlit_app.py`,
 `config/evaluation/dashboard_validation.yaml`, and
@@ -3965,7 +3966,15 @@ evidence until that rerun passes.
 
 Validate the dashboard as a reproducible inspection and decision-support layer.
 
-The completed Notebook 35 record is the historical Controlled-50 validation.
+**Current closeout:** user-executed Batch 11 run
+`run_3d52ae7863c44fb1b7f56a99ea0c01fa` records 533 checks: 519 passed and 14
+warning nonpasses. Ten unmeasured qualifications have explicit owner-acceptance
+exceptions, and four dependency warnings remain. Both output artifacts retain
+warning status. Live availability passed through push and scheduled dispatch;
+server revision, performance budgets and exhaustive platform coverage are not
+independently certified. N36 must carry these limitations into consolidation.
+
+The following pilot description is historical Controlled-50 validation.
 At that validation time, the application consumed the fixed pilot package under
 `outputs/34_final_streamlit_dashboard_assets/` and used the old labels
 `Overview`, `Study Design`, `Metric Framework`, `Model Performance`,
@@ -3981,7 +3990,7 @@ relabel the pilot package.
 
 The Controlled-300 application is implemented and reviewed room by room. Each
 room receives a live local Streamlit preview against its approved visual
-reference before work moves to the next room. This is a ten-batch delivery and
+reference before work moves to the next room. This is an eleven-batch delivery and
 validation sequence:
 
 1. replace the pilot validation contract and data-access helper with the v2
@@ -3996,7 +4005,10 @@ validation sequence:
 8. implement and approve Case Explorer;
 9. implement and approve Research Archive;
 10. run cross-room, responsive, deep-link, remote-fallback, cache, missing-asset,
-    application-smoke and canonical-persistence validation.
+    application-smoke and canonical-persistence validation, saving a partial
+    checkpoint where manual qualifications remain unmeasured;
+11. record owner acceptance and live availability evidence, preserve unmeasured
+    qualifications as explicit warning exceptions, and persist the N35 closeout.
 
 Only the active room may execute its data and asset work. Approved mockups are
 visual authorities, never deployable page backgrounds. High fidelity means the
@@ -4080,7 +4092,7 @@ three proposal research questions with evidence-bounded answers. Representative
 defaults remain presentation choices only; the complete indexed populations
 remain accessible.
 
-### Post-notebook application delivery
+### Historical pilot post-notebook application delivery
 
 The public deployment and approved numerical-metrics additions occurred after
 this run. The current app retains the eight-page layout and the N34 candidate
@@ -4097,9 +4109,9 @@ evidence is recorded in `docs/evidence_dependency_audit.md`.
 
 **Notebook:** `36_supervisor_publication_reproducibility_package.ipynb`\
 **Origin:** Consolidates Existing Previous Versions of Notebooks 30 and 35, Pre-refactor  
-**Refactor status:** Finished\
-**Validation status:** Finished with inherited non-blocking dependency warning\
-**Completion gate passed:** Yes\
+**Historical Controlled-50 status:** Finished with inherited non-blocking dependency warning\
+**Controlled-300 status:** Pending consolidation after the accepted N35 closeout\
+**Controlled-300 completion gate passed:** No\
 **Output root:** `outputs/36_supervisor_publication_reproducibility_package/`\
 **Depends on:** Notebooks 01–35
 

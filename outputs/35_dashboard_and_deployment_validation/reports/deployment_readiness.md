@@ -1,3 +1,90 @@
+# N35 deployment acceptance closeout
+
+Status: completed with disclosed limitations; not an all-tests-passed certificate.
+
+Accepted live URL: https://fhtw-painting-restoration-main.streamlit.app/
+
+Repository/checker reference: `e2b54a695a99ace715adbaee8a7ff21f7a407780`. Server checkout SHA not independently attested.
+
+The owner accepted live functionality and requested further interactive testing stop. Known unmeasured qualification rows remain **false**, with warning severity and their original records preserved. This is an explicit acceptance exception, not measured compliance with the original validation plan.
+
+## Remaining limitations
+
+- Exact desktop/tablet/mobile viewport and accessibility coverage was not completed independently; owner reports functional acceptance.
+- Firefox/second-monitor and complete same-room/cross-room behavior are owner-accepted, not exhaustively independently verified.
+- All downloaded reports were not independently opened offline in the live acceptance check.
+- Browser warm-navigation p95, live server peak memory and aggregate per-action remote budgets were not measured.
+- GitHub used Linux Chromium to visit the hosted app; that does not establish a clean Linux application environment reproduction or exact installed server dependency versions.
+- The four Batch 1 local dependency-version warnings remain historical facts.
+- Server checkout SHA was not independently read; repository reference and checker revision are recorded separately.
+- Availability maintenance is best-effort, not an indefinite uptime guarantee.
+- The pilot public URL was not redirected or renamed; the accepted live URL is the full-version URL above.
+
+## Deployment and acceptance evidence
+
+```json
+{
+  "schema": "n35_live_acceptance.v1",
+  "url": "https://fhtw-painting-restoration-main.streamlit.app/",
+  "repository": "Rahul-DS25M008/painting_restoration_eval",
+  "branch": "main",
+  "reference_revision": "e2b54a695a99ace715adbaee8a7ff21f7a407780",
+  "revision_basis": "Repository revision used by the checker; application main-branch deployment reported by owner. Server checkout SHA not independently attested.",
+  "user_acceptance": {
+    "functional_report": "I checked and played around myself and for me, everything seems fully in placce.",
+    "stop_further_checks": "its okay stop the check and assume everything works, take my word for it",
+    "scheduled_run_report": "a scheduled automated run finished just now successfully so consider this closed",
+    "disposition": "Owner accepts delivery with the unmeasured qualifications disclosed; not a claim of measured compliance."
+  },
+  "verified_actions_runs": [
+    {
+      "id": 36858527530,
+      "event": "push",
+      "branch": "main",
+      "head_sha": "e2b54a695a99ace715adbaee8a7ff21f7a407780",
+      "conclusion": "success",
+      "url": "https://github.com/Rahul-DS25M008/painting_restoration_eval/actions/runs/36858527530",
+      "checked_at_utc": "2026-10-01T11:57:50.178671+00:00",
+      "checker_status": "ready",
+      "case_status": "ready",
+      "elapsed_seconds": 43.7
+    },
+    {
+      "id": 36859028102,
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "head_sha": "e2b54a695a99ace715adbaee8a7ff21f7a407780",
+      "conclusion": "success",
+      "url": "https://github.com/Rahul-DS25M008/painting_restoration_eval/actions/runs/36859028102",
+      "checked_at_utc": "2026-10-01T12:02:36.254580+00:00",
+      "checker_status": "ready",
+      "case_status": "ready",
+      "elapsed_seconds": 43.7,
+      "schedule_attribution": "Owner reports automatic Cloudflare invocation; GitHub independently confirms workflow_dispatch on main."
+    }
+  ],
+  "verified_live_scope": [
+    "Foyer navigation and decoded painting",
+    "Visitor-guide dialog opens and closes with Escape",
+    "Case Explorer: five decoded evidence images and model/metric controls"
+  ],
+  "measurement_caveat": "43.7 seconds is the complete smoke duration including two 15-second settle intervals, not navigation latency or p95.",
+  "remaining_limitations": [
+    "Exact desktop/tablet/mobile viewport and accessibility coverage was not completed independently; owner reports functional acceptance.",
+    "Firefox/second-monitor and complete same-room/cross-room behavior are owner-accepted, not exhaustively independently verified.",
+    "All downloaded reports were not independently opened offline in the live acceptance check.",
+    "Browser warm-navigation p95, live server peak memory and aggregate per-action remote budgets were not measured.",
+    "GitHub used Linux Chromium to visit the hosted app; that does not establish a clean Linux application environment reproduction or exact installed server dependency versions.",
+    "The four Batch 1 local dependency-version warnings remain historical facts.",
+    "Server checkout SHA was not independently read; repository reference and checker revision are recorded separately.",
+    "Availability maintenance is best-effort, not an indefinite uptime guarantee.",
+    "The pilot public URL was not redirected or renamed; the accepted live URL is the full-version URL above."
+  ]
+}
+```
+
+## Batch 10 record (preserved)
+
 # N35 local deployment readiness
 
 Status: Partial local checkpoint; NOT readiness-certified. Required qualifications remain pending.
