@@ -87,6 +87,7 @@ outputs/34_final_streamlit_dashboard_assets/**/*.webp -filter -diff -merge -text
 
 # Small finished-room artwork uses ordinary Git, never the exhausted Git LFS.
 streamlit_assets/rooms/* -filter -diff -merge -text
+streamlit_assets/rooms/archive_portraits/*.png -filter -diff -merge -text
 streamlit_assets/ornaments/* -filter -diff -merge -text
 streamlit_assets/evidence/study_design/* -filter -diff -merge -text
 

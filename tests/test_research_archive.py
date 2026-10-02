@@ -134,6 +134,19 @@ class ResearchArchiveTests(unittest.TestCase):
             self.assertEqual(population[key],expected)
         self.assertEqual(self.data['individual_publications'],2653)
 
+    def test_decorative_portraits_preserve_controls_and_are_local(self):
+        portraits={name:f'{name}.png' for name in ('azhdaha','leto_ii','dragon')}
+        plain=room_markup(self.data,'<nav>Navigation</nav>','shell.png','lettering.png')
+        decorated=room_markup(self.data,'<nav>Navigation</nav>','shell.png','lettering.png',portraits)
+        self.assertEqual(decorated.count('data-action='),plain.count('data-action='))
+        self.assertEqual(decorated.count('aria-hidden="true" draggable="false"'),3)
+        for name in portraits:
+            self.assertIn(f'ra-portrait-{name}',decorated)
+            self.assertTrue((archive.ROOT/'streamlit_assets/rooms/archive_portraits'/f'{name}.png').is_file())
+        css=(archive.ROOT/'streamlit_assets/research_archive.css').read_text()
+        self.assertIn('mix-blend-mode:multiply',css)
+        self.assertIn('font:700 .91cqw',css)
+
     def test_publication_receipt_is_separate_from_frozen_partitions(self):
         z=self.data['zenodo']
         self.assertEqual(z['status'],'published')

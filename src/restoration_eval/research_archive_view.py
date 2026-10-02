@@ -24,11 +24,15 @@ def reference_window(box):
     return f'background-size:{1672/w*100:.6f}% {941/h*100:.6f}%;background-position:{x/(1672-w)*100:.6f}% {y/(941-h)*100:.6f}%'
 
 
-def room_markup(data,navigation,shell,lettering=None):
+def room_markup(data,navigation,shell,lettering=None,portraits=None):
     esc=html.escape
     parts=[f'<main class="ra-stage" aria-label="Research Archive" style="background-image:url({shell})">',navigation]
     if lettering:
         parts.append(f'<img class="ra-lettering-source" src="{esc(lettering)}" alt="" hidden>')
+    # Decorative ink only: preserve the original room, parchment and frame pixels.
+    for name,box in [('azhdaha',(1264,290,47,56)),('leto_ii',(1102,347,33,43)),('dragon',(1334,339,39,43))]:
+        if portraits and name in portraits:
+            parts.append(f'<img class="ra-portrait ra-portrait-{name}" src="{esc(portraits[name],quote=True)}" alt="" aria-hidden="true" draggable="false" style="{rect(*box)}">')
     def text(cls,box,content): parts.append(f'<div class="{cls}" style="{rect(*box)}">{content}</div>')
     def button(action,box,label,cls='ra-label',aria=None):
         parts.append(f'<button type="button" class="{cls}" data-action="{action}" aria-label="{esc(aria or re.sub("<[^>]+>"," ",label))}" style="{rect(*box)}">{label}</button>')
@@ -123,7 +127,8 @@ def render_research_archive(package,navigation):
                 elif len(raw)<1024*1024 and suffix in ('json','csv','md','yaml','txt'): st.code(raw.decode('utf-8-sig'),language='json' if suffix=='json' else None)
             return
         css=(ROOT/'streamlit_assets/research_archive.css').read_text(encoding='utf-8')
-        revision=room_html('<style>'+css+'</style>'+room_markup(data,nav_images(navigation),image_uri(str(ROOT/'streamlit_assets/rooms/research_archive_shell.png')),image_uri(str(ROOT/'streamlit_assets/rooms/research_archive_lettering.png'))))
+        portraits={name:image_uri(str(ROOT/'streamlit_assets/rooms/archive_portraits'/f'{name}.png')) for name in ('azhdaha','leto_ii','dragon')}
+        revision=room_html('<style>'+css+'</style>'+room_markup(data,nav_images(navigation),image_uri(str(ROOT/'streamlit_assets/rooms/research_archive_shell.png')),image_uri(str(ROOT/'streamlit_assets/rooms/research_archive_lettering.png')),portraits))
         js=(ROOT/'streamlit_assets/research_archive_controller.js').read_text(encoding='utf-8')
         serialized=json.dumps(data,ensure_ascii=True,allow_nan=False).replace('</','<\\/')
         room_controller(js.replace('__ARCHIVE_PAYLOAD__',serialized),revision)
