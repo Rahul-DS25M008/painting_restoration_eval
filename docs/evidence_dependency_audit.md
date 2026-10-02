@@ -13,6 +13,96 @@ The machine-readable YAML is authoritative for automated preflight. This file
 explains the scientific meaning of that registry and records the decisions that
 must not be silently reversed during later notebook planning.
 
+### Reporting clarifications — 2026-10-02
+
+This documentation-only review examined repository commit
+`54f1034f03877ceb9f4477ea3826ea22d09ccff8` and its saved comparison records.
+It corrects current-facing interpretation after the N36 freeze. No experiment,
+statistical analysis or notebook was rerun; no numerical output, run manifest,
+package snapshot, recorded hash or dashboard layout was changed. The historical
+entries below continue to describe their original review dates.
+
+**Current methodology and populations.** `docs/methodology_notes.md` now describes
+Controlled-300 rather than carrying the pilot body beneath a current header.
+Stale passages in `docs/model_audit_notes.md` are also corrected. The active
+design is 300 paintings, 3,425 registered cases, 2,620 restoration-eligible cases
+(2,320 nonzero and 300 controls), four fully covered methods, 10,480 matched
+primary candidates, 13,879 retained report candidates and 1,025 four-seed groups.
+N11's effective contract records 8,520 candidates; N22 separately adds 735
+candidates for 245 damage-size groups. D01/D02 remain separate evidence. The
+pilot remains recoverable at `pilot-50-complete`.
+
+**Pipeline comparison.** The recorded experiment compares fixed pipelines,
+including preprocessing and inference settings, not architecture in isolation.
+`config/experiments/stable_diffusion.yaml` specifies 512 × 512 inference and
+768 × 768 output; the Telea, LaMa and HINT contracts use 768 × 768. Resolution,
+mask processing, prompts and generation settings may contribute to differences.
+No matched-resolution experiment isolated their contributions.
+
+**Overlapping anchors.** In `src/restoration_eval/metrics_classical.py`, masked
+MAE averages absolute RGB error across selected pixels and channels. In
+`src/restoration_eval/error_maps.py`, the restored-error map first averages the
+same absolute error across RGB channels; its masked regional mean is the same
+scalar apart from floating-point precision. Maps remain useful localization
+evidence, but `classical_masked_mae` and `spatial_masked_error` are not independent
+confirmations. The recorded 10/11 LaMa anchor-win result remains a descriptive
+summary of the saved set, not a deduplicated result or 11 independent votes.
+Other metrics may also correlate; per-metric results and paired analyses should
+lead the comparative argument.
+
+**N33 T04/T05 scope and denominator correction.** In
+`outputs/21_multi_model_comparison/metrics/model_comparison.csv`, filter
+`population_id=core_three_model`, `analysis_scope=overall`, `scope_value=all`
+and a populated `anchor_id`. Across all four methods, the 44 selected rows have:
+
+| Saved anchors | Eligible coverage (`population_case_count`) | Actual paired cases (`paired_case_count`) |
+|---|---:|---:|
+| All ten anchors except structural-affinity correlation | 2,620 | 2,320 nonzero cases |
+| `structural_affinity_correlation` (content region) | 2,620 | 2,620, including 300 controls |
+
+The N33 builder in `src/restoration_eval/final_evaluation_report.py` copies the
+eligible-coverage count into T04's denominator and applies
+`controlled_300_core_four_method_overall_nonzero_cases` to both T04 and T05.
+That blanket label is inaccurate: the selected overall rows have metric-specific
+applicability and one anchor includes controls. This clarification applies to
+`t04_quality_anchor_summary` and `t05_metric_disagreement` in
+`outputs/33_final_evaluation_report/data/thesis_tables.csv`, their rendered final
+report views, and later byte-preserved copies or summaries of those selections.
+Read T04 with the paired denominator above; read T05 as rankings for those same
+metric-specific populations. Neither table establishes equal painting weights.
+Do not replace every 2,620 with 2,320 or describe the frozen table as corrected.
+
+The upstream comparison already saves a nonzero-only view:
+`analysis_scope=zero_control`, `scope_value=False`. For example:
+
+| LaMa affinity row | Saved comparison row ID | Paired cases | Saved mean (rounded) |
+|---|---|---:|---:|
+| Overall, including controls | `comparison_ef76a6ce4ec83d15adb2` | 2,620 | 0.942400 |
+| Nonzero only | `comparison_7cccf6ce4f5533ae75f9` | 2,320 | 0.934951 |
+
+The saved nonzero-only rows retain the same winners across the eleven anchors:
+LaMa on ten and Telea on crop SSIM. This is a read-only comparison of existing
+rows, not a new ranking computation. The README's quoted masked MAE, crop SSIM,
+crop LPIPS, masked colour and crop DINO values already use 2,320 nonzero cases.
+
+**Aggregation and independence.** `build_model_comparison` in
+`src/restoration_eval/multi_model_comparison.py` takes the mean of applicable
+paired case-level values per method. Overall values therefore describe the
+case-weighted benchmark mixture; extension paintings contribute more cases.
+They are not equal-weight averages over paintings. The N26 painting-level
+inferential analyses are separate estimators. This correction does not claim a
+new painting-balanced sensitivity analysis. Legacy population IDs are retained
+for compatibility, not interpreted literally as current method counts.
+
+**Reproducibility claim.** The records support traceability and reproduction;
+independent end-to-end reproduction has not been demonstrated. The N29 historical
+artifact-manifest and N35 notebook-source discrepancies remain unresolved.
+Owner-accepted but unmeasured deployment qualifications remain unmeasured, and
+warning nonpasses remain nonpasses. This review does not recertify all numerical
+results, establish a cause for the provenance discrepancies, or alter the N36
+completion record. The same distinctions should accompany Methods, Results and
+Discussion claims in the written thesis.
+
 ### N36 Controlled-300 closeout — 2026-10-01
 
 The Controlled-300 pipeline through N36 is complete, including production N12A;

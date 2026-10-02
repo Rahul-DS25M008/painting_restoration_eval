@@ -2,7 +2,7 @@
 
 **Status:** Controlled-300 audit notes with completed HINT selection/execution,
 validated N30 method cards, five N31 model reports and completed N36 delivery;
-reviewed 2026-10-01.
+reviewed 2026-10-02.
 
 This document records model selection, implementation provenance, evidence
 boundaries and reproducibility risks. Notebook 30's earlier Controlled-50 cards
@@ -64,6 +64,14 @@ API-only image-editing services are outside the executed model stack. No
 comparative performance claim about an unexecuted service follows from this
 project's selection decision.
 
+These are comparisons of fixed pipelines under recorded operating conditions,
+not isolated architecture effects. Telea, LaMa and HINT operate at 768 × 768;
+Stable Diffusion performs inference at 512 × 512 before returning to the
+768 × 768 canvas. Resolution, resizing, mask processing, prompting and generation
+settings can contribute to differences. Their effects have not been separated
+by a matched-resolution experiment. See the
+[post-freeze reporting clarifications](evidence_dependency_audit.md#reporting-clarifications--2026-10-02).
+
 ## 3. OpenCV Telea
 
 ### Role and implementation
@@ -113,7 +121,7 @@ independently reconstructed checkpoint-to-training-run history. See
 - uses broader learned context than Telea;
 - practical open learned baseline for large masks;
 - deterministic under the evaluated contract;
-- strongest model on 10 of the 11 validated Notebook 21 anchors for the complete three-model population.
+- lowest mean masked MAE (14.83) and crop LPIPS (0.1292) among the four full methods on the saved 2,320-case nonzero comparison; leads 10 of the 11 saved Notebook 21 anchors, with the overlap explained in Section 7.
 
 ### Limitations
 
@@ -145,19 +153,19 @@ The effective six-variant prompt policy includes the separately configured
 scratch-aware supplement. See the
 [executed N11 prompt contract](notebook_11_scratch_prompt_ablation_contract.md).
 
-### Original N11 and N18 evidence population
+### Controlled-300 N11 and N18 evidence population
 
-- 410 restoration cases;
-- 1,330 persisted candidates;
-- 1,280 model inferences and 50 zero controls;
-- 80 unique restoration cases in the repeated-seed uncertainty population;
-- 130 prompt-specific uncertainty groups;
-- 520 repeated-seed candidates using seeds `2026`, `2027`, `2028`, and `2029`;
-- 50 scratch-aware groups paired with generic-prompt groups for controlled thin-scratch prompt ablation.
+- 2,620 restoration-eligible cases, including 300 identity controls;
+- 8,520 persisted N11 candidates under the effective scratch-prompt contract;
+- 8,220 model inferences and 300 zero controls;
+- 480 unique restoration cases in the repeated-seed uncertainty population;
+- 780 prompt-specific uncertainty groups: 480 generic and 300 scratch-aware;
+- 3,120 repeated-seed candidates using seeds `2026`, `2027`, `2028`, and `2029`;
+- 300 scratch-aware groups paired with generic-prompt groups for controlled thin-scratch prompt ablation.
 
-The completed N22 extension adds 35 damage-size four-seed groups by combining
-35 N11 seed-2026 candidates with its own 105 additional candidates. Final
-uncertainty coverage is 165 groups: 130 canonical groups from N18 and 35
+The completed N22 extension adds 245 damage-size four-seed groups by combining
+245 N11 seed-2026 candidates with its own 735 additional candidates. Final
+uncertainty coverage is 1,025 groups: 780 canonical groups from N18 and 245
 damage-size groups from N22. Prompt arms remain separate within each group.
 
 The additional N22 candidates do not inherit individual reference-quality rows
@@ -262,6 +270,19 @@ Anchor wins are descriptive counts across validated evidence views. They are not
 a weighted score, conservation ranking, or substitute for case-level inspection.
 Neither runtime nor repeated-seed uncertainty enters cross-model quality voting.
 
+The eleven anchors are not eleven independent measurements. Masked MAE and
+masked mean restored spatial error summarize the same absolute RGB error apart
+from numerical precision. The maps add spatial localization; their scalar mean
+does not provide a second independent confirmation. Other anchors can correlate.
+The recorded 10/11 result is retained, not relabelled as a deduplicated analysis.
+
+Overall values average paired cases rather than giving each painting equal
+weight. In the saved N21 overall rows, ten anchors use 2,320 nonzero cases and
+structural-affinity correlation uses all 2,620 eligible cases including controls.
+Read `paired_case_count` for the measurement's denominator. The N33 T04/T05
+reporting correction and the already saved nonzero-only affinity results are
+specified in the [audit clarification](evidence_dependency_audit.md#reporting-clarifications--2026-10-02).
+
 ## 8. Uncertainty and robustness terminology
 
 - Stable Diffusion receives empirical repeated-seed uncertainty because four candidates exist per approved group.
@@ -269,7 +290,7 @@ Neither runtime nor repeated-seed uncertainty enters cross-model quality voting.
 - Telea, LaMa and HINT are deterministic under the evaluated contract; later analyses use robustness or sensitivity terminology.
 - Notebook 18 owns scalar and pairwise uncertainty for the complete approved repeated-seed groups.
 - Notebook 19 owns their numeric uncertainty maps, heatmaps and spatial overlays.
-- Notebook 22 owns the damage-size extension, including its 35-group scalar and spatial uncertainty evidence.
+- Notebook 22 owns the damage-size extension, including its 245-group scalar and spatial uncertainty evidence.
 
 Uncertainty is an empirical variability proxy, not calibrated confidence.
 

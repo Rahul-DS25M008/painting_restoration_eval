@@ -1,6 +1,6 @@
 # Methodology Guide
 
-**Status:** completed Controlled-300 pipeline with explicitly labelled historical methodology, reviewed 2026-10-01\
+**Status:** current methodology for the completed Controlled-300 pipeline, reviewed 2026-10-02\
 **Experimental scope:** `controlled_300` completed through Notebook 36 with disclosed deployment/provenance limitations; `controlled_50` retained as historical evidence\
 **Pipeline:** completed N01–N36 including N12A; separate D01 and supplemental D02; pilot baseline remains frozen\
 **Public interface:** [Controlled-300 Streamlit dashboard](https://fhtw-painting-restoration-main.streamlit.app/)
@@ -10,10 +10,12 @@ completed painting-restoration evaluation framework. It is a navigation and
 interpretation document, not a replacement for producer manifests, validation
 tables, configurations, reports, or the thesis methodology chapter.
 
-The detailed prose below preserves the completed pilot methodology. Current
-Controlled-300 populations and producer status supersede its pilot counts only
-where explicitly recorded in the roadmap, evidence audit, coverage registry and
-completed producer manifests. Notebook 31 supplies the validated five-report
+The detailed prose below describes Controlled-300. The completed Controlled-50
+pilot is historical evidence, recoverable at `pilot-50-complete`; it does not
+define the current populations. The
+[post-freeze reporting clarifications](evidence_dependency_audit.md#reporting-clarifications--2026-10-02)
+explain interpretation corrections without changing executed outputs.
+Notebook 31 supplies the validated five-report
 Controlled-300 model-report layer. Notebook 32 run
 `run_0d4ae193602944dda511bf54199105b1` now supplies the validated 300-painting,
 30-deep-case and collection reporting layer. Notebook 33 run
@@ -68,7 +70,7 @@ The central interpretation boundary is:
 
 ## 2. Dataset and preprocessing
 
-The controlled dataset contains 50 paintings divided evenly across five broad
+The controlled dataset contains 300 paintings, with 60 in each of five broad
 visual categories:
 
 - abstraction/surrealism;
@@ -78,9 +80,9 @@ visual categories:
 - portrait/figure.
 
 These are study strata, not independently validated art-historical styles.
-Style/period, date/period and medium are populated for only 18 of the 50 works,
-so analyses must not convert the balanced visual categories into general style
-effects.
+Style/period is documented for 268 works and missing for 32. Metadata coverage
+is field-specific; analyses must not convert the balanced visual categories
+into general art-historical style effects.
 
 Notebook 02 standardizes each accepted image as a 768 × 768 RGB PNG. It preserves
 aspect ratio, pads rather than distorts or center-crops, and records the exact
@@ -90,14 +92,14 @@ estimating content from pixel colour.
 
 ## 3. Experimental case registry
 
-Notebook 08 normalizes four experiment families into a 525-row case registry:
+Notebook 08 normalizes four experiment families into a 3,425-row case registry:
 
 | Experiment | Cases | Design and statistical boundary |
 |---|---:|---|
-| Canonical missing-region damage | 250 | 50 paintings × five masks, including 50 identity controls |
-| Damage-size sensitivity | 35 | Five paintings × seven nested area levels; painting and category are confounded |
-| Mask robustness | 75 | Five paintings × three fixed family/area groups × five mask variants |
-| Synthetic degradation | 165 | Controlled procedural effects; only 50 cases have approved masked-removal semantics |
+| Canonical missing-region damage | 1,500 | 300 paintings × five masks, including 300 identity controls |
+| Damage-size sensitivity | 245 | 35 paintings × seven nested area levels; levels repeat within paintings |
+| Mask robustness | 525 | 35 paintings × three fixed family/area groups × five mask variants |
+| Synthetic degradation | 1,155 | 35 paintings × 33 procedural conditions; 350 cases have approved masked-removal semantics |
 
 Canonical masks are `zero_control`, `scratch_thin`, `loss_small`, `loss_large`
 and `mixed_damage`. Missing pixels are displayed as white in damaged inputs;
@@ -115,17 +117,28 @@ cases are inpainting tasks. Only `water_stain`, `dirt_dust`,
 `partial_transparency` and `water_stain_dirt` synthetic cases are eligible as
 supplementary masked-removal diagnostics. Blur, tonal change, colour change and
 pigment transport are not silently reframed as missing-content restoration.
-This yields 410 eligible restoration cases for each method: 250 canonical, 35
-damage-size, 75 robustness and 50 synthetic-degradation cases.
+This yields 2,620 eligible restoration cases per full-coverage method: 1,500
+canonical, 245 damage-size, 525 robustness and 350 synthetic-degradation cases.
+Of these, 2,320 have nonzero damage and 300 are identity controls. Eligible-case
+coverage and the number of applicable paired measurements are distinct counts.
 
 ## 4. Restoration methods and candidate populations
 
 | Method | Role | Validated scope |
 |---|---|---:|
-| OpenCV Telea | Deterministic classical baseline; radius 3 | 410 cases |
-| LaMa through IOPaint | Deterministic pretrained learned baseline | 410 cases |
-| Stable Diffusion 1.5 Inpainting | Stochastic, prompt-conditioned baseline | 410 primary candidates; 1,330 N11 candidates in total |
-| SDXL Inpainting | Bounded feasibility/partial-evaluation branch | 10 cases nested within five paintings |
+| OpenCV Telea | Deterministic classical baseline; radius 3 | 2,620 cases |
+| LaMa through IOPaint | Deterministic pretrained learned baseline | 2,620 cases |
+| HINT Places2 | Deterministic learned transformer, selected in separate D01 | 2,620 cases in N12A |
+| Stable Diffusion 1.5 Inpainting | Stochastic, prompt-conditioned baseline | 2,620 primary candidates; 8,520 N11 candidates in total |
+| SDXL Inpainting | Bounded feasibility/partial-evaluation branch | 24 completed of 35 scheduled cases; 19 paintings represented |
+
+The comparison evaluates fixed restoration pipelines, not architecture in
+isolation. Telea, LaMa and HINT operate on the 768 × 768 canvas; Stable Diffusion
+uses 512 × 512 inference and returns to 768 × 768 for exact-mask compositing.
+Resolution, resizing, mask processing, prompts and generation settings can all
+contribute to observed differences. Their individual effects were not isolated
+by a matched-resolution experiment. Conclusions concern the recorded pipelines,
+not every implementation of the corresponding model families.
 
 Zero controls are identity no-ops. The nonzero restoration branches use exact
 mask compositing so active pixels may change while pixels outside the approved
@@ -133,21 +146,24 @@ mask remain unchanged. Binary and synthetic masks retain their distinct active
 thresholds.
 
 Stable Diffusion uses a fixed generic primary prompt and seed 2026 for the
-410-case comparison. Its additional N11 candidates support contextual prompt
+2,620-case comparison. Its additional N11 candidates support contextual prompt
 tests, four-seed uncertainty and a paired scratch-aware prompt experiment. The
-formal scratch experiment contains 400 outcomes: 50 paintings × four seeds ×
-two prompt arms. Seeds are repeated observations within paintings, not 200
+formal scratch experiment contains 2,400 outcomes: 300 paintings × four seeds ×
+two prompt arms. Seeds are repeated observations within paintings, not 1,200
 independent paintings. Prompt sensitivity is not seed uncertainty.
 
-Notebook 22 owns another 105 Stable Diffusion candidates—seeds 2027–2029 for
-the 35 damage-size cases. They extend uncertainty coverage without altering N11.
-The 1,785-candidate reporting/dashboard population is a validated downstream
+Notebook 22 owns another 735 Stable Diffusion candidates—seeds 2027–2029 for
+the 245 damage-size cases. They extend uncertainty coverage without altering N11.
+The four full methods contribute 10,480 matched primary candidates. The
+13,879-candidate reporting/dashboard population is a validated downstream
 selection, distinct from every candidate ever generated. “Approved” means
 eligible for the declared analysis, not approved restoration quality.
 
-SDXL completed all ten predeclared cases, but one seed per case and five
-independent paintings cannot support a full benchmark or uncertainty estimate.
-Runtime or hardware limitations are not image-quality failures.
+SDXL completed 24 predeclared cases; one timed out and ten were not started
+under the declared compute budget. One seed per completed case cannot support
+seed-uncertainty estimates. Runtime or hardware limitations are not image-quality
+failures. D01's 12 paired HINT/MAT cases and the supplemental D02 portrait audit
+remain separate studies, not additions to the main comparison population.
 
 ## 5. Canonical spatial regions
 
@@ -200,7 +216,7 @@ suitability.
 
 ## 7. Eleven comparison anchors
 
-The main three-model comparison uses eleven metric–region anchors:
+The main four-method comparison retains eleven metric–region anchors:
 
 | Evidence family | Anchor |
 |---|---|
@@ -217,35 +233,49 @@ The main three-model comparison uses eleven metric–region anchors:
 | Structural affinity | Content-region reference-affinity map correlation |
 
 Metric direction is retained for every anchor. Anchor wins count how many
-separate anchors a model ranks first on; mean anchor rank describes its average
-position across those same anchors. Neither is a combined quality score.
-Runtime and uncertainty are excluded from quality voting. The core paired
-comparison covers 410 cases and three models; a separate matched four-model view
-covers only the ten SDXL cases.
+saved anchors a model ranks first on; mean anchor rank describes its average
+position across those same anchors. These are not counts of independent evidence
+or a combined quality score. Masked MAE and masked mean restored spatial error
+are the same scalar quantity apart from numerical precision: the spatial maps
+add localization, but their regional mean is not independent confirmation.
+Other anchors may also correlate. Individual metric values and the paired
+analyses support interpretation of the retained 10/11 LaMa result.
+
+Runtime and uncertainty are excluded from quality voting. The core coverage is
+2,620 cases and four methods; a separate matched five-method view covers the
+24 completed SDXL cases. The legacy identifiers `core_three_model` and
+`sdxl_four_model_subset` remain unchanged for schema continuity.
+
+For the saved N21 overall anchor rows, ten anchors have 2,320 paired nonzero
+cases. Content-region structural-affinity correlation has 2,620 paired cases,
+including controls. N33's T04/T05 blanket nonzero scope and coverage-based
+denominator therefore require the
+[documented correction](evidence_dependency_audit.md#reporting-clarifications--2026-10-02).
+Use N21's `paired_case_count` for each measurement, not `population_case_count`.
 
 ## 8. Repeated-candidate stability and spatial explanation
 
 Repeated-candidate stability analysis requires exactly seeds 2026–2029 within
 a fixed case, prompt and configuration:
 
-- N18: 130 canonical prompt-specific groups—80 generic and 50 scratch-aware—
-  containing 520 candidates and 780 unordered seed pairs;
-- N22: 35 damage-size groups, using 35 N11 seed-2026 candidates and 105 new
-  candidates, with 210 unordered seed pairs;
-- final coverage: 165 complete groups.
+- N18: 780 canonical prompt-specific groups—480 generic and 300 scratch-aware—
+  containing 3,120 candidates and 4,680 unordered seed pairs;
+- N22: 245 damage-size groups, using 245 N11 seed-2026 candidates and 735 new
+  candidates, with 1,470 unordered seed pairs;
+- final coverage: 1,025 complete groups, each with four seeds and six pairs.
 
 The transparent disagreement components include per-pixel RGB standard deviation, pairwise
 RGB MAE/RMSE, LPIPS distance and CLIP/DINOv2 cosine distance. N18 also joins
 reference, perceptual, feature, texture, colour and seam evidence into a
-130-row association-ready table. It does not fit confidence calibration, compute
+780-row association-ready table. It does not fit confidence calibration, compute
 a combined uncertainty index, or use later computational flags as ground truth.
 
-N19 stores raw numeric maps and visual overlays for N18's 130 groups; N22 owns
-the 35 damage-size maps. High variability identifies less stable areas where
+N19 stores raw numeric maps and visual overlays for N18's 780 groups; N22 owns
+the 245 damage-size groups' maps. High variability identifies less stable areas where
 repeated candidates disagree and closer inspection may be useful. Low
 variability shows consistency, not correctness. Associations with other
 restoration-quality diagnostics describe complementary evidence rather than a
-validated error detector. Telea and LaMa are deterministic, so their later
+validated error detector. Telea, LaMa and HINT are deterministic, so their later
 analyses use robustness or sensitivity terminology instead of artificial
 uncertainty values. SDXL has insufficient seed coverage.
 
@@ -255,6 +285,13 @@ Comparisons are case-paired whenever models share the same case. Repeated masks,
 seeds, prompts and cases nested within paintings are not treated as independent
 paintings. Focused extension experiments support within-study trajectories
 and sensitivity descriptions, not independent category effects.
+
+N21's overall summaries average applicable paired case-level rows. They are
+case-weighted descriptions of the evaluated benchmark mixture, not equal-weight
+painting averages: paintings included in extension experiments contribute more
+cases. N26's painting-level inferential analyses are separate and must not be
+presented as the same estimator. No new equal-painting sensitivity analysis was
+performed for this documentation correction.
 
 Downstream analyses preserve metric disagreement and include, where their
 contracts apply:
@@ -277,8 +314,9 @@ damage threshold, model ordering or combined score is retained.
 Notebook 27 assigns rule-derived flags and failure categories from available
 computational evidence. These rules prioritize review; they are not expert
 annotations, objective failure truth, calibrated risk or conservation decisions.
-Consequently, the 1,703 flagged candidates must not be described as a 95.4%
-objective model-failure rate.
+Consequently, the proportion of candidates with review flags is not an
+objective model-failure rate. Counts must retain their declared candidate
+population, available evidence and rule applicability.
 
 Notebook 29 provides rule traces, counterfactual “what would change the flag”
 explanations, and CLIP/DINOv2 neighbor retrieval. Retrieval supplies visual or
@@ -292,7 +330,7 @@ Important HTML reports are self-contained: report-relevant web-sized images and
 figures are embedded, while full-resolution collections remain referenced by
 validated paths and checksums. Report examples follow explicit, auditable
 selection rules rather than informal cherry-picking. The final reporting layer
-includes four model reports, 30 selected case reports, all 50 painting reports,
+includes five model reports, 30 selected case reports, all 300 painting reports,
 and a thesis-level evaluation report.
 
 Notebook 34 prepares normalized dashboard tables and indexes. The approved
@@ -317,6 +355,12 @@ lock of every producer environment. Exact reproduction requires the target
 producer's package versions, configuration and helper checksums, seeds, model
 revisions, hardware and CUDA information. See the
 [reproducibility appendix](../outputs/36_supervisor_publication_reproducibility_package/reports/reproducibility_appendix.md).
+
+These records support traceability and reproduction; independent end-to-end
+reproduction has not been demonstrated. The N29 historical-manifest and N35
+notebook-source discrepancies remain unresolved, as do the disclosed unmeasured
+deployment qualifications. Documentation updates neither change those hashes
+nor convert accepted qualifications into passed checks.
 
 ## 12. What the methodology supports
 

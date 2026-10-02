@@ -16,7 +16,7 @@ The completed **Controlled-300** study uses 300 paintings, balanced across five 
 
 Four methods have full eligible-case coverage: **OpenCV Telea, LaMa, HINT and Stable Diffusion**. SDXL is reported separately as a bounded feasibility branch.
 
-The main comparative finding is clear but conditional: **LaMa leads 10 of 11 saved quality anchors; Telea leads crop SSIM.** An anchor is one metric in one defined image region, not a component of a universal combined score. Zero anchor wins do not mean a method never performs well on an individual painting.
+The main comparative finding is clear: **LaMa has the lowest mean masked MAE (14.83) and crop LPIPS (0.1292); Telea leads crop SSIM (0.8632)** across the 2,320 paired nonzero-damage cases. LaMa also leads 10 of 11 saved quality anchors. These anchors are not independent votes: masked MAE and mean masked spatial error summarize the same scalar error, although the spatial maps add localization. Zero anchor wins do not mean a method never performs well on an individual painting.
 
 ![Controlled-300 benchmark summary: separate quality-anchor wins and mean anchor rank](outputs/33_final_evaluation_report/figures/publication/01_benchmark_summary.png)
 
@@ -38,7 +38,7 @@ The results demonstrate why this additional evidence changes the conclusion. In 
 
 **How do selected inpainting methods differ in restoration quality across controlled artificial damage conditions, and how consistent are these differences across the evaluated paintings?**
 
-**LaMa is the strongest overall method in Controlled-300, leading 10 of the 11 separate quality anchors; Telea leads crop SSIM.** Across the overall nonzero-damage comparison, mean masked MAE is **14.83 for LaMa, 17.57 for Telea, 19.16 for HINT and 30.61 for Stable Diffusion**. HINT ranks second on crop LPIPS and local DINO correspondence, while Stable Diffusion ranks second on crop CLIP and DINOv2 similarity. The canonical painting-level analysis confirms differences between the four methods on all 11 anchors (300 paintings; Friedman tests, all adjusted *q* < 10⁻¹³⁴), with Kendall's W from 0.69 to 0.82.
+**LaMa is the strongest overall evaluated pipeline in Controlled-300; Telea leads crop SSIM.** Across the 2,320 paired nonzero-damage cases, mean masked MAE is **14.83 for LaMa, 17.57 for Telea, 19.16 for HINT and 30.61 for Stable Diffusion**. HINT ranks second on crop LPIPS and local DINO correspondence, while Stable Diffusion ranks second on crop CLIP and DINOv2 similarity. The canonical painting-level analysis confirms differences between the four methods on all 11 saved anchors (300 paintings; Friedman tests, all adjusted *q* < 10⁻¹³⁴), with Kendall's W from 0.69 to 0.82. The anchors include overlapping measurements, not 11 independent confirmations.
 
 The controlled stress tests also favour LaMa on pixel fidelity and placement stability. Across 35 paintings and seven damage levels from 2% to 20%, the median increase in masked MAE per ten percentage points of damage is **3.43 for LaMa, 4.68 for Telea, 5.20 for Stable Diffusion and 5.92 for HINT**. Across the 35-painting mask-placement experiment, the median within-painting/family MAE dispersion (MAD) is **0.92 for LaMa versus 2.35 for Stable Diffusion**; crop-LPIPS dispersion is **0.0037 versus 0.0159**, respectively. Thus, LaMa combines the strongest aggregate fidelity with comparatively low sensitivity to increased loss and changed mask placement, while the other methods' advantages are more metric-specific.
 
@@ -77,6 +77,10 @@ The five categories are portrait/figure, landscape/natural, architecture/structu
 
 The retained catalogue is an analysis population, **not a quality-approval list**. Missing measurements remain missing; a candidate never inherits another candidate's score. Detailed design and independence rules are in the [methodology notes](docs/methodology_notes.md).
 
+The comparison concerns **fixed pipelines**, not architecture alone: Stable Diffusion uses 512×512 inference before returning to the 768×768 canvas, while Telea, LaMa and HINT operate at 768×768. Resizing, mask handling, prompting and generation settings may contribute to the differences. Overall metric means are **case-weighted summaries of the benchmark mixture**, distinct from the painting-level statistical analyses.
+
+**Reading the frozen reports:** ten N21 overall anchors use 2,320 nonzero cases; structural-affinity correlation uses 2,620 cases including controls. N33's blanket “overall nonzero” scope and denominator labels need that distinction. The [dated reporting clarification](docs/evidence_dependency_audit.md#reporting-clarifications--2026-10-02) identifies the affected tables and saved source rows. Numerical outputs remain unchanged.
+
 ### Separate studies: method selection and focused portrait review
 
 **D01 / Notebook 37** compared HINT and MAT on 12 paired cases before expansion. HINT led 96 of 108 case-level metric anchors; MAT led six, with six ties. HINT was selected and subsequently evaluated across all 2,620 eligible cases in N12A. The 24 D01 candidates remain separate selection evidence, not part of the main leaderboard. [Selection report](outputs/37_hint_mat_method_selection/reports/method_selection_report.html).
@@ -106,13 +110,15 @@ GitHub displays HTML source rather than the full report presentation. Download a
 
 ## Reproducibility and delivery status
 
+The repository supports traceability through saved evidence, configurations and manifests. **Independent end-to-end reproduction has not been demonstrated**; the recorded provenance exceptions and deployment qualifications below remain unresolved.
+
 **Completed:** N01–N36, including N12A, with separate D01 and supplemental D02. The Controlled-300 dashboard is deployed from `main`; its approved layout is frozen. The pilot baseline remains recoverable at `pilot-50-complete`.
 
 N36 closed with **859 passed checks, 16 disclosed warning nonpasses and zero blockers**. The complete delivery has **134 files**, including a **123-file review package** containing six scientific HTML reports, 24 figures, five model cards, compact tables and 38 upstream manifests. Its 693-row artifact index distinguishes copied, generated and intentionally unbundled evidence.
 
 Start with the [package README](outputs/36_supervisor_publication_reproducibility_package/package/README.md), [reproducibility appendix](outputs/36_supervisor_publication_reproducibility_package/reports/reproducibility_appendix.md) and [limitations record](outputs/36_supervisor_publication_reproducibility_package/reports/limitations_and_deviations.md). Distribute the **complete N36 output directory**, not `package/` alone. It is a review package, not a runnable clone of the full research environment.
 
-Compact records and code live in GitHub; bulk restoration/diagnostic evidence follows the checksum-pinned GitHub/HF routes recorded in the publication manifests. N36's bounded delivery is ordinary Git, without LFS or a duplicate HF release. A Zenodo deposit remains planned, not completed.
+Compact records and code live in GitHub; bulk restoration/diagnostic evidence follows the checksum-pinned GitHub/HF routes recorded in the publication manifests. N36's bounded delivery is ordinary Git, without LFS or a duplicate HF release. The Zenodo release is being prepared: **DOI `10.5281/zenodo.23092185` is reserved, not yet published or registered**. The [release plan](config/publication/zenodo_release.json) records its scope. Frozen N36 records retain their historical publication status.
 
 The 16 N36 nonpasses retain N35's four dependency warnings and ten unmeasured, owner-accepted qualifications, plus the N29 historical-manifest and N35 notebook-source discrepancies. Availability checks and owner acceptance do not establish exhaustive browser coverage, performance budgets, a fresh clean-Linux reproduction or an independently attested deployed-server revision. [Full closeout audit](docs/evidence_dependency_audit.md#n36-controlled-300-closeout--2026-10-01).
 
@@ -143,6 +149,12 @@ Dashboard use does not require a GPU. Lazy remote evidence needs network access.
 - `streamlit_assets/` — deployed presentation assets and evidence indexes.
 - `tests/` and `tools/` — regression checks, validation, inventory and publication utilities; completed-notebook helpers may still be required for reproducibility.
 - `docs/` — [methods](docs/methodology_notes.md), [literature](docs/literature_reference_log.md), [evidence audit](docs/evidence_dependency_audit.md), [defence preparation](docs/notebook_revision_and_defence_qa.md) and supervisor material.
+
+## Licensing
+
+Original project code is licensed under **MIT**. Original research documentation, reports, figures and result compilations are licensed under **CC BY 4.0**, to the extent of the author's rights. See the [licensing scope and exclusions](LICENSE), [MIT terms](LICENSES/MIT.txt) and [CC BY 4.0 notice](LICENSES/CC-BY-4.0.txt).
+
+Source paintings, third-party visual elements (including those embedded in screenshots or figures), dependencies, model weights and other externally sourced material retain their existing rights and terms. These project licences do not relicense them or establish blanket redistribution clearance. The Zenodo DOI is reserved only; the release is not yet published.
 
 ## What the thesis does not claim
 
