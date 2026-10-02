@@ -1,0 +1,15 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 Rahul Maddineni
+
+The original research material identified in the root LICENSE file is
+licensed under Creative Commons Attribution 4.0 International.
+
+Licence: https://creativecommons.org/licenses/by/4.0/
+Full legal code: https://creativecommons.org/licenses/by/4.0/legalcode.en
+Plain-language summary: https://creativecommons.org/licenses/by/4.0/deed.en
+
+This file records the licence grant and its location; it is not a replacement
+for the legal code. The root LICENSE file identifies the covered material
+and third-party exclusions. This licence does not grant rights the author
+does not hold and does not restrict material already in the public domain.

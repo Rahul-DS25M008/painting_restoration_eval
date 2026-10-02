@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: >-
+  If you use this work, cite the identified repository revision. The Zenodo
+  release DOI 10.5281/zenodo.23092185 is reserved but not yet published;
+  it is intentionally omitted from the DOI field until publication is verified.
+type: software
+title: "Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration: Controlled-300 Research Artifacts"
+authors:
+  - family-names: Maddineni
+    given-names: Rahul
+    affiliation: University of Applied Sciences Technikum Wien
+repository-code: "https://github.com/Rahul-DS25M008/painting_restoration_eval"
+url: "https://github.com/Rahul-DS25M008/painting_restoration_eval"
+abstract: >-
+  A region-aware evaluation framework and Controlled-300 experimental study
+  of AI-assisted painting restoration, with quality, robustness, repeated-seed
+  and case-level evidence. Original software is MIT licensed; original research
+  material is CC BY 4.0 licensed to the extent of the author's rights.
+  See LICENSE for component-specific scope and third-party exclusions.

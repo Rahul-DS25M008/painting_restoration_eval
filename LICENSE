@@ -1,0 +1,52 @@
+Controlled-300 project licensing
+Copyright (c) 2026 Rahul Maddineni
+
+This project uses separate licences for original software and original research
+material. These grants apply only to rights held by Rahul Maddineni and do not
+override existing third-party licences or notices.
+
+1. Original software
+
+Original evaluation-framework code, dashboard code, scripts, tests, notebook
+code cells and configuration files are licensed under the MIT License. The
+full licence text is in LICENSES/MIT.txt.
+
+2. Original research material
+
+Original narrative documentation, notebook explanatory text, reports, original
+research figures and research-result compilations are licensed under Creative
+Commons Attribution 4.0 International (CC BY 4.0), to the extent that the author
+holds the relevant copyright or database rights. See LICENSES/CC-BY-4.0.txt.
+No exclusive rights are claimed over facts or public-domain material.
+
+3. Third-party exclusions
+
+The grants above do not relicense source paintings or their digital images,
+third-party artwork or visual elements, third-party code, dependencies, model
+weights, checkpoints, training data, or externally sourced material. Existing
+rights statements and licence conditions continue to apply. Third-party
+elements embedded in a figure, report or dashboard screenshot are excluded
+from the licence grant for the author's original contribution.
+
+Painting-source rights and provenance are recorded in
+data/raw/metadata/metadata_300.csv and
+outputs/01_dataset_verification/data/artworks.csv. Model-specific disclosures
+are recorded in the model cards and docs/model_audit_notes.md. These records
+are provenance aids, not a comprehensive legal clearance or a substitute for
+the applicable upstream terms. A software licence does not establish the
+licence for its model weights or training data.
+
+Redistribution packages must retain applicable upstream notices and identify
+third-party material. Content whose redistribution terms have not been
+established must not be treated as cleared by this project-level notice.
+
+4. Attribution
+
+Credit original research material to Rahul Maddineni, University of Applied
+Sciences Technikum Wien, and identify the project as:
+Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration:
+Controlled-300 Research Artifacts.
+
+The affiliation is supplied for attribution and does not imply institutional
+endorsement. Citation metadata and any future DOI complement, rather than
+replace, the applicable licence conditions.
