@@ -109,8 +109,10 @@ class ResearchArchiveTests(unittest.TestCase):
         self.assertNotIn('recorded as dirty',markup)
         self.assertIn(self.data['record']['summary']['run_id'],markup)
         self.assertIn(self.data['record']['summary']['git_commit'],markup)
-        self.assertIn('planned after',markup)
-        self.assertNotIn('doi.org',markup)
+        self.assertNotIn('planned after',markup)
+        self.assertIn('Zenodo published',markup)
+        self.assertIn('10.5281/zenodo.23092185',markup)
+        self.assertIn('ra-zenodo-published',markup)
         self.assertEqual(markup.count('data-action="final_sources"'),2)
         query={'room':'research_archive','ar_record':'N33','ar_view':'record'}
         self.assertEqual(navigation_query({'room':'research_archive','query':query},'research_archive'),query)
@@ -131,6 +133,16 @@ class ResearchArchiveTests(unittest.TestCase):
         for key,expected in [('painting_count',300),('registered_case_count',3425),('indexed_inspectable_candidate_count',13879),('n32_browsable_record_count',331),('model_report_count',5)]:
             self.assertEqual(population[key],expected)
         self.assertEqual(self.data['individual_publications'],2653)
+
+    def test_publication_receipt_is_separate_from_frozen_partitions(self):
+        z=self.data['zenodo']
+        self.assertEqual(z['status'],'published')
+        self.assertEqual(z['doi'],'10.5281/zenodo.23092185')
+        self.assertEqual(len(z['files']),15)
+        self.assertEqual(sum(f['size_bytes'] for f in z['files']),40565606666)
+        self.assertEqual(len([f for f in z['files'] if '.zip.00' in f['name']]),8)
+        self.assertNotIn('zenodo',archive.catalogue(self.package))
+        self.assertNotIn('?token=',json.dumps(z))
 
 
 if __name__=='__main__': unittest.main()

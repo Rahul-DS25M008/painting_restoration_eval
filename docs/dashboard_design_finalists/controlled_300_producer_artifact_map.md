@@ -276,7 +276,9 @@ The opening candidate is
 GitHub, Hugging Face Candidates and Hugging Face Diagnostics are mixed
 per-artifact destinations. The interface must resolve the exact publication
 registry or bundle record instead of assigning a whole notebook to one
-provider. Zenodo remains planned and has no DOI.
+provider. Zenodo v1.0.0 was published on 2026-10-02 as
+`10.5281/zenodo.23092185`; `config/publication/zenodo_published_record.json`
+supplies the later status independently of the frozen producer artifacts.
 
 ## Required N34 derivations exposed by Step 2
 

@@ -1,5 +1,11 @@
 # Controlled-300 Dashboard Design Direction
 
+**Publication update (2026-10-02):** [Zenodo v1.0.0](https://doi.org/10.5281/zenodo.23092185)
+is published. Only the existing Research Archive Zenodo plaque lettering and
+popup are updated, using the separate publication receipt. The approved room
+artwork, layout, hitbox, other controls and frozen evidence partitions remain
+unchanged. "Planned" text embedded in the original reference is historical.
+
 **Delivery update (2026-10-01):** all approved rooms are implemented and frozen
 in the [Controlled-300 deployment](https://fhtw-painting-restoration-main.streamlit.app/).
 N35 and N36 have closed with disclosed limitations; the numbered pipeline is complete. The

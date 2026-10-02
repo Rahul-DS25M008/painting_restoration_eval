@@ -1,6 +1,7 @@
 """Small offline regression tests for the publication-only release builder."""
 import importlib.util
 import io
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -11,6 +12,16 @@ SPEC.loader.exec_module(mod)
 
 
 class ZenodoReleaseTests(unittest.TestCase):
+    def test_published_release_cannot_be_rebuilt(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d)
+            plan=root/mod.PLAN
+            plan.parent.mkdir(parents=True)
+            plan.write_text(json.dumps({'release_status':'published'}))
+            for preflight in (True,False):
+                with self.assertRaisesRegex(ValueError,'already published'):
+                    mod.build(root,preflight)
+
     def test_pinned_revision_comes_from_existing_commit(self):
         commit='a'*40
         row={'repository_id':'owner/dataset','publication_commit_url':f'https://huggingface.co/datasets/owner/dataset/commit/{commit}','sha256':'b'*64,'publication_status':'published_verified','verification_status':'verified','revision':'main','path_in_repository':'images/p001.png','artifact_id':'one','local_relative_path':'outputs/p001.png','size_bytes':'123','verified_at_utc':'2026-09-01'}

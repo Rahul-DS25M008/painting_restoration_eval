@@ -1252,8 +1252,11 @@ exclusive storage classes:
 The external publication registry records 2,653 of 2,653 **individually
 published** artifacts as remotely verified. A separate `Verified bundled
 releases` catalogue exposes bundle count, release ID, pinned revision and
-verification status; bundles must not be added to the 2,653 row count. Zenodo
-is labelled `planned after pipeline freeze`; no DOI may be invented.
+verification status; bundles must not be added to the 2,653 row count. The
+2026-10-02 publication update replaces the original `planned after pipeline
+freeze` label with `Zenodo published · v1.0.0` and the verified version DOI
+`10.5281/zenodo.23092185`. The existing hitbox/layout remains fixed; the popup
+reads the separate published-record receipt, not modified scientific partitions.
 
 ### Limits cabinet
 

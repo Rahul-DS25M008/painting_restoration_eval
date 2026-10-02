@@ -237,6 +237,8 @@ def verify_zip(path: Path, records: list[dict]) -> None:
 
 def build(root: Path, preflight: bool) -> dict:
     plan=json.loads((root/PLAN).read_text(encoding='utf-8'))
+    if plan.get('release_status') == 'published':
+        raise ValueError('This version is already published. Do not rebuild the frozen archive; a future release requires a separately approved version and plan.')
     commit=git(root,'rev-parse','HEAD').strip()
     dirty=git(root,'status','--porcelain=v1','--untracked-files=normal').strip()
     if dirty and not preflight:

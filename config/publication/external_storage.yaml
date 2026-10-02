@@ -176,9 +176,14 @@ git_store:
 
 archive_store:
   provider: zenodo
-  status: account_ready_record_not_created
-  record_id: null
-  doi: null
+  status: published
+  record_id: '23092185'
+  doi: 10.5281/zenodo.23092185
+  concept_doi: 10.5281/zenodo.23092184
+  record_url: https://zenodo.org/records/23092185
+  publication_date: '2026-10-02'
+  version: v1.0.0
+  publication_receipt: config/publication/zenodo_published_record.json
   publish_only_after_pipeline_freeze: true
 
 deployment:

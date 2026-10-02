@@ -2,6 +2,16 @@
 
 ## 1. Document status
 
+**Publication closeout (2026-10-02):** the completed Controlled-300 study is
+archived as [Zenodo v1.0.0](https://doi.org/10.5281/zenodo.23092185). The
+[publication receipt](../config/publication/zenodo_published_record.json) is the
+current status authority; see [download and verification details](zenodo_publication.md).
+Do not rewrite frozen notebook outputs, N35/N36 manifests or supervisor PDF
+snapshots to remove historical pre-publication wording. The original ZIP and
+eight delivery parts stay ignored locally, not in Git/LFS. Publication is not
+blanket third-party rights clearance. Earlier dated implementation/planning
+sections below remain historical; no new experimentation is required.
+
 This document is the approved project-wide implementation contract for refactoring and extending the repository for the thesis:
 
 **Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration**

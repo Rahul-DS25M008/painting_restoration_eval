@@ -61,9 +61,11 @@ in the original final report, not newly generated summaries.
 Publication routes use recorded full commit revisions. N31/N33 GitHub report
 routes are emitted only when bytes at the recorded code checkpoint match the
 report index. N32 links to its pinned package folder; an unrecorded per-object
-remote URL is not guessed. Zenodo remains planned after pipeline freeze, with
-no invented DOI. Saved publication verification is not described as a fresh
-network check.
+remote URL is not guessed. Zenodo was planned at Step 3; the 2026-10-02
+publication closeout adds the verified DOI `10.5281/zenodo.23092185` through a
+separate publication receipt without changing frozen Step-3 evidence partitions.
+The receipt records a later public-API size/MD5 check; historical HF verification
+is not described as a fresh network check.
 
 ### Integrity caveat retained, not repaired
 

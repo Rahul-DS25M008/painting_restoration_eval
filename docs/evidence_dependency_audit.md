@@ -13,6 +13,31 @@ The machine-readable YAML is authoritative for automated preflight. This file
 explains the scientific meaning of that registry and records the decisions that
 must not be silently reversed during later notebook planning.
 
+### Zenodo publication closeout — 2026-10-02
+
+The owner published Controlled-300 research artifacts **v1.0.0** at
+[10.5281/zenodo.23092185](https://doi.org/10.5281/zenodo.23092185), with open access.
+The all-versions DOI is `10.5281/zenodo.23092184`. The archived source commit is
+`2378961a8accb2ecde610ed60428879e8f52a8a8`; later publication-status edits do not
+change that snapshot. All 15 public file sizes and MD5 checksums match the local
+verified upload set via an unauthenticated API check. This is not a fresh remote
+payload download or independent reproduction.
+
+The 40,522,491,399-byte ZIP is delivered as eight binary parts plus seven
+companions, with no recompression or altered scientific content. Its SHA-256 is
+`3ee4f9266477213521cdd4f877c71140360125fa9d0f5badb7fb1712c701a562`.
+Twenty-three locally damaged PNG copies were restored from checksum-pinned
+publication evidence before final archive verification, not regenerated.
+See [publication closeout](zenodo_publication.md) and the compact receipt in
+`config/publication/zenodo_published_record.json` for scope and verification.
+
+Third-party franchise exclusions and unresolved decorative fan-art redistribution
+permission are disclosed on the public record. Publication does not imply rights
+clearance. Frozen N35/N36 outputs, notebooks, historical audit entries, original
+dashboard artwork and supervisor PDF snapshots remain unchanged. Current-facing
+README/citation/configuration and the existing Zenodo plaque/popup now report the
+published release; historical "planned" wording below is not current status.
+
 ### Reporting clarifications — 2026-10-02
 
 This documentation-only review examined repository commit

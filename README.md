@@ -6,7 +6,7 @@ This master's thesis develops and applies an evidence-based evaluation framework
 
 The contribution is an **evaluation framework and reproducible empirical study**, not a newly trained restoration model or an automated conservation system.
 
-[Explore the dashboard](https://fhtw-painting-restoration-main.streamlit.app/) · [Final evaluation report](outputs/33_final_evaluation_report/reports/final_evaluation.html) · [Supervisor walkthrough](docs/supervisor/Supervisor_Dashboard_Walkthrough_Controlled_300.pdf) · [Completion and review brief](docs/supervisor/Study_Completion_and_Review_Brief.pdf)
+[Explore the dashboard](https://fhtw-painting-restoration-main.streamlit.app/) · [Research archive / DOI](https://doi.org/10.5281/zenodo.23092185) · [Final evaluation report](outputs/33_final_evaluation_report/reports/final_evaluation.html) · [Supervisor walkthrough](docs/supervisor/Supervisor_Dashboard_Walkthrough_Controlled_300.pdf) · [Completion and review brief](docs/supervisor/Study_Completion_and_Review_Brief.pdf)
 
 > Visual plausibility, metric performance and output stability are different kinds of evidence. None alone establishes historical correctness or conservation approval.
 
@@ -118,7 +118,11 @@ N36 closed with **859 passed checks, 16 disclosed warning nonpasses and zero blo
 
 Start with the [package README](outputs/36_supervisor_publication_reproducibility_package/package/README.md), [reproducibility appendix](outputs/36_supervisor_publication_reproducibility_package/reports/reproducibility_appendix.md) and [limitations record](outputs/36_supervisor_publication_reproducibility_package/reports/limitations_and_deviations.md). Distribute the **complete N36 output directory**, not `package/` alone. It is a review package, not a runnable clone of the full research environment.
 
-Compact records and code live in GitHub; bulk restoration/diagnostic evidence follows the checksum-pinned GitHub/HF routes recorded in the publication manifests. N36's bounded delivery is ordinary Git, without LFS or a duplicate HF release. The Zenodo release is being prepared: **DOI `10.5281/zenodo.23092185` is reserved, not yet published or registered**. The [release plan](config/publication/zenodo_release.json) records its scope. Frozen N36 records retain their historical publication status.
+Compact records and code live in GitHub; bulk restoration/diagnostic evidence follows the checksum-pinned GitHub/HF routes recorded in the publication manifests. N36's bounded delivery is ordinary Git, without LFS or a duplicate HF release. The complete selected research-artifact archive is **published on Zenodo as v1.0.0, 2 October 2026: [10.5281/zenodo.23092185](https://doi.org/10.5281/zenodo.23092185)**. All 15 public file sizes and MD5 checksums were checked without authentication against the locally verified upload set. See the [publication closeout and download guide](docs/zenodo_publication.md) and [machine-readable receipt](config/publication/zenodo_published_record.json). Frozen N36 records retain their historical publication status.
+
+**Download:** the 40.52 GB ZIP is delivered as **eight numbered parts** (`.zip.001`–`.zip.008`), plus seven companion files. Download all eight parts and follow `REASSEMBLE.txt`; they are not independently extractable ZIPs. Verify the reassembled archive before extraction. The archived source snapshot is commit `2378961a8accb2ecde610ed60428879e8f52a8a8`; later repository documentation and publication-status updates do not alter that release.
+
+**Cite this release:** Maddineni, R. (2026). *Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration: Controlled-300 Research Artifacts* (v1.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23092185. The all-versions DOI is [10.5281/zenodo.23092184](https://doi.org/10.5281/zenodo.23092184); use the version-specific DOI above for the exact archived evidence.
 
 The 16 N36 nonpasses retain N35's four dependency warnings and ten unmeasured, owner-accepted qualifications, plus the N29 historical-manifest and N35 notebook-source discrepancies. Availability checks and owner acceptance do not establish exhaustive browser coverage, performance budgets, a fresh clean-Linux reproduction or an independently attested deployed-server revision. [Full closeout audit](docs/evidence_dependency_audit.md#n36-controlled-300-closeout--2026-10-01).
 
@@ -154,7 +158,7 @@ Dashboard use does not require a GPU. Lazy remote evidence needs network access.
 
 Original project code is licensed under **MIT**. Original research documentation, reports, figures and result compilations are licensed under **CC BY 4.0**, to the extent of the author's rights. See the [licensing scope and exclusions](LICENSE), [MIT terms](LICENSES/MIT.txt) and [CC BY 4.0 notice](LICENSES/CC-BY-4.0.txt).
 
-Source paintings, third-party visual elements (including those embedded in screenshots or figures), dependencies, model weights and other externally sourced material retain their existing rights and terms. These project licences do not relicense them or establish blanket redistribution clearance. The Zenodo DOI is reserved only; the release is not yet published.
+Source paintings, third-party visual elements (including those embedded in screenshots or figures), dependencies, model weights and other externally sourced material retain their existing rights and terms. These project licences do not relicense them or establish blanket redistribution clearance. The published Zenodo record explicitly excludes third-party franchise elements from the author's grants and discloses unresolved redistribution permission for decorative fan artwork. Publication and checksum verification do not establish rights clearance; see its `RIGHTS_AND_REUSE_NOTICE.txt`.
 
 ## What the thesis does not claim
 

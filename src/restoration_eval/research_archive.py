@@ -54,7 +54,9 @@ def href(**selection):
 def payload(package, identity='N33', view='', painting=None):
     if view and view not in VIEWS: raise ValueError('Unknown Archive view')
     data=catalogue(package)
-    result={**data,'record':record(package,identity),'open_view':view,'painting':painting,'publications':[], 'case_rows':[], 'candidate_rows':[]}
+    # Later publication metadata is a separate receipt, not a rewrite of frozen N34 partitions.
+    zenodo=json.loads((ROOT/'config/publication/zenodo_published_record.json').read_text(encoding='utf-8'))
+    result={**data,'zenodo':zenodo,'record':record(package,identity),'open_view':view,'painting':painting,'publications':[], 'case_rows':[], 'candidate_rows':[]}
     if view.startswith('publications'): result['publications']=partition('publications.json.gz')
     if painting:
         if painting not in {p['painting_id'] for p in data['paintings']}: raise ValueError('Unknown painting')

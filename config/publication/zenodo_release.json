@@ -5,11 +5,16 @@
   "resource_type": "software",
   "reserved_doi": "10.5281/zenodo.23092185",
   "zenodo_record_id": "23092185",
-  "doi_status": "reserved_unpublished",
-  "release_status": "draft_preparation",
+  "doi_status": "published",
+  "release_status": "published",
+  "published_record_path": "config/publication/zenodo_published_record.json",
+  "publication_date": "2026-10-02",
+  "concept_doi": "10.5281/zenodo.23092184",
   "publication_ready": false,
-  "rights_review": "Pending owner review of third-party paintings, decorative artwork and embedded copies. Building a local draft does not authorize uploading or publication.",
+  "publication_ready_meaning": "The automated builder clearance remains false. The owner separately published the record with unresolved third-party rights disclosed; release_status records that completed action, not blanket rights clearance.",
+  "rights_review": "Published by the owner with an explicit rights notice: original software MIT, original research material CC BY 4.0 to the extent of rights held; third-party franchise elements excluded. No separate permission for decorative Genshin Impact/Dune franchise elements; redistribution permission remains unresolved.",
   "archive_layout": "single_zip64_preserving_repository_paths",
+  "delivery_layout": "eight_binary_parts_of_one_unchanged_zip_plus_seven_companion_files",
   "max_upload_bytes": 50000000000,
   "bulk_prefixes": ["data/raw/", "outputs/", "streamlit_assets/"],
   "exclude_prefixes": ["docs/thesis/", "docs/dashboard_design_finalists/"],
@@ -44,5 +49,5 @@
   "external_individual_artifact_count": 2653,
   "expected_bundle_release_count": 6,
   "excluded": ["Model weights and checkpoints", "Environment directories and caches", "Secrets and credentials", "Private thesis drafts and untracked working documents", "Superseded supervisor guides and dashboard design iterations", "Duplicate HF transport bundles in .codex_tmp", "Historical Controlled-50 working trees outside this repository"],
-  "publication_gate": "Build the local draft from a clean committed checkout and verify archive hashes. Resolve redistribution rights before any upload. Inspect the actual Zenodo draft and publish only with the owner's explicit approval. No upload, tag, commit or publication is performed by the builder."
+  "publication_gate": "v1.0.0 has been published by the owner. Do not rebuild or overwrite this release. Preserve its bytes and frozen producer records. Any future release requires a separate version, rights assessment and explicit owner approval; publication is not performed by the builder."
 }

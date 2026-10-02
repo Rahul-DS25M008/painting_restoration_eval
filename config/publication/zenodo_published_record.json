@@ -1,0 +1,117 @@
+{
+  "schema_version": "zenodo_publication_receipt.v1",
+  "status": "published",
+  "record_id": "23092185",
+  "doi": "10.5281/zenodo.23092185",
+  "concept_doi": "10.5281/zenodo.23092184",
+  "doi_url": "https://doi.org/10.5281/zenodo.23092185",
+  "record_url": "https://zenodo.org/records/23092185",
+  "publication_date": "2026-10-02",
+  "version": "v1.0.0",
+  "access": "open",
+  "source_commit": "2378961a8accb2ecde610ed60428879e8f52a8a8",
+  "verified_at_utc": "2026-10-02T21:29:46Z",
+  "verification_method": "Unauthenticated public record API; all 15 filenames, byte sizes and MD5 values match the locally verified upload queue. SHA-256 values below are from local split/read-back verification, not a fresh download of the remote payload.",
+  "archive": {
+    "name": "controlled-300-v1.0.0-research-artifacts.zip",
+    "size_bytes": 40522491399,
+    "sha256": "3ee4f9266477213521cdd4f877c71140360125fa9d0f5badb7fb1712c701a562",
+    "delivery": "Eight binary parts concatenated in .001 to .008 order; not independent ZIPs.",
+    "part_count": 8,
+    "companion_count": 7,
+    "total_upload_bytes": 40565606666
+  },
+  "rights_status": "Published by owner with third-party franchise exclusions and unresolved decorative fan-art redistribution permission disclosed; not blanket rights clearance.",
+  "files": [
+    {
+      "name": "controlled-300-v1.0.0-research-artifacts.zip.001",
+      "size_bytes": 5065311425,
+      "md5": "41115e1f636a25182a49d95d48d2d3df",
+      "sha256": "08e0ad1b08ddf46626cb98be858ce8e5acb7e6b5855c82e3e572fd220565feee"
+    },
+    {
+      "name": "controlled-300-v1.0.0-research-artifacts.zip.002",
+      "size_bytes": 5065311425,
+      "md5": "53cb5ceebf241d707f4b81267081b073",
+      "sha256": "ad98111c8faed88af33b07d436ab60037652d2fccef6d1469cb5bd58eb612eb8"
+    },
+    {
+      "name": "controlled-300-v1.0.0-research-artifacts.zip.003",
+      "size_bytes": 5065311425,
+      "md5": "463ea0323cc2b77f20dff8549e504725",
+      "sha256": "def6020fa817f32c2d497317cec87d8ae0f49ae50dc7e59ade5c229f72f5ae22"
+    },
+    {
+      "name": "controlled-300-v1.0.0-research-artifacts.zip.004",
+      "size_bytes": 5065311425,
+      "md5": "d35c771bb67ac11d24503ea17b75669b",
+      "sha256": "169a7c6f347fd763bc15702609950a27f1853a7eb2fed07afb61341e417df5c1"
+    },
+    {
+      "name": "controlled-300-v1.0.0-research-artifacts.zip.005",
+      "size_bytes": 5065311425,
+      "md5": "9a6f7f8a5260ef74e311407e28d7faa8",
+      "sha256": "86a2e66d8529375208ade8a7cfa2534c851b55f82fdc6cc6c1990895ebb00436"
+    },
+    {
+      "name": "controlled-300-v1.0.0-research-artifacts.zip.006",
+      "size_bytes": 5065311425,
+      "md5": "9c96a894adb1c94b20402ea13a6a3005",
+      "sha256": "c05b0985b1e675ba995cbf042d24b62be65b3d9fdbd5309118d3abed994bd7e4"
+    },
+    {
+      "name": "controlled-300-v1.0.0-research-artifacts.zip.007",
+      "size_bytes": 5065311425,
+      "md5": "8aab89460da87d2d3d3cc4aa20603f49",
+      "sha256": "17a755a6a26500976bf6b86dcbbe0f4df7252da70a87fe46150db4b30b04704c"
+    },
+    {
+      "name": "controlled-300-v1.0.0-research-artifacts.zip.008",
+      "size_bytes": 5065311424,
+      "md5": "16099c6afe2294c5b358bc6a049b80ae",
+      "sha256": "6c45361b3a6d96538af5106d20f7e2e3fa32255ecacd93395318e867a22c7a51"
+    },
+    {
+      "name": "RELEASE_MANIFEST.json",
+      "size_bytes": 43097753,
+      "md5": "206de229bf179b2fb1ff2c14aa532745",
+      "sha256": "4970616581dd343c9a9eddbfe89d98c946ef45ff5f52919e77d1808794ef9ef7"
+    },
+    {
+      "name": "RELEASE_README.txt",
+      "size_bytes": 4261,
+      "md5": "30d11ef1c5696131e342a6745dc99325",
+      "sha256": "da028f74b3774717ed204b4e582f288aec1f84be2be175b765e94cb8d8a0bc94"
+    },
+    {
+      "name": "RELEASE_ADDENDUM.txt",
+      "size_bytes": 3732,
+      "md5": "fe283c80214c3f46c7d62cef2ab0a15e",
+      "sha256": "4d26565839dcd67b3298d98e3ec52775191e935592aa2a009eef344b7a9a146f"
+    },
+    {
+      "name": "RIGHTS_AND_REUSE_NOTICE.txt",
+      "size_bytes": 3697,
+      "md5": "67f624b680739b52381471c458ddd307",
+      "sha256": "9f4ab4fa557d1e0557831e02b2b01ad661111bd598f9339d0d9365e1d9f9a079"
+    },
+    {
+      "name": "REASSEMBLE.txt",
+      "size_bytes": 2135,
+      "md5": "957058dbe27d6ed4dea480bec1eb3f5f",
+      "sha256": "c4b9dad5d0129f665a629f9e0c2eccee4d39ad1ae586d6eee9d82b6ab5da8b24"
+    },
+    {
+      "name": "SPLIT_MANIFEST.json",
+      "size_bytes": 2234,
+      "md5": "6e1465c7ac48ceb4d7a9e04e9770bf29",
+      "sha256": "d7b32ecfe63f8fbc0005d8b56f9046dda0b70f9fd2d71da73520bcc8afd872a5"
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "size_bytes": 1455,
+      "md5": "5f21609e66c66fdb470ca309e87e4f41",
+      "sha256": "80c6d60d42b4b9ed3821998deeac7d9d42f1cf916c4669408ec70764c73a8e78"
+    }
+  ]
+}
