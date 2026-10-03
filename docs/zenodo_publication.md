@@ -1,5 +1,14 @@
 # Controlled-300 Zenodo publication closeout
 
+## Post-publication reporting corrections
+
+The [2026-10-03 errata](errata/2026-10-03/README.md) corrects population labels,
+aggregation descriptions and SDXL scheduled/completed coverage. It supplies
+traceable replacement rows while preserving the archived files and all saved
+scientific numerical results. Cite the original DOI together with a commit-pinned
+errata link when using affected tables. Updating the public record's description
+is a separate owner action; these repository edits do not update Zenodo.
+
 ## Published release
 
 Rahul Maddineni's **v1.0.0** research-artifact release was published on **2 October

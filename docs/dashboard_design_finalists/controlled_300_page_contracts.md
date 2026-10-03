@@ -543,6 +543,8 @@ cases. Their roles must remain explicit:
 
 The headline comparison may state that LaMa led 10 of the 11 separate quality
 anchors while Telea led crop SSIM in the completed comparison. It must
+explain that equivalent masked MAE/spatial-error scalars correspond to nine
+LaMa wins among ten distinct scalar quantities, not independent votes, and
 immediately retain the qualifiers `separate comparisons` and `no combined
 score`. Results remain conditional on this dataset, controlled damage, region
 policy and metric family.

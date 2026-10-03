@@ -50,25 +50,26 @@ class MultiModelComparisonTests(unittest.TestCase):
         settings = config["multi_model_comparison"]
         settings["populations"]["core_three_model"].update({
             "exact_case_count": 2,
-            "exact_candidate_count": 6,
+            "exact_candidate_count": 8,
         })
         settings["populations"]["four_model_subset"].update({
             "exact_case_count": 1,
-            "exact_candidate_count": 4,
+            "exact_candidate_count": 5,
         })
         settings["expected_counts"].update({
-            "selected_candidates": 7,
+            "selected_candidates": 9,
             "selected_candidates_by_model": {
                 "opencv_telea": 2,
                 "lama": 2,
+                "hint_places2": 2,
                 "stable_diffusion_inpainting": 2,
                 "sdxl_inpainting": 1,
             },
             "unique_cases": 2,
             "core_case_count": 2,
-            "core_candidate_count": 6,
+            "core_candidate_count": 8,
             "four_model_case_count": 1,
-            "four_model_candidate_count": 4,
+            "four_model_candidate_count": 5,
         })
         settings["analysis_scopes"] = [{"scope_id": "overall", "column": None}]
         settings["ranking"]["minimum_paintings_for_stability"] = 2
@@ -154,7 +155,12 @@ class MultiModelComparisonTests(unittest.TestCase):
             "restored_path": sdxl_restored.relative_to(root).as_posix(),
             "runtime_seconds": 50.0,
         }])
-        return deterministic("opencv_telea"), deterministic("lama"), pd.DataFrame(sd_rows), sdxl
+        return (deterministic("opencv_telea"), deterministic("lama"),
+                pd.DataFrame(sd_rows), sdxl, deterministic("hint_places2"))
+
+    def _select_candidates(self, root: Path, config: dict) -> pd.DataFrame:
+        opencv, lama, sd, sdxl, hint = self._candidate_inputs(root)
+        return select_comparison_candidates(opencv, lama, sd, sdxl, hint=hint, config=config)
 
     @staticmethod
     def _semantic_metadata(selected: pd.DataFrame) -> pd.DataFrame:
@@ -166,7 +172,7 @@ class MultiModelComparisonTests(unittest.TestCase):
                 "category": candidate.category,
                 "style_or_period": "Baroque" if candidate.painting_id == "p001" else "not_recorded",
                 "dataset_id": "painting_restoration_eval",
-                "dataset_scope": "controlled_50",
+                "dataset_scope": "controlled_300",
                 "experiment_id": candidate.experiment_id,
                 "damage_or_degradation_type": candidate.damage_or_degradation_type,
                 "target_damage_fraction": 0.02 if "scratch" in candidate.case_id else 0.125,
@@ -176,10 +182,10 @@ class MultiModelComparisonTests(unittest.TestCase):
         return pd.DataFrame(rows).drop_duplicates()
 
     def test_config_and_schema_registration(self) -> None:
-        self.assertEqual(MULTI_MODEL_COMPARISON_MODULE_VERSION, "1.0.0")
+        self.assertEqual(MULTI_MODEL_COMPARISON_MODULE_VERSION, "2.0.0")
         settings = self.config["multi_model_comparison"]
-        self.assertEqual(settings["expected_counts"]["selected_candidates"], 1240)
-        self.assertEqual(settings["expected_counts"]["four_model_case_count"], 10)
+        self.assertEqual(settings["expected_counts"]["selected_candidates"], 10504)
+        self.assertEqual(settings["expected_counts"]["four_model_case_count"], 24)
         self.assertTrue(settings["report"]["self_contained_html"])
         self.assertFalse(settings["ranking"]["combined_quality_score_retained"])
         self.assertIs(get_schema("model_comparison"), MODEL_COMPARISON_SCHEMA)
@@ -196,7 +202,10 @@ class MultiModelComparisonTests(unittest.TestCase):
             for index in range(9, 21)
         }
         audit = validate_upstream_run_manifests(manifests)
-        self.assertEqual(len(audit), 12)
+        self.assertFalse(audit["passed"].all())  # Missing HINT must remain blocking.
+        manifests["12A"] = dict(manifests["12"])
+        audit = validate_upstream_run_manifests(manifests)
+        self.assertEqual(len(audit), 13)
         self.assertTrue(audit["passed"].all())
         manifests["15"]["completion_gate_passed"] = False
         self.assertFalse(validate_upstream_run_manifests(manifests)["passed"].all())
@@ -204,14 +213,14 @@ class MultiModelComparisonTests(unittest.TestCase):
     def test_candidate_selection_and_case_dimensions(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-            inputs = self._candidate_inputs(root)
-            selected = select_comparison_candidates(*inputs, config=self._small_config())
-            self.assertEqual(len(selected), 7)
+            selected = self._select_candidates(root, self._small_config())
+            self.assertEqual(len(selected), 9)
             self.assertEqual(selected["case_id"].nunique(), 2)
             self.assertEqual(
                 selected.groupby("model_id").size().to_dict(),
                 {
                     "lama": 2,
+                    "hint_places2": 2,
                     "opencv_telea": 2,
                     "sdxl_inpainting": 1,
                     "stable_diffusion_inpainting": 2,
@@ -233,18 +242,23 @@ class MultiModelComparisonTests(unittest.TestCase):
                 ).all()
             )
 
+    def test_missing_hint_does_not_silently_reduce_core_population(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            inputs = self._candidate_inputs(Path(temporary))
+            with self.assertRaisesRegex(ValueError, "Selected candidate counts differ from contract"):
+                select_comparison_candidates(*inputs[:4], config=self._small_config())
+
     def test_metric_normalization_comparison_and_disagreement(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             config = self._small_config()
-            selected = select_comparison_candidates(
-                *self._candidate_inputs(root), config=config
-            )
+            selected = self._select_candidates(root, config)
             selected = attach_case_metadata(selected, self._semantic_metadata(selected))
             rows = []
             model_penalty = {
                 "opencv_telea": 0.2,
                 "lama": 0.1,
+                "hint_places2": 0.25,
                 "stable_diffusion_inpainting": 0.3,
                 "sdxl_inpainting": 0.15,
             }
@@ -273,7 +287,7 @@ class MultiModelComparisonTests(unittest.TestCase):
                 comparison["population_id"].eq("core_three_model")
                 & comparison["analysis_scope"].eq("overall")
             ]
-            self.assertEqual(len(overall_core), 3)
+            self.assertEqual(len(overall_core), 4)
             self.assertEqual(overall_core.iloc[0]["winner_model_id"], "lama")
             disagreement = build_metric_disagreement(comparison, config=config)
             disagreement_validation = validate_metric_disagreement(disagreement)
@@ -284,13 +298,12 @@ class MultiModelComparisonTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             config = self._small_config()
-            selected = select_comparison_candidates(
-                *self._candidate_inputs(root), config=config
-            )
+            selected = self._select_candidates(root, config)
             selected = attach_case_metadata(selected, self._semantic_metadata(selected))
             values = {
                 "opencv_telea": [np.inf, 50.0],
                 "lama": [45.0, 45.0],
+                "hint_places2": [43.0, 43.0],
                 "stable_diffusion_inpainting": [40.0, 40.0],
                 "sdxl_inpainting": [42.0],
             }
@@ -334,19 +347,17 @@ class MultiModelComparisonTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             config = self._small_config()
-            selected = select_comparison_candidates(
-                *self._candidate_inputs(root), config=config
-            )
+            selected = self._select_candidates(root, config)
             selected = attach_case_metadata(selected, self._semantic_metadata(selected))
             runtime = normalise_runtime_evidence(selected, config=config)
-            self.assertEqual(set(runtime["source_notebook_id"]), {"09-12"})
+            self.assertEqual(set(runtime["source_notebook_id"]), {"09-12A"})
             comparison = build_model_comparison(runtime, selected, config=config)
             validation = validate_model_comparison(comparison)
             self.assertTrue(validation["passed"], validation)
             overall = comparison.loc[comparison["analysis_scope"].eq("overall")]
             self.assertEqual(
                 overall.groupby("population_id").size().to_dict(),
-                {"core_three_model": 3, "sdxl_four_model_subset": 4},
+                {"core_three_model": 4, "sdxl_four_model_subset": 5},
             )
             self.assertFalse(comparison["quality_ranking_eligible"].any())
             self.assertTrue(comparison["aggregate_rank"].isna().all())
@@ -356,9 +367,7 @@ class MultiModelComparisonTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             config = self._small_config()
-            selected = select_comparison_candidates(
-                *self._candidate_inputs(root), config=config
-            )
+            selected = self._select_candidates(root, config)
             selected = attach_case_metadata(selected, self._semantic_metadata(selected))
             slots = pd.DataFrame([{
                 "selection_slot_id": "slot_01",
@@ -377,7 +386,7 @@ class MultiModelComparisonTests(unittest.TestCase):
             )
             validation = validate_representative_cases(representatives)
             self.assertTrue(validation["passed"], validation)
-            self.assertEqual(len(representatives), 3)
+            self.assertEqual(len(representatives), 4)
             clean_path = root / representatives.iloc[0]["clean_image_path"]
             data_uri = image_path_to_data_uri(clean_path, max_dimension=100)
             self.assertTrue(data_uri.startswith("data:image/jpeg;base64,"))

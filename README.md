@@ -16,7 +16,7 @@ The completed **Controlled-300** study uses 300 paintings, balanced across five 
 
 Four methods have full eligible-case coverage: **OpenCV Telea, LaMa, HINT and Stable Diffusion**. SDXL is reported separately as a bounded feasibility branch.
 
-The main comparative finding is clear: **LaMa has the lowest mean masked MAE (14.83) and crop LPIPS (0.1292); Telea leads crop SSIM (0.8632)** across the 2,320 paired nonzero-damage cases. LaMa also leads 10 of 11 saved quality anchors. These anchors are not independent votes: masked MAE and mean masked spatial error summarize the same scalar error, although the spatial maps add localization. Zero anchor wins do not mean a method never performs well on an individual painting.
+The main comparative finding is clear: **LaMa has the lowest mean masked MAE (14.83) and crop LPIPS (0.1292); Telea leads crop SSIM (0.8632)** across the 2,320 paired nonzero-damage cases. LaMa leads **10 of 11 saved quality anchors, corresponding to nine wins among ten distinct scalar quantities**: masked MAE and mean masked spatial error summarize the same scalar error, although the spatial maps add localization. Distinct quantities can still be correlated; these are not independent votes. Zero anchor wins do not mean a method never performs well on an individual painting.
 
 ![Controlled-300 benchmark summary: separate quality-anchor wins and mean anchor rank](outputs/33_final_evaluation_report/figures/publication/01_benchmark_summary.png)
 
@@ -34,11 +34,13 @@ The results demonstrate why this additional evidence changes the conclusion. In 
 
 [Metric disagreement](outputs/21_multi_model_comparison/reports/multi_model_comparison.html) · [Metric/region ablation](outputs/28_metric_and_region_policy_ablation/reports/ablation_study.html)
 
+[Three traceable examples](docs/framework_evidence_chain.md) show the contribution directly: a classical-only LaMa/Telea tie separates under the richer policy; Telea's SSIM-leading `p009` small-loss restoration ranks last on LPIPS; and LaMa's `p002` large-loss restoration leads both, leaving the conclusion unchanged.
+
 ### RQ2 — How do the methods compare?
 
 **How do selected inpainting methods differ in restoration quality across controlled artificial damage conditions, and how consistent are these differences across the evaluated paintings?**
 
-**LaMa is the strongest overall evaluated pipeline in Controlled-300; Telea leads crop SSIM.** Across the 2,320 paired nonzero-damage cases, mean masked MAE is **14.83 for LaMa, 17.57 for Telea, 19.16 for HINT and 30.61 for Stable Diffusion**. HINT ranks second on crop LPIPS and local DINO correspondence, while Stable Diffusion ranks second on crop CLIP and DINOv2 similarity. The canonical painting-level analysis confirms differences between the four methods on all 11 saved anchors (300 paintings; Friedman tests, all adjusted *q* < 10⁻¹³⁴), with Kendall's W from 0.69 to 0.82. The anchors include overlapping measurements, not 11 independent confirmations.
+**LaMa is the strongest overall evaluated pipeline in Controlled-300; Telea leads crop SSIM.** Across the 2,320 paired nonzero-damage cases, mean masked MAE is **14.83 for LaMa, 17.57 for Telea, 19.16 for HINT and 30.61 for Stable Diffusion**. HINT ranks second on crop LPIPS and local DINO correspondence, while Stable Diffusion ranks second on crop CLIP and DINOv2 similarity. The canonical painting-level analysis confirms differences between the four methods on all 11 saved anchors (1,200 canonical cases reduced to four-case medians for each of 300 equally weighted paintings; Friedman tests, all adjusted *q* < 10⁻¹³⁴), with Kendall's W from 0.69 to 0.82. The anchors include overlapping measurements, not 11 independent confirmations.
 
 The controlled stress tests also favour LaMa on pixel fidelity and placement stability. Across 35 paintings and seven damage levels from 2% to 20%, the median increase in masked MAE per ten percentage points of damage is **3.43 for LaMa, 4.68 for Telea, 5.20 for Stable Diffusion and 5.92 for HINT**. Across the 35-painting mask-placement experiment, the median within-painting/family MAE dispersion (MAD) is **0.92 for LaMa versus 2.35 for Stable Diffusion**; crop-LPIPS dispersion is **0.0037 versus 0.0159**, respectively. Thus, LaMa combines the strongest aggregate fidelity with comparatively low sensitivity to increased loss and changed mask placement, while the other methods' advantages are more metric-specific.
 
@@ -68,6 +70,8 @@ The painting-level canonical analysis quantifies the relationship to quality. Fo
 
 The five categories are portrait/figure, landscape/natural, architecture/structured, abstraction/surrealism and high-texture/brushwork. They are operational visual groupings, not independently verified style labels.
 
+Category balance is not cultural, geographic, chronological or conservation-condition representativeness. Three source institutions supply 208/300 paintings (69.3%), and style/period metadata is missing for 32. Artificial damage enables controlled reference comparisons rather than demonstrating generality to real conservation conditions. SDXL's 35-case schedule covers 30 paintings; its 24 technically validated completions cover 19, with one timeout and ten not started after the guard.
+
 | Experiment | Registered cases | Design |
 |---|---:|---|
 | Canonical damage | 1,500 | 300 paintings × four damage types and one undamaged control |
@@ -79,7 +83,7 @@ The retained catalogue is an analysis population, **not a quality-approval list*
 
 The comparison concerns **fixed pipelines**, not architecture alone: Stable Diffusion uses 512×512 inference before returning to the 768×768 canvas, while Telea, LaMa and HINT operate at 768×768. Resizing, mask handling, prompting and generation settings may contribute to the differences. Overall metric means are **case-weighted summaries of the benchmark mixture**, distinct from the painting-level statistical analyses.
 
-**Reading the frozen reports:** ten N21 overall anchors use 2,320 nonzero cases; structural-affinity correlation uses 2,620 cases including controls. N33's blanket “overall nonzero” scope and denominator labels need that distinction. The [dated reporting clarification](docs/evidence_dependency_audit.md#reporting-clarifications--2026-10-02) identifies the affected tables and saved source rows. Numerical outputs remain unchanged.
+**Reading the frozen reports:** ten N21 overall anchors use 2,320 nonzero cases; structural-affinity correlation uses 2,620 cases including controls. The [post-publication errata and corrected exports](docs/errata/2026-10-03/README.md) correct T04/T05 population labels, distinguish T10's canonical tests from its all-branch runtime associations, and clarify SDXL coverage. Original N26/N33/N36 and Zenodo files remain historical snapshots. Saved metric values and statistical results are unchanged. Read the frozen reports together with these corrections.
 
 ### Separate studies: method selection and focused portrait review
 
@@ -125,6 +129,8 @@ Compact records and code live in GitHub; bulk restoration/diagnostic evidence fo
 **Cite this release:** Maddineni, R. (2026). *Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration: Controlled-300 Research Artifacts* (v1.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23092185. The all-versions DOI is [10.5281/zenodo.23092184](https://doi.org/10.5281/zenodo.23092184); use the version-specific DOI above for the exact archived evidence.
 
 The 16 N36 nonpasses retain N35's four dependency warnings and ten unmeasured, owner-accepted qualifications, plus the N29 historical-manifest and N35 notebook-source discrepancies. Availability checks and owner acceptance do not establish exhaustive browser coverage, performance budgets, a fresh clean-Linux reproduction or an independently attested deployed-server revision. [Full closeout audit](docs/evidence_dependency_audit.md#n36-controlled-300-closeout--2026-10-01).
+
+The [compact provenance-exception ledger](docs/provenance_exceptions.md) separates what was checked from what remains uncertain. Zero blockers is an administrative closeout outcome, not independent scientific reproduction.
 
 ## Run the dashboard locally
 

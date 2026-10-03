@@ -1,5 +1,10 @@
 # Supervisor documents: publication status
 
+Read the PDF snapshots with the [2026-10-03 reporting errata](../errata/2026-10-03/README.md).
+It corrects table population labels and SDXL completed-painting coverage without
+changing saved numerical results. The [three-example evidence chain](../framework_evidence_chain.md)
+and [compact provenance ledger](../provenance_exceptions.md) supplement the review.
+
 The Controlled-300 study and N36 review package are complete. The full selected
 research-artifact archive was subsequently published on **2 October 2026** as
 [Zenodo v1.0.0, DOI 10.5281/zenodo.23092185](https://doi.org/10.5281/zenodo.23092185).

@@ -84,6 +84,15 @@ Style/period is documented for 268 works and missing for 32. Metadata coverage
 is field-specific; analyses must not convert the balanced visual categories
 into general art-historical style effects.
 
+Balancing five operational categories at 60 paintings each does not establish
+cultural, chronological, geographic or conservation-condition representativeness.
+The source institutions are concentrated: Cleveland Museum of Art contributes
+109 paintings, the Metropolitan Museum of Art 55 and Statens Museum for Kunst
+44, together 208/300 (69.3%). These counts come from N01's `artworks.csv`.
+Artificial damage supports controlled reference-fidelity evaluation, not
+generalization to real conservation conditions. The 32 missing style/period
+entries further limit historical subgroup interpretation.
+
 Notebook 02 standardizes each accepted image as a 768 × 768 RGB PNG. It preserves
 aspect ratio, pads rather than distorts or center-crops, and records the exact
 painting-content bounds. Padding is excluded wherever the declared region
@@ -159,8 +168,9 @@ The four full methods contribute 10,480 matched primary candidates. The
 selection, distinct from every candidate ever generated. “Approved” means
 eligible for the declared analysis, not approved restoration quality.
 
-SDXL completed 24 predeclared cases; one timed out and ten were not started
-under the declared compute budget. One seed per completed case cannot support
+SDXL scheduled 35 cases across 30 paintings; 24 cases across 19 paintings
+completed and passed technical validation, one timed out and ten were not started
+after the budget/timeout guard. One seed per completed case cannot support
 seed-uncertainty estimates. Runtime or hardware limitations are not image-quality
 failures. D01's 12 paired HINT/MAT cases and the supplemental D02 portrait audit
 remain separate studies, not additions to the main comparison population.
@@ -240,6 +250,9 @@ are the same scalar quantity apart from numerical precision: the spatial maps
 add localization, but their regional mean is not independent confirmation.
 Other anchors may also correlate. Individual metric values and the paired
 analyses support interpretation of the retained 10/11 LaMa result.
+Removing the duplicated MAE/spatial-error scalar gives nine LaMa wins among
+ten distinct scalar quantities; Telea leads crop SSIM. Distinct does not mean
+statistically independent.
 
 Runtime and uncertainty are excluded from quality voting. The core coverage is
 2,620 cases and four methods; a separate matched five-method view covers the
@@ -292,6 +305,25 @@ painting averages: paintings included in extension experiments contribute more
 cases. N26's painting-level inferential analyses are separate and must not be
 presented as the same estimator. No new equal-painting sensitivity analysis was
 performed for this documentation correction.
+
+N26's eleven Friedman tests and 66 paired-model contrasts use only
+`canonical_missing_region`: 1,200 nonzero cases (300 paintings, each with
+`loss_large`, `loss_small`, `mixed_damage` and `scratch_thin`). For each anchor
+and method, the median of the four direction-adjusted case values is computed
+within each painting. These form 300 equally weighted painting blocks, with
+one observation per method per block. The four methods are Telea, LaMa, HINT
+and primary generic-prompt Stable Diffusion (seed 2026). Identity controls,
+extension cases, other prompts, repeated seeds and SDXL are excluded.
+
+The 44 quality/runtime associations use a different population: 2,320 nonzero
+cases across canonical damage (1,200), damage-size sensitivity (245), mask
+robustness (525) and eligible synthetic degradation (350). Quality and runtime
+are separately summarized by their within-painting/model medians, then correlated
+across 300 equally weighted paintings per method. Paintings outside the extension
+subset have fewer constituent cases. T10 summarizes these as eleven rows, each
+containing four model-specific associations. The original N26 export mislabeled
+the canonical tests as all-branch results; see the
+[E02 correction](errata/2026-10-03/README.md#e02--n26-and-t10-statistical-populations).
 
 Downstream analyses preserve metric disagreement and include, where their
 contracts apply:

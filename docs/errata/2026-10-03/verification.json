@@ -1,0 +1,33 @@
+{
+  "correction_version": "2026-10-03.v1",
+  "corrected_thesis_rows": 78,
+  "corrected_statistical_rows": 77,
+  "corrected_latex_tables": 4,
+  "unchanged_scientific_numbers": true,
+  "matched_friedman_tests": 11,
+  "original_inputs_unchanged": true,
+  "scientific_model_runs": 0,
+  "source_sha256": {
+    "outputs/33_final_evaluation_report/data/thesis_tables.csv": "9232ab7e09c1d3b1e9ce36201676c2289f46c86d99a1f894f1fdd080336eb058",
+    "outputs/21_multi_model_comparison/metrics/model_comparison.csv": "a55a1b41f05639bde954d59f974550137d4bc6eae5a4acd73dc7c806fc4cd76b",
+    "outputs/21_multi_model_comparison/metrics/metric_disagreement.csv": "358e08be3437ef746646ce40a5941086909eb703a1571c016480f39e13e5fd5a",
+    "outputs/26_grouped_and_statistical_analysis/metrics/statistical_results.csv": "62b5ae5f096b21929ac20ecbf378153841abf1262aee80e11baea746fa176874",
+    "outputs/11_stable_diffusion_restoration/data/candidates.csv": "9806293b1e5fc888315e453c628aa21b04bc62bb08c0dd9e0b5e0f8acd4a0633",
+    "outputs/13_classical_metrics/metrics/classical_metrics.csv": "a9a1250c7ecd1339dbb4150d8f42336ea3d1b0567648f6f03cf7f7e6f23e337c",
+    "outputs/14_lpips_metrics/metrics/lpips_metrics.csv": "0d2b125a5045459db4d07648ac52af14faeb5c4ae9187328fce9fd31d492d129",
+    "outputs/15_feature_similarity/metrics/feature_metrics.csv": "128b57ea6b443707b04c5df40e45477acf67339732336de0d7302e959d449bd2",
+    "outputs/16_difference_maps_and_spatial_diagnostics/metrics/spatial_diagnostics.csv": "7f8155aaee2b4eaaad7cba004bf28f38500fc45c4f3690ea60d65f3de04badab",
+    "outputs/17_local_consistency_metrics/metrics/local_consistency.csv": "662dd76152d26a3b6e317067ac49d33eaca249bf724bbd44203c579d5fc44ecf",
+    "outputs/20_semantic_and_structural_consistency/metrics/semantic_structural_metrics.csv": "badae80c559c463cf89309d9f9ac19bd288528b9fa8a6541f7913d3a4588be5e",
+    "outputs/28_metric_and_region_policy_ablation/metrics/ablation_results.csv": "9b7789fcf8dc6853456b4dc248fa72bb6a575ca36c5cbe6742a585188b93288c",
+    "outputs/12_sdxl_feasibility_or_restoration/data/candidates.csv": "2ca1e5effd579a7748f12e35f804fdf1d2e4f859465454fc2ef9c280947c7253"
+  },
+  "output_sha256": {
+    "corrected_latex_tables.csv": "85615bd218e8d4ca29b818337942ef0f39d07d382072c4c785d2972c41807719",
+    "corrected_statistical_rows.csv": "4bcf60b90a8272010b07431f60dad4f6e00e2dc51e71b5dbe405eafb48fc0c66",
+    "corrected_thesis_rows.csv": "1ee00c6db680132892ae0eb34b18b5a2ec833f4125c2d6afce0e5eabba4c9b37",
+    "correction_ledger.csv": "f07486a8242333f90db17bc4e3ec15f72e14a970cf3e69dcaabd5b16ddb2ac04",
+    "framework_examples.json": "6677a30f48c974a7395dd88a2853a795b4690adacd5c88b74987d7b9511770d6",
+    "statistical_verification.json": "2b997e1f925913532bd95b4f65905cc43766c633a9de9a89e251d2075daf20cf"
+  }
+}

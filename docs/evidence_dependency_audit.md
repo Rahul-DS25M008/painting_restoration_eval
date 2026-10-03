@@ -13,6 +13,27 @@ The machine-readable YAML is authoritative for automated preflight. This file
 explains the scientific meaning of that registry and records the decisions that
 must not be silently reversed during later notebook planning.
 
+### Post-publication reporting corrections — 2026-10-03
+
+The [errata and corrected exports](errata/2026-10-03/README.md) supersede the
+affected reporting labels in the frozen N26/N33/N36 and Zenodo v1.0.0 snapshots.
+T04/T05 distinguish measured cases, controls and case weighting. N26's eleven
+Friedman tests and 66 paired contrasts are relabeled canonical-only (1,200 cases,
+300 painting medians); T10's all-branch runtime associations remain separate.
+The SDXL limitation now distinguishes 35 scheduled cases/30 paintings from
+24 technically validated completions/19 paintings. All eleven omnibus test
+statistics, p-values and Kendall's W values matched a saved-metric reconstruction.
+No scientific measurement, original report, frozen manifest or archive was changed.
+
+Current producer code, the N26 export source and stale four-method test fixtures
+are corrected. The N26 source edit is not represented as a historical rerun.
+The [compact exception ledger](provenance_exceptions.md),
+[framework examples](framework_evidence_chain.md), README and methodology
+clarify anchor overlap, provenance and dataset validity. Manuscript restructuring
+and the manuscript claim-boundary sweep were excluded because no manuscript
+exists. The apparent N35 deletions were a file-access false alarm; no recovery
+operation was performed. Validation outcomes are linked from the errata.
+
 ### Zenodo publication closeout — 2026-10-02
 
 The owner published Controlled-300 research artifacts **v1.0.0** at

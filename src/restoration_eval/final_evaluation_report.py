@@ -25,13 +25,20 @@ from PIL import Image
 
 
 MODULE_NAME = "restoration_eval.final_evaluation_report"
-MODULE_VERSION = "1.3.0"
+MODULE_VERSION = "1.3.1"
 CONFIG_SCHEMA_VERSION = "final_evaluation_report_config.v1"
 THESIS_TABLE_SCHEMA_VERSION = "thesis_tables.v1"
 LATEX_TABLE_SCHEMA_VERSION = "latex_tables.v1"
 EVIDENCE_CATALOG_SCHEMA_VERSION = "final_report_evidence_catalog.v1"
 TRACEABILITY_SCHEMA_VERSION = "final_report_mock_traceability.v1"
 REPORT_SCHEMA_VERSION = "final_evaluation_report.v1"
+
+SDXL_COMPLETION_NOTE = (
+    "SDXL had a predeclared schedule of 35 cases across 30 paintings. "
+    "Twenty-four cases across 19 paintings completed and passed technical validation; "
+    "one case timed out and ten were not started after the budget/timeout guard. "
+    "SDXL provides bounded feasibility evidence, not a fifth full benchmark ranking."
+)
 
 VALIDATION_COLUMNS = (
     "check_id",
@@ -809,6 +816,31 @@ def _require_row_count(frame: pd.DataFrame, expected: int, label: str) -> None:
         raise ValueError(f"{label} expected {expected} rows, observed {len(frame)}")
 
 
+def quality_population_metadata(
+    anchor_id: str, case_count: int, painting_count: int, population_case_count: int,
+) -> dict[str, Any]:
+    """Describe measured rows, not just the larger candidate registry (erratum E01)."""
+    controls = anchor_id == "structural_affinity_correlation"
+    return {
+        "values": {
+            "population_case_count": population_case_count,
+            "measured_case_count": case_count,
+            "painting_count": painting_count,
+            "controls_included": controls,
+            "aggregation_rule": "case_weighted_mean",
+        },
+        "scope": "controlled_300_core_four_method_" + (
+            "all_eligible_cases_including_controls" if controls else "overall_nonzero_cases"
+        ),
+        "denominator": (
+            f"{case_count} measured cases; {painting_count} paintings; "
+            f"{population_case_count} restoration-eligible cases in registry; "
+            + ("300 identity controls included" if controls else "identity controls excluded")
+            + "; case-weighted means (not equal-painting means)"
+        ),
+    }
+
+
 def build_final_thesis_tables(
     source_tables: Mapping[str, pd.DataFrame],
     config: Mapping[str, Any],
@@ -983,6 +1015,10 @@ def build_final_thesis_tables(
     ].sort_values(["anchor_id", "aggregate_rank", "model_id"], kind="stable")
     _require_row_count(quality_rows, 44, "T04 quality anchor selection")
     for row in quality_rows.to_dict(orient="records"):
+        population = quality_population_metadata(
+            str(row["anchor_id"]), int(row["paired_case_count"]),
+            int(row["paired_painting_count"]), int(row["population_case_count"]),
+        )
         add(
             "t04_quality_anchor_summary",
             f"{row['anchor_id']}__{row['model_id']}",
@@ -994,12 +1030,13 @@ def build_final_thesis_tables(
                 "directional_utility_mean": row["directional_utility_mean"],
                 "aggregate_rank": row["aggregate_rank"],
                 "winner_model_id": row["winner_model_id"],
-                "eligible_case_count": row["population_case_count"],
+                "eligible_case_count": row["paired_case_count"],
+                **population["values"],
                 "paired_painting_count": row["paired_painting_count"],
             },
-            "controlled_300_core_four_method_overall_nonzero_cases",
-            f"{int(row['population_case_count'])} cases; {int(row['paired_painting_count'])} paintings",
-            "painting",
+            population["scope"],
+            population["denominator"],
+            "case (descriptive mean; clustered by painting)",
             ["21"],
             ["model_comparison_path"],
             [str(row["comparison_row_id"])],
@@ -1016,6 +1053,11 @@ def build_final_thesis_tables(
     ].sort_values("anchor_id", kind="stable")
     _require_row_count(disagreement_rows, 11, "T05 metric disagreement selection")
     for row in disagreement_rows.to_dict(orient="records"):
+        population = quality_population_metadata(
+            str(row["anchor_id"]), int(row["eligible_case_count"]),
+            int(row["eligible_painting_count"]),
+            int(quality_rows["population_case_count"].max()),
+        )
         add(
             "t05_metric_disagreement",
             str(row["anchor_id"]),
@@ -1026,10 +1068,11 @@ def build_final_thesis_tables(
                 "majority_vote_winner_model_id": row["majority_vote_winner_model_id"],
                 "agrees_with_majority_vote": row["agrees_with_majority_vote"],
                 "loo_winner_stability_fraction": row["loo_winner_stability_fraction"],
+                **population["values"],
             },
-            "controlled_300_core_four_method_overall_nonzero_cases",
-            f"{int(row['eligible_case_count'])} cases; {int(row['eligible_painting_count'])} paintings",
-            "painting",
+            population["scope"],
+            population["denominator"],
+            "case (descriptive mean; clustered by painting)",
             ["21"],
             ["metric_disagreement_path"],
             [str(row["disagreement_row_id"])],
@@ -1221,9 +1264,12 @@ def build_final_thesis_tables(
                 "p_value": row["p_value"],
                 "q_value": row["q_value"],
                 "n_paintings": row["n_paintings"],
+                "n_cases": 1200,
+                "aggregation_rule": "median_over_four_canonical_damage_cases_per_painting_and_model",
+                "controls_included": False,
             },
-            "all_nonzero_primary_core",
-            f"{int(row['n_paintings'])} paintings",
+            "canonical_nonzero_core",
+            f"1200 canonical nonzero cases; {int(row['n_paintings'])} equally weighted painting blocks; four cases per painting/model",
             str(row["independent_unit"]),
             ["26"],
             ["statistical_results_path"],
@@ -1254,9 +1300,12 @@ def build_final_thesis_tables(
                 "model_associations": associations,
                 "model_count": subset["model_id"].nunique(),
                 "n_paintings": int(pd.to_numeric(subset["n_paintings"], errors="coerce").max()),
+                "n_cases": int(pd.to_numeric(subset["n_cases"], errors="raise").max()),
+                "aggregation_rule": "separate_quality_and_runtime_medians_over_all_nonzero_cases_per_painting_and_model",
+                "controls_included": False,
             },
             "all_nonzero_primary_core",
-            f"{int(pd.to_numeric(subset['n_paintings'], errors='coerce').max())} paintings per model",
+            f"{int(pd.to_numeric(subset['n_cases'], errors='raise').max())} nonzero cases across four experiment branches; {int(pd.to_numeric(subset['n_paintings'], errors='coerce').max())} equally weighted paintings per model; within-painting medians",
             "painting",
             ["26"],
             ["statistical_results_path", "ranking_stability_path"],
@@ -1421,7 +1470,7 @@ def build_final_thesis_tables(
         add(
             "t15_limitations",
             f"limitation_{number:02d}",
-            str(limitation).replace("_", " "),
+            SDXL_COMPLETION_NOTE if str(limitation).startswith("sdxl_scheduled_35_") else str(limitation).replace("_", " "),
             {"limitation_id": str(limitation), "must_remain_explicit": True},
             "final_report_interpretation_boundary",
             "one approved limitation or deviation",
@@ -1464,11 +1513,21 @@ def build_final_latex_tables(
         display_rows = []
         for row in subset.to_dict(orient="records"):
             values = json.loads(str(row["values_json"]))
+            # Keep the measured result visible after adding population metadata.
+            # Alphabetical truncation otherwise drops restored_mean from T04.
+            priority = {
+                "t04_quality_anchor_summary": ["restored_mean", "aggregate_rank", "metric_name", "region_id", "winner_model_id"],
+                "t05_metric_disagreement": ["model_rank_order", "winner_model_id", "majority_vote_winner_model_id", "agrees_with_majority_vote", "loo_winner_stability_fraction"],
+                "t10_grouped_statistics": ["test_statistic", "effect_size", "p_value", "q_value", "model_associations"],
+            }.get(table_id)
+            visible = ([(key, values[key]) for key in priority if key in values]
+                       if priority else list(values.items())[:5])
             compact = "; ".join(
-                f"{key}={value}" for key, value in list(values.items())[:5]
+                f"{key}={value}" for key, value in visible
             )
             display_rows.append(
-                {"Item": row["row_label"], "Scope": row["scope"], "Evidence": compact}
+                {"Item": row["row_label"], "Scope": row["scope"],
+                 "Population and aggregation": row["denominator"], "Evidence": compact}
             )
         latex = pd.DataFrame(display_rows).to_latex(index=False, escape=True)
         records.append(
@@ -1479,7 +1538,7 @@ def build_final_latex_tables(
                 "section_id": str(item["section_id"]),
                 "caption": table_id.replace("_", " ").title(),
                 "label": f"tab:{table_id.replace('_', '-')}",
-                "column_specification": "lll",
+                "column_specification": "llll",
                 "latex": latex,
                 "source_row_count": len(subset),
                 "schema_version": LATEX_TABLE_SCHEMA_VERSION,

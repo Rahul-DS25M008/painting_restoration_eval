@@ -116,3 +116,7 @@ outputs/36_supervisor_publication_reproducibility_package/**/*.html diff
 
 # Supervisor PDFs are binary documents in ordinary Git; preserve their bytes.
 docs/supervisor/*.pdf -filter -diff -merge -text
+
+# Reporting errata are small ordinary-Git tables. Preserve checksum bytes on all OSes.
+docs/errata/2026-10-03/*.csv -filter diff -merge -text
+docs/errata/2026-10-03/*.json -filter diff -merge -text

@@ -50,9 +50,11 @@ The central risk is domain gap. General-image or web-scale training does not est
 OpenCV Telea, LaMa, HINT and Stable Diffusion share all 2,620 eligible restoration
 cases across 300 paintings, including 300 zero controls per primary branch.
 Stable Diffusion additionally retains approved prompt-context and repeated-seed
-candidates. SDXL is restricted to 35 predeclared cases across 30 paintings; 24
-completed, one timed out and ten were not started under the declared compute
-budget. It must not be presented as a full-scope comparison.
+candidates. SDXL had a predeclared schedule of 35 cases across 30 paintings.
+Twenty-four cases across 19 paintings completed and passed technical validation;
+one case timed out and ten were not started after the budget/timeout guard.
+SDXL provides bounded feasibility evidence, not a fifth full benchmark ranking.
+The eleven noncompleted cases are not image-quality failures.
 
 Notebook 22 owns additional Stable Diffusion damage-size candidates outside the
 N11 generation/runtime table. Notebook 30's observed Stable Diffusion generation
@@ -274,7 +276,9 @@ The eleven anchors are not eleven independent measurements. Masked MAE and
 masked mean restored spatial error summarize the same absolute RGB error apart
 from numerical precision. The maps add spatial localization; their scalar mean
 does not provide a second independent confirmation. Other anchors can correlate.
-The recorded 10/11 result is retained, not relabelled as a deduplicated analysis.
+The recorded 10/11 result is retained. Counting the equivalent MAE/spatial-error
+scalar once gives nine wins among ten distinct scalar quantities, not ten
+independent measurements and not a newly fitted ranking.
 
 Overall values average paired cases rather than giving each painting equal
 weight. In the saved N21 overall rows, ten anchors use 2,320 nonzero cases and

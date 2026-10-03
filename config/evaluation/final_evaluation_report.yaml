@@ -280,7 +280,7 @@ final_evaluation_report:
     - "controlled_300_balanced_collection_does_not_represent_all_painting_traditions_or_conservation_conditions"
     - "style_or_period_documented_for_268_of_300_paintings"
     - "thirty_five_painting_extensions_do_not_separate_category_from_painting_identity"
-    - "sdxl_bounded_35_case_schedule_has_24_completed_candidates_across_30_paintings"
+    - "sdxl_scheduled_35_cases_across_30_paintings_completed_24_across_19_one_timeout_ten_not_started"
     - "uncertainty_only_for_supported_repeated_seed_populations"
     - "uncertainty_is_not_calibrated_confidence"
     - "telea_lama_and_hint_are_deterministic"

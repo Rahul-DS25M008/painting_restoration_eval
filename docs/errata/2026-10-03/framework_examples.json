@@ -1,0 +1,334 @@
+{
+  "structural_perceptual_disagreement": {
+    "case_id": "canonical__p009__loss_small",
+    "candidate_id": "candidate__opencv_telea__canonical__p009__loss_small__c00",
+    "model_id": "opencv_telea",
+    "qualifying_candidates": 82,
+    "selection_rule": "first case_id/candidate_id in lexicographic order with crop SSIM >= 0.9 and SSIM rank 1 but LPIPS rank 4",
+    "candidate_comparison": [
+      {
+        "candidate_id": "candidate__hint_places2__canonical__p009__loss_small__c00",
+        "model_id": "hint_places2",
+        "structural_crop_ssim": 0.9507304370721492,
+        "perceptual_crop_lpips": 0.0209653116762638,
+        "classical_masked_mae": 22.003434779135716,
+        "colour_masked_delta_e": 9.552050590515137
+      },
+      {
+        "candidate_id": "candidate__lama__canonical__p009__loss_small__c00",
+        "model_id": "lama",
+        "structural_crop_ssim": 0.9571865467745528,
+        "perceptual_crop_lpips": 0.0158178508281707,
+        "classical_masked_mae": 18.7464653726336,
+        "colour_masked_delta_e": 8.083992004394531
+      },
+      {
+        "candidate_id": "candidate__opencv_telea__canonical__p009__loss_small__c00",
+        "model_id": "opencv_telea",
+        "structural_crop_ssim": 0.9584804129154056,
+        "perceptual_crop_lpips": 0.0494477003812789,
+        "classical_masked_mae": 22.920872274143303,
+        "colour_masked_delta_e": 9.357145309448242
+      },
+      {
+        "candidate_id": "sd15__p00__s2026__e80e263b9473",
+        "model_id": "stable_diffusion_inpainting",
+        "structural_crop_ssim": 0.9459496969514593,
+        "perceptual_crop_lpips": 0.0395544096827507,
+        "classical_masked_mae": 28.311190989695664,
+        "colour_masked_delta_e": 11.14451026916504
+      }
+    ],
+    "source_rows": [
+      {
+        "source_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+        "source_row_id": "cm__fa80a45ffcabf3535563",
+        "candidate_id": "candidate__hint_places2__canonical__p009__loss_small__c00",
+        "anchor_id": "classical_masked_mae",
+        "value": 22.003434779135716
+      },
+      {
+        "source_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+        "source_row_id": "cm__2e126b84d8b0317cd0d3",
+        "candidate_id": "candidate__lama__canonical__p009__loss_small__c00",
+        "anchor_id": "classical_masked_mae",
+        "value": 18.7464653726336
+      },
+      {
+        "source_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+        "source_row_id": "cm__0a66ce92ab59f83e9af1",
+        "candidate_id": "candidate__opencv_telea__canonical__p009__loss_small__c00",
+        "anchor_id": "classical_masked_mae",
+        "value": 22.920872274143303
+      },
+      {
+        "source_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+        "source_row_id": "cm__309a48f2d0570f24fd5a",
+        "candidate_id": "sd15__p00__s2026__e80e263b9473",
+        "anchor_id": "classical_masked_mae",
+        "value": 28.311190989695664
+      },
+      {
+        "source_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+        "source_row_id": "cm__62a4963ef779981260dc",
+        "candidate_id": "candidate__hint_places2__canonical__p009__loss_small__c00",
+        "anchor_id": "structural_crop_ssim",
+        "value": 0.9507304370721492
+      },
+      {
+        "source_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+        "source_row_id": "cm__d04ca692668daee2e04f",
+        "candidate_id": "candidate__lama__canonical__p009__loss_small__c00",
+        "anchor_id": "structural_crop_ssim",
+        "value": 0.9571865467745528
+      },
+      {
+        "source_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+        "source_row_id": "cm__2a816f7001fa3d7e1805",
+        "candidate_id": "candidate__opencv_telea__canonical__p009__loss_small__c00",
+        "anchor_id": "structural_crop_ssim",
+        "value": 0.9584804129154056
+      },
+      {
+        "source_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+        "source_row_id": "cm__a66830f6b408846ad145",
+        "candidate_id": "sd15__p00__s2026__e80e263b9473",
+        "anchor_id": "structural_crop_ssim",
+        "value": 0.9459496969514593
+      },
+      {
+        "source_path": "outputs/14_lpips_metrics/metrics/lpips_metrics.csv",
+        "source_row_id": "lp__48f0d0b81077d9430515",
+        "candidate_id": "candidate__hint_places2__canonical__p009__loss_small__c00",
+        "anchor_id": "perceptual_crop_lpips",
+        "value": 0.0209653116762638
+      },
+      {
+        "source_path": "outputs/14_lpips_metrics/metrics/lpips_metrics.csv",
+        "source_row_id": "lp__f4da600f81e03a723afd",
+        "candidate_id": "candidate__lama__canonical__p009__loss_small__c00",
+        "anchor_id": "perceptual_crop_lpips",
+        "value": 0.0158178508281707
+      },
+      {
+        "source_path": "outputs/14_lpips_metrics/metrics/lpips_metrics.csv",
+        "source_row_id": "lp__d92ca03b9968a8bb6310",
+        "candidate_id": "candidate__opencv_telea__canonical__p009__loss_small__c00",
+        "anchor_id": "perceptual_crop_lpips",
+        "value": 0.0494477003812789
+      },
+      {
+        "source_path": "outputs/14_lpips_metrics/metrics/lpips_metrics.csv",
+        "source_row_id": "lp__35161ea0c685b5e69964",
+        "candidate_id": "sd15__p00__s2026__e80e263b9473",
+        "anchor_id": "perceptual_crop_lpips",
+        "value": 0.0395544096827507
+      },
+      {
+        "source_path": "outputs/17_local_consistency_metrics/metrics/local_consistency.csv",
+        "source_row_id": "lcmr_25867f9b59f8c04959ae",
+        "candidate_id": "candidate__hint_places2__canonical__p009__loss_small__c00",
+        "anchor_id": "colour_masked_delta_e",
+        "value": 9.552050590515137
+      },
+      {
+        "source_path": "outputs/17_local_consistency_metrics/metrics/local_consistency.csv",
+        "source_row_id": "lcmr_14993da41d374746d5a7",
+        "candidate_id": "candidate__lama__canonical__p009__loss_small__c00",
+        "anchor_id": "colour_masked_delta_e",
+        "value": 8.083992004394531
+      },
+      {
+        "source_path": "outputs/17_local_consistency_metrics/metrics/local_consistency.csv",
+        "source_row_id": "lcmr_2124b0cc21f489653a9b",
+        "candidate_id": "candidate__opencv_telea__canonical__p009__loss_small__c00",
+        "anchor_id": "colour_masked_delta_e",
+        "value": 9.357145309448242
+      },
+      {
+        "source_path": "outputs/17_local_consistency_metrics/metrics/local_consistency.csv",
+        "source_row_id": "lcmr_7a2425f1478f250a2bc8",
+        "candidate_id": "sd15__p00__s2026__e80e263b9473",
+        "anchor_id": "colour_masked_delta_e",
+        "value": 11.14451026916504
+      }
+    ]
+  },
+  "unchanged_winner": {
+    "case_id": "canonical__p002__loss_large",
+    "candidate_id": "candidate__lama__canonical__p002__loss_large__c00",
+    "model_id": "lama",
+    "qualifying_candidates": 416,
+    "selection_rule": "first case_id/candidate_id in lexicographic order with SSIM rank 1 and LPIPS rank 1",
+    "candidate_comparison": [
+      {
+        "candidate_id": "candidate__hint_places2__canonical__p002__loss_large__c00",
+        "model_id": "hint_places2",
+        "structural_crop_ssim": 0.6901438852937934,
+        "perceptual_crop_lpips": 0.3364080190658569,
+        "classical_masked_mae": 31.84891799330097,
+        "colour_masked_delta_e": 13.005694389343262
+      },
+      {
+        "candidate_id": "candidate__lama__canonical__p002__loss_large__c00",
+        "model_id": "lama",
+        "structural_crop_ssim": 0.791482484575022,
+        "perceptual_crop_lpips": 0.2359907925128936,
+        "classical_masked_mae": 24.03543713070641,
+        "colour_masked_delta_e": 9.216575622558594
+      },
+      {
+        "candidate_id": "candidate__opencv_telea__canonical__p002__loss_large__c00",
+        "model_id": "opencv_telea",
+        "structural_crop_ssim": 0.776491113291355,
+        "perceptual_crop_lpips": 0.3237887918949127,
+        "classical_masked_mae": 28.82128636483384,
+        "colour_masked_delta_e": 11.01602554321289
+      },
+      {
+        "candidate_id": "sd15__p00__s2026__29ff258ff921",
+        "model_id": "stable_diffusion_inpainting",
+        "structural_crop_ssim": 0.6906322832688531,
+        "perceptual_crop_lpips": 0.2821890115737915,
+        "classical_masked_mae": 34.36687365925257,
+        "colour_masked_delta_e": 13.773536682128906
+      }
+    ],
+    "source_rows": [
+      {
+        "source_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+        "source_row_id": "cm__2d3330db590a08f17ba6",
+        "candidate_id": "candidate__hint_places2__canonical__p002__loss_large__c00",
+        "anchor_id": "classical_masked_mae",
+        "value": 31.84891799330097
+      },
+      {
+        "source_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+        "source_row_id": "cm__6626f1af369921b4cd78",
+        "candidate_id": "candidate__lama__canonical__p002__loss_large__c00",
+        "anchor_id": "classical_masked_mae",
+        "value": 24.03543713070641
+      },
+      {
+        "source_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+        "source_row_id": "cm__4a864d97ab9cc4b7edd1",
+        "candidate_id": "candidate__opencv_telea__canonical__p002__loss_large__c00",
+        "anchor_id": "classical_masked_mae",
+        "value": 28.82128636483384
+      },
+      {
+        "source_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+        "source_row_id": "cm__9663de0547aa91c22dd6",
+        "candidate_id": "sd15__p00__s2026__29ff258ff921",
+        "anchor_id": "classical_masked_mae",
+        "value": 34.36687365925257
+      },
+      {
+        "source_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+        "source_row_id": "cm__525712431d9abfd5e233",
+        "candidate_id": "candidate__hint_places2__canonical__p002__loss_large__c00",
+        "anchor_id": "structural_crop_ssim",
+        "value": 0.6901438852937934
+      },
+      {
+        "source_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+        "source_row_id": "cm__b52a50c1deb1e34a5c94",
+        "candidate_id": "candidate__lama__canonical__p002__loss_large__c00",
+        "anchor_id": "structural_crop_ssim",
+        "value": 0.791482484575022
+      },
+      {
+        "source_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+        "source_row_id": "cm__3614e0784b6ccfc91671",
+        "candidate_id": "candidate__opencv_telea__canonical__p002__loss_large__c00",
+        "anchor_id": "structural_crop_ssim",
+        "value": 0.776491113291355
+      },
+      {
+        "source_path": "outputs/13_classical_metrics/metrics/classical_metrics.csv",
+        "source_row_id": "cm__0ade1c3b91919ebc81b2",
+        "candidate_id": "sd15__p00__s2026__29ff258ff921",
+        "anchor_id": "structural_crop_ssim",
+        "value": 0.6906322832688531
+      },
+      {
+        "source_path": "outputs/14_lpips_metrics/metrics/lpips_metrics.csv",
+        "source_row_id": "lp__e1cb1f66a6cf1e935a4e",
+        "candidate_id": "candidate__hint_places2__canonical__p002__loss_large__c00",
+        "anchor_id": "perceptual_crop_lpips",
+        "value": 0.3364080190658569
+      },
+      {
+        "source_path": "outputs/14_lpips_metrics/metrics/lpips_metrics.csv",
+        "source_row_id": "lp__8c974ddf81092b2c1c00",
+        "candidate_id": "candidate__lama__canonical__p002__loss_large__c00",
+        "anchor_id": "perceptual_crop_lpips",
+        "value": 0.2359907925128936
+      },
+      {
+        "source_path": "outputs/14_lpips_metrics/metrics/lpips_metrics.csv",
+        "source_row_id": "lp__08e92372942c9c64ee79",
+        "candidate_id": "candidate__opencv_telea__canonical__p002__loss_large__c00",
+        "anchor_id": "perceptual_crop_lpips",
+        "value": 0.3237887918949127
+      },
+      {
+        "source_path": "outputs/14_lpips_metrics/metrics/lpips_metrics.csv",
+        "source_row_id": "lp__f770bb4ec2adf75e539c",
+        "candidate_id": "sd15__p00__s2026__29ff258ff921",
+        "anchor_id": "perceptual_crop_lpips",
+        "value": 0.2821890115737915
+      },
+      {
+        "source_path": "outputs/17_local_consistency_metrics/metrics/local_consistency.csv",
+        "source_row_id": "lcmr_1f4c9ec7a06ab886aac9",
+        "candidate_id": "candidate__hint_places2__canonical__p002__loss_large__c00",
+        "anchor_id": "colour_masked_delta_e",
+        "value": 13.005694389343262
+      },
+      {
+        "source_path": "outputs/17_local_consistency_metrics/metrics/local_consistency.csv",
+        "source_row_id": "lcmr_d11bfc74b7acaccb7c1f",
+        "candidate_id": "candidate__lama__canonical__p002__loss_large__c00",
+        "anchor_id": "colour_masked_delta_e",
+        "value": 9.216575622558594
+      },
+      {
+        "source_path": "outputs/17_local_consistency_metrics/metrics/local_consistency.csv",
+        "source_row_id": "lcmr_45bd2603b81803007ac8",
+        "candidate_id": "candidate__opencv_telea__canonical__p002__loss_large__c00",
+        "anchor_id": "colour_masked_delta_e",
+        "value": 11.01602554321289
+      },
+      {
+        "source_path": "outputs/17_local_consistency_metrics/metrics/local_consistency.csv",
+        "source_row_id": "lcmr_c5bf1c12466559f35b34",
+        "candidate_id": "sd15__p00__s2026__29ff258ff921",
+        "anchor_id": "colour_masked_delta_e",
+        "value": 13.773536682128906
+      }
+    ]
+  },
+  "aggregate_ablation": [
+    {
+      "result_id": "ablation_07676bcaa7871b5746bc",
+      "scenario_id": "complete_approved_framework",
+      "baseline_winner_id": "lama",
+      "scenario_winner_id": "lama",
+      "available_family_count": 10.0,
+      "available_anchor_count": 11,
+      "n_cases": 2620,
+      "n_paintings": 300
+    },
+    {
+      "result_id": "ablation_1ac0cd489f68a3d6d826",
+      "scenario_id": "only_classical",
+      "baseline_winner_id": "lama",
+      "scenario_winner_id": "lama|opencv_telea",
+      "available_family_count": 2.0,
+      "available_anchor_count": 2,
+      "n_cases": 2620,
+      "n_paintings": 300
+    }
+  ]
+}
