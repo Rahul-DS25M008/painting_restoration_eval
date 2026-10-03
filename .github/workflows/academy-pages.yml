@@ -1,0 +1,52 @@
+name: Deploy Evidence Academy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/academy/**'
+      - '.github/workflows/academy-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: academy-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out academy only
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: docs/academy
+          lfs: false
+          persist-credentials: false
+      - name: Check static publication file
+        run: |
+          test -s docs/academy/index.html
+          test "$(wc -c < docs/academy/index.html)" -lt 2000000
+          grep -q 'Restoration Evidence Academy' docs/academy/index.html
+          mkdir -p _academy_site
+          cp docs/academy/index.html _academy_site/index.html
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload academy only
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _academy_site
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

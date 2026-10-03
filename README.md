@@ -6,7 +6,7 @@ This master's thesis develops and applies an evidence-based evaluation framework
 
 The contribution is an **evaluation framework and reproducible empirical study**, not a newly trained restoration model or an automated conservation system.
 
-[Explore the dashboard](https://fhtw-painting-restoration-main.streamlit.app/) · [Research archive / DOI](https://doi.org/10.5281/zenodo.23092185) · [Final evaluation report](outputs/33_final_evaluation_report/reports/final_evaluation.html) · [Supervisor walkthrough](docs/supervisor/Supervisor_Dashboard_Walkthrough_Controlled_300.pdf) · [Completion and review brief](docs/supervisor/Study_Completion_and_Review_Brief.pdf)
+[Explore the dashboard](https://fhtw-painting-restoration-main.streamlit.app/) · [Learn the pipeline](https://rahul-ds25m008.github.io/painting_restoration_eval/) · [Research archive / DOI](https://doi.org/10.5281/zenodo.23092185) · [Final evaluation report](outputs/33_final_evaluation_report/reports/final_evaluation.html) · [Supervisor walkthrough](docs/supervisor/Supervisor_Dashboard_Walkthrough_Controlled_300.pdf) · [Completion and review brief](docs/supervisor/Study_Completion_and_Review_Brief.pdf)
 
 > Visual plausibility, metric performance and output stability are different kinds of evidence. None alone establishes historical correctness or conservation approval.
 
@@ -111,6 +111,18 @@ The dashboard reads saved evidence. **It does not run restoration models or reco
 The report collection covers 30 selected cases and all 300 paintings. [Pinned case/painting report package on HF](https://huggingface.co/datasets/RahulMaddineni264/painting-restoration-eval-diagnostics/blob/c33bbd87e65fe96f9a81c1c794fd4a70f7226874/report_packages/v1/controlled_300/32_case_and_painting_report_generation/run_0d4ae193602944dda511bf54199105b1/reports/index.html).
 
 GitHub displays HTML source rather than the full report presentation. Download a report and open it locally, or open it through the dashboard. Scientific report images are embedded for standalone viewing.
+
+## Understand the pipeline: Restoration Evidence Academy
+
+The [Restoration Evidence Academy](https://rahul-ds25m008.github.io/painting_restoration_eval/) is a separate interactive learning companion for supervisors and readers who want a quick overview followed by a detailed understanding of how the pipeline works.
+
+- **Notebook Lab:** 37 detailed chapters covering N01–N36 plus D02; the existing N12 chapter also covers D01/HINT–MAT selection and N12A. Each chapter explains its inputs, method, terminology, actual evidence, decisions and limitations, with five revision questions.
+- **Evidence Gallery:** seven cross-notebook explanations for a quicker, question-led overview.
+- **Defence Room:** 18 questions connecting the pipeline to the research questions and defensible conclusions.
+
+Start with the Evidence Gallery, then open the relevant notebook chapters for depth. This companion incorporates the 3 October reporting corrections and distinguishes the completed N34–N36 delivery from independent scientific reproduction. It does not alter the frozen dashboard or archived experiments.
+
+The academy is a static GitHub Pages site: figures and lesson data are embedded, progress is stored in the reader's browser, and discussion buttons expose reusable prompts rather than calling an AI service. Its first public deployment requires the one-time [Pages setup](docs/academy/README.md); the link becomes available after that workflow succeeds. A [standalone copy](docs/academy/index.html) can also be downloaded and opened locally.
 
 ## Reproducibility and delivery status
 
