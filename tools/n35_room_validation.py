@@ -60,10 +60,16 @@ def verify_freeze(root, relative):
     if not files or len({r["path"] for r in files}) != len(files):
         raise ValueError("Empty or duplicate freeze entries")
     from n35_backend_delta import baseline_source
+    from n35_publication_delta import publication_baseline, verify_added_files
+    if relative == "config/publication/research_archive_freeze.json":
+        verify_added_files(root)
     result = []
     for r in files:
         observed = digest(safe_path(root, r["path"]), r["hash_mode"])
         baseline = baseline_source(Path(root), r["path"]) if r["path"].endswith(".py") else None
+        if baseline is None and r["hash_mode"] == "lf_normalized":
+            current = safe_path(root, r["path"]).read_text(encoding="utf-8")
+            baseline = publication_baseline(root, r["path"], current)
         if baseline is not None and r["hash_mode"] == "lf_normalized":
             observed = hashlib.sha256(baseline.encode()).hexdigest()
         result.append({"path": r["path"], "expected": r["sha256"], "observed": observed})

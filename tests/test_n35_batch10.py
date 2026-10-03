@@ -145,6 +145,9 @@ class Batch10Tests(unittest.TestCase):
     def test_original_frozen_sources_are_not_rebaselined(self):
         result = b10.visual_delta_checks()
         self.assertTrue(result["passed"],result)
+        fingerprint = b10.fingerprint()
+        for name in ("research_archive_publication_delta", "n35_validation_delta"):
+            self.assertIn(f"config/publication/{name}.json", fingerprint)
 
     def test_no_notebook_execution_or_publication_in_cells(self):
         source="\n".join(c["source"] for c in build_cells() if c["cell_type"]=="code")

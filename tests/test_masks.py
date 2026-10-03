@@ -111,7 +111,8 @@ class CanonicalMaskTests(unittest.TestCase):
     def test_representative_selection_is_rule_based_and_stable(self) -> None:
         selected = select_representative_row(self.preprocessed, self.config)
         self.assertEqual(len(selected), 1)
-        self.assertEqual(selected.iloc[0]["painting_id"], "p050")
+        # The representative is population-dependent: p050 belonged to Pilot-50.
+        # Check the declared median/tie-break rule and input-order invariance.
         median = float(self.preprocessed["content_area_fraction"].median())
         selected_distance = abs(
             float(selected.iloc[0]["content_area_fraction"]) - median
@@ -120,6 +121,13 @@ class CanonicalMaskTests(unittest.TestCase):
             self.preprocessed["content_area_fraction"].astype(float) - median
         ).abs()
         self.assertAlmostEqual(selected_distance, float(all_distances.min()))
+        nearest = self.preprocessed.loc[all_distances.eq(all_distances.min())]
+        expected = nearest.sort_values(["dataset_sort_index", "painting_id"]).iloc[0]
+        self.assertEqual(selected.iloc[0]["painting_id"], expected["painting_id"])
+        shuffled = select_representative_row(
+            self.preprocessed.sample(frac=1, random_state=2026), self.config
+        )
+        pd.testing.assert_frame_equal(selected, shuffled)
 
     def test_seed_derivation_and_case_generation_are_deterministic(self) -> None:
         seed = stable_seed("painting", 3, "scratch_thin")

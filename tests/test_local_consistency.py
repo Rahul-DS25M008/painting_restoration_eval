@@ -111,7 +111,7 @@ class LocalConsistencyTests(unittest.TestCase):
         }])
 
     def test_config_schema_ids_and_counts(self) -> None:
-        self.assertEqual(LOCAL_CONSISTENCY_MODULE_VERSION, "1.0.3")
+        self.assertEqual(LOCAL_CONSISTENCY_MODULE_VERSION, "1.1.0")
         self.assertIs(get_schema("local_consistency"), LOCAL_CONSISTENCY_SCHEMA)
         self.assertIs(
             get_schema("local_consistency_map_images"),
@@ -119,8 +119,8 @@ class LocalConsistencyTests(unittest.TestCase):
         )
         settings = self.config["local_consistency"]
         self.assertEqual(tuple(settings["visualization"]["map_types"]), MAP_TYPES)
-        self.assertEqual(settings["expected_counts"]["total_metric_rows"], 271988)
-        self.assertEqual(settings["expected_counts"]["map_manifest_rows"], 3282)
+        self.assertEqual(settings["expected_counts"]["total_metric_rows"], 2060667)
+        self.assertEqual(settings["expected_counts"]["map_manifest_rows"], 27926)
         first = make_map_id("candidate_with_a_long_identifier")
         second = make_map_id("candidate_with_a_long_identifier")
         self.assertEqual(first, second)
@@ -266,10 +266,10 @@ class LocalConsistencyTests(unittest.TestCase):
             cases, eligibility, geometry, tables,
             candidate_source_roots=source_roots,
         ).worklist
-        self.assertEqual(len(worklist), 2160)
-        self.assertEqual(expected_metric_row_count(worklist), 271988)
+        self.assertEqual(len(worklist), 16404)
+        self.assertEqual(expected_metric_row_count(worklist), 2060667)
         selected = select_map_candidates(worklist)
-        self.assertEqual(len(selected), 1090)
+        self.assertEqual(len(selected), 9304)
         self.assertFalse(selected["is_zero_control"].any())
         self.assertFalse(selected.duplicated(["case_id", "model_id"]).any())
         self.assertEqual(

@@ -150,6 +150,17 @@ python -m streamlit run streamlit_app.py
 
 Dashboard use does not require a GPU. Lazy remote evidence needs network access. Full experimental reproduction needs the separate experiment environments, datasets and model prerequisites recorded in the appendix; installing the dashboard requirements alone is not a full reproduction.
 
+### Regression validation
+
+In the existing Python 3.12 experiment environment, install `requirements_test.txt`
+and run `python -m playwright install chromium`, then set `PYTHONPATH=src` and run
+`python -m unittest discover -s tests -v`. Run the six `tests/*.cjs` controller
+files with `node --test` too. These checks need the saved local evidence; a
+dashboard-only installation is not the complete test environment. HINT functions
+are included in unittest discovery. See the [dated validation record](docs/errata/2026-10-03/validation.md)
+for executed results and the explicitly retired historical tests. Current
+regression results do not replace the original N35/N36 execution records.
+
 ## Find your way around the repository
 
 - `notebooks/` — completed producers, analyses and delivery stages; [roadmap](docs/final_notebook_roadmap.md).

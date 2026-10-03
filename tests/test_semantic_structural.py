@@ -169,9 +169,9 @@ class SemanticStructuralTests(unittest.TestCase):
     def test_config_arithmetic_and_schema_registration(self) -> None:
         settings = self.config["semantic_structural"]
         self.assertEqual(SEMANTIC_STRUCTURAL_MODULE_VERSION, "1.0.3")
-        self.assertEqual(settings["expected_counts"]["semantic_metric_rows"], 58980)
-        self.assertEqual(settings["expected_counts"]["map_manifest_rows"], 9430)
-        self.assertEqual(settings["expected_counts"]["canonical_file_count"], 1097)
+        self.assertEqual(settings["expected_counts"]["semantic_metric_rows"], 447312)
+        self.assertEqual(settings["expected_counts"]["map_manifest_rows"], 72520)
+        self.assertEqual(settings["expected_counts"]["canonical_file_count"], 9311)
         self.assertFalse(settings["evidence_policy"]["combined_semantic_score_retained"])
         self.assertIs(
             get_schema("semantic_structural_metrics"),

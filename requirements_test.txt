@@ -1,0 +1,7 @@
+# Install after the existing project/experiment environment, not on Streamlit.
+# Keep the dashboard at its repository pin; 1.59's newer web dependencies
+# conflict with the retained IOPaint 1.6.0 experiment environment.
+streamlit==1.56.0
+pytest==8.4.2
+# Matches the availability-check workflow; install its Chromium separately.
+playwright==1.62.0

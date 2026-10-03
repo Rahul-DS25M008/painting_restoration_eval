@@ -1,4 +1,6 @@
 from pathlib import Path
+import tempfile
+import unittest
 
 import pandas as pd
 import pytest
@@ -61,3 +63,18 @@ def test_hint_config_rejects_wrong_eligible_count(tmp_path: Path) -> None:
     path.write_text(yaml.safe_dump(config, sort_keys=False), encoding="utf-8")
     with pytest.raises(ValueError, match="2,620"):
         load_hint_config(path)
+
+
+def load_tests(loader, tests, pattern):
+    """Include these pytest-style functions in the repository's unittest run."""
+    suite = unittest.TestSuite()
+    for name, function in list(globals().items()):
+        if name.startswith("test_") and callable(function):
+            def run(fn=function):
+                if fn.__code__.co_argcount:
+                    with tempfile.TemporaryDirectory() as temporary:
+                        fn(Path(temporary))
+                else:
+                    fn()
+            suite.addTest(unittest.FunctionTestCase(run, description=name))
+    return suite

@@ -34,6 +34,28 @@ and the manuscript claim-boundary sweep were excluded because no manuscript
 exists. The apparent N35 deletions were a file-access false alarm; no recovery
 operation was performed. Validation outcomes are linked from the errata.
 
+### Regression repair following reporting errata — 2026-10-03
+
+The owner requested that all fixable regression/environment failures be resolved
+before the Zenodo metadata handoff. Pilot-50 count/version assertions now use the
+current Controlled-300 contracts. Mask selection tests verify the rule and tie
+breaks; the Gallery test checks actual notebook nonmutation. HINT's five function
+tests now execute under unittest discovery; test-only pytest/Playwright dependencies
+and Chromium are installed for the local validation run.
+
+Original visual freezes and the original N35 backend receipt remain unchanged.
+Separate exact-hash receipts account for previously approved Zenodo/portrait
+changes and the reviewed Gallery test correction. Negative tests still reject
+unapproved source or asset drift. No dashboard layout, notebook execution,
+scientific output or published ZIP is modified. Consult the
+[final validation record](errata/2026-10-03/validation.md): 594 discovered,
+579 passed, 15 intentionally retired skips, and zero failures/errors. After
+restoring repository-pinned Streamlit 1.56.0 and IOPaint-compatible dependencies,
+all 228 affected regression checks passed and `pip check` found no broken
+requirements. All six controller test files passed. These are current checks,
+not historical N35/N36 passes inferred from repairs. Zenodo description updates
+remain pending owner action.
+
 ### Zenodo publication closeout — 2026-10-02
 
 The owner published Controlled-300 research artifacts **v1.0.0** at

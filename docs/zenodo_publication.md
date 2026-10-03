@@ -88,6 +88,17 @@ decision and verified checksums are **not blanket rights clearance**.
 
 ## Maintenance boundary
 
+### Reporting errata and validation follow-up — 2026-10-03
+
+The [post-publication errata](errata/2026-10-03/README.md) and its
+[validation record](errata/2026-10-03/validation.md) are separate GitHub corrections
+to reporting metadata and regression checks. They do not replace or alter any of
+the 15 Zenodo files. The owner has **not yet applied** the corresponding description
+update. After the repair commit is public, append a commit-pinned errata link to
+the existing record using **Edit**, then **Publish** the metadata changes. Do not
+choose New version or upload another archive for these reporting corrections.
+Record the owner-confirmed metadata update here only after it has happened.
+
 No new HF upload, model run, archive rebuild or re-upload is needed for this
 closeout. GitHub contains the compact publication receipt and updated source/docs;
 the original ZIP, eight parts, credentials and temporary recovery files stay

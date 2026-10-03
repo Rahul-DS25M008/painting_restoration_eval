@@ -131,14 +131,14 @@ class SpatialExplanationTests(unittest.TestCase):
         return pd.DataFrame(records), artworks
 
     def test_config_and_schemas_are_registered(self) -> None:
-        self.assertEqual(SPATIAL_EXPLANATIONS_MODULE_VERSION, "1.0.1")
+        self.assertEqual(SPATIAL_EXPLANATIONS_MODULE_VERSION, "1.0.2")
         self.assertIs(get_schema("spatial_explanations"), SPATIAL_EXPLANATIONS_SCHEMA)
         self.assertIs(
             get_schema("spatial_explanation_map_images"),
             SPATIAL_EXPLANATION_MAP_IMAGE_SCHEMA,
         )
         settings = self.config["spatial_explanations"]
-        self.assertEqual(settings["expected_counts"]["canonical_file_count"], 431)
+        self.assertEqual(settings["expected_counts"]["canonical_file_count"], 2481)
         self.assertFalse(settings["evidence_policy"]["combined_explanation_score_retained"])
         self.assertEqual(settings["population"]["filename_identity"], "uncertainty_group_id")
 

@@ -36,6 +36,9 @@ def remaining_ast(source, allowed):
 
 def baseline_source(root, relative):
     current = (root / relative).read_text(encoding="utf-8")
+    from n35_publication_delta import publication_baseline, validation_baseline
+    current = publication_baseline(root, relative, current)
+    current = validation_baseline(root, relative, current)
     path = root / "config/publication/n35_backend_delta.json"
     if not path.is_file(): return current
     manifest = json.loads(path.read_text())

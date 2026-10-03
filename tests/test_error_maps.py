@@ -107,7 +107,7 @@ class ErrorMapTests(unittest.TestCase):
         }
 
     def test_config_schema_and_ids(self) -> None:
-        self.assertEqual(ERROR_MAP_VERSION, "4.0.1")
+        self.assertEqual(ERROR_MAP_VERSION, "4.1.0")
         self.assertIs(get_schema("spatial_diagnostics"), SPATIAL_DIAGNOSTICS_SCHEMA)
         self.assertIs(
             get_schema("spatial_map_images"),
@@ -123,7 +123,7 @@ class ErrorMapTests(unittest.TestCase):
         )
         self.assertEqual(
             self.config["expected_counts"]["spatial_diagnostic_rows"],
-            18896,
+            143247,
         )
         self.assertEqual(
             sum(
@@ -131,7 +131,7 @@ class ErrorMapTests(unittest.TestCase):
                     "diagnostic_rows_by_region"
                 ].values()
             ),
-            18896,
+            143247,
         )
         first = make_map_id("candidate_with_a_very_long_identifier")
         second = make_map_id("candidate_with_a_very_long_identifier")

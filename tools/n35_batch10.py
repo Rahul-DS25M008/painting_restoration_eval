@@ -30,6 +30,8 @@ def fingerprint():
              *sorted((ROOT / "streamlit_assets").rglob("*.css")), *sorted((ROOT / "streamlit_assets").rglob("*.js")),
              ROOT / "streamlit_assets/evidence/deployment/manifest.json", ROOT / "config/publication/n35_backend_delta.json",
              ROOT / "requirements.txt", ROOT / "config/evaluation/dashboard_validation.yaml",
+               ROOT / "config/publication/research_archive_publication_delta.json",
+               ROOT / "config/publication/n35_validation_delta.json",
              *sorted((ROOT / "tools").glob("n35*.py")), *sorted((ROOT / "tools").glob("prepare_n35*.py")),
              ROOT / "tests/test_evidence_transport.py", ROOT / "tests/test_n35_batch10.py"]
     return {p.relative_to(ROOT).as_posix(): room.digest(p, "lf_normalized") for p in paths}
@@ -45,7 +47,7 @@ def visual_delta_checks():
         rows = room.verify_gallery_freeze(ROOT) if name == "model_gallery" else room.verify_later_room_freeze(ROOT, name) if name in {"stability_lab", "trustworthiness", "focused_portrait", "research_archive"} else room.verify_freeze(ROOT, f"config/publication/{name}_freeze.json")
         failures.extend(r for r in rows if r["expected"] != r["observed"])
     return dict(passed=not failures, scoped_backend_files=checked, freeze_failures=failures,
-                note="Original visual freezes retained; exact backend deltas are separately fingerprinted and AST-scoped")
+                  note="Original freezes retained; backend deltas are AST-scoped; approved post-publication Archive changes have a separate exact-hash receipt")
 
 
 def run_check(action, room_id=None, missing_local=False, remote=False):
