@@ -131,7 +131,12 @@ results. It does not update the frozen manifests or published release.
 ## Validation and publication status
 
 The completed check outcomes are recorded in [validation.md](validation.md).
-These repository corrections require a Git push to become publicly accessible.
-Adding the commit-pinned errata link to the existing Zenodo description is an
-owner action, not performed by the build or commit. No new DOI or archive upload
-is necessary for this explicit reporting-correction approach.
+The corrections and regression repairs are public in GitHub commit
+`6d24c42e1cdf47f9b4d0a266cf171fa5dee0c9f2`. On **3 October 2026**, the owner
+updated the existing Zenodo description to link to this exact errata revision.
+The public API and linked GitHub document were checked: the notice is present,
+the link is accessible, and the DOI, version and all 15 file identities remain
+unchanged. See the [publication closeout](../../zenodo_publication.md) for the
+verification scope. No new DOI, archive upload or further Zenodo metadata action
+is pending for these corrections. This later confirmation does not rewrite the
+historical pending-action wording preserved in the commit-pinned snapshot.

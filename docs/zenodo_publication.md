@@ -6,8 +6,9 @@ The [2026-10-03 errata](errata/2026-10-03/README.md) corrects population labels,
 aggregation descriptions and SDXL scheduled/completed coverage. It supplies
 traceable replacement rows while preserving the archived files and all saved
 scientific numerical results. Cite the original DOI together with a commit-pinned
-errata link when using affected tables. Updating the public record's description
-is a separate owner action; these repository edits do not update Zenodo.
+errata link when using affected tables. The owner updated the public record's
+description on **3 October 2026**; the public API confirms the correction notice
+and its link to commit `6d24c42e1cdf47f9b4d0a266cf171fa5dee0c9f2`.
 
 ## Published release
 
@@ -93,11 +94,18 @@ decision and verified checksums are **not blanket rights clearance**.
 The [post-publication errata](errata/2026-10-03/README.md) and its
 [validation record](errata/2026-10-03/validation.md) are separate GitHub corrections
 to reporting metadata and regression checks. They do not replace or alter any of
-the 15 Zenodo files. The owner has **not yet applied** the corresponding description
-update. After the repair commit is public, append a commit-pinned errata link to
-the existing record using **Edit**, then **Publish** the metadata changes. Do not
-choose New version or upload another archive for these reporting corrections.
-Record the owner-confirmed metadata update here only after it has happened.
+the 15 Zenodo files. **The description update is complete.** On 2026-10-03,
+the unauthenticated public API confirmed the correction notice and the exact
+[commit-pinned errata link](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/6d24c42e1cdf47f9b4d0a266cf171fa5dee0c9f2/docs/errata/2026-10-03/README.md).
+GitHub `main` matched that commit, and the linked document returned HTTP 200.
+Zenodo records the metadata update at `2026-10-03T01:16:39.048753Z`.
+
+The exact-version DOI and `v1.0.0` remain unchanged. All 15 public filenames,
+byte sizes and MD5 values still match the original publication receipt. This
+was a public metadata comparison, not another payload download or scientific
+rerun. The original receipt remains unchanged, preserving its earlier check
+date and the dashboard's approved freeze. No further Zenodo action is pending
+for this reporting-correction closeout.
 
 No new HF upload, model run, archive rebuild or re-upload is needed for this
 closeout. GitHub contains the compact publication receipt and updated source/docs;

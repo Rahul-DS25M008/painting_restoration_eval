@@ -53,8 +53,17 @@ scientific output or published ZIP is modified. Consult the
 restoring repository-pinned Streamlit 1.56.0 and IOPaint-compatible dependencies,
 all 228 affected regression checks passed and `pip check` found no broken
 requirements. All six controller test files passed. These are current checks,
-not historical N35/N36 passes inferred from repairs. Zenodo description updates
-remain pending owner action.
+not historical N35/N36 passes inferred from repairs.
+
+**Publication follow-up completed, 2026-10-03:** GitHub `main` was verified at
+`6d24c42e1cdf47f9b4d0a266cf171fa5dee0c9f2`. The public Zenodo API confirms the
+owner's correction notice linking to that exact errata revision; the linked
+document is accessible. Zenodo's recorded update time is
+`2026-10-03T01:16:39.048753Z`. The DOI, version and all 15 public filenames,
+sizes and MD5 values remain unchanged. This metadata-only confirmation does not
+rerun experiments, clear retained provenance exceptions or replace the original
+publication receipt. See [publication closeout](zenodo_publication.md). No further
+Zenodo action is pending for these reporting corrections.
 
 ### Zenodo publication closeout — 2026-10-02
 
