@@ -1,4 +1,4 @@
-# Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration
+# Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration (Pilot Experiment)
 
 A master's thesis project investigating how to evaluate painting restorations beyond visual appearance or a single image-similarity score.
 
@@ -9,6 +9,8 @@ The framework combines controlled artificial damage, pretrained inpainting model
 [Explore the dashboard](https://fhtw-painting-restoration.streamlit.app/) · [Full evaluation report — HTML](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/33_final_evaluation_report/reports/final_evaluation.html) · [Case and painting reports — HTML](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/main/outputs/32_case_and_painting_report_generation/reports/index.html)
 
 **Status:** The 36-notebook core computational pipeline and the post-pipeline Notebook 37 method-selection extension are complete. The interactive dashboard is publicly deployed.
+
+**This branch shows the results for the pilot experiment containing 50 paintings. To refer to the full-scaled thesis experiment, please switch to the branch main.**
 
 For interactive inspection, open the dashboard. For standalone reports, download the HTML file and open it in a browser; its presentation images are embedded.
 
