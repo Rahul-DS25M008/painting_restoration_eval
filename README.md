@@ -1,5 +1,9 @@
 # Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration
 
+[![Watch the 1-minute 55-second video tour of the Painting Restoration Evidence Museum](streamlit_assets/museum_visit/media/tour-overview-v1.jpg)](https://fhtw-painting-restoration-main.streamlit.app/?room=exhibition_foyer&tour=1)
+
+**[▶ Watch the museum tour · 1:55](https://fhtw-painting-restoration-main.streamlit.app/?room=exhibition_foyer&tour=1)** — A short introduction to the eight-room research dashboard. Click the preview, then Play in **Tour Overview**; fullscreen is available. Switch to **Explore Rooms** for the original self-paced guided route.
+
 **A restoration can look convincing and still be wrong. How should we evaluate it?**
 
 This master's thesis develops and applies an evidence-based evaluation framework for AI-assisted painting restoration. It combines controlled artificial damage, complementary inpainting methods, region-aware measurements, robustness experiments, repeated-candidate disagreement and inspectable case-level evidence.
