@@ -1,8 +1,9 @@
 # Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration
 
-[![Watch the 1-minute 55-second video tour of the Painting Restoration Evidence Museum](streamlit_assets/museum_visit/media/tour-overview-v1.jpg)](https://fhtw-painting-restoration-main.streamlit.app/?room=exhibition_foyer&tour=1)
+https://github.com/user-attachments/assets/b8f4f687-5af0-430b-b4f2-87c7ef6423a4
 
-**[▶ Watch the museum tour · 1:55](https://fhtw-painting-restoration-main.streamlit.app/?room=exhibition_foyer&tour=1)** — A short introduction to the eight-room research dashboard. Click the preview, then Play in **Tour Overview**; fullscreen is available. Switch to **Explore Rooms** for the original self-paced guided route.
+
+**Museum Tour**: Explore the eight rooms of the Painting Restoration Evidence Museum.
 
 **A restoration can look convincing and still be wrong. How should we evaluate it?**
 
