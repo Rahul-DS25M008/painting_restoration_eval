@@ -31,18 +31,21 @@ const MuseumVisit={
     const dock=button('Your museum passport',()=>showGuide(),host,'mv-dock');dock.hidden=true;
     function index(){return data.stops.findIndex(s=>s.room===data.room);}
     function current(){return data.stops[index()];}
-    function closeDialog(){dialog.close();if(state.active)collapse();if(previousFocus?.isConnected)previousFocus.focus();}
+    function pauseVideo(){for(const video of dialog.querySelectorAll('video'))video.pause();}
+    function closeDialog(){pauseVideo();dialog.close();if(state.active)collapse();if(previousFocus?.isConnected)previousFocus.focus();}
     function modal(kicker,title,subtitle){
       if(!dialog.open)previousFocus=doc.activeElement;
-      panel.hidden=true;dock.hidden=true;dialog.replaceChildren();
+      pauseVideo();panel.hidden=true;dock.hidden=true;dialog.replaceChildren();delete dialog.dataset.tourView;
       const header=el('header'),copy=el('div');eyebrow(kicker,copy);const h=el('h2',title);h.id='mv-dialog-title';copy.append(h);if(subtitle)copy.append(el('p',subtitle,'mv-subtitle'));header.append(copy);button('×',closeDialog,header,'mv-close').setAttribute('aria-label','Close visitor guide');dialog.append(header);
       const body=el('div',undefined,'mv-body');dialog.append(body);if(!dialog.open)dialog.showModal();dialog.scrollTop=0;return body;
     }
     function navigate(room){
+      pauseVideo();
       state.minimized=false;save();if(room===data.room){if(dialog.open)dialog.close();showGuide();return;}
       const a=el('a');a.href=api.roomURL(room,data.stops,data.detour);if(state.active&&!storageOK)a.href+='&tour=1';a.target='_self';host.append(a);a.click();a.remove();
     }
     function begin(fresh){
+      pauseVideo();
       if(fresh)state=api.normalize(null,data.stops);state.active=true;
       if(fresh&&data.room==='exhibition_foyer'){state=api.arrive(state,data.room,data.stops);save();dialog.close();showGuide();}
       else{const next=data.stops.find(s=>!state.visited.includes(s.room))||data.stops[0];navigate(next.room);}
@@ -58,8 +61,48 @@ const MuseumVisit={
       }
       where.append(list);
     }
-    function introduction(){
-      const body=modal('A CURATOR’S ROUTE / YOUR MUSEUM PASSPORT',data.title,data.subtitle);
+    function introduction(initialView='overview'){
+      const body=modal('YOUR MUSEUM PASSPORT',data.title);
+      const headerCopy=dialog.querySelector('header > div');
+      const subtitle=el('p',data.subtitle,'mv-subtitle');headerCopy.append(subtitle);
+      const tabs=el('div',undefined,'mv-tour-tabs');tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','Museum tour views');headerCopy.append(tabs);
+      const overview=el('section',undefined,'mv-overview'),rooms=el('section');
+      for(const [name,section]of [['overview',overview],['rooms',rooms]]){section.id='mv-tour-'+name;section.setAttribute('role','tabpanel');section.setAttribute('aria-labelledby','mv-tab-'+name);body.append(section);}
+      const tabButtons={};
+      function selectView(name,focus=false){
+        pauseVideo();const isOverview=name==='overview';dialog.dataset.tourView=name;
+        overview.hidden=!isOverview;rooms.hidden=isOverview;subtitle.hidden=isOverview;
+        headerCopy.querySelector('.mv-eyebrow').textContent=isOverview?'YOUR MUSEUM PASSPORT':'A CURATOR’S ROUTE / YOUR MUSEUM PASSPORT';
+        for(const [key,b]of Object.entries(tabButtons)){b.setAttribute('aria-selected',String(key===name));b.tabIndex=key===name?0:-1;}
+        dialog.scrollTop=0;if(focus)tabButtons[name].focus();
+      }
+      for(const [name,label]of [['overview','Tour Overview'],['rooms','Explore Rooms']]){
+        const b=button(label,()=>selectView(name),tabs,'mv-tour-tab');b.id='mv-tab-'+name;b.setAttribute('role','tab');b.setAttribute('aria-controls','mv-tour-'+name);tabButtons[name]=b;
+        b.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();selectView(event.key==='Home'?'overview':event.key==='End'?'rooms':name==='overview'?'rooms':'overview',true);});
+      }
+      overview.append(el('p','Eight rooms. One short introduction.','mv-overview-intro'));
+      const player=el('div',undefined,'mv-video-shell'),video=el('video');video.preload='none';video.playsInline=true;video.setAttribute('aria-label','Tour Overview — eight-room museum film, 1 minute 55 seconds');
+      const status=el('p',undefined,'mv-video-status');status.setAttribute('role','status');status.hidden=true;
+      if(data.media?.video&&data.media?.poster){
+        video.poster=data.media.poster;player.append(video);
+        const play=button('▶',async()=>{
+          status.hidden=true;if(!video.getAttribute('src'))video.src=data.media.video;
+          video.controls=true;play.hidden=true;
+          try{await video.play();if(!dialog.open||overview.hidden)video.pause();}
+          catch{if(!dialog.open||overview.hidden)return;play.hidden=false;status.textContent='Playback did not start. Try Play again, or explore the rooms below.';status.hidden=false;}
+        },player,'mv-video-play');play.setAttribute('aria-label','Play Tour Overview (1:55)');
+        const duration=el('span','1:55','mv-video-duration');player.append(duration);
+        video.addEventListener('playing',()=>{duration.hidden=true;play.hidden=true;status.hidden=true;});
+        video.addEventListener('error',()=>{play.hidden=false;status.textContent='The film could not load. You can retry Play or continue to Explore Rooms.';status.hidden=false;});
+        video.addEventListener('ended',()=>{play.hidden=false;});
+        overview.append(player,status);
+      }else overview.append(el('p','The film is unavailable right now. The complete eight-room route is still ready to explore.','mv-note'));
+      overview.append(el('p','Watch first, then explore at your own pace.','mv-overview-caption'));
+      const actions=el('div',undefined,'mv-actions');overview.append(actions);button('Explore Rooms →',()=>selectView('rooms',true),actions,'mv-button mv-primary');
+      renderRoute(rooms);
+      selectView(initialView==='rooms'?'rooms':'overview');
+    }
+    function renderRoute(body){
       const summary=el('div',undefined,'mv-ticket');for(const [value,label]of [['8','principal rooms'],['≈ 6 min','at your own pace'],['1','question to carry']]){const c=el('div');c.append(el('strong',value),el('span',label));summary.append(c);}body.append(summary);
       body.append(el('p','Start with what you see. Learn how it was tested. Leave knowing where the evidence ends. Each stop offers one small thing to notice—not a lecture or a score.','mv-intro'));
       routeList(body);
@@ -78,7 +121,7 @@ const MuseumVisit={
       for(const item of data.invitations){const card=el('button',undefined,'mv-invitation');card.type='button';card.append(el('span',item.mark,'mv-eyebrow'),el('strong',item.label),el('p',item.text),el('span',data.stops.find(s=>s.room===item.room).label+' ↗','mv-destination'));card.addEventListener('click',()=>{state.active=false;navigate(item.room);});grid.append(card);}
       body.append(el('p','The room map and top navigation are always your compass. Open a label, follow an original report, or come back for the guided route whenever you like.','mv-note'));
       const actions=el('div',undefined,'mv-actions');body.append(actions);
-      button('Let me wander',()=>{state.active=false;save();closeDialog();dock.hidden=true;panel.hidden=true;},actions,'mv-button mv-primary');button('Show me the six-minute route',introduction,actions,'mv-button mv-quiet');
+      button('Let me wander',()=>{state.active=false;save();closeDialog();dock.hidden=true;panel.hidden=true;},actions,'mv-button mv-primary');button('Show me the six-minute route',()=>introduction('rooms'),actions,'mv-button mv-quiet');
     }
     function collapse(){state.minimized=true;save();panel.hidden=true;dock.hidden=!state.active;if(state.active){const s=current();dock.textContent='◈  Your passport · '+(s?(index()+1)+' / 8':'side room');}}
     function end(){state.active=false;save();panel.hidden=true;dock.hidden=true;}
@@ -110,10 +153,11 @@ const MuseumVisit={
       const footer=el('div',undefined,'mv-guide-footer');panel.append(footer);if(i>0)button('← Previous room',()=>navigate(data.stops[i-1].room),footer,'mv-text-button');button('Passport',passport,footer,'mv-text-button');button('End tour',end,footer,'mv-text-button');
     }
     dialog.addEventListener('cancel',event=>{event.preventDefault();closeDialog();});
+    dialog.addEventListener('close',pauseVideo);
     const bindings=new WeakSet(),abort=new parent.AbortController();
     function bind(){if(disposed)return;for(const target of doc.querySelectorAll('.foyer-action[data-museum-visit]')){if(bindings.has(target))continue;bindings.add(target);target.addEventListener('click',event=>{if(event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;event.preventDefault();event.stopImmediatePropagation();(target.dataset.museumVisit==='tour'?introduction:explore)();},{capture:true,signal:abort.signal});}}
     const observer=new parent.MutationObserver(bind);observer.observe(doc.body,{childList:true,subtree:true});bind();
-    function dispose(){if(disposed)return;disposed=true;abort.abort();observer.disconnect();host.remove();}
+    function dispose(){if(disposed)return;disposed=true;pauseVideo();abort.abort();observer.disconnect();host.remove();}
     parent.__museumVisit={dispose};win.addEventListener('unload',dispose,{once:true});
     if(state.active){if(state.minimized)collapse();else showGuide();}else if(legacyLaunch&&data.room==='exhibition_foyer')introduction();
   }

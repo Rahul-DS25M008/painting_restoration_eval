@@ -26,9 +26,9 @@
     },
     {
       "path": "src/restoration_eval/museum_visit.py",
-      "sha256": "1633327079215c8543b0d525408a9900b4fa6823da0485be54e3680b6e36328b",
+      "sha256": "d53b072be22ef04a36a7da7a8253ef73ea87fa4f9f5468ddaf1235ff543e247d",
       "hash_mode": "lf_normalized",
-      "size_bytes": 806
+      "size_bytes": 1983
     },
     {
       "path": "src/restoration_eval/room_runtime.py",
@@ -44,9 +44,21 @@
     },
     {
       "path": "streamlit_assets/museum_visit/controller.js",
-      "sha256": "955e39cde0e79a8b7f873ffae3f9a1d9db126d982578aa02c8aaef74456b48c5",
+      "sha256": "ff08a0bb27bfc96f9dd779316be60b627827de38455404f6824b432f158bb840",
       "hash_mode": "lf_normalized",
-      "size_bytes": 13320
+      "size_bytes": 17395
+    },
+    {
+      "path": "streamlit_assets/museum_visit/media/tour-overview-v1.jpg",
+      "sha256": "3365a47779e4f1d6119584e79475477433784aba528b5c916aa08c9a21513e14",
+      "hash_mode": "binary",
+      "size_bytes": 391613
+    },
+    {
+      "path": "streamlit_assets/museum_visit/media/tour-overview-v1.mp4",
+      "sha256": "043f85c35c0245fd9e82a2e189a1867b4f7fa76cdeb4797ce76c09ceaa970f6b",
+      "hash_mode": "binary",
+      "size_bytes": 20713486
     },
     {
       "path": "streamlit_assets/museum_visit/tour.json",
@@ -56,9 +68,15 @@
     },
     {
       "path": "streamlit_assets/museum_visit/visit.css",
-      "sha256": "bf6de1fb52bf9a92db0d37dbc309526f31fad2a879ba27b060a8dd0c82fe7414",
+      "sha256": "364408b22dcdbd674751ad34fd853e002e78d7351315fb3cf8293e8728b0d2bd",
       "hash_mode": "lf_normalized",
-      "size_bytes": 8356
+      "size_bytes": 10237
+    },
+    {
+      "path": "tests/museum_visit_overview.test.cjs",
+      "sha256": "f12f72eaa50f7f7fa30ae6aff447a3f998582bcb71fcc05575e50b326f200693",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 5813
     },
     {
       "path": "tests/museum_visit.test.cjs",
@@ -67,10 +85,44 @@
       "size_bytes": 2641
     },
     {
+      "path": "tests/test_museum_visit_media.py",
+      "sha256": "260af773c1dd9b6d9c48f1a03e64e905334b85416b7e3286cc33510f43b10319",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 1925
+    },
+    {
       "path": "tools/check_museum_visit_freeze.py",
       "sha256": "ebe81482b988e80dee2c1e29af2b995a91750be7af7e52c38232aa8f3fb5c7d9",
       "hash_mode": "lf_normalized",
       "size_bytes": 2295
+    }
+  ],
+  "amendments": [
+    {
+      "date": "2026-10-06",
+      "scope": "User-approved Tour Overview / Explore Rooms two-view introduction; existing room scene layouts and tour.json route unchanged.",
+      "approval": "User approved both visual mockups and the local implementation on 2026-10-06. Commit and deployment await the user's commit and push.",
+      "prior_file_records": [
+        {
+          "path": "src/restoration_eval/museum_visit.py",
+          "sha256": "1633327079215c8543b0d525408a9900b4fa6823da0485be54e3680b6e36328b",
+          "hash_mode": "lf_normalized",
+          "size_bytes": 806
+        },
+        {
+          "path": "streamlit_assets/museum_visit/controller.js",
+          "sha256": "955e39cde0e79a8b7f873ffae3f9a1d9db126d982578aa02c8aaef74456b48c5",
+          "hash_mode": "lf_normalized",
+          "size_bytes": 13320
+        },
+        {
+          "path": "streamlit_assets/museum_visit/visit.css",
+          "sha256": "bf6de1fb52bf9a92db0d37dbc309526f31fad2a879ba27b060a8dd0c82fe7414",
+          "hash_mode": "lf_normalized",
+          "size_bytes": 8356
+        }
+      ],
+      "validation_document": "docs/dashboard_design_finalists/tour_overview_validation.json"
     }
   ]
 }

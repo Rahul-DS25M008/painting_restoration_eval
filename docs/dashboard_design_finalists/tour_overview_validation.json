@@ -1,0 +1,46 @@
+{
+  "schema": "museum_tour_overview_review.v1",
+  "date": "2026-10-06",
+  "status": "user_approved_local_implementation",
+  "scope": "User-approved two-view tour popup only. No room scenes, scientific results, or deployment changed.",
+  "views": {
+    "default": "Tour Overview",
+    "route": "Explore Rooms",
+    "overview_max_width_px": 880,
+    "route_max_width_px": 690,
+    "route_content": "Original eight stops, descriptions, timings, actions and passport logic retained. The existing small-screen one-column route rule is unchanged."
+  },
+  "media": {
+    "file": "streamlit_assets/museum_visit/media/tour-overview-v1.mp4",
+    "poster": "streamlit_assets/museum_visit/media/tour-overview-v1.jpg",
+    "duration_seconds": 115,
+    "resolution": "1920x1080",
+    "size_bytes": 20713486,
+    "delivery": "Same-origin Streamlit media manager, registered for foyer sessions; browser assigns MP4 src only on Play. No external host, base64 MP4, or hidden st.video widget.",
+    "range_test": "HTTP 206, Content-Type video/mp4, bytes 0-1023/20713486",
+    "runtime_dependency": "Streamlit 1.56.0 pinned in requirements.txt; media manager adapter isolated in museum_visit.py and covered by focused tests."
+  },
+  "tests": {
+    "node_museum_visit": "12 passed, including original route invariants, lazy loading, pause/disposal, keyboard tabs, fallback and delayed-play race",
+    "python_media_adapter": "4 passed",
+    "dashboard_application": "29 passed, including frozen foyer/study visual-source checks and amended overlay hashes",
+    "browser": [
+      "Opened Tour Overview from the actual foyer button",
+      "Confirmed MP4 src absent before Play",
+      "Decoded and played the film; duration 115 seconds, readyState 4",
+      "Native seek, volume and fullscreen controls present after Play",
+      "Confirmed switching to Explore Rooms pauses the video",
+      "Inspected original eight-room list and its unchanged wording/timings",
+      "Started original tour and advanced from stop 1 to stop 2 with passport progress retained",
+      "Saved screenshots of both final views"
+    ],
+    "fullscreen_note": "Native fullscreen control is enabled. The in-app browser could not capture its native fullscreen surface. User approved the local preview on 2026-10-06; no separate automated Firefox verification is recorded.",
+    "git_diff_check": "passed"
+  },
+  "review_url": "http://127.0.0.1:8501/?room=exhibition_foyer&tour=1",
+  "screenshots": [
+    ".codex_tmp/tour-overview-review/overview.jpg",
+    ".codex_tmp/tour-overview-review/explore-rooms.jpg"
+  ],
+  "release": "Local implementation approved by the user on 2026-10-06 and prepared for user commit and push. No commit or deployment performed as part of this review. Existing Zenodo scientific archive is unchanged."
+}
