@@ -7,6 +7,12 @@
   "deployment_note": "Presentation approval only; not N35 deployment validation or publication.",
   "files": [
     {
+      "path": ".streamlit/config.toml",
+      "sha256": "d7a49b587c3d681c24db55d699ef657e3bf53902ac581f64d9367501f167dbe9",
+      "hash_mode": "lf_normalized",
+      "size_bytes": 34
+    },
+    {
       "path": "docs/dashboard_design_finalists/explore_freely_preview.png",
       "sha256": "21c5d45d248668c5fe0494f48f7b59efc39e4065bd3e11c4ebcf5bd40a550dd5",
       "hash_mode": "binary",
@@ -44,9 +50,9 @@
     },
     {
       "path": "streamlit_assets/museum_visit/controller.js",
-      "sha256": "ff08a0bb27bfc96f9dd779316be60b627827de38455404f6824b432f158bb840",
+      "sha256": "9eccd53c66609373db543fa25dc2129a580f67388d2b3c9818197deb0f215839",
       "hash_mode": "lf_normalized",
-      "size_bytes": 17395
+      "size_bytes": 17700
     },
     {
       "path": "streamlit_assets/museum_visit/media/tour-overview-v1.jpg",
@@ -74,9 +80,9 @@
     },
     {
       "path": "tests/museum_visit_overview.test.cjs",
-      "sha256": "f12f72eaa50f7f7fa30ae6aff447a3f998582bcb71fcc05575e50b326f200693",
+      "sha256": "19e266b9e1dec7239ef048f7cb110c908675e246ad19b0f120e8ace70703c7e9",
       "hash_mode": "lf_normalized",
-      "size_bytes": 5813
+      "size_bytes": 6809
     },
     {
       "path": "tests/museum_visit.test.cjs",
@@ -101,7 +107,7 @@
     {
       "date": "2026-10-06",
       "scope": "User-approved Tour Overview / Explore Rooms two-view introduction; existing room scene layouts and tour.json route unchanged.",
-      "approval": "User approved both visual mockups and the local implementation on 2026-10-06. Commit and deployment await the user's commit and push.",
+      "approval": "User approved both visual mockups and the local implementation on 2026-10-06; committed and pushed as 74f93a2d. Subsequent Cloud compatibility changes are recorded in the next amendment.",
       "prior_file_records": [
         {
           "path": "src/restoration_eval/museum_visit.py",
@@ -122,6 +128,29 @@
           "size_bytes": 8356
         }
       ],
+      "validation_document": "docs/dashboard_design_finalists/tour_overview_validation.json"
+    },
+    {
+      "date": "2026-10-06",
+      "scope": "Reconcile user-deployed Cloud media URL resolution (e44468ef) and polling configuration (b78e20ed); update regression tests and current fingerprints without changing runtime behavior, room layouts, or scientific evidence.",
+      "reviewed_git_revision": "b78e20eddfb20ba6201806c9e6a37ac2d309d423",
+      "approval": "User reports deployed video working and requested checksum/manifest reconciliation. This records user-reported live success, not a new automated live playback test.",
+      "prior_file_records": [
+        {
+          "path": "streamlit_assets/museum_visit/controller.js",
+          "sha256": "ff08a0bb27bfc96f9dd779316be60b627827de38455404f6824b432f158bb840",
+          "hash_mode": "lf_normalized",
+          "size_bytes": 17395
+        },
+        {
+          "path": "tests/museum_visit_overview.test.cjs",
+          "sha256": "f12f72eaa50f7f7fa30ae6aff447a3f998582bcb71fcc05575e50b326f200693",
+          "hash_mode": "lf_normalized",
+          "size_bytes": 5813
+        }
+      ],
+      "added_files": [".streamlit/config.toml"],
+      "media_integrity": "Full SHA-256 of MP4 and poster matches the existing records; no media replacement or recompression.",
       "validation_document": "docs/dashboard_design_finalists/tour_overview_validation.json"
     }
   ]

@@ -10,7 +10,9 @@ restoration or scientific result. UI states and exact saved images come from
 the existing Controlled-300 dashboard and p018 LaMa case.
 
 Delivery uses Streamlit's same-origin, range-capable media endpoint. The
-browser receives only the poster until the visitor clicks Play. This small
+controller resolves /media/ paths against the parent app directory, preserving
+Community Cloud's /~/+/ prefix. The browser receives only the poster until
+the visitor clicks Play. This small
 20.7 MB rendition can travel with ordinary Git; no HF upload or external
 player is required for this implementation. Do not put the production source
 project, fonts, or the larger master into this directory.
@@ -23,5 +25,9 @@ all decorative artwork is rights-cleared.
 
 The local review and source/freeze amendment are documented in
 docs/dashboard_design_finalists/tour_overview_validation.json and
-config/publication/museum_visit_freeze.json. Local implementation approved on
-2026-10-06; publication follows the user's commit and push.
+config/publication/museum_visit_freeze.json. Local implementation approved and
+published on 2026-10-06; the user confirmed deployed playback after commits
+e44468ef (Cloud media URL resolution) and b78e20ed (polling configuration).
+Both media files retain their original approved SHA-256 hashes. The repository
+README uses a separate GitHub video attachment for inline playback; the
+dashboard continues to use these bundled files.

@@ -1,8 +1,8 @@
 {
   "schema": "museum_tour_overview_review.v1",
   "date": "2026-10-06",
-  "status": "user_approved_local_implementation",
-  "scope": "User-approved two-view tour popup only. No room scenes, scientific results, or deployment changed.",
+  "status": "user_reported_deployed_success_with_local_regression_validation",
+  "scope": "User-approved two-view tour popup and subsequent user-deployed Cloud compatibility fix. No room scenes or scientific results changed.",
   "views": {
     "default": "Tour Overview",
     "route": "Explore Rooms",
@@ -16,7 +16,7 @@
     "duration_seconds": 115,
     "resolution": "1920x1080",
     "size_bytes": 20713486,
-    "delivery": "Same-origin Streamlit media manager, registered for foyer sessions; browser assigns MP4 src only on Play. No external host, base64 MP4, or hidden st.video widget.",
+    "delivery": "Same-origin Streamlit media manager, registered for foyer sessions; /media/ URLs resolve against the parent app directory, retaining Community Cloud's /~/+/ prefix. Browser assigns MP4 src only on Play. No external host, base64 MP4, or hidden st.video widget.",
     "range_test": "HTTP 206, Content-Type video/mp4, bytes 0-1023/20713486",
     "runtime_dependency": "Streamlit 1.56.0 pinned in requirements.txt; media manager adapter isolated in museum_visit.py and covered by focused tests."
   },
@@ -42,5 +42,20 @@
     ".codex_tmp/tour-overview-review/overview.jpg",
     ".codex_tmp/tour-overview-review/explore-rooms.jpg"
   ],
-  "release": "Local implementation approved by the user on 2026-10-06 and prepared for user commit and push. No commit or deployment performed as part of this review. Existing Zenodo scientific archive is unchanged."
+  "deployment_reconciliation": {
+    "date": "2026-10-06",
+    "reviewed_git_revision": "b78e20eddfb20ba6201806c9e6a37ac2d309d423",
+    "implementation_commit": "74f93a2d",
+    "github_readme_video_commit": "37268cd6",
+    "cloud_media_url_commit": "e44468ef",
+    "polling_config_commit": "b78e20ed",
+    "live_status": "User reports the deployed video now works. No new automated live playback verification performed during reconciliation.",
+    "runtime_config": ".streamlit/config.toml sets server.fileWatcherType to poll. This is recorded as the user's deployment setting, not independently established as the cause of the media fix.",
+    "media_integrity": "Full SHA-256 of both existing media files matches the approved freeze; controller checksum was stale, media checksums were not.",
+    "regression_tests": "14 Node tests passed, including localhost absolute URL resolution, Cloud /~/+/ prefix preservation, already-qualified URL passthrough, and existing tour behavior. Original local browser checks above remain historical.",
+    "python_regression_tests": "41 passed: 4 media adapter, 29 dashboard application, and 8 publication freeze delta tests.",
+    "freeze_verification": "All 16 museum freeze fingerprints match through n35_room_validation.verify_freeze, respecting existing approved historical source baselines. git diff --check passed.",
+    "archive_policy": "N35/N36 and Zenodo release manifests remain immutable historical evidence. Presentation-only changes are recorded in the current museum visit freeze and project inventory."
+  },
+  "release": "User approved, committed, and deployed the tour video; user confirmed the Cloud compatibility fix works on 2026-10-06. README now uses a separate GitHub-hosted inline video attachment. Existing Zenodo scientific archive is unchanged."
 }

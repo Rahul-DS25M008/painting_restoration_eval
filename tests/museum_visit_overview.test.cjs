@@ -24,20 +24,36 @@ class Element {
   focus(){this.doc.activeElement=this;}
   remove(){this.parent.children=this.parent.children.filter(n=>n!==this);}
 }
-function setup(media={video:'/media/tour.mp4',poster:'/media/poster.jpg',duration:115}){
+function setup(media={video:'/media/tour.mp4',poster:'/media/poster.jpg',duration:115},href='http://localhost:8501/?room=exhibition_foyer&tour=1'){
   const doc={createElement(tag){return new Element(tag,this);}};doc.body=new Element('body',doc);
   doc.querySelectorAll=q=>doc.body.querySelectorAll(q);
-  const storage=new Map();const parent={document:doc,location:{href:'http://localhost:8501/?room=exhibition_foyer&tour=1'},history:{replaceState(){}},sessionStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)},AbortController,MutationObserver:class{observe(){}disconnect(){}}};
+  const storage=new Map();const parent={document:doc,location:{href},history:{replaceState(){}},sessionStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)},AbortController,MutationObserver:class{observe(){}disconnect(){}}};
   visit.install({parent,addEventListener(){}},{...data,room:'exhibition_foyer',legacyLaunch:true,media},'');
   return {doc,parent,storage,dialog:doc.body.querySelector('dialog'),find:text=>doc.body.all().find(n=>n.textContent===text),video:()=>doc.body.querySelector('video')};
 }
 test('overview is default; media is click-to-load and does not stamp a visit',async()=>{
   const h=setup();assert.equal(h.dialog.dataset.tourView,'overview');
   assert.equal(h.video().getAttribute('src'),null);assert.equal(h.video().preload,'none');assert.equal(h.video().paused,true);
-  assert.equal(h.video().poster,'/media/poster.jpg');assert.equal(h.video().playsInline,true);
+  assert.equal(h.video().poster,'http://localhost:8501/media/poster.jpg');assert.equal(h.video().playsInline,true);
   assert.deepEqual(JSON.parse(h.storage.get(visit.storageKey)).visited,[]);
-  await h.find('▶').click();assert.equal(h.video().src,'/media/tour.mp4');assert.equal(h.video().controls,true);assert.equal(h.video().paused,false);
+  await h.find('▶').click();assert.equal(h.video().src,'http://localhost:8501/media/tour.mp4');assert.equal(h.video().controls,true);assert.equal(h.video().paused,false);
   assert.deepEqual(JSON.parse(h.storage.get(visit.storageKey)).visited,[]);
+});
+test('Cloud media retains the parent app prefix and remains click-to-load',async()=>{
+  const h=setup(undefined,'https://example.streamlit.app/~/+/?room=exhibition_foyer&tour=1');
+  assert.equal(h.video().poster,'https://example.streamlit.app/~/+/media/poster.jpg');
+  assert.equal(h.video().getAttribute('src'),null);
+  await h.find('▶').click();
+  assert.equal(h.video().src,'https://example.streamlit.app/~/+/media/tour.mp4');
+  assert.equal(h.video().controls,true);
+});
+test('media URLs already carrying a path or origin are not rewritten',async()=>{
+  for(const prefix of ['/custom/media/','https://example.streamlit.app/~/+/media/']){
+    const media={video:prefix+'tour.mp4',poster:prefix+'poster.jpg',duration:115};
+    const h=setup(media,'https://example.streamlit.app/~/+/?room=exhibition_foyer&tour=1');
+    assert.equal(h.video().poster,media.poster);
+    await h.find('▶').click();assert.equal(h.video().src,media.video);
+  }
 });
 test('room tab retains the exact eight-room route and pauses video without reload',async()=>{
   const h=setup();await h.find('▶').click();h.video().currentTime=31;
