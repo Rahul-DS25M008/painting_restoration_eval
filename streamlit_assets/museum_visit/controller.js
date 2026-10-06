@@ -10,6 +10,11 @@ const MuseumVisit={
   roomURL(room,stops,detour){if(!stops.some(s=>s.room===room)&&room!==detour?.room)throw Error('Unknown museum room');return '?'+new URLSearchParams({room});},
   install(win,data,css){
     const parent=win.parent,doc=parent.document,api=this;
+    function mediaURL(path) {
+      if (!path.startsWith('/media/')) return path;
+      // Preserve the app directory, including Community Cloud's /~/+/ prefix.
+      return new URL(path.slice(1), parent.location.href).href;
+    }
     parent.__museumVisit?.dispose();
     const host=doc.createElement('div');host.id='museum-visit-root';
     const style=doc.createElement('style');style.textContent=css;host.append(style);doc.body.append(host);
@@ -84,9 +89,13 @@ const MuseumVisit={
       const player=el('div',undefined,'mv-video-shell'),video=el('video');video.preload='none';video.playsInline=true;video.setAttribute('aria-label','Tour Overview — eight-room museum film, 1 minute 55 seconds');
       const status=el('p',undefined,'mv-video-status');status.setAttribute('role','status');status.hidden=true;
       if(data.media?.video&&data.media?.poster){
-        video.poster=data.media.poster;player.append(video);
+        video.poster = mediaURL(data.media.poster);
+        player.append(video);
         const play=button('▶',async()=>{
-          status.hidden=true;if(!video.getAttribute('src'))video.src=data.media.video;
+          status.hidden = true;
+          if (!video.getAttribute('src')) {
+            video.src = mediaURL(data.media.video);
+          }
           video.controls=true;play.hidden=true;
           try{await video.play();if(!dialog.open||overview.hidden)video.pause();}
           catch{if(!dialog.open||overview.hidden)return;play.hidden=false;status.textContent='Playback did not start. Try Play again, or explore the rooms below.';status.hidden=false;}
