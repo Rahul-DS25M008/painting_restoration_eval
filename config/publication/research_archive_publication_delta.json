@@ -35,6 +35,17 @@
       "after_sha256": "7637f0028498c1db573aca4bb9858e200e7e0997475020a213c712bebb66f6ee"
     }
   },
+  "amendments": [
+    {
+      "date": "2026-10-07",
+      "scope": "User-approved documentation-only Genshin Impact copyright notice; no image, dashboard, video or archived file changed.",
+      "path": "streamlit_assets/rooms/archive_portraits/README.md",
+      "hash_mode": "lf_normalized",
+      "before_sha256": "0134bc445a9011d2e554f9ce134ce01b18ffae91127681b1aa18eef78969b35c",
+      "after_sha256": "4a98552f3567fbf4f92cb5e1ad86da542f76ee4af07d05f3ced4bda3ff142614",
+      "record": "docs/zenodo_publication.md#genshin-impact-policy-guidance--2026-10-07"
+    }
+  ],
   "added_files": {
     "config/publication/zenodo_published_record.json": {
       "hash_mode": "lf_normalized",
@@ -42,7 +53,7 @@
     },
     "streamlit_assets/rooms/archive_portraits/README.md": {
       "hash_mode": "lf_normalized",
-      "sha256": "0134bc445a9011d2e554f9ce134ce01b18ffae91127681b1aa18eef78969b35c"
+      "sha256": "4a98552f3567fbf4f92cb5e1ad86da542f76ee4af07d05f3ced4bda3ff142614"
     },
     "streamlit_assets/rooms/archive_portraits/azhdaha.png": {
       "hash_mode": "binary",

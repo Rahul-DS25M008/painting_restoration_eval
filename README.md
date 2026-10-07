@@ -210,6 +210,8 @@ Original project code is licensed under **MIT**. Original research documentation
 
 Source paintings, third-party visual elements (including those embedded in screenshots or figures), dependencies, model weights and other externally sourced material retain their existing rights and terms. These project licences do not relicense them or establish blanket redistribution clearance. The published Zenodo record explicitly excludes third-party franchise elements from the author's grants and discloses unresolved redistribution permission for decorative fan artwork. Publication and checksum verification do not establish rights clearance; see its `RIGHTS_AND_REUSE_NOTICE.txt`.
 
+<sub>Genshin Impact decorative elements are unofficial fan artwork, excluded from the project's MIT/CC BY grants. © All rights reserved by COGNOSPHERE. Other properties belong to their respective owners. This independent project is not affiliated with or endorsed by COGNOSPHERE or HoYoverse. See the [rights clarification](docs/zenodo_publication.md#genshin-impact-policy-guidance--2026-10-07).</sub>
+
 ## What the thesis does not claim
 
 The experiments simulate damage; they do not validate physical conservation treatments. Reference fidelity and feature similarity do not establish authenticity. Repeated-seed disagreement is not calibrated uncertainty. Review flags are not expert judgements. SDXL remains partial, and the separate D01/D02 studies do not justify universal model superiority or demographic conclusions.

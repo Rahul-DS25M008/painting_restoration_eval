@@ -87,6 +87,56 @@ from those grants. No separate permission for those franchise elements was
 obtained; redistribution permission remains unresolved. The owner's publication
 decision and verified checksums are **not blanket rights clearance**.
 
+### Genshin Impact policy guidance — 2026-10-07
+
+On 7 October 2026, the owner reported that Genshin Impact support referred him
+to the [Legal FAQ](https://www.hoyolab.com/article/143107) and the
+[Overseas Fan-Made Merchandising Guide](https://www.hoyolab.com/article/381519),
+and supplied copies of both articles for review. This date records the review,
+not a verified date of the support email. The copies are the basis for the
+assessment; the full email and any project-specific assurances were not supplied.
+
+Section 2 of the supplied Legal FAQ says non-commercial personal use is not
+prohibited, requires a COGNOSPHERE legal declaration, and expressly does not
+transfer rights or confer legal approval. The merchandising guide primarily
+addresses physical products; its quantity thresholds are not treated as website
+visitor/download limits or as project-specific website authorization. Neither
+supplied text explicitly resolves the treatment of AI-generated decorations.
+
+For Genshin Impact decorative elements: **© All rights reserved by COGNOSPHERE.
+Other properties belong to their respective owners.** The artwork is unofficial;
+this independent project is not affiliated with, sponsored by, or endorsed by
+COGNOSPHERE or HoYoverse. These elements remain excluded from the author's
+MIT/CC BY grants, including embedded copies. This does not change the separate
+rights assessment for Dune or other third-party material.
+
+The owner approved documentation-only attribution: a small readable notice in
+the repository README's Licensing section, the project LICENSE, and the
+decorative-portrait README. No notice was added to the dashboard or video;
+no image, room layout, runtime behavior or scientific evidence was changed.
+Consequently, this update is not a claim that documentation-only attribution
+satisfies every policy requirement to place a notice on the works themselves.
+The portrait README checksum is reconciled separately, retaining its prior value.
+
+**Zenodo action pending:** append the paragraph below to the existing record's
+description, preserving the prior description, reporting errata, licence fields,
+DOI, version, files and checksums. Do not create a new version or rebuild/re-upload
+the archive. This metadata clarification does not insert notices into archived
+files. Once published, the metadata update can be verified separately; it is not
+recorded here as completed in advance.
+
+> Genshin Impact decorative elements are unofficial fan artwork. © All rights
+> reserved by COGNOSPHERE. Other properties belong to their respective owners.
+> This independent research project is not affiliated with, sponsored by, or
+> endorsed by COGNOSPHERE or HoYoverse. Genshin Impact support referred the author
+> to the [Legal FAQ](https://www.hoyolab.com/article/143107) and
+> [Overseas Fan-Made Merchandising Guide](https://www.hoyolab.com/article/381519).
+> These references provide general policy guidance, not project-specific
+> permission or blanket redistribution clearance. Third-party characters and
+> franchise elements remain excluded from the author's MIT/CC BY licence grants;
+> the existing rights qualifications remain in force. This clarification changes
+> record metadata only, not the archived files or their checksums.
+
 ## Maintenance boundary
 
 ### Reporting errata and validation follow-up — 2026-10-03

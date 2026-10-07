@@ -8,6 +8,8 @@ Created for the Research Archive shelf frames using the built-in image-generatio
 
 Third-party characters and franchise elements are excluded from the project's MIT/CC BY grants. This addition does not claim permission or blanket rights clearance. These are post-publication dashboard decorations, not changes to the frozen v1.0.0 Zenodo archive or experimental evidence.
 
+For the Genshin Impact/Azhdaha elements: © All rights reserved by COGNOSPHERE. Other properties belong to their respective owners. This independent project is not affiliated with or endorsed by COGNOSPHERE or HoYoverse. This notice does not apply COGNOSPHERE ownership to the Dune artwork or the original fantasy dragon. See the [policy-guidance record](../../../docs/zenodo_publication.md#genshin-impact-policy-guidance--2026-10-07); general guidance is not project-specific permission.
+
 ## Final prompts
 
 ### Azhdaha
