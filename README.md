@@ -11,7 +11,7 @@ This master's thesis develops and applies an evidence-based evaluation framework
 
 The contribution is an **evaluation framework and reproducible empirical study**, not a newly trained restoration model or an automated conservation system.
 
-[Explore the dashboard](https://fhtw-painting-restoration-main.streamlit.app/) · [Learn the pipeline](https://rahul-ds25m008.github.io/painting_restoration_eval/) · [Research archive / DOI](https://doi.org/10.5281/zenodo.23092185) · [Final evaluation report](outputs/33_final_evaluation_report/reports/final_evaluation.html) · [Supervisor walkthrough](docs/supervisor/Supervisor_Dashboard_Walkthrough_Controlled_300.pdf) · [Completion and review brief](docs/supervisor/Study_Completion_and_Review_Brief.pdf)
+[Explore the website](https://fhtw-painting-restoration-main.streamlit.app/) · [Learn the pipeline](https://rahul-ds25m008.github.io/painting_restoration_eval/) · [Research archive / DOI](https://doi.org/10.5281/zenodo.23092185) · [Final evaluation report](outputs/33_final_evaluation_report/reports/final_evaluation.html) · [Supervisor walkthrough](docs/supervisor/Supervisor_Dashboard_Walkthrough_Controlled_300.pdf) · [Completion and review brief](docs/supervisor/Study_Completion_and_Review_Brief.pdf)
 
 > Visual plausibility, metric performance and output stability are different kinds of evidence. None alone establishes historical correctness or conservation approval.
 
