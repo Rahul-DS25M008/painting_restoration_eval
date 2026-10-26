@@ -1,15 +1,15 @@
 {
   "run_schema_version": "inventory_run.v1",
   "inventory_schema_version": "project_file_inventory.v1",
-  "inventory_run_id": "inventory_20261007T170520Z_b6949408",
+  "inventory_run_id": "inventory_20261026T013805Z_211b2228",
   "status": "completed",
-  "generated_at_utc": "2026-10-07T17:05:20.988485Z",
-  "completed_at_utc": "2026-10-07T17:14:12.273508Z",
-  "duration_seconds": 531.596,
+  "generated_at_utc": "2026-10-26T01:38:05.658845Z",
+  "completed_at_utc": "2026-10-26T01:47:17.561008Z",
+  "duration_seconds": 552.107,
   "repository_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
   "inventory_relative_path": "outputs/inventory/project_file_inventory.csv",
-  "inventory_sha256": "f79a9478eda0fbee6550a03200771fc1d6560659117efe8d49acd97131023a80",
-  "inventory_size_bytes": 79989339,
+  "inventory_sha256": "e99674365245ee61a872c078ae526274156ae689176c4f578d5a3b6b47e4aabf",
+  "inventory_size_bytes": 79990207,
   "hash_configuration": {
     "mode": "partial",
     "algorithm": "sha256_first_n_bytes",
@@ -18,9 +18,9 @@
   "incremental_reuse": {
     "enabled": true,
     "cache_status": "verified",
-    "source_run_id": "inventory_20261006T151622Z_3f114bb2",
-    "reused_file_count": 155744,
-    "inspected_file_count": 6
+    "source_run_id": "inventory_20261007T170520Z_b6949408",
+    "reused_file_count": 155749,
+    "inspected_file_count": 3
   },
   "scan_configuration": {
     "skipped_directory_names": [
@@ -48,8 +48,8 @@
     "platform": "Windows-11-10.0.26200-SP0"
   },
   "summary": {
-    "file_count": 155750,
-    "total_size_bytes": 43418840911,
+    "file_count": 155752,
+    "total_size_bytes": 43421031802,
     "read_error_file_count": 0,
     "read_error_count": 0,
     "counts_by_format": {
@@ -57,7 +57,7 @@
       "cjs": 7,
       "css": 7,
       "csv": 180,
-      "docx": 5,
+      "docx": 6,
       "gz": 2100,
       "html": 356,
       "jpeg": 301,
@@ -70,7 +70,7 @@
       "notebook": 39,
       "npz": 304,
       "parquet": 16,
-      "pdf": 3,
+      "pdf": 4,
       "png": 151594,
       "pptx": 1,
       "python": 181,
@@ -92,7 +92,7 @@
       "mask_image": 23489,
       "metric_table": 42,
       "notebook": 39,
-      "other": 2449,
+      "other": 2451,
       "python": 181,
       "restored_image": 81282,
       "summary_table": 2,
@@ -106,7 +106,7 @@
       ".cjs": 7,
       ".css": 7,
       ".csv": 180,
-      ".docx": 5,
+      ".docx": 6,
       ".gz": 2100,
       ".html": 356,
       ".ipynb": 39,
@@ -118,7 +118,7 @@
       ".mp4": 1,
       ".npz": 304,
       ".parquet": 16,
-      ".pdf": 3,
+      ".pdf": 4,
       ".png": 151594,
       ".pptx": 1,
       ".py": 181,
