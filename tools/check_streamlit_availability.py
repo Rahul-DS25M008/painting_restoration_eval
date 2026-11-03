@@ -48,6 +48,9 @@ class BrowserDiagnostics:
         self.label = label
         self.events = []
         self.seen = set()
+        self.startup_failure_at = None
+        self.reloads = 0
+        self.last_reload = 0
         page.on("pageerror", lambda error: self.record("javascript", detail=safe_message(error)))
         page.on("console", lambda msg: self.record("console", detail=safe_message(msg.text))
                 if msg.type == "error" else None)
@@ -59,6 +62,12 @@ class BrowserDiagnostics:
         page.on("websocket", self.websocket)
 
     def record(self, kind, **details):
+        url = urlsplit(details.get("url", ""))
+        if (url.hostname == urlsplit(APP_URL).hostname
+                and url.path.startswith(("/~/+/static/js/", "/~/+/static/css/"))
+                and (kind == "request_failed" or
+                     (kind == "http_error" and details.get("status", 0) >= 500))):
+            self.startup_failure_at = time.monotonic()
         event = {"kind": kind, **details}
         key = json.dumps(event, sort_keys=True)
         if key in self.seen or len(self.events) >= 40:
@@ -66,6 +75,26 @@ class BrowserDiagnostics:
         self.seen.add(key)
         self.events.append(event)
         print(f"Browser diagnostic ({self.label}): {key}", flush=True)
+
+    def retry_startup(self, remaining_seconds):
+        """Reload failed frontend modules, without relaxing rendered readiness."""
+        from playwright.sync_api import Error as BrowserError
+
+        now = time.monotonic()
+        if (self.startup_failure_at is None or self.reloads >= 2
+                or now - self.startup_failure_at < 3
+                or now - self.last_reload < 20 or remaining_seconds < 10):
+            return
+        self.startup_failure_at = None
+        self.reloads += 1
+        self.last_reload = now
+        print(f"Retrying failed Streamlit startup files: reload {self.reloads}/2 "
+              f"({self.label}).", flush=True)
+        try:
+            # Preserve successfully cached files; wait for real readiness below.
+            self.page.reload(wait_until="commit", timeout=min(15000, int(remaining_seconds * 1000)))
+        except BrowserError as error:
+            self.record("reload_failed", detail=safe_message(error))
 
     def websocket(self, socket):
         url = safe_url(socket.url)
@@ -148,7 +177,8 @@ def describe_loading_state(page):
     return states
 
 
-def wait_for_dashboard(page, *, room="foyer", timeout_seconds=600, settle_seconds=15, poll_ms=2000):
+def wait_for_dashboard(page, *, room="foyer", timeout_seconds=600, settle_seconds=15,
+                       poll_ms=2000, recover_startup=None):
     """Handle direct or iframe-hosted apps, including delayed wake buttons.
 
     A short stable-ready interval keeps the browser session open and catches
@@ -183,6 +213,8 @@ def wait_for_dashboard(page, *, room="foyer", timeout_seconds=600, settle_second
                 return {"status": "ready", "wake_requested": wake_requested}
         else:
             ready_since = None
+            if recover_startup is not None:
+                recover_startup(max(0, deadline - now))
         if now >= next_progress:
             print("Waiting for rendered dashboard content and a decoded image...", flush=True)
             print("Loading state: " + json.dumps(describe_loading_state(page)), flush=True)
@@ -208,7 +240,8 @@ def check_visitor_dialog(frame):
 
 def open_dashboard(page, *, timeout_seconds=TOTAL_TIMEOUT_SECONDS,
                    primary_timeout_seconds=PRIMARY_TIMEOUT_SECONDS,
-                   settle_seconds=15, poll_ms=2000, fresh_page=None, on_failure=None):
+                   settle_seconds=15, poll_ms=2000, fresh_page=None, on_failure=None,
+                   recover_startup=None):
     """Try the public entry for two minutes, then the same app's direct route.
 
     Navigation and rendered readiness share each route's budget. Both attempts
@@ -234,11 +267,12 @@ def open_dashboard(page, *, timeout_seconds=TOTAL_TIMEOUT_SECONDS,
 
         print(f"Visiting {'fallback' if fallback else 'primary'} entry: {url}", flush=True)
         try:
-            page.goto(url, wait_until="domcontentloaded",
+            page.goto(url, wait_until="commit",
                       timeout=max(1, int(min(120, remaining()) * 1000)))
             result = wait_for_dashboard(
                 page, timeout_seconds=remaining(), settle_seconds=settle_seconds,
                 poll_ms=poll_ms,
+                recover_startup=recover_startup,
             )
         except (TimeoutError, BrowserError) as error:
             if on_failure is not None:
@@ -313,6 +347,7 @@ def main() -> int:
                     page, timeout_seconds=max(1, TOTAL_TIMEOUT_SECONDS - (time.monotonic() - started)),
                     fresh_page=lambda: create_page("fallback"),
                     on_failure=lambda: active["diagnostics"].save("entry-failed"),
+                    recover_startup=lambda remaining: active["diagnostics"].retry_startup(remaining),
                 )
                 page = active["page"]
                 frame = next(frame for frame in page.frames if inspect_frame(frame))

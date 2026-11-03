@@ -222,6 +222,34 @@ class AvailabilityTests(unittest.TestCase):
             self.assertIn("Waiting for the app", report["visible_text_excerpt"])
             self.assertGreater((Path(directory) / "primary-failed.png").stat().st_size, 100)
 
+    def test_failed_startup_asset_can_reload_and_reach_real_readiness(self):
+        self.page.set_content('<div>Loading</div>')
+        diagnostics = availability.BrowserDiagnostics(self.page, "primary")
+        diagnostics.record("http_error", status=500,
+                           url=availability.FALLBACK_URL + "static/js/startup.js")
+        diagnostics.startup_failure_at -= 4
+        with patch.object(self.page, "reload", side_effect=lambda **kw:
+                          self.page.set_content(READY_HTML)) as reload:
+            result = availability.wait_for_dashboard(
+                self.page, timeout_seconds=12, settle_seconds=0, poll_ms=25,
+                recover_startup=diagnostics.retry_startup)
+        self.assertEqual(result["status"], "ready")
+        self.assertEqual(reload.call_count, 1)
+
+    def test_startup_retries_are_bounded_and_ignore_unrelated_errors(self):
+        diagnostics = availability.BrowserDiagnostics(self.page, "primary")
+        diagnostics.record("http_error", status=500, url="https://example.com/analytics.js")
+        with patch.object(self.page, "reload") as reload:
+            diagnostics.retry_startup(60)
+            reload.assert_not_called()
+            for _ in range(3):
+                diagnostics.record("http_error", status=500,
+                                   url=availability.FALLBACK_URL + "static/css/main.css")
+                diagnostics.startup_failure_at -= 4
+                diagnostics.last_reload = 0
+                diagnostics.retry_startup(60)
+            self.assertEqual(reload.call_count, 2)
+
 
 class TargetTests(unittest.TestCase):
     def test_browser_messages_omit_url_secrets_and_embedded_images(self):

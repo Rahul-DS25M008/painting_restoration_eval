@@ -63,6 +63,14 @@ screenshots and sanitized diagnostics are retained as Actions artifacts for seve
 days, including when the live check fails. No browser credentials or HAR files
 are collected. The application readiness requirements remain unchanged.
 
+Fresh-browser investigation also reproduced HTTP 500 responses for Streamlit's
+own JavaScript modules and an HTML response where a stylesheet was expected.
+A loaded shell cannot recover those failed imports merely by waiting. When a
+same-app startup JavaScript/CSS request fails, the checker permits at most two
+reloads per route, preserving successfully cached files and the overall deadline.
+Unrelated analytics failures do not trigger reloads. A reload alone never counts
+as success: the actual dashboard and interaction checks must still pass.
+
 This addresses the observed Community Cloud loading-page problem without
 changing the dashboard, deployment URL, Cloudflare schedule or Worker. The
 temporary internal route is not a replacement for the published URL. Each run
