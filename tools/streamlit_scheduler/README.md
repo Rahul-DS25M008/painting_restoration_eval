@@ -51,6 +51,9 @@ A successful fallback makes the workflow pass, with a warning annotation and
 job summary explicitly stating that the public entry remains unavailable.
 JSON output records `fallback_used`, `primary_status`, `primary_error` and the
 checked `url`. If the fallback also fails, the workflow fails normally.
+While waiting, compact logs show frame paths, headings and decoded-image counts
+to distinguish a stuck hosting page from missing application content or images.
+They do not dump page HTML, embedded image data or URL query strings.
 
 This addresses the observed Community Cloud loading-page problem without
 changing the dashboard, deployment URL, Cloudflare schedule or Worker. The

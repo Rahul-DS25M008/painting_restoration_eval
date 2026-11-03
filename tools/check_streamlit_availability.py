@@ -14,6 +14,7 @@ import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urlsplit
 
 APP_URL = "https://fhtw-painting-restoration-main.streamlit.app/"
 FALLBACK_URL = APP_URL + "~/+/"
@@ -56,6 +57,30 @@ def inspect_frame(frame, room="foyer") -> bool:
     )
 
 
+def describe_loading_state(page):
+    """Report small DOM facts, without page HTML, data URLs or query strings."""
+    from playwright.sync_api import Error as BrowserError
+
+    states = []
+    for frame in list(page.frames)[:8]:
+        try:
+            url = urlsplit(frame.url)
+            states.append({
+                "frame": ((url.netloc + url.path)[:180]
+                          if url.scheme in {"http", "https"} else url.scheme),
+                "headings": [text[:120] for text in
+                             frame.locator("h1, h2").all_text_contents()[:3]],
+                "images": frame.locator("img").evaluate_all(
+                    "images => ({total: images.length, decoded: images.filter("
+                    "i => i.complete && i.naturalWidth >= 50 && i.naturalHeight >= 50 "
+                    "&& i.getClientRects().length > 0).length})"
+                ),
+            })
+        except BrowserError:
+            states.append({"frame": "changed during inspection"})
+    return states
+
+
 def wait_for_dashboard(page, *, room="foyer", timeout_seconds=600, settle_seconds=15, poll_ms=2000):
     """Handle direct or iframe-hosted apps, including delayed wake buttons.
 
@@ -93,8 +118,10 @@ def wait_for_dashboard(page, *, room="foyer", timeout_seconds=600, settle_second
             ready_since = None
         if now >= next_progress:
             print("Waiting for rendered dashboard content and a decoded image...", flush=True)
+            print("Loading state: " + json.dumps(describe_loading_state(page)), flush=True)
             next_progress = now + 30
         page.wait_for_timeout(poll_ms)
+    print("Final loading state: " + json.dumps(describe_loading_state(page)), flush=True)
     raise TimeoutError(
         "Dashboard did not become ready before the deadline. "
         f"Wake button clicked: {wake_requested}. "

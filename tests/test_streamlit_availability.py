@@ -1,6 +1,7 @@
 """Small browser fixtures; no notebook execution or scientific data loading."""
 
 import importlib.util
+import json
 import os
 import unittest
 import tempfile
@@ -112,6 +113,13 @@ class AvailabilityTests(unittest.TestCase):
     def test_case_missing_metric_control_fails(self):
         self.page.set_content(CASE_HTML.replace('<button>Inspect exact saved metric rows</button>', ''))
         with self.assertRaises(TimeoutError): self.wait(timeout=0.2, room="case")
+
+    def test_loading_diagnostics_distinguish_broken_images_without_dumping_sources(self):
+        self.page.set_content(READY_HTML.replace(IMAGE, 'data:image/png;base64,broken'))
+        state = availability.describe_loading_state(self.page)
+        self.assertIn(availability.READY_HEADING, state[0]["headings"])
+        self.assertEqual(state[0]["images"], {"total": 1, "decoded": 0})
+        self.assertNotIn("base64", json.dumps(state))
 
     def test_late_streamlit_error_during_settle_fails(self):
         self.page.set_content(READY_HTML)
