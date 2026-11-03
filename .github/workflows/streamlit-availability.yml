@@ -65,7 +65,9 @@ jobs:
       - name: Test wake-up and readiness detection
         run: python -m unittest discover -s tests -p test_streamlit_availability.py -v
 
-      - name: Visit and verify deployed dashboard
+      # Public entry gets 120 seconds, then /~/+/ is tried within the same
+      # 600-second browser budget. A fallback pass emits a warning and summary.
+      - name: Verify dashboard with bounded direct-route fallback
         run: python tools/check_streamlit_availability.py
 
       # No commits, app restarts, credentials, datasets, or stored artifacts.

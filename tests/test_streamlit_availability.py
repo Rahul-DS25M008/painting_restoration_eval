@@ -3,7 +3,9 @@
 import importlib.util
 import os
 import unittest
+import tempfile
 from pathlib import Path
+from unittest.mock import patch
 
 SCRIPT = Path(__file__).resolve().parents[1] / "tools/check_streamlit_availability.py"
 spec = importlib.util.spec_from_file_location("availability", SCRIPT)
@@ -117,10 +119,126 @@ class AvailabilityTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             availability.wait_for_dashboard(self.page,timeout_seconds=2,settle_seconds=0.5,poll_ms=50)
 
+    def open_entry(self):
+        return availability.open_dashboard(
+            self.page, timeout_seconds=0.8, primary_timeout_seconds=0.15,
+            settle_seconds=0, poll_ms=25,
+        )
+
+    def test_ready_primary_never_visits_fallback(self):
+        with patch.object(self.page, "goto", side_effect=lambda *a, **kw:
+                          self.page.set_content(READY_HTML)) as navigate:
+            result = self.open_entry()
+        self.assertFalse(result["fallback_used"])
+        self.assertEqual(result["primary_status"], "ready")
+        self.assertEqual(result["url"], availability.APP_URL)
+        self.assertIsNone(result["primary_error"])
+        self.assertEqual(navigate.call_count, 1)
+
+    def test_stuck_primary_uses_verified_fallback(self):
+        def navigate(url, **kwargs):
+            self.page.set_content(READY_HTML if url == availability.FALLBACK_URL
+                                  else '<div>Loading</div>')
+        with patch.object(self.page, "goto", side_effect=navigate) as navigation:
+            result = self.open_entry()
+        self.assertTrue(result["fallback_used"])
+        self.assertEqual(result["primary_status"], "unavailable")
+        self.assertIn("TimeoutError", result["primary_error"])
+        self.assertEqual(result["url"], availability.FALLBACK_URL)
+        self.assertEqual([c.args[0] for c in navigation.call_args_list],
+                         [availability.APP_URL, availability.FALLBACK_URL])
+
+    def test_navigation_failure_uses_fallback(self):
+        from playwright.sync_api import Error as BrowserError
+
+        def navigate(url, **kwargs):
+            if url == availability.APP_URL:
+                raise BrowserError("net::ERR_CONNECTION_RESET")
+            self.page.set_content(READY_HTML)
+        with patch.object(self.page, "goto", side_effect=navigate):
+            self.assertTrue(self.open_entry()["fallback_used"])
+
+    def test_application_error_is_not_hidden_by_fallback(self):
+        with patch.object(self.page, "goto", side_effect=lambda *a, **kw:
+                          self.page.set_content('<div data-testid="stException">Error</div>')) as navigate:
+            with self.assertRaisesRegex(RuntimeError, "Streamlit exception"):
+                self.open_entry()
+        self.assertEqual(navigate.call_count, 1)
+
+    def test_both_routes_stuck_fail(self):
+        with patch.object(self.page, "goto", side_effect=lambda *a, **kw:
+                          self.page.set_content('<div>Loading</div>')) as navigate:
+            with self.assertRaisesRegex(RuntimeError, "Neither entry route became ready"):
+                self.open_entry()
+        self.assertEqual(navigate.call_count, 2)
+
+    def test_fallback_broken_image_is_not_success(self):
+        def navigate(url, **kwargs):
+            self.page.set_content(
+                READY_HTML.replace(IMAGE, 'data:image/png;base64,broken')
+                if url == availability.FALLBACK_URL else '<div>Loading</div>'
+            )
+        with patch.object(self.page, "goto", side_effect=navigate):
+            with self.assertRaisesRegex(RuntimeError, "Neither entry route became ready"):
+                self.open_entry()
+
 
 class TargetTests(unittest.TestCase):
     def test_full_version_target(self):
         self.assertEqual(availability.APP_URL, 'https://fhtw-painting-restoration-main.streamlit.app/')
+
+    @unittest.skipUnless(importlib.util.find_spec("playwright"), "Playwright not installed")
+    def test_navigation_time_counts_towards_primary_budget(self):
+        from unittest.mock import Mock
+
+        clock = [100.0]
+        page = Mock()
+        page.goto.side_effect = lambda *a, **kw: clock.__setitem__(0, 190.0)
+        with patch.object(availability.time, "monotonic", side_effect=lambda: clock[0]), \
+             patch.object(availability, "wait_for_dashboard",
+                          return_value={"status": "ready", "wake_requested": False}) as wait:
+            availability.open_dashboard(page)
+        self.assertEqual(page.goto.call_args.kwargs["timeout"], 120000)
+        self.assertEqual(wait.call_args.kwargs["timeout_seconds"], 30)
+
+    def test_fallback_summary_discloses_public_entry_failure(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "summary.md"
+            with patch.dict(os.environ, {"GITHUB_STEP_SUMMARY": str(path)}):
+                availability.write_summary({
+                    "fallback_used": True, "url": availability.FALLBACK_URL,
+                    "primary_url": availability.APP_URL, "elapsed_seconds": 160,
+                })
+            summary = path.read_text(encoding="utf-8")
+        self.assertIn("public entry unavailable", summary)
+        self.assertIn(availability.FALLBACK_URL, summary)
+        self.assertIn("Case Explorer", summary)
+
+    @unittest.skipUnless(importlib.util.find_spec("playwright"), "Playwright not installed")
+    def test_fallback_uses_remaining_total_budget(self):
+        from unittest.mock import Mock
+
+        clock = [100.0]
+        page = Mock()
+
+        def navigate(url, **kwargs):
+            clock[0] += 100 if url == availability.APP_URL else 10
+
+        waits = []
+
+        def wait(*args, **kwargs):
+            waits.append(kwargs["timeout_seconds"])
+            if len(waits) == 1:
+                clock[0] += kwargs["timeout_seconds"]
+                raise TimeoutError("Primary entry remained loading")
+            return {"status": "ready", "wake_requested": False}
+
+        page.goto.side_effect = navigate
+        with patch.object(availability.time, "monotonic", side_effect=lambda: clock[0]), \
+             patch.object(availability, "wait_for_dashboard", side_effect=wait):
+            result = availability.open_dashboard(page)
+        self.assertEqual(waits, [20, 470])
+        self.assertTrue(result["fallback_used"])
 
 
 if __name__ == "__main__":

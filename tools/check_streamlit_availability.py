@@ -13,8 +13,12 @@ import re
 import sys
 import time
 from datetime import datetime, timezone
+from pathlib import Path
 
 APP_URL = "https://fhtw-painting-restoration-main.streamlit.app/"
+FALLBACK_URL = APP_URL + "~/+/"
+PRIMARY_TIMEOUT_SECONDS = 120
+TOTAL_TIMEOUT_SECONDS = 600
 READY_HEADING = "How should we judge an AI-restored painting?"
 ROOM_LINKS = ("Exhibition Foyer", "Study Design", "Metric Framework", "Model Gallery",
               "Stability Lab", "Trustworthiness", "Case Explorer", "Research Archive")
@@ -108,11 +112,84 @@ def check_visitor_dialog(frame):
     title.wait_for(state="hidden", timeout=15000)
 
 
+def open_dashboard(page, *, timeout_seconds=TOTAL_TIMEOUT_SECONDS,
+                   primary_timeout_seconds=PRIMARY_TIMEOUT_SECONDS,
+                   settle_seconds=15, poll_ms=2000):
+    """Try the public entry for two minutes, then the same app's direct route.
+
+    Navigation and rendered readiness share each route's budget. Both attempts
+    share the total deadline. Visible application exceptions remain hard failures;
+    only loading/transport failures can select the temporary fallback.
+    """
+    from playwright.sync_api import Error as BrowserError
+
+    deadline = time.monotonic() + timeout_seconds
+    primary_error = None
+    for url, fallback in ((APP_URL, False), (FALLBACK_URL, True)):
+        route_deadline = deadline if fallback else min(
+            deadline, time.monotonic() + primary_timeout_seconds
+        )
+
+        def remaining():
+            seconds = route_deadline - time.monotonic()
+            if seconds <= 0:
+                raise TimeoutError("Entry-route loading budget exhausted.")
+            return seconds
+
+        print(f"Visiting {'fallback' if fallback else 'primary'} entry: {url}", flush=True)
+        try:
+            page.goto(url, wait_until="domcontentloaded",
+                      timeout=max(1, int(min(120, remaining()) * 1000)))
+            result = wait_for_dashboard(
+                page, timeout_seconds=remaining(), settle_seconds=settle_seconds,
+                poll_ms=poll_ms,
+            )
+        except (TimeoutError, BrowserError) as error:
+            # Keep diagnostics short; never dump page HTML or embedded image data.
+            reason = f"{type(error).__name__}: {' '.join(str(error).split())[:400]}"
+            if fallback:
+                raise RuntimeError(
+                    f"Neither entry route became ready. Primary: {primary_error}; "
+                    f"fallback: {reason}"
+                ) from error
+            primary_error = reason
+            print(f"Primary entry unavailable: {reason}", flush=True)
+            print("Public entry did not become ready. Trying the temporary "
+                  "direct route; fallback success does not prove the public URL recovered.",
+                  flush=True)
+            continue
+        result.update(
+            url=url, primary_url=APP_URL, fallback_used=fallback,
+            primary_status="unavailable" if fallback else "ready",
+            primary_error=primary_error,
+        )
+        return result
+
+
+def write_summary(result):
+    """Make degraded public access visible even when fallback checks pass."""
+    destination = os.environ.get("GITHUB_STEP_SUMMARY")
+    if not destination:
+        return
+    mode = ("PASS via temporary fallback — public entry unavailable"
+            if result["fallback_used"] else "PASS via public entry")
+    with Path(destination).open("a", encoding="utf-8") as output:
+        output.write(
+            f"## Streamlit availability\n\n**{mode}**\n\n"
+            f"- Checked entry: {result['url']}\n"
+            f"- Public entry: {result['primary_url']}\n"
+            "- Verified: foyer navigation and image, visitor dialog, "
+            "Case Explorer's five images and metric control.\n"
+            f"- Browser check duration: {result['elapsed_seconds']} seconds.\n\n"
+            "The public entry is tried first on every run. Fallback use does not "
+            "confirm that the normal public link has recovered.\n"
+        )
+
+
 def main() -> int:
     from playwright.sync_api import sync_playwright
 
     started = time.monotonic()
-    print(f"Visiting {APP_URL}", flush=True)
     try:
         with sync_playwright() as playwright:
             # Optional installed browser channel is for local verification only.
@@ -124,18 +201,16 @@ def main() -> int:
             try:
                 page = browser.new_page(viewport={"width": 1440, "height": 1100})
                 page.set_default_timeout(5000)
-                page.goto(APP_URL, wait_until="domcontentloaded", timeout=120000)
-                result = wait_for_dashboard(
-                    page, timeout_seconds=max(1, 600 - (time.monotonic() - started))
+                result = open_dashboard(
+                    page, timeout_seconds=max(1, TOTAL_TIMEOUT_SECONDS - (time.monotonic() - started))
                 )
                 frame = next(frame for frame in page.frames if inspect_frame(frame))
                 check_visitor_dialog(frame)
                 # One representative evidence room, not a full regression sweep.
                 frame.get_by_role("link", name="Case Explorer", exact=True).click()
                 case_result = wait_for_dashboard(page, room="case",
-                    timeout_seconds=max(1, 600 - (time.monotonic() - started)))
+                    timeout_seconds=max(1, TOTAL_TIMEOUT_SECONDS - (time.monotonic() - started)))
                 result.update(
-                    url=APP_URL,
                     checked_at_utc=datetime.now(timezone.utc).isoformat(),
                     elapsed_seconds=round(time.monotonic() - started, 1),
                     checks=["foyer_navigation_and_image", "visitor_dialog_open_and_escape",
@@ -143,6 +218,11 @@ def main() -> int:
                     case_status=case_result["status"],
                     scope="Lightweight availability smoke; not N35 certification or an uptime guarantee",
                 )
+                if result["fallback_used"]:
+                    print("::warning::Museum checks passed via the temporary direct route. "
+                          "The normal public entry did not become ready within its budget.",
+                          flush=True)
+                write_summary(result)
                 print(json.dumps(result, indent=2), flush=True)
                 return 0
             finally:

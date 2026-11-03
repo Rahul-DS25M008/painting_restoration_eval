@@ -38,6 +38,27 @@ the public wake button, stable-ready interval and bounded timeout. It does not
 download reports, sweep all filters, compute science, or certify N35. Recurring
 visits remain best-effort, not an indefinite uptime guarantee.
 
+### Temporary direct-route fallback — 2026-11-03
+
+Every check first tries the normal public URL. If navigation or rendered readiness
+fails within a two-minute budget, it tries the same deployment at
+https://fhtw-painting-restoration-main.streamlit.app/~/+/.
+Both routes share the existing ten-minute browser budget. Visible Streamlit
+application exceptions remain failures rather than being bypassed.
+
+The fallback must pass the same foyer, visitor-guide and Case Explorer checks.
+A successful fallback makes the workflow pass, with a warning annotation and
+job summary explicitly stating that the public entry remains unavailable.
+JSON output records `fallback_used`, `primary_status`, `primary_error` and the
+checked `url`. If the fallback also fails, the workflow fails normally.
+
+This addresses the observed Community Cloud loading-page problem without
+changing the dashboard, deployment URL, Cloudflare schedule or Worker. The
+temporary internal route is not a replacement for the published URL. Each run
+retries the public entry first, so normal checks resume automatically when it
+recovers. A green fallback run demonstrates app availability through that route,
+not recovery of public entry or guaranteed uptime.
+
 Changes to the workflow/checker/tests on `main` also trigger a one-off `push`
 verification. This does not add another periodic schedule. A successful push
 run proves Actions and the new target work; the next Cloudflare-triggered
