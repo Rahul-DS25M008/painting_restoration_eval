@@ -28,6 +28,7 @@ jobs:
     env:
       PYTHONUNBUFFERED: '1'
       PYTHONDONTWRITEBYTECODE: '1'
+      AVAILABILITY_BROWSER_CHANNEL: chromium
     steps:
       - name: Check out only the availability script and its tests
         uses: actions/checkout@v6
@@ -68,8 +69,20 @@ jobs:
       # Public entry gets 120 seconds, then /~/+/ is tried within the same
       # 600-second browser budget. A fallback pass emits a warning and summary.
       - name: Verify dashboard with bounded direct-route fallback
+        env:
+          AVAILABILITY_DIAGNOSTICS_DIR: availability-diagnostics
         run: python tools/check_streamlit_availability.py
 
-      # No commits, app restarts, credentials, datasets, or stored artifacts.
+      - name: Save public-page browser diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: availability-browser-diagnostics
+          path: availability-diagnostics/
+          retention-days: 7
+          if-no-files-found: ignore
+
+      # No commits, app restarts, credentials, or datasets. Diagnostic artifacts
+      # contain public-page screenshots and sanitized browser errors only.
       # Scheduling is owned by Cloudflare, not GitHub's schedule event.
       # Check recent runs and token expiry periodically; this is not an uptime SLA.

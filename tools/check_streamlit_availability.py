@@ -26,6 +26,73 @@ ROOM_LINKS = ("Exhibition Foyer", "Study Design", "Metric Framework", "Model Gal
 WAKE_BUTTON = re.compile(r"^Yes, get this app back up!?$", re.IGNORECASE)
 
 
+def safe_url(value):
+    """Keep public endpoint paths, never credentials, query strings or data URLs."""
+    parsed = urlsplit(value)
+    if parsed.scheme not in {"http", "https", "ws", "wss"}:
+        return parsed.scheme or "unknown"
+    return f"{parsed.scheme}://{parsed.hostname or ''}{parsed.path}"[:240]
+
+
+def safe_message(value):
+    text = re.sub(r"(?:https?|wss?)://[^\s\"'<>]+", lambda m: safe_url(m[0]), str(value))
+    text = re.sub(r"data:[^\s]+", "[embedded data omitted]", text)
+    return " ".join(text.split())[:600]
+
+
+class BrowserDiagnostics:
+    """Capture startup failures, without headers, cookies or response bodies."""
+
+    def __init__(self, page, label):
+        self.page = page
+        self.label = label
+        self.events = []
+        self.seen = set()
+        page.on("pageerror", lambda error: self.record("javascript", detail=safe_message(error)))
+        page.on("console", lambda msg: self.record("console", detail=safe_message(msg.text))
+                if msg.type == "error" else None)
+        page.on("requestfailed", lambda request: self.record(
+            "request_failed", url=safe_url(request.url), detail=safe_message(request.failure)))
+        page.on("response", lambda response: self.record(
+            "http_error", url=safe_url(response.url), status=response.status)
+            if response.status >= 400 else None)
+        page.on("websocket", self.websocket)
+
+    def record(self, kind, **details):
+        event = {"kind": kind, **details}
+        key = json.dumps(event, sort_keys=True)
+        if key in self.seen or len(self.events) >= 40:
+            return
+        self.seen.add(key)
+        self.events.append(event)
+        print(f"Browser diagnostic ({self.label}): {key}", flush=True)
+
+    def websocket(self, socket):
+        url = safe_url(socket.url)
+        self.record("websocket_created", url=url)
+        socket.on("socketerror", lambda error: self.record(
+            "websocket_error", url=url, detail=safe_message(error)))
+        # Record receipt, never the contents of Streamlit's messages or images.
+        socket.on("framereceived", lambda _: self.record("websocket_received", url=url))
+
+    def save(self, stage):
+        directory = os.environ.get("AVAILABILITY_DIAGNOSTICS_DIR")
+        if not directory:
+            return
+        destination = Path(directory)
+        destination.mkdir(parents=True, exist_ok=True)
+        stem = destination / f"{self.label}-{stage}"
+        report = {"url": safe_url(self.page.url), "events": self.events}
+        try:
+            report["frames"] = describe_loading_state(self.page)
+            report["visible_text_excerpt"] = safe_message(self.page.locator("body").evaluate(
+                "body => body.innerText.slice(0, 1200)", timeout=3000))
+            self.page.screenshot(path=str(stem.with_suffix(".png")), timeout=8000)
+        except Exception as error:
+            report["capture_error"] = safe_message(error)
+        stem.with_suffix(".json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+
+
 def inspect_frame(frame, room="foyer") -> bool:
     """Require real Controlled-300 content, navigation and decoded evidence."""
     for error in frame.locator('[data-testid="stException"]').all():
@@ -141,7 +208,7 @@ def check_visitor_dialog(frame):
 
 def open_dashboard(page, *, timeout_seconds=TOTAL_TIMEOUT_SECONDS,
                    primary_timeout_seconds=PRIMARY_TIMEOUT_SECONDS,
-                   settle_seconds=15, poll_ms=2000):
+                   settle_seconds=15, poll_ms=2000, fresh_page=None, on_failure=None):
     """Try the public entry for two minutes, then the same app's direct route.
 
     Navigation and rendered readiness share each route's budget. Both attempts
@@ -153,6 +220,8 @@ def open_dashboard(page, *, timeout_seconds=TOTAL_TIMEOUT_SECONDS,
     deadline = time.monotonic() + timeout_seconds
     primary_error = None
     for url, fallback in ((APP_URL, False), (FALLBACK_URL, True)):
+        if fallback and fresh_page is not None:
+            page = fresh_page()
         route_deadline = deadline if fallback else min(
             deadline, time.monotonic() + primary_timeout_seconds
         )
@@ -172,6 +241,8 @@ def open_dashboard(page, *, timeout_seconds=TOTAL_TIMEOUT_SECONDS,
                 poll_ms=poll_ms,
             )
         except (TimeoutError, BrowserError) as error:
+            if on_failure is not None:
+                on_failure()
             # Keep diagnostics short; never dump page HTML or embedded image data.
             reason = f"{type(error).__name__}: {' '.join(str(error).split())[:400]}"
             if fallback:
@@ -219,18 +290,31 @@ def main() -> int:
     started = time.monotonic()
     try:
         with sync_playwright() as playwright:
-            # Optional installed browser channel is for local verification only.
-            channel = os.environ.get("AVAILABILITY_BROWSER_CHANNEL")
+            # Full Chromium's new headless mode, rather than headless shell.
+            channel = os.environ.get("AVAILABILITY_BROWSER_CHANNEL", "chromium")
             launch_options = {"headless": True}
             if channel:
                 launch_options["channel"] = channel
             browser = playwright.chromium.launch(**launch_options)
+            active = {}
             try:
-                page = browser.new_page(viewport={"width": 1440, "height": 1100})
-                page.set_default_timeout(5000)
+                def create_page(label):
+                    if active:
+                        active["context"].close()
+                    context = browser.new_context(viewport={"width": 1440, "height": 1100})
+                    page = context.new_page()
+                    page.set_default_timeout(5000)
+                    active.update(context=context, page=page,
+                                  diagnostics=BrowserDiagnostics(page, label))
+                    return page
+
+                page = create_page("primary")
                 result = open_dashboard(
-                    page, timeout_seconds=max(1, TOTAL_TIMEOUT_SECONDS - (time.monotonic() - started))
+                    page, timeout_seconds=max(1, TOTAL_TIMEOUT_SECONDS - (time.monotonic() - started)),
+                    fresh_page=lambda: create_page("fallback"),
+                    on_failure=lambda: active["diagnostics"].save("entry-failed"),
                 )
+                page = active["page"]
                 frame = next(frame for frame in page.frames if inspect_frame(frame))
                 check_visitor_dialog(frame)
                 # One representative evidence room, not a full regression sweep.
@@ -250,8 +334,13 @@ def main() -> int:
                           "The normal public entry did not become ready within its budget.",
                           flush=True)
                 write_summary(result)
+                active["diagnostics"].save("ready")
                 print(json.dumps(result, indent=2), flush=True)
                 return 0
+            except Exception:
+                if active.get("diagnostics"):
+                    active["diagnostics"].save("failed")
+                raise
             finally:
                 browser.close()
     except Exception as error:

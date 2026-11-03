@@ -34,7 +34,7 @@ class AvailabilityTests(unittest.TestCase):
 
         cls.playwright = sync_playwright().start()
         options = {"headless": True}
-        channel = os.environ.get("AVAILABILITY_BROWSER_CHANNEL")
+        channel = os.environ.get("AVAILABILITY_BROWSER_CHANNEL", "chromium")
         if channel:
             options["channel"] = channel
         cls.browser = cls.playwright.chromium.launch(**options)
@@ -190,8 +190,48 @@ class AvailabilityTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "Neither entry route became ready"):
                 self.open_entry()
 
+    def test_fallback_can_use_fresh_context_without_primary_cookies(self):
+        self.page.context.add_cookies([{"name": "stale", "value": "yes", "url": availability.APP_URL}])
+        fresh = self.browser.new_page()
+        try:
+            with patch.object(self.page, "goto", side_effect=lambda *a, **kw:
+                              self.page.set_content('<div>Loading</div>')), \
+                 patch.object(fresh, "goto", side_effect=lambda *a, **kw:
+                              fresh.set_content(READY_HTML)), \
+                 patch.object(availability, "write_summary"):
+                result = availability.open_dashboard(
+                    self.page, timeout_seconds=1, primary_timeout_seconds=0.15,
+                    settle_seconds=0, poll_ms=25, fresh_page=lambda: fresh,
+                )
+            self.assertTrue(result["fallback_used"])
+            self.assertEqual(fresh.context.cookies(availability.APP_URL), [])
+            self.assertTrue(availability.inspect_frame(fresh.main_frame))
+        finally:
+            fresh.close()
+
+    def test_failure_diagnostics_save_screenshot_and_browser_evidence(self):
+        self.page.set_content('<h1>Waiting for the app</h1>')
+        diagnostics = availability.BrowserDiagnostics(self.page, "primary")
+        diagnostics.record("javascript", detail="A startup module failed")
+        with tempfile.TemporaryDirectory() as directory:
+            with patch.dict(os.environ, {"AVAILABILITY_DIAGNOSTICS_DIR": directory}):
+                diagnostics.save("failed")
+            report = json.loads((Path(directory) / "primary-failed.json").read_text(encoding="utf-8"))
+            self.assertNotIn("capture_error", report)
+            self.assertEqual(report["events"][0]["kind"], "javascript")
+            self.assertIn("Waiting for the app", report["visible_text_excerpt"])
+            self.assertGreater((Path(directory) / "primary-failed.png").stat().st_size, 100)
+
 
 class TargetTests(unittest.TestCase):
+    def test_browser_messages_omit_url_secrets_and_embedded_images(self):
+        message = availability.safe_message(
+            'failed https://user:password@example.com/app.js?token=secret#fragment data:image/png;base64,private'
+        )
+        self.assertIn('https://example.com/app.js', message)
+        for value in ('password', 'secret', 'fragment', 'private', 'base64'):
+            self.assertNotIn(value, message)
+
     def test_full_version_target(self):
         self.assertEqual(availability.APP_URL, 'https://fhtw-painting-restoration-main.streamlit.app/')
 

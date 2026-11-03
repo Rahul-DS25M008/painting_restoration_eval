@@ -55,6 +55,14 @@ While waiting, compact logs show frame paths, headings and decoded-image counts
 to distinguish a stuck hosting page from missing application content or images.
 They do not dump page HTML, embedded image data or URL query strings.
 
+The runner uses full Chromium in its new headless mode. The fallback starts a
+fresh browser context after closing the primary context, so it does not inherit
+the failed page's cookies or cache. JavaScript, failed HTTP requests and WebSocket
+errors are logged with URL credentials and query strings removed. Public-page
+screenshots and sanitized diagnostics are retained as Actions artifacts for seven
+days, including when the live check fails. No browser credentials or HAR files
+are collected. The application readiness requirements remain unchanged.
+
 This addresses the observed Community Cloud loading-page problem without
 changing the dashboard, deployment URL, Cloudflare schedule or Worker. The
 temporary internal route is not a replacement for the published URL. Each run
