@@ -1,0 +1,16 @@
+[
+  "D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\.venv\\Scripts\\python.exe",
+  "-m",
+  "iopaint",
+  "run",
+  "--model",
+  "lama",
+  "--device",
+  "cuda",
+  "--image",
+  "D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\d04_real_damage_restoration_and_evaluation\\work\\lama\\jobs\\primary_ff0e4bbfa55747a4890544f88af51113\\input",
+  "--mask",
+  "D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\d04_real_damage_restoration_and_evaluation\\work\\lama\\jobs\\primary_ff0e4bbfa55747a4890544f88af51113\\mask",
+  "--output",
+  "D:\\Masters\\FH\\Thesis\\painting-restoration-eval\\outputs\\d04_real_damage_restoration_and_evaluation\\work\\lama\\jobs\\primary_ff0e4bbfa55747a4890544f88af51113\\output"
+]

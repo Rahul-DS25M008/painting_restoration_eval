@@ -1,0 +1,67 @@
+schema_version: real_damage_report_config.v1
+config_version: 1.0.0
+stage: batch_10_reporting_and_completion
+approval: user_approved_six_section_mock_and_all_case_findings
+helper_source: src/restoration_eval/real_damage_report.py
+report_source: src/restoration_eval/real_damage_report_content.py
+tests: tests/test_real_damage_report.py
+comparison_config: config/evaluation/real_damage_comparison.yaml
+observations: config/evaluation/real_damage_visual_observations.json
+proposal: docs/proposal/Rahul_Thesis_Proposal_Final.docx
+title: 'Physical Painting Damage: Visual Reconstruction, Preserved Context and Stochastic Variation'
+subtitle: 'Ten paintings, four restoration methods, and contextual comparisons with the Controlled-300 study.'
+sections:
+  - {id: findings_and_scope, title: Findings and scope, question: 'What did the physical-damage pilot establish?', alignment: approved_real_damage_extension}
+  - {id: physical_cases_and_four_method_restorations, title: 'Ten paintings, four restoration methods', question: 'Which repairs look stronger and why?', alignment: RQ2_descriptive_extension}
+  - {id: repair_boundaries_and_preserved_context, title: Repair boundaries and preserved context, question: 'What do the available diagnostics actually tell us?', alignment: RQ1}
+  - {id: fixed_prompt_seed_variability, title: 'Same prompt, different seeds', question: 'Does SD produce a stable interpretation of missing content?', alignment: RQ3}
+  - {id: descriptive_synthetic_comparisons_with_prompt_difference_disclosed, title: Physical damage alongside Controlled-300 examples, question: 'Which behaviours recur or differ when a reference is available?', alignment: RQ1_RQ2_descriptive_extension}
+  - {id: limitations_provenance_and_expert_study_handoff, title: 'Conclusions, limitations and expert-study handoff', question: 'What does this add to the thesis and what requires human assessment?', alignment: RQ1_RQ2_RQ3_and_optional_expert_study}
+policy:
+  new_inference: false
+  new_scientific_metrics: false
+  physical_reference_metrics: false
+  combined_quality_score: false
+  visual_review: assistant_visual_inspection_user_approved_model_identities_visible
+  expert_validation: false
+  primary_seed: 2026
+  best_seed_selection: false
+  preserve_all_ten_cases: true
+  standalone_embedded_html: true
+  scientific_inputs_immutable: true
+  partial_masks: selected_repair_targets_not_exhaustive_condition_mapping
+  disclose_targeted_vs_generic_prompts: true
+visuals:
+  case_detail: existing_batch9_input_defined_largest_component_crop
+  secondary_detail: {rd010: [170, 260, 425, 630]}
+  extended_case_discussions: [rd004, rd003, rd007, rd006]
+  prominent_synthetic_pairs: [rd004, rd007, rd009]
+  enlarged_seed_discussions: [rd003, rd006]
+  selection_basis: all_ten_cases_retained_expanded_examples_are_approved_visible_patterns_and_saved_metric_extremes
+  embedded_max_width: 2400
+  embedded_jpeg_quality: 90
+  expected_images: 46
+  expected_tiles: 481
+  max_report_bytes: 65000000
+expected:
+  paintings: 10
+  primary_candidates: 40
+  total_candidates: 70
+  sd_groups: 10
+  seed_pairwise_rows: 720
+  uncertainty_summary_rows: 220
+  comparison_rows: 40
+  synthetic_reference_metric_rows: 120
+  observations: 40
+  batch9_checks: 393
+outputs:
+  asset_catalog: work/report/embedded_assets.csv
+  figure_catalog: work/report/figures.csv
+  claim_catalog: work/report/numerical_claims.csv
+  traceability: work/report/mock_traceability.csv
+  receipt: work/report/build_receipt.json
+  overview: work/report/painting_overview.png
+  variability_plot: work/report/variability_measures.png
+  stage_checks: work/report/checks.csv
+  summary: work/report/batch_summary.json
+  report_metadata: work/report/report_metadata.json

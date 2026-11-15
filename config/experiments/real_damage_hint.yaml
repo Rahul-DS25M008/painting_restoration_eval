@@ -1,0 +1,27 @@
+schema_version: real_damage_hint_config.v1
+config_version: 1.0.0
+stage: batch_5_hint
+helper_source: src/restoration_eval/real_damage_hint.py
+tests: tests/test_real_damage_hint.py
+lama_config: config/experiments/real_damage_lama.yaml
+baseline_config: config/experiments/hint.yaml
+baseline_notebook: notebooks/12a_hint_restoration.ipynb
+expected_load_audit:
+  matched_state_keys: 973
+  model_state_key_count: 973
+  missing_state_keys: 0
+  unexpected_state_keys: 153
+shared_input_helper: src/restoration_eval/hint_mat_selection.py
+expected_candidates: 10
+smoke_painting_id: rd007
+smoke_repeats: 2
+overwrite_unverified_outputs: false
+worker_overrides:
+  progress_interval_cases: 1
+  checkpoint_interval_cases: 1
+outputs:
+  smoke_summary: work/hint/smoke_summary.json
+  stage_checks: work/hint/checks.csv
+  stage_summary: work/hint/batch_summary.json
+  preview_first: work/hint/restorations_01.png
+  preview_second: work/hint/restorations_02.png

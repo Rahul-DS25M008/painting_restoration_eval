@@ -1,0 +1,24 @@
+{
+  "command_groups": 1,
+  "command_groups_missing_runtime": 0,
+  "completed_candidates": 10,
+  "execution_fingerprint": "633ab5e6442d936ef4e4cf7a0f65ee276d3043bbda7ce117656a6c0bc4663375",
+  "expected_candidates": 10,
+  "failed_candidates": 0,
+  "model_id": "hint_places2",
+  "notebook_completion_gate_passed": false,
+  "recorded_at_utc": "2026-11-15T13:29:46.055465Z",
+  "recorded_case_runtime_seconds": 75.267,
+  "recorded_command_runtime_seconds": 97.842321300006,
+  "reused_candidates": 0,
+  "runtime_scope": "case_calls_exclude_model_load_command_wall_time_includes_startup_smoke_excluded",
+  "stage": "batch_5_hint",
+  "validation_summary": {
+    "blocking_failure_count": 0,
+    "check_count": 175,
+    "failed_check_ids": [],
+    "failed_count": 0,
+    "overall_passed": true,
+    "passed_count": 175
+  }
+}

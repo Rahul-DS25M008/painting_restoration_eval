@@ -1,0 +1,25 @@
+{
+  "artifact_count": 57,
+  "artifacts_sha256": "b4cc8fc31dd3fb2bcaa6bb1df12f6772b2e6c917644206e40833712198bc189a",
+  "comparison_pairs": 10,
+  "comparison_rows": 40,
+  "completed_at_utc": "2026-11-15T21:45:11.907859Z",
+  "detail_panels": 10,
+  "execution_fingerprint": "a9643e3a34b6dc0ed8080156a7aba1338ed72801194098f05396e556d4dcbc88",
+  "full_panels": 10,
+  "notebook_completion_gate_passed": false,
+  "physical_primary_candidates": 40,
+  "reused_metric_pairs": 0,
+  "reused_panel_pairs": 0,
+  "saved_reference_metric_rows": 120,
+  "stage": "batch_9_physical_synthetic_comparison",
+  "synthetic_primary_candidates": 40,
+  "validation_summary": {
+    "blocking_failure_count": 0,
+    "check_count": 393,
+    "failed_check_ids": [],
+    "failed_count": 0,
+    "overall_passed": true,
+    "passed_count": 393
+  }
+}

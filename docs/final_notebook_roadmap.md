@@ -87,13 +87,153 @@ The canonical 768-pixel preprocessing helper/configuration and all four model
 configurations remain unchanged. D03 accepts JPEG/RGB and PNG/fully opaque RGBA;
 opaque alpha is dropped in memory without altering RGB values. The revised
 provenance audit supports Commons public-domain, CC BY 2.0, CC BY-SA 4.0 and Met
-CC0 sources, retaining attribution and adaptation conditions. No restoration
-has run for this cohort. D03 is complete; D04 is the next stage for contract planning
-for the same four restoration methods and reference-free diagnostics; D05
-remains the optional expert study. These additions do not reopen or renumber
+CC0 sources, retaining attribution and adaptation conditions. D03 itself does
+not perform restoration. D03 and D04 are complete; D04 used the same four
+restoration methods and reference-free diagnostics with the targeted-prompt
+amendment below. D05 remains an optional, unexecuted expert study. These additions do not reopen or renumber
 the completed Controlled-300 pipeline. D03's ordinary-Git checkpoint preserves
-source, preparation and review bytes without Git LFS; D04 storage will be scoped
-with its inference contract.
+source, preparation and review bytes without Git LFS; D04 retains its bounded
+owned output tree under explicit ordinary-Git attributes.
+
+**D04 completed — 2026-11-15:** all ten batches are saved and verified. The
+notebook has 39 executed code cells, no error outputs, and Finished/Finished/Yes
+opening metadata. Run `run_d04_a6698ff0479f5dc389c91b9a` passed 404/404 checks at
+`2026-11-15T22:39:36.084467Z`. The final manifest registers 428 verified evidence
+artifacts. Forty primary outputs and thirty additional SD outputs cover ten
+physical paintings; 120 saved synthetic fidelity values remain separate. The
+researcher accepted the six-section report with 46 embedded figures, 481 tiles
+and 161 source-checked numerical claims. All validated artifacts are registered
+in the project-path ledger. The 693-file output tree includes retained stage
+history and manifest wrappers beyond the 428 registered records. D04 coding is
+complete; the optional expert study is not a dependency of this completion.
+
+**D04 approved preparation and execution history:**
+`d04_real_damage_restoration_and_evaluation` will use the ten D03 images and
+reviewed masks for 40 primary candidates plus 30 additional SD candidates
+(seeds 2026–2029; ten four-seed groups). The user replaced the proposed generic
+SD prompt with one prompt per painting based on its visible damaged input and
+reviewed mask. These ten prompts are recorded in
+`config/experiments/real_damage_sd_prompts.yaml` and remain fixed across seeds.
+The existing SD checkpoint, numerical generation settings, negative prompt,
+512-pixel inference and 768-pixel final compositing remain unchanged. The
+effective SD configuration is separately named so targeted conditioning is
+not misrepresented as the earlier generic-prompt policy. D03's original
+configuration, eligibility records and completed manifests remain immutable.
+
+`config/experiments/real_damage_restoration.yaml` records the approved batches:
+1. D03 handoff and targeted-prompt preflight;
+2. runtime readiness, prompt token-length checks and synthetic comparator selection;
+3. Telea; 4. LaMa; 5. HINT; 6. primary SD; 7. additional SD seeds;
+8. diagnostics/variability; 9. descriptive physical/synthetic comparison;
+10. reporting/completion. The saved Batch 1 passed all 31 checks; the user
+accepted the ten targeted prompts. The saved Batch 2 passed 55/55 checks in
+82.64 seconds. It verified local model assets and untruncated prompt lengths,
+selected ten same-category synthetic cases using input geometry, and froze
+the 70-candidate plan. All 12 saved artifacts and 141 scientific input hashes
+were rechecked. Batch 3 preparation uses the unchanged N09 Telea array helper
+(CPU, radius 3, threshold 128) with separate D04 output ownership, smoke checks,
+per-candidate receipts, strict resume validation and two five-case preview panels.
+The saved Batch 3 subsequently passed 95/95 checks; all ten primary Telea PNGs
+match their receipts, preserve outside-mask pixels and retain the frozen IDs.
+Their recorded primary-case runtime totals 3.160331 seconds; the user accepted
+the previews. Batch 4 is prepared in a separate LaMa helper/configuration/test
+set, retaining the unchanged N10 IOPaint/CUDA pipeline and masked compositor.
+Its two rd007 smoke runs use N10's numerical repeatability tolerance, followed
+by ten primary candidates. Each completed image is checkpointed; interrupted
+raw outputs can be recovered without replacing completed candidates. Timings
+refer to command groups including startup, not individual-image estimates.
+The saved LaMa batch subsequently passed 134/134 checks, with ten completed
+primary images, exact outside-mask preservation and identical smoke PNG hashes.
+Its primary command took 47.026742 seconds; the user accepted both preview sheets.
+Batch 5 is prepared with the unchanged N12A HINT production worker, pinned
+Places2 checkpoint, seed 2026, CUDA float32 and native 768-pixel exact compositing.
+Progress and checkpoint intervals become one case; model settings are unchanged.
+Two rd007 smoke repeats must match exactly, with an additional empty-mask
+compositor check and a load audit matching N12A (973/973 generator keys matched,
+zero missing and 153 extra checkpoint keys). Per-case receipts permit verified
+resume; failures remain retained without automatic retries. The saved HINT
+batch subsequently passed 175/175 checks: ten verified primary images, identical
+smoke PNGs, the accepted model-load audit and exact outside-mask preservation.
+Its primary case calls total 75.267 seconds; command wall time is 97.842321
+seconds. The user accepted both preview sheets.
+Batch 6 is prepared with a separate SD adapter/configuration. It reuses N11's
+single-candidate executor and pinned local SD 1.5 weights: DDIM, 30 steps,
+guidance 7.5, strength 1.0, CUDA float16, 512-pixel inference and 768-pixel exact
+mask compositing. The ten approved targeted prompts come from the frozen plan;
+the negative prompt and all numerical settings are unchanged. rd007 smoke seeds
+2026/2026/2027 check N11 repeat tolerances, seed sensitivity and outside-mask
+preservation, with an empty-mask compositor control. Ten primary candidates use
+seed 2026; the thirty additional seeds remain for Batch 7. Per-case executor
+checkpoints, load audits and receipts support verified resumption. One exact-seed
+retry follows the baseline; a saved failed receipt blocks further automatic
+attempts. The saved Batch 6 subsequently passed 216/216 checks with ten completed
+SD primary candidates, zero retries and exact outside-mask preservation. Its
+fixed-seed smoke outputs match exactly; its alternate seed changes only masked
+pixels. Primary case calls total 144.964821 seconds; the user accepted the previews.
+Batch 7 is prepared in a separate helper/configuration/test set. It reuses the
+ten seed-2026 outputs and revalidates the saved smoke gate, then runs thirty
+additional candidates with seeds 2027–2029 and identical targeted prompts,
+inputs, masks and numerical settings. Receipts and load audits are stage-owned
+under `work/sd_seeds/`; each successful case is checkpointed. The expected
+seventy-row candidate table contains ten complete four-seed SD groups. Saved
+membership and pair plans identify sixty unique pairs; variability metrics
+remain for Batch 8. Two five-case sheets display the masked input and all four
+seeds. Additional runtime is recorded separately from the primary comparison.
+Allow 8–12 minutes based on Batch 6 throughput plus loading and validation.
+The saved Batch 7 passed 325/325 checks: thirty additional outputs, ten complete
+four-seed groups, sixty unique pairs and seventy total candidates. Case calls
+total 412.702367 seconds with zero retries; the forty primary outputs remain
+unchanged. The researcher accepted the previews.
+Batch 8 is prepared in `real_damage_diagnostics.py` with a separate evaluation
+configuration and tests. Seventy candidates receive preservation checks, edit
+magnitude and raw boundary-band contrast descriptors. Unchanged N18/N19 helpers
+provide pixel disagreement and maps; the N14 LPIPS configuration compares seed
+candidates only. Five pixel regions and two contiguous LPIPS crops exclude
+padding, yielding 720 pairwise rows and 220 group summaries across sixty pairs.
+Ten raw maps retain an unclipped numerical scale; previews share a pooled masked
+p99 display ceiling. Boundary contrast is not reference error or a quality
+ranking, and seed agreement is not calibrated confidence. Per-candidate and
+per-group receipts support verified resumption. The saved Batch 8 subsequently
+passed 371/371 checks, with seventy candidate records, 720 pairwise rows,
+220 summaries and ten maps. All outside-mask pixels remain unchanged. Candidate
+diagnostics took 55.783562 seconds and group diagnostics 31.994825 seconds including
+the first LPIPS load. The researcher accepted its previews.
+Batch 9 is prepared in `real_damage_comparison.py` with separate configuration
+and tests. It preserves Batch 2's ten comparator selections and forty saved
+synthetic primary outputs. Forty comparison rows connect reference-free edit
+and boundary descriptors; 120 saved N13/N14 fidelity measurements apply only to
+synthetic cases. Ten full and ten input-defined detail panels retain the source
+credits and explicitly disclose unavailable physical references and different
+SD prompt policies. A geometry figure shows coverage and fragmentation gaps.
+No restoration or reference metric is recomputed. The comparison is descriptive,
+without pooled scores or a causal domain-effect claim. The saved Batch 9 passed
+393/393 checks; all 57 artifact hashes and twenty metric/panel receipts were
+verified. The forty comparison rows and 120 copied reference values match their
+canonical sources. Frozen Batches 1–9 are unchanged.
+
+Batch 10 is prepared in `real_damage_report.py` and
+`real_damage_report_content.py`, governed by `real_damage_report.yaml` and the
+approved forty-row visual observation catalogue. Its six-section self-contained
+report preserves all ten four-method cases, all ten four-seed groups and all ten
+physical/synthetic comparisons, including the approved extended discussions.
+Forty-six embedded figures contain 481 image/plot tiles. Numeric claims,
+embedded images and mock-to-final roles have separate provenance tables.
+Observations are user-approved assistant inspection with visible model names,
+not expert ratings. New panels reformat existing images only; no restoration
+or scientific metric is rerun. Finalization validates evidence and presentation
+before writing the universal artifact/run manifests. The saved Batch 10 now
+passes 404/404 checks and its completion gate is true. Its report build took
+44.258993 seconds, producing a 29,874,479-byte self-contained HTML file. The
+researcher accepted the report; its 83 approved structural elements and all
+scientific input/output hashes were checked during closeout.
+The readiness checkpoint and its immutable check snapshot live under
+`work/readiness/`; they do not certify a completed D04 run.
+Synthetic comparison cases were selected in Batch 2 before D04 outputs were inspected.
+They retain their existing restorations, including generic-prompt SD; the
+prompt-policy difference will be disclosed and prevents a same-prompt causal
+claim about physical versus synthetic damage. Physical photographs have no
+clean references. Estimated active compute is 15–30 minutes, with a one-hour
+operational allowance excluding downloads, debugging and human review.
 
 ### 1.1 Authoritative research-question framing
 

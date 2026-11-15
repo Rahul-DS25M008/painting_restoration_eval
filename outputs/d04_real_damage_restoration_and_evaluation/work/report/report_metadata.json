@@ -1,0 +1,21 @@
+{
+  "approved_mock_elements": 83,
+  "build_seconds": 44.258993299969006,
+  "embedded_images": 46,
+  "embedded_tiles": 481,
+  "execution_fingerprint": "a6698ff0479f5dc389c91b9a4696798ab736c5c8641a60cb72ebe73f3af9b4ad",
+  "numerical_claims": 161,
+  "report_path": "outputs/d04_real_damage_restoration_and_evaluation/reports/real_damage_evaluation.html",
+  "report_sha256": "f81b76c78d42c606b7f475b1b82c6ad675c3fdc5a288f588f4dbb10852e26800",
+  "report_size_bytes": 29874479,
+  "schema_version": "real_damage_report_metadata.v1",
+  "section_order": [
+    "findings_and_scope",
+    "physical_cases_and_four_method_restorations",
+    "repair_boundaries_and_preserved_context",
+    "fixed_prompt_seed_variability",
+    "descriptive_synthetic_comparisons_with_prompt_difference_disclosed",
+    "limitations_provenance_and_expert_study_handoff"
+  ],
+  "visual_review": "user-approved assistant inspection; model identities visible; not external expert ratings"
+}

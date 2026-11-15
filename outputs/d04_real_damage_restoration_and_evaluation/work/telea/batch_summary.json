@@ -1,0 +1,21 @@
+{
+  "completed_candidates": 10,
+  "execution_fingerprint": "d714823cd34a816aad07b0b3ac6cde628de1ebc85bde66165d919bda2279cb38",
+  "expected_candidates": 10,
+  "failed_candidates": 0,
+  "model_id": "opencv_telea",
+  "notebook_completion_gate_passed": false,
+  "recorded_at_utc": "2026-11-15T12:38:43.017499Z",
+  "recorded_case_runtime_seconds": 3.1603311000508256,
+  "reused_candidates": 0,
+  "runtime_scope": "original_primary_case_calls_excluding_smoke_review_and_resume_validation",
+  "stage": "batch_3_telea",
+  "validation_summary": {
+    "blocking_failure_count": 0,
+    "check_count": 95,
+    "failed_check_ids": [],
+    "failed_count": 0,
+    "overall_passed": true,
+    "passed_count": 95
+  }
+}

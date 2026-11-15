@@ -132,3 +132,73 @@ outputs/d03_real_damage_dataset_preparation/** -filter -diff -merge -text
 outputs/d03_real_damage_dataset_preparation/**/*.csv diff
 outputs/d03_real_damage_dataset_preparation/**/*.json diff
 outputs/d03_real_damage_dataset_preparation/**/*.html diff
+
+# D04 preparation is compact text; preserve config/notebook bytes for provenance.
+config/experiments/real_damage_* -filter diff -merge -text
+notebooks/d04_real_damage_restoration_and_evaluation.ipynb -filter diff -merge -text
+tests/test_real_damage_restoration.py -filter diff -merge -text
+tests/test_real_damage_readiness.py -filter diff -merge -text
+tests/test_real_damage_telea.py -filter diff -merge -text
+tests/test_real_damage_lama.py -filter diff -merge -text
+tests/test_real_damage_hint.py -filter diff -merge -text
+tests/test_real_damage_sd.py -filter diff -merge -text
+tests/test_real_damage_sd_seeds.py -filter diff -merge -text
+tests/test_real_damage_diagnostics.py -filter diff -merge -text
+config/evaluation/real_damage_diagnostics.yaml -filter diff -merge -text
+config/evaluation/real_damage_comparison.yaml -filter diff -merge -text
+tests/test_real_damage_comparison.py -filter diff -merge -text
+config/evaluation/real_damage_report.yaml -filter diff -merge -text
+config/evaluation/real_damage_visual_observations.json -filter diff -merge -text
+tests/test_real_damage_report.py -filter diff -merge -text
+# D04 Batch 2 stores compact tables and two input-selection previews only.
+outputs/d04_real_damage_restoration_and_evaluation/data/*.csv -filter diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/work/readiness/*.csv -filter diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/work/readiness/*.json -filter diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/work/readiness/*.png -filter -diff -merge -text
+# Bounded Telea outputs and resume records preserve their exact checksummed bytes.
+outputs/d04_real_damage_restoration_and_evaluation/images/restored/opencv_telea/** -filter -diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/work/telea/** -filter -diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/work/telea/**/*.json diff
+outputs/d04_real_damage_restoration_and_evaluation/work/telea/*.csv diff
+outputs/d04_real_damage_restoration_and_evaluation/metrics/*.csv -filter diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/validation/*.csv -filter diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/logs/telea_*.jsonl -filter diff -merge -text
+# Bounded LaMa outputs, staged inputs, raw inference and resume receipts.
+outputs/d04_real_damage_restoration_and_evaluation/images/restored/lama/** -filter -diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/work/lama/** -filter -diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/work/lama/**/*.json diff
+outputs/d04_real_damage_restoration_and_evaluation/work/lama/*.csv diff
+outputs/d04_real_damage_restoration_and_evaluation/work/lama/**/*.log diff
+# Bounded HINT worker evidence and per-candidate receipts preserve exact bytes.
+outputs/d04_real_damage_restoration_and_evaluation/images/restored/hint_places2/** -filter -diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/work/hint/** -filter -diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/work/hint/**/*.json diff
+outputs/d04_real_damage_restoration_and_evaluation/work/hint/**/*.csv diff
+outputs/d04_real_damage_restoration_and_evaluation/work/hint/**/*.log diff
+# Bounded SD primary images, smoke evidence, executor checkpoints and load audits.
+outputs/d04_real_damage_restoration_and_evaluation/images/restored/stable_diffusion_inpainting/** -filter -diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/work/sd/** -filter -diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/work/sd/**/*.json diff
+outputs/d04_real_damage_restoration_and_evaluation/work/sd/*.csv diff
+# Additional-seed receipts and group-membership evidence are separate from Batch 6.
+outputs/d04_real_damage_restoration_and_evaluation/work/sd_seeds/** -filter -diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/work/sd_seeds/**/*.json diff
+outputs/d04_real_damage_restoration_and_evaluation/work/sd_seeds/*.csv diff
+# Reference-free diagnostic checkpoints, maps and labelled previews.
+outputs/d04_real_damage_restoration_and_evaluation/work/diagnostics/** -filter -diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/work/diagnostics/**/*.json diff
+outputs/d04_real_damage_restoration_and_evaluation/work/diagnostics/**/*.csv diff
+outputs/d04_real_damage_restoration_and_evaluation/images/uncertainty/** -filter -diff -merge -text
+# Descriptive comparisons reuse fixed synthetic candidates and retain provenance.
+outputs/d04_real_damage_restoration_and_evaluation/work/comparison/** -filter -diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/work/comparison/**/*.json diff
+outputs/d04_real_damage_restoration_and_evaluation/work/comparison/**/*.csv diff
+outputs/d04_real_damage_restoration_and_evaluation/figures/synthetic_comparisons/** -filter -diff -merge -text
+# Final bounded report assets retain exact hashes without LFS indirection.
+outputs/d04_real_damage_restoration_and_evaluation/figures/case_comparisons/** -filter -diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/figures/seed_variability/** -filter -diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/work/report/** -filter -diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/work/report/*.csv diff
+outputs/d04_real_damage_restoration_and_evaluation/work/report/*.json diff
+outputs/d04_real_damage_restoration_and_evaluation/reports/*.html -filter diff -merge -text
+outputs/d04_real_damage_restoration_and_evaluation/manifests/** -filter diff -merge -text

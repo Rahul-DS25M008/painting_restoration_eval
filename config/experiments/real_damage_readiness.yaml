@@ -1,0 +1,52 @@
+schema_version: real_damage_readiness_config.v1
+config_version: 1.0.0
+stage: batch_2_runtime_selection_and_freeze
+restoration_config: config/experiments/real_damage_restoration.yaml
+helper_source: src/restoration_eval/real_damage_readiness.py
+tests: tests/test_real_damage_readiness.py
+inputs:
+  artworks: outputs/01_dataset_verification/data/artworks.csv
+  masks: outputs/03_canonical_mask_generation/data/masks.csv
+  cases: outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv
+  opencv_telea: outputs/09_opencv_telea_restoration/data/restorations.csv
+  lama: outputs/10_lama_restoration/data/restorations.csv
+  hint_places2: outputs/12a_hint_restoration/data/restorations.csv
+  stable_diffusion_inpainting: outputs/11_stable_diffusion_restoration/data/candidates.csv
+runtime:
+  network_downloads: false
+  model_inference: false
+  cuda_required: true
+  cpu_fallback: false
+  hash_local_model_files: true
+  tokenizer_truncation: false
+  readiness_scope: environment_assets_and_tokenizer_pending_method_smoke
+selection:
+  population: canonical_nonzero_controlled_300
+  expected_pool: 1200
+  category_match_required: true
+  distinct_synthetic_paintings: true
+  order: physical_painting_id_then_score_then_synthetic_case_id
+  compact_single_target_rule: largest_component_fraction_eq_1_and_bbox_fill_ratio_ge_0p8
+  compact_single_target_allowed_families: [loss_small, loss_large]
+  score:
+    coverage_absolute_difference_scale: 0.02
+    coverage_weight: 2.0
+    bbox_fill_ratio_weight: 1.0
+    largest_component_fraction_weight: 1.0
+    log_component_density_weight: 1.0
+    log_component_density_scale: 101.0
+    compactness_weight: 1.0
+  select_using_restored_images_or_scores: false
+  physical_synthetic_pooling: false
+  prompt_policy_difference_disclosed: true
+outputs:
+  root: work/readiness
+  runtime_environment: work/readiness/runtime_environment.json
+  runtime_assets: work/readiness/runtime_assets.csv
+  tokenizer_audit: work/readiness/tokenizer_audit.csv
+  synthetic_candidates: work/readiness/synthetic_candidate_sources.csv
+  input_checksums: work/readiness/input_checksums.csv
+  validation: work/readiness/checks.csv
+  preview_first: work/readiness/comparison_inputs_01.png
+  preview_second: work/readiness/comparison_inputs_02.png
+  checkpoint: work/readiness/readiness_checkpoint.json

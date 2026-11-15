@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.26"
+config_version: "1.1.37"
 
 evidence_coverage:
   authority:
@@ -9,12 +9,13 @@ evidence_coverage:
     inventory_path: "outputs/inventory/project_file_inventory.csv"
     project_paths_path: "outputs/inventory/project_paths.json"
 
-  # Separate supplemental preparation; never pooled into Controlled-300 results.
+  # Completed D03/D04 supplement; never pooled into Controlled-300 results.
   real_damage_supplement:
     recorded_on: "2026-11-15"
-    completed_through_notebook_id: "D03"
-    next_eligible_notebook_id: "D04"
-    next_stage_status: "contract_planning_required_before_inference"
+    completed_through_notebook_id: "D04"
+    next_eligible_notebook_id: null
+    next_stage_status: "coding_complete_optional_expert_study_not_started"
+    preparation_record_scope: "D03_dataset_handoff_fields_below_D04_completion_in_d04_preparation"
     dataset_scope: "real_damage_10"
     dataset_version: "2.0.0"
     notebook_id: "D03"
@@ -55,7 +56,190 @@ evidence_coverage:
     controlled_300_results_changed: false
     restoration_inference_executed: false
     model_runtime_and_weights_verified: false
-    d04_contract_approval_required: true
+    d04_contract_approval_required: false
+    d04_preparation:
+      contract_status: "approved_with_targeted_SD_prompts"
+      notebook_id: "D04"
+      stem: "d04_real_damage_restoration_and_evaluation"
+      output_root: "outputs/d04_real_damage_restoration_and_evaluation"
+      manifest_path: "outputs/d04_real_damage_restoration_and_evaluation/manifests/run_manifest.json"
+      artifact_manifest_path: "outputs/d04_real_damage_restoration_and_evaluation/manifests/artifacts.csv"
+      validation_path: "outputs/d04_real_damage_restoration_and_evaluation/validation/checks.csv"
+      report_path: "outputs/d04_real_damage_restoration_and_evaluation/reports/real_damage_evaluation.html"
+      run_id: "run_d04_a6698ff0479f5dc389c91b9a"
+      run_status: "completed"
+      completed_at_utc: "2026-11-15T22:39:36.084467Z"
+      data_fingerprint: "a6698ff0479f5dc389c91b9a4696798ab736c5c8641a60cb72ebe73f3af9b4ad"
+      completion_gate_passed: true
+      downstream_ready: true
+      readiness_scope: "saved_physical_restoration_evidence_no_reference_fidelity"
+      validation: {checks: 404, passed: 404, failed: 0, blocking_failures: 0}
+      artifact_records: 428
+      output_files: 693
+      additional_retained_files_including_manifest_wrappers: 265
+      output_bytes: 243087807
+      notebook_metadata: "Finished_Finished_Yes"
+      report_review_status: "accepted_by_user_after_batch_10"
+      optional_expert_study_status: "not_started_not_required_for_D04_completion"
+      config_path: "config/experiments/real_damage_restoration.yaml"
+      prompt_catalog_path: "config/experiments/real_damage_sd_prompts.yaml"
+      helper_source: "src/restoration_eval/real_damage_restoration.py"
+      batch_count: 10
+      notebook_execution_status: "all_ten_batches_saved_and_verified"
+      batch_1_validation: {checks: 31, passed: 31, failed: 0, blocking_failures: 0}
+      targeted_prompts_review_status: "accepted_by_user_after_batch_1"
+      batch_2_status: "saved_and_verified"
+      batch_2_validation: {checks: 55, passed: 55, failed: 0, blocking_failures: 0}
+      readiness_fingerprint: "5cbf297aa2d5a03d2343a03e9335e71a36b50ce7eb799a9dc8105e1b786e672e"
+      batch_2_checkpoint: "outputs/d04_real_damage_restoration_and_evaluation/work/readiness/readiness_checkpoint.json"
+      batch_2_elapsed_seconds: 82.64
+      batch_3_status: "saved_and_verified"
+      batch_3_validation: {checks: 95, passed: 95, failed: 0, blocking_failures: 0}
+      batch_3_completed_primary_candidates: 10
+      batch_3_recorded_case_runtime_seconds: 3.1603311000508256
+      batch_3_execution_fingerprint: "d714823cd34a816aad07b0b3ac6cde628de1ebc85bde66165d919bda2279cb38"
+      batch_3_config: "config/experiments/real_damage_telea.yaml"
+      batch_3_helper: "src/restoration_eval/real_damage_telea.py"
+      batch_3_tests: "tests/test_real_damage_telea.py"
+      batch_4_status: "saved_and_verified"
+      batch_4_validation: {checks: 134, passed: 134, failed: 0, blocking_failures: 0}
+      batch_4_completed_primary_candidates: 10
+      batch_4_recorded_command_runtime_seconds: 47.02674230001867
+      batch_4_smoke_repeat_sha256_equal: true
+      batch_4_execution_fingerprint: "f0eeb657b699d63cbd0e1e6d27badb74c7c97dc61417cf54e287877d75d3d082"
+      batch_4_config: "config/experiments/real_damage_lama.yaml"
+      batch_4_helper: "src/restoration_eval/real_damage_lama.py"
+      batch_4_tests: "tests/test_real_damage_lama.py"
+      batch_4_pipeline: "unchanged_N10_IOPaint_CUDA_float32_768px_masked_composite"
+      batch_4_runtime_scope: "command_group_wall_time_including_startup_not_individual_image_runtime"
+      batch_5_status: "saved_and_verified"
+      batch_5_validation: {checks: 175, passed: 175, failed: 0, blocking_failures: 0}
+      batch_5_completed_primary_candidates: 10
+      batch_5_recorded_case_runtime_seconds: 75.267
+      batch_5_recorded_command_runtime_seconds: 97.842321300006
+      batch_5_smoke_repeat_sha256_equal: true
+      batch_5_execution_fingerprint: "633ab5e6442d936ef4e4cf7a0f65ee276d3043bbda7ce117656a6c0bc4663375"
+      batch_5_config: "config/experiments/real_damage_hint.yaml"
+      batch_5_helper: "src/restoration_eval/real_damage_hint.py"
+      batch_5_tests: "tests/test_real_damage_hint.py"
+      batch_5_pipeline: "unchanged_N12A_worker_Places2_CUDA_float32_native_768_seed_2026_exact_composite"
+      batch_5_checkpoint_interval_cases: 1
+      batch_5_automatic_retry: false
+      batch_6_status: "saved_and_verified"
+      batch_6_validation: {checks: 216, passed: 216, failed: 0, blocking_failures: 0}
+      batch_6_completed_primary_candidates: 10
+      batch_6_recorded_case_runtime_seconds: 144.96482080011629
+      batch_6_retry_count: 0
+      batch_6_smoke_repeat_maximum_pixel_difference: 0
+      batch_6_execution_fingerprint: "90c7d5af633d6cf7da424a5fb68831fde7409289941a18d9d78d1a3cb2a55b0f"
+      batch_6_config: "config/experiments/real_damage_sd.yaml"
+      batch_6_helper: "src/restoration_eval/real_damage_sd.py"
+      batch_6_tests: "tests/test_real_damage_sd.py"
+      batch_6_pipeline: "unchanged_N11_executor_SD15_DDIM_30_steps_cfg7.5_strength1_CUDA_float16_512_to_768_exact_composite"
+      batch_6_prompt_source: "frozen_Batch_2_approved_targeted_prompts_no_retuning"
+      batch_6_primary_seed: 2026
+      batch_6_smoke_seeds: [2026, 2026, 2027]
+      batch_6_checkpoint_interval_cases: 1
+      batch_6_maximum_retries_per_call: 1
+      batch_6_retry_policy: "unchanged_N11_preserve_exact_seed_retained_failure_blocks_further_automatic_attempts"
+      batch_7_status: "saved_and_verified"
+      batch_7_validation: {checks: 325, passed: 325, failed: 0, blocking_failures: 0}
+      batch_7_completed_additional_candidates: 30
+      batch_7_completed_seed_groups: 10
+      batch_7_unique_seed_pairs: 60
+      batch_7_recorded_case_runtime_seconds: 412.70236699987436
+      batch_7_retry_count: 0
+      batch_7_execution_fingerprint: "bb7160c0715b9b450cef43e29c6a0a3ec2fad2832250f1d6757b5f313b8999a3"
+      batch_7_config: "config/experiments/real_damage_sd_seeds.yaml"
+      batch_7_helper: "src/restoration_eval/real_damage_sd_seeds.py"
+      batch_7_tests: "tests/test_real_damage_sd_seeds.py"
+      batch_7_additional_seeds: [2027, 2028, 2029]
+      batch_7_planned_candidates: 30
+      batch_7_reused_primary_candidates: 10
+      batch_7_prompt_policy: "unchanged_frozen_targeted_prompt_per_painting"
+      batch_7_checkpoint_interval_cases: 1
+      batch_7_smoke_policy: "reuse_revalidated_Batch_6_gate_no_new_smoke_candidates"
+      batch_7_estimated_minutes: [8, 12]
+      batch_7_runtime_basis: "30_calls_at_Batch_6_mean_14.50_seconds_plus_loading_validation_and_previews"
+      batch_8_status: "saved_and_verified"
+      batch_8_validation: {checks: 371, passed: 371, failed: 0, blocking_failures: 0}
+      batch_8_execution_fingerprint: "ca1e8491443f1bc7bb9ec8415444d5d318ddc2d549a459706d392fbd1882855d"
+      batch_8_candidate_processing_seconds: 55.78356200037524
+      batch_8_group_processing_seconds_including_model_load: 31.994825200061314
+      batch_8_outside_mask_changed_pixels: 0
+      batch_8_map_display_vmax: 0.24492061227560044
+      batch_8_config: "config/evaluation/real_damage_diagnostics.yaml"
+      batch_8_helper: "src/restoration_eval/real_damage_diagnostics.py"
+      batch_8_tests: "tests/test_real_damage_diagnostics.py"
+      batch_8_expected_technical_rows: 70
+      batch_8_expected_diagnostic_rows: 70
+      batch_8_expected_pairwise_rows: 720
+      batch_8_expected_group_summary_rows: 220
+      batch_8_expected_uncertainty_maps: 10
+      batch_8_metric_policy: "unchanged_N18_N19_RGB_seed_disagreement_and_N14_pairwise_LPIPS_no_clean_reference"
+      batch_8_boundary_policy: "raw_inner_outer_three_pixel_band_mean_Lstar_and_CIEDE2000_contrast_not_reference_error"
+      batch_8_region_policy: "canonical_content_mask_crop_boundary_outside_content_padding_excluded"
+      batch_8_resume_policy: "hash_verified_per_candidate_and_per_group_checkpoints"
+      batch_9_status: "saved_and_verified"
+      batch_9_validation: {checks: 393, passed: 393, failed: 0, blocking_failures: 0}
+      batch_9_execution_fingerprint: "a9643e3a34b6dc0ed8080156a7aba1338ed72801194098f05396e556d4dcbc88"
+      batch_9_verified_artifacts: 57
+      batch_9_verified_checkpoint_receipts: 20
+      batch_9_config: "config/evaluation/real_damage_comparison.yaml"
+      batch_9_helper: "src/restoration_eval/real_damage_comparison.py"
+      batch_9_tests: "tests/test_real_damage_comparison.py"
+      batch_9_selection: "unchanged_ten_Batch_2_input_based_pairs"
+      batch_9_expected_comparison_rows: 40
+      batch_9_expected_saved_synthetic_reference_metrics: 120
+      batch_9_expected_synthetic_diagnostic_rows: 40
+      batch_9_expected_full_panels: 10
+      batch_9_expected_detail_panels: 10
+      batch_9_reference_metrics: "saved_N13_masked_MAE_crop_SSIM_and_N14_crop_LPIPS_synthetic_only_no_recomputation"
+      batch_9_scope: "descriptive_different_artworks_damage_geometry_and_SD_prompt_policies_no_pooling_or_causal_domain_claim"
+      batch_9_detail_policy: "largest_input_mask_component_plus_32_pixel_margin_display_only_not_metric_region"
+      batch_10_status: "saved_and_verified"
+      batch_10_validation: {checks: 404, passed: 404, failed: 0, blocking_failures: 0}
+      batch_10_report_build_seconds: 44.258993299969006
+      batch_10_report_size_bytes: 29874479
+      batch_10_report_sha256: "f81b76c78d42c606b7f475b1b82c6ad675c3fdc5a288f588f4dbb10852e26800"
+      batch_10_observed_numerical_claims: 161
+      batch_10_observed_traceability_elements: 83
+      batch_10_observed_embedded_images: 46
+      batch_10_observed_embedded_tiles: 481
+      batch_10_config: "config/evaluation/real_damage_report.yaml"
+      batch_10_helper: "src/restoration_eval/real_damage_report.py"
+      batch_10_report_content: "src/restoration_eval/real_damage_report_content.py"
+      batch_10_visual_observations: "config/evaluation/real_damage_visual_observations.json"
+      batch_10_tests: "tests/test_real_damage_report.py"
+      batch_10_approved_sections: 6
+      batch_10_expected_observations: 40
+      batch_10_expected_embedded_images: 46
+      batch_10_expected_embedded_tiles: 481
+      batch_10_review_scope: "user_approved_assistant_visual_inspection_model_identities_visible_not_expert_ratings"
+      batch_10_computation_scope: "presentation_only_saved_evidence_no_inference_or_new_scientific_metrics"
+      batch_10_completion_policy: "verify_sources_report_claims_assets_traceability_then_write_universal_manifest_last"
+      batch_2_config: "config/experiments/real_damage_readiness.yaml"
+      batch_2_helper: "src/restoration_eval/real_damage_readiness.py"
+      batch_2_tests: "tests/test_real_damage_readiness.py"
+      batch_2_selection: "deterministic_input_geometry_same_category_distinct_paintings_no_quality_scores"
+      batch_2_readiness_scope: "local_assets_and_tokenizer_snapshot_before_method_smoke"
+      local_asset_and_tokenizer_checks_passed: true
+      planned_primary_candidates: 40
+      planned_additional_SD_candidates: 30
+      planned_total_candidates: 70
+      sd_seeds: [2026, 2027, 2028, 2029]
+      prompt_policy: "d04_sd15_targeted_visible_context.v1"
+      targeted_prompt_count: 10
+      prompt_basis: "damaged_input_and_reviewed_mask_only_before_restoration_outcomes"
+      prompts_fixed_across_seeds: true
+      sd_model_parameters_and_negative_prompt: "unchanged_baseline"
+      D03_generic_prompt_declaration: "historical_superseded_for_D04_only"
+      synthetic_comparison: "descriptive_separate_populations_prompt_difference_disclosed"
+      model_runtime_and_weights_verified: true
+      restoration_inference_executed: true
+      completed_primary_methods: ["opencv_telea", "lama", "hint_places2", "stable_diffusion_inpainting"]
+      completed_primary_candidates: 40
+      pending_method_smoke: []
     d05_expert_study_status: "optional_not_started"
     storage: "ordinary_git_exact_bytes_no_lfs_no_duplicate_hf_release"
     zenodo_v1_0_0_includes_this_supplement: false

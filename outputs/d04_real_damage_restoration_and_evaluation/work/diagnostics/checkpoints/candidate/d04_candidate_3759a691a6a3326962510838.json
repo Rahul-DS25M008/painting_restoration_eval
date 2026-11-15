@@ -1,0 +1,9 @@
+{
+  "binding": "466118b3a819e64df8c817a302b6d0d1ca63749329b9875b0d5ad4a4c6d2f2ce",
+  "completed_at_utc": "2026-11-15T21:17:09.225609Z",
+  "files": {
+    "outputs/d04_real_damage_restoration_and_evaluation/work/diagnostics/candidates/d04_candidate_3759a691a6a3326962510838.json": "1b64180e06f908068b7a3502aea66fae87f60dd17cfeb53d73a1f55922496799"
+  },
+  "runtime_seconds": 0.7931236000149511,
+  "status": "completed"
+}

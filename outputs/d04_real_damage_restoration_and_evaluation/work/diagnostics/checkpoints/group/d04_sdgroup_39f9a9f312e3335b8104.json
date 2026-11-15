@@ -1,0 +1,10 @@
+{
+  "binding": "8b1fe7b6b61ba0f2b8565ecd77ec517ad08689833418f6123358ba7e346fa242",
+  "completed_at_utc": "2026-11-15T21:17:27.507893Z",
+  "files": {
+    "outputs/d04_real_damage_restoration_and_evaluation/images/uncertainty/d04_sdgroup_39f9a9f312e3335b8104.npz": "a9126acbed13da453fba69ea61dea9e5f9ee424a8c28f399bc270ca0643c38fb",
+    "outputs/d04_real_damage_restoration_and_evaluation/work/diagnostics/groups/d04_sdgroup_39f9a9f312e3335b8104.csv": "a72d7d3daed72829270c52ce26c47bf7b8c7f66b5574891681dd788fbae5a252"
+  },
+  "runtime_seconds": 2.9655564000131562,
+  "status": "completed"
+}

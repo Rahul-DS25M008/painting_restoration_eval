@@ -1,0 +1,24 @@
+{
+  "command_groups": 1,
+  "command_groups_missing_runtime": 0,
+  "completed_candidates": 10,
+  "execution_fingerprint": "f0eeb657b699d63cbd0e1e6d27badb74c7c97dc61417cf54e287877d75d3d082",
+  "expected_candidates": 10,
+  "failed_candidates": 0,
+  "individual_case_runtime_available": false,
+  "model_id": "lama",
+  "notebook_completion_gate_passed": false,
+  "recorded_at_utc": "2026-11-15T13:01:32.270502Z",
+  "recorded_command_runtime_seconds": 47.02674230001867,
+  "reused_candidates": 0,
+  "runtime_scope": "primary_IOPaint_commands_including_startup_retries_and_checkpointing_excluding_smoke",
+  "stage": "batch_4_lama",
+  "validation_summary": {
+    "blocking_failure_count": 0,
+    "check_count": 134,
+    "failed_check_ids": [],
+    "failed_count": 0,
+    "overall_passed": true,
+    "passed_count": 134
+  }
+}

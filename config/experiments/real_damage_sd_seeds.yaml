@@ -1,0 +1,21 @@
+schema_version: real_damage_sd_seeds_config.v1
+config_version: 1.0.0
+stage: batch_7_sd_seeds
+helper_source: src/restoration_eval/real_damage_sd_seeds.py
+tests: tests/test_real_damage_sd_seeds.py
+primary_config: config/experiments/real_damage_sd.yaml
+expected_candidates: 30
+expected_groups: 10
+seeds: [2026, 2027, 2028, 2029]
+additional_seeds: [2027, 2028, 2029]
+reuse_primary: true
+reuse_verified_batch_6_smoke_gate: true
+overwrite_unverified_outputs: false
+outputs:
+  stage_checks: work/sd_seeds/checks.csv
+  stage_summary: work/sd_seeds/batch_summary.json
+  runtime: work/sd_seeds/runtime_summary.csv
+  group_members: work/sd_seeds/group_members.csv
+  seed_pair_plan: work/sd_seeds/seed_pair_plan.csv
+  preview_first: work/sd_seeds/seed_groups_01.png
+  preview_second: work/sd_seeds/seed_groups_02.png

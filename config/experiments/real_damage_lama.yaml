@@ -1,0 +1,19 @@
+schema_version: real_damage_lama_config.v1
+config_version: 1.0.0
+stage: batch_4_lama
+helper_source: src/restoration_eval/real_damage_lama.py
+tests: tests/test_real_damage_lama.py
+telea_config: config/experiments/real_damage_telea.yaml
+baseline_config: config/experiments/lama.yaml
+expected_candidates: 10
+smoke_painting_id: rd007
+smoke_repeats: 2
+overwrite_unverified_outputs: false
+checkpoint_after_each_candidate: true
+runtime_measurement: command_group_wall_time_including_startup
+outputs:
+  smoke_summary: work/lama/smoke_summary.json
+  stage_checks: work/lama/checks.csv
+  stage_summary: work/lama/batch_summary.json
+  preview_first: work/lama/restorations_01.png
+  preview_second: work/lama/restorations_02.png

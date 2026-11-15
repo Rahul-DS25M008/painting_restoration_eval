@@ -1,0 +1,38 @@
+schema_version: real_damage_comparison_config.v1
+config_version: 1.0.0
+stage: batch_9_physical_synthetic_comparison
+helper_source: src/restoration_eval/real_damage_comparison.py
+tests: tests/test_real_damage_comparison.py
+diagnostics_config: config/evaluation/real_damage_diagnostics.yaml
+inputs:
+  classical_metrics: outputs/13_classical_metrics/metrics/classical_metrics.csv
+  lpips_metrics: outputs/14_lpips_metrics/metrics/lpips_metrics.csv
+  synthetic_geometry: outputs/02_image_preprocessing/data/preprocessed_images.csv
+  synthetic_artworks: outputs/01_dataset_verification/data/artworks.csv
+  physical_artworks: outputs/d03_real_damage_dataset_preparation/data/artworks.csv
+anchors:
+  - {anchor_id: masked_mae, source: classical_metrics, metric_name: mae, region_id: masked_region, units: RGB_0_255, direction: lower}
+  - {anchor_id: crop_ssim, source: classical_metrics, metric_name: ssim, region_id: mask_bbox_crop, units: SSIM, direction: higher}
+  - {anchor_id: crop_lpips, source: lpips_metrics, metric_name: lpips, region_id: mask_bbox_crop, units: LPIPS, direction: lower}
+policy:
+  use_frozen_batch_2_selection: true
+  regenerate_restorations: false
+  recompute_reference_metrics: false
+  pool_physical_synthetic_scores: false
+  estimate_causal_domain_effect: false
+  physical_clean_reference_available: false
+  disclose_targeted_vs_generic_sd_prompts: true
+  diagnostic_definition: unchanged_batch_8_reference_free_descriptors_applied_to_synthetic_candidates
+  detail_crop: largest_8_connected_mask_component_bbox_plus_32_pixels_clipped_to_content
+  detail_crop_is_metric_region: false
+expected: {pairs: 10, models: 4, comparison_rows: 40, synthetic_diagnostics: 40, reference_metric_rows: 120, full_panels: 10, detail_panels: 10}
+outputs:
+  synthetic_diagnostics: work/comparison/synthetic_diagnostics.csv
+  synthetic_technical: work/comparison/synthetic_technical_checks.csv
+  reference_metrics: work/comparison/synthetic_reference_metrics.csv
+  panel_manifest: work/comparison/panels.csv
+  detail_template: work/comparison/details/{painting_id}.png
+  matching_figure: work/comparison/input_matching.png
+  stage_checks: work/comparison/checks.csv
+  stage_summary: work/comparison/batch_summary.json
+  artifacts: work/comparison/artifacts.csv

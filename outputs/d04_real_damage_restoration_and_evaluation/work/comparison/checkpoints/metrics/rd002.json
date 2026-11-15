@@ -1,0 +1,9 @@
+{
+  "binding": "bd5ff1ddf0e4620bc86cc9d90f16107c7b010032641f7dda6ad361ebd5353a75",
+  "completed_at_utc": "2026-11-15T21:43:38.077307Z",
+  "files": {
+    "outputs/d04_real_damage_restoration_and_evaluation/work/comparison/pairs/rd002.json": "3e44f40302b5278d77bc98b4410fa3d3309f28146a3559aa75f0ec3e8eb5441f"
+  },
+  "runtime_seconds": 3.020021300006192,
+  "status": "completed"
+}

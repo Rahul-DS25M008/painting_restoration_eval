@@ -1,0 +1,30 @@
+{
+  "canonical_hf_model_id": "stable-diffusion-v1-5/stable-diffusion-inpainting",
+  "execution_fingerprint": "bb7160c0715b9b450cef43e29c6a0a3ec2fad2832250f1d6757b5f313b8999a3",
+  "loaded_at_utc": "2026-11-15T20:28:50.387730Z",
+  "model_load_seconds": 8.598631099972408,
+  "precision": "float16",
+  "prompt_truncation_used": false,
+  "revision": "8a4288a76071f7280aedbdb3253bdb9e9d5d84bb",
+  "runtime": {
+    "cuda_available": true,
+    "cuda_version": "12.1",
+    "device": "cuda",
+    "gpu_name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "machine": "AMD64",
+    "package_versions": {
+      "Pillow": "9.5.0",
+      "accelerate": "1.14.0",
+      "diffusers": "0.27.2",
+      "safetensors": "0.8.0",
+      "torch": "2.5.1+cu121",
+      "transformers": "4.48.3"
+    },
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 165 Stepping 2, GenuineIntel",
+    "python_version": "3.12.6"
+  },
+  "scheduler": "DDIMScheduler",
+  "snapshot_path": "E:\\HFCache\\hub\\models--stable-diffusion-v1-5--stable-diffusion-inpainting\\snapshots\\8a4288a76071f7280aedbdb3253bdb9e9d5d84bb",
+  "unet_in_channels": 9
+}

@@ -1,0 +1,19 @@
+schema_version: real_damage_telea_config.v1
+config_version: 1.0.0
+stage: batch_3_telea
+helper_source: src/restoration_eval/real_damage_telea.py
+tests: tests/test_real_damage_telea.py
+readiness_checkpoint: outputs/d04_real_damage_restoration_and_evaluation/work/readiness/readiness_checkpoint.json
+baseline_config: config/experiments/opencv_telea.yaml
+expected_candidates: 10
+smoke_painting_id: rd007
+smoke_repeats: 2
+overwrite_unverified_outputs: false
+checkpoint_after_each_candidate: true
+outputs:
+  work: work/telea
+  smoke_summary: work/telea/smoke_summary.json
+  stage_checks: work/telea/checks.csv
+  stage_summary: work/telea/batch_summary.json
+  preview_first: work/telea/restorations_01.png
+  preview_second: work/telea/restorations_02.png

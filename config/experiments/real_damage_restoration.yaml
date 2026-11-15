@@ -1,0 +1,143 @@
+config_schema_version: real_damage_restoration_config.v1
+config_version: 1.0.0
+contract_status: approved
+approval_basis: user_approved_ten_batches_with_painting_specific_sd_prompts
+notebook:
+  id: D04
+  stem: d04_real_damage_restoration_and_evaluation
+  output_root: outputs/d04_real_damage_restoration_and_evaluation
+  batch_count: 10
+dataset:
+  dataset_id: painting_restoration_real_damage
+  dataset_scope: real_damage_10
+  dataset_version: 2.0.0
+  experiment_id: real_damage_targeted_restoration
+  has_clean_reference: false
+  expected_paintings: 10
+  expected_per_category: 2
+upstream:
+  completion_config: config/datasets/real_damage_completion.yaml
+  manifest: outputs/d03_real_damage_dataset_preparation/manifests/run_manifest.json
+  expected_run_id: run_d03_6a2e02fcf9a4b65a612b7cdf
+  expected_data_fingerprint: 6a2e02fcf9a4b65a612b7cdf5e9aa36846bc641ae8533f1f19635d5ebf00afe4
+  expected_passed_checks: 379
+inputs:
+  prompt_catalog: config/experiments/real_damage_sd_prompts.yaml
+  inventory: outputs/inventory/project_file_inventory.csv
+  inventory_run: outputs/inventory/inventory_run.json
+  project_paths: outputs/inventory/project_paths.json
+  evidence_audit: docs/evidence_dependency_audit.md
+  evidence_coverage: config/evaluation/evidence_coverage.yaml
+  notebook_roadmap: docs/final_notebook_roadmap.md
+  implementation_guidelines: docs/refactoring_implementation_guidelines.md
+  helper_source: src/restoration_eval/real_damage_restoration.py
+  preparation_tests: tests/test_real_damage_restoration.py
+models:
+  opencv_telea: config/experiments/opencv_telea.yaml
+  lama: config/experiments/lama.yaml
+  hint_places2: config/experiments/hint.yaml
+  stable_diffusion_inpainting: config/experiments/stable_diffusion.yaml
+inference_helpers:
+  opencv_telea: src/restoration_eval/restoration_opencv.py
+  lama: src/restoration_eval/restoration_lama.py
+  hint_places2: src/restoration_eval/restoration_hint.py
+  hint_worker: src/restoration_eval/restoration_hint_production_worker.py
+  stable_diffusion_inpainting: src/restoration_eval/restoration_stable_diffusion.py
+candidate_design:
+  primary_candidates: 40
+  primary_seed: 2026
+  sd_seeds: [2026, 2027, 2028, 2029]
+  additional_sd_candidates: 30
+  total_candidates: 70
+  uncertainty_groups: 10
+  unique_seed_pairs: 60
+prompt_policy:
+  policy_id: d04_sd15_targeted_visible_context.v1
+  effective_configuration_id: sd15_inpaint_targeted_real_damage_v1
+  variant_id: p05_real_damage_targeted
+  selection: one_prompt_per_painting_from_damaged_input_and_reviewed_mask
+  negative_prompt: inherit_unchanged_sd15_baseline
+  fixed_across_seeds: true
+  freeze_before_inference: true
+  outcome_based_tuning: false
+  known_clean_image_used: false
+  tokenizer_length_check_batch: 2
+  reject_silent_prompt_truncation: true
+  d03_generic_prompt_declaration: superseded_for_D04_only_by_user_approved_targeted_policy
+  synthetic_comparison_prompt_policy: different_from_existing_generic_SD_comparators
+comparison:
+  synthetic_cases: 10
+  selection_stage: 2
+  selection_basis: category_mask_coverage_geometry_and_visible_context
+  selection_before_D04_restoration_outcomes: true
+  select_using_restoration_scores: false
+  reuse_existing_four_method_outputs: true
+  pool_real_and_synthetic_metrics: false
+  same_prompt_domain_effect_claim_allowed: false
+evaluation:
+  input_as_clean_reference: false
+  physical_reference_fidelity_metrics_applicable: false
+  outside_mask_preservation: technical_check_not_quality_score
+  inside_mask_change: edit_magnitude_not_reference_error
+  boundary_descriptors: reference_free_not_reference_boundary_error
+  uncertainty: fixed_prompt_seed_disagreement_not_calibrated_confidence
+  primary_analysis_population: primary_40
+  repeated_seed_population: sd_40_in_ten_groups
+  region_policy: reuse_canonical_regions_excluding_padding
+outputs:
+  candidate_plan: data/candidate_plan.csv
+  candidates: data/candidates.csv
+  prompt_policy: data/prompt_policy.csv
+  model_provenance: data/model_provenance.csv
+  synthetic_comparators: data/synthetic_comparators.csv
+  case_observations: data/case_observations.csv
+  runtime_summary: metrics/runtime_summary.csv
+  technical_checks: metrics/technical_checks.csv
+  real_damage_diagnostics: metrics/real_damage_diagnostics.csv
+  seed_pairwise: metrics/seed_pairwise.csv
+  uncertainty_summary: metrics/uncertainty_summary.csv
+  synthetic_comparison: metrics/synthetic_comparison.csv
+  restored_template: images/restored/{model_id}/{case_id}/{candidate_id}.png
+  uncertainty_array_template: images/uncertainty/{group_id}.npz
+  uncertainty_preview_template: images/uncertainty/{group_id}.png
+  case_panel_template: figures/case_comparisons/{painting_id}.png
+  comparator_panel_template: figures/synthetic_comparisons/{painting_id}.png
+  seed_panel_template: figures/seed_variability/{painting_id}.png
+  report: reports/real_damage_evaluation.html
+  run_manifest: manifests/run_manifest.json
+  artifacts: manifests/artifacts.csv
+  validation: validation/checks.csv
+  work_root: work
+  logs_root: logs
+report:
+  audience: thesis_reader_and_research_reviewer
+  sections:
+    - findings_and_scope
+    - physical_cases_and_four_method_restorations
+    - repair_boundaries_and_preserved_context
+    - fixed_prompt_seed_variability
+    - descriptive_synthetic_comparisons_with_prompt_difference_disclosed
+    - limitations_provenance_and_expert_study_handoff
+batches:
+  - {number: 1, name: D03 handoff and targeted-prompt preflight}
+  - {number: 2, name: Runtime readiness and comparison selection}
+  - {number: 3, name: Telea smoke and ten restorations}
+  - {number: 4, name: LaMa smoke and ten restorations}
+  - {number: 5, name: HINT smoke and ten restorations}
+  - {number: 6, name: Targeted-prompt primary Stable Diffusion}
+  - {number: 7, name: Fixed-prompt repeated-seed Stable Diffusion}
+  - {number: 8, name: Diagnostics and seed variability}
+  - {number: 9, name: Physical and synthetic comparison}
+  - {number: 10, name: Reporting and completion gate}
+execution:
+  assistant_executes_notebook: false
+  user_creates_and_edits_notebook: true
+  runtime_and_weights_check_batch: 2
+  sequential_models: true
+  checkpoint_after_each_candidate: true
+  resume_requires_matching_inputs_configuration_prompt_and_output_hashes: true
+  automatic_cleanup: false
+  active_compute_estimate_minutes: [15, 30]
+  operational_allowance_minutes: 60
+  estimates_exclude_downloads_debugging_and_human_review: true
+  supported_python_minors: ['3.11', '3.12']

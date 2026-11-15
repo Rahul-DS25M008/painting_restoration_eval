@@ -1,0 +1,27 @@
+{
+  "candidate_processing_seconds": 55.78356200037524,
+  "completed_at_utc": "2026-11-15T21:18:13.946488Z",
+  "completed_candidates": 70,
+  "completed_seed_groups": 10,
+  "display_vmax": 0.24492061227560044,
+  "execution_fingerprint": "ca1e8491443f1bc7bb9ec8415444d5d318ddc2d549a459706d392fbd1882855d",
+  "group_processing_seconds_including_first_model_load": 31.994825200061314,
+  "group_summary_rows": 220,
+  "map_count": 10,
+  "notebook_completion_gate_passed": false,
+  "pairwise_rows": 720,
+  "primary_candidates": 40,
+  "reused_candidate_diagnostics": 0,
+  "reused_uncertainty_groups": 0,
+  "sd_candidates": 40,
+  "stage": "batch_8_diagnostics",
+  "unique_seed_pairs": 60,
+  "validation_summary": {
+    "blocking_failure_count": 0,
+    "check_count": 371,
+    "failed_check_ids": [],
+    "failed_count": 0,
+    "overall_passed": true,
+    "passed_count": 371
+  }
+}

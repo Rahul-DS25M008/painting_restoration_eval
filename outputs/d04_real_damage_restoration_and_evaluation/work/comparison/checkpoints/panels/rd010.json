@@ -1,0 +1,10 @@
+{
+  "binding": "7e41f0adb73f5f85018a1bff907283d7d4ef1590a7112c0f14aa1ba01dfcba99",
+  "completed_at_utc": "2026-11-15T21:45:06.411769Z",
+  "files": {
+    "outputs/d04_real_damage_restoration_and_evaluation/figures/synthetic_comparisons/rd010.png": "b82649435a11a77517116f64b075fdb56a028b9e12a27a41baea4bd843ffac46",
+    "outputs/d04_real_damage_restoration_and_evaluation/work/comparison/details/rd010.png": "e42d6b7d9b0e46ac82434b3ff9115d615451d662c6d12a6d8bd1dc042fb5b624"
+  },
+  "runtime_seconds": 5.7966107000247575,
+  "status": "completed"
+}

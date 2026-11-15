@@ -1,0 +1,24 @@
+{
+  "completed_candidates": 30,
+  "completed_seed_groups": 10,
+  "execution_fingerprint": "bb7160c0715b9b450cef43e29c6a0a3ec2fad2832250f1d6757b5f313b8999a3",
+  "expected_candidates": 30,
+  "failed_candidates": 0,
+  "model_id": "stable_diffusion_inpainting",
+  "notebook_completion_gate_passed": false,
+  "planned_unique_seed_pairs": 60,
+  "recorded_at_utc": "2026-11-15T20:36:02.388736Z",
+  "recorded_case_runtime_seconds": 412.70236699987436,
+  "reused_candidates": 0,
+  "reused_primary_candidates": 10,
+  "runtime_scope": "additional_seed_case_calls_only_excludes_model_load_primary_calls_and_resume_validation",
+  "stage": "batch_7_sd_seeds",
+  "validation_summary": {
+    "blocking_failure_count": 0,
+    "check_count": 325,
+    "failed_check_ids": [],
+    "failed_count": 0,
+    "overall_passed": true,
+    "passed_count": 325
+  }
+}

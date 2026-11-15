@@ -1,0 +1,24 @@
+schema_version: real_damage_sd_config.v1
+config_version: 1.0.0
+stage: batch_6_sd
+helper_source: src/restoration_eval/real_damage_sd.py
+tests: tests/test_real_damage_sd.py
+hint_config: config/experiments/real_damage_hint.yaml
+baseline_config: config/experiments/stable_diffusion.yaml
+baseline_notebook: notebooks/11_stable_diffusion_restoration.ipynb
+expected_candidates: 10
+primary_seed: 2026
+smoke_painting_id: rd007
+smoke_seeds: [2026, 2026, 2027]
+repeat_tolerance:
+  maximum_absolute_difference: 1
+  mean_absolute_difference: 0.005
+  different_pixel_fraction: 0.01
+overwrite_unverified_outputs: false
+load_policy: verified_local_snapshot_same_pinned_weights
+outputs:
+  smoke_summary: work/sd/smoke_summary.json
+  stage_checks: work/sd/checks.csv
+  stage_summary: work/sd/batch_summary.json
+  preview_first: work/sd/restorations_01.png
+  preview_second: work/sd/restorations_02.png

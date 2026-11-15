@@ -1,0 +1,55 @@
+schema_version: real_damage_diagnostics_config.v1
+config_version: 1.0.0
+stage: batch_8_diagnostics
+helper_source: src/restoration_eval/real_damage_diagnostics.py
+tests: tests/test_real_damage_diagnostics.py
+upstream_config: config/experiments/real_damage_sd_seeds.yaml
+geometry: outputs/d03_real_damage_dataset_preparation/data/preprocessed_images.csv
+cases: outputs/d03_real_damage_dataset_preparation/data/case_registry.csv
+artworks: outputs/d03_real_damage_dataset_preparation/data/artworks.csv
+uncertainty_config: config/evaluation/diffusion_uncertainty.yaml
+spatial_config: config/evaluation/spatial_explanations.yaml
+lpips_config: config/evaluation/lpips.yaml
+shared_sources:
+  regions: src/restoration_eval/regions.py
+  uncertainty: src/restoration_eval/diffusion_uncertainty.py
+  spatial: src/restoration_eval/spatial_explanations.py
+  lpips: src/restoration_eval/metrics_lpips.py
+  schemas: src/restoration_eval/schemas.py
+regions:
+  mask_bbox_margin_pixels: 8
+  boundary_width_pixels: 3
+  pixel_regions: [content_region, masked_region, mask_bbox_crop, boundary_ring, outside_mask_content]
+  learned_regions: [content_region, mask_bbox_crop]
+evidence_policy:
+  damaged_input_is_clean_reference: false
+  edit_magnitude_is_reconstruction_error: false
+  boundary_gap_is_reference_error: false
+  seed_disagreement_is_calibrated_confidence: false
+  combined_score: false
+  feature_cosine_metrics: not_computed_in_this_bounded_reference_free_extension
+boundary_definition: absolute_Lstar_and_CIEDE2000_gap_between_inner_and_outer_three_pixel_band_means
+uncertainty_definition: unchanged_N18_N19_mean_RGB_channel_std_over_four_seeds_ddof0
+map_display: shared_p99_of_masked_values_across_all_ten_groups_raw_arrays_unclipped
+outside_float_tolerance: 0.0000001
+resume_policy: verify_completed_hashes_recompute_only_started_owned_checkpoints
+expected:
+  candidates: 70
+  primary_candidates: 40
+  sd_candidates: 40
+  groups: 10
+  unique_pairs: 60
+  technical_rows: 70
+  diagnostic_rows: 70
+  pairwise_rows: 720
+  group_summary_rows: 220
+  maps: 10
+outputs:
+  stage_checks: work/diagnostics/checks.csv
+  stage_summary: work/diagnostics/batch_summary.json
+  runtime: work/diagnostics/runtime_and_assets.json
+  region_manifest: work/diagnostics/regions.csv
+  map_manifest: work/diagnostics/maps.csv
+  preview_first: work/diagnostics/uncertainty_maps_01.png
+  preview_second: work/diagnostics/uncertainty_maps_02.png
+  boundary_figure: work/diagnostics/primary_boundary_descriptors.png

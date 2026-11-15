@@ -1,0 +1,12 @@
+painting_id,prompt_id,kind,tokens,maximum_tokens,fits,truncation_used
+rd001,d04_targeted_rd001_v1,positive,49,77,True,False
+rd002,d04_targeted_rd002_v1,positive,50,77,True,False
+rd003,d04_targeted_rd003_v1,positive,52,77,True,False
+rd004,d04_targeted_rd004_v1,positive,46,77,True,False
+rd005,d04_targeted_rd005_v1,positive,51,77,True,False
+rd006,d04_targeted_rd006_v1,positive,51,77,True,False
+rd007,d04_targeted_rd007_v1,positive,47,77,True,False
+rd008,d04_targeted_rd008_v1,positive,54,77,True,False
+rd009,d04_targeted_rd009_v1,positive,53,77,True,False
+rd010,d04_targeted_rd010_v1,positive,57,77,True,False
+all,unchanged_negative,negative,45,77,True,False

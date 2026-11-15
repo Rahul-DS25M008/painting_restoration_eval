@@ -1,0 +1,21 @@
+{
+  "completed_candidates": 10,
+  "execution_fingerprint": "90c7d5af633d6cf7da424a5fb68831fde7409289941a18d9d78d1a3cb2a55b0f",
+  "expected_candidates": 10,
+  "failed_candidates": 0,
+  "model_id": "stable_diffusion_inpainting",
+  "notebook_completion_gate_passed": false,
+  "recorded_at_utc": "2026-11-15T14:02:01.308254Z",
+  "recorded_case_runtime_seconds": 144.96482080011629,
+  "reused_candidates": 0,
+  "runtime_scope": "original_case_calls_include_baseline_retry_exclude_model_load_smoke_and_resume_validation",
+  "stage": "batch_6_sd",
+  "validation_summary": {
+    "blocking_failure_count": 0,
+    "check_count": 216,
+    "failed_check_ids": [],
+    "failed_count": 0,
+    "overall_passed": true,
+    "passed_count": 216
+  }
+}

@@ -1,0 +1,173 @@
+schema_version: real_damage_sd_prompt_catalog.v1
+catalog_version: 1.0.0
+policy_id: d04_sd15_targeted_visible_context.v1
+policy_approval: user_requested_targeted_prompts_for_each_of_ten_paintings
+record_status: prepared_before_inference
+author: assistant_visual_review_of_D03_inputs_and_mask_atlas
+source_run_id: run_d03_6a2e02fcf9a4b65a612b7cdf
+source_data_fingerprint: 6a2e02fcf9a4b65a612b7cdf5e9aa36846bc641ae8533f1f19635d5ebf00afe4
+known_clean_images_consulted: false
+restoration_outputs_consulted: false
+fixed_across_seeds: true
+negative_prompt_source: config/experiments/stable_diffusion.yaml:prompt_policy.negative_prompt
+records:
+- painting_id: rd001
+  case_id: real_damage__v2_0_0__rd001__9db153e17cc07a17
+  title: Portrait of Antonio van Diemen
+  category: portrait_figure
+  input_image_path: outputs/d03_real_damage_dataset_preparation/images/inputs/rd001.png
+  input_image_sha256: 19d0767b56687bdcf5c2a963c7e69457b22bc954bb63097114d6c0bd4666ad60
+  mask_path: outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd001.png
+  mask_sha256: 149647289de638c6c4a0d0ee0669a85737f0057a9015d9602bdb78a53bc2c8b9
+  prompt_id: d04_targeted_rd001_v1
+  prompt_variant: p05_real_damage_targeted
+  visible_damage_observation: Vertical losses interrupt the dark hat, black clothing and reddish-brown
+    background; the visible face and collar supply context.
+  prompt: An aged oil portrait, continuous black hat and dark clothing, warm reddish brown background
+    and muted green side curtain. Fill the narrow gaps by continuing nearby painted tones, fabric contours
+    and soft brushwork, preserving the existing figure and collar.
+  prompt_sha256: 41b7d05a92ab32f092ea3fc706bee6ee4ef49a7786b496e483119fde7a6fa347
+- painting_id: rd002
+  case_id: real_damage__v2_0_0__rd002__eb05992fc31081da
+  title: Antigone condemned to death by Creon — before restoration
+  category: portrait_figure
+  input_image_path: outputs/d03_real_damage_dataset_preparation/images/inputs/rd002.png
+  input_image_sha256: 8117bea7e452db0f89620f071d4ba9b7e667c9a2a438ae1d6d3eca9f1e227e12
+  mask_path: outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd002.png
+  mask_sha256: a4df1fed1e330c92dad48009adbd69d4ec54ceca2488511ed8a1c1687940f404
+  prompt_id: d04_targeted_rd002_v1
+  prompt_variant: p05_real_damage_targeted
+  visible_damage_observation: Selected flaking crosses the left cliff, pale sky, soldier and clothing;
+    intact architecture, skin and metal have mask exclusions.
+  prompt: A classical figurative oil painting, pale cloudy sky above a rocky cliff, muted stone buildings
+    and a soldier in armour beside draped figures. Continue the nearby rock contours, metal shading and
+    coloured fabric folds across the missing patches with matching brushwork.
+  prompt_sha256: 59a155ed8447b64ec96c366e6784c15a38cc2249d008ae0a9b5a27504fb3ae05
+- painting_id: rd003
+  case_id: real_damage__v2_0_0__rd003__3fdc9e508d73d6c0
+  title: Horse pasture in Algeria
+  category: landscape_natural
+  input_image_path: outputs/d03_real_damage_dataset_preparation/images/inputs/rd003.png
+  input_image_sha256: bd385492e77aa39e5c106f03ad1ae04da48b8677a2533b5e198edb4bd8f75b76
+  mask_path: outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd003.png
+  mask_sha256: cfa47490b468af1f782c89736f31176a8b3ab4426c34694e79b964a550a5fe51
+  prompt_id: d04_targeted_rd003_v1
+  prompt_variant: p05_real_damage_targeted
+  visible_damage_observation: The large right-hand tear crosses pale sky and green land; smaller left-edge
+    losses cross the same landscape. Extensive unselected abrasion remains.
+  prompt: An aged landscape painting with a pale blue grey sky, low muted hills and green pasture. Continue
+    the surrounding sky gradients, distant horizon and soft green earth tones through the missing areas,
+    matching the subdued colours and fine existing painted texture.
+  prompt_sha256: 1e59f50bde099943da8030c30c4fcc7f76af285f1fb67b4c79be0e89a2fe4433
+- painting_id: rd004
+  case_id: real_damage__v2_0_0__rd004__789bdd017cf0eda7
+  title: Garden fresco, House of the Golden Bracelet
+  category: landscape_natural
+  input_image_path: outputs/d03_real_damage_dataset_preparation/images/inputs/rd004.png
+  input_image_sha256: 3271049eca558d5b4513d4abc7c400e1c918307a31dede2af58929cf45311c63
+  mask_path: outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd004.png
+  mask_sha256: c7de1258ea0123edaa0b08e602c635e7ca7593e04518e6ebbb702c1a587356c4
+  prompt_id: d04_targeted_rd004_v1
+  prompt_variant: p05_real_damage_targeted
+  visible_damage_observation: Upper neutral-filled lacunae interrupt pale blue sky and foliage; painted
+    birds, ornamental heads and other pale details are excluded where distinguishable.
+  prompt: An ancient painted garden fresco, pale blue sky behind slender green branches and small leaves.
+    Continue nearby sky colour and interrupted foliage across the missing patches, matching the faded
+    mineral colours and fine flat painted texture of the surrounding wall.
+  prompt_sha256: c7e988d8f3ce171eb0338333fae49a534920b33b82e525445a244ee3e7db870d
+- painting_id: rd005
+  case_id: real_damage__v2_0_0__rd005__bcaaf66562156e9b
+  title: Landscape with maritime villa
+  category: architecture_structured
+  input_image_path: outputs/d03_real_damage_dataset_preparation/images/inputs/rd005.png
+  input_image_sha256: 91d21beca9a7388471f0eeafd4d65968912566550568031afee15c3a2171a9e8
+  mask_path: outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd005.png
+  mask_sha256: edeeb8061297298423cdf5e514301bf6f8a2ea36edf0ce17d80f0984b7b1b1f8
+  prompt_id: d04_targeted_rd005_v1
+  prompt_variant: p05_real_damage_targeted
+  visible_damage_observation: Selected fracture lines and one exposed junction cross the maritime architecture;
+    pale painted buildings remain outside the target where intact.
+  prompt: An ancient maritime villa fresco, pale stone buildings, red roof edges, long colonnades, blue
+    green water and muted sky. Join the interrupted architectural edges and nearby colour fields across
+    the narrow gaps, matching the soft faded fresco texture and perspective.
+  prompt_sha256: 6110d1e482a0fa0ee9e058bea05fc4f55a35b0da202b49edf62601eeeb4952f1
+- painting_id: rd006
+  case_id: real_damage__v2_0_0__rd006__44ba08c6388341c1
+  title: Cubiculum wall, Villa of P. Fannius Synistor
+  category: architecture_structured
+  input_image_path: outputs/d03_real_damage_dataset_preparation/images/inputs/rd006.png
+  input_image_sha256: 39ea34daf2dcd662fb4d32139356cea41916fa13f97bfdcccb4665fce336b581
+  mask_path: outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd006.png
+  mask_sha256: 96d97369765f5ea9f6fc92414841183e587062b053ad576a0e470f040957fc93
+  prompt_id: d04_targeted_rd006_v1
+  prompt_variant: p05_real_damage_targeted
+  visible_damage_observation: The lower central neutral infill is the selected target; adjacent framed
+    red and green dado panels provide visible context, not a known original design.
+  prompt: An ancient architectural wall fresco with a lower band of muted red and green framed panels
+    and ochre horizontal borders. Continue adjacent lower wall colours, straight panel edges and subdued
+    fresco texture across the central missing area, retaining the visible architectural alignment.
+  prompt_sha256: c5435ea9c4ef15358c26713affdb31dcf636fdc50a1b5fa9e9d393a5efccfe57
+- painting_id: rd007
+  case_id: real_damage__v2_0_0__rd007__c1834a5ce9bf80cc
+  title: Black Square
+  category: abstraction_surrealism
+  input_image_path: outputs/d03_real_damage_dataset_preparation/images/inputs/rd007.png
+  input_image_sha256: 6b5c659665e8a05f7c8a9a8856674682dbce82e78e6bb3eb1fff25ea9fe2f843
+  mask_path: outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd007.png
+  mask_sha256: e0e59a312fa07c99353dbdca57ae0205d1208b183ba7d6e5683c3a79fccae012
+  prompt_id: d04_targeted_rd007_v1
+  prompt_variant: p05_real_damage_targeted
+  visible_damage_observation: The reviewed fine crack network lies inside the near-black square; the surrounding
+    light ground and square outline are not reconstruction targets.
+  prompt: A dark near black painted square with subtle blue brown tonal variation and fine matte paint
+    texture. Fill the thin light gaps inside the dark field by continuing the nearby dark pigment, retaining
+    the existing quiet surface and the square outline.
+  prompt_sha256: 432242e78873a4b51cae7121d41f54378caf059ae5e3ff356d46ee7f3711fecc
+- painting_id: rd008
+  case_id: real_damage__v2_0_0__rd008__2e548e0d03f7ef4a
+  title: Watermelon Regatta — damaged state
+  category: abstraction_surrealism
+  input_image_path: outputs/d03_real_damage_dataset_preparation/images/inputs/rd008.png
+  input_image_sha256: 1efdaac92e4f34232c735d47363ad72bcabbee4e26e071995249c968372371ae
+  mask_path: outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd008.png
+  mask_sha256: 07a73f8d0c2316b4cdb1433a65ea3f698f25a55e430aa2f29a04b2b116482581
+  prompt_id: d04_targeted_rd008_v1
+  prompt_variant: p05_real_damage_targeted
+  visible_damage_observation: Selected upper-edge losses and a worn vertical strip interrupt sky and distant
+    scene details in this fantastical crowded waterscape.
+  prompt: An aged fantastical waterscape painting with muted grey brown sky, distant buildings and dense
+    small painted figures and boats. Continue neighbouring sky tones and interrupted silhouettes through
+    the selected gaps, keeping the existing small scale, subdued palette and fine brushwork.
+  prompt_sha256: f73e3cf406c93507943712ff1ea1437047686dddd3e3bc992a5072bbe70abef2
+- painting_id: rd009
+  case_id: real_damage__v2_0_0__rd009__b9f8474628df3d3e
+  title: Tarquinius and Lucretia — damaged state
+  category: high_texture_brushwork
+  input_image_path: outputs/d03_real_damage_dataset_preparation/images/inputs/rd009.png
+  input_image_sha256: 9119132e86a79b5f22e375bcb72703dbd54485d6b545cead45197a589128f689
+  mask_path: outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd009.png
+  mask_sha256: ee04b9b974add1dcf2cc389c7903216ed87d9eca24b3086d0fafc0aea98d637c
+  prompt_id: d04_targeted_rd009_v1
+  prompt_variant: p05_real_damage_targeted
+  visible_damage_observation: Selected tear lines and scattered flakes cross dark background, drapery
+    and figures; painted highlights are excluded where distinguishable.
+  prompt: A dramatic figurative oil painting with warm skin tones, deep brown shadows and richly folded
+    red and cream fabrics. Continue nearby skin shading, drapery contours and dark background through
+    the thin missing patches, matching the soft luminous paint and existing figure shapes.
+  prompt_sha256: b6ebff2cb1737a5892c474ca09aa8401f451c0e868b445b166b48539c1f1a95f
+- painting_id: rd010
+  case_id: real_damage__v2_0_0__rd010__ad05ad33fc86f023
+  title: Nude — before restoration
+  category: high_texture_brushwork
+  input_image_path: outputs/d03_real_damage_dataset_preparation/images/inputs/rd010.png
+  input_image_sha256: 583a9aebe120181b51f804e45669a5b779dfa2cc9ac769400a6a795692619791
+  mask_path: outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd010.png
+  mask_sha256: 933929185f9d7477b89a62a878de2fb565d5f124f8d61a6cec6e10aec25292be
+  prompt_id: d04_targeted_rd010_v1
+  prompt_variant: p05_real_damage_targeted
+  visible_damage_observation: Selected light flakes lie on the figure and dark surrounding field; global
+    deterioration and photographic grain are not treated as missing painted content.
+  prompt: A subdued painted figure study, warm ochre skin against a dark green brown background, soft
+    shadows and loose brushwork. Fill the scattered small gaps with nearby skin or background tones, continuing
+    the existing contours and gentle tonal modelling at the same level of detail.
+  prompt_sha256: 49f3e87b0c61ca3b75534c15e3db98591a04547b84ec590097a4efd1b0782e03

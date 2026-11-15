@@ -1,0 +1,21 @@
+{
+  "completed_at_utc": "2026-11-15T22:39:36.084467Z",
+  "completion_gate_passed": true,
+  "embedded_images": 46,
+  "embedded_tiles": 481,
+  "execution_fingerprint": "a6698ff0479f5dc389c91b9a4696798ab736c5c8641a60cb72ebe73f3af9b4ad",
+  "new_inference": false,
+  "new_scientific_metrics": false,
+  "notebook_status": "completed",
+  "numerical_claims": 161,
+  "report_path": "outputs/d04_real_damage_restoration_and_evaluation/reports/real_damage_evaluation.html",
+  "stage": "batch_10_reporting_and_completion",
+  "validation_summary": {
+    "blocking_failure_count": 0,
+    "check_count": 404,
+    "failed_check_ids": [],
+    "failed_count": 0,
+    "overall_passed": true,
+    "passed_count": 404
+  }
+}
