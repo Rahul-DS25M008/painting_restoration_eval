@@ -1,0 +1,103 @@
+{
+  "batchcomplete": "",
+  "query": {
+    "pages": {
+      "156824013": {
+        "pageid": 156824013,
+        "ns": 6,
+        "title": "File:Giuseppe Diotti - Antigone condannata a morte da Creonte (prima del restauro).jpg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "timestamp": "2024-12-17T23:06:40Z",
+            "size": 806409,
+            "width": 2850,
+            "height": 2000,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Giuseppe_Diotti_-_Antigone_condannata_a_morte_da_Creonte_%28prima_del_restauro%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Giuseppe_Diotti_-_Antigone_condannata_a_morte_da_Creonte_(prima_del_restauro).jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=156824013",
+            "sha1": "883bfd9a7b79349d19be64c979bf260db977249a",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2024-12-17 23:06:40",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "<div class=\"fn\">\n<div style=\"font-weight:bold;display:inline-block;\">Antigone condannata a morte da Creonte</div></div>",
+                "source": "commons-desc-page"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "Antigone|PD-old-100-expired|PD-Art (PD-old-auto-expired)|Artworks with known accession number|CC-PD-Mark|Damaged paintings|Paintings without Wikidata item|Neoclassical paintings in Bergamo|Works by Giuseppe Diotti|1845 paintings in Bergamo|Paintings in the Galleria dell’Accademia Carrara (Bergamo)",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Artist": {
+                "value": "<bdi><a href=\"https://en.wikipedia.org/wiki/en:Giuseppe_Diotti\" class=\"extiw\" title=\"w:en:Giuseppe Diotti\"><span title=\"Neoclassic Painter (1779-1846)\">Giuseppe Diotti</span></a></bdi>",
+                "source": "commons-desc-page"
+              },
+              "ImageDescription": {
+                "value": "\"Esposto inizialmente nel salone al secondo piano dove si tenevano le cerimonie ufficiali dell’istituzione, ben presto il dipinto fu percepito come il relitto ingombrante di un’epoca passata: dopo aver subito diversi spostamenti, la tela venne rimossa dal percorso espositivo durante il secondo conflitto mondiale. Ritrovata nel 1976 nei depositi del museo, avvolta su di un rullo dal diametro minimo e con il colore rivolto verso l’interno, l’Antigone fu oggetto di un lungo e complesso lavoro di recupero condotto da Bruno Sesti e Delfina Fagnani.\" (vedi riferimenti, 2021)",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "1845<div style=\"display: none;\">date QS:P571,+1845-00-00T00:00:00Z/9</div>",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<a rel=\"nofollow\" class=\"external free\" href=\"https://www.lacarrara.it/catalogo-online/58AC00885/\">https://www.lacarrara.it/catalogo-online/58AC00885/</a>",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "Public domain",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Public domain",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "false",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Copyrighted": {
+                "value": "False",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "pd",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ],
+        "revisions": [
+          {
+            "revid": 1184110606,
+            "parentid": 1184029337,
+            "timestamp": "2026-03-20T18:13:13Z"
+          }
+        ]
+      }
+    }
+  }
+}

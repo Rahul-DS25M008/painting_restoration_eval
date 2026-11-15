@@ -120,3 +120,15 @@ docs/supervisor/*.pdf -filter -diff -merge -text
 # Reporting errata are small ordinary-Git tables. Preserve checksum bytes on all OSes.
 docs/errata/2026-10-03/*.csv -filter diff -merge -text
 docs/errata/2026-10-03/*.json -filter diff -merge -text
+
+# D03 is a bounded ten-source supplement. Preserve all recorded bytes in
+# ordinary Git, including review history, without invoking legacy LFS filters.
+data/raw/real_damage/** -filter -diff -merge -text
+data/raw/real_damage/**/*.json diff
+config/datasets/real_damage_* -filter diff -merge -text
+src/restoration_eval/real_damage_*.py -filter diff -merge -text
+notebooks/d03_real_damage_dataset_preparation.ipynb -filter diff -merge -text
+outputs/d03_real_damage_dataset_preparation/** -filter -diff -merge -text
+outputs/d03_real_damage_dataset_preparation/**/*.csv diff
+outputs/d03_real_damage_dataset_preparation/**/*.json diff
+outputs/d03_real_damage_dataset_preparation/**/*.html diff

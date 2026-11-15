@@ -10,6 +10,14 @@ remain the frozen E-drive baseline; run `run_605de239145a46e9a202fd63bbbb4e9c`
 has replaced them as current evidence with the Controlled-300 outputs described
 here.
 
+**Supplemental D03 handoff (2026-11-15):** ten physically damaged inputs and
+reviewed masks are eligible for the same Telea, LaMa, HINT and Stable Diffusion
+configurations (40 pairs; 379 preparation checks passed). D03 verifies input
+compatibility and preserves the existing configuration hashes; it does not
+load weights or run models. D04 must check runtime availability before inference.
+There are no new model-quality results or clean-reference targets for this
+supplement. [D03 closeout](evidence_dependency_audit.md#d03-real-damage-preparation-closeout--2026-11-15).
+
 - Literature justification belongs in [the literature log](literature_reference_log.md).
 - General methodology belongs in [the methodology guide](methodology_notes.md).
 - Executed counts and artifacts belong in notebook-owned manifests and canonical tables.

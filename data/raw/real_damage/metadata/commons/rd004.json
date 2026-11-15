@@ -1,0 +1,120 @@
+{
+  "batchcomplete": "",
+  "query": {
+    "pages": {
+      "133810160": {
+        "pageid": 133810160,
+        "ns": 6,
+        "title": "File:Fresco from a garden room (panel 1 of 3) (51357507238).jpg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "timestamp": "2023-07-01T06:03:07Z",
+            "size": 2234073,
+            "width": 3861,
+            "height": 2247,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Fresco_from_a_garden_room_%28panel_1_of_3%29_%2851357507238%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Fresco_from_a_garden_room_(panel_1_of_3)_(51357507238).jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=133810160",
+            "sha1": "07190f7f4cf4aa680940b92067872ecc97bc8117",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2023-07-01 06:03:07",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "Fresco from a garden room (panel 1 of 3) (51357507238)",
+                "source": "mediawiki-metadata"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "Files with coordinates missing SDC location of creation|House of the Golden Bracelet (Pompeii) - Garden room|Flickr images reviewed by FlickreviewR 2",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "GPSLatitude": {
+                "value": "37.777063",
+                "source": "commons-desc-page"
+              },
+              "GPSLongitude": {
+                "value": "-122.494550",
+                "source": "commons-desc-page"
+              },
+              "GPSMapDatum": {
+                "value": "WGS-84",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "ImageDescription": {
+                "value": "<p>Frescoes from a garden room\n</p><p>Roman, Pompeii, House of the Golden Bracelet, salone 32, second quarter of 1st century AD\n</p><p>Fresco\n</p><p>Parco Archeologico di Pompei SAP 40690, 40691, 40692\n</p><p>102\n</p><p>The House of the Golden Bracelet was a palatial residence on the western edge of Pompeii, laid out over three floors to accommodate the sloping land scape and the city walls. On the lowest level were the garden and two lavishly painted rooms: a summer triclinium (dining room) and a small reception hall. Both open on one side to a lush garden with a fountain and pools, while beyond the terrace stretches a panoramic sea view.\n</p><p>The north and south walls of the small room (on view here, left and right) are painted with a similar scheme of garden statuary set in a verdant landscape filled\n</p>\nwith birds and flora. A scalloped marble fountain is flanked by two marble herms, each holding a decorative panel (pinax) with a relief of a reclining female. The female herm on the left holds a picture of Ariadne, the lover of the god Bacchus. The male herm, with a satyr's wild face, holds a panel showing a maenad, one of the followers of Bacchus. A pair of theatrical masks hangs from the top. The garden scenery fresco in the middle (to the left) is decorated with a pair of marble circular reliefs (oscilla). Evidence that this room contained a small couch (kline) suggests that it, like the adjacent triclinium, might also have been used for dining.",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "2021-07-29 15:20",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/photos/tylerbell/51357507238/\">Fresco from a garden room (panel 1 of 3)</a>",
+                "source": "commons-desc-page"
+              },
+              "Artist": {
+                "value": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/12680458@N08\">Tyler Bell</a>",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "CC BY 2.0",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Creative Commons Attribution 2.0",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "true",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "LicenseUrl": {
+                "value": "https://creativecommons.org/licenses/by/2.0",
+                "source": "commons-desc-page"
+              },
+              "Copyrighted": {
+                "value": "True",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "cc-by-2.0",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ],
+        "revisions": [
+          {
+            "revid": 1261454477,
+            "parentid": 922244750,
+            "timestamp": "2026-08-15T04:37:02Z"
+          }
+        ]
+      }
+    }
+  }
+}

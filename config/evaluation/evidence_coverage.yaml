@@ -1,5 +1,5 @@
 config_schema_version: "evidence_coverage.v1"
-config_version: "1.1.25"
+config_version: "1.1.26"
 
 evidence_coverage:
   authority:
@@ -8,6 +8,57 @@ evidence_coverage:
     notebook_roadmap: "docs/final_notebook_roadmap.md"
     inventory_path: "outputs/inventory/project_file_inventory.csv"
     project_paths_path: "outputs/inventory/project_paths.json"
+
+  # Separate supplemental preparation; never pooled into Controlled-300 results.
+  real_damage_supplement:
+    recorded_on: "2026-11-15"
+    completed_through_notebook_id: "D03"
+    next_eligible_notebook_id: "D04"
+    next_stage_status: "contract_planning_required_before_inference"
+    dataset_scope: "real_damage_10"
+    dataset_version: "2.0.0"
+    notebook_id: "D03"
+    stem: "d03_real_damage_dataset_preparation"
+    output_root: "outputs/d03_real_damage_dataset_preparation"
+    manifest_path: "outputs/d03_real_damage_dataset_preparation/manifests/run_manifest.json"
+    artifact_manifest_path: "outputs/d03_real_damage_dataset_preparation/manifests/artifacts.csv"
+    validation_path: "outputs/d03_real_damage_dataset_preparation/validation/checks.csv"
+    run_id: "run_d03_6a2e02fcf9a4b65a612b7cdf"
+    run_status: "completed"
+    completed_at_utc: "2026-11-15T01:07:42.388740Z"
+    completion_gate_passed: true
+    downstream_ready: true
+    readiness_scope: "dataset_inputs_and_reviewed_masks"
+    validation: {checks: 379, passed: 379, failed: 0, blocking_failures: 0}
+    completion_checks: 45
+    paintings: 10
+    operational_categories: 5
+    paintings_per_category: 2
+    reviewed_masks: 10
+    case_rows: 10
+    model_eligibility_rows: 40
+    eligible_pairs: 40
+    primary_models: ["opencv_telea", "lama", "hint_places2", "stable_diffusion_inpainting"]
+    canonical_files: 34
+    retained_work_files: 77
+    output_files: 111
+    artifact_records: 14
+    data_fingerprint: "6a2e02fcf9a4b65a612b7cdf5e9aa36846bc641ae8533f1f19635d5ebf00afe4"
+    preprocessing_canvas: [768, 768]
+    sd_mask_audit_canvas: [512, 512]
+    shared_preprocessing_and_model_configs_unchanged: true
+    mask_scope: "researcher_approved_selected_repair_targets_not_exhaustive_condition_maps"
+    scale_review_status: "accepted_by_researcher"
+    selected_content_fraction_range: [0.020247864208633, 0.07827419704861111]
+    has_clean_reference: false
+    reference_fidelity_metrics_applicable: false
+    controlled_300_results_changed: false
+    restoration_inference_executed: false
+    model_runtime_and_weights_verified: false
+    d04_contract_approval_required: true
+    d05_expert_study_status: "optional_not_started"
+    storage: "ordinary_git_exact_bytes_no_lfs_no_duplicate_hf_release"
+    zenodo_v1_0_0_includes_this_supplement: false
 
   # Administrative delivery metadata, not a replacement for producer run facts.
   post_completion_maintenance:

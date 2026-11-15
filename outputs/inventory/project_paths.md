@@ -1,8 +1,8 @@
 # Project Artifact Paths
 
 - Schema: `project_paths.v1`
-- Updated: `2026-10-01T21:39:40.409546Z`
-- Registered artifacts: 245
+- Updated: `2026-11-15T01:13:17.263155Z`
+- Registered artifacts: 259
 
 | Artifact key | Producer | Relative path | Role | Validation |
 |---|---|---|---|---|
@@ -31,6 +31,20 @@
 | d02_skin_tone_audit | d02_portrait_skin_tone_and_hand_restoration_audit | `outputs/d02_portrait_skin_tone_and_hand_restoration_audit/metrics/skin_tone_audit.csv` | canonical_metric_evidence | passed |
 | d02_skin_tone_figure | d02_portrait_skin_tone_and_hand_restoration_audit | `outputs/d02_portrait_skin_tone_and_hand_restoration_audit/figures/skin_tone_audit.png` | canonical_visual_evidence | passed |
 | d02_validation_checks | d02_portrait_skin_tone_and_hand_restoration_audit | `outputs/d02_portrait_skin_tone_and_hand_restoration_audit/validation/checks.csv` | canonical_validation_evidence | passed |
+| d03_artworks | d03_real_damage_dataset_preparation | `outputs/d03_real_damage_dataset_preparation/data/artworks.csv` | primary_downstream | passed |
+| d03_case_registry | d03_real_damage_dataset_preparation | `outputs/d03_real_damage_dataset_preparation/data/case_registry.csv` | primary_downstream | passed |
+| d03_inference_mask_audit | d03_real_damage_dataset_preparation | `outputs/d03_real_damage_dataset_preparation/metrics/inference_mask_audit.csv` | primary_downstream | passed |
+| d03_mask_geometry | d03_real_damage_dataset_preparation | `outputs/d03_real_damage_dataset_preparation/metrics/mask_geometry.csv` | primary_downstream | passed |
+| d03_mask_review | d03_real_damage_dataset_preparation | `outputs/d03_real_damage_dataset_preparation/data/mask_review.csv` | primary_downstream | passed |
+| d03_mask_review_atlas | d03_real_damage_dataset_preparation | `outputs/d03_real_damage_dataset_preparation/figures/mask_review_atlas.png` | audit_reporting | passed |
+| d03_masks | d03_real_damage_dataset_preparation | `outputs/d03_real_damage_dataset_preparation/data/masks.csv` | primary_downstream | passed |
+| d03_model_eligibility | d03_real_damage_dataset_preparation | `outputs/d03_real_damage_dataset_preparation/data/model_eligibility.csv` | primary_downstream | passed |
+| d03_preprocessed_images | d03_real_damage_dataset_preparation | `outputs/d03_real_damage_dataset_preparation/data/preprocessed_images.csv` | primary_downstream | passed |
+| d03_processed_inputs | d03_real_damage_dataset_preparation | `outputs/d03_real_damage_dataset_preparation/images/inputs` | primary_downstream | passed |
+| d03_report | d03_real_damage_dataset_preparation | `outputs/d03_real_damage_dataset_preparation/reports/real_damage_dataset.html` | audit_reporting | passed |
+| d03_reviewed_masks | d03_real_damage_dataset_preparation | `outputs/d03_real_damage_dataset_preparation/images/masks` | primary_downstream | passed |
+| d03_source_overview | d03_real_damage_dataset_preparation | `outputs/d03_real_damage_dataset_preparation/figures/source_overview.png` | audit_reporting | passed |
+| d03_validation | d03_real_damage_dataset_preparation | `outputs/d03_real_damage_dataset_preparation/validation/checks.csv` | audit_reporting | passed |
 | damage.audit | 04_canonical_damaged_image_generation | `outputs/04_canonical_damaged_image_generation/metrics/damage_audit.csv` | audit_reporting | passed |
 | damage.canonical_cases | 04_canonical_damaged_image_generation | `outputs/04_canonical_damaged_image_generation/data/cases.csv` | primary_downstream | passed |
 | damage.canonical_images | 04_canonical_damaged_image_generation | `outputs/04_canonical_damaged_image_generation/images/damaged` | primary_downstream | passed |

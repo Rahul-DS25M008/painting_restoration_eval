@@ -1,0 +1,878 @@
+{
+  "manifest_schema_version": "run_manifest.v1",
+  "run_id": "run_d03_6a2e02fcf9a4b65a612b7cdf",
+  "notebook_id": "D03",
+  "notebook_name": "Real-Damage Dataset Preparation",
+  "origin": "New approved supplemental real-damage study",
+  "run_status": "partial",
+  "started_at_utc": "2026-11-14T23:46:33.087501Z",
+  "completed_at_utc": "",
+  "git_commit": "45af6d027e46562a5d3adfa06faa2b89eb75bd4f",
+  "git_dirty": true,
+  "git_branch": "main",
+  "git_error": "",
+  "inventory_run_id": "inventory_20261115T004341Z_62a5241f",
+  "dataset_versions": {
+    "dataset_id": "painting_restoration_real_damage",
+    "dataset_version": "2.0.0",
+    "dataset_scope": "real_damage_10",
+    "experiment_id": "real_damage_reviewed_mask",
+    "source_selection_status": "approved_by_user",
+    "source_selection_date": "2026-11-15",
+    "expected_paintings": 10,
+    "expected_per_category": 2,
+    "painting_ids": [
+      "rd001",
+      "rd002",
+      "rd003",
+      "rd004",
+      "rd005",
+      "rd006",
+      "rd007",
+      "rd008",
+      "rd009",
+      "rd010"
+    ],
+    "categories": [
+      "portrait_figure",
+      "landscape_natural",
+      "architecture_structured",
+      "abstraction_surrealism",
+      "high_texture_brushwork"
+    ],
+    "has_clean_reference": false
+  },
+  "configuration_paths": [
+    "config/datasets/controlled_300.yaml",
+    "config/datasets/real_damage_10.yaml",
+    "config/datasets/real_damage_annotation_candidates.json",
+    "config/datasets/real_damage_eligibility.yaml",
+    "config/datasets/real_damage_mask_review_decisions.json",
+    "config/datasets/real_damage_publication.yaml",
+    "config/datasets/real_damage_scale_review_decisions.json",
+    "config/evaluation/evidence_coverage.yaml",
+    "config/experiments/evaluation_contract.yaml",
+    "config/experiments/hint.yaml",
+    "config/experiments/lama.yaml",
+    "config/experiments/opencv_telea.yaml",
+    "config/experiments/stable_diffusion.yaml",
+    "config/preprocessing/canonical_768.yaml"
+  ],
+  "configuration_checksums": {
+    "config/datasets/controlled_300.yaml": "1bf29bacd04b367f92f20ee3a8e8c421fa4d53cd3c7cd629942abb0455ba53c9",
+    "config/datasets/real_damage_10.yaml": "24e4daf6dd41d7b7f85024a81a63421d99bc5017d14c85886c92e5d28cf6e91e",
+    "config/datasets/real_damage_annotation_candidates.json": "11f0ecc1cad6489fd8dc4907c89e81ae49f6f0efd3f0bdbcf070254e9aac9f6d",
+    "config/datasets/real_damage_eligibility.yaml": "e2d0d86a31167bf677d5bfb22d85e0f83565eaf9237bbf77e2277911df68f7ce",
+    "config/datasets/real_damage_mask_review_decisions.json": "da788f116a720a7bb336befbfb0db2742daa2d6ae8aa327fe99e98e5fdace226",
+    "config/datasets/real_damage_publication.yaml": "fd57f1332b85214c65a3ed7d01e6a70273404a5ba327f5d82c97da5d6261d214",
+    "config/datasets/real_damage_scale_review_decisions.json": "e206e95c9a66072c0b9bf694cab234641c5ac9bdc6b66433ffcc15594c870b8c",
+    "config/evaluation/evidence_coverage.yaml": "f43a3dfd8c42d9e864530b75aec69604897300ab7112eb35da5bbb815c01266f",
+    "config/experiments/evaluation_contract.yaml": "4db2fc27ba02559799b39ecdce73b1e828b812cb3972eaec970f53f34a385761",
+    "config/experiments/hint.yaml": "3a4ac3844491ffce7ad784e6ad454ecac5fa6dbf5089b5bc8e91fb329bcf7aed",
+    "config/experiments/lama.yaml": "b95d6d7f6ea69d435f8a44995043aac8d0c47e0f44f515d77664c362f2c56887",
+    "config/experiments/opencv_telea.yaml": "83b8e8af77238dc3b69047fe87aeffd226214f93ca502fe2c753b8a1924c4252",
+    "config/experiments/stable_diffusion.yaml": "e04296fb5c9af1349f64b5adb38a78004e477bab80e412c88e4564a07581bfdb",
+    "config/preprocessing/canonical_768.yaml": "df6f1fa528e87fd5da2762baeea848520812d8c72664532783e74647d1f6af62"
+  },
+  "helper_versions": {
+    "real_damage_dataset": "1.3.0",
+    "real_damage_preparation": "1.1.1",
+    "paths": "1.1.1",
+    "schemas": "1.19.0",
+    "manifests": "1.0.0",
+    "validation": "1.0.0",
+    "preprocessing": "2.1.0",
+    "masks": "3.1.0",
+    "regions": "1.1.0",
+    "real_damage_review": "1.0.0",
+    "real_damage_eligibility": "1.0.0",
+    "real_damage_publication": "1.0.0"
+  },
+  "python_version": "3.12.6",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "Pillow": "9.5.0",
+    "PyYAML": "6.0.3",
+    "matplotlib": "3.11.0",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3",
+    "scipy": "1.17.1"
+  },
+  "hardware": {
+    "execution_device": "CPU",
+    "gpu_required": false
+  },
+  "inputs": [
+    {
+      "input_key": "d03_config",
+      "relative_path": "config/datasets/real_damage_10.yaml",
+      "checksum": "24e4daf6dd41d7b7f85024a81a63421d99bc5017d14c85886c92e5d28cf6e91e",
+      "required": true
+    },
+    {
+      "input_key": "approved_sources",
+      "relative_path": "data/raw/real_damage/metadata/approved_sources.json",
+      "checksum": "4f6d92fcc601ba4d53ae9445a7cad5c2d310a0c7b55683b66e56c58fe76624a2",
+      "required": true
+    },
+    {
+      "input_key": "annotation_recipe",
+      "relative_path": "config/datasets/real_damage_annotation_candidates.json",
+      "checksum": "11f0ecc1cad6489fd8dc4907c89e81ae49f6f0efd3f0bdbcf070254e9aac9f6d",
+      "required": true
+    },
+    {
+      "input_key": "mask_review_decisions",
+      "relative_path": "config/datasets/real_damage_mask_review_decisions.json",
+      "checksum": "da788f116a720a7bb336befbfb0db2742daa2d6ae8aa327fe99e98e5fdace226",
+      "required": true
+    },
+    {
+      "input_key": "inventory",
+      "relative_path": "outputs/inventory/project_file_inventory.csv",
+      "checksum": "c059b29e14d12734da597ea69d8434a7eb01ef325cb58ac4ff03c6710fc90b2c",
+      "required": true
+    },
+    {
+      "input_key": "inventory_run",
+      "relative_path": "outputs/inventory/inventory_run.json",
+      "checksum": "5afcedd729fc777b0d18054d34f4b090f62ae89cbc257f20f664a1b64f33e46d",
+      "required": true
+    },
+    {
+      "input_key": "project_paths",
+      "relative_path": "outputs/inventory/project_paths.json",
+      "checksum": "41c122b09cb1a23d7cbd75bde74975c1d110be4881b8a23dbea6a2be32c05f25",
+      "required": true
+    },
+    {
+      "input_key": "evidence_audit",
+      "relative_path": "docs/evidence_dependency_audit.md",
+      "checksum": "7a6377591425545371972915b74c5165f90b7748adbda10afac670bcff90f88c",
+      "required": true
+    },
+    {
+      "input_key": "evidence_coverage",
+      "relative_path": "config/evaluation/evidence_coverage.yaml",
+      "checksum": "f43a3dfd8c42d9e864530b75aec69604897300ab7112eb35da5bbb815c01266f",
+      "required": true
+    },
+    {
+      "input_key": "implementation_guidelines",
+      "relative_path": "docs/refactoring_implementation_guidelines.md",
+      "checksum": "112c94ce90599e119a812af491216f3b2ae6df4f56d81e0a22241472d4601e22",
+      "required": true
+    },
+    {
+      "input_key": "notebook_roadmap",
+      "relative_path": "docs/final_notebook_roadmap.md",
+      "checksum": "e777beb1e7f58f37fc7c17120233617ccca0e2f4c9dfa459397c33c494c60e10",
+      "required": true
+    },
+    {
+      "input_key": "controlled_artworks",
+      "relative_path": "outputs/01_dataset_verification/data/artworks.csv",
+      "checksum": "be5c78657a7b6cdefb432024131b61586c275edf139ce963bc2169a518ca4469",
+      "required": true
+    },
+    {
+      "input_key": "controlled_dataset_manifest",
+      "relative_path": "outputs/01_dataset_verification/manifests/run_manifest.json",
+      "checksum": "3b52be254867caf056deb794c0eb5f779a98f25f51df8ce450b32a75c3599bb3",
+      "required": true
+    },
+    {
+      "input_key": "controlled_dataset_config",
+      "relative_path": "config/datasets/controlled_300.yaml",
+      "checksum": "1bf29bacd04b367f92f20ee3a8e8c421fa4d53cd3c7cd629942abb0455ba53c9",
+      "required": true
+    },
+    {
+      "input_key": "preprocessing_config",
+      "relative_path": "config/preprocessing/canonical_768.yaml",
+      "checksum": "df6f1fa528e87fd5da2762baeea848520812d8c72664532783e74647d1f6af62",
+      "required": true
+    },
+    {
+      "input_key": "region_config",
+      "relative_path": "config/experiments/evaluation_contract.yaml",
+      "checksum": "4db2fc27ba02559799b39ecdce73b1e828b812cb3972eaec970f53f34a385761",
+      "required": true
+    },
+    {
+      "input_key": "model_configs.opencv_telea",
+      "relative_path": "config/experiments/opencv_telea.yaml",
+      "checksum": "83b8e8af77238dc3b69047fe87aeffd226214f93ca502fe2c753b8a1924c4252",
+      "required": true
+    },
+    {
+      "input_key": "model_configs.lama",
+      "relative_path": "config/experiments/lama.yaml",
+      "checksum": "b95d6d7f6ea69d435f8a44995043aac8d0c47e0f44f515d77664c362f2c56887",
+      "required": true
+    },
+    {
+      "input_key": "model_configs.hint_places2",
+      "relative_path": "config/experiments/hint.yaml",
+      "checksum": "3a4ac3844491ffce7ad784e6ad454ecac5fa6dbf5089b5bc8e91fb329bcf7aed",
+      "required": true
+    },
+    {
+      "input_key": "model_configs.stable_diffusion_inpainting",
+      "relative_path": "config/experiments/stable_diffusion.yaml",
+      "checksum": "e04296fb5c9af1349f64b5adb38a78004e477bab80e412c88e4564a07581bfdb",
+      "required": true
+    },
+    {
+      "input_key": "helper_sources.real_damage_dataset",
+      "relative_path": "src/restoration_eval/real_damage_dataset.py",
+      "checksum": "8cc0c500eaafe4f4c2a72fdba98b8c9f307f4ab23a2a28716d9d6af852fd05f6",
+      "required": true
+    },
+    {
+      "input_key": "helper_sources.real_damage_preparation",
+      "relative_path": "src/restoration_eval/real_damage_preparation.py",
+      "checksum": "d3fd0863460533a55b25a08b4275f95de6b995397df660d38df92da7c7546ef0",
+      "required": true
+    },
+    {
+      "input_key": "helper_sources.real_damage_review",
+      "relative_path": "src/restoration_eval/real_damage_review.py",
+      "checksum": "39af41704ea36bf76516079c1bb2d893832f41cee025332360e1520af750fcaf",
+      "required": true
+    },
+    {
+      "input_key": "helper_sources.dataset_verification",
+      "relative_path": "src/restoration_eval/dataset_verification.py",
+      "checksum": "4536eff1568fbb38f488e58364e9e6ff8a729a31430a94d78117c84f20a9e268",
+      "required": true
+    },
+    {
+      "input_key": "helper_sources.paths",
+      "relative_path": "src/restoration_eval/paths.py",
+      "checksum": "d84d77df3fa24870289700c0bd06c00dda425a43fdd960b175b897ec1e9adf0a",
+      "required": true
+    },
+    {
+      "input_key": "helper_sources.schemas",
+      "relative_path": "src/restoration_eval/schemas.py",
+      "checksum": "ae2f7a847a9227a25c7baaf6c52873b8f314126f4e4f9732dd1caf05e5036a35",
+      "required": true
+    },
+    {
+      "input_key": "helper_sources.manifests",
+      "relative_path": "src/restoration_eval/manifests.py",
+      "checksum": "8ba9846539a63ca14becdf5bb5488204917476169e847233489f0012d5703217",
+      "required": true
+    },
+    {
+      "input_key": "helper_sources.validation",
+      "relative_path": "src/restoration_eval/validation.py",
+      "checksum": "1311f816879b60e8314364686e2136eb906ff3718ccf7b6106a3e73f04e09a10",
+      "required": true
+    },
+    {
+      "input_key": "helper_sources.preprocessing",
+      "relative_path": "src/restoration_eval/preprocessing.py",
+      "checksum": "74a8f2ed7d3ce178075b8c6ba13804baa6be9b558a95eb76b17e1d06b1f3d4cd",
+      "required": true
+    },
+    {
+      "input_key": "helper_sources.masks",
+      "relative_path": "src/restoration_eval/masks.py",
+      "checksum": "8d6b99b42a878d516c353723b2ba8a34b6067299e9c42924d3f448cc2f653a7d",
+      "required": true
+    },
+    {
+      "input_key": "helper_sources.regions",
+      "relative_path": "src/restoration_eval/regions.py",
+      "checksum": "8b0c9d413ecba9e5056b3b8f6cd89147d4cfd044291290e31ebc78b882a16e9d",
+      "required": true
+    },
+    {
+      "input_key": "source_selection_review",
+      "relative_path": "data/raw/real_damage/metadata/source_selection_review.json",
+      "checksum": "8404f8562a95f104ea8673bf31628bc6fec0892f85f9c63b8855e6dbf21f05ea",
+      "required": true
+    },
+    {
+      "input_key": "source_image.rd001",
+      "relative_path": "data/raw/real_damage/images/rd001.jpg",
+      "checksum": "cd512537337204a0f801b1abc5e57660e3f14ad7cc95db9fd7c154076fa9811e",
+      "required": true
+    },
+    {
+      "input_key": "source_metadata.rd001",
+      "relative_path": "data/raw/real_damage/metadata/commons/rd001.json",
+      "checksum": "ad9fb2fe74cb3c6979434d68a7e40bd48d3a9426e0f7a022e73474c4b106e982",
+      "required": true
+    },
+    {
+      "input_key": "reviewed_mask.rd001",
+      "relative_path": "data/raw/real_damage/annotations/rd001.png",
+      "checksum": "149647289de638c6c4a0d0ee0669a85737f0057a9015d9602bdb78a53bc2c8b9",
+      "required": true
+    },
+    {
+      "input_key": "source_image.rd002",
+      "relative_path": "data/raw/real_damage/images/rd002.jpg",
+      "checksum": "f20f9c1b1acbdf25cd13d4a17b7403ef0a68f8016bb5b18db7cefe4f7ec41b1f",
+      "required": true
+    },
+    {
+      "input_key": "source_metadata.rd002",
+      "relative_path": "data/raw/real_damage/metadata/commons/rd002.json",
+      "checksum": "9deb9b8f00592bf639b5905bd137eb3f401b6a2d3dafe0628cabd222c1ef6186",
+      "required": true
+    },
+    {
+      "input_key": "reviewed_mask.rd002",
+      "relative_path": "data/raw/real_damage/annotations/rd002.png",
+      "checksum": "a4df1fed1e330c92dad48009adbd69d4ec54ceca2488511ed8a1c1687940f404",
+      "required": true
+    },
+    {
+      "input_key": "source_image.rd003",
+      "relative_path": "data/raw/real_damage/images/rd003.jpg",
+      "checksum": "3db81587aebe360a9e44da0b1a783dea0b399584b99b248cd6ce4fe3e7c276b7",
+      "required": true
+    },
+    {
+      "input_key": "source_metadata.rd003",
+      "relative_path": "data/raw/real_damage/metadata/commons/rd003.json",
+      "checksum": "df418dbfc1e46f7c523263a99c9b945ae6a8d307f3c6d8d5c46dc2aa31c90b0c",
+      "required": true
+    },
+    {
+      "input_key": "reviewed_mask.rd003",
+      "relative_path": "data/raw/real_damage/annotations/rd003.png",
+      "checksum": "cfa47490b468af1f782c89736f31176a8b3ab4426c34694e79b964a550a5fe51",
+      "required": true
+    },
+    {
+      "input_key": "source_image.rd004",
+      "relative_path": "data/raw/real_damage/images/rd004.jpg",
+      "checksum": "b46dcf8bfd749855bd0c6170789531d9e1669e34ea46f241ada2ec5250a0de64",
+      "required": true
+    },
+    {
+      "input_key": "source_metadata.rd004",
+      "relative_path": "data/raw/real_damage/metadata/commons/rd004.json",
+      "checksum": "bcdca6f6f25e52cb4d8fbf1882057516b31a74f4b9a0a1a0e8a56d50498ee4fd",
+      "required": true
+    },
+    {
+      "input_key": "reviewed_mask.rd004",
+      "relative_path": "data/raw/real_damage/annotations/rd004.png",
+      "checksum": "c7de1258ea0123edaa0b08e602c635e7ca7593e04518e6ebbb702c1a587356c4",
+      "required": true
+    },
+    {
+      "input_key": "source_image.rd005",
+      "relative_path": "data/raw/real_damage/images/rd005.jpg",
+      "checksum": "ea6ee0a9bc0f0745682bfac6924d42778bd513e8e0ee2c2495ebf9dba4b40e62",
+      "required": true
+    },
+    {
+      "input_key": "source_metadata.rd005",
+      "relative_path": "data/raw/real_damage/metadata/commons/rd005.json",
+      "checksum": "62894604700c9b504d73d88e70687dd5a5c47d904cd269d3e0514e323bb3d9bc",
+      "required": true
+    },
+    {
+      "input_key": "reviewed_mask.rd005",
+      "relative_path": "data/raw/real_damage/annotations/rd005.png",
+      "checksum": "edeeb8061297298423cdf5e514301bf6f8a2ea36edf0ce17d80f0984b7b1b1f8",
+      "required": true
+    },
+    {
+      "input_key": "source_image.rd006",
+      "relative_path": "data/raw/real_damage/images/rd006.jpg",
+      "checksum": "22c886d958075f3e470b0dd5b566ffe4a8e62357e5a5a4b25595ad6e02b8a460",
+      "required": true
+    },
+    {
+      "input_key": "source_metadata.rd006",
+      "relative_path": "data/raw/real_damage/metadata/met/rd006.json",
+      "checksum": "1cf56fc1dec63acfcc4d5e4258176ee8222c87a978621d297528c1d99bcd4641",
+      "required": true
+    },
+    {
+      "input_key": "reviewed_mask.rd006",
+      "relative_path": "data/raw/real_damage/annotations/rd006.png",
+      "checksum": "96d97369765f5ea9f6fc92414841183e587062b053ad576a0e470f040957fc93",
+      "required": true
+    },
+    {
+      "input_key": "source_image.rd007",
+      "relative_path": "data/raw/real_damage/images/rd007.jpg",
+      "checksum": "5780dae1040b5b06aca35b44b141e4edf8b7ad46b9b203d08fe9ca52250e4114",
+      "required": true
+    },
+    {
+      "input_key": "source_metadata.rd007",
+      "relative_path": "data/raw/real_damage/metadata/commons/rd007.json",
+      "checksum": "07c15131053c23135e9b1265f58f786c50e933b4294aac2ad42da76637a8c9a5",
+      "required": true
+    },
+    {
+      "input_key": "reviewed_mask.rd007",
+      "relative_path": "data/raw/real_damage/annotations/rd007.png",
+      "checksum": "e0e59a312fa07c99353dbdca57ae0205d1208b183ba7d6e5683c3a79fccae012",
+      "required": true
+    },
+    {
+      "input_key": "source_image.rd008",
+      "relative_path": "data/raw/real_damage/images/rd008.jpg",
+      "checksum": "84936585268bf1d4ce6626895f17c6128f268848f55f8f61f5886ea7790cbae1",
+      "required": true
+    },
+    {
+      "input_key": "source_metadata.rd008",
+      "relative_path": "data/raw/real_damage/metadata/commons/rd008.json",
+      "checksum": "8732b330160ce86ebae748937fc99be8cc87af513ea76e49662f38b65378ae07",
+      "required": true
+    },
+    {
+      "input_key": "reviewed_mask.rd008",
+      "relative_path": "data/raw/real_damage/annotations/rd008.png",
+      "checksum": "07a73f8d0c2316b4cdb1433a65ea3f698f25a55e430aa2f29a04b2b116482581",
+      "required": true
+    },
+    {
+      "input_key": "source_image.rd009",
+      "relative_path": "data/raw/real_damage/images/rd009.jpg",
+      "checksum": "22ced91fd0687bfd22691f9d1cf262d6d15edd9330036a8a4dc9ac7c834ab97d",
+      "required": true
+    },
+    {
+      "input_key": "source_metadata.rd009",
+      "relative_path": "data/raw/real_damage/metadata/commons/rd009.json",
+      "checksum": "3f639ad5c78d5564bc1dc9c7af7f23e5653179f1d777f9e82a9ec33ef62039c0",
+      "required": true
+    },
+    {
+      "input_key": "reviewed_mask.rd009",
+      "relative_path": "data/raw/real_damage/annotations/rd009.png",
+      "checksum": "ee04b9b974add1dcf2cc389c7903216ed87d9eca24b3086d0fafc0aea98d637c",
+      "required": true
+    },
+    {
+      "input_key": "source_image.rd010",
+      "relative_path": "data/raw/real_damage/images/rd010.png",
+      "checksum": "4e81747a8fba51289fc1a987b8018b630140e970fcd5d19394dc703f46b0a129",
+      "required": true
+    },
+    {
+      "input_key": "source_metadata.rd010",
+      "relative_path": "data/raw/real_damage/metadata/commons/rd010.json",
+      "checksum": "ddb735471d0346a0f8d7eb1b382067c271b8571f90562786732d1ccda8129fa0",
+      "required": true
+    },
+    {
+      "input_key": "reviewed_mask.rd010",
+      "relative_path": "data/raw/real_damage/annotations/rd010.png",
+      "checksum": "933929185f9d7477b89a62a878de2fb565d5f124f8d61a6cec6e10aec25292be",
+      "required": true
+    },
+    {
+      "input_key": "eligibility.config",
+      "relative_path": "config/datasets/real_damage_eligibility.yaml",
+      "checksum": "e2d0d86a31167bf677d5bfb22d85e0f83565eaf9237bbf77e2277911df68f7ce",
+      "required": true
+    },
+    {
+      "input_key": "eligibility.scale_review_decisions",
+      "relative_path": "config/datasets/real_damage_scale_review_decisions.json",
+      "checksum": "e206e95c9a66072c0b9bf694cab234641c5ac9bdc6b66433ffcc15594c870b8c",
+      "required": true
+    },
+    {
+      "input_key": "eligibility.helper_source",
+      "relative_path": "src/restoration_eval/real_damage_eligibility.py",
+      "checksum": "d230388e01ebe954de059812a614afa86be3e49ed04c4a93687aa201562e39a7",
+      "required": true
+    },
+    {
+      "input_key": "publication.config",
+      "relative_path": "config/datasets/real_damage_publication.yaml",
+      "checksum": "fd57f1332b85214c65a3ed7d01e6a70273404a5ba327f5d82c97da5d6261d214",
+      "required": true
+    },
+    {
+      "input_key": "publication.helper_source",
+      "relative_path": "src/restoration_eval/real_damage_publication.py",
+      "checksum": "1f5b682a190f8baf45b8ddc5d083aa28a9be869375803cde5e0d11075e6066c4",
+      "required": true
+    },
+    {
+      "input_key": "publication.eligibility_checkpoint",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/work/geometry_eligibility/eligibility_checkpoint.json",
+      "checksum": "ce526d42e1e6af35d64d48dbf6607872a9307b7b08e82e9163efda0874c07136",
+      "required": true
+    },
+    {
+      "input_key": "publication.prepared_masks",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/work/geometry_eligibility/masks.csv",
+      "checksum": "b2b2c37a38bab884824be974cca5108287bbfc78002585b4e6a5020ac21bf544",
+      "required": true
+    },
+    {
+      "input_key": "publication.prepared_mask_review",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/work/geometry_eligibility/mask_review.csv",
+      "checksum": "14cd171786ff201a7f9dc4c03f42a13358399f461680469b8a34bf266c6da37a",
+      "required": true
+    },
+    {
+      "input_key": "publication.prepared_case_registry",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/work/geometry_eligibility/case_registry.csv",
+      "checksum": "98a09426e5283c1f0720a379947c63cfb03540dceea2a729d29efb5b13c950df",
+      "required": true
+    },
+    {
+      "input_key": "publication.prepared_model_eligibility",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/work/geometry_eligibility/model_eligibility.csv",
+      "checksum": "88db0f735fb6877f8084ae04d0c4ca0d9b01c028ebad8e181d5c329e837a2778",
+      "required": true
+    },
+    {
+      "input_key": "publication.prepared_mask_geometry",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/work/geometry_eligibility/mask_geometry.csv",
+      "checksum": "b247eebf73aec27cd041d40756955b3af9d4b0468e17375f4b2017d6ecd01812",
+      "required": true
+    },
+    {
+      "input_key": "publication.prepared_inference_mask_audit",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/work/geometry_eligibility/inference_mask_audit.csv",
+      "checksum": "5300f961e576c0c8335d325bd7c22702c3c8cc2c5ca05ab85bc8713e1330e058",
+      "required": true
+    },
+    {
+      "input_key": "publication.preprocessed_checkpoint",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/work/annotation_candidates/preprocessed_images.csv",
+      "checksum": "a72997ee9dcd6c2fccc5991a40e6a2df472e0985002d069d93452cc0ca5d57f1",
+      "required": true
+    }
+  ],
+  "outputs": [
+    {
+      "artifact_id": "artifact_48b85caa0f475efb272c",
+      "artifact_key": "artworks",
+      "producer_notebook": "d03_real_damage_dataset_preparation",
+      "artifact_type": "dataset_table",
+      "artifact_role": "primary_downstream",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/data/artworks.csv",
+      "format": "csv",
+      "dataset_scope": "real_damage_10",
+      "experiment_id": "real_damage_reviewed_mask",
+      "schema_version": "real_damage_artworks.v1",
+      "row_count": 10,
+      "file_count": 1,
+      "size_bytes": 24132,
+      "checksum": "e173f9ec265d6fb148e8d47451410fe4f57d1c99ad2053c7491b7ceedc378a18",
+      "validation_status": "passed"
+    },
+    {
+      "artifact_id": "artifact_62c2c1619ecc8e21b1d6",
+      "artifact_key": "preprocessed_images",
+      "producer_notebook": "d03_real_damage_dataset_preparation",
+      "artifact_type": "dataset_table",
+      "artifact_role": "primary_downstream",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/data/preprocessed_images.csv",
+      "format": "csv",
+      "dataset_scope": "real_damage_10",
+      "experiment_id": "real_damage_reviewed_mask",
+      "schema_version": "real_damage_preprocessed_images.v1",
+      "row_count": 10,
+      "file_count": 1,
+      "size_bytes": 8892,
+      "checksum": "a72997ee9dcd6c2fccc5991a40e6a2df472e0985002d069d93452cc0ca5d57f1",
+      "validation_status": "passed"
+    },
+    {
+      "artifact_id": "artifact_a6432dfc640497aeaa09",
+      "artifact_key": "masks",
+      "producer_notebook": "d03_real_damage_dataset_preparation",
+      "artifact_type": "dataset_table",
+      "artifact_role": "primary_downstream",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/data/masks.csv",
+      "format": "csv",
+      "dataset_scope": "real_damage_10",
+      "experiment_id": "real_damage_reviewed_mask",
+      "schema_version": "real_damage_masks.v1",
+      "row_count": 10,
+      "file_count": 1,
+      "size_bytes": 9655,
+      "checksum": "7abce2123721a12dd4f5829cdae5244ba4330a7633e03fca176d1cfc936d94b3",
+      "validation_status": "passed"
+    },
+    {
+      "artifact_id": "artifact_7481bd7ab63d60db9dc1",
+      "artifact_key": "mask_review",
+      "producer_notebook": "d03_real_damage_dataset_preparation",
+      "artifact_type": "dataset_table",
+      "artifact_role": "primary_downstream",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/data/mask_review.csv",
+      "format": "csv",
+      "dataset_scope": "real_damage_10",
+      "experiment_id": "real_damage_reviewed_mask",
+      "schema_version": "real_damage_mask_review.v1",
+      "row_count": 10,
+      "file_count": 1,
+      "size_bytes": 18438,
+      "checksum": "1c3087e4a4936a50aa7ed43cba1c8e58754c2215ac27fd867d9fd252fc8f534a",
+      "validation_status": "passed"
+    },
+    {
+      "artifact_id": "artifact_5751bdf42ec47f9726ef",
+      "artifact_key": "case_registry",
+      "producer_notebook": "d03_real_damage_dataset_preparation",
+      "artifact_type": "dataset_table",
+      "artifact_role": "primary_downstream",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/data/case_registry.csv",
+      "format": "csv",
+      "dataset_scope": "real_damage_10",
+      "experiment_id": "real_damage_reviewed_mask",
+      "schema_version": "real_damage_cases.v1",
+      "row_count": 10,
+      "file_count": 1,
+      "size_bytes": 9836,
+      "checksum": "8891f8f9e0238279a258bd2a800447aade5f0a7ed925987ecc7874da80fa0ac7",
+      "validation_status": "passed"
+    },
+    {
+      "artifact_id": "artifact_c50a21c0bd57b6b30443",
+      "artifact_key": "model_eligibility",
+      "producer_notebook": "d03_real_damage_dataset_preparation",
+      "artifact_type": "dataset_table",
+      "artifact_role": "primary_downstream",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/data/model_eligibility.csv",
+      "format": "csv",
+      "dataset_scope": "real_damage_10",
+      "experiment_id": "real_damage_reviewed_mask",
+      "schema_version": "real_damage_model_eligibility.v1",
+      "row_count": 40,
+      "file_count": 1,
+      "size_bytes": 33203,
+      "checksum": "fd7ad0cf3145c928ca4d2b5bbc5511b81f9a46e635761d37dab54e55c560aa38",
+      "validation_status": "passed"
+    },
+    {
+      "artifact_id": "artifact_c214289a50ae4676ec3f",
+      "artifact_key": "mask_geometry",
+      "producer_notebook": "d03_real_damage_dataset_preparation",
+      "artifact_type": "dataset_table",
+      "artifact_role": "primary_downstream",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/metrics/mask_geometry.csv",
+      "format": "csv",
+      "dataset_scope": "real_damage_10",
+      "experiment_id": "real_damage_reviewed_mask",
+      "schema_version": "real_damage_mask_geometry.v1",
+      "row_count": 10,
+      "file_count": 1,
+      "size_bytes": 7336,
+      "checksum": "b247eebf73aec27cd041d40756955b3af9d4b0468e17375f4b2017d6ecd01812",
+      "validation_status": "passed"
+    },
+    {
+      "artifact_id": "artifact_3a305409624ab3881daf",
+      "artifact_key": "inference_mask_audit",
+      "producer_notebook": "d03_real_damage_dataset_preparation",
+      "artifact_type": "dataset_table",
+      "artifact_role": "primary_downstream",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/metrics/inference_mask_audit.csv",
+      "format": "csv",
+      "dataset_scope": "real_damage_10",
+      "experiment_id": "real_damage_reviewed_mask",
+      "schema_version": "real_damage_inference_mask_audit.v1",
+      "row_count": 10,
+      "file_count": 1,
+      "size_bytes": 15233,
+      "checksum": "5300f961e576c0c8335d325bd7c22702c3c8cc2c5ca05ab85bc8713e1330e058",
+      "validation_status": "passed"
+    },
+    {
+      "artifact_id": "artifact_4c35dc781730336e9e12",
+      "artifact_key": "processed_inputs",
+      "producer_notebook": "d03_real_damage_dataset_preparation",
+      "artifact_type": "image_collection",
+      "artifact_role": "primary_downstream",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/images/inputs",
+      "format": "directory",
+      "dataset_scope": "real_damage_10",
+      "experiment_id": "real_damage_reviewed_mask",
+      "schema_version": "real_damage_image_collection.v1",
+      "row_count": 10,
+      "file_count": 10,
+      "size_bytes": 7295971,
+      "checksum": "28276d9bf8454f6ab814a5ee16b30b161f74cbbf1836c65c7de942ab89d26e13",
+      "validation_status": "passed"
+    },
+    {
+      "artifact_id": "artifact_4cfe4142fd2e84f1b232",
+      "artifact_key": "reviewed_masks",
+      "producer_notebook": "d03_real_damage_dataset_preparation",
+      "artifact_type": "image_collection",
+      "artifact_role": "primary_downstream",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/images/masks",
+      "format": "directory",
+      "dataset_scope": "real_damage_10",
+      "experiment_id": "real_damage_reviewed_mask",
+      "schema_version": "real_damage_image_collection.v1",
+      "row_count": 10,
+      "file_count": 10,
+      "size_bytes": 93394,
+      "checksum": "a212dbf965b7b79e4444e24621f6aab18dd2915bf19d21799d46a4853cc2c26d",
+      "validation_status": "passed"
+    },
+    {
+      "artifact_id": "artifact_fa1d735136eb82df069a",
+      "artifact_key": "source_overview",
+      "producer_notebook": "d03_real_damage_dataset_preparation",
+      "artifact_type": "figure",
+      "artifact_role": "audit_reporting",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/figures/source_overview.png",
+      "format": "png",
+      "dataset_scope": "real_damage_10",
+      "experiment_id": "real_damage_reviewed_mask",
+      "schema_version": "real_damage_overview.v1",
+      "row_count": "",
+      "file_count": 1,
+      "size_bytes": 2200574,
+      "checksum": "25da8d6bd437a0027aab7333a9bf821392e748c1d673ad3c67d8dc51e5cc4776",
+      "validation_status": "passed"
+    },
+    {
+      "artifact_id": "artifact_58e064bd6d02e4d21829",
+      "artifact_key": "mask_review_atlas",
+      "producer_notebook": "d03_real_damage_dataset_preparation",
+      "artifact_type": "figure",
+      "artifact_role": "audit_reporting",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/figures/mask_review_atlas.png",
+      "format": "png",
+      "dataset_scope": "real_damage_10",
+      "experiment_id": "real_damage_reviewed_mask",
+      "schema_version": "real_damage_overview.v1",
+      "row_count": "",
+      "file_count": 1,
+      "size_bytes": 2214168,
+      "checksum": "f4efb6ae6a9ed67a7b4dab8f2d4030d456db613654f031cb1dff38df624d8919",
+      "validation_status": "passed"
+    },
+    {
+      "artifact_id": "artifact_b6d176d79733de07cf96",
+      "artifact_key": "report",
+      "producer_notebook": "d03_real_damage_dataset_preparation",
+      "artifact_type": "html_report",
+      "artifact_role": "audit_reporting",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/reports/real_damage_dataset.html",
+      "format": "html",
+      "dataset_scope": "real_damage_10",
+      "experiment_id": "real_damage_reviewed_mask",
+      "schema_version": "real_damage_dataset_report.v1",
+      "row_count": "",
+      "file_count": 1,
+      "size_bytes": 5903793,
+      "checksum": "dccb8c9c768e6b400ac3dcc314c0bcd7530347893d1eebe4c0d4605a1f8999ee",
+      "validation_status": "passed"
+    },
+    {
+      "artifact_id": "artifact_aadd63872db812dd1851",
+      "artifact_key": "validation",
+      "producer_notebook": "d03_real_damage_dataset_preparation",
+      "artifact_type": "validation_table",
+      "artifact_role": "audit_reporting",
+      "relative_path": "outputs/d03_real_damage_dataset_preparation/validation/checks.csv",
+      "format": "csv",
+      "dataset_scope": "real_damage_10",
+      "experiment_id": "real_damage_reviewed_mask",
+      "schema_version": "validation_checks.v1",
+      "row_count": 334,
+      "file_count": 1,
+      "size_bytes": 68762,
+      "checksum": "a09c8a6b4b70bfaec31204604a779edec93800191e2f6b8377279d827ef48c54",
+      "validation_status": "passed"
+    }
+  ],
+  "expected_counts": {
+    "paintings": 10,
+    "paintings_per_category": 2,
+    "reviewed_masks": 10,
+    "cases": 10,
+    "model_eligibility_rows": 40,
+    "canonical_files": 34,
+    "artifact_records": 14
+  },
+  "observed_counts": {
+    "paintings": 10,
+    "paintings_per_category": 2,
+    "reviewed_masks": 10,
+    "cases": 10,
+    "model_eligibility_rows": 40,
+    "canonical_files": 34,
+    "artifact_records": 14,
+    "eligible_rows": 40,
+    "known_clean_references": 0
+  },
+  "validation_summary": {
+    "check_count": 334,
+    "passed_count": 334,
+    "failed_count": 0,
+    "blocking_failure_count": 0,
+    "overall_passed": true,
+    "failed_check_ids": []
+  },
+  "known_limitations": [
+    "No clean reference exists; damaged inputs are not reference-fidelity targets.",
+    "Masks cover selected repair targets; unselected deterioration may remain.",
+    "Two purposively selected paintings per category do not support population-level rankings.",
+    "Scale-resampling effects are accepted and retained in the inference-mask audit.",
+    "Input eligibility does not establish model runtime readiness; D04 checks models and weights."
+  ],
+  "publication_stage": 7,
+  "publication_recorded_at_utc": "2026-11-15T00:49:54.873680Z",
+  "completion_gate_passed": false,
+  "downstream_ready": false,
+  "data_fingerprint": "6a2e02fcf9a4b65a612b7cdf5e9aa36846bc641ae8533f1f19635d5ebf00afe4",
+  "artifact_manifest_sha256": "8a4243bd86b8a3b499651ebf7ca90fbf52679355a1325e9ba26de6409417cb34",
+  "canonical_file_checksums": {
+    "outputs/d03_real_damage_dataset_preparation/data/artworks.csv": "e173f9ec265d6fb148e8d47451410fe4f57d1c99ad2053c7491b7ceedc378a18",
+    "outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd007.png": "e0e59a312fa07c99353dbdca57ae0205d1208b183ba7d6e5683c3a79fccae012",
+    "outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd005.png": "edeeb8061297298423cdf5e514301bf6f8a2ea36edf0ce17d80f0984b7b1b1f8",
+    "outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd010.png": "933929185f9d7477b89a62a878de2fb565d5f124f8d61a6cec6e10aec25292be",
+    "outputs/d03_real_damage_dataset_preparation/images/inputs/rd010.png": "583a9aebe120181b51f804e45669a5b779dfa2cc9ac769400a6a795692619791",
+    "outputs/d03_real_damage_dataset_preparation/images/inputs/rd004.png": "3271049eca558d5b4513d4abc7c400e1c918307a31dede2af58929cf45311c63",
+    "outputs/d03_real_damage_dataset_preparation/data/case_registry.csv": "8891f8f9e0238279a258bd2a800447aade5f0a7ed925987ecc7874da80fa0ac7",
+    "outputs/d03_real_damage_dataset_preparation/figures/source_overview.png": "25da8d6bd437a0027aab7333a9bf821392e748c1d673ad3c67d8dc51e5cc4776",
+    "outputs/d03_real_damage_dataset_preparation/images/inputs/rd006.png": "39ea34daf2dcd662fb4d32139356cea41916fa13f97bfdcccb4665fce336b581",
+    "outputs/d03_real_damage_dataset_preparation/images/inputs/rd001.png": "19d0767b56687bdcf5c2a963c7e69457b22bc954bb63097114d6c0bd4666ad60",
+    "outputs/d03_real_damage_dataset_preparation/reports/real_damage_dataset.html": "dccb8c9c768e6b400ac3dcc314c0bcd7530347893d1eebe4c0d4605a1f8999ee",
+    "outputs/d03_real_damage_dataset_preparation/data/model_eligibility.csv": "fd7ad0cf3145c928ca4d2b5bbc5511b81f9a46e635761d37dab54e55c560aa38",
+    "outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd006.png": "96d97369765f5ea9f6fc92414841183e587062b053ad576a0e470f040957fc93",
+    "outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd009.png": "ee04b9b974add1dcf2cc389c7903216ed87d9eca24b3086d0fafc0aea98d637c",
+    "outputs/d03_real_damage_dataset_preparation/data/preprocessed_images.csv": "a72997ee9dcd6c2fccc5991a40e6a2df472e0985002d069d93452cc0ca5d57f1",
+    "outputs/d03_real_damage_dataset_preparation/data/masks.csv": "7abce2123721a12dd4f5829cdae5244ba4330a7633e03fca176d1cfc936d94b3",
+    "outputs/d03_real_damage_dataset_preparation/images/inputs/rd008.png": "1efdaac92e4f34232c735d47363ad72bcabbee4e26e071995249c968372371ae",
+    "outputs/d03_real_damage_dataset_preparation/images/inputs/rd007.png": "6b5c659665e8a05f7c8a9a8856674682dbce82e78e6bb3eb1fff25ea9fe2f843",
+    "outputs/d03_real_damage_dataset_preparation/metrics/mask_geometry.csv": "b247eebf73aec27cd041d40756955b3af9d4b0468e17375f4b2017d6ecd01812",
+    "outputs/d03_real_damage_dataset_preparation/images/inputs/rd009.png": "9119132e86a79b5f22e375bcb72703dbd54485d6b545cead45197a589128f689",
+    "outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd008.png": "07a73f8d0c2316b4cdb1433a65ea3f698f25a55e430aa2f29a04b2b116482581",
+    "outputs/d03_real_damage_dataset_preparation/figures/mask_review_atlas.png": "f4efb6ae6a9ed67a7b4dab8f2d4030d456db613654f031cb1dff38df624d8919",
+    "outputs/d03_real_damage_dataset_preparation/metrics/inference_mask_audit.csv": "5300f961e576c0c8335d325bd7c22702c3c8cc2c5ca05ab85bc8713e1330e058",
+    "outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd002.png": "a4df1fed1e330c92dad48009adbd69d4ec54ceca2488511ed8a1c1687940f404",
+    "outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd003.png": "cfa47490b468af1f782c89736f31176a8b3ab4426c34694e79b964a550a5fe51",
+    "outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd004.png": "c7de1258ea0123edaa0b08e602c635e7ca7593e04518e6ebbb702c1a587356c4",
+    "outputs/d03_real_damage_dataset_preparation/images/inputs/rd003.png": "bd385492e77aa39e5c106f03ad1ae04da48b8677a2533b5e198edb4bd8f75b76",
+    "outputs/d03_real_damage_dataset_preparation/images/inputs/rd005.png": "91d21beca9a7388471f0eeafd4d65968912566550568031afee15c3a2171a9e8",
+    "outputs/d03_real_damage_dataset_preparation/images/masks/rdmask_rd001.png": "149647289de638c6c4a0d0ee0669a85737f0057a9015d9602bdb78a53bc2c8b9",
+    "outputs/d03_real_damage_dataset_preparation/data/mask_review.csv": "1c3087e4a4936a50aa7ed43cba1c8e58754c2215ac27fd867d9fd252fc8f534a",
+    "outputs/d03_real_damage_dataset_preparation/images/inputs/rd002.png": "8117bea7e452db0f89620f071d4ba9b7e667c9a2a438ae1d6d3eca9f1e227e12"
+  },
+  "artifact_manifest_exclusions": [
+    "run_manifest.json",
+    "artifacts.csv"
+  ],
+  "exclusion_reason": "Run manifest pins artifacts.csv; neither manifest hashes itself.",
+  "retained_work_files": 70
+}

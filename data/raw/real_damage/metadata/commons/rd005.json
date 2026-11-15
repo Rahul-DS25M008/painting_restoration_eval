@@ -1,0 +1,107 @@
+{
+  "batchcomplete": "",
+  "query": {
+    "pages": {
+      "174166066": {
+        "pageid": 174166066,
+        "ns": 6,
+        "title": "File:Landscape with maritime villa, from Stabiae, Villa San Marco, diaeta 50. Archaeological Museum of Stabia 62518.jpg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "timestamp": "2025-09-01T19:20:41Z",
+            "size": 2708568,
+            "width": 3487,
+            "height": 1764,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/9/93/Landscape_with_maritime_villa%2C_from_Stabiae%2C_Villa_San_Marco%2C_diaeta_50._Archaeological_Museum_of_Stabia_62518.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Landscape_with_maritime_villa,_from_Stabiae,_Villa_San_Marco,_diaeta_50._Archaeological_Museum_of_Stabia_62518.jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=174166066",
+            "sha1": "d443f6eab1bf482c06f50853c1f876428816b5c2",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2025-09-01 19:20:41",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "Landscape with maritime villa, from Stabiae, Villa San Marco, diaeta 50. Archaeological Museum of Stabia 62518",
+                "source": "mediawiki-metadata"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "Self-published work|Information field template with formatting|Cultural heritage monuments in Italy with known IDs|Images from Wiki Loves Monuments missing SDC depicts|Images from Wiki Loves Monuments missing SDC location of creation|Cultural heritage monuments in Italy missing SDC location of creation|Cultural heritage monuments in Italy missing SDC depicts|Images from Wiki Loves Monuments 2025|Images from Wiki Loves Monuments 2025 in Italy|Images from Wiki Loves Monuments 2025 in Italy - Campania|Images from Wiki Loves Monuments 2025 in Italy - traditional contest|Frescoes from Villa San Marco in the Archaeological Museum of Stabia|Images from Wiki Loves Monuments 2025 in Italy - without local award|Images from Wiki Loves Monuments 2025 in Italy - Campania - traditional contest",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "ImageDescription": {
+                "value": "Landscape with maritime villa, from Stabiae, Villa San Marco, diaeta 50. Archaeological Museum of Stabia 62518",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "2024-06-22",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+                "source": "commons-desc-page"
+              },
+              "Artist": {
+                "value": "<a href=\"//commons.wikimedia.org/wiki/User:BeakheadIntrados\" title=\"User:BeakheadIntrados\">BeakheadIntrados</a>",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "CC BY-SA 4.0",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Creative Commons Attribution-Share Alike 4.0",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "true",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "LicenseUrl": {
+                "value": "https://creativecommons.org/licenses/by-sa/4.0",
+                "source": "commons-desc-page"
+              },
+              "Copyrighted": {
+                "value": "True",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "cc-by-sa-4.0",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ],
+        "revisions": [
+          {
+            "revid": 1143963697,
+            "parentid": 1094879638,
+            "timestamp": "2026-01-07T23:58:09Z"
+          }
+        ]
+      }
+    }
+  }
+}

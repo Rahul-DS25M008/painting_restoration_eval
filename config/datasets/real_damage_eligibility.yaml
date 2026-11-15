@@ -1,0 +1,14 @@
+config_schema_version: real_damage_eligibility_config.v1
+config_version: 1.0.0
+dataset_scope: real_damage_10
+dataset_version: 2.0.0
+inputs:
+  scale_review_decisions: config/datasets/real_damage_scale_review_decisions.json
+  helper_source: src/restoration_eval/real_damage_eligibility.py
+output_work_directory: work/geometry_eligibility
+eligibility_scope: input_and_mask_compatibility
+runtime_and_weights_check_stage: D04
+reference_fidelity_metrics_applicable: false
+physical_input_is_clean_reference: false
+canonical_publication_batch: 7
+completion_gate_batch: 8

@@ -40,6 +40,61 @@ recorded in the dated addendum to `docs/evidence_dependency_audit.md`.
 
 All notebooks follow `docs/refactoring_implementation_guidelines.md`.
 
+**Supplemental D03 completed — 2026-11-15:** the user approved the revised ten
+real-damage photographs, two per operational visual category, after the first
+cohort's repair masks proved too small. Source cohort v2.0.0 replaces v1.0.0;
+only the Black Square source (rd007) is retained. Earlier notebook results for
+v1.0.0 remain in ignored local recovery storage with its sources and unfinished
+outputs; they are not validation of the revised sources. The current saved
+notebook has completed revised Batches 1–8: 43 preflight, 66 source, 35 smoke,
+63 full-preparation, 43 mask-review, 49 geometry/eligibility and 35 publication
+and 45 completion checks passed (379/379, zero failures).
+Batch 3 took 8.86 seconds and produced
+five 768-pixel PNGs plus a comparison sheet. The user accepted these previews;
+their processed hashes match the approved revised-source annotations.
+Batch 4 took 23.79 seconds and saved all ten inputs, unchanged selected binary
+masks, review sheets and temporary handoff tables. The user accepted these
+previews. Batch 5 completed in 14.13 seconds with hash-bound researcher approval
+of the selected 768-pixel targets and separate 512-pixel diagnostics. The user
+accepted those scale previews and resizing effects. Batch 6 completed in 6.82
+seconds, using the existing morphology/region helpers to prepare ten cases and
+forty eligible input/mask pairings for the unchanged four methods. Its six saved
+tables and checkpoint were checked. No model weights or runtime are checked until D04. Batch 6 uses separate
+settings so earlier saved checkpoints retain their original configuration.
+Batch 7 completed in 9.27 seconds and published 34 canonical files and 14 artifact
+records, including a standalone illustrated report. The user accepted the
+figures/report, and all recorded hashes match
+`run_d03_6a2e02fcf9a4b65a612b7cdf`. Batch 8 completed in 5.40 seconds at
+`2026-11-15T01:07:42.388740Z`; the run is `completed` with its completion gate
+and downstream dataset readiness true. The 34 canonical files and 77 retained
+work/history files total 111 files. All 14 artifact records are registered in
+the project-path registry and separate real-damage coverage ledger. The saved
+notebook's opening metadata is Finished/Finished/Yes. Scientific artifacts
+remain unchanged by completion; only validation/manifests were finalized.
+The notebook itself is edited and executed only by the user.
+
+`config/datasets/real_damage_10.yaml` retains the approved eight-batch contract,
+separate `real_damage_10` scope and exact output ownership. Selected repair masks
+are hash-bound acquisition annotations under `data/raw/real_damage/annotations/`;
+their saved Batch 4 copies passed validation, and Batch 5 verified the approval
+binding and presented the now-accepted inference-scale effects.
+The user requested expanded soldier/cliff flaking for Antigone (rd002), even
+above 15% if necessary; the revised selected coverage is 3.4994%. Other masks
+range from 2.0248% to 7.8274%. Partial repair scope is explicitly accepted.
+These are not exhaustive condition maps or clean-reference ground truth.
+
+The canonical 768-pixel preprocessing helper/configuration and all four model
+configurations remain unchanged. D03 accepts JPEG/RGB and PNG/fully opaque RGBA;
+opaque alpha is dropped in memory without altering RGB values. The revised
+provenance audit supports Commons public-domain, CC BY 2.0, CC BY-SA 4.0 and Met
+CC0 sources, retaining attribution and adaptation conditions. No restoration
+has run for this cohort. D03 is complete; D04 is the next stage for contract planning
+for the same four restoration methods and reference-free diagnostics; D05
+remains the optional expert study. These additions do not reopen or renumber
+the completed Controlled-300 pipeline. D03's ordinary-Git checkpoint preserves
+source, preparation and review bytes without Git LFS; D04 storage will be scoped
+with its inference contract.
+
 ### 1.1 Authoritative research-question framing
 
 The controlled-300 rerun and every regenerated report, dashboard asset, and

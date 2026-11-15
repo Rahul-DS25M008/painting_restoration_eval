@@ -1,0 +1,18 @@
+config_schema_version: real_damage_completion_config.v1
+config_version: 1.0.0
+dataset_scope: real_damage_10
+dataset_version: 2.0.0
+completion_gate_batch: 8
+expected_canonical_files: 34
+expected_artifact_records: 14
+expected_prior_checks: 334
+helper_source: src/restoration_eval/real_damage_completion.py
+scientific_artifacts_immutable: true
+runtime_and_weights_check_stage: D04
+refreshable_administrative_inputs:
+  - inventory
+  - inventory_run
+  - evidence_audit
+  - notebook_roadmap
+  - evidence_coverage
+  - project_paths

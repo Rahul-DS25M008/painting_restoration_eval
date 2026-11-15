@@ -1,0 +1,106 @@
+{
+  "continue": {
+    "iistart": "2014-07-29T20:09:51Z",
+    "continue": "||revisions"
+  },
+  "query": {
+    "pages": {
+      "34318420": {
+        "pageid": 34318420,
+        "ns": 6,
+        "title": "File:Antonio van Diemen (1593-1645). Gouverneur-generaal (1636-45) Rijksmuseum SK-A-3762.jpeg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "timestamp": "2019-01-13T13:08:49Z",
+            "size": 1916406,
+            "width": 2860,
+            "height": 3830,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Antonio_van_Diemen_%281593-1645%29._Gouverneur-generaal_%281636-45%29_Rijksmuseum_SK-A-3762.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Antonio_van_Diemen_(1593-1645)._Gouverneur-generaal_(1636-45)_Rijksmuseum_SK-A-3762.jpeg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=34318420",
+            "sha1": "bdd412d5a67be20b8f629db2e4c3e441812f3323",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2019-01-13 13:08:49",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "<div class=\"fn\">\n<div style=\"font-weight:bold;display:inline-block;\">Portrait of Antonio van Diemen (1593-1645)</div></div>",
+                "source": "commons-desc-page"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "CC-Zero|Antonio van Diemen|Images from the Rijksmuseum|Images uploaded by Fæ|PD-old-100-expired|Artworks with Wikidata item|Artworks with known accession number|Unknown date|Template Unknown (author)|CC-PD-Mark|17th-century portraits of men|Portrait paintings of men at half length|GWToolset Batch Upload|Damaged paintings|Artworks digital representation of 2D work|Landvoogd-Galerij|Dutch Golden Age portrait paintings in the Rijksmuseum Amsterdam|Anonymous portrait paintings in the Rijksmuseum Amsterdam",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Artist": {
+                "value": "<bdi><a href=\"https://www.wikidata.org/wiki/Q4233718\" class=\"extiw\" title=\"d:Q4233718\"><span title='unknown creator of a work (do not use as value of P50; use \"unknown value\" instead)'>anonymous</span></a></bdi>",
+                "source": "commons-desc-page"
+              },
+              "ImageDescription": {
+                "value": "<div class=\"description\">\nPortrait of Antonio van Diemen (1593-1645), Governor-General of the Dutch East Indies from 1636 to 1645. At half-length, facing right. Part of the <a href=\"//commons.wikimedia.org/wiki/Rijksmuseum_Amsterdam/Paintings/Governors-general_series\" title=\"Rijksmuseum Amsterdam/Paintings/Governors-general series\">Governors-general series</a>.</div>",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "between 1636 and 1675<div style=\"display: none;\">date QS:P571,+1650-00-00T00:00:00Z/7,P1319,+1636-00-00T00:00:00Z/9,P1326,+1675-00-00T00:00:00Z/9</div>",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "www.rijksmuseum.nl : <a rel=\"nofollow\" class=\"external text\" href=\"http://www.rijksmuseum.nl/?lang=en\">Home</a> : <a rel=\"nofollow\" class=\"external text\" href=\"http://www.rijksmuseum.nl/collectie/SK-A-3762\">Info</a>",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "Public domain",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Public domain",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "false",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Copyrighted": {
+                "value": "False",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "pd",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ],
+        "revisions": [
+          {
+            "revid": 1055905573,
+            "parentid": 997459063,
+            "timestamp": "2025-07-11T17:06:38Z"
+          }
+        ]
+      }
+    }
+  }
+}

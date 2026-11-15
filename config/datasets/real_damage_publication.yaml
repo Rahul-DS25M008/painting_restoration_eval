@@ -1,0 +1,13 @@
+config_schema_version: real_damage_publication_config.v1
+config_version: 1.0.0
+dataset_scope: real_damage_10
+dataset_version: 2.0.0
+inputs:
+  helper_source: src/restoration_eval/real_damage_publication.py
+completion_gate_batch: 8
+publication_run_status: partial
+overwrite_scientific_artifacts: false
+report_embeds_images: true
+figure_dpi: 140
+expected_canonical_files: 34
+expected_artifact_records: 14

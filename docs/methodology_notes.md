@@ -30,6 +30,17 @@ platform and browser qualifications are not inferred from acceptance. N36 run
 Its 134-file delivery preserves these distinctions, including both provenance
 exceptions, without rerunning scientific experiments.
 
+**Separate real-damage supplement (2026-11-15):** D03 has completed preparation
+of ten physically damaged painting photographs, two per operational category,
+with 379/379 passed checks. It reuses the 768-pixel preprocessing and existing
+four-model configurations, records reviewed repair masks and accepted 512-pixel
+mask-resizing effects, and supplies ten cases and forty eligible input/mask
+pairings. These are selected repair targets, not exhaustive damage labels.
+No clean reference exists and no restoration inference has run. D04 is next
+for contract planning and model/runtime checks; synthetic reference metrics
+will remain separate. See the [D03 closeout](evidence_dependency_audit.md#d03-real-damage-preparation-closeout--2026-11-15).
+The Controlled-300 methods and results below remain frozen.
+
 - The detailed notebook sequence is in
   [`final_notebook_roadmap.md`](final_notebook_roadmap.md).
 - Validated populations and evidence boundaries are in

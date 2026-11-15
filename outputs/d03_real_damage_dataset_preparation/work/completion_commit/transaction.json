@@ -1,0 +1,17 @@
+{
+  "schema_version": "d03_metadata_transaction.v1",
+  "files": {
+    "validation/checks.csv": {
+      "before": "a09c8a6b4b70bfaec31204604a779edec93800191e2f6b8377279d827ef48c54",
+      "after": "b23422ffcf922a1a3a4ae4782f1a94245d581ca6c5ee9d75d471951e72826a92"
+    },
+    "manifests/artifacts.csv": {
+      "before": "8a4243bd86b8a3b499651ebf7ca90fbf52679355a1325e9ba26de6409417cb34",
+      "after": "fc0658ef4413d06bfdd3400dd69391bb64c3d41eee6c605370ad980edbf44b47"
+    },
+    "manifests/run_manifest.json": {
+      "before": "0c96a77ddf4f65ea19922aa1d82556d042f7b340a5003315e602a66abdd78b0c",
+      "after": "5436c6ddeec626e314b2c3276f064a906bd4658ace5e8932b6a23517480e9659"
+    }
+  }
+}

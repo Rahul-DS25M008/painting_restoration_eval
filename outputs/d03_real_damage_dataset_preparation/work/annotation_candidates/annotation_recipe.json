@@ -1,0 +1,362 @@
+{
+  "schema_version": "real_damage_annotation_recipe.v1",
+  "recipe_version": "2.0.0",
+  "coordinate_space": "preprocessed_768_canvas",
+  "automatic_dilation": false,
+  "all_visible_damage_covered": false,
+  "annotation_method": "inspected_binary_raster_hash_bound_to_source_and_canonical_image",
+  "prepared_by": "assistant_with_user_visual_review",
+  "selection_approved_date": "2026-11-15",
+  "records": [
+    {
+      "painting_id": "rd001",
+      "source_sha256": "cd512537337204a0f801b1abc5e57660e3f14ad7cc95db9fd7c154076fa9811e",
+      "processed_sha256": "19d0767b56687bdcf5c2a963c7e69457b22bc954bb63097114d6c0bd4666ad60",
+      "review_status": "pending",
+      "prior_visual_review": "accepted_by_user_2026-11-15",
+      "target_description": "Visible vertical losses across the background, hat and clothing. Review mask targets clear losses; it is not exhaustive condition mapping. The broader uniform loss on the hat has been included.",
+      "selection_notes": "Other physical deterioration may remain outside the repair mask; it is outside this restoration target, not automatically model failure. No clean reference exists.",
+      "reviewed_mask_path": "data/raw/real_damage/annotations/rd001.png",
+      "reviewed_mask_sha256": "149647289de638c6c4a0d0ee0669a85737f0057a9015d9602bdb78a53bc2c8b9",
+      "regions": [
+        {
+          "polygon_xy": [
+            [
+              97,
+              1
+            ],
+            [
+              515,
+              1
+            ],
+            [
+              515,
+              753
+            ],
+            [
+              97,
+              753
+            ]
+          ],
+          "selector": "reviewed_raster",
+          "role": "inspection_box_only_not_a_mask"
+        }
+      ]
+    },
+    {
+      "painting_id": "rd002",
+      "source_sha256": "f20f9c1b1acbdf25cd13d4a17b7403ef0a68f8016bb5b18db7cefe4f7ec41b1f",
+      "processed_sha256": "8117bea7e452db0f89620f071d4ba9b7e667c9a2a438ae1d6d3eca9f1e227e12",
+      "review_status": "pending",
+      "prior_visual_review": "accepted_by_user_2026-11-15",
+      "target_description": "Visible flaking across the left background, cliff and soldier. Expanded after user review to include the breastplate and branching cliff losses. Intact skin, metal, architecture and spear are excluded where distinguishable. No dilation or damage synthesis.",
+      "selection_notes": "Other physical deterioration may remain outside the repair mask; it is outside this restoration target, not automatically model failure. No clean reference exists.",
+      "reviewed_mask_path": "data/raw/real_damage/annotations/rd002.png",
+      "reviewed_mask_sha256": "a4df1fed1e330c92dad48009adbd69d4ec54ceca2488511ed8a1c1687940f404",
+      "regions": [
+        {
+          "polygon_xy": [
+            [
+              0,
+              114
+            ],
+            [
+              268,
+              114
+            ],
+            [
+              268,
+              650
+            ],
+            [
+              0,
+              650
+            ]
+          ],
+          "selector": "reviewed_raster",
+          "role": "inspection_box_only_not_a_mask"
+        }
+      ]
+    },
+    {
+      "painting_id": "rd003",
+      "source_sha256": "3db81587aebe360a9e44da0b1a783dea0b399584b99b248cd6ce4fe3e7c276b7",
+      "processed_sha256": "bd385492e77aa39e5c106f03ad1ae04da48b8677a2533b5e198edb4bd8f75b76",
+      "review_status": "pending",
+      "prior_visual_review": "accepted_by_user_2026-11-15",
+      "target_description": "Large open tear on the right and smaller open losses at the left edge. Broader surface abrasion is present outside the selected repair targets; this mask is not a claim that all physical damage occupies only 7.21%.",
+      "selection_notes": "Other physical deterioration may remain outside the repair mask; it is outside this restoration target, not automatically model failure. No clean reference exists.",
+      "reviewed_mask_path": "data/raw/real_damage/annotations/rd003.png",
+      "reviewed_mask_sha256": "cfa47490b468af1f782c89736f31176a8b3ab4426c34694e79b964a550a5fe51",
+      "regions": [
+        {
+          "polygon_xy": [
+            [
+              0,
+              188
+            ],
+            [
+              726,
+              188
+            ],
+            [
+              726,
+              570
+            ],
+            [
+              0,
+              570
+            ]
+          ],
+          "selector": "reviewed_raster",
+          "role": "inspection_box_only_not_a_mask"
+        }
+      ]
+    },
+    {
+      "painting_id": "rd004",
+      "source_sha256": "b46dcf8bfd749855bd0c6170789531d9e1669e34ea46f241ada2ec5250a0de64",
+      "processed_sha256": "3271049eca558d5b4513d4abc7c400e1c918307a31dede2af58929cf45311c63",
+      "review_status": "pending",
+      "prior_visual_review": "accepted_by_user_2026-11-15",
+      "target_description": "Visible neutral-filled lacunae interrupt the blue sky and foliage. Targets are missing painted content within the panel; ornamental heads, birds and painted pale surfaces are excluded. This is a painted garden, rather than an oil landscape. Photo: Tyler Bell; CC BY 2.0.",
+      "selection_notes": "Other physical deterioration may remain outside the repair mask; it is outside this restoration target, not automatically model failure. No clean reference exists. Prior neutral fills/retouching are present; do not describe the photograph as untreated fresh damage.",
+      "reviewed_mask_path": "data/raw/real_damage/annotations/rd004.png",
+      "reviewed_mask_sha256": "c7de1258ea0123edaa0b08e602c635e7ca7593e04518e6ebbb702c1a587356c4",
+      "regions": [
+        {
+          "polygon_xy": [
+            [
+              305,
+              160
+            ],
+            [
+              767,
+              160
+            ],
+            [
+              767,
+              339
+            ],
+            [
+              305,
+              339
+            ]
+          ],
+          "selector": "reviewed_raster",
+          "role": "inspection_box_only_not_a_mask"
+        }
+      ]
+    },
+    {
+      "painting_id": "rd005",
+      "source_sha256": "ea6ee0a9bc0f0745682bfac6924d42778bd513e8e0ee2c2495ebf9dba4b40e62",
+      "processed_sha256": "91d21beca9a7388471f0eeafd4d65968912566550568031afee15c3a2171a9e8",
+      "review_status": "pending",
+      "prior_visual_review": "accepted_by_user_2026-11-15",
+      "target_description": "Selected fracture network and an exposed loss at a crack junction. Pale architecture is preserved. Some abrasion and fine cracks remain outside the repair target. Photograph: BeakheadIntrados; CC BY-SA 4.0.",
+      "selection_notes": "Other physical deterioration may remain outside the repair mask; it is outside this restoration target, not automatically model failure. No clean reference exists.",
+      "reviewed_mask_path": "data/raw/real_damage/annotations/rd005.png",
+      "reviewed_mask_sha256": "edeeb8061297298423cdf5e514301bf6f8a2ea36edf0ce17d80f0984b7b1b1f8",
+      "regions": [
+        {
+          "polygon_xy": [
+            [
+              0,
+              189
+            ],
+            [
+              767,
+              189
+            ],
+            [
+              767,
+              577
+            ],
+            [
+              0,
+              577
+            ]
+          ],
+          "selector": "reviewed_raster",
+          "role": "inspection_box_only_not_a_mask"
+        }
+      ]
+    },
+    {
+      "painting_id": "rd006",
+      "source_sha256": "22c886d958075f3e470b0dd5b566ffe4a8e62357e5a5a4b25595ad6e02b8a460",
+      "processed_sha256": "39ea34daf2dcd662fb4d32139356cea41916fa13f97bfdcccb4665fce336b581",
+      "review_status": "pending",
+      "prior_visual_review": "accepted_by_user_2026-11-15",
+      "target_description": "Selected lower central neutral infill/lacuna. Historical photographs show loss in this lower dado, and the museum conservation report describes fills and retouching. This is not untreated fresh damage: the target lacks depicted content, while other repaired or abraded areas remain. Source: The Met, CC0.",
+      "selection_notes": "Other physical deterioration may remain outside the repair mask; it is outside this restoration target, not automatically model failure. No clean reference exists. Prior neutral fills/retouching are present; do not describe the photograph as untreated fresh damage.",
+      "reviewed_mask_path": "data/raw/real_damage/annotations/rd006.png",
+      "reviewed_mask_sha256": "96d97369765f5ea9f6fc92414841183e587062b053ad576a0e470f040957fc93",
+      "regions": [
+        {
+          "polygon_xy": [
+            [
+              202,
+              490
+            ],
+            [
+              316,
+              490
+            ],
+            [
+              316,
+              569
+            ],
+            [
+              202,
+              569
+            ]
+          ],
+          "selector": "reviewed_raster",
+          "role": "inspection_box_only_not_a_mask"
+        }
+      ]
+    },
+    {
+      "painting_id": "rd007",
+      "source_sha256": "5780dae1040b5b06aca35b44b141e4edf8b7ad46b9b203d08fe9ca52250e4114",
+      "processed_sha256": "6b5c659665e8a05f7c8a9a8856674682dbce82e78e6bb3eb1fff25ea9fe2f843",
+      "review_status": "pending",
+      "prior_visual_review": "accepted_by_user_2026-11-15",
+      "target_description": "Local contrast selection across the visible crack network in the black field. No dilation; a selected digital repair target, not conservator-validated condition mapping.",
+      "selection_notes": "Other physical deterioration may remain outside the repair mask; it is outside this restoration target, not automatically model failure. No clean reference exists.",
+      "reviewed_mask_path": "data/raw/real_damage/annotations/rd007.png",
+      "reviewed_mask_sha256": "e0e59a312fa07c99353dbdca57ae0205d1208b183ba7d6e5683c3a79fccae012",
+      "regions": [
+        {
+          "polygon_xy": [
+            [
+              127,
+              128
+            ],
+            [
+              644,
+              128
+            ],
+            [
+              644,
+              645
+            ],
+            [
+              127,
+              645
+            ]
+          ],
+          "selector": "reviewed_raster",
+          "role": "inspection_box_only_not_a_mask"
+        }
+      ]
+    },
+    {
+      "painting_id": "rd008",
+      "source_sha256": "84936585268bf1d4ce6626895f17c6128f268848f55f8f61f5886ea7790cbae1",
+      "processed_sha256": "1efdaac92e4f34232c735d47363ad72bcabbee4e26e071995249c968372371ae",
+      "review_status": "pending",
+      "prior_visual_review": "accepted_by_user_2026-11-15",
+      "target_description": "Selected exposed-ground losses near the upper edge plus a visibly worn vertical zone. Not a complete condition map. The category is fantastical imagery, not a claim that this 18th-century work belongs to historical Surrealism. Coverage is close to 2%; the user accepted this scope in visual review.",
+      "selection_notes": "Other physical deterioration may remain outside the repair mask; it is outside this restoration target, not automatically model failure. No clean reference exists.",
+      "reviewed_mask_path": "data/raw/real_damage/annotations/rd008.png",
+      "reviewed_mask_sha256": "07a73f8d0c2316b4cdb1433a65ea3f698f25a55e430aa2f29a04b2b116482581",
+      "regions": [
+        {
+          "polygon_xy": [
+            [
+              2,
+              107
+            ],
+            [
+              767,
+              107
+            ],
+            [
+              767,
+              529
+            ],
+            [
+              2,
+              529
+            ]
+          ],
+          "selector": "reviewed_raster",
+          "role": "inspection_box_only_not_a_mask"
+        }
+      ]
+    },
+    {
+      "painting_id": "rd009",
+      "source_sha256": "22ced91fd0687bfd22691f9d1cf262d6d15edd9330036a8a4dc9ac7c834ab97d",
+      "processed_sha256": "9119132e86a79b5f22e375bcb72703dbd54485d6b545cead45197a589128f689",
+      "review_status": "pending",
+      "prior_visual_review": "accepted_by_user_2026-11-15",
+      "target_description": "Visible tear lines and flaking cross the drapery, figures and background. Bright painted folds and skin highlights have exclusions. Texture-focused figurative example: the category refers to the rendering of fabrics and painterly surfaces, not to the damage itself.",
+      "selection_notes": "Other physical deterioration may remain outside the repair mask; it is outside this restoration target, not automatically model failure. No clean reference exists.",
+      "reviewed_mask_path": "data/raw/real_damage/annotations/rd009.png",
+      "reviewed_mask_sha256": "ee04b9b974add1dcf2cc389c7903216ed87d9eca24b3086d0fafc0aea98d637c",
+      "regions": [
+        {
+          "polygon_xy": [
+            [
+              5,
+              72
+            ],
+            [
+              760,
+              72
+            ],
+            [
+              760,
+              693
+            ],
+            [
+              5,
+              693
+            ]
+          ],
+          "selector": "reviewed_raster",
+          "role": "inspection_box_only_not_a_mask"
+        }
+      ]
+    },
+    {
+      "painting_id": "rd010",
+      "source_sha256": "4e81747a8fba51289fc1a987b8018b630140e970fcd5d19394dc703f46b0a129",
+      "processed_sha256": "583a9aebe120181b51f804e45669a5b779dfa2cc9ac769400a6a795692619791",
+      "review_status": "pending",
+      "prior_visual_review": "accepted_by_user_2026-11-15",
+      "target_description": "Clearly visible light paint-loss flakes around the figure and background. Selected flakes are masked; overall surface deterioration and photographic grain remain. A painterly figurative case, not a claim that scan grain is paint texture. The source PNG has a fully opaque alpha channel: RGB conversion drops only that channel before the unchanged preprocessing.",
+      "selection_notes": "Other physical deterioration may remain outside the repair mask; it is outside this restoration target, not automatically model failure. No clean reference exists. Fully opaque alpha is removed in memory without changing RGB values, before the unchanged canonical colour policy.",
+      "reviewed_mask_path": "data/raw/real_damage/annotations/rd010.png",
+      "reviewed_mask_sha256": "933929185f9d7477b89a62a878de2fb565d5f124f8d61a6cec6e10aec25292be",
+      "regions": [
+        {
+          "polygon_xy": [
+            [
+              131,
+              4
+            ],
+            [
+              635,
+              4
+            ],
+            [
+              635,
+              757
+            ],
+            [
+              131,
+              757
+            ]
+          ],
+          "selector": "reviewed_raster",
+          "role": "inspection_box_only_not_a_mask"
+        }
+      ]
+    }
+  ]
+}

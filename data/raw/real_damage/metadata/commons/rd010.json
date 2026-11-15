@@ -1,0 +1,100 @@
+{
+  "batchcomplete": "",
+  "query": {
+    "pages": {
+      "101257041": {
+        "pageid": 101257041,
+        "ns": 6,
+        "title": "File:HidakaYasunori-Nude-before restoration.png",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "timestamp": "2021-03-09T12:59:31Z",
+            "size": 51872796,
+            "width": 3546,
+            "height": 5287,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/3/36/HidakaYasunori-Nude-before_restoration.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:HidakaYasunori-Nude-before_restoration.png",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=101257041",
+            "sha1": "9ed51ca23f91ee8bf602c0fd1b2e6f860e0e1e77",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2021-03-09 12:59:31",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "Nude",
+                "source": "commons-desc-page"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "Hidaka Yasunori|PD-Japan|PD-old-50-1996|PD-scan (PD-old-50-1996)|Paintings without Wikidata item|PD-old missing SDC copyright status",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Artist": {
+                "value": "Hidaka Yasunori",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "野見山暁治・宗左近・安田武『祈りの画集 戦没画学生の記録』日本放送出版協会、1977年",
+                "source": "commons-desc-page"
+              },
+              "Permission": {
+                "value": "According to Japanese <a rel=\"nofollow\" class=\"external text\" href=\"https://web.archive.org/web/20181002142928/http://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=345AC0000000048&amp;openerCode=1\">Copyright Law (June 1, 2018 grant)</a> the copyright on this work has expired and is as such <b><a href=\"https://en.wikipedia.org/wiki/public_domain\" class=\"extiw\" title=\"w:public domain\">public domain</a></b>. According to articles 51, 52, 53 and 57 of the copyright laws of Japan, under the jurisdiction of the Government of Japan works enter the public domain 50 years after the death of the creator (there being multiple creators, the creator who dies last) or 50 years after publication for anonymous or pseudonymous authors or for works whose copyright holder is an organization.<br>\n<p><small><b>Note:</b> <b>The enforcement of the revised Copyright Act on December 30, 2018 extended the copyright term of works whose copyright was valid on that day to 70 years. Do not use this template for works of the copyright holders who died after 1967.</b></small>\n</p>\n<small>Use <a href=\"//commons.wikimedia.org/wiki/Template:PD-Japan-oldphoto\" title=\"Template:PD-Japan-oldphoto\"><span style=\"font-family:monospace,monospace;\">{{PD-Japan-oldphoto}}</span></a> for photos published before December 31, 1956, and <a href=\"//commons.wikimedia.org/wiki/Template:PD-Japan-film\" title=\"Template:PD-Japan-film\"><span style=\"font-family:monospace,monospace;\">{{PD-Japan-film}}</span></a> for films produced prior to 1953. Public domain works must be out of copyright in both the United States and in the source country of the work in order to be hosted on the Commons. The file must have an additional <a href=\"//commons.wikimedia.org/wiki/Commons:Copyright_tags#Non-U.S._works\" title=\"Commons:Copyright tags\">copyright tag</a> indicating the copyright status in the United States. See also <a href=\"//commons.wikimedia.org/wiki/Commons:Copyright_rules_by_territory/Japan\" title=\"Commons:Copyright rules by territory/Japan\">Copyright rules by territory</a>.</small>",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "LicenseShortName": {
+                "value": "Public domain",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Public domain",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "false",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Copyrighted": {
+                "value": "False",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "pd",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ],
+        "revisions": [
+          {
+            "revid": 1223090877,
+            "parentid": 631615730,
+            "timestamp": "2026-05-30T21:18:32Z"
+          }
+        ]
+      }
+    }
+  }
+}

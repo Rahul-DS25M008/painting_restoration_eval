@@ -13,6 +13,113 @@ The machine-readable YAML is authoritative for automated preflight. This file
 explains the scientific meaning of that registry and records the decisions that
 must not be silently reversed during later notebook planning.
 
+### D03 real-damage preparation closeout — 2026-11-15
+
+The user accepted the revised final ten (two per operational visual category),
+replacing the first cohort after reviewing undersized repair masks. Cohort
+v2.0.0 retains only the original rd007 source; reused rd identifiers must always
+be joined with dataset version and source hash. The old acquisition collection,
+unfinished outputs and notebook snapshot are preserved in ignored local recovery
+storage. The current saved notebook has executed the replacement opening and
+Batches 1–8 for v2.0.0: 43/43 preflight, 66/66 source, 35/35 preprocessing
+smoke, 63/63 full-preparation, 43/43 mask-review, 49/49 geometry/eligibility and
+35/35 canonical-publication and 45/45 completion checks passed (379/379
+combined, zero failures). The five source/processed
+previews were accepted by the user; their PNG hashes match the revised annotation
+bindings. Source validation took 4.63 seconds and the smoke batch 8.86 seconds.
+Batch 4 took 23.79 seconds; its 40 accumulated output files and ten input/mask
+hash pairs were checked. The user accepted the saved mask previews. Batch 5
+finished in 14.13 seconds and saved 33 review artifacts (73 accumulated D03
+files). The user accepted the resizing effects after inspecting its previews;
+that decision is bound to the complete saved Batch 5 file set and the ten
+input/canonical-mask/inference-mask hash triples. The 768-pixel approval concerns
+selected repair targets, not an exhaustive condition map. Review timestamps
+identify when the existing chat approval was recorded. Earlier pending-review
+checkpoints remain intact as history. Batch 6 completed in 6.82 seconds, applied
+the acceptance decision and saved six prepared tables plus a checkpoint. Their
+hashes, producer hash and ten input/mask bindings were verified. All ten cases
+have four eligible input/mask pairings (40 rows; 80 accumulated D03 files).
+Eligibility concerns input/mask compatibility; runtime and weight checks belong
+to D04. Its separate settings preserve the unchanged Batch 1–5 configuration.
+Batch 7 completed in 9.27 seconds using a separate helper/configuration to publish eight tables,
+ten reviewed masks alongside the ten existing inputs, two overview figures,
+an HTML report with embedded images, validation and manifests. The canonical
+package contains 34 files; 14 artifact records cover its data, images,
+figures, report and validation. The run manifest pins artifacts.csv; both
+manifests are excluded from self-checksumming. Batch 8 completed in 5.40 seconds
+at `2026-11-15T01:07:42.388740Z`, finalizing run
+`run_d03_6a2e02fcf9a4b65a612b7cdf` as `completed`, with the completion gate and
+downstream dataset readiness both true. All artifact and scientific file hashes
+match; 111 files comprise 34 canonical files and 77 retained work/history files.
+The user accepted the figures/report and updated the notebook's opening metadata
+to Finished/Finished/Yes. Only validation and the two manifests changed during
+completion; before/after metadata is retained under `work/completion_commit/`.
+The 14 canonical artifact records are registered in `project_paths.json` and
+the separate `real_damage_supplement` coverage record. These are supplemental
+preparation results, not additions to the Controlled-300 restoration population.
+D04 is next for contract planning; runtime/weights checks and inference remain
+unexecuted. D05 remains an optional expert study.
+
+The bounded D03 source/preparation package is committed in ordinary Git with
+exact-byte attributes, avoiding inherited Git LFS filters. Source photographs,
+licence snapshots, reviewed annotations and the retained preparation evidence
+stay together; no duplicate HF release is needed for this checkpoint. D04's
+future candidate/diagnostic storage requires its own scope review. The frozen
+Zenodo v1.0.0 record and deployed dashboard are unchanged.
+
+The ten selected masks and their source/canonical-image hashes are now recorded
+as acquisition annotations. User visual acceptance precedes model outcomes.
+For Antigone (rd002), requested flaking on the soldier and cliff was added without
+dilation: 9,025 to 14,486 selected pixels, 2.1802% to 3.4994% of content. The user
+permits this particular mask to exceed 15% if accurate tracing requires it;
+that exception is not needed at present. The other nine accepted masks are
+unchanged. Batch 5 verified the canonical approval binding, and its 512-pixel
+views were accepted. All ten resized masks remain nonempty. Whole-component
+loss is at most 4.3541% of selected source pixels (rd009), distinct from other
+resampling changes to surviving edges. These are mask-geometry measurements,
+not restoration-quality results. D03 preparation is complete.
+Residual unselected damage is outside the repair target, not automatically a
+restoration failure. Neutral infills and prior treatment on wall paintings are
+explicitly distinguished from untreated losses; categories are operational.
+
+The input audit now handles saved Commons licences and Met CC0 object metadata.
+CC BY 2.0 and CC BY-SA 4.0 photographs retain attribution, licence links and
+adaptation conditions. A fully opaque RGBA PNG is normalized to RGB in memory;
+original bytes and RGB values remain unchanged. Shared preprocessing and model
+files retain their original hashes. No reference-fidelity scores are assigned
+to real-damage interiors, and the frozen Controlled-300 evidence is unchanged.
+
+### Superseded initial real-damage preparation — 2026-11-14
+
+The following is a historical v1.0.0 snapshot. Its pending states and paths
+describe that superseded run, whose files are retained in ignored recovery
+storage; current cohort v2.0.0 completion is recorded above.
+
+The user approved all ten candidate photographs, two per existing category.
+The immutable source bytes, source-page metadata snapshots and approval record
+are retained under `data/raw/real_damage/`. The eight-batch D03 contract was
+approved in chat and is configured in `config/datasets/real_damage_10.yaml`;
+the saved Batch 1 passed 33 preflight checks and Batch 2 passed all 66 source
+checks (99/99 combined). All ten sources were accepted; the recorded overlap
+screen found no exact-hash, normalized artist/title or near-duplicate matches
+against Controlled-300. Saved Batch 3 passed 35 checks (134/134 combined),
+and the user accepted its five previews. It used the unchanged N02 processing
+helper and temporary files under D03's `work/preprocessing_smoke/`.
+Batch 4 is prepared for user execution: all ten inputs and assistant-prepared
+candidate repair masks, with explicit polygons/pixel rules and source/input
+hash bindings. The user requested no manual mask drawing. Candidate recipes
+are recorded in `config/datasets/real_damage_annotation_candidates.json` and
+are not ground-truth damage labels or exhaustive segmentation. Selection was
+made before restoration outcomes; ambiguous additional damage is left out.
+Candidate overlays and close-ups remain under `work/annotation_candidates/`.
+Their review approval, 512-pixel mask checks and dataset completion remain
+pending. Additive Batch 4 setup refreshes configuration and preflight in place,
+retaining earlier evidence only when its scientific inputs are unchanged.
+This is acquisition/preparation status, not new measured restoration evidence.
+The separate scope has no clean reference and cannot contribute interior
+reference-fidelity scores to Controlled-300. Existing evidence-coverage and
+project-path completion entries remain unchanged until D03 passes its gate.
+
 ### Post-publication reporting corrections — 2026-10-03
 
 The [errata and corrected exports](errata/2026-10-03/README.md) supersede the

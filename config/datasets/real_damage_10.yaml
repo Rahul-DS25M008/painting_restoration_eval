@@ -1,0 +1,207 @@
+config_schema_version: real_damage_preparation_config.v1
+config_version: 2.1.0
+contract_status: approved
+contract_approval_date: '2026-11-14'
+notebook:
+  id: D03
+  stem: d03_real_damage_dataset_preparation
+  origin: New approved supplemental real-damage study
+  output_root: outputs/d03_real_damage_dataset_preparation
+  batch_count: 8
+  contract_authority: user_approved_eight_batch_contract_in_chat
+dataset:
+  dataset_id: painting_restoration_real_damage
+  dataset_version: 2.0.0
+  dataset_scope: real_damage_10
+  experiment_id: real_damage_reviewed_mask
+  source_selection_status: approved_by_user
+  source_selection_date: '2026-11-15'
+  expected_paintings: 10
+  expected_per_category: 2
+  painting_ids:
+  - rd001
+  - rd002
+  - rd003
+  - rd004
+  - rd005
+  - rd006
+  - rd007
+  - rd008
+  - rd009
+  - rd010
+  categories:
+  - portrait_figure
+  - landscape_natural
+  - architecture_structured
+  - abstraction_surrealism
+  - high_texture_brushwork
+  has_clean_reference: false
+inputs:
+  approved_sources: data/raw/real_damage/metadata/approved_sources.json
+  annotation_recipe: config/datasets/real_damage_annotation_candidates.json
+  mask_review_decisions: config/datasets/real_damage_mask_review_decisions.json
+  inventory: outputs/inventory/project_file_inventory.csv
+  inventory_run: outputs/inventory/inventory_run.json
+  project_paths: outputs/inventory/project_paths.json
+  evidence_audit: docs/evidence_dependency_audit.md
+  evidence_coverage: config/evaluation/evidence_coverage.yaml
+  implementation_guidelines: docs/refactoring_implementation_guidelines.md
+  notebook_roadmap: docs/final_notebook_roadmap.md
+  controlled_artworks: outputs/01_dataset_verification/data/artworks.csv
+  controlled_dataset_manifest: outputs/01_dataset_verification/manifests/run_manifest.json
+  controlled_dataset_config: config/datasets/controlled_300.yaml
+  preprocessing_config: config/preprocessing/canonical_768.yaml
+  region_config: config/experiments/evaluation_contract.yaml
+  model_configs:
+    opencv_telea: config/experiments/opencv_telea.yaml
+    lama: config/experiments/lama.yaml
+    hint_places2: config/experiments/hint.yaml
+    stable_diffusion_inpainting: config/experiments/stable_diffusion.yaml
+  helper_sources:
+    real_damage_dataset: src/restoration_eval/real_damage_dataset.py
+    real_damage_preparation: src/restoration_eval/real_damage_preparation.py
+    real_damage_review: src/restoration_eval/real_damage_review.py
+    dataset_verification: src/restoration_eval/dataset_verification.py
+    paths: src/restoration_eval/paths.py
+    schemas: src/restoration_eval/schemas.py
+    manifests: src/restoration_eval/manifests.py
+    validation: src/restoration_eval/validation.py
+    preprocessing: src/restoration_eval/preprocessing.py
+    masks: src/restoration_eval/masks.py
+    regions: src/restoration_eval/regions.py
+  source_selection_review: data/raw/real_damage/metadata/source_selection_review.json
+schemas:
+  approved_sources: real_damage_approved_sources.v1
+  artworks: real_damage_artworks.v1
+  preprocessed_images: real_damage_preprocessed_images.v1
+  masks: real_damage_masks.v1
+  mask_review: real_damage_mask_review.v1
+  case_registry: real_damage_cases.v1
+  model_eligibility: real_damage_model_eligibility.v1
+  mask_geometry: real_damage_mask_geometry.v1
+  inference_mask_audit: real_damage_inference_mask_audit.v1
+  report: real_damage_dataset_report.v1
+preprocessing:
+  reuse_helper: restoration_eval.preprocessing.build_preprocessed_image
+  reuse_config_sections:
+  - processing
+  - orientation
+  - color
+  canvas_width: 768
+  canvas_height: 768
+  output_mode: RGB
+  crop_content: false
+  source_pixels_modified_before_preprocessing: false
+  source_policy: retain_original_bytes
+  source_normalization: accept_RGB_or_drop_fully_opaque_alpha_in_memory_without_RGB_changes
+annotation:
+  mask_schema_version: real_damage_masks.v1
+  review_schema_version: real_damage_mask_review.v1
+  canonical_mask_mode: L
+  canonical_mask_values:
+  - 0
+  - 255
+  missing_region_value: 255
+  mask_coordinate_space: preprocessed_768_canvas
+  coordinate_convention: xyxy_exclusive_zero_based
+  one_primary_mask_per_painting: true
+  reviewed_target_scope: clearly_identifiable_visible_damage
+  candidate_masks_require_human_review: true
+  inspection_boxes_are_masks: false
+  automatic_dilation_allowed: false
+  padding_overlap_allowed: false
+  requires_nonempty_mask: true
+  reviewer_approval_binds_image_and_mask_hashes: true
+  review_before_restoration_outcomes: true
+  allowed_final_review_statuses:
+  - approved
+  - approved_with_ambiguity
+  - excluded
+  inference_scale_check:
+    size: 512
+    resize: nearest
+    empty_mask_action: block_sd_eligibility
+    record_disappearing_components: true
+    material_geometry_change_requires_review: true
+  coverage_guidance_percent:
+  - 2
+  - 15
+  coverage_upper_bound_exceptions:
+  - rd002
+downstream:
+  primary_models:
+  - opencv_telea
+  - lama
+  - hint_places2
+  - stable_diffusion_inpainting
+  planned_primary_candidates: 40
+  primary_seed: 2026
+  sd_prompt_variant: p00_generic
+  proposed_sd_seeds:
+  - 2026
+  - 2027
+  - 2028
+  - 2029
+  proposed_additional_sd_candidates: 30
+  d04_contract_approval_required_before_inference: true
+  clean_reference_placeholder_allowed: false
+  synthetic_comparison_metrics_pooled_with_real: false
+  synthetic_comparator_selection: before_outcome_inspection
+outputs:
+  artworks: data/artworks.csv
+  preprocessed_images: data/preprocessed_images.csv
+  masks: data/masks.csv
+  mask_review: data/mask_review.csv
+  case_registry: data/case_registry.csv
+  model_eligibility: data/model_eligibility.csv
+  mask_geometry: metrics/mask_geometry.csv
+  inference_mask_audit: metrics/inference_mask_audit.csv
+  processed_image_template: images/inputs/{painting_id}.png
+  mask_template: images/masks/{mask_id}.png
+  source_overview: figures/source_overview.png
+  mask_review_atlas: figures/mask_review_atlas.png
+  report: reports/real_damage_dataset.html
+  run_manifest: manifests/run_manifest.json
+  artifacts: manifests/artifacts.csv
+  validation: validation/checks.csv
+  work_root: work
+preparation:
+  candidate_directory: work/annotation_candidates
+  candidate_mask_template: masks/{painting_id}.png
+  candidate_preview_template: previews/{painting_id}.png
+  candidate_table: candidate_masks.csv
+  preprocessing_checkpoint: preprocessed_images.csv
+  candidate_atlas: mask_candidates_atlas.png
+  recipe_snapshot: annotation_recipe.json
+  candidate_masks_are_final: false
+  user_drawing_required: false
+  human_review_required_before_inference: true
+  prior_visual_review: user_accepted_batch_3_previews_in_chat
+smoke:
+  directory: work/preprocessing_smoke
+  image_filename_template: '{painting_id}.png'
+  preview_filename: preprocessing_preview.png
+  figure_dpi: 150
+execution:
+  assistant_executes_notebook: false
+  user_creates_and_edits_notebook: true
+  smoke_painting_ids:
+  - rd001
+  - rd003
+  - rd005
+  - rd007
+  - rd009
+  progress_interval_paintings: 1
+  active_compute_estimate_minutes:
+  - 5
+  - 20
+  human_annotation_estimate_hours:
+  - 2
+  - 6
+  annotation_estimate_is_provisional: true
+  checkpoint_after_each_reviewed_painting: true
+  resume_requires_matching_input_config_and_mask_hashes: true
+  automatic_cleanup: false
+  supported_python_minors:
+  - '3.11'
+  - '3.12'

@@ -1,0 +1,99 @@
+{
+  "batchcomplete": "",
+  "query": {
+    "pages": {
+      "67859416": {
+        "pageid": 67859416,
+        "ns": 6,
+        "title": "File:Alberto Pasini - Paardenweide in Algerië - SK-A-1895 - Rijksmuseum.jpg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "timestamp": "2018-03-31T00:37:17Z",
+            "size": 591160,
+            "width": 2500,
+            "height": 1547,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Alberto_Pasini_-_Paardenweide_in_Algeri%C3%AB_-_SK-A-1895_-_Rijksmuseum.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Alberto_Pasini_-_Paardenweide_in_Algeri%C3%AB_-_SK-A-1895_-_Rijksmuseum.jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=67859416",
+            "sha1": "dbfe3c26365036211fff7467ae3649750ae01de1",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2018-03-31 00:37:17",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "<div class=\"fn\">\nPaardenweide in Algerië</div>",
+                "source": "commons-desc-page"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "Italian paintings in the Rijksmuseum Amsterdam|PD-old-100-expired|PD-Art (PD-old-auto-expired)|Artworks with Wikidata item|Artworks with known accession number|CC-PD-Mark|Damaged paintings|19th-century paintings in the Rijksmuseum Amsterdam|Artworks with Wikidata item missing genre|Artworks digital representation of 2D work|Landscape paintings in the Rijksmuseum Amsterdam|Paintings by Alberto Pasini",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Artist": {
+                "value": "<bdi><a href=\"https://en.wikipedia.org/wiki/en:Alberto_Pasini\" class=\"extiw\" title=\"w:en:Alberto Pasini\"><span title=\"Italian painter (1826-1899)\">Alberto Pasini</span></a></bdi>",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "1880 <span class=\"mw-valign-text-top noprint\" typeof=\"mw:File/Frameless\"><a href=\"https://www.wikidata.org/wiki/Q18607783#P571\" title=\"Edit this at Wikidata\"><img alt=\"Edit this at Wikidata\" src=\"https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/OOjs_UI_icon_edit-ltr-progressive.svg/20px-OOjs_UI_icon_edit-ltr-progressive.svg.png?utm_source=commons.wikimedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail\" decoding=\"async\" loading=\"lazy\" width=\"10\" height=\"10\" class=\"mw-file-element\" data-file-width=\"20\" data-file-height=\"20\"></a></span>",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<a rel=\"nofollow\" class=\"external free\" href=\"https://www.rijksmuseum.nl/nl/collectie/SK-A-1895\">https://www.rijksmuseum.nl/nl/collectie/SK-A-1895</a>",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "Public domain",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Public domain",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "false",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Copyrighted": {
+                "value": "False",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "pd",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ],
+        "revisions": [
+          {
+            "revid": 1036581696,
+            "parentid": 957370370,
+            "timestamp": "2025-05-27T13:58:58Z"
+          }
+        ]
+      }
+    }
+  }
+}

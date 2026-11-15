@@ -1,0 +1,102 @@
+{
+  "continue": {
+    "iistart": "2014-02-06T06:56:55Z",
+    "continue": "||revisions"
+  },
+  "query": {
+    "pages": {
+      "31011870": {
+        "pageid": 31011870,
+        "ns": 6,
+        "title": "File:Kazimir Malevich, 1915, Black Suprematic Square, oil on linen canvas, 79.5 x 79.5 cm, Tretyakov Gallery, Moscow.jpg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "timestamp": "2023-12-19T22:37:37Z",
+            "size": 1449829,
+            "width": 1718,
+            "height": 1718,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Kazimir_Malevich%2C_1915%2C_Black_Suprematic_Square%2C_oil_on_linen_canvas%2C_79.5_x_79.5_cm%2C_Tretyakov_Gallery%2C_Moscow.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Kazimir_Malevich,_1915,_Black_Suprematic_Square,_oil_on_linen_canvas,_79.5_x_79.5_cm,_Tretyakov_Gallery,_Moscow.jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=31011870",
+            "sha1": "8297c4af84b2d8ef388580550e213f53d21377a5",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2023-12-19 22:37:37",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "<div class=\"fn\">\n<i>Black Square (Black Suprematic Square)</i></div>",
+                "source": "commons-desc-page"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "1915 paintings from Russia|PD-Art (PD-Russia-expired)|Artworks with Wikidata item|User:Geagea/Template to add|Black Square (Malevich, 1915)|PD-Art missing SDC copyright status|Artworks digital representation of 2D work|Geometric abstract paintings|Works shown at the Last Futurist Exhibition of Paintings 0,10|Oil on linen",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Artist": {
+                "value": "<bdi><a href=\"https://en.wikipedia.org/wiki/en:Kazimir_Malevich\" class=\"extiw\" title=\"w:en:Kazimir Malevich\"><span title=\"Russian avant-garde artist of Polish ancestry. Founder of the Suprematist movement (1879–1935)\">Kazimir Malevich</span></a></bdi>",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "1915<div style=\"display: none;\">date QS:P571,+1915-00-00T00:00:00Z/9</div>",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<a rel=\"nofollow\" class=\"external text\" href=\"http://www.tretyakovgallery.ru/en/collection/_show/image/_id/378\">Tretyakov Gallery, Moscow</a>, <a rel=\"nofollow\" class=\"external text\" href=\"https://my.tretyakov.ru/app/masterpiece/8403\">My Tretyakov</a>",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "Public domain",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Public domain",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "false",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Copyrighted": {
+                "value": "False",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "pd",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ],
+        "revisions": [
+          {
+            "revid": 978758765,
+            "parentid": 871472258,
+            "timestamp": "2025-01-03T00:21:33Z"
+          }
+        ]
+      }
+    }
+  }
+}

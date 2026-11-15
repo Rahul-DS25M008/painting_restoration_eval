@@ -1,0 +1,19 @@
+{
+  "schema_version": "real_damage_eligibility_checkpoint.v1",
+  "helper_version": "1.0.0",
+  "helper_sha256": "d230388e01ebe954de059812a614afa86be3e49ed04c4a93687aa201562e39a7",
+  "scale_decisions_sha256": "e206e95c9a66072c0b9bf694cab234641c5ac9bdc6b66433ffcc15594c870b8c",
+  "eligibility_config_sha256": "0a7ff08f530fc9f3375e8cdc0b24dc00ef2fba52ddc9c443ca24969345cd6a48",
+  "dataset_version": "2.0.0",
+  "canonical_artifacts_persisted": false,
+  "completion_gate_passed": false,
+  "runtime_status": "not_checked_D04",
+  "files_sha256": {
+    "masks.csv": "b2b2c37a38bab884824be974cca5108287bbfc78002585b4e6a5020ac21bf544",
+    "mask_geometry.csv": "b247eebf73aec27cd041d40756955b3af9d4b0468e17375f4b2017d6ecd01812",
+    "mask_review.csv": "14cd171786ff201a7f9dc4c03f42a13358399f461680469b8a34bf266c6da37a",
+    "inference_mask_audit.csv": "5300f961e576c0c8335d325bd7c22702c3c8cc2c5ca05ab85bc8713e1330e058",
+    "case_registry.csv": "98a09426e5283c1f0720a379947c63cfb03540dceea2a729d29efb5b13c950df",
+    "model_eligibility.csv": "88db0f735fb6877f8084ae04d0c4ca0d9b01c028ebad8e181d5c329e837a2778"
+  }
+}

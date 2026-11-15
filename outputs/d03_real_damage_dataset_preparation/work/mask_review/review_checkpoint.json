@@ -1,0 +1,15 @@
+{
+  "schema_version": "real_damage_mask_review_checkpoint.v1",
+  "helper_version": "1.0.0",
+  "helper_sha256": "39af41704ea36bf76516079c1bb2d893832f41cee025332360e1520af750fcaf",
+  "config_content_sha256": "0cd7b4ecbf18d792a976eb8336313d71527c203a54d4cc3cd63c05542287654a",
+  "dataset_version": "2.0.0",
+  "decisions_sha256": "da788f116a720a7bb336befbfb0db2742daa2d6ae8aa327fe99e98e5fdace226",
+  "batch_4_checkpoint_sha256": {
+    "preprocessed_images": "a72997ee9dcd6c2fccc5991a40e6a2df472e0985002d069d93452cc0ca5d57f1",
+    "mask_candidates": "ef6cb2656af55eb646fa54529765849e51b1fa563e28ca52b816147b06fbd555"
+  },
+  "mask_review_status": "approved_at_768",
+  "scale_review_status": "pending",
+  "model_eligibility_status": "not_assessed"
+}
