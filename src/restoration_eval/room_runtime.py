@@ -17,6 +17,7 @@ PREFIXES = {
     "stability_lab": ("stability_",), "trustworthiness": ("trust_",),
     "focused_portrait_review": ("portrait_",), "case_explorer": ("ce_",),
     "research_archive": ("ar_",),
+    "physical_damage_study": ("pd_",),
 }
 
 

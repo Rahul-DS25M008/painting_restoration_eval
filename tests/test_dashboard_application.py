@@ -454,7 +454,7 @@ class DashboardApplicationV2Tests(unittest.TestCase):
         self.assertIn("method-eligible cases", source)
         self.assertIn(
             'aria-label="Open the focused portrait review for Juan de Pareja"',
-            source,
+            (ROOT / "src/restoration_eval/physical_damage_view.py").read_text(encoding="utf-8"),
         )
         self.assertNotIn("restoration-ready", source)
         self.assertNotIn("realistic damage", source.casefold())
@@ -546,11 +546,13 @@ class DashboardApplicationV2Tests(unittest.TestCase):
             )
         self.assertIn('.study-specimen::before', source)
         self.assertIn('border:.24cqw ridge #5a3923', source)
-        self.assertIn('class="portrait-audit-link"', source)
-        self.assertIn('class="portrait-audit-caption">Juan de Pareja', source)
-        self.assertIn('class="portrait-audit-stats"', source)
-        self.assertIn('.study-stage .portrait-audit-stats', source)
-        self.assertIn('font-size:clamp(7px,.68cqw,12px)', source)
+        self.assertIn('supplementary_entry(portrait_audit_uri, population)', source)
+        entry_source = (ROOT / "src/restoration_eval/physical_damage_view.py").read_text(encoding="utf-8")
+        self.assertIn('Supplementary studies', entry_source)
+        self.assertIn('?room=focused_portrait_review&amp;return_room=study_design', entry_source)
+        self.assertIn('?room=physical_damage_study', entry_source)
+        self.assertIn('<strong>Portrait audit</strong>', entry_source)
+        self.assertIn('<strong>Physical damage</strong>', entry_source)
         self.assertIn('@media (max-width: 780px)', source)
         self.assertIn('class="study-wall-emblem upper"', source)
         self.assertIn('class="study-wall-art lower"', source)

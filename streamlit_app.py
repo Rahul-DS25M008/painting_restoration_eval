@@ -46,6 +46,7 @@ ROOM_LABELS = {
     "case_explorer": "Case Explorer",
     "research_archive": "Research Archive",
     "focused_portrait_review": "Focused Portrait Review",
+    "physical_damage_study": "Physical Damage Study",
 }
 
 ROOM_BATCHES = {
@@ -528,7 +529,7 @@ def active_room(config: Mapping[str, Any]) -> str:
         "room",
         str(config["application"]["default_room_id"]),
     )
-    allowed = set(PRINCIPAL_ROOM_IDS) | {"focused_portrait_review"}
+    allowed = set(PRINCIPAL_ROOM_IDS) | {"focused_portrait_review", "physical_damage_study"}
     return requested if requested in allowed else "exhibition_foyer"
 
 
@@ -1165,6 +1166,8 @@ def _render_study_design_legacy(package: DashboardPackage) -> None:
 def render_study_design(package: DashboardPackage) -> None:
     """Render one exact, interactive Study Design state from N34 shards."""
 
+    from restoration_eval.physical_damage_view import supplementary_entry
+
     room = package.load_room("study_design")
     if len(room) != 13:
         raise DashboardContractError("Study Design must contain exactly 13 records")
@@ -1465,20 +1468,7 @@ def render_study_design(package: DashboardPackage) -> None:
     <h3>Study notes</h3>{''.join(note_rows)}
   </section>
 
-  <aside class="portrait-audit" aria-label="Focused portrait audit summary">
-    <h3>Focused<br><span>portrait audit</span></h3>
-    <a class="portrait-audit-link" href="?room=focused_portrait_review&amp;return_room=study_design" target="_self"
-       aria-label="Open the focused portrait review for Juan de Pareja">
-      <img src="{portrait_audit_uri}" alt="Juan de Pareja, the fixed portrait-audit anchor" loading="lazy">
-      <span class="portrait-audit-caption">Juan de Pareja</span>
-    </a>
-    <ul class="portrait-audit-stats" aria-label="Focused portrait audit population">
-      <li>{int(population['d02_portraits_screened'])} portraits screened</li>
-      <li>{int(population['d02_matched_cases'])} matched hand cases</li>
-      <li>{int(population['d02_matched_painting_count'])} paintings</li>
-      <li class="reuse">Reuses existing results.</li>
-    </ul>
-  </aside>
+  {supplementary_entry(portrait_audit_uri, population)}
 
   <figure class="study-wall-emblem upper" aria-hidden="true">
     <svg viewBox="0 0 72 250" preserveAspectRatio="none" focusable="false">
@@ -2527,6 +2517,17 @@ def main() -> None:
             importlib.reload(portrait_view)
             portrait_view._loaded_source_signature = signature
         portrait_view.render_focused_portrait(package, navigation_html("trustworthiness"))
+    elif room_id == "physical_damage_study":
+        import importlib
+        from restoration_eval import physical_damage as physical_data
+        from restoration_eval import physical_damage_view as physical_view
+        signature = tuple(Path(module.__file__).stat().st_mtime_ns
+                          for module in (physical_data, physical_view))
+        if getattr(physical_view, "_loaded_source_signature", None) != signature:
+            importlib.reload(physical_data)
+            importlib.reload(physical_view)
+            physical_view._loaded_source_signature = signature
+        physical_view.render_physical_damage(navigation_html("study_design"))
     else:
         render_pending_room(package, room_id)
 

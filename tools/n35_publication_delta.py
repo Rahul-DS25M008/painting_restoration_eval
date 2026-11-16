@@ -47,6 +47,26 @@ def validation_baseline(root, relative, current):
     return entry["before_source"]
 
 
+def physical_room_baseline(root, relative, current):
+    """Unwind only the exact approved supplementary-room preview delta.
+
+    The original eight-room freeze and scientific producer records stay intact.
+    This receipt records implementation scope, not cloud or user acceptance.
+    """
+    path = Path(root) / "config/publication/physical_damage_room_delta.json"
+    if not path.is_file():
+        return current
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if data.get("schema") != "physical_damage_room_delta.v1":
+        raise ValueError("Unknown physical-room delta schema")
+    entry = data["files"].get(relative)
+    if entry is None:
+        return current
+    if sha(current) != entry["after_sha256"] or sha(entry["before_source"]) != entry["before_sha256"]:
+        raise ValueError("Unreviewed physical-room change: " + relative)
+    return entry["before_source"]
+
+
 def verify_added_files(root):
     root = Path(root).resolve()
     for relative, expected in receipt(root)["added_files"].items():

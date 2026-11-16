@@ -1,5 +1,17 @@
 # Controlled-300 Dashboard Design Direction
 
+**Supplementary-room design approval (2026-11-16):** the Physical Damage Study
+has an approved [single-room design and interaction record](physical_damage_study_design.md),
+with a [room reference](approved_current/12_physical_damage_study_final.png)
+and a [Study Design entrance reference](approved_current/13_study_design_supplementary_entry.png).
+The extension is implemented and locally tested on `codex/physical-damage-room`;
+see the [local validation record](physical_damage_study_validation.md).
+The author accepted the final local appearance on 2026-11-16. Commit, separate
+branch deployment and merge remain pending.
+It preserves the eight principal rooms and the frozen experimental outputs.
+The implementation and publication statements below describe the existing
+Controlled-300 delivery, not this new supplementary room.
+
 **Publication update (2026-10-02):** [Zenodo v1.0.0](https://doi.org/10.5281/zenodo.23092185)
 is published. Only the existing Research Archive Zenodo plaque lettering and
 popup are updated, using the separate publication receipt. The approved room
