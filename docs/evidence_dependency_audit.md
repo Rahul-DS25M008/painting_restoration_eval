@@ -66,6 +66,8 @@ measurement rows and 220 group summaries. Ten four-seed groups contain sixty
 unique pairs; measurement rows are not independent paintings. The final report
 and saved notebook retain the complete execution sequence and validation history.
 
+The shared historical documentation-input discrepancy in D03 and D04 is retained in the [provenance-exception ledger](provenance_exceptions.md). Scientific output hashes were verified; the unavailable guide bytes are not replaced with a new claimed historical hash.
+
 ### D03 real-damage preparation closeout — 2026-11-15
 
 Visual review accepted the revised final ten (two per operational visual category),
@@ -110,14 +112,15 @@ completion; before/after metadata is retained under `work/completion_commit/`.
 The 14 canonical artifact records are registered in `project_paths.json` and
 the separate `real_damage_supplement` coverage record. These are supplemental
 preparation results, not additions to the Controlled-300 restoration population.
-D04 is next for contract planning; runtime/weights checks and inference remain
-unexecuted. D05 remains an optional expert study.
+At this D03 closeout, D04 runtime/weights checks and inference were the next
+stage. D04 has since completed, as recorded above. The proposed expert study
+remains optional and unexecuted; it does not require another pipeline notebook.
 
 The bounded D03 source/preparation package is committed in ordinary Git with
 exact-byte attributes, avoiding inherited Git LFS filters. Source photographs,
 licence snapshots, reviewed annotations and the retained preparation evidence
 stay together; no duplicate HF release is needed for this checkpoint. D04's
-future candidate/diagnostic storage requires its own scope review. The frozen
+separate candidate/diagnostic storage is recorded in its completed handoff above. The frozen
 Zenodo v1.0.0 record and deployed dashboard are unchanged.
 
 The ten selected masks and their source/canonical-image hashes are now recorded
@@ -388,7 +391,7 @@ manual/idle time; no inferred runtime claim is made.
 The complete bounded delivery (37,249,478 bytes, approximately 35.52 MiB) stays in
 ordinary Git with byte-preserving, non-LFS attributes. No individual file exceeds
 15,302,443 bytes. No new HF bundle is needed; existing bulk publications remain
-on their immutable routes. Zenodo publication is still planned, not completed.
+on their immutable routes. At this 1 October closeout, Zenodo publication was planned; it completed on 2 October, as recorded in the [publication ledger](zenodo_publication.md).
 
 Closeout replaces only N36's 12 registry records with its current canonical
 artifact ledger, retaining warning status and all 233 other records (245 total).
@@ -606,12 +609,12 @@ remain local and notebook-owned, while GitHub is restricted to the compact
 scientific record and verified external publication records. The approved live
 asset target is a public, structured evidence store; the final full-resolution
 target is a versioned Zenodo release; and the final Controlled-300 Streamlit
-application will use a separate lightweight deployment repository. The two
+application was then proposed to use a separate lightweight deployment repository. That proposal was superseded: the completed museum is deployed from this repository's `main` branch. The two
 public Hugging Face dataset repositories are configured, and the candidates
 repository passed a two-file public remote-read, byte-count, and SHA-256 smoke
 test on 2026-09-12. The diagnostics repository subsequently received and
 remotely verified Notebook 13's first applicable bulk metric artifact; the
-Zenodo record remains incomplete. Commit
+Zenodo record was still incomplete at that date; publication completed on 2 October. Commit
 `c4f1650c` applied the approved forward-only tracking boundary: exactly 14,970
 historical N12–N36 image artifacts were removed from the current `main` index,
 with zero unrelated deletions. Every file remains present locally, and all
@@ -682,7 +685,7 @@ blocking or warning failures. All seven artifact types match the E: pilot
 baseline; metric rows increased from 20,800 to 124,800 and calibration rows
 from 130 to 780. N18 contains no spatial heatmaps (N19 owns them), no SDXL
 repeated-seed estimate, and no calibrated confidence score. Its compact Git
-handoff is pending. The largest of its seven files is an approximately 81 MB
+handoff was pending at this September checkpoint and is now complete. The largest of its seven files is an approximately 81 MB
 CSV already tracked in Git LFS, so N18 needs no separate HF publication.
    The existing machine-readable pilot coverage YAML is not
    retroactively relabelled as Controlled-300 evidence.
@@ -2123,10 +2126,12 @@ to imply that the original runs deployed the app.
 
 ### 6.2 Completed Notebook 37 HINT/MAT method-selection extension
 
-Notebook 37 is a completed, separately owned scientific extension. It compared
-HINT and MAT and selected HINT as the additional method for the planned expanded
-benchmark. It must not be merged into the completed three-method
-leaderboard or described as a fourth full-model benchmark.
+Notebook 37 (D01) is a completed, separately owned selection study. It compared
+HINT and MAT before expansion. Its 24 candidates remain outside both the
+historical three-method pilot leaderboard and the current four-method benchmark.
+The selected HINT pipeline subsequently completed all 2,620 eligible
+Controlled-300 cases in N12A; those production candidates supply its full-model
+comparison, not this twelve-case selection study.
 
 | Contract element | Approved value |
 |---|---|

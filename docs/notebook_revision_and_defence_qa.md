@@ -3,8 +3,7 @@
 ## Purpose
 
 This is the cumulative revision guide for the completed research pipeline. It
-starts again from Notebook 01 and will be extended only after each notebook quiz
-has been answered and verified against repository evidence.
+records completed revision through N33, plus D01, N12A and D02. Quiz completion here is distinct from experiment completion: N34–N36 and D03/D04 are also complete, with reference lessons in the [39-chapter Academy](academy/README.md). Their personal quiz completion is not recorded here.
 
 Every notebook section must distinguish four things:
 
@@ -28,6 +27,7 @@ revision, supervisor discussions, and thesis-defence preparation.
 | D02 | Portrait, hand, and rendered-skin-tone audit | Completed with reference answers |
 | 22–30 | Extensions, stress tests, statistics, flags, XAI, and model cards | Completed and verified |
 | 31–33 | Model, case, painting, and final evaluation reports | Completed with reference answers |
+| 34–36, D03–D04 | Delivery and physical-damage supplement | Experiments complete; Academy reference lessons available; personal quiz completion not recorded here |
 
 ---
 
@@ -3465,7 +3465,7 @@ evidence for later revision.
 
 ### Q5. What did blinded visual review find?
 
-- 32 candidates were reviewed without exposing model identity.
+- 32 candidates underwent automated visual inspection with model identity masked, followed by researcher review; this was not an independent expert assessment.
 - 25 contained at least one visible anatomical failure.
 - Failures included missing or fused digits, broken contours, wrist discontinuity, and non-anatomical texture.
 - Region-average metrics did not capture every visible anatomical defect.

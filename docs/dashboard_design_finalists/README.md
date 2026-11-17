@@ -19,14 +19,16 @@ planning and design records below remain the historical visual authorities.
 See `../evidence_dependency_audit.md` for the current acceptance and provenance
 boundaries.
 
-**Status:** All eight top-level rooms and the `D02` mini room approved;
+**Status:** Eight principal rooms, the `D02` portrait room and the D03/D04 physical-damage room are implemented and deployed on `main` (17 November 2026). For the original Controlled-300 package,
 cross-page consistency, producer-artifact mapping, remote integrity, runtime
 loading and the final implementation contract are complete; Notebook 34 release
-`release_c5edf0d0ec99affbfa403726` passed on 2026-09-28
-**Mandatory review point:** Binding input for Controlled-300 Streamlit
-implementation and the Notebook 35 validation rerun
-**Scope:** Navigation, interaction, visual hierarchy, information flow, and
-presentation references only
+`release_c5edf0d0ec99affbfa403726` passed on 2026-09-28.
+
+**Completed review gate:** these references governed Controlled-300 Streamlit
+implementation and N35 validation; they are not an outstanding approval step.
+
+**Scope:** navigation, interaction, visual hierarchy, information flow and
+presentation references only.
 
 The dated cosmetic-pass notes, generation records and frozen checkpoint documents
 are archival validation records. Their exact bytes are retained for checksum
@@ -35,8 +37,7 @@ and deployment status is summarized here and in the physical-study records.
 
 ## Approved current direction
 
-The two boards below are the current design authority for the delivered
-Controlled-300 dashboard:
+The two boards below define the original Controlled-300 room layouts. The approved physical-study room and updated supplementary entrance above extend them; the updated entrance supersedes only the original Study Design portrait alcove:
 
 1. [Interactive Museum Rooms 01–04](approved_current/01_interactive_museum_rooms_01_to_04.png):
    Exhibition Foyer, Study Design, Metric Framework, and Model Gallery.
@@ -108,14 +109,14 @@ The eight-room structure is now fixed as the primary navigation:
 8. Research Archive.
 
 The focused portrait audit (`D02`) does not add a ninth top-level room. It is
-an explicitly separate mini study room opened from the Trustworthiness room.
-Study Design may link to the same room from its compact audit summary, while
+an explicitly separate study room opened from both Trustworthiness and the Study Design supplementary alcove. The same alcove also opens the separate physical-damage room. Neither changes the eight-room navigation.
+
 Case Explorer may deep-link to an individual reviewed portrait. These links
 must resolve to the same evidence-backed subroute rather than duplicate the
 study or imply that it is part of the automated flag taxonomy.
 
-The exact tab content may be refined when the final Controlled-300 evidence is
-available. Such refinement may replace illustrative values and reorganize
+The delivered tabs use the completed Controlled-300 evidence. Later approved
+refinements may replace presentation details and reorganize
 content within a room, but it must not silently replace the approved room
 sequence, museum identity, interaction grammar, or progressive introduction
 from orientation to detailed evidence.
@@ -217,8 +218,8 @@ startup, responsive and retry/fallback contract, and the final
 `dashboard_package.v2`/asset-manifest design also pass. Notebook 34 has now
 implemented that contract and promoted its 377-file Controlled-300 package.
 
-The next step is to implement the approved interface from that package.
-Notebook 35 then validates fidelity, functionality, evidence coverage, and
-deployed access. The mockups' illustrative text and imagery are not substitutes
-for those gates, and the currently deployed 50-painting application remains
-unchanged until the Controlled-300 implementation and N35 gate pass.
+The approved interface and N35 deployment closeout are complete. N35 records
+519 passed checks and 14 retained warning nonpasses; acceptance does not imply
+that every browser, performance or reproduction property was measured. See the
+[evidence audit](../evidence_dependency_audit.md) for those qualifications. The
+subsequent physical-study extension has its own validation record above.

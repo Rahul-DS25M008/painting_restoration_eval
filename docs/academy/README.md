@@ -11,6 +11,7 @@ covered within N12. Each chapter has six activities and five questions, for
 **195 notebook questions**, plus seven synthesis rooms and an 18-question defence
 recap. The existing chapter order and earlier figures are retained.
 
+- **D02 — Focused portrait audit:** matched hand/control comparisons and exploratory rendered lightness using existing benchmark outputs. Its visual assessment is automated inspection with researcher review and masked model identities, not independent expert ratings.
 - **D03 — Real-damage dataset preparation:** source rights, two paintings per
   category, unchanged preprocessing, reviewed partial masks, scale checks and
   the eligible-case handoff. The saved ten-painting mask atlas is embedded.

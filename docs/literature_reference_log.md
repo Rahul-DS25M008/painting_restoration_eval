@@ -1,8 +1,8 @@
 # Literature Reference Log
 
-**Status:** completed literature audit plus active Controlled-300 transition log\
-**Reviewed:** 2026-09-25\
-**Scope:** Controlled-300 producers completed through Notebook 32, completed HINT/MAT decision study, and historical downstream pilot/dashboard evidence\
+**Status:** literature catalog mapped to the completed research pipeline\
+**Literature audit date:** 2026-09-25; implementation mapping updated 2026-11-17 (not a new literature search)\
+**Scope:** completed N01–N36 including N12A, D01 method selection and supplements D02–D04; pilot evidence remains historical\
 **Search priority:** 2020–2026, with explicitly identified foundational exceptions
 
 This is an annotated source catalog for thesis writing, not a list of methods
@@ -68,8 +68,8 @@ performance numbers into this project's results.
 | “Cultural heritage restoration and inpainting evaluation literature” | Not a citation. Replaced with named heritage sources H01–H07. |
 | “Recent inpainting self-consistency work” | Replaced with the identifiable Chen et al. paper [U05](#u05); re-inpainting is not our repeated-seed procedure. |
 | Unresolved generated citation markers | Removed; references now have actual publisher, proceedings, author or software links. |
-| Old notebook numbers, 40 groups/160 candidates and a combined uncertainty index | Superseded by the completed-pipeline map below. N18 has 130 groups; N22 adds 35. No combined uncertainty index is retained. |
-| SDXL described as unexecuted; future 300-painting expansion treated as planned evidence | SDXL has ten completed bounded cases. Larger-population compute estimates remain projections, not executed studies. |
+| Old notebook numbers, 40 groups/160 candidates and a combined uncertainty index | Superseded by the completed-pipeline map below. N18 has 780 canonical prompt-specific groups; N22 adds 245 damage-size groups (1,025 total). No combined uncertainty index is retained. |
+| SDXL described as unexecuted; future 300-painting expansion treated as planned evidence | The completed Controlled-300 SDXL branch has 24 completions across 19 paintings from 35 scheduled cases across 30 paintings; one timed out and ten were not started. Larger-population compute estimates remain projections. |
 | RunwayML and generic SDXL references without checkpoint distinction | The model-family papers are separated from the exact SD/SDXL inpainting checkpoint records in T04. |
 
 The old document is recoverable through Git history. Frozen reports or N36
@@ -109,7 +109,10 @@ notebooks without pretending that every engineering choice comes from a paper.
 | N31–N33 | Model, case, painting and final evaluation reports | [H01](#h01), [E06](#e06), [E08](#e08)–[E11](#e11) |
 | N34–N35 | Normalized assets, eight-page dashboard and validation | [E08](#e08)–[E11](#e11), [T07](#t07) |
 | N36 | Supervisor/publication/reproducibility package | [E06](#e06), [E07](#e07), [E11](#e11) |
-| N37 | Paired HINT/MAT method selection and HINT expansion decision | [M11](#m11), [M12](#m12), [M09](#m09), [E02](#e02); the 12-case pilot does not establish full-benchmark superiority |
+| D01 (file N37) / N12A | Paired HINT/MAT method selection and HINT expansion decision | [M11](#m11), [M12](#m12), [M09](#m09), [E02](#e02); the 12-case pilot does not establish full-benchmark superiority |
+| D02 | Matched hand/control analysis and exploratory rendered-lightness evidence | [E01](#e01)–[E03](#e03), [Q01](#q01), [Q03](#q03), [Q07](#q07); annotations, matching rules and the bounded visual-review protocol are project-defined |
+| D03 | Real-damage source provenance, preprocessing and reviewed repair masks | [H01](#h01), [H07](#h07), [E07](#e07), [T01](#t01); ten sources and selected repair targets are project-defined |
+| D04 | Same four methods on physical damage; preservation, boundary and repeated-seed diagnostics | [M01](#m01), [M04](#m04), [M05](#m05), [M11](#m11), [U01](#u01)–[U04](#u04); absent clean references preclude physical reference-fidelity claims |
 
 ### Research-question use
 
@@ -461,7 +464,7 @@ implementation.
   model multi-scale, long-range context.
 - **Use here:** Explain why HINT was a credible second deterministic learned
   family beyond Telea, LaMa, and stochastic Stable Diffusion, and why it was
-  selected for the planned expanded benchmark after the paired pilot.
+  selected after the paired pilot and executed across all 2,620 eligible Controlled-300 cases.
 - **Boundary:** The released method was trained and evaluated on general-image
   datasets, including Places2. The paper does not establish conservation
   suitability, painting-domain generality, or superiority on the full thesis
@@ -1137,6 +1140,10 @@ In particular:
 - Comparing the focused 35-painting trajectories does not isolate independent
   category effects from painting identity.
 
+### Later delivery and supplementary evidence
+
+N32–N36 completed case/painting reports, synthesis, dashboard packaging, deployment validation and the bounded publication package. D02 adds matched anatomical analysis using existing outputs. D03/D04 then add ten physically damaged photographs, source and mask provenance, targeted SD prompts, four-method restorations, seed variability and descriptive comparison with controlled cases. These stages reuse the cited methods; they do not implement every related-work method in this catalog. Their source of numerical evidence is the corresponding saved report, not the cited paper. The optional expert study remains unexecuted.
+
 ## 11. Reading and thesis-writing priorities
 
 ### First pass: central argument and closest recent work
@@ -1172,4 +1179,4 @@ as if they were independently reproduced findings.
 **Safe contribution framing:** this project assembles and evaluates a
 traceable, region-aware, multi-evidence framework on a controlled painting
 benchmark, including repeated-seed and sensitivity analysis and an inspectable
-dashboard. This literature search does not establish a “first-ever” claim.
+dashboard, with focused portrait analysis and a separate ten-painting physical-damage supplement. This literature search does not establish a “first-ever” claim.

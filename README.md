@@ -1,13 +1,13 @@
-# Trustworthy Evaluation Frameworks for AI-Assisted Painting Restoration
+# Trustworthy Evaluation Framework for AI-Assisted Painting Restoration
 
 https://github.com/user-attachments/assets/b8f4f687-5af0-430b-b4f2-87c7ef6423a4
 
 
-**Museum Tour**: Explore the eight rooms of the Painting Restoration Evidence Museum.
+**Museum Tour**: Explore eight principal rooms and two supplementary study rooms: the focused portrait audit and physically damaged paintings.
 
 **A restoration can look convincing and still be wrong. How should we evaluate it?**
 
-This master's thesis develops and applies an evidence-based evaluation framework for AI-assisted painting restoration. It combines controlled artificial damage, complementary inpainting methods, region-aware measurements, robustness experiments, repeated-candidate disagreement and inspectable case-level evidence.
+This master's thesis develops and applies an evidence-based evaluation framework for AI-assisted painting restoration. It combines controlled artificial damage, complementary inpainting methods, region-aware measurements, robustness experiments, repeated-candidate disagreement and inspectable case-level evidence. A focused portrait audit examines anatomical difficulty within the benchmark; a separate physical-damage study applies the same four restoration pipelines to ten real damaged painting photographs.
 
 The contribution is an **evaluation framework and reproducible empirical study**, not a newly trained restoration model or an automated conservation system.
 
@@ -15,7 +15,17 @@ The contribution is an **evaluation framework and reproducible empirical study**
 
 > Visual plausibility, metric performance and output stability are different kinds of evidence. None alone establishes historical correctness or conservation approval.
 
-## The study in one minute
+## Three connected studies
+
+| Study | Completed scope | Inspect the evidence |
+|---|---|---|
+| **Controlled-300 benchmark** | 300 paintings; known references; four main methods; damage, metric and stability comparisons | [Museum](https://fhtw-painting-restoration-main.streamlit.app/) · [Final report](outputs/33_final_evaluation_report/reports/final_evaluation.html) |
+| **Focused portrait audit — D02** | 60 benchmark portraits screened; 45 matched hand/control cases from 20 paintings; exploratory rendered-lightness analysis | [Portrait room](https://fhtw-painting-restoration-main.streamlit.app/?room=focused_portrait_review&return_room=study_design) · [Audit report](outputs/d02_portrait_skin_tone_and_hand_restoration_audit/reports/portrait_skin_tone_and_hand_audit.html) |
+| **Physically damaged paintings — D03/D04** | Ten separate paintings, two per category; 40 primary restorations; ten four-seed SD groups; no clean references | [Physical damage room](https://fhtw-painting-restoration-main.streamlit.app/?room=physical_damage_study) · [Preparation](outputs/d03_real_damage_dataset_preparation/reports/real_damage_dataset.html) · [Restoration report](outputs/d04_real_damage_restoration_and_evaluation/reports/real_damage_evaluation.html) |
+
+D02 reuses paintings and restorations from Controlled-300; it is not an additional dataset. D03/D04 form a separate supplementary study and are not pooled into the benchmark or the October Zenodo archive. Both supplementary rooms are reached from **Study Design**, while the portrait audit is also linked from **Trustworthiness**. An expert survey remains optional and has not been performed.
+
+## The controlled study in one minute
 
 The completed **Controlled-300** study uses 300 paintings, balanced across five broad visual categories. Artificial damage creates known-reference comparisons: the original image is available, so a restoration can be inspected against the content it was meant to recover.
 
@@ -106,24 +116,42 @@ The study evaluated existing pretrained checkpoints; it did **not train or fine-
 
 Consequently, Controlled-300 is an evaluation collection with **unverified pretraining overlap**, not a certified unseen-artwork test set. No specific overlap was verified by this review, and that is **not evidence of zero overlap**. This distinction leaves the saved measurements unchanged while making the scope of the generalization claim explicit.
 
-### Separate studies: method selection and focused portrait review
+### Method selection before the main comparison
 
 **D01 / Notebook 37** compared HINT and MAT on 12 paired cases before expansion. HINT led 96 of 108 case-level metric anchors; MAT led six, with six ties. HINT was selected and subsequently evaluated across all 2,620 eligible cases in N12A. The 24 D01 candidates remain separate selection evidence, not part of the main leaderboard. [Selection report](outputs/37_hint_mat_method_selection/reports/method_selection_report.html).
 
-**D02** is a separate focused portrait audit, accessible through Trustworthiness. Its matched evidence found hands harder to restore, while rendered lightness did not show a consistent overall association. Rendered lightness is not race or identity, and this is not a demographic-bias certification. The [final synthesis](outputs/36_supervisor_publication_reproducibility_package/reports/supervisor_summary.md) preserves these boundaries.
+## Supplementary studies
+
+### Focused portrait audit — D02
+
+The completed audit screened all 60 portrait-category paintings, recorded 91 reviewed anatomical annotations and compared **45 hand/control cases from 20 paintings**. It reuses existing restorations and matches damaged hand regions with similarly sized non-anatomical regions in the same case. All 12 primary method–metric estimates indicated greater hand difficulty; ten remained significant after multiple-testing correction. There was no universal method winner.
+
+The separate rendered-lightness analysis used 30 painting profiles and ten context pairs and found no consistent overall association. Rendered lightness is an image measurement, not race or identity. Automated visual inspection, with model identities masked and researcher review, recorded anatomical defects in 25 of 32 selected candidates; this is not an independent expert assessment. D02 passed **99/99 validation checks**.
+
+[Open the portrait audit](https://fhtw-painting-restoration-main.streamlit.app/?room=focused_portrait_review&return_room=study_design) · [Read the illustrated report](outputs/d02_portrait_skin_tone_and_hand_restoration_audit/reports/portrait_skin_tone_and_hand_audit.html) · [Notebook](notebooks/d02_portrait_skin_tone_and_hand_restoration_audit.ipynb).
+
+### Physically damaged paintings — D03 and D04
+
+**D03** prepared ten photographs of physically damaged paintings, two per operational category, with recorded sources and reuse conditions, the existing 768-pixel preprocessing, reviewed repair masks and 512-pixel SD mask checks. The masks identify selected repair targets rather than every visible defect. Preparation passed **379/379 checks**.
+
+**D04** used the same Telea, LaMa, HINT and Stable Diffusion adapters to produce **40 primary restorations and 30 additional SD candidates**, forming ten four-seed groups. SD used targeted prompts for each painting. Evaluation combined case-level visual inspection, outside-mask preservation, boundary diagnostics, seed variability and ten saved controlled comparators. D04 passed **404/404 checks**.
+
+Stable Diffusion often produced visually coherent completions in the selected cases, but **there is no clean reference to establish recovery of the missing original content**. Visual observations are automated inspection with researcher review, not expert ratings. Outside-mask preservation is enforced by compositing; it is not evidence of better reconstruction inside the mask. Physical and controlled comparisons are descriptive, particularly because their SD prompts differ. The illustrated report retains both successful-looking repairs and visible flaws.
+
+[Open the physical study](https://fhtw-painting-restoration-main.streamlit.app/?room=physical_damage_study) · [Source and mask report](outputs/d03_real_damage_dataset_preparation/reports/real_damage_dataset.html) · [Restoration and comparison report](outputs/d04_real_damage_restoration_and_evaluation/reports/real_damage_evaluation.html) · [D03 notebook](notebooks/d03_real_damage_dataset_preparation.ipynb) · [D04 notebook](notebooks/d04_real_damage_restoration_and_evaluation.ipynb).
 
 ## Explore the evidence, not just the headline
 
-The [Streamlit dashboard](https://fhtw-painting-restoration-main.streamlit.app/) is an eight-room interactive museum. Start with **Take the guided tour (about 6 min)** in the Exhibition Foyer, or use **Explore freely** to choose a question-led entry point.
+The [Streamlit dashboard](https://fhtw-painting-restoration-main.streamlit.app/) has eight principal rooms and two supplementary study rooms. Start with **Take the guided tour (about 6 min)** in the Exhibition Foyer, or use **Explore freely** to choose a question-led entry point.
 
 | Room | What to inspect |
 |---|---|
 | Exhibition Foyer | The central question and guided route |
-| Study Design | Population, experimental conditions and eligibility |
+| Study Design | Population, conditions, eligibility and entrances to both supplementary studies |
 | Metric Framework | What each measurement and region can tell you |
 | Model Gallery | Method-specific results, capabilities and limitations |
 | Stability Lab | Sensitivity, perturbations and repeated-seed evidence |
-| Trustworthiness | Computational review flags; optional D02 portrait side room |
+| Trustworthiness | Computational review flags and another entrance to the completed D02 portrait audit |
 | Case Explorer | One exact painting, case and candidate: images, maps and saved measurements |
 | Research Archive | Reports, provenance, manifests, checksums and study limits |
 
@@ -137,27 +165,27 @@ GitHub displays HTML source rather than the full report presentation. Download a
 
 The [Restoration Evidence Academy](https://rahul-ds25m008.github.io/painting_restoration_eval/) is a separate interactive learning companion for supervisors and readers who want a quick overview followed by a detailed understanding of how the pipeline works.
 
-- **Notebook Lab:** 37 detailed chapters covering N01–N36 plus D02; the existing N12 chapter also covers D01/HINT–MAT selection and N12A. Each chapter explains its inputs, method, terminology, actual evidence, decisions and limitations, with five revision questions.
+- **Notebook Lab:** 39 detailed chapters covering N01–N36 and D02–D04; N12 also covers D01/HINT–MAT selection and N12A. Each chapter has six activities and five revision questions, for 195 notebook questions, covering inputs, methods, evidence, decisions and limitations.
 - **Evidence Gallery:** seven cross-notebook explanations for a quicker, question-led overview.
 - **Defence Room:** 18 questions connecting the pipeline to the research questions and defensible conclusions.
 
-Start with the Evidence Gallery, then open the relevant notebook chapters for depth. This companion incorporates the 3 October reporting corrections and distinguishes the completed N34–N36 delivery from independent scientific reproduction. It does not alter the frozen dashboard or archived experiments.
+Start with the Evidence Gallery, then open the relevant notebook chapters for depth. This companion incorporates the 3 October reporting corrections and distinguishes the completed N34–N36 delivery from independent scientific reproduction. It includes the completed portrait and physical-damage supplements without altering archived experiments.
 
-The academy is a static GitHub Pages site: figures and lesson data are embedded, progress is stored in the reader's browser, and discussion buttons expose reusable prompts rather than calling an AI service. Its first public deployment requires the one-time [Pages setup](docs/academy/README.md); the link becomes available after that workflow succeeds. A [standalone copy](docs/academy/index.html) can also be downloaded and opened locally.
+The academy is a static GitHub Pages site: figures and lesson data are embedded, progress is stored in the reader's browser, and discussion buttons expose reusable prompts rather than calling an AI service. It is deployed on GitHub Pages; updates publish through the [Academy build and deployment workflow](docs/academy/README.md). A [standalone copy](docs/academy/index.html) can also be downloaded and opened locally.
 
 ## Reproducibility and delivery status
 
 The repository supports traceability through saved evidence, configurations and manifests. **Independent end-to-end reproduction has not been demonstrated**; the recorded provenance exceptions and deployment qualifications below remain unresolved.
 
-**Completed:** N01–N36, including N12A, with separate D01 and supplemental D02. The Controlled-300 dashboard is deployed from `main`; its approved layout is frozen. The pilot baseline remains recoverable at `pilot-50-complete`.
+**Completed:** N01–N36, including N12A, plus D01 method selection, D02 focused portrait audit, D03 physical-damage preparation and D04 physical restoration/evaluation. The museum is deployed from `main`, including both supplementary rooms. The eight principal rooms remain unchanged. The pilot baseline remains recoverable at `pilot-50-complete`.
 
-**Real-damage supplement:** [D03 dataset preparation](notebooks/d03_real_damage_dataset_preparation.ipynb) and [D04 restoration and evaluation](notebooks/d04_real_damage_restoration_and_evaluation.ipynb) are complete. Ten physically damaged painting photographs, two per category, have 40 primary restorations from Telea, LaMa, HINT and Stable Diffusion, plus 30 additional SD candidates forming ten four-seed groups. D03 passed **379/379 checks**; D04 passed **404/404 checks**. [Source and preparation report](outputs/d03_real_damage_dataset_preparation/reports/real_damage_dataset.html) · [Illustrated restoration report](outputs/d04_real_damage_restoration_and_evaluation/reports/real_damage_evaluation.html) · [D04 completion manifest](outputs/d04_real_damage_restoration_and_evaluation/manifests/run_manifest.json). The report combines case-level visual comparisons, preservation/boundary diagnostics, seed variability and ten frozen synthetic comparators. Physical paintings have no clean references; targeted physical SD prompts differ from the generic synthetic prompts, so the comparison is descriptive. Visual observations are reviewed automated visual inspection, not expert ratings. This supplement remains separate from Controlled-300 and is not part of the frozen Zenodo v1.0.0 archive. Its supplementary museum room is deployed on the existing main website (17 November 2026), alongside the focused portrait audit; the eight principal rooms remain unchanged.
+**Archive boundary:** N36 and Zenodo v1.0.0 are the October Controlled-300 delivery. The later D03/D04 outputs and supplementary museum room are maintained separately in this repository; cite their repository revision and producer records alongside the archive when using the physical study.
 
-N36 closed with **859 passed checks, 16 disclosed warning nonpasses and zero blockers**. The complete delivery has **134 files**, including a **123-file review package** containing six scientific HTML reports, 24 figures, five model cards, compact tables and 38 upstream manifests. Its 693-row artifact index distinguishes copied, generated and intentionally unbundled evidence.
+N36 closed with **859 passed checks, 16 disclosed warning nonpasses and zero blockers**. That Controlled-300 delivery has **134 files**, including a **123-file review package** containing six scientific HTML reports, 24 figures, five model cards, compact tables and 38 upstream manifests. Its 693-row artifact index distinguishes copied, generated and intentionally unbundled evidence.
 
 Start with the [package README](outputs/36_supervisor_publication_reproducibility_package/package/README.md), [reproducibility appendix](outputs/36_supervisor_publication_reproducibility_package/reports/reproducibility_appendix.md) and [limitations record](outputs/36_supervisor_publication_reproducibility_package/reports/limitations_and_deviations.md). Distribute the **complete N36 output directory**, not `package/` alone. It is a review package, not a runnable clone of the full research environment.
 
-Compact records and code live in GitHub; bulk restoration/diagnostic evidence follows the checksum-pinned GitHub/HF routes recorded in the publication manifests. N36's bounded delivery is ordinary Git, without LFS or a duplicate HF release. The complete selected research-artifact archive is **published on Zenodo as v1.0.0, 2 October 2026: [10.5281/zenodo.23092185](https://doi.org/10.5281/zenodo.23092185)**. All 15 public file sizes and MD5 checksums were checked without authentication against the locally verified upload set. See the [publication closeout and download guide](docs/zenodo_publication.md) and [machine-readable receipt](config/publication/zenodo_published_record.json). Frozen N36 records retain their historical publication status.
+Compact records and code live in GitHub; bulk restoration/diagnostic evidence follows the checksum-pinned GitHub/HF routes recorded in the publication manifests. N36's bounded delivery is ordinary Git, without LFS or a duplicate HF release. The selected Controlled-300 research-artifact archive is **published on Zenodo as v1.0.0, 2 October 2026: [10.5281/zenodo.23092185](https://doi.org/10.5281/zenodo.23092185)**. All 15 public file sizes and MD5 checksums were checked without authentication against the locally verified upload set. See the [publication closeout and download guide](docs/zenodo_publication.md) and [machine-readable receipt](config/publication/zenodo_published_record.json). Frozen N36 records retain their historical publication status.
 
 **Download:** the 40.52 GB ZIP is delivered as **eight numbered parts** (`.zip.001`–`.zip.008`), plus seven companion files. Download all eight parts and follow `REASSEMBLE.txt`; they are not independently extractable ZIPs. Verify the reassembled archive before extraction. The archived source snapshot is commit `2378961a8accb2ecde610ed60428879e8f52a8a8`; later repository documentation and publication-status updates do not alter that release.
 
@@ -166,8 +194,6 @@ Compact records and code live in GitHub; bulk restoration/diagnostic evidence fo
 The 16 N36 nonpasses retain N35's four dependency warnings and ten unmeasured, owner-accepted qualifications, plus the N29 historical-manifest and N35 notebook-source discrepancies. Availability checks and owner acceptance do not establish exhaustive browser coverage, performance budgets, a fresh clean-Linux reproduction or an independently attested deployed-server revision. [Full closeout audit](docs/evidence_dependency_audit.md#n36-controlled-300-closeout--2026-10-01).
 
 The [compact provenance-exception ledger](docs/provenance_exceptions.md) separates what was checked from what remains uncertain. Zero blockers is an administrative closeout outcome, not independent scientific reproduction.
-
-The [Restoration Evidence Academy](https://rahul-ds25m008.github.io/painting_restoration_eval/) covers 39 chapters, including D03 source/mask preparation and D04 physical restorations, with saved figures and revision questions. See its [build and deployment guide](docs/academy/README.md).
 
 ## Run the dashboard locally
 
@@ -206,7 +232,7 @@ regression results do not replace the original N35/N36 execution records.
 - `outputs/` — notebook-owned evidence, reports, manifests and validation; copied package files are intentional provenance, not redundant clutter.
 - `streamlit_assets/` — deployed presentation assets and evidence indexes.
 - `tests/` and `tools/` — regression checks, validation, inventory and publication utilities; completed-notebook helpers may still be required for reproducibility.
-- `docs/` — [reproducibility](docs/reproducibility.md), [methods](docs/methodology_notes.md), [literature](docs/literature_reference_log.md), [evidence audit](docs/evidence_dependency_audit.md), [defence preparation](docs/notebook_revision_and_defence_qa.md) and supervisor material.
+- `docs/` — [current documentation index](docs/README.md), [reproducibility](docs/reproducibility.md), [methods](docs/methodology_notes.md), [literature](docs/literature_reference_log.md), [evidence audit](docs/evidence_dependency_audit.md), [defence preparation](docs/notebook_revision_and_defence_qa.md) and supervisor material.
 
 ## Licensing
 

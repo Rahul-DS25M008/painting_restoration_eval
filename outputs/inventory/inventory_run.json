@@ -1,15 +1,15 @@
 {
   "run_schema_version": "inventory_run.v1",
   "inventory_schema_version": "project_file_inventory.v1",
-  "inventory_run_id": "inventory_20261117T170658Z_d0528e78",
+  "inventory_run_id": "inventory_20261117T220614Z_f3e115f0",
   "status": "completed",
-  "generated_at_utc": "2026-11-17T17:06:58.016733Z",
-  "completed_at_utc": "2026-11-17T17:08:05.982766Z",
-  "duration_seconds": 68.18,
+  "generated_at_utc": "2026-11-17T22:06:14.605360Z",
+  "completed_at_utc": "2026-11-17T22:11:48.875198Z",
+  "duration_seconds": 334.503,
   "repository_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
   "inventory_relative_path": "outputs/inventory/project_file_inventory.csv",
-  "inventory_sha256": "e79dff853f75e48db1557f3aefb09a3fd8648acfb1b8465988f95f5d5aed4760",
-  "inventory_size_bytes": 80711225,
+  "inventory_sha256": "78b3c24a1d438352518cd6aa693779a482573e5a53d378a804c05c8934dc43a4",
+  "inventory_size_bytes": 80711520,
   "hash_configuration": {
     "mode": "partial",
     "algorithm": "sha256_first_n_bytes",
@@ -18,9 +18,9 @@
   "incremental_reuse": {
     "enabled": true,
     "cache_status": "verified",
-    "source_run_id": "inventory_20261117T170154Z_a1a69adc",
-    "reused_file_count": 156666,
-    "inspected_file_count": 2
+    "source_run_id": "inventory_20261117T170658Z_d0528e78",
+    "reused_file_count": 156646,
+    "inspected_file_count": 23
   },
   "scan_configuration": {
     "skipped_directory_names": [
@@ -48,8 +48,8 @@
     "platform": "Windows-11-10.0.26200-SP0"
   },
   "summary": {
-    "file_count": 156668,
-    "total_size_bytes": 43919221859,
+    "file_count": 156669,
+    "total_size_bytes": 43919238389,
     "read_error_file_count": 0,
     "read_error_count": 0,
     "counts_by_format": {
@@ -64,7 +64,7 @@
       "js": 11,
       "json": 834,
       "log": 10,
-      "markdown": 94,
+      "markdown": 95,
       "mjs": 2,
       "mp4": 1,
       "no_extension": 4,
@@ -89,7 +89,7 @@
       "image": 24487,
       "json": 834,
       "manifest_table": 54,
-      "markdown": 94,
+      "markdown": 95,
       "mask_image": 23553,
       "metric_table": 51,
       "notebook": 41,
@@ -115,7 +115,7 @@
       ".js": 11,
       ".json": 834,
       ".log": 10,
-      ".md": 94,
+      ".md": 95,
       ".mjs": 2,
       ".mp4": 1,
       ".npz": 314,

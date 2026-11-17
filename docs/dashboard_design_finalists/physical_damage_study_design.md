@@ -173,21 +173,15 @@ controlled examples retain their original recorded configurations. Retain
 source attribution and the distinction between selected repair targets and
 all physical deterioration.
 
-## Implementation sequence
+## Completed implementation sequence
 
-1. Bind the approved room and entrance composition to exact source assets and
-   stable case identities on the feature branch.
-2. Implement the room, entrance and evidence popups; preserve existing rooms.
-3. Test locally, including selection consistency, images, source bindings,
-   popup behaviour, narrow screens and existing-room navigation.
-4. Complete the final visual approval, then push the branch and deploy
-   a separate Streamlit test app following the agreed workflow.
-5. Verify the cloud app; merge only after final deployment validation and approval. Keep the
-   existing main application URL when the main branch updates.
+1. The approved room and entrance were bound to source assets and stable case identities on the feature branch.
+2. The room, supplementary entrances and evidence popups were implemented while retaining the eight principal rooms.
+3. Local checks covered selection, images, source bindings, popups, narrow screens and existing-room navigation.
+4. Visual refinements were approved and the branch was deployed to a separate Streamlit test app.
+5. Cloud asset and interaction fixes were validated before merging into `main` on 17 November 2026. The existing main application URL is retained; the test deployment remains available.
 
-Local implementation and testing are recorded in
-[the validation record](physical_damage_study_validation.md). This does not
-claim a remote upload, publication, commit, deployment or merge.
+See the [validation record](physical_damage_study_validation.md) for the checks and deployment history. This sequence records delivery, not a new scientific run or independent expert validation.
 
 ## Approved image integrity
 

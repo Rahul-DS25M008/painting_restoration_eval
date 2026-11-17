@@ -2,7 +2,7 @@
 
 **Status:** Controlled-300 audit notes with completed HINT selection/execution,
 validated N30 method cards, five N31 model reports and completed N36 delivery;
-reviewed 2026-10-02.
+reviewed 2026-11-17, including the completed physical-damage supplement.
 
 This document records model selection, implementation provenance, evidence
 boundaries and reproducibility risks. Notebook 30's earlier Controlled-50 cards
@@ -10,13 +10,7 @@ remain the frozen E-drive baseline; run `run_605de239145a46e9a202fd63bbbb4e9c`
 has replaced them as current evidence with the Controlled-300 outputs described
 here.
 
-**Supplemental D03 handoff (2026-11-15):** ten physically damaged inputs and
-reviewed masks are eligible for the same Telea, LaMa, HINT and Stable Diffusion
-configurations (40 pairs; 379 preparation checks passed). D03 verifies input
-compatibility and preserves the existing configuration hashes; it does not
-load weights or run models. D04 must check runtime availability before inference.
-There are no new model-quality results or clean-reference targets for this
-supplement. [D03 closeout](evidence_dependency_audit.md#d03-real-damage-preparation-closeout--2026-11-15).
+**Completed supplemental studies:** D02 reuses Controlled-300 restorations for matched anatomical comparisons and an exploratory rendered-lightness analysis; it trains no new model. D03/D04 apply the same Telea, LaMa, HINT and Stable Diffusion adapters to ten physically damaged photographs. D04 completed runtime checks, 40 primary restorations and 30 additional SD candidates, using targeted prompts and ten four-seed groups. SDXL is not part of this physical study. D03 passed 379 checks and D04 passed 404. Physical repairs have no clean references, so visually coherent completion is not a reference-fidelity ranking or proof of historical accuracy. These separate results do not change the Controlled-300 rankings below. [Portrait audit](../outputs/d02_portrait_skin_tone_and_hand_restoration_audit/reports/portrait_skin_tone_and_hand_audit.html) · [Physical restoration report](../outputs/d04_real_damage_restoration_and_evaluation/reports/real_damage_evaluation.html).
 
 - Literature justification belongs in [the literature log](literature_reference_log.md).
 - General methodology belongs in [the methodology guide](methodology_notes.md).

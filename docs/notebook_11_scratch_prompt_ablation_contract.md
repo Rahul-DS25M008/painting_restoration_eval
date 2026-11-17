@@ -1,9 +1,10 @@
 # Notebook 11 Supplement — Paired Scratch-Aware Prompt Ablation
 
-**Status:** controlled-300 preparation complete; execution pending\
-**Controlled-300 refactor status:** In progress\
-**Validation status:** Pending controlled-300 execution\
-**Completion gate passed:** No\
+**Status:** Controlled-300 execution completed 2026-09-12\
+**Controlled-300 refactor status:** Finished\
+**Validation status:** Passed in saved run `run_4385124a0cca4d758d357de654a33f13`\
+**Completion gate passed:** Yes
+
 **Parent notebook:** `11_stable_diffusion_restoration.ipynb`  
 **Parent output root:** `outputs/11_stable_diffusion_restoration/`  
 **Base configuration:** `config/experiments/stable_diffusion.yaml`  
@@ -15,7 +16,7 @@ This supplement extends, and does not replace, the Notebook 11 contract in
 
 This is the authored experimental contract, so it remains under `docs/`.
 Executed evidence belongs to the notebook-owned output root. The scope and
-expansion wording below defines the approved controlled-300 rerun. The completed
+expansion wording below records the design of the completed Controlled-300 rerun. The linked run manifest now refers to that run; the pilot figures below describe the tagged historical version. The completed
 50-painting evidence remains recoverable from Git tag `pilot-50-complete`.
 
 ## Pilot completion evidence

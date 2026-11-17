@@ -1,5 +1,7 @@
 # Supervisor documents: publication status
 
+**Current scope — 17 November 2026:** the completed research also includes the [focused portrait audit](../../outputs/d02_portrait_skin_tone_and_hand_restoration_audit/reports/portrait_skin_tone_and_hand_audit.html) and the later ten-painting physical-damage supplement: [D03 preparation](../../outputs/d03_real_damage_dataset_preparation/reports/real_damage_dataset.html) and [D04 restorations/evaluation](../../outputs/d04_real_damage_restoration_and_evaluation/reports/real_damage_evaluation.html). Both supplementary rooms are accessible from Study Design in the [main museum](https://fhtw-painting-restoration-main.streamlit.app/?room=study_design). The [Academy](../academy/README.md) covers all 39 chapters. The PDF snapshots below and October Zenodo archive predate D03/D04; read their separate reports alongside those snapshots. The optional expert survey is not complete.
+
 Read the PDF snapshots with the [2026-10-03 reporting errata](../errata/2026-10-03/README.md).
 It corrects table population labels and SDXL completed-painting coverage without
 changing saved numerical results. The [three-example evidence chain](../framework_evidence_chain.md)

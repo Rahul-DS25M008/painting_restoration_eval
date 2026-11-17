@@ -1,8 +1,8 @@
 # Methodology Guide
 
-**Status:** current methodology for the completed Controlled-300 pipeline, reviewed 2026-10-02\
+**Status:** current methodology for the completed Controlled-300 pipeline, reviewed 2026-11-17\
 **Experimental scope:** `controlled_300` completed through Notebook 36 with disclosed deployment/provenance limitations; `controlled_50` retained as historical evidence\
-**Pipeline:** completed N01–N36 including N12A; separate D01 and supplemental D02; pilot baseline remains frozen\
+**Pipeline:** completed N01–N36 including N12A; separate D01 and completed supplements D02–D04; pilot baseline remains frozen\
 **Public interface:** [Controlled-300 Streamlit dashboard](https://fhtw-painting-restoration-main.streamlit.app/)
 
 This guide explains the main scientific and engineering decisions in the
@@ -30,16 +30,11 @@ platform and browser qualifications are not inferred from acceptance. N36 run
 Its 134-file delivery preserves these distinctions, including both provenance
 exceptions, without rerunning scientific experiments.
 
-**Separate real-damage supplement (2026-11-15):** D03 has completed preparation
-of ten physically damaged painting photographs, two per operational category,
-with 379/379 passed checks. It reuses the 768-pixel preprocessing and existing
-four-model configurations, records reviewed repair masks and accepted 512-pixel
-mask-resizing effects, and supplies ten cases and forty eligible input/mask
-pairings. These are selected repair targets, not exhaustive damage labels.
-No clean reference exists and no restoration inference has run. D04 is next
-for contract planning and model/runtime checks; synthetic reference metrics
-will remain separate. See the [D03 closeout](evidence_dependency_audit.md#d03-real-damage-preparation-closeout--2026-11-15).
-The Controlled-300 methods and results below remain frozen.
+**Focused portrait audit (D02):** existing Controlled-300 outputs support a within-case hand-versus-control analysis: 60 portraits screened, 91 reviewed anatomical annotations and 45 matched cases from 20 paintings. Painting-level analysis accounts for repeated cases and seeds. The exploratory rendered-lightness branch uses 30 painting profiles and ten matched context pairs; image lightness is not demographic identity. Its bounded 32-candidate visual assessment used automated inspection with model identities masked and researcher review, not independent expert ratings. [D02 report](../outputs/d02_portrait_skin_tone_and_hand_restoration_audit/reports/portrait_skin_tone_and_hand_audit.html).
+
+**Physical-damage supplement (D03/D04, complete):** D03 prepared ten photographs, two per operational category, with recorded provenance, unchanged 768-pixel preprocessing, reviewed selected repair masks and accepted 512-pixel SD mask-resizing effects. D04 completed the same four adapters, using targeted per-painting SD prompts and seeds 2026–2029: 40 primary candidates and 30 additional SD candidates form ten four-seed groups. D03 passed 379 checks and D04 passed 404. No clean reference exists. Evaluation therefore describes preservation, boundaries, visual completion and seed variability; it does not report reference-fidelity scores for the physical repairs. Ten saved synthetic comparators supply descriptive context, with prompt and damage differences retained as limitations. [D03 preparation](../outputs/d03_real_damage_dataset_preparation/reports/real_damage_dataset.html) · [D04 evaluation](../outputs/d04_real_damage_restoration_and_evaluation/reports/real_damage_evaluation.html).
+
+Sections 1–10 describe the Controlled-300 methods; the supplements above have separate populations and producer records. The optional expert survey has not been performed.
 
 - The detailed notebook sequence is in
   [`final_notebook_roadmap.md`](final_notebook_roadmap.md).
@@ -377,7 +372,7 @@ includes five model reports, 30 selected case reports, all 300 painting reports,
 and a thesis-level evaluation report.
 
 Notebook 34 prepares normalized dashboard tables and indexes. The approved
-eight-page application is a read-only presentation and inspection interface. Its
+eight-principal-room application, with separate portrait and physical-damage rooms, is a read-only presentation and inspection interface. Its
 later numerical views use the N34 candidate allow-list and checksum-verified
 producer metrics as documented in
 [`dashboard_numeric_metrics.md`](dashboard_numeric_metrics.md). The app does not
@@ -392,7 +387,7 @@ repository clone. Historical notebook manifests and package snapshots describe
 the versions actually executed or packaged and are not rewritten after later
 documentation or deployment changes.
 
-All 36 saved run manifests record Python 3.12.6. Dashboard installation uses the
+All 36 numbered core run manifests record Python 3.12.6. Dashboard installation uses the
 root `requirements.txt`; the experimental recipe is separate and is not an exact
 lock of every producer environment. Exact reproduction requires the target
 producer's package versions, configuration and helper checksums, seeds, model
@@ -401,9 +396,10 @@ revisions, hardware and CUDA information. See the
 
 These records support traceability and reproduction; independent end-to-end
 reproduction has not been demonstrated. The N29 historical-manifest and N35
-notebook-source discrepancies remain unresolved, as do the disclosed unmeasured
-deployment qualifications. Documentation updates neither change those hashes
+notebook-source discrepancies remain unresolved, as do the shared D03/D04 historical documentation-input discrepancy and the disclosed unmeasured deployment qualifications. See the [provenance ledger](provenance_exceptions.md). Documentation updates neither change those hashes
 nor convert accepted qualifications into passed checks.
+
+The [Academy](academy/README.md) explains all 39 chapters. The later D03/D04 reports and museum room are separate from the October N36/Zenodo snapshot. Their ten real-damage cases provide bounded supplementary observations, not proof that controlled benchmark rankings generalize to physical deterioration.
 
 ## 12. What the methodology supports
 
@@ -436,6 +432,9 @@ It does not support:
 - [Grouped statistical analysis](../outputs/26_grouped_and_statistical_analysis/reports/statistical_analysis.html)
 - [Metric and region ablation](../outputs/28_metric_and_region_policy_ablation/reports/ablation_study.html)
 - [Final evaluation report](../outputs/33_final_evaluation_report/reports/final_evaluation.html)
+- [Focused portrait audit](../outputs/d02_portrait_skin_tone_and_hand_restoration_audit/reports/portrait_skin_tone_and_hand_audit.html)
+- [Physical-damage preparation](../outputs/d03_real_damage_dataset_preparation/reports/real_damage_dataset.html)
+- [Physical restoration and evaluation](../outputs/d04_real_damage_restoration_and_evaluation/reports/real_damage_evaluation.html)
 - [Review-package README](../outputs/36_supervisor_publication_reproducibility_package/package/README.md)
 
 These sources are the appropriate next level of detail. The methodology guide

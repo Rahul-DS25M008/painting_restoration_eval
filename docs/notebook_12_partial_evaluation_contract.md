@@ -1,9 +1,11 @@
 # Notebook 12 SDXL bounded partial-evaluation contract
 
-**Status:** Controlled-300 execution contract approved 2026-09-13\
-**Refactor status:** In progress\
-**Validation status:** Pending\
-**Completion gate passed:** No
+**Status:** Controlled-300 bounded evaluation completed 2026-09-13\
+**Refactor status:** Finished\
+**Validation status:** Passed in saved run `run_1f7af9d329354a56b4275c4af3cd3f75`\
+**Completion gate passed:** Yes
+
+The completed branch retains partial coverage: **24 completed cases across 19 paintings**, from 35 scheduled cases across 30 paintings; one timeout and ten not started after the runtime guard. Completion means this bounded contract passed, not that SDXL gained full benchmark coverage. [Run manifest](../outputs/12_sdxl_feasibility_or_restoration/manifests/run_manifest.json).
 
 ## Status and purpose
 
@@ -17,12 +19,11 @@ asset under strict runtime limits.
 
 The machine-readable authority is `config/experiments/sdxl.yaml`
 (`sdxl_config.v3`). This document explains that contract in human-readable
-form. The final notebook roadmap and refactoring implementation guidelines
-remain controlling repository-wide documents.
+form. The [final notebook roadmap](final_notebook_roadmap.md) and [reproducibility guide](reproducibility.md) provide repository-wide context.
 
 This authored design contract remains under `docs/`; the executed report,
 candidates, validation, and manifests belong to the notebook-owned output root.
-The policy and batch plan below authorize the bounded Controlled-300 rerun. The
+The policy and batch plan below record the design of the completed bounded Controlled-300 rerun. The
 tagged `pilot-50-complete` evidence remains frozen and independently recoverable.
 
 ## Pilot evidence used to size the rerun

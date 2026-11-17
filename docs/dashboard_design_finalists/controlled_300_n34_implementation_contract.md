@@ -1,5 +1,7 @@
 # Controlled-300 Notebook 34 Implementation Contract
 
+**Scope update (2026-11-17):** this contract describes the completed N34 Controlled-300 package. The deployed D03/D04 supplementary room and updated Study Design entrance are recorded in the [physical-study design](physical_damage_study_design.md) and [validation](physical_damage_study_validation.md), without rewriting that frozen package.
+
 **Status:** Implemented and validated by Notebook 34 on 2026-09-28
 
 **Applies to:** Notebook 34, its configuration and helper module, the

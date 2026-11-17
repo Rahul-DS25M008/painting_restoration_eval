@@ -1653,7 +1653,6 @@ validation/checks.csv
 **Refactor status:** Finished\
 **Validation status:** Finished with one declared non-blocking CUDA repeatability warning\
 **Completion gate passed:** Yes\
-**Planned controlled-300 coverage:** 2,620 cases; 16,404 candidates across five methods; 31,608 candidate-region evaluations; 63,216 feature-metric rows; 78,336 retained embeddings  
 **Observed controlled-300 coverage:** 2,620 cases; 16,404 candidates across five methods; 31,608 candidate-region evaluations; 63,216 feature-metric rows; 78,336 retained embeddings; 247 validation checks; 0 blocking failures; 1 warning failure; 7 canonical files; 5 registered artifacts\
 **Output root:** `outputs/15_feature_similarity/`  
 **Depends on:** Notebook 02 geometry handoff and Notebooks 08–12A
@@ -1709,9 +1708,9 @@ notebook, and publication registry remain in the GitHub scientific record.
 
 **Notebook:** `16_difference_maps_and_spatial_diagnostics.ipynb`  
 **Origin:** Consolidates Existing Notebooks 10, 16, and 23  
-**Refactor status:** Prepared\
-**Validation status:** Not run\
-**Completion gate passed:** No\
+**Refactor status:** Finished\
+**Validation status:** Passed; saved run `run_99b0d8d1af1b43bd8e8cb3d6ae754868` completed 2026-09-15\
+**Completion gate passed:** Yes\
 **Observed controlled-300 coverage:** 2,620 cases; 16,404 candidates across five methods; 15,204 nonzero candidates; 143,247 spatial-diagnostic rows; 76,020 candidate maps; 14 selected panels; 76,034 map-manifest rows\
 **Output root:** `outputs/16_difference_maps_and_spatial_diagnostics/`  
 **Depends on:** Notebooks 02 and 08–13, including Notebook 12A
@@ -1720,7 +1719,7 @@ notebook, and publication registry remain in the GitHub scientific record.
 approved full indexed-bundle N16 release is remotely verified at the pinned
 revision and record named in Section 2.1. All maps and the large metrics table
 remain locally canonical; the compact Git record is a separate handoff. Storage
-and dashboard access are still reassessed after N33 and before N34. Do not
+and dashboard access were reviewed for the completed N34/N35 delivery. Do not
 delete the local map collection.
 
 ### Responsibilities
@@ -2284,7 +2283,7 @@ conclusions separate:
    restoration evidence changes with the rendered lightness of annotated skin
    regions in this controlled portrait collection.
 
-The hand study is the stronger and more defensible planned contribution. The
+The hand study is the primary contribution of this completed audit. The
 skin-tone study is exploratory because the available paintings differ in
 collection source, period, medium, palette, scale, pose, lighting, and stylistic
 convention. It is not a racial-bias benchmark.
@@ -2504,10 +2503,10 @@ historical, social, or conservation meaning.
     reconcile every row and file, write manifests and checks, map the approved
     contract to evidence, and clean temporary material.
 
-### Planned canonical outputs
+### Original canonical output plan
 
-The final preparation layer must minimize duplication and may refine filenames,
-but the owned artifact families are expected to include:
+The approved plan below defined the artifact families. The completed run's
+manifest and artifact index record the final filenames and coverage:
 
 ```text
 data/anatomical_annotations.csv
@@ -2727,8 +2726,8 @@ embedded images and no external image dependency. All 124 checks and all 10
 roadmap responsibilities passed with no blocking or warning failures. The
 eight pilot artifact paths and schemas are preserved; the pilot's 1,901 rows
 expanded to 7,035. Inference used 5,000 seeded painting-cluster bootstrap draws
-and 100,000 seeded batched sign flips with the +1 correction. Notebook 24 is
-the next eligible Controlled-300 producer.
+and 100,000 seeded batched sign flips with the +1 correction. Notebook 24
+subsequently completed the next controlled analysis stage.
 
 ### Canonical outputs
 

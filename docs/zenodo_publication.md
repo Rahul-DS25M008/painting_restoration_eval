@@ -22,8 +22,7 @@ Rahul Maddineni's **v1.0.0** research-artifact release was published on **2 Octo
   [`zenodo_published_record.json`](../config/publication/zenodo_published_record.json).
 - Repository citation metadata: [`CITATION.cff`](../CITATION.cff).
 
-Use the exact-version DOI for the evidence behind the completed thesis. When
-using later repository code, also identify that commit. Publication is complete;
+Use the exact-version DOI for the archived Controlled-300 evidence. The later D03/D04 physical-damage study is not included in v1.0.0; identify its repository commit and [producer reports](README.md) separately. When using later repository code, also identify that commit. Publication is complete;
 the reserved-DOI/draft wording in frozen records describes their earlier dates.
 
 ## Download and verification

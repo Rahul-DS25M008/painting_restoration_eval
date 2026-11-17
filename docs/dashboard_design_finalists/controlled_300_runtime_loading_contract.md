@@ -14,7 +14,7 @@ and
 **Step 5 implementation authority:**
 [`controlled_300_n34_implementation_contract.md`](controlled_300_n34_implementation_contract.md)
 
-**Next gate:** Step 6 Notebook 34 refactor and package execution
+**Current context (2026-11-17):** N34 packaging, N35 validation and N36 delivery are complete. This dated contract/audit describes the original Controlled-300 scope, not a pending task or a fresh remote audit. The later physical-damage extension has separate [design](physical_damage_study_design.md) and [validation](physical_damage_study_validation.md) records.
 
 ## Decision
 

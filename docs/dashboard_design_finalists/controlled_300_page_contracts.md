@@ -3,10 +3,7 @@
 **Purpose:** Preserve the room-by-room content and interaction decisions made
 before Notebook 34 packages or implements the Controlled-300 dashboard.
 
-**Implementation boundary:** These contracts authorize design planning only.
-The live Controlled-50 application remains unchanged until all eight rooms are
-approved, the required remote assets are audited, Notebook 34 is rebuilt, and
-Notebook 35 validates the replacement.
+**Historical planning boundary:** These contracts originally governed replacement of the Controlled-50 application. The Controlled-300 implementation, N34 package and N35 closeout are complete. The later D03/D04 room and Study Design supplementary entrance follow the separate [physical-study design](physical_damage_study_design.md); the original contracts below retain their core scope.
 
 **Evidence authority:** Exact producer paths, row selectors, display states,
 and required Notebook 34 derivations are recorded in
