@@ -18,12 +18,22 @@ from urllib.parse import urlsplit
 
 APP_URL = "https://fhtw-painting-restoration-main.streamlit.app/"
 FALLBACK_URL = APP_URL + "~/+/"
+PHYSICAL_APP_URL = "https://fhtw-painting-restoration-physical-test.streamlit.app/"
 PRIMARY_TIMEOUT_SECONDS = 120
 TOTAL_TIMEOUT_SECONDS = 600
 READY_HEADING = "How should we judge an AI-restored painting?"
 ROOM_LINKS = ("Exhibition Foyer", "Study Design", "Metric Framework", "Model Gallery",
               "Stability Lab", "Trustworthiness", "Case Explorer", "Research Archive")
 WAKE_BUTTON = re.compile(r"^Yes, get this app back up!?$", re.IGNORECASE)
+
+
+def target_for_ref(ref):
+    """Explicit deployments only; a test-branch check cannot pass against main."""
+    targets = {"main": (APP_URL, True),
+               "codex/physical-damage-room": (PHYSICAL_APP_URL, True)}
+    if ref not in targets:
+        raise ValueError("No availability deployment configured for this Git ref")
+    return targets[ref]
 
 
 def safe_url(value):
@@ -43,9 +53,10 @@ def safe_message(value):
 class BrowserDiagnostics:
     """Capture startup failures, without headers, cookies or response bodies."""
 
-    def __init__(self, page, label):
+    def __init__(self, page, label, app_url=APP_URL):
         self.page = page
         self.label = label
+        self.app_url = app_url
         self.events = []
         self.seen = set()
         self.startup_failure_at = None
@@ -63,7 +74,7 @@ class BrowserDiagnostics:
 
     def record(self, kind, **details):
         url = urlsplit(details.get("url", ""))
-        if (url.hostname == urlsplit(APP_URL).hostname
+        if (url.hostname == urlsplit(self.app_url).hostname
                 and url.path.startswith(("/~/+/static/js/", "/~/+/static/css/"))
                 and (kind == "request_failed" or
                      (kind == "http_error" and details.get("status", 0) >= 500))):
@@ -127,14 +138,26 @@ def inspect_frame(frame, room="foyer") -> bool:
     for error in frame.locator('[data-testid="stException"]').all():
         if error.is_visible():
             raise RuntimeError("The deployed app displays a Streamlit exception.")
-    if room not in {"foyer", "case"}:
+    if room not in {"foyer", "case", "study", "physical"}:
         raise ValueError("Unsupported availability room")
-    heading = READY_HEADING if room == "foyer" else "Case Explorer"
+    if room == "physical":
+        # A native evidence dialog makes the room inert to accessibility role
+        # queries; its painted DOM must still pass while the dialog is open.
+        return frame.locator('.pd-stage').evaluate_all("""stages => stages.some(s =>
+            s.dataset.ready === 'true' && s.dataset.assetsReady === 'true' &&
+            s.dataset.loadError !== 'true' &&
+            s.querySelectorAll('[data-print][data-painted="true"]').length === 5 &&
+            s.querySelectorAll('[data-exhibit][data-painted="true"][data-mounted="true"]').length === 10 &&
+            [...s.querySelectorAll('[data-mode], [data-mask], [data-image]')].every(b => !b.disabled))""")
+    heading = {"foyer": READY_HEADING, "case": "Case Explorer", "study": "Study Design"}[room]
     if not frame.get_by_role("heading", name=heading, exact=True).is_visible():
         return False
     if not all(frame.get_by_role("link", name=name, exact=True).is_visible() for name in ROOM_LINKS):
         return False
-    if room == "foyer":
+    if room == "study":
+        images = frame.locator('.pd-study-entry img, .pd-study-alcove-surface')
+        minimum = 3  # alcove, portrait entry, physical-damage entry
+    elif room == "foyer":
         if not frame.get_by_role("link", name="Take the guided tour about 6 min", exact=True).is_visible():
             return False
         images = frame.get_by_role("img", name="Juan de Pareja clean controlled reference.", exact=True)
@@ -241,7 +264,7 @@ def check_visitor_dialog(frame):
 def open_dashboard(page, *, timeout_seconds=TOTAL_TIMEOUT_SECONDS,
                    primary_timeout_seconds=PRIMARY_TIMEOUT_SECONDS,
                    settle_seconds=15, poll_ms=2000, fresh_page=None, on_failure=None,
-                   recover_startup=None):
+                   recover_startup=None, app_url=APP_URL):
     """Try the public entry for two minutes, then the same app's direct route.
 
     Navigation and rendered readiness share each route's budget. Both attempts
@@ -252,7 +275,7 @@ def open_dashboard(page, *, timeout_seconds=TOTAL_TIMEOUT_SECONDS,
 
     deadline = time.monotonic() + timeout_seconds
     primary_error = None
-    for url, fallback in ((APP_URL, False), (FALLBACK_URL, True)):
+    for url, fallback in ((app_url, False), (app_url + "~/+/", True)):
         if fallback and fresh_page is not None:
             page = fresh_page()
         route_deadline = deadline if fallback else min(
@@ -291,11 +314,74 @@ def open_dashboard(page, *, timeout_seconds=TOTAL_TIMEOUT_SECONDS,
                   flush=True)
             continue
         result.update(
-            url=url, primary_url=APP_URL, fallback_used=fallback,
+            url=url, primary_url=app_url, fallback_used=fallback,
             primary_status="unavailable" if fallback else "ready",
             primary_error=primary_error,
         )
         return result
+
+
+def check_physical_study(page, *, deadline, diagnostics):
+    """Exercise the paths missed by the original foyer/Case Explorer smoke."""
+    from playwright.sync_api import expect
+
+    def ready(room):
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise TimeoutError("Physical-study check exhausted the shared browser budget")
+        wait_for_dashboard(page, room=room, timeout_seconds=remaining, settle_seconds=2)
+        return next(f for f in page.frames if inspect_frame(f, room))
+
+    frame = next(f for f in page.frames if inspect_frame(f, "case"))
+    frame.get_by_role("link", name="Study Design", exact=True).click()
+    frame = ready("study")
+    diagnostics.save("study-design")
+    frame.locator('.pd-study-entry a[href*="room=physical_damage_study"]').click()
+    frame = ready("physical")
+    diagnostics.save("physical-room")
+
+    canvas = frame.locator('[data-print="0"]')
+    frame.get_by_role("button", name="Full painting", exact=True).click()
+    whole = canvas.evaluate("c => [c.width, c.height]")
+    frame.get_by_role("button", name="Same detail", exact=True).click()
+    expect(frame.locator('[data-mode="detail"]')).to_have_attribute("aria-pressed", "true")
+    if canvas.evaluate("c => [c.width, c.height]") == whole:
+        raise RuntimeError("Same-detail control did not change the displayed crop")
+    mask = frame.locator('[data-mask]')
+    if mask.get_attribute("aria-pressed") == "true":
+        mask.click()
+    fingerprint = """c => {let h=2166136261; for(const v of c.getContext('2d').getImageData(0,0,c.width,c.height).data)
+        h=Math.imul(h^v,16777619); return h>>>0;}"""
+    before = canvas.evaluate(fingerprint)
+    mask.click()
+    expect(mask).to_have_attribute("aria-pressed", "true")
+    if canvas.evaluate(fingerprint) == before:
+        raise RuntimeError("Mask control changed its label but not the displayed image")
+    mask.click()
+    frame.get_by_role("button", name="Enlarge Stable Diffusion", exact=True).click()
+    expect(frame.locator('.pd-dialog canvas[data-painted="true"]')).to_be_visible()
+    frame.get_by_role("button", name="Close inspection", exact=True).click()
+    expect(frame.locator('.pd-dialog')).to_have_count(0)
+
+    # A second case verifies real navigation, not just inert catalogue links.
+    frame.locator('.pd-exhibit[href*="pd_case=rd001"]').click()
+    frame = ready("physical")
+    expect(frame.locator('.pd-stage')).to_have_attribute("data-case", "rd001")
+    frame.locator('a[href*="pd_panel=seeds"]').click()
+    frame = ready("physical")
+    expect(frame.locator('.pd-dialog .pd-seeds canvas[data-painted="true"]')).to_have_count(4, timeout=30000)
+    seed_figure = frame.locator('.pd-dialog img')
+    expect(seed_figure).to_be_visible()
+    seed_figure.evaluate("img => img.decode()")
+    diagnostics.save("physical-seeds")
+    frame.locator('.pd-dialog').get_by_role("link", name="Sources & settings", exact=True).click()
+    frame = ready("physical")
+    expect(frame.get_by_role("heading", name="Recorded targeted SD prompt", exact=True)).to_be_visible()
+    frame.get_by_role("button", name="Close inspection", exact=True).click()
+    ready("physical")
+    return ["study_design_three_decoded_images", "physical_room_background_and_plaque",
+            "physical_ten_previews_and_five_restorations", "physical_detail_mask_and_enlarge",
+            "physical_case_navigation_seeds_and_sources"]
 
 
 def write_summary(result):
@@ -312,6 +398,7 @@ def write_summary(result):
             f"- Public entry: {result['primary_url']}\n"
             "- Verified: foyer navigation and image, visitor dialog, "
             "Case Explorer's five images and metric control.\n"
+            f"- Additional checks: {', '.join(result.get('supplementary_checks', [])) or 'none (main profile)'}.\n"
             f"- Browser check duration: {result['elapsed_seconds']} seconds.\n\n"
             "The public entry is tried first on every run. Fallback use does not "
             "confirm that the normal public link has recovered.\n"
@@ -323,6 +410,9 @@ def main() -> int:
 
     started = time.monotonic()
     try:
+        ref = os.environ.get("AVAILABILITY_REF", "main")
+        app_url, physical_checks = target_for_ref(ref)
+        print(f"Monitoring ref={ref}; deployment={app_url}", flush=True)
         with sync_playwright() as playwright:
             # Full Chromium's new headless mode, rather than headless shell.
             channel = os.environ.get("AVAILABILITY_BROWSER_CHANNEL", "chromium")
@@ -339,7 +429,7 @@ def main() -> int:
                     page = context.new_page()
                     page.set_default_timeout(5000)
                     active.update(context=context, page=page,
-                                  diagnostics=BrowserDiagnostics(page, label))
+                                  diagnostics=BrowserDiagnostics(page, label, app_url))
                     return page
 
                 page = create_page("primary")
@@ -348,6 +438,7 @@ def main() -> int:
                     fresh_page=lambda: create_page("fallback"),
                     on_failure=lambda: active["diagnostics"].save("entry-failed"),
                     recover_startup=lambda remaining: active["diagnostics"].retry_startup(remaining),
+                    app_url=app_url,
                 )
                 page = active["page"]
                 frame = next(frame for frame in page.frames if inspect_frame(frame))
@@ -356,7 +447,12 @@ def main() -> int:
                 frame.get_by_role("link", name="Case Explorer", exact=True).click()
                 case_result = wait_for_dashboard(page, room="case",
                     timeout_seconds=max(1, TOTAL_TIMEOUT_SECONDS - (time.monotonic() - started)))
+                supplementary_checks = check_physical_study(
+                    page, deadline=started + TOTAL_TIMEOUT_SECONDS,
+                    diagnostics=active["diagnostics"],
+                ) if physical_checks else []
                 result.update(
+                    ref=ref, supplementary_checks=supplementary_checks,
                     checked_at_utc=datetime.now(timezone.utc).isoformat(),
                     elapsed_seconds=round(time.monotonic() - started, 1),
                     checks=["foyer_navigation_and_image", "visitor_dialog_open_and_escape",

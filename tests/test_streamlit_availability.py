@@ -114,6 +114,26 @@ class AvailabilityTests(unittest.TestCase):
         self.page.set_content(CASE_HTML.replace('<button>Inspect exact saved metric rows</button>', ''))
         with self.assertRaises(TimeoutError): self.wait(timeout=0.2, room="case")
 
+    def test_study_design_requires_both_tiles_and_the_alcove(self):
+        html = NAV + '<h1>Study Design</h1>' + f'<img class="pd-study-alcove-surface" src="{IMAGE}">' + \
+            '<aside class="pd-study-entry">' + f'<img src="{IMAGE}">' * 2 + '</aside>'
+        self.page.set_content(html)
+        self.assertEqual(self.wait(room="study")["status"], "ready")
+        self.page.locator('.pd-study-alcove-surface').evaluate("e => e.src='data:image/png;base64,broken'")
+        with self.assertRaises(TimeoutError): self.wait(timeout=0.2, room="study")
+
+    def test_physical_room_rejects_missing_decorations_or_unpainted_canvases(self):
+        html = NAV + '<h1>Physical Damage Study</h1><main class="pd-stage" data-ready="true" data-assets-ready="true">' + \
+            '<canvas data-print data-painted="true"></canvas>' * 5 + \
+            '<canvas data-exhibit data-painted="true" data-mounted="true"></canvas>' * 10 + \
+            '<button data-mode>Full painting</button><button data-mask>Show mask</button></main>'
+        self.page.set_content(html)
+        self.assertEqual(self.wait(room="physical")["status"], "ready")
+        self.page.locator('.pd-stage').evaluate("e => e.dataset.assetsReady='false'")
+        with self.assertRaises(TimeoutError): self.wait(timeout=0.2, room="physical")
+        self.page.set_content(html.replace('data-painted="true"', 'data-painted="false"', 1))
+        with self.assertRaises(TimeoutError): self.wait(timeout=0.2, room="physical")
+
     def test_loading_diagnostics_distinguish_broken_images_without_dumping_sources(self):
         self.page.set_content(READY_HTML.replace(IMAGE, 'data:image/png;base64,broken'))
         state = availability.describe_loading_state(self.page)
@@ -252,6 +272,22 @@ class AvailabilityTests(unittest.TestCase):
 
 
 class TargetTests(unittest.TestCase):
+    def test_branch_targets_are_separate_and_unknown_refs_fail(self):
+        self.assertEqual(availability.target_for_ref("main"), (availability.APP_URL, True))
+        self.assertEqual(availability.target_for_ref("codex/physical-damage-room"), (availability.PHYSICAL_APP_URL, True))
+        with self.assertRaises(ValueError):
+            availability.target_for_ref("other")
+
+    @unittest.skipUnless(importlib.util.find_spec("playwright"), "Playwright not installed")
+    def test_test_deployment_fallback_never_visits_main(self):
+        from unittest.mock import Mock
+        page = Mock()
+        with patch.object(availability, "wait_for_dashboard", side_effect=[TimeoutError("loading"), {"status": "ready"}]):
+            result = availability.open_dashboard(page, app_url=availability.PHYSICAL_APP_URL)
+        self.assertEqual([c.args[0] for c in page.goto.call_args_list],
+                         [availability.PHYSICAL_APP_URL, availability.PHYSICAL_APP_URL + "~/+/"])
+        self.assertEqual(result["primary_url"], availability.PHYSICAL_APP_URL)
+
     def test_browser_messages_omit_url_secrets_and_embedded_images(self):
         message = availability.safe_message(
             'failed https://user:password@example.com/app.js?token=secret#fragment data:image/png;base64,private'
