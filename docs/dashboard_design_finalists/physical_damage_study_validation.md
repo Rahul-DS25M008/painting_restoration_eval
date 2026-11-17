@@ -200,7 +200,7 @@ can substitute the main app. CI browser fixtures cover missing alcove/background
 and unpainted images, alongside the original readiness tests.
 
 Cloudflare setup and the 48-hour observation gate are documented in
-[`tools/streamlit_scheduler/README.md`](../../tools/streamlit_scheduler/README.md).
+[Cloudflare setup and 48-hour observation instructions](https://github.com/Rahul-DS25M008/painting_restoration_eval/blob/53b6b8d0b0b1a3f68637adb9da27c30cef4aa7bd/tools/streamlit_scheduler/README.md)
 The new Worker defaults to main unless `GITHUB_REF` is explicitly set to the
 approved test branch. Its other ref values are rejected before dispatch.
 No Worker was deployed or cron enabled by this code change. No merge to main
