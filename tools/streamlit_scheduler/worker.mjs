@@ -2,7 +2,7 @@
 // No token values belong in this file. Set GITHUB_TOKEN as a Worker secret.
 const REPOSITORY = "Rahul-DS25M008/painting_restoration_eval";
 const WORKFLOW = "streamlit-availability.yml";
-const ALLOWED_REFS = new Set(["main", "codex/physical-damage-room"]);
+const REF = "main";
 const API_URL = `https://api.github.com/repos/${REPOSITORY}` +
   `/actions/workflows/${WORKFLOW}/dispatches`;
 
@@ -12,10 +12,6 @@ export async function dispatchWorkflow(
   env,
   fetchImpl = (url, options) => globalThis.fetch(url, options),
 ) {
-  const ref = env.GITHUB_REF ?? "main";
-  if (!ALLOWED_REFS.has(ref)) {
-    throw new Error("Unsupported GITHUB_REF; no dispatch attempted.");
-  }
   if (typeof env.GITHUB_TOKEN !== "string" || !env.GITHUB_TOKEN.trim()) {
     throw new Error("Missing GITHUB_TOKEN Worker secret; no dispatch attempted.");
   }
@@ -34,7 +30,7 @@ export async function dispatchWorkflow(
         "User-Agent": "painting-restoration-availability-scheduler",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ref }),
+      body: JSON.stringify({ ref: REF }),
       signal: AbortSignal.timeout(20000),
     });
   } catch (error) {
@@ -84,7 +80,7 @@ export async function dispatchWorkflow(
     status: "dispatch_accepted_not_health_verified",
     repository: REPOSITORY,
     workflow: WORKFLOW,
-    ref,
+    ref: REF,
     workflow_run_id: runId,
     run_url: runId
       ? `https://github.com/${REPOSITORY}/actions/runs/${runId}`

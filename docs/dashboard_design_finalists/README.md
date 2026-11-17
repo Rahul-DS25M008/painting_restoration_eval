@@ -4,8 +4,7 @@
 has an approved [single-room design and interaction record](physical_damage_study_design.md),
 with a [room reference](approved_current/12_physical_damage_study_final.png)
 and a [Study Design entrance reference](approved_current/13_study_design_supplementary_entry.png).
-The extension is implemented and locally tested on `codex/physical-damage-room`;
-see the [local validation record](physical_damage_study_validation.md).
+The Physical Damage Study was implemented and validated on codex/physical-damage-room, including a separate Streamlit Community Cloud deployment and scheduled availability checks. The final local appearance was accepted on 2026-11-16. The extension is being promoted to the existing main museum without changing its public URL. The original feature branch and its test deployment are retained.
 The author accepted the final local appearance on 2026-11-16. Commit, separate
 branch deployment and merge remain pending.
 It preserves the eight principal rooms and the frozen experimental outputs.

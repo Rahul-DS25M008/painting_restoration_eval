@@ -273,7 +273,7 @@ class AvailabilityTests(unittest.TestCase):
 
 class TargetTests(unittest.TestCase):
     def test_branch_targets_are_separate_and_unknown_refs_fail(self):
-        self.assertEqual(availability.target_for_ref("main"), (availability.APP_URL, False))
+        self.assertEqual(availability.target_for_ref("main"), (availability.APP_URL, True))
         self.assertEqual(availability.target_for_ref("codex/physical-damage-room"), (availability.PHYSICAL_APP_URL, True))
         with self.assertRaises(ValueError):
             availability.target_for_ref("other")

@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   # Verify watcher changes immediately; recurring dispatch remains Cloudflare-owned.
   push:
-    branches: [main, codex/physical-damage-room]
+    branches: [main]
     paths:
       - '.github/workflows/streamlit-availability.yml'
       - 'tools/check_streamlit_availability.py'

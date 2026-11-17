@@ -4,20 +4,6 @@ import worker, { dispatchWorkflow } from "./worker.mjs";
 
 const env = { GITHUB_TOKEN: "fake-unit-test-token-not-a-credential" };
 
-test("separate test Worker dispatches the approved branch only", async () => {
-  const result = await dispatchWorkflow({...env, GITHUB_REF: "codex/physical-damage-room"}, async (_, options) => {
-    assert.deepEqual(JSON.parse(options.body), {ref: "codex/physical-damage-room"});
-    return new Response(null, {status: 204});
-  });
-  assert.equal(result.ref, "codex/physical-damage-room");
-});
-
-test("unknown ref is rejected before transmitting credentials", async () => {
-  let called = false;
-  await assert.rejects(dispatchWorkflow({...env, GITHUB_REF: "other"}, async () => {called = true;}), /Unsupported GITHUB_REF/);
-  assert.equal(called, false);
-});
-
 test("dispatches only the fixed repository, workflow and main branch", async () => {
   let calls = 0;
   const result = await dispatchWorkflow(env, async (url, options) => {

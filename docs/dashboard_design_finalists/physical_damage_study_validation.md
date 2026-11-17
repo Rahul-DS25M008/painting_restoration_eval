@@ -5,6 +5,8 @@ Approved visual authority: [design contract](physical_damage_study_design.md).
 Status: final local appearance accepted by the author on 2026-11-16; no commit,
 push, cloud deployment or merge performed in this implementation pass.
 
+Promotion note: The original implementation and validation entries below are historical. Subsequent testing verified the separate physical-test deployment and its scheduled health checks before promotion to the main museum. The existing production URL and original feature-branch deployment are preserved.
+
 ## Delivered behaviour
 
 - `?room=physical_damage_study` opens the approved single overhead hall at
