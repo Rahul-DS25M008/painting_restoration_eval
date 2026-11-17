@@ -81,6 +81,21 @@ def rows(relative: str, index: dict) -> list[dict]:
     return list(csv.DictReader(io.StringIO(verified_bytes(relative, index).decode("utf-8-sig"))))
 
 
+def app_media_url(url: str) -> str:
+    """Resolve media under the visible app, including Cloud's /~/+/ proxy.
+
+    MediaFileManager returns a server-root path; raw HTML/CSS bypasses the
+    base-path rewriting used by Streamlit's native image components.
+    """
+    from urllib.parse import urlsplit
+    parsed = urlsplit(url)
+    prefix, separator, filename = parsed.path.rpartition("/media/")
+    if (parsed.scheme or parsed.netloc or not separator or not filename
+            or "/" in filename or parsed.query or parsed.fragment):
+        raise ValueError("Unexpected Streamlit media URL")
+    return "media/" + filename
+
+
 def media(relative: str, index: dict, expected=None) -> str:
     """Register same-origin media on every render; large evidence loads on demand."""
     import mimetypes
@@ -88,7 +103,7 @@ def media(relative: str, index: dict, expected=None) -> str:
     data = verified_bytes(relative, index, expected)
     mime = mimetypes.guess_type(relative)[0] or "application/octet-stream"
     if runtime.exists():
-        return runtime.get_instance().media_file_mgr.add(data, mime, f"physical:{relative}")
+        return app_media_url(runtime.get_instance().media_file_mgr.add(data, mime, f"physical:{relative}"))
     return f"data:{mime};base64," + base64.b64encode(data).decode("ascii")
 
 
@@ -96,7 +111,7 @@ def static_media(relative: str) -> str:
     from streamlit import runtime
     path = local_path(relative)
     if runtime.exists():
-        return runtime.get_instance().media_file_mgr.add(str(path), "image/png", f"physical:{relative}")
+        return app_media_url(runtime.get_instance().media_file_mgr.add(str(path), "image/png", f"physical:{relative}"))
     return "data:image/png;base64," + base64.b64encode(path.read_bytes()).decode("ascii")
 
 

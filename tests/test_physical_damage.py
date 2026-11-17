@@ -1,9 +1,22 @@
 """Verify exhibit provenance and isolation from the principal museum route."""
 import pytest
+from urllib.parse import urljoin
 
 from restoration_eval import physical_damage as room
 from restoration_eval.physical_damage_view import markup
 from restoration_eval.room_runtime import navigation_query
+
+
+@pytest.mark.parametrize("base", ["http://localhost:8501/", "https://example.streamlit.app/~/+/", "http://localhost:8502/museum/"])
+@pytest.mark.parametrize("registered", ["/media/example.png", "/museum/media/example.png"])
+def test_media_stays_under_the_visible_app_base(base, registered):
+    assert urljoin(base + "?room=study_design", room.app_media_url(registered)) == base + "media/example.png"
+
+
+@pytest.mark.parametrize("url", ["https://other.test/media/a.png", "//other.test/media/a.png", "/media/../a.png", "/static/a.png"])
+def test_unexpected_media_urls_are_rejected(url):
+    with pytest.raises(ValueError, match="media URL"):
+        room.app_media_url(url)
 
 
 def checked_media(path, index, expected=None):

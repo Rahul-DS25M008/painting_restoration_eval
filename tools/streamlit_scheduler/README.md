@@ -1,5 +1,72 @@
 # Independent Streamlit availability scheduler
 
+## Separate physical-room test deployment — 2026-11-17
+
+This uses **Cloudflare Workers**, not AWS CloudWatch. Keep the existing main
+Worker and its cron unchanged. A second Worker dispatches the same registered
+workflow, with the explicitly allowed ref `codex/physical-damage-room`.
+The checker maps this ref only to
+<https://fhtw-painting-restoration-physical-test.streamlit.app/>. Its fallback
+is the same test deployment's `/~/+/` route; it never switches to main.
+Unknown refs fail before visiting an app. Concurrency is separated by Git ref.
+
+### Setup after pushing this branch
+
+1. Wait for Streamlit to deploy the new branch commit. Verify the test app still
+   uses `codex/physical-damage-room`, `streamlit_app.py`, and Python 3.12.
+   A push also starts an availability check when the monitored files change.
+2. Open GitHub Actions -> **Streamlit availability check** -> **Run workflow**.
+   Select `codex/physical-damage-room`. Confirm the log says `Monitoring ref=`
+   with that branch and the physical-test URL. The workflow already exists on
+   main, so dispatching its branch version does not require merging this code.
+3. In Cloudflare -> Workers & Pages, create a separate Worker named
+   `streamlit-physical-test-monitor`. Replace its starter code with the complete
+   contents of `tools/streamlit_scheduler/worker.mjs` from this branch; deploy it.
+4. In that new Worker's Settings -> Variables and Secrets, add:
+   - Text variable **GITHUB_REF** = `codex/physical-damage-room`.
+   - Secret **GITHUB_TOKEN** = a valid fine-grained GitHub token for this
+     repository, with **Actions: Read and write** and automatic Metadata access.
+     The existing token can be reused if its scope and expiry remain suitable;
+     copying a Worker does not copy its secret value. Never put the token in Git.
+   Apply/deploy the variable changes to the active Worker version.
+5. Enable Workers Logs. Under Settings -> Triggers -> Cron Triggers add
+   **`15,45 * * * *`**. This is every 30 minutes in UTC, staggered from main's
+   usual `*/30` schedule. Allow up to 15 minutes for a new cron to propagate.
+6. Confirm a scheduled log reports
+   `dispatch_accepted_not_health_verified` and `ref=codex/physical-damage-room`.
+   Follow its run URL and confirm the actual GitHub browser check passes.
+   A Worker HTTP preview returns 404 intentionally and does not trigger a run.
+
+The test profile retains the foyer, visitor-guide and Case Explorer checks,
+then verifies both supplementary entry images plus the alcove, the physical
+room background and plaque, ten painted selectors, five painted comparisons,
+detail cropping, actual mask pixel changes, enlargement, case selection, four
+SD seeds plus the saved figure, and the recorded-prompt source panel.
+It saves labelled screenshots and sanitized diagnostics as Actions artifacts
+for seven days. This is a focused smoke check, not a screenshot-layout judge
+or an exhaustive run of every evidence panel for every painting.
+
+### Observation window before a possible merge
+
+Start the 48-hour window after the corrected deployment passes a manual cloud
+inspection and the first scheduled branch check. At a 30-minute interval,
+expect about 96 scheduled checks. Check for missing runs as well as failures.
+Review errors and screenshots instead of counting only green badges; a green
+fallback run explicitly reports degraded public entry and is not a clean pass
+for the normal URL. Check all ten paintings and all evidence panels manually
+at least once, including the full report, and inspect Streamlit's server logs.
+
+The scheduler does not merge branches or restart apps. Any later merge remains
+a separate decision after stable observation. A checker commit identifies the
+code used to probe the app; it does not attest the server's deployed revision.
+No cloud recovery or scheduled monitoring is claimed until these setup steps
+have actually been completed.
+
+References: [Cloudflare Cron Triggers](https://developers.cloudflare.com/workers/configuration/cron-triggers/)
+and [GitHub workflow_dispatch](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#workflow_dispatch).
+
+---
+
 This small Cloudflare Worker replaces reliance on GitHub's native scheduled
 trigger, not the successful GitHub Actions browser check.
 
@@ -20,13 +87,13 @@ now removes the canary and native GitHub schedule, retaining the dispatch workfl
 
 The workflow on `main` now targets
 https://fhtw-painting-restoration-main.streamlit.app/. The checked-in Worker
-already sets `const REF = "main"`. The owner also changed the deployed Worker to
+defaults to `main` when `GITHUB_REF` is unset. The owner also changed the deployed Worker to
 `main` and confirmed a successful scheduled invocation. GitHub records successful
 push run [36858527530](https://github.com/Rahul-DS25M008/painting_restoration_eval/actions/runs/36858527530)
 and workflow-dispatch run [36859028102](https://github.com/Rahul-DS25M008/painting_restoration_eval/actions/runs/36859028102),
 both at `e2b54a695a99ace715adbaee8a7ff21f7a407780`. The latter's automatic
 Cloudflare attribution is owner-confirmed; GitHub verifies the dispatch event
-and successful result. No further branch migration is pending.
+and successful result. No further main-app branch migration is pending.
 A GitHub push does not update dashboard-managed Worker code. Its existing
 secret, cron interval and permissions remain unchanged. The Worker
 dispatches the workflow; the Python checker owns the app URL.

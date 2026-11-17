@@ -6,17 +6,22 @@ on:
   workflow_dispatch:
   # Verify watcher changes immediately; recurring dispatch remains Cloudflare-owned.
   push:
-    branches: [main]
+    branches: [main, codex/physical-damage-room]
     paths:
       - '.github/workflows/streamlit-availability.yml'
       - 'tools/check_streamlit_availability.py'
       - 'tests/test_streamlit_availability.py'
+      - 'tools/streamlit_scheduler/**'
+      - 'src/restoration_eval/physical_damage*.py'
+      - 'streamlit_assets/physical_damage*'
+      - 'streamlit_assets/rooms/physical_damage*'
+      - 'streamlit_assets/rooms/study_design_supplementary_alcove.png'
 
 permissions:
   contents: read
 
 concurrency:
-  group: streamlit-availability
+  group: streamlit-availability-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -29,6 +34,7 @@ jobs:
       PYTHONUNBUFFERED: '1'
       PYTHONDONTWRITEBYTECODE: '1'
       AVAILABILITY_BROWSER_CHANNEL: chromium
+      AVAILABILITY_REF: ${{ github.ref_name }}
     steps:
       - name: Check out only the availability script and its tests
         uses: actions/checkout@v6

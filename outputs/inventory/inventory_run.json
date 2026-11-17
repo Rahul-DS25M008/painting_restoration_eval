@@ -1,15 +1,15 @@
 {
   "run_schema_version": "inventory_run.v1",
   "inventory_schema_version": "project_file_inventory.v1",
-  "inventory_run_id": "inventory_20261116T223540Z_87437f22",
+  "inventory_run_id": "inventory_20261116T233504Z_9b38d550",
   "status": "completed",
-  "generated_at_utc": "2026-11-16T22:35:40.209213Z",
-  "completed_at_utc": "2026-11-16T22:44:22.267900Z",
-  "duration_seconds": 522.271,
+  "generated_at_utc": "2026-11-16T23:35:04.207026Z",
+  "completed_at_utc": "2026-11-16T23:41:07.751031Z",
+  "duration_seconds": 363.76,
   "repository_root": "D:\\Masters\\FH\\Thesis\\painting-restoration-eval",
   "inventory_relative_path": "outputs/inventory/project_file_inventory.csv",
-  "inventory_sha256": "4ac520751627924691568bf4fc8a428bae31b70b71ac0704a4af5fb1a656481d",
-  "inventory_size_bytes": 80717148,
+  "inventory_sha256": "9cda26e60d442a24d943805942f8d7014830ab0fdc860e50975154102376d7fe",
+  "inventory_size_bytes": 80717150,
   "hash_configuration": {
     "mode": "partial",
     "algorithm": "sha256_first_n_bytes",
@@ -18,9 +18,9 @@
   "incremental_reuse": {
     "enabled": true,
     "cache_status": "verified",
-    "source_run_id": "inventory_20261116T211359Z_c76cdbcd",
-    "reused_file_count": 156662,
-    "inspected_file_count": 14
+    "source_run_id": "inventory_20261116T223540Z_87437f22",
+    "reused_file_count": 156666,
+    "inspected_file_count": 10
   },
   "scan_configuration": {
     "skipped_directory_names": [
@@ -49,7 +49,7 @@
   },
   "summary": {
     "file_count": 156676,
-    "total_size_bytes": 44036362713,
+    "total_size_bytes": 44036380565,
     "read_error_file_count": 0,
     "read_error_count": 0,
     "counts_by_format": {

@@ -166,6 +166,44 @@ comparison, sources and complete report, plus the existing principal navigation.
 Cloud loading, remote evidence and server logs must be checked on that deployment;
 local success alone does not certify Community Cloud behaviour.
 
+## Test deployment repair and monitoring — 2026-11-17
+
+The first cloud deployment exposed an application URL bug. New media used
+root-relative `/media/...` paths, whereas the public Community Cloud app runs
+inside `/~/+/`. The new Study Design alcove and physical tile could not decode;
+the physical room lost its decorative assets and comparison images. The
+controller stopped before attaching controls when those images failed. This
+was not evidence that the committed producer files were missing. Opening the
+same cloud alcove image at `/~/+/media/...` decoded the full 1672px image.
+
+`physical_damage.app_media_url` now emits app-relative `media/...` paths for
+both verified producer artifacts and decorative assets. The controller resolves
+images against the host document's base URI, verifies background/plaque loading,
+marks canvases only after painting and displays an explicit reload message with
+disabled controls on startup failure. The approved layout is unchanged.
+
+Manual browser checks passed on the ordinary localhost app and a second
+localhost server configured with the `/museum/` base path. The latter loaded
+all three Study Design images, the room/plaque, ten selectors and five primary
+images; full/detail, mask, case selection and enlargement worked. Saved seed
+images/figure, physical/controlled comparison figures, source settings and the
+complete report were also opened. These are local checks, not a cloud pass.
+
+The availability workflow now maps `codex/physical-damage-room` exclusively to
+the physical-test deployment, retaining main's original target and separating
+concurrency by ref. Its additional smoke checks cover the alcove, painted
+canvases, decorations, interactive detail/mask/enlargement, case navigation,
+seeds and sources. Main's fallback behaviour is retained; neither test route
+can substitute the main app. CI browser fixtures cover missing alcove/background
+and unpainted images, alongside the original readiness tests.
+
+Cloudflare setup and the 48-hour observation gate are documented in
+[`tools/streamlit_scheduler/README.md`](../../tools/streamlit_scheduler/README.md).
+The new Worker defaults to main unless `GITHUB_REF` is explicitly set to the
+approved test branch. Its other ref values are rejected before dispatch.
+No Worker was deployed or cron enabled by this code change. No merge to main
+is authorized by a passing local test or by successful dispatch alone.
+
 Browser screenshots (updated after the annotated refinements):
 
 ![Local physical room](physical_damage_room_local_preview.jpg)

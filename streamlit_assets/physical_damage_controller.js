@@ -17,15 +17,24 @@
   function number(value,digits=4){return value!=='' && value!==undefined && Number.isFinite(Number(value))?Number(value).toFixed(digits):'\u2014';}
   function remember(){try{host.sessionStorage.setItem('physical-room-view',JSON.stringify(state));}catch(_) {}}
   const imageCache=new Map();
-  function load(uri){if(!imageCache.has(uri))imageCache.set(uri,new Promise((resolve,reject)=>{const image=new host.Image();image.onload=()=>resolve(image);image.onerror=()=>reject(Error('A saved evidence image could not be loaded.'));image.src=uri;}));return imageCache.get(uri);}
+  function load(uri){if(!imageCache.has(uri))imageCache.set(uri,new Promise((resolve,reject)=>{const image=new host.Image();image.onload=()=>resolve(image);image.onerror=()=>reject(Error('A saved evidence image could not be loaded.'));image.src=new URL(uri,doc.baseURI).href;}));return imageCache.get(uri);}
   function crop(){return state.mode==='detail'?data.detail:data.content;}
   let overlay;
-  function draw(canvas,image,bounds,showMask=false){const [x,y,x1,y1]=bounds,w=x1-x,h=y1-y;canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');ctx.drawImage(image,x,y,w,h,0,0,w,h);if(showMask&&overlay)ctx.drawImage(overlay,x,y,w,h,0,0,w,h);}
+  function draw(canvas,image,bounds,showMask=false){const [x,y,x1,y1]=bounds,w=x1-x,h=y1-y;canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');ctx.drawImage(image,x,y,w,h,0,0,w,h);if(showMask&&overlay)ctx.drawImage(overlay,x,y,w,h,0,0,w,h);canvas.dataset.painted='true';}
   function action(parent,label,fn){const button=node('button',label);button.type='button';button.addEventListener('click',fn,{signal:abort.signal});parent.append(button);return button;}
   function close(){if(data.panel){const a=node('a');a.href=data.links.close;doc.body.append(a);a.click();a.remove();}else{dialog?.close();dialog?.remove();dialog=null;restoreFocus?.focus();}}
   function open(title,fromServer=false){dialog?.remove();restoreFocus=doc.activeElement;dialog=node('dialog',undefined,'pd-dialog');dialog.setAttribute('aria-label',title);const header=node('header');header.append(node('h2',title));const closeButton=node('button','\u00d7','pd-close');closeButton.type='button';closeButton.setAttribute('aria-label','Close inspection');closeButton.addEventListener('click',close);header.append(closeButton);const body=node('div',undefined,'pd-body');dialog.append(header,body);doc.body.append(dialog);dialog.addEventListener('cancel',e=>{e.preventDefault();close();});dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)close();}});dialog.showModal();if(fromServer){const nav=node('nav');nav.setAttribute('aria-label','Evidence panels');for(const [key,label] of Object.entries({evidence:'Observations & diagnostics',seeds:'Four seeds',comparison:'Controlled comparison',sources:'Sources & settings',report:'Full report'})){const a=node('a',label);a.href=data.links[key];if(data.panel===key)a.setAttribute('aria-current','page');nav.append(a);}body.append(nav);}return body;}
-  const images=await Promise.all(data.images.map(r=>load(r.uri))).catch(e=>{stage.querySelector('.pd-table-note').textContent=e.message;return null;});
-  if(!images||!alive)return;
+  // Decode the room and plaque too: canvas readiness must not hide a missing set.
+  const style=host.getComputedStyle(stage);
+  const decorationUris=[style.backgroundImage,style.getPropertyValue('--pd-plaque')]
+    .map(value=>value.trim().match(/^url\(["']?(.*?)["']?\)$/)?.[1]);
+  if(decorationUris.some(uri=>!uri))throw Error('The room background or plaque is unavailable.');
+  const [images]=await Promise.all([
+    Promise.all(data.images.map(r=>load(r.uri))),
+    Promise.all(decorationUris.map(load)),
+  ]);
+  stage.dataset.assetsReady='true';
+  if(!alive)return;
   try {const mask=await load(data.mask);overlay=node('canvas');overlay.width=mask.naturalWidth;overlay.height=mask.naturalHeight;const context=overlay.getContext('2d');context.drawImage(mask,0,0);const pixels=context.getImageData(0,0,overlay.width,overlay.height);for(let i=0;i<pixels.data.length;i+=4){const selected=pixels.data[i]>=128;pixels.data[i]=241;pixels.data[i+1]=174;pixels.data[i+2]=53;pixels.data[i+3]=selected?130:0;}context.putImageData(pixels,0,0);}catch(e){stage.querySelector('[data-mask]').disabled=true;}
   function paint(){stage.querySelectorAll('[data-print]').forEach(c=>draw(c,images[Number(c.dataset.print)],crop(),state.mask));stage.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===state.mode)));stage.querySelector('[data-mask]').setAttribute('aria-pressed',String(state.mask));stage.querySelector('[data-mask]').textContent=state.mask?'Hide mask':'Show mask';stage.querySelector('.pd-table-note').textContent=state.mode==='detail'?'Same saved display crop across all five images \u00b7 not a metric region \u00b7 click to enlarge':'Click an image to inspect \u00b7 selected repair targets only \u00b7 SD primary seed 2026';remember();}
   paint();
@@ -102,4 +111,4 @@
     const download=node('a','Download the saved HTML report');download.href=data.report_uri;download.download='D04_real_damage_evaluation.html';body.append(download);
     const frame=node('iframe');frame.title='Complete D04 physical-damage evaluation report';frame.setAttribute('sandbox','allow-scripts allow-downloads');frame.src=data.report_uri;body.append(frame);
   }
-})().catch(error=>{const stage=window.parent.document.querySelector('.pd-stage');if(stage){const note=stage.querySelector('.pd-table-note');if(note)note.textContent='Evidence view unavailable: '+error.message;}console.error(error);});
+})().catch(error=>{const stage=window.parent.document.querySelector('.pd-stage');if(stage){stage.dataset.ready='false';stage.dataset.loadError='true';stage.querySelectorAll('button').forEach(button=>button.disabled=true);const note=stage.querySelector('.pd-table-note');if(note)note.textContent='Evidence view unavailable. Reload the page to retry. '+error.message;}console.error(error);});
