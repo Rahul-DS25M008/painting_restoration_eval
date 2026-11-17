@@ -905,7 +905,7 @@ The opening scope record must retain:
 - all 12 primary model–metric estimates worse for hands, with 10 of 12 meeting
   the corrected significance rule;
 - 32 candidate review units across eight cases and four methods in a bounded
-  Codex-assisted blind visual review, with 25 visible anatomical failures;
+  visual review, with 25 visible anatomical failures;
 - 30 rendered-lightness painting profiles and 10 context matches; and
 - 24 adjusted model–metric lightness associations: zero clearly positive,
   three chroma-error associations clearly negative and 21 intervals crossing

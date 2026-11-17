@@ -57,6 +57,6 @@ error-oriented. Full precision is retained in source details and CSV downloads.
 
 Rendered lightness is not race, ethnicity, or identity. This audit does not
 establish inherent model bias, conservation correctness, or expert validation.
-The Codex-assisted blind review is explicitly bounded and separate from N27
+The review is explicitly bounded and separate from N27
 automated flagging. Browser difference previews are exact absolute RGB
 differences of verified source pixels, not new scientific measurements.

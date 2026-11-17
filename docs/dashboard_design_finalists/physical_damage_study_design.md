@@ -1,10 +1,11 @@
-# Physical Damage Study — approved design
+# Physical Damage Study — Approved Design
 
-**Approved:** 2026-11-16, by the user: "yup, this looks good. lets finalize this".
-**Status:** implemented, locally tested and visually accepted by the author on
-2026-11-16. Commit and separate test-app deployment pending.
-**Local branch:** `codex/physical-damage-room`.
-**Starting commit:** `a9ce94ad0728ffa89e11f9da80e49e3cbbe91ecc`.
+**Design approved:** 2026-11-16  
+**Implementation:** Completed and validated through a separate Streamlit test deployment.  
+**Production deployment:** Integrated into the existing museum on 2026-11-17 without changing its public URL.  
+**Starting commit:** `a9ce94ad0728ffa89e11f9da80e49e3cbbe91ecc`
+
+The Study Design entrance and Physical Damage Study room were reviewed and approved separately. The final implementation follows the approved single-room composition and interaction requirements. Earlier workbench, gallery, desk, storage, theatre, mobile, atlas, and separate collection concepts are retained only as superseded alternatives. Image filename numbers refer to design-catalogue indices, not additional principal rooms.
 
 ## Visual authority
 
@@ -70,7 +71,7 @@ reports should load on demand rather than all at room startup.
 
 ### Physical-room typography and frame refinement — 2026-11-16
 
-Following the author's annotated local review, the main heading, selected
+Following the final annotated design review, the main heading, selected
 artwork title and interpretation note sit on the central marble table, clear
 of the architecture and doorway. Dark, bold small-cap serif lettering replaces
 the floating cream text; category names follow the wall surfaces. The return
@@ -114,7 +115,7 @@ not been approved. They are not included in this design approval.
 
 ### Alcove styling refinement — 2026-11-16
 
-Following local review, the author requested that the entrance blend into the
+The entrance was refined to blend into the
 original wall rather than sit on a flat beige panel. The heading is dark serif
 lettering directly on plaster; each link occupies a small antique-gold frame
 with a caption plaque. Follow-up review removed both scope/count lines,
@@ -168,7 +169,7 @@ manifests govern the content. Relevant configuration records are
 Physical cases have no clean reference. Boundary descriptors, preserved
 outside-mask pixels and seed differences are not clean-reference fidelity
 scores or probabilities of correctness. The qualitative observations are
-assistant inspection approved by the user, not an expert survey.
+AI-assisted qualitative visual inspection, reviewed before inclusion; not an external expert survey.
 
 Controlled examples are separate artworks, not matched clean versions of the
 physical cases. Show their reference metrics only in their own context.
@@ -184,9 +185,9 @@ all physical deterioration.
 2. Implement the room, entrance and evidence popups; preserve existing rooms.
 3. Test locally, including selection consistency, images, source bindings,
    popup behaviour, narrow screens and existing-room navigation.
-4. Obtain the user's local visual acceptance, then push the branch and deploy
+4. Complete the final visual approval, then push the branch and deploy
    a separate Streamlit test app following the agreed workflow.
-5. Verify the cloud app; merge only after the user's acceptance. Keep the
+5. Verify the cloud app; merge only after final deployment validation and approval. Keep the
    existing main application URL when the main branch updates.
 
 Local implementation and testing are recorded in

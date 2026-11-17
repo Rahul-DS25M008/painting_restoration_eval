@@ -1,15 +1,10 @@
 # Controlled-300 Dashboard Design Direction
 
-**Supplementary-room design approval (2026-11-16):** the Physical Damage Study
-has an approved [single-room design and interaction record](physical_damage_study_design.md),
-with a [room reference](approved_current/12_physical_damage_study_final.png)
-and a [Study Design entrance reference](approved_current/13_study_design_supplementary_entry.png).
-The Physical Damage Study was implemented and validated on codex/physical-damage-room, including a separate Streamlit Community Cloud deployment and scheduled availability checks. The final local appearance was accepted on 2026-11-16. The extension is being promoted to the existing main museum without changing its public URL. The original feature branch and its test deployment are retained.
-The author accepted the final local appearance on 2026-11-16. Commit, separate
-branch deployment and merge remain pending.
-It preserves the eight principal rooms and the frozen experimental outputs.
-The implementation and publication statements below describe the existing
-Controlled-300 delivery, not this new supplementary room.
+**Physical Damage Study extension (approved 2026-11-16):** The supplementary Physical Damage Study is documented in the [approved design and interaction record](physical_damage_study_design.md), with references for the [physical study room](approved_current/12_physical_damage_study_final.png) and [Study Design entrance](approved_current/13_study_design_supplementary_entry.png).
+
+The extension was validated on a separate Streamlit Community Cloud deployment before being merged into `main` on 2026-11-17. It is now available through the existing Painting Restoration Evidence Museum URL. The separate test deployment remains available for regression testing.
+
+The original eight principal rooms and frozen experimental outputs remain unchanged. The implementation and publication records below continue to describe the existing Controlled-300 delivery, with the Physical Damage Study documented as a supplementary extension.
 
 **Publication update (2026-10-02):** [Zenodo v1.0.0](https://doi.org/10.5281/zenodo.23092185)
 is published. Only the existing Research Archive Zenodo plaque lettering and

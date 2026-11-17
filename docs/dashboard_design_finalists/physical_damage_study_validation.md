@@ -1,11 +1,11 @@
-# Physical Damage Study — local implementation and validation
+# Physical Damage Study — Implementation and Validation
 
-Date: 2026-11-16. Branch: `codex/physical-damage-room`.
-Approved visual authority: [design contract](physical_damage_study_design.md).
-Status: final local appearance accepted by the author on 2026-11-16; no commit,
-push, cloud deployment or merge performed in this implementation pass.
+**Local validation:** 2026-11-16  
+**Approved design:** [Physical Damage Study design record](physical_damage_study_design.md)  
+**Cloud validation:** Completed on the separate physical-test deployment.  
+**Production integration:** Merged into the existing `main` museum on 2026-11-17.
 
-Promotion note: The original implementation and validation entries below are historical. Subsequent testing verified the separate physical-test deployment and its scheduled health checks before promotion to the main museum. The existing production URL and original feature-branch deployment are preserved.
+This document records the original local implementation, subsequent deployment fixes, and validation results. Entries describing pre-commit or pre-deployment conditions refer to their respective development stages. The existing production URL and separate test deployment remain unchanged.
 
 ## Delivered behaviour
 
@@ -90,8 +90,7 @@ scientific evidence were not modified in this refinement.
   its plaque; both destination links remain intact.
 - Browser: narrow-screen entries align side by side, with 17px titles and no
   document horizontal overflow. Desktop viewport restored.
-- The original Study Design shell remains unchanged. This is still an
-  uncommitted local preview, pending the author's inspection.
+- At this stage, validation covered the local preview only; cloud deployment had not yet been performed.
 
 ## Physical-room refinement following annotated review
 
@@ -136,7 +135,7 @@ Final backdrop/plaque follow-up:
 
 ## Final pre-commit checks — 2026-11-16
 
-The author accepted the final appearance, including the Architecture wall label.
+The final appearance, including the Architecture wall label, was approved.
 The final Python selection covered 94 checks: 93 passed initially, and the one
 stale alcove assertion was corrected to the approved caption-only design.
 The 37 dashboard/freeze checks then all passed, including that assertion.

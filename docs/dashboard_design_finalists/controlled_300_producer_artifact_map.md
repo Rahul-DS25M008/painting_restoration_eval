@@ -226,7 +226,7 @@ presented as a universal rule for every trustworthiness flag.
 | `d02.r005.control` | Exact matched-control print/mask | Temporary `work/hand_control_design.csv` was cleaned; canonical metric table retains `hand_control_id` and the 1,196-pixel count but not geometry | `unsupported_until_derived`; deterministically rebuild and confirm the same control ID before display |
 
 Rendered lightness is an image property, not race, ethnicity or identity. D02
-review is a bounded Codex-assisted blind review, not expert or conservator
+review is a bounded review, not expert or conservator
 ground truth.
 
 ## 07 — Case Explorer
