@@ -30,7 +30,7 @@ what was actually executed. A newly added citation does not alter those records.
 - **Close-topic:** the paper addresses restoration evaluation, painting/mural
   restoration, or a central thesis question, but its method or dataset differs.
 - **Partial/context:** a useful transferable component, limitation or comparison.
-  This deliberately includes the user's requested approximate “60% matches”.
+  This deliberately includes approximate thematic matches, rather than only exact matches.
   Relevance is qualitative; no invented numerical matching score is assigned.
 - **Technical:** official implementation documentation or a checkpoint/model
   card. These establish software behavior and provenance, not peer-reviewed

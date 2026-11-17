@@ -50,7 +50,7 @@ semantic_structural:
     explanation_metrics_path: "outputs/19_uncertainty_and_spatial_explanation_maps/metrics/spatial_explanations.csv"
     explanation_map_manifest_path: "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/map_images.csv"
     explanation_run_manifest_path: "outputs/19_uncertainty_and_spatial_explanation_maps/manifests/run_manifest.json"
-    implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+    implementation_guidelines_path: "docs/reproducibility.md"
     notebook_roadmap_path: "docs/final_notebook_roadmap.md"
 
   output:

@@ -12,7 +12,7 @@ import time
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / '.codex_tmp/zenodo/23092185/v1.0.0/2378961a8acc'
+SOURCE = ROOT / '.local_work/zenodo/23092185/v1.0.0/2378961a8acc'
 DEST = SOURCE / 'split-upload'
 NAME = 'controlled-300-v1.0.0-research-artifacts.zip'
 SIZE = 40522491399

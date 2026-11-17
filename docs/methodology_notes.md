@@ -47,7 +47,7 @@ The Controlled-300 methods and results below remain frozen.
   [`evidence_dependency_audit.md`](evidence_dependency_audit.md) and
   [`evidence_coverage.yaml`](../config/evaluation/evidence_coverage.yaml).
 - Implementation and artifact rules are in
-  [`refactoring_implementation_guidelines.md`](refactoring_implementation_guidelines.md).
+  [`reproducibility.md`](reproducibility.md).
 - Literature support is maintained separately in
   [`literature_reference_log.md`](literature_reference_log.md).
 - Model provenance and selection are maintained separately in

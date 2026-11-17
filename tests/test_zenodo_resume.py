@@ -151,7 +151,7 @@ class ResumeTests(unittest.TestCase):
             original_mtime = target.stat().st_mtime_ns
             stream = io.BytesIO(); Image.new('RGB', (2, 2)).save(stream, format='PNG')
             data = stream.getvalue()
-            bundle_root = root/'.codex_tmp/bundled_assets/n22d_full'
+            bundle_root = root/'.local_work/bundled_assets/n22d_full'
             (bundle_root/'indexes').mkdir(parents=True)
             (bundle_root/'bundles/p001').mkdir(parents=True)
             with zipfile.ZipFile(bundle_root/'bundles/p001/part-0001.zip', 'w') as z:

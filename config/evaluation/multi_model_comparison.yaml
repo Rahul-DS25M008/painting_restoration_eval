@@ -17,7 +17,7 @@ multi_model_comparison:
     inventory_run_path: "outputs/inventory/inventory_run.json"
     project_paths_path: "outputs/inventory/project_paths.json"
     proposal_path: "docs/proposal/Rahul_Thesis_Proposal.docx"
-    implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+    implementation_guidelines_path: "docs/reproducibility.md"
     notebook_roadmap_path: "docs/final_notebook_roadmap.md"
     opencv_candidates_path: "outputs/09_opencv_telea_restoration/data/restorations.csv"
     opencv_runtime_path: "outputs/09_opencv_telea_restoration/metrics/runtime_summary.csv"

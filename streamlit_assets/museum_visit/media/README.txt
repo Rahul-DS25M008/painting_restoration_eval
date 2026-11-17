@@ -1,8 +1,8 @@
 TOUR OVERVIEW — PRESENTATION MEDIA
 
-tour-overview-v1.mp4 is a web rendition of the user-approved 115-second
+tour-overview-v1.mp4 is a web rendition of the approved 115-second
 eight-room Brag/Hyperframes showcase. tour-overview-v1.jpg is its closing poster.
-The local high-quality original and project remain untouched in .codex_tmp.
+The high-quality original and source project are retained in ignored local working files.
 
 Web encoding: H.264, 1920x1080, 30 fps, CRF 25, preset fast, yuv420p,
 AAC 96 kbit/s, MP4 faststart. This is presentation media, not a newly computed

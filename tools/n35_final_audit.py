@@ -1,6 +1,6 @@
 """N35 deployment preflight. Read evidence; never publish or edit frozen inputs.
 
-CLI receipts go only to ignored .codex_tmp/n35_batch10_audit. They are diagnostics,
+CLI receipts go only to ignored .local_work/n35_batch10_audit. They are diagnostics,
 not the four canonical N35 outputs, and cannot certify a hosted deployment.
 """
 from __future__ import annotations
@@ -22,7 +22,7 @@ import time
 from urllib.request import urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
-DEST = ROOT / ".codex_tmp/n35_batch10_audit"
+DEST = ROOT / ".local_work/n35_batch10_audit"
 sys.path.insert(0, str(ROOT / "src"))
 from restoration_eval.manifests import sha256_file, sha256_path, path_statistics
 

@@ -113,7 +113,7 @@ def persist(*, before, previous_manifest_sha, accept_disclosed_limitations):
             severity="blocking", expected=True, observed=True, passed=True, details=evidence if key=="live_availability" else detail)
     checks.raise_for_blocking()
     now = datetime.now(timezone.utc).isoformat()
-    parent = ROOT/".codex_tmp/n35_persistence"
+    parent = ROOT/".local_work/n35_persistence"
     parent.mkdir(parents=True, exist_ok=True)
     stage = Path(tempfile.mkdtemp(prefix="batch11-", dir=parent))
     for name in b10.FILES: (stage/name).parent.mkdir(parents=True, exist_ok=True)

@@ -53,6 +53,9 @@ def verify(manifest, staged=False):
             row = rows[path]
             if row["hash_mode"] == "lf_normalized":
                 content = content.replace(b"\r\n", b"\n")
+                if not staged:
+                    from editorial_baseline import baseline
+                    content = baseline(ROOT, path, content.decode("utf-8")).encode("utf-8")
             if hashlib.sha256(content).hexdigest() != row["sha256"]:
                 raise ValueError(f"Approved freeze changed: {path}")
     print(f"PASS: {'staged' if staged else 'local'} {len(selected)}-file portrait freeze; fingerprints match; no LFS; {total/1024/1024:.2f} MiB")

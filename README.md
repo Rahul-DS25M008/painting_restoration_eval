@@ -151,7 +151,7 @@ The repository supports traceability through saved evidence, configurations and 
 
 **Completed:** N01–N36, including N12A, with separate D01 and supplemental D02. The Controlled-300 dashboard is deployed from `main`; its approved layout is frozen. The pilot baseline remains recoverable at `pilot-50-complete`.
 
-**Real-damage supplement:** [D03 dataset preparation](notebooks/d03_real_damage_dataset_preparation.ipynb) and [D04 restoration and evaluation](notebooks/d04_real_damage_restoration_and_evaluation.ipynb) are complete. Ten physically damaged painting photographs, two per category, have 40 primary restorations from Telea, LaMa, HINT and Stable Diffusion, plus 30 additional SD candidates forming ten four-seed groups. D03 passed **379/379 checks**; D04 passed **404/404 checks**. [Source and preparation report](outputs/d03_real_damage_dataset_preparation/reports/real_damage_dataset.html) · [Illustrated restoration report](outputs/d04_real_damage_restoration_and_evaluation/reports/real_damage_evaluation.html) · [D04 completion manifest](outputs/d04_real_damage_restoration_and_evaluation/manifests/run_manifest.json). The report combines case-level visual comparisons, preservation/boundary diagnostics, seed variability and ten frozen synthetic comparators. Physical paintings have no clean references; targeted physical SD prompts differ from the generic synthetic prompts, so the comparison is descriptive. Visual observations are researcher-approved assistant inspection, not expert ratings. This supplement remains separate from Controlled-300 and is not part of the frozen Zenodo v1.0.0 archive or deployed dashboard.
+**Real-damage supplement:** [D03 dataset preparation](notebooks/d03_real_damage_dataset_preparation.ipynb) and [D04 restoration and evaluation](notebooks/d04_real_damage_restoration_and_evaluation.ipynb) are complete. Ten physically damaged painting photographs, two per category, have 40 primary restorations from Telea, LaMa, HINT and Stable Diffusion, plus 30 additional SD candidates forming ten four-seed groups. D03 passed **379/379 checks**; D04 passed **404/404 checks**. [Source and preparation report](outputs/d03_real_damage_dataset_preparation/reports/real_damage_dataset.html) · [Illustrated restoration report](outputs/d04_real_damage_restoration_and_evaluation/reports/real_damage_evaluation.html) · [D04 completion manifest](outputs/d04_real_damage_restoration_and_evaluation/manifests/run_manifest.json). The report combines case-level visual comparisons, preservation/boundary diagnostics, seed variability and ten frozen synthetic comparators. Physical paintings have no clean references; targeted physical SD prompts differ from the generic synthetic prompts, so the comparison is descriptive. Visual observations are reviewed automated visual inspection, not expert ratings. This supplement remains separate from Controlled-300 and is not part of the frozen Zenodo v1.0.0 archive. Its supplementary museum room is deployed on the existing main website (17 November 2026), alongside the focused portrait audit; the eight principal rooms remain unchanged.
 
 N36 closed with **859 passed checks, 16 disclosed warning nonpasses and zero blockers**. The complete delivery has **134 files**, including a **123-file review package** containing six scientific HTML reports, 24 figures, five model cards, compact tables and 38 upstream manifests. Its 693-row artifact index distinguishes copied, generated and intentionally unbundled evidence.
 
@@ -166,6 +166,8 @@ Compact records and code live in GitHub; bulk restoration/diagnostic evidence fo
 The 16 N36 nonpasses retain N35's four dependency warnings and ten unmeasured, owner-accepted qualifications, plus the N29 historical-manifest and N35 notebook-source discrepancies. Availability checks and owner acceptance do not establish exhaustive browser coverage, performance budgets, a fresh clean-Linux reproduction or an independently attested deployed-server revision. [Full closeout audit](docs/evidence_dependency_audit.md#n36-controlled-300-closeout--2026-10-01).
 
 The [compact provenance-exception ledger](docs/provenance_exceptions.md) separates what was checked from what remains uncertain. Zero blockers is an administrative closeout outcome, not independent scientific reproduction.
+
+The [Restoration Evidence Academy](https://rahul-ds25m008.github.io/painting_restoration_eval/) covers 39 chapters, including D03 source/mask preparation and D04 physical restorations, with saved figures and revision questions. See its [build and deployment guide](docs/academy/README.md).
 
 ## Run the dashboard locally
 
@@ -204,7 +206,7 @@ regression results do not replace the original N35/N36 execution records.
 - `outputs/` — notebook-owned evidence, reports, manifests and validation; copied package files are intentional provenance, not redundant clutter.
 - `streamlit_assets/` — deployed presentation assets and evidence indexes.
 - `tests/` and `tools/` — regression checks, validation, inventory and publication utilities; completed-notebook helpers may still be required for reproducibility.
-- `docs/` — [methods](docs/methodology_notes.md), [literature](docs/literature_reference_log.md), [evidence audit](docs/evidence_dependency_audit.md), [defence preparation](docs/notebook_revision_and_defence_qa.md) and supervisor material.
+- `docs/` — [reproducibility](docs/reproducibility.md), [methods](docs/methodology_notes.md), [literature](docs/literature_reference_log.md), [evidence audit](docs/evidence_dependency_audit.md), [defence preparation](docs/notebook_revision_and_defence_qa.md) and supervisor material.
 
 ## Licensing
 
@@ -216,6 +218,6 @@ Source paintings, third-party visual elements (including those embedded in scree
 
 ## What the thesis does not claim
 
-The experiments simulate damage; they do not validate physical conservation treatments. Reference fidelity and feature similarity do not establish authenticity. Repeated-seed disagreement is not calibrated uncertainty. Review flags are not expert judgements. SDXL remains partial, and the separate D01/D02 studies do not justify universal model superiority or demographic conclusions.
+The core experiments simulate damage; D03/D04 separately evaluate photographs of physically damaged paintings without clean references. Neither study validates physical conservation treatments. Reference fidelity and feature similarity do not establish authenticity. Repeated-seed disagreement is not calibrated uncertainty. Review flags are not expert judgements. SDXL remains partial, and the separate D01/D02 studies do not justify universal model superiority or demographic conclusions.
 
 **The final contribution is a traceable way to ask better questions of a restoration: what changed, what was measured, how stable is it, and what evidence still requires human judgement?**

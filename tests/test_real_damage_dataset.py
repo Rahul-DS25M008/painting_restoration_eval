@@ -52,7 +52,7 @@ class RealDamageContractTests(unittest.TestCase):
         self.assertTrue(all(p.is_file() for p in inputs.values()))
         self.assertEqual(len(outputs), 17)
         self.assertEqual(len(self.catalog["records"]), 10)
-        self.assertTrue(all(".codex_tmp" not in p.parts for p in inputs.values()))
+        self.assertTrue(all(".local_work" not in p.parts for p in inputs.values()))
 
     def test_fake_clean_reference_is_rejected(self):
         for changes in ({"has_clean_reference": True}, {"clean_image_path": "damaged.jpg"}):
@@ -79,7 +79,7 @@ class RealDamageContractTests(unittest.TestCase):
                 validate_real_damage_config(config)
 
     def test_output_cannot_escape_or_depend_on_temporary_sources(self):
-        for bad in ("../outside.csv", "D:/outside.csv", ".codex_tmp/masks.csv"):
+        for bad in ("../outside.csv", "D:/outside.csv", ".local_work/masks.csv"):
             config = copy.deepcopy(self.config)
             config["outputs"]["masks"] = bad
             with self.assertRaises(ValueError):

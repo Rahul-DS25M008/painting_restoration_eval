@@ -1,5 +1,19 @@
 # Independent Streamlit availability scheduler
 
+## Current target — 17 November 2026
+
+The production checker on `main` includes the Physical Damage Study and its Study
+Design entrance. The physical-room test deployment has been merged; the original
+test branch retains its own checker. Cloudflare scheduling continues indefinitely
+until its cron trigger is disabled. There is no fixed observation-period expiry.
+
+For a token rotation with unchanged permissions, update the Worker's
+`GITHUB_TOKEN` secret, deploy the version containing it, and verify the next
+scheduled dispatch and its GitHub Actions result. GitHub repository secrets and
+application code do not need changing for that rotation. Historical dates below
+record earlier setup stages; the current production target supersedes them.
+
+
 This small Cloudflare Worker replaces reliance on GitHub's native scheduled
 trigger, not the successful GitHub Actions browser check.
 

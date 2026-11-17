@@ -169,7 +169,7 @@ def main():
     else:
         result = companion_check() if args.action == "companion" else remote_samples() if args.action == "remote" else github_samples() if args.action == "github" else performance(args.room) if args.action == "performance" else opening(args.room, args.missing_local, args.remote)
     result["request_id"] = args.request_id
-    dest = ROOT / ".codex_tmp/n35_batch10_audit"
+    dest = ROOT / ".local_work/n35_batch10_audit"
     dest.mkdir(parents=True, exist_ok=True)
     name = "deployment_" + (args.room if args.action == "opening" else args.action + ("_"+args.room if args.room else ""))
     if args.group: name += "_"+args.group

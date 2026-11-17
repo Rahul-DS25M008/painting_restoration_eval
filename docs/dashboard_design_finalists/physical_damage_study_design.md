@@ -12,11 +12,6 @@ The Study Design entrance and Physical Damage Study room were reviewed and appro
 - [Single overhead room](approved_current/12_physical_damage_study_final.png).
 - [Study Design supplementary-study entrance](approved_current/13_study_design_supplementary_entry.png).
 
-The user approved the Study Design placement separately, then approved the
-single-room refinement. Earlier workbench, gallery, desk, storage, theatre,
-mobile, atlas and separate collection/immersive-view concepts are not approved
-implementation references. The image filename numbers are design-catalogue
-indices, not new principal-room numbers.
 
 The approved layout is one continuous, open museum hall viewed from above at
 an oblique angle. Five category displays sit around the perimeter; a shared

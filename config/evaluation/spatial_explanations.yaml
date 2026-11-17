@@ -37,7 +37,7 @@ spatial_explanations:
     uncertainty_metrics_path: "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_metrics.csv"
     uncertainty_calibration_inputs_path: "outputs/18_diffusion_uncertainty_analysis/metrics/uncertainty_calibration_inputs.csv"
     uncertainty_run_manifest_path: "outputs/18_diffusion_uncertainty_analysis/manifests/run_manifest.json"
-    implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+    implementation_guidelines_path: "docs/reproducibility.md"
     notebook_roadmap_path: "docs/final_notebook_roadmap.md"
 
   output:

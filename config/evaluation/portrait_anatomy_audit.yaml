@@ -17,7 +17,7 @@ portrait_anatomy_audit:
     inventory_path: "outputs/inventory/project_file_inventory.csv"
     inventory_run_path: "outputs/inventory/inventory_run.json"
     project_paths_path: "outputs/inventory/project_paths.json"
-    implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+    implementation_guidelines_path: "docs/reproducibility.md"
     notebook_roadmap_path: "docs/final_notebook_roadmap.md"
     artworks_path: "outputs/01_dataset_verification/data/artworks.csv"
     preprocessing_path: "outputs/02_image_preprocessing/data/preprocessed_images.csv"

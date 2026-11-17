@@ -78,7 +78,7 @@ def _relative(value: Any) -> str:
     _require(
         not Path(value).is_absolute() and not PureWindowsPath(value).drive
         and "\\" not in value and ".." not in value.split("/")
-        and ".codex_tmp" not in value.split("/"),
+        and not any(part.startswith(".") for part in value.split("/")),
         f"Path must be repository-relative and independent of temporary review files: {value}",
     )
     return value

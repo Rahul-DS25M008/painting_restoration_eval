@@ -156,7 +156,8 @@ def select_source(tracked: list[str], plan: dict) -> list[str]:
 
 def excluded(path: str, plan: dict) -> bool:
     parts = Path(path).parts
-    return (any(p in {'.git', '.codex_tmp', '.venv', 'venv', 'env', 'node_modules', '.cache', '__pycache__', '.ipynb_checkpoints', '.pytest_cache', '.mypy_cache', '.ruff_cache'} for p in parts)
+    return (any(p in {'.git', '.local_work', '.venv', 'venv', 'env', 'node_modules', '.cache', '__pycache__', '.ipynb_checkpoints', '.pytest_cache', '.mypy_cache', '.ruff_cache'} for p in parts)
+            or any(p.startswith('.') and (p.endswith('_tmp') or p.startswith('.chart-data-')) for p in parts)
             or any(path.startswith(p) for p in plan.get('exclude_prefixes', []))
             or path in plan.get('exclude_files', [])
             or path.startswith('outputs/34_final_streamlit_dashboard_assets/work/'))
@@ -273,7 +274,7 @@ def build(root: Path, preflight: bool) -> dict:
     }
     if preflight:
         return summary
-    destination=root/'.codex_tmp'/'zenodo'/plan['zenodo_record_id']/plan['version']/commit[:12]
+    destination=root/'.local_work'/'zenodo'/plan['zenodo_record_id']/plan['version']/commit[:12]
     if destination.exists(): raise ValueError(f'Release directory already exists; do not overwrite a verified build: {destination}')
     destination.mkdir(parents=True)
     target=destination/f"controlled-300-{plan['version']}-research-artifacts.zip"

@@ -8,7 +8,7 @@ from prepare_n35_batch2_cells import render
 
 ROOT = Path(__file__).resolve().parents[1]
 NOTEBOOK = ROOT / "notebooks/35_dashboard_and_deployment_validation.ipynb"
-DEST = ROOT / ".codex_tmp/n35_batch10"
+DEST = ROOT / ".local_work/n35_batch10"
 
 
 def cell(text, kind="code"): return {"cell_type":kind,"source":dedent(text).strip()+"\n"}

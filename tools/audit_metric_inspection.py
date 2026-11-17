@@ -114,7 +114,7 @@ def main():
     parser.add_argument('--paintings',nargs='*')
     parser.add_argument('--require-count',type=int,default=300)
     parser.add_argument('--wait-for-build',action='store_true')
-    parser.add_argument('--report',default='.codex_tmp/metric_inspection_audit.json')
+    parser.add_argument('--report',default='.local_work/metric_inspection_audit.json')
     args=parser.parse_args()
     root=ROOT/'streamlit_assets/evidence/metric_framework'
     folders=[root/p for p in args.paintings] if args.paintings else sorted(p.parent for p in root.glob('p*/manifest.json'))

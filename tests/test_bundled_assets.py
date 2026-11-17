@@ -213,7 +213,7 @@ class BundleTests(unittest.TestCase):
                                             "notebook_name": "16_difference_maps_and_spatial_diagnostics",
                                             "run_id": "synthetic_run"}), encoding="utf-8")
         (producer / "validation/checks.csv").write_text("check_id,status\na,passed\n", encoding="utf-8")
-        stage = self.root / ".codex_tmp/bundled_assets/full_test"
+        stage = self.root / ".local_work/bundled_assets/full_test"
         args = SimpleNamespace(staging_dir=str(stage))
         with patch.object(publisher, "ROOT", self.root), \
              patch.object(publisher, "MANIFEST", map_manifest), \

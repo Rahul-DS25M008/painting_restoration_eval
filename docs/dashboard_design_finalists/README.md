@@ -28,6 +28,11 @@ implementation and the Notebook 35 validation rerun
 **Scope:** Navigation, interaction, visual hierarchy, information flow, and
 presentation references only
 
+The dated cosmetic-pass notes, generation records and frozen checkpoint documents
+are archival validation records. Their exact bytes are retained for checksum
+verification; they are not current implementation instructions. Current design
+and deployment status is summarized here and in the physical-study records.
+
 ## Approved current direction
 
 The two boards below are the current design authority for the delivered

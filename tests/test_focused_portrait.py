@@ -101,7 +101,7 @@ class FocusedPortraitTests(unittest.TestCase):
         self.assertIn('R005 · failure · high confidence', markup)
         self.assertIn('25 of 32: visible anatomy failure', markup)
         self.assertIn('Model names hidden during review.', markup)
-        self.assertNotIn('Codex-assisted', markup)
+        self.assertNotIn('independent expert validation completed', markup)
         self.assertIn('class="fpr-plaque fpr-eligibility"', markup)
         self.assertIn('<span>1,196 damaged hand pixels</span><span>26.28% affected</span>', markup)
         self.assertEqual(markup.count('fpr-resource-label'), 4)

@@ -10,7 +10,7 @@ from prepare_n35_batch2_cells import render
 
 ROOT = Path(__file__).resolve().parents[1]
 NOTEBOOK = ROOT / "notebooks/35_dashboard_and_deployment_validation.ipynb"
-DEST = ROOT / ".codex_tmp/n35_batches_3_5"
+DEST = ROOT / ".local_work/n35_batches_3_5"
 
 SETUP = r'''
 # Shared read-only room validation harness. Requires the completed Batch 2 kernel.

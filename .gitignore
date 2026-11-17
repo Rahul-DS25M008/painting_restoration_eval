@@ -47,7 +47,10 @@ docs/supervisor/Next_Steps.docx
 !docs/supervisor/Next_Steps.pdf
 !docs/supervisor/Supervisor_Dashboard_Walkthrough_Controlled_300.pdf
 !docs/supervisor/Study_Completion_and_Review_Brief.pdf
-.codex_tmp/
+# Private build, publication and review scratch directories.
+.*_tmp/
+/.local_work/
+/.chart-data-*/
 
 # Controlled-300 storage boundary (Notebook 12 onward).
 # Complete notebook-owned evidence remains local. N12-15 and the approved

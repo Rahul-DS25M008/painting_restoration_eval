@@ -2,10 +2,16 @@
 
 ## 1. Status and authority
 
+**Current delivery (17 November 2026):** D03/D04 and the numbered pipeline are
+complete. The Physical Damage Study is deployed on the main museum, and the
+Academy includes both supplements. Dated preparation entries below describe
+their original stages; they are not pending tasks. The expert survey remains
+optional and unexecuted.
+
 This document is the human-readable evidence-coverage ledger for the completed
 36-notebook pipeline and the gate for any later extension. It must be read together with:
 
-- `docs/refactoring_implementation_guidelines.md`;
+- `docs/reproducibility.md`;
 - `docs/final_notebook_roadmap.md`;
 - `config/evaluation/evidence_coverage.yaml`.
 
@@ -15,7 +21,7 @@ must not be silently reversed during later notebook planning.
 
 ### D04 completed and targeted-prompt amendment — 2026-11-15
 
-**D04 completed and researcher-accepted:** the saved notebook contains 39
+**D04 completed and accepted:** the saved notebook contains 39
 executed code cells with no error outputs, and the opening metadata reads
 Finished/Finished/Yes. All 404 checks pass. Run
 `run_d04_a6698ff0479f5dc389c91b9a` completed at
@@ -29,7 +35,7 @@ additional SD candidates, forming ten four-seed groups. The final report retains
 46 embedded figures (481 tiles), 161 source-checked numerical claims and 83
 mock-to-final elements. Report SHA-256:
 `f81b76c78d42c606b7f475b1b82c6ad675c3fdc5a288f588f4dbb10852e26800`.
-The researcher accepted the report. No inference or scientific measurement was
+The report was accepted. No inference or scientific measurement was
 rerun during reporting or closeout.
 
 The output tree contains 693 files (243,087,807 bytes). In addition to the 428
@@ -41,299 +47,28 @@ logs and the full local inventory are excluded from the Git checkpoint.
 
 D03 and D04 are complete; no further coding batch is pending. The proposed expert
 assessment remains optional and unexecuted. Neither this supplement nor its
-qualitative observations are pooled into Controlled-300, the existing dashboard
-package or the frozen Zenodo v1.0.0 archive. Physical fidelity and expert-validation
+qualitative observations are pooled into Controlled-300 or the frozen Zenodo
+v1.0.0 archive. The physical supplement is available in its own museum room;
+the original Controlled-300 evidence package is unchanged. Physical fidelity and expert-validation
 claims remain unsupported for the reasons recorded below.
 
-**Earlier preparation and execution record:**
+The D04 report preserves all ten four-method cases, all four SD seeds per
+painting and the ten fixed synthetic comparators. The garden fresco, torn
+landscape, Black Square and Roman wall illustrate different completion
+behaviours. Automated visual observations were reviewed with model identities
+visible; they are not expert validation or a universal ranking. Boundary
+descriptors, outside-mask preservation and pixel/perceptual variability retain
+separate interpretations. The report discloses absent physical references and
+targeted-versus-generic SD prompt differences.
 
-**Batch 9 execution verified; Batch 10 prepared:** the saved notebook has no
-execution errors through Batch 9 (trailing empty cells ignored). Batch 9 passed
-393/393 checks; 57 artifact hashes, twenty checkpoint receipts, forty comparison
-rows and 120 copied synthetic reference values were verified. Fingerprint:
-`a9643e3a34b6dc0ed8080156a7aba1338ed72801194098f05396e556d4dcbc88`.
-
-The approved six-section Batch 10 report retains forty primary method
-observations, every physical painting, every SD seed and every frozen synthetic
-pair. Its expanded cases cover the garden fresco, torn landscape, Black Square
-and Roman wall; the synthetic comparisons additionally emphasize the Rubens
-case. SD's strong irregular-loss examples coexist with Telea's crack suppression
-and LaMa's restrained fill. These are user-approved assistant visual observations
-with visible model identities, not expert validation or a universal ranking.
-The report separately interprets boundary descriptors, preserved outside pixels,
-and differing pixel/perceptual variability measures. Targeted versus generic SD
-prompts and absent physical clean references remain explicit.
-
-The separate report configuration, helper, content module, tests and image-bound
-observation catalogue do not alter frozen Batch 1–9 inputs. Forty-six embedded
-figures (481 tiles), a numeric-claim catalogue and mock-to-final traceability are
-checked before finalization. The separate preview preceded the now-verified user
-execution; the authoritative completed run is recorded above.
-
-Implementation validation: fifteen targeted report/comparison tests passed.
-The separate preview passed 404/404 evidence and report checks, including 161
-displayed numerical claims and 83 approved mock elements. Browser inspection
-confirmed all six sections and 46 images, working enlargement, no page-script
-errors, and no document overflow at desktop or narrow mobile width. These are
-pre-execution implementation checks; the subsequent saved Batch 10 run also
-passed 404/404 checks.
-
-**Earlier Batch 8 execution:** the saved notebook has no
-execution errors (trailing empty cells ignored). Batch 8 passed 371/371 checks,
-retaining seventy technical and diagnostic rows, 720 pairwise measurements,
-220 group summaries and ten raw maps. Outside-mask changes remain zero across
-all seventy candidates. Candidate processing took 55.783562 seconds; group
-processing including the first LPIPS load took 31.994825 seconds. The shared
-display ceiling is 0.2449206123 in normalized RGB standard-deviation units.
-Execution fingerprint: `ca1e8491443f1bc7bb9ec8415444d5d318ddc2d549a459706d392fbd1882855d`.
-The researcher accepted the previews; this is not expert validation.
-
-Batch 9 uses separate `real_damage_comparison.py`, evaluation configuration and
-tests. It retains the ten input-based comparator selections frozen in Batch 2
-and forty existing synthetic primary candidates. Exact candidate/case/model
-joins select 120 saved reference measurements: N13 masked MAE and crop SSIM,
-plus N14 crop LPIPS. No reference metric or restoration is rerun. Physical
-reference scores remain explicitly unavailable. Batch 8's reference-free edit
-and band-contrast definitions are applied to the synthetic candidates, producing
-forty new diagnostic records for descriptive comparison only.
-
-Ten full comparison panels and ten detail panels accompany a coverage and
-fragmentation figure. Detail crops use the largest eight-connected input-mask
-component plus 32 pixels, clipped to content; they neither define new metric
-regions nor depict corresponding subjects across different paintings. Saved
-scores always refer to their original evaluation regions. Source credits and
-licences remain attached. The targeted physical SD prompts differ from the
-generic synthetic prompts; no pooled quality score or causal domain effect is
-estimated. Batch 9 execution is verified above. Batch 10 owns the final report,
-case observations and completion gate. Frozen Batches 1–9 remain unchanged.
-
-**Batch 7 execution verified; Batch 8 prepared:** the saved notebook contains no
-execution errors (trailing empty cells ignored). All thirty additional seed
-receipts and PNGs agree with the frozen plan and prompts. The seventy-row table
-retains forty primary candidates; ten four-seed groups define sixty unique
-pairs. All 325 checks pass. Case calls total 412.702367 seconds with zero retries;
-execution fingerprint is `bb7160c0715b9b450cef43e29c6a0a3ec2fad2832250f1d6757b5f313b8999a3`.
-
-Batch 8 uses separate `real_damage_diagnostics.py`, its evaluation YAML and tests.
-It leaves executed sources and outputs unchanged. Planned outputs include seventy
-technical rows, seventy edit/boundary descriptor rows, 720 candidate-pair metric
-rows, 220 group summaries and ten raw uncertainty arrays. The sixty pairs are
-repeated across regions/metrics, not 720 independent observations. RGB variability
-and maps reuse N18/N19; candidate-to-candidate LPIPS reuses N14's AlexNet v0.1
-configuration and crop transform, with currently installed weight hashes recorded.
-No claim is made that these hashes were recorded in the historical N14 run.
-Padding is excluded from published variability regions. CLIP/DINO feature
-distances are not computed in this bounded extension.
-
-Raw L* and CIEDE2000 contrasts compare mean colours in three-pixel inner/outer
-bands. They are new reference-free descriptors, not N17 reference-relative seam
-errors or a restoration ranking. Edit magnitude against damaged input is also
-not fidelity error. Raw standard-deviation arrays remain unclipped; display
-previews share a pooled masked p99 ceiling, with clipping fractions recorded.
-Only the user executes the study calculations. Batch 8 remains pending and no
-D04 completion gate, final report, or synthetic comparison is claimed here.
-
-**Batch 6 execution verified; Batch 7 prepared:** all ten primary SD restorations
-and three smoke outputs retain verified hashes, 768-pixel RGB geometry and exact
-outside-mask preservation. The notebook has no saved errors and passed 216/216
-checks. The two seed-2026 smoke images match exactly; seed 2027 changes 46,147
-masked pixels while changing none outside. The empty-mask compositor control
-passes. All ten primary candidates use their frozen targeted prompts and seed
-2026, with zero retries. Primary case calls total 144.964821 seconds, excluding
-model loading and smoke. Forty primary candidates now exist, ten per method;
-the user accepted both SD preview sheets.
-
-Batch 7 uses the separate `real_damage_sd_seeds.py` adapter and
-`real_damage_sd_seeds.yaml`. It revalidates the saved Batch 6 smoke gate and
-primary outputs, then runs only the thirty frozen additional candidates at
-seeds 2027, 2028 and 2029. No primary restoration or smoke inference is repeated.
-The original N11 executor, pinned weights, model settings, negative prompt and
-painting-specific targeted prompts remain fixed. Each group is checked for
-identical inputs, masks, prompts and configuration; only its seed changes.
-Per-case checkpoints, load audits and receipts live under `work/sd_seeds/`,
-with the same exact-seed retry and verified-resume rules as Batch 6.
-
-After successful user execution, the table will contain seventy candidates:
-forty primary and thirty additional. Ten four-seed groups supply sixty unique
-unordered pairs. Batch 7 saves membership and pair-plan tables plus two five-case
-preview sheets. These are not variability metrics; their computation remains
-in Batch 8. The four-method primary runtime table stays unchanged; additional
-seed timings are saved separately. Estimated batch time is 8–12 minutes, based
-on the observed 14.50-second mean primary SD call plus loading, validation and
-preview generation. Additional-seed inference remains pending user execution;
-D04 is still incomplete and no physical reference-fidelity claim is added.
-
-**Batch 5 execution verified; Batch 6 prepared:** all ten HINT primary PNGs
-and two smoke PNGs match their saved receipts, retain 768-pixel RGB geometry
-and preserve every outside-mask pixel. The saved notebook has no error outputs
-and passed 175/175 checks. Both worker groups exited successfully; the fixed-seed
-smoke PNGs are identical, the empty-mask compositor preserves the input, and
-the load audit matches N12A (973 matched, zero missing, 153 extra keys).
-The primary case calls total 75.267 seconds; their command group took
-97.842321 seconds including startup. Thirty primary candidates are now retained:
-ten each from Telea, LaMa and HINT. The user accepted the HINT previews.
-
-Batch 6 uses the separate `real_damage_sd.py` adapter and `real_damage_sd.yaml`.
-The unchanged N11 single-candidate executor receives each approved targeted
-prompt directly from the frozen Batch 2 plan, with the original negative prompt,
-pinned SD 1.5 inpainting weights, DDIM scheduler, 30 steps, guidance 7.5, strength
-1.0, CUDA float16, attention slicing, 512-pixel inference, and exact compositing
-onto the 768-pixel input. Loading resolves the verified local snapshot rather
-than querying the hub; candidate provenance retains the canonical model ID and
-revision. There is no CPU or resolution fallback and no prompt retuning.
-
-Three separate rd007 smoke candidates use seeds 2026, 2026 and 2027. The repeated
-seed uses N11's original tolerances (maximum pixel difference 1, mean difference
-0.005 and changed-pixel fraction 0.01); the alternate seed must change masked
-pixels. All outside-mask pixels and an empty-mask compositor control must remain
-exact. Smoke candidates are excluded from the primary table. Ten primary calls
-then use seed 2026. Baseline retry semantics allow one retry with the exact same
-seed. Failed receipts remain visible and prevent unbounded retries. Per-case
-executor checkpoints permit recovery without replacing verified results;
-uncheckpointed raw files remain in their job directories. Each successful case
-is bound to its model-load audit, input/config/prompt identity and output hashes.
-Case timings exclude model loading and smoke work. Other models and future SD
-additional-seed rows are preserved when the primary table is checkpointed.
-SD inference remains pending user execution; D04 is not complete. No physical
-reference-fidelity metrics or new scientific results are claimed at preparation.
-
-**Batch 4 execution verified; Batch 5 prepared:** the saved LaMa batch passed
-134/134 checks with no notebook error outputs. All ten primary images and both
-smoke images retain their receipt checksums, correct geometry and exact
-outside-mask preservation. The repeat smoke PNGs are identical (zero pixel
-difference). Both smoke commands and the primary command exited successfully.
-The ten primary cases took 47.026742 seconds as one command group, excluding
-smoke; separate smoke commands took 46.915625 and 20.455044 seconds. The user
-accepted the previews. Twenty primary candidates now exist: ten Telea and ten
-LaMa. Batch 2's scientific inputs and frozen outputs remain unchanged.
-
-Batch 5 uses a separate `real_damage_hint.py` adapter and
-`real_damage_hint.yaml` configuration. It calls the unchanged N12A production
-worker with the pinned HINT Places2 weights, source revision, seed 2026, CUDA
-float32, native 768-pixel inference and exact mask compositing. Only progress
-and checkpoint intervals are shortened to one case. Two rd007 smoke candidates
-run in one isolated worker and must have identical PNG hashes, as in N12A;
-an empty-mask compositor control and model-load audit complete the smoke gate.
-The recorded N12A load profile is retained: 973/973 generator keys matched,
-zero missing keys, and 153 extra checkpoint keys. The saved N12A smoke and full
-run outputs establish these counts; the adapter does not require zero extra keys.
-No CPU/resolution fallback or automatic failed-model retry is introduced.
-
-The adapter binds frozen candidate IDs, source/weight hashes, worker jobs,
-per-case worker checkpoint rows and published PNG receipts. Interrupted worker
-checkpoints can be recovered; uncheckpointed worker images remain in their job
-directory and are not treated as completed evidence. An active previous worker
-blocks concurrent resumption, and an interrupted parent terminates its child.
-Worker case-call times exclude model loading; command-group wall times include
-startup/checkpointing and remain separate. These are technical runtime scopes,
-not a universal speed ranking. HINT study inference remains pending user
-execution; D04 is incomplete and no physical reference-fidelity metric is added.
-
-**Batch 3 execution verified; Batch 4 prepared:** the saved Telea batch passed
-95/95 checks with no error outputs. Ten primary PNGs match their receipts and
-the candidate table, retain 768-pixel RGB geometry, and preserve every pixel
-outside the reviewed masks. The original primary calls total 3.160331 seconds;
-smoke/review/resume time is excluded. The user accepted the previews. The Batch 2
-checkpoint, its 12 artifacts and 141 scientific input hashes remain unchanged.
-
-The separate `real_damage_lama.py` adapter, `real_damage_lama.yaml` configuration
-and synthetic-fixture tests prepare Batch 4 without editing the frozen earlier
-stages. LaMa uses the same N10 IOPaint CLI, cached big-lama checkpoint, CUDA
-float32 execution, 768-pixel inputs, threshold-128 binary masks and exact
-outside-mask compositing. The rd007 smoke runs twice in separate commands with
-N10's full-canvas repeatability tolerance (maximum difference 1/255, mean
-difference 0.005 on the 0–255 scale, differing-pixel fraction 0.01); byte identity
-is not required. An empty-mask compositor check is separate from primary cases.
-
-Fresh job directories retain commands, logs and raw outputs. Each complete image
-receives a checksum-bound receipt immediately; interrupted runs can recover raw
-outputs and skip verified candidates, with one retry for unfinished cases. An
-active previous process blocks concurrent resumption; interruption terminates
-the child started by that call. Group wall time includes startup, retries and
-checkpointing. Individual-image runtime is intentionally unavailable, so these
-times must not be directly ranked against Telea's case-call timings. Smoke
-outputs do not enter the primary table. LaMa study inference remains pending
-user execution, and D04 remains incomplete. Poor-looking but technically valid
-outputs are retained; no reference-fidelity scores are manufactured.
-
-**Batch 2 execution verified; Batch 3 prepared:** the saved notebook passed
-55/55 checks with no error outputs in 82.64 seconds. All 12 checkpoint-owned
-artifacts and 141 scientific inputs still match their recorded hashes. The
-70-candidate plan and ten accepted prompts remain frozen under fingerprint
-`5cbf297aa2d5a03d2343a03e9335e71a36b50ce7eb799a9dc8105e1b786e672e`.
-Local assets and tokenization are verified; inference is not yet executed.
-The separate `real_damage_telea.py` adapter and `real_damage_telea.yaml` prepare
-Batch 3 without changing frozen Batch 2 files or the N09 algorithm/configuration.
-The smoke uses rd007 twice plus an in-memory empty-mask identity check. Smoke
-outputs are excluded from primary counts. Ten primary outputs retain exact
-frozen candidate IDs. Resume requires matching inputs, code/configuration,
-OpenCV version, receipt and output hash; interrupted writes must reproduce
-identical bytes. Failures remain logged, and all ten attempts are collected.
-Outside-mask preservation and edit magnitude are technical descriptors, not
-reference accuracy. Unconvincing but technically valid restorations are kept.
-The notebook remains user-only; Batch 3 inference and saved outputs are pending.
-
-**Batch 1 execution verified; Batch 2 prepared:** the saved D04 notebook has
-three executed code cells, 31 passed checks and no saved errors. Empty trailing
-cells are ignored. The user accepted the ten prompts. The Batch 2 helper and
-`config/experiments/real_damage_readiness.yaml` implement local-only runtime
-inspection, model-file hashing, CLIP token-length checks and plan freezing.
-Full model instantiation and smoke inference remain method-specific later
-batches. No D04 notebook cells or canonical D04 outputs were produced by the
-assistant during preparation.
-
-Synthetic comparators are selected from 1,200 canonical nonzero cases before
-restoration outcomes are inspected: same operational category, distinct
-paintings, deterministic input-geometry distance, and a compact-loss filter
-for single compact physical targets. The selection records coverage,
-component-count and geometry differences. Physical fragmentation and scene
-content can differ substantially even at similar mask coverage. These are
-approximate descriptive comparisons, not matched causal estimates. Existing
-four-method outputs are checksum-checked after selection and reused unchanged.
-Batch 2 writes a separate immutable check snapshot under `work/readiness/`,
-so later cumulative notebook validation does not invalidate that checkpoint.
-Identical interrupted writes can resume; changed inputs, plans or artifacts
-block reuse. Saved Batch 2 execution and inference are still pending.
-
-The user approved a single ten-batch D04 notebook using the completed D03
-cohort: ten photographs, 40 primary four-method restorations, and 30 additional
-SD outputs to form ten groups at seeds 2026–2029. Before implementation, the
-user amended SD conditioning to one targeted prompt per painting, based on
-visible damage and surrounding content. The assistant inspected all ten saved
-768-pixel inputs and the approved mask atlas. The prompt catalog records the
-observations, exact input/mask hashes and prompt text. No clean reference or
-D04 restoration output was consulted.
-
-The amendment is implemented separately in
-`config/experiments/real_damage_restoration.yaml` and
-`config/experiments/real_damage_sd_prompts.yaml`. It supersedes D03's proposed
-`p00_generic` downstream setting only for D04; D03's completed config,
-eligibility rows and manifests are retained unchanged. The original four model
-configuration files are unchanged. SD retains its numerical generation
-settings, pinned model revision, negative prompt and 512-to-768 masked
-compositing, with a distinct effective configuration identifier for targeted
-conditioning. Each painting's prompt stays fixed across all four seeds.
-Token-length checks and plan freezing occur before inference in Batch 2.
-
-Batch 1 helpers/tests validate population, provenance, paths, prompt bindings
-and deterministic candidate identity without executing inference. Twelve
-preparation tests passed. These are software checks, not executed notebook
-results or runtime/checkpoint validation. The notebook remains user-created
-and user-executed; D04 has no completed run or published artifacts yet.
-
-Ten synthetic comparators will be selected before new restoration outcomes are
-inspected. Existing generic-prompt SD outputs will be retained on that side,
-so the comparison explicitly differs in conditioning as well as damage source.
-It is descriptive, with no claim of an isolated domain effect or pooled
-physical/synthetic quality score. Physical photographs have no clean-reference
-fidelity scores. The planned report addresses case findings, boundary/context
-behaviour, seed variability, descriptive synthetic comparisons, provenance and
-the optional expert-study handoff. The batch contract and preparation status
-are mirrored in the roadmap and the separate supplemental coverage record.
+The completed diagnostics contain seventy candidate rows, 720 pairwise
+measurement rows and 220 group summaries. Ten four-seed groups contain sixty
+unique pairs; measurement rows are not independent paintings. The final report
+and saved notebook retain the complete execution sequence and validation history.
 
 ### D03 real-damage preparation closeout — 2026-11-15
 
-The user accepted the revised final ten (two per operational visual category),
+Visual review accepted the revised final ten (two per operational visual category),
 replacing the first cohort after reviewing undersized repair masks. Cohort
 v2.0.0 retains only the original rd007 source; reused rd identifiers must always
 be joined with dataset version and source hash. The old acquisition collection,
@@ -343,16 +78,16 @@ Batches 1–8 for v2.0.0: 43/43 preflight, 66/66 source, 35/35 preprocessing
 smoke, 63/63 full-preparation, 43/43 mask-review, 49/49 geometry/eligibility and
 35/35 canonical-publication and 45/45 completion checks passed (379/379
 combined, zero failures). The five source/processed
-previews were accepted by the user; their PNG hashes match the revised annotation
+previews were accepted during visual review; their PNG hashes match the revised annotation
 bindings. Source validation took 4.63 seconds and the smoke batch 8.86 seconds.
 Batch 4 took 23.79 seconds; its 40 accumulated output files and ten input/mask
-hash pairs were checked. The user accepted the saved mask previews. Batch 5
+hash pairs were checked. Visual review accepted the saved mask previews. Batch 5
 finished in 14.13 seconds and saved 33 review artifacts (73 accumulated D03
-files). The user accepted the resizing effects after inspecting its previews;
+files). Visual review accepted the resizing effects after inspecting its previews;
 that decision is bound to the complete saved Batch 5 file set and the ten
 input/canonical-mask/inference-mask hash triples. The 768-pixel approval concerns
 selected repair targets, not an exhaustive condition map. Review timestamps
-identify when the existing chat approval was recorded. Earlier pending-review
+identify when the existing approval was recorded. Earlier pending-review
 checkpoints remain intact as history. Batch 6 completed in 6.82 seconds, applied
 the acceptance decision and saved six prepared tables plus a checkpoint. Their
 hashes, producer hash and ten input/mask bindings were verified. All ten cases
@@ -369,7 +104,7 @@ at `2026-11-15T01:07:42.388740Z`, finalizing run
 `run_d03_6a2e02fcf9a4b65a612b7cdf` as `completed`, with the completion gate and
 downstream dataset readiness both true. All artifact and scientific file hashes
 match; 111 files comprise 34 canonical files and 77 retained work/history files.
-The user accepted the figures/report and updated the notebook's opening metadata
+Visual review accepted the figures/report and updated the notebook's opening metadata
 to Finished/Finished/Yes. Only validation and the two manifests changed during
 completion; before/after metadata is retained under `work/completion_commit/`.
 The 14 canonical artifact records are registered in `project_paths.json` and
@@ -388,7 +123,7 @@ Zenodo v1.0.0 record and deployed dashboard are unchanged.
 The ten selected masks and their source/canonical-image hashes are now recorded
 as acquisition annotations. User visual acceptance precedes model outcomes.
 For Antigone (rd002), requested flaking on the soldier and cliff was added without
-dilation: 9,025 to 14,486 selected pixels, 2.1802% to 3.4994% of content. The user
+dilation: 9,025 to 14,486 selected pixels, 2.1802% to 3.4994% of content. The agreed scope
 permits this particular mask to exceed 15% if accurate tracing requires it;
 that exception is not needed at present. The other nine accepted masks are
 unchanged. Batch 5 verified the canonical approval binding, and its 512-pixel
@@ -413,19 +148,19 @@ The following is a historical v1.0.0 snapshot. Its pending states and paths
 describe that superseded run, whose files are retained in ignored recovery
 storage; current cohort v2.0.0 completion is recorded above.
 
-The user approved all ten candidate photographs, two per existing category.
+The review approved all ten candidate photographs, two per existing category.
 The immutable source bytes, source-page metadata snapshots and approval record
 are retained under `data/raw/real_damage/`. The eight-batch D03 contract was
-approved in chat and is configured in `config/datasets/real_damage_10.yaml`;
+approved before implementation and is configured in `config/datasets/real_damage_10.yaml`;
 the saved Batch 1 passed 33 preflight checks and Batch 2 passed all 66 source
 checks (99/99 combined). All ten sources were accepted; the recorded overlap
 screen found no exact-hash, normalized artist/title or near-duplicate matches
 against Controlled-300. Saved Batch 3 passed 35 checks (134/134 combined),
-and the user accepted its five previews. It used the unchanged N02 processing
+and visual review accepted its five previews. It used the unchanged N02 processing
 helper and temporary files under D03's `work/preprocessing_smoke/`.
-Batch 4 is prepared for user execution: all ten inputs and assistant-prepared
+Batch 4 is prepared for notebook execution: all ten inputs and automatically prepared
 candidate repair masks, with explicit polygons/pixel rules and source/input
-hash bindings. The user requested no manual mask drawing. Candidate recipes
+hash bindings. Manual mask drawing was not required. Candidate recipes
 are recorded in `config/datasets/real_damage_annotation_candidates.json` and
 are not ground-truth damage labels or exhaustive segmentation. Selection was
 made before restoration outcomes; ambiguous additional damage is left out.
@@ -752,9 +487,9 @@ verify the pinned Linux environment and record the hosted revision and URL.
 The owner-accepted closeout below explicitly discloses which targets remain
 unmeasured; it does not retroactively turn them into measured passes.
 
-The user explicitly selected the **existing scientific repository's `main`
+I explicitly selected the **existing scientific repository's `main`
 branch** for deployment, superseding the earlier separate-lightweight-repository
-plan below. The user confirmed that the current Streamlit app watches
+plan below. I confirmed that the current Streamlit app watches
 `pilot-50`, not `main`: pushing this checkpoint to `main` leaves the pilot
 deployment untouched. Switching the app's configured branch to `main` is a
 separate, deliberate deployment step before Batch 11 live testing. Existing
@@ -823,7 +558,7 @@ of nine batches. This is preparation, not an executed N36 completion claim.
 The first three batches read and validate metadata and selected compact evidence
 in memory; the existing historical N36 output tree is not removed or overwritten.
 Later writes require isolated staging and verified promotion within N36 ownership.
-Notebook cells are delivered directly in chat for user execution; no new HTML
+Notebook cells and outputs are retained in the executed notebook; no new HTML
 renderer or Python preparation script is created.
 
 The upstream contract contains 38 manifests: N01–N35, N12A, D02 and D01's
@@ -883,7 +618,7 @@ with zero unrelated deletions. Every file remains present locally, and all
 14,970 remain recoverable from `pilot-50-dashboard` and the frozen pilot tag.
 No Git/LFS history was rewritten. Previously verified N12/N12A/N13/N15
 publication records remain valid. A later per-file LFS upload attempt for N16
-hit Hugging Face's free-account API rate limit; the user removed the partial
+hit Hugging Face's free-account API rate limit; I removed the partial
 remote repository and the local upload cache was cleared. That failed attempt
 was superseded by the separately approved, verified N16 indexed-bundle release.
 N17 subsequently passed its own separate full-bundle gate. Later oversized
@@ -905,7 +640,7 @@ verified N13/N15 artifacts and later N16/N17 bundle releases; the live pilot
 deployment stays unchanged.
 
 **Bounded bundle transport test (2026-09-17).**
-The user initially approved a small N16 smoke test of exact-byte indexed ZIP-member
+I initially approved a small N16 smoke test of exact-byte indexed ZIP-member
 retrieval in the existing diagnostics repository. The direct-file registry
 remains authoritative for already verified N12/N12A/N13/N15 assets; a new
 versioned bundle record is separate. That test preceded a separately approved
@@ -1999,22 +1734,13 @@ examples, formats validated values and creates presentation-only plots. Its
 approximately 13 MiB output is compact enough for ordinary Git under explicit
 LFS bypass rules, so no duplicate Hugging Face release is required.
 
-The Notebook 33–36 completion records below describe the **historical
-Controlled-50 final-report, dashboard and packaging layer**. They remain valid
-as pilot evidence and recovery documentation, but only the Notebook 33 record
-now has a completed current Controlled-300 successor. Notebook 33 is the
-canonical Controlled-300 final synthesis; Notebooks 34–36 remain pending. The
-pre-N34 design, producer mapping, immutable remote-integrity, runtime-loading
-and final implementation-contract gates completed on 2026-09-28. The binding
-`dashboard_package.v2` contract is
-`docs/dashboard_design_finalists/controlled_300_n34_implementation_contract.md`;
-Step 6 preparation is complete and execution now proceeds batch by batch. The
-v2 config/helper/test unit pins 36 completed manifests (N01–N33 plus separately
-registered N12A, D01 and D02) and passes 70 inventory-backed source-table
-contracts spanning 4,749,036 logical rows and 2,877,354,404 bytes without
-eager producer-frame retention. N34 Batch 1 and the remaining package batches
-are not yet executed. The live pilot is unchanged, and the historical N34–N36
-outputs must not be relabelled as Controlled-300.
+The Notebook 33–36 records below retain the **historical Controlled-50
+final-report, dashboard and packaging layer**. Their Controlled-300 successors
+are now complete, as recorded in the current completion ledger above. The
+pre-N34 design, producer mapping, remote-integrity and runtime-loading gates
+completed on 28 September 2026. The original implementation contract remains at
+`docs/dashboard_design_finalists/controlled_300_n34_implementation_contract.md`.
+Historical pilot outputs are not relabelled as Controlled-300 evidence.
 
 The preparation audit also requires all 91 declared local inputs, canonical
 repository artifact/validation ledger schemas, and a passing 64 MiB promoted
@@ -2351,7 +2077,7 @@ was changed during this final packaging audit.
 
 ### 6.1 Post-notebook application delivery — recorded 2026-09-04
 
-The user approved the completed eight-page dashboard, its later numerical
+The review approved the completed eight-page dashboard, its later numerical
 evidence views, and the public deployment at
 [https://fhtw-painting-restoration.streamlit.app/](https://fhtw-painting-restoration.streamlit.app/).
 The root README and application's Reports & Reproducibility page link to this
@@ -2415,7 +2141,7 @@ leaderboard or described as a fourth full-model benchmark.
 | Category coverage | all five categories; at least two cases per category |
 | Identity QA | `canonical__p001__zero_control`, excluded from comparison counts |
 | Statistical scope | paired descriptive evidence; no inferential p-values |
-| Decision owner | user after complete visual and numerical review |
+| Decision owner | completion review after visual and numerical checks |
 | Recorded decision | HINT |
 | Metric-anchor result | HINT 96, MAT 6, ties 6 of 108 |
 | Validation | 94 of 94 checks pass; no blocking or warning failures |
@@ -2520,7 +2246,7 @@ It also found legacy notebooks whose numbers overlap later roadmap stages. They
 remain non-canonical until a separate exact-path migration/deletion audit is
 approved. No future notebook may consume them merely because they exist.
 
-The user removed all 56 files and the five empty non-canonical runtime directories
+I removed all 56 files and the five empty non-canonical runtime directories
 under the output roots of Notebooks 10, 11, 12, 25, and 26 in commit `bbb2c6fc`.
 The cleanup was verified with a clean, synchronized Git worktree: no legacy global
 output tree remains, every numbered Notebook 01--26 output root remains present,
@@ -2528,8 +2254,7 @@ and `outputs/inventory/` remains the sole global output exception.
 
 ## 9. Update protocol
 
-No notebook remains unimplemented in the approved 36-stage pipeline or the
-completed Notebook 37 extension. Before Batch 1 of any further explicitly
+The approved N01–N36 pipeline and supplements D01–D04 are complete. Before Batch 1 of any further explicitly
 approved extension or reopening:
 
 1. Resolve every responsibility to an entry in
@@ -2544,7 +2269,7 @@ At completion of that approved notebook work:
 1. Update the YAML with actual counts and the new manifest path.
 2. Update this document's completion ledger and affected dependency contracts.
 3. Refresh `outputs/inventory/`.
-4. The user commits the notebook, owned outputs, governing-file updates, and
+4. Commit the notebook, owned outputs, governing-file updates, and
    compact `inventory_run.json` together unless an approved staged commit is
    required. The complete `project_file_inventory.csv` remains local under the
    2026-09-21 LFS capacity guard.

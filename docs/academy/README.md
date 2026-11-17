@@ -1,73 +1,55 @@
 # Restoration Evidence Academy
 
-Supervisor learning companion for the completed Controlled-300 study.
+Learning companion for Controlled-300 and the completed physical-damage supplement.
 
-Expected public URL after deployment:
-<https://rahul-ds25m008.github.io/painting_restoration_eval/>
+[Open the Academy](https://rahul-ds25m008.github.io/painting_restoration_eval/).
 
-## Content and scope
+## Content
 
-The approved detailed academy contains 37 chapters (N01–N36 plus D02, with
-D01 and N12A inside N12), six activities per chapter, 185 notebook questions,
-seven synthesis rooms and an 18-question defence recap. Only stale N12/N21/N26/
-N29/N33 content was corrected before adding N34–N36. The other 29 original
-chapters and the original 34 embedded figures were retained.
+The Academy contains **39 chapters**: N01–N36 and D02–D04, with D01 and N12A
+covered within N12. Each chapter has six activities and five questions, for
+**195 notebook questions**, plus seven synthesis rooms and an 18-question defence
+recap. The existing chapter order and earlier figures are retained.
 
-The 3 October reporting errata supplements the frozen evidence; this learning
-page is not a new scientific run or a replacement Zenodo release.
+- **D03 — Real-damage dataset preparation:** source rights, two paintings per
+  category, unchanged preprocessing, reviewed partial masks, scale checks and
+  the eligible-case handoff. The saved ten-painting mask atlas is embedded.
+- **D04 — Real-damage restoration and evaluation:** four methods, targeted SD
+  prompts, forty primary candidates, ten four-seed groups, reference-free
+  diagnostics and descriptive controlled comparisons. Saved rd004 comparison
+  and seed-variability figures illustrate the interpretation limits.
 
-## Deploy once, then update by pushing
+The lessons use saved evidence; they do not run inference or recompute metrics.
+The physical supplement is separate from the frozen Zenodo v1.0.0 archive.
+Source credits and reuse qualifications continue to apply to embedded figures.
 
-1. Open this repository's **Settings → Pages**.
-2. Under **Build and deployment**, select **GitHub Actions** as the source.
-   Do not select a branch/folder Jekyll build or create another Streamlit app.
-3. Commit and push the academy files and `academy-pages.yml` to `main`.
-4. Open **Actions → Deploy Evidence Academy**. Wait for the job to succeed.
-   If needed, choose **Run workflow → main**. A first attempt made before
-   enabling Pages can be rerun after changing the setting.
-5. Open the URL from the deployment job. Confirm the header shows 37 chapters,
-   open N36, answer a practice question, refresh, and check retained progress.
-   Open one original Evidence figure and a discussion prompt as well.
+## Build and preview
 
-Subsequent changes to `docs/academy/**` on `main` trigger deployment
-automatically. The workflow checks out the academy directory without LFS and
-publishes **only `index.html`**, never the repository, research outputs or local
-scratch files. The existing Streamlit app and availability workflow are unchanged.
-
-This workflow owns this repository's GitHub Pages site. If another Pages site
-is added later, combine the sites deliberately instead of deploying over it.
-No new repository, HF bundle, API token or availability watcher is required.
-
-Official setup reference:
-[GitHub Pages custom workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
-
-## Files and local preview
-
-- `source.html`: editable, self-contained academy fragment with embedded lesson
-  data and figures. Preserve the approved scientific content when editing.
-- `index.html`: exported standalone document used for deployment. It contains
-  its own display wrapper and browser-local state bridge; it is not an LFS pointer.
-
-From the repository root:
+`source.html` contains editable lesson data, figures and the interface.
+`index.html` is its generated standalone publication. From the repository root:
 
 ```powershell
+.\.venv\Scripts\python.exe tools/build_academy.py
 .\.venv\Scripts\python.exe -m http.server 8502 --bind 127.0.0.1 --directory docs/academy
 ```
 
-Open <http://127.0.0.1:8502/>. Stop the preview with Ctrl+C.
-Downloading `index.html` and opening it directly also renders the lessons;
-browser persistence is most predictable on a stable HTTP(S) origin.
+Open <http://127.0.0.1:8502/>. Stop the server with Ctrl+C. Commit the source
+and regenerated publication together. No external renderer, account, token or
+runtime evidence download is required.
 
-`index.html` was exported from `source.html` using the visualization renderer.
-For later edits, regenerate the standalone export from the fragment; updating
-the fragment alone does not change the published page. Keep the exported file
-in the same commit and test it in an ordinary browser before pushing. The
-renderer is a development tool, not a deployment/runtime dependency.
+Progress is stored in the browser on the current origin. Existing compatible
+learning records are retained; it is not an authenticated or graded record.
+Discussion controls provide revision questions for independent study or a
+discussion partner. They do not send messages. Reset requires confirmation.
 
-Progress is stored locally in the browser and is not a graded or authenticated
-supervisor record. Discussion controls display copyable prompts; no AI service
-or account is needed to read the academy. Reset uses an in-page confirmation.
-Figures and lessons require no runtime GitHub/HF fetch. The original source
-paths displayed within lessons identify repository evidence; they are not
-automatic downloads. Existing third-party/painting rights qualifications still
-apply to embedded figures.
+## Deployment
+
+The **Deploy Evidence Academy** workflow publishes only `index.html` to GitHub
+Pages after changes to `docs/academy/**` reach `main`. Pages uses **GitHub Actions**
+as its deployment source. The workflow enforces the two-megabyte publication
+limit. The museum's Streamlit deployment is separate.
+
+After publication, open both new chapters, inspect their figures, answer a
+question and refresh to check retained progress. The workflow can also be
+dispatched manually from Actions. Older dated validation records describe
+their original revision, not the current chapter count.

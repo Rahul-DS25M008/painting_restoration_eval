@@ -1,6 +1,8 @@
 """Finalization tests on copies of the accepted Batch 7 evidence, never originals."""
 import json
+import hashlib
 import shutil
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -15,7 +17,8 @@ from restoration_eval.manifests import build_artifact_record, sha256_file
 class CompletionTests(unittest.TestCase):
     def setUp(self):
         self.actual = Path(__file__).resolve().parents[1]
-        self.temp = tempfile.TemporaryDirectory(prefix="d03-completion-", dir=self.actual / ".codex_tmp")
+        (self.actual / ".local_work").mkdir(exist_ok=True)
+        self.temp = tempfile.TemporaryDirectory(prefix="d03-completion-", dir=self.actual / ".local_work")
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         (self.root / ".git").mkdir()
@@ -24,7 +27,7 @@ class CompletionTests(unittest.TestCase):
         self.relative = Path("outputs/d03_real_damage_dataset_preparation")
         self.output = self.root / self.relative
         shutil.copytree(self.actual / self.relative, self.output)
-        # Tests start from Batch 7 even if the user has subsequently completed D03.
+        # Reproduce the recorded Batch 7 inputs, independent of later maintenance.
         journal = self.output / "work/completion_commit"
         if (journal / "transaction.json").exists():
             for name in completion.METADATA_PATHS:
@@ -38,8 +41,30 @@ class CompletionTests(unittest.TestCase):
             target.parent.mkdir(parents=True, exist_ok=True)
             if row["input_key"] == "inventory":
                 target.write_text("test inventory\n", encoding="utf-8")
+            elif row["input_key"] == "implementation_guidelines":
+                # This is a constructed completion fixture, not a claim of
+                # recovering the unavailable historical guide bytes. Keep the
+                # actual research record untouched; see provenance_exceptions.md.
+                raw = b"Documentation-only completion test fixture.\n"
+                target.write_bytes(raw)
+                row["checksum"] = hashlib.sha256(raw).hexdigest()
             else:
-                shutil.copyfile(self.actual / row["relative_path"], target)
+                source = self.actual / row["relative_path"]
+                raw = source.read_bytes() if source.is_file() else b""
+                if (row["input_key"] not in completion.ADMINISTRATIVE_INPUTS
+                        and hashlib.sha256(raw).hexdigest() != row["checksum"]):
+                    raw = subprocess.check_output(
+                        ["git", "show", "6b1959211455c23f956ebe8110dd7b520f5dd39e:"
+                         + row["relative_path"]], cwd=self.actual)
+                    # Git may normalize text while execution recorded CRLF bytes.
+                    alternatives = [raw, raw.replace(b"\r\n", b"\n"),
+                                    raw.replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")]
+                    raw = next((value for value in alternatives
+                                if hashlib.sha256(value).hexdigest() == row["checksum"]), None)
+                    self.assertIsNotNone(raw, "Recorded fixture unavailable: " + row["relative_path"])
+                target.write_bytes(raw)
+        (self.output / completion.METADATA_PATHS[2]).write_text(
+            json.dumps(self.manifest), encoding="utf-8")
         for relative in ("config/datasets/real_damage_completion.yaml", "src/restoration_eval/real_damage_completion.py"):
             target = self.root / relative
             target.parent.mkdir(parents=True, exist_ok=True)

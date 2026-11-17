@@ -28,9 +28,8 @@ WAKE_BUTTON = re.compile(r"^Yes, get this app back up!?$", re.IGNORECASE)
 
 
 def target_for_ref(ref):
-    """Explicit deployments only; a test-branch check cannot pass against main."""
-    targets = {"main": (APP_URL, True),
-               "codex/physical-damage-room": (PHYSICAL_APP_URL, True)}
+    """Main checks production; historical test branches retain their own checker."""
+    targets = {"main": (APP_URL, True)}
     if ref not in targets:
         raise ValueError("No availability deployment configured for this Git ref")
     return targets[ref]

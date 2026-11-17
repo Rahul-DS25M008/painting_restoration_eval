@@ -45,7 +45,7 @@ inputs:
   project_paths: outputs/inventory/project_paths.json
   evidence_audit: docs/evidence_dependency_audit.md
   evidence_coverage: config/evaluation/evidence_coverage.yaml
-  implementation_guidelines: docs/refactoring_implementation_guidelines.md
+  implementation_guidelines: docs/reproducibility.md
   notebook_roadmap: docs/final_notebook_roadmap.md
   controlled_artworks: outputs/01_dataset_verification/data/artworks.csv
   controlled_dataset_manifest: outputs/01_dataset_verification/manifests/run_manifest.json

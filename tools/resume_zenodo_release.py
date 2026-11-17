@@ -39,7 +39,7 @@ def restore_published_image(root: Path, relative: str, dry_run: bool = False) ->
     if len(parts) < 3 or parts[0] != 'outputs' or parts[1] not in producers or Path(relative).suffix != '.png':
         raise ValueError('Only recognized producer PNGs can be restored automatically')
     bundle_name, manifest_name = producers[parts[1]]
-    bundle_root = root/'.codex_tmp/bundled_assets'/bundle_name
+    bundle_root = root/'.local_work/bundled_assets'/bundle_name
     with (bundle_root/'indexes/members.csv').open(encoding='utf-8-sig', newline='') as f:
         rows = [r for r in csv.DictReader(f) if r['original_relative_path'] == relative]
     with (root/'outputs'/parts[1]/'manifests'/manifest_name).open(encoding='utf-8-sig', newline='') as f:
@@ -64,7 +64,7 @@ def restore_published_image(root: Path, relative: str, dry_run: bool = False) ->
     if dry_run:
         return {'status': 'verified_recovery_copy', 'path': relative,
                 'old_sha256': base.sha(original), 'sha256': row['sha256'], 'source_bundle': str(bundle)}
-    folder = root/'.codex_tmp/zenodo-recovery'
+    folder = root/'.local_work/zenodo-recovery'
     folder.mkdir(parents=True, exist_ok=True)
     backup = folder/f"corrupt-{base.sha(relative.encode())[:16]}-{base.sha(original)[:16]}.png"
     if backup.exists():
@@ -117,7 +117,7 @@ def restore_audit(root: Path, report_path: Path) -> dict:
         print(f"Restored and verified {len(results)}/{len(errors)}: {row['path']}", flush=True)
     summary = {'status': 'all_reported_sources_restored', 'audit_report': str(report_path),
                'restored_count': len(results), 'files': results}
-    out = root/'.codex_tmp/zenodo-recovery'/f'batch-recovery-{time.time_ns()}.json'
+    out = root/'.local_work/zenodo-recovery'/f'batch-recovery-{time.time_ns()}.json'
     out.write_text(json.dumps(summary, indent=2)+'\n', encoding='utf-8')
     return summary
 
@@ -229,15 +229,15 @@ def audit_release(root: Path, repair_last: str | None) -> dict:
     for row in package['files']:
         p = f"{n36}/package/{row['package_relative_path']}"
         selected.setdefault(p, {'path': p}).update(sha256=row['sha256'], size_bytes=row['size_bytes'])
-    target = root/'.codex_tmp/zenodo'/plan['zenodo_record_id']/plan['version']/commit[:12]/f"controlled-300-{plan['version']}-research-artifacts.zip"
-    report = root/'.codex_tmp/zenodo-recovery'/f'integrity-audit-{time.time_ns()}.json'
+    target = root/'.local_work/zenodo'/plan['zenodo_record_id']/plan['version']/commit[:12]/f"controlled-300-{plan['version']}-research-artifacts.zip"
+    report = root/'.local_work/zenodo-recovery'/f'integrity-audit-{time.time_ns()}.json'
     return audit_records(root, target, sorted(selected.values(), key=lambda r: r['path']), repair_last, report)
 
 
 def restore_known_image(root: Path) -> dict:
     """Restore exact producer bytes, preserving a diagnostic copy and timestamp."""
     from PIL import Image
-    source = root/'.codex_tmp/bundled_assets/n17_full/bundles/p100/part-0001.zip'
+    source = root/'.local_work/bundled_assets/n17_full/bundles/p100/part-0001.zip'
     with zipfile.ZipFile(source) as z:
         data = z.read(KNOWN_IMAGE)
     if base.sha(data) != GOOD_SHA or len(data) != 78211:
@@ -250,7 +250,7 @@ def restore_known_image(root: Path) -> dict:
         return {'status': 'already_restored', 'path': KNOWN_IMAGE, 'sha256': GOOD_SHA}
     if current != BAD_SHA:
         raise ValueError('Unexpected local image bytes; refusing automatic replacement')
-    backup = root/'.codex_tmp/zenodo-recovery/corrupt-texture.png'
+    backup = root/'.local_work/zenodo-recovery/corrupt-texture.png'
     backup.parent.mkdir(parents=True, exist_ok=True)
     if backup.exists():
         if backup.read_bytes() != original:
@@ -374,7 +374,7 @@ def resume(root: Path, repair_last: str | None) -> dict:
         if line[:3] != '?? ' or line[3:] not in RECOVERY_FILES:
             raise ValueError('Source checkout changed. Do not commit or refresh inventory before this recovery.')
     plan = json.loads((root/base.PLAN).read_text(encoding='utf-8'))
-    destination = root/'.codex_tmp/zenodo'/plan['zenodo_record_id']/plan['version']/commit[:12]
+    destination = root/'.local_work/zenodo'/plan['zenodo_record_id']/plan['version']/commit[:12]
     target = destination/f"controlled-300-{plan['version']}-research-artifacts.zip"
     if (destination/'RELEASE_MANIFEST.json').exists() or (destination/'SHA256SUMS.txt').exists():
         raise ValueError('Final release records already exist; refusing to modify a finalized archive')
@@ -405,7 +405,7 @@ def resume(root: Path, repair_last: str | None) -> dict:
                   {'__builtins__': {}}, {'plan': plan, 'commit': commit})
     generated = {'ZENODO_EXTERNAL_REFERENCES.json': json.dumps(refs, indent=2, ensure_ascii=False).encode('utf-8'),
                  'ZENODO_RELEASE_CONTEXT.txt': readme.encode('utf-8')}
-    entries = resume_zip(root, target, records, generated, repair_last, root/'.codex_tmp/zenodo-recovery')
+    entries = resume_zip(root, target, records, generated, repair_last, root/'.local_work/zenodo-recovery')
     print('Hashing completed ZIP (streaming, no recompression)...', flush=True)
     archive = base.file_record(root, target.relative_to(root).as_posix())
     if (base.git(root, 'rev-parse', 'HEAD').strip() != commit

@@ -116,7 +116,7 @@ if(typeof window!=='undefined') (()=>{
       p(r.review_notes,'fpr-review-note');const pair=node('div',undefined,'fpr-image-pair');
       for(const kind of ['clean','restored']){const figure=node('figure'),c=node('canvas');figure.append(c,node('figcaption',plain(kind)+' · recorded crop'));pair.append(figure);safePaint(c,kind);}body.append(pair);
       table(['Observation','Recorded outcome'],['digit_count_error','missing_digits','duplicated_digits','fused_digits','contour_failure','articulation_failure','wrist_or_arm_discontinuity','non_anatomical_texture'].map(k=>[plain(k),r[k]]));
-      p('25 of 32 review units showed a visible anatomy failure. Eight cases, four methods, model names hidden during the bounded Codex-assisted review. These judgements are not expert/conservator ground truth.');
+      p('25 of 32 review units showed a visible anatomy failure. Eight cases, four methods, model names hidden during the bounded automated, researcher-reviewed review. These judgements are not expert/conservator ground truth.');
       button('Visible failure',()=>cycle(true));button('Acceptable counterexample',()=>cycle(false));detail('Original unblinded review row',r);provenance();
     }
     function observationDrawer(category){
@@ -140,7 +140,7 @@ if(typeof window!=='undefined') (()=>{
       for(const [title,text] of [
         ['01 / Matched hand evidence','Same-case matched non-hand controls, painting as independent unit, painting-cluster bootstrap intervals and Benjamini–Hochberg correction. Stable Diffusion seeds are collapsed before painting-level inference; SDXL remains descriptive, outside the four-method primary estimates.'],
         ['02 / Rendered lightness','30 profiles, 10 context matches, six metrics × four models. Adjusted associations retain image-context covariates and uncertainty. They do not establish demographic fairness or historical correctness.'],
-        ['03 / Blind visual review','32 units from eight cases, model identities hidden during a bounded Codex-assisted review. This is not independent expert validation.'],
+        ['03 / Blind visual review','32 units from eight cases, model identities hidden during a bounded automated, researcher-reviewed review. This is not independent expert validation.'],
         ['04 / Reading the prints','The five prints use recorded crop coordinates. Inspect any print for full-canvas context. Difference views are absolute RGB differences, not a diagnostic verdict. Sparse control pixels, not the entire crop, define the comparison.']
       ]){const section=node('section');section.append(node('h3',title));p(text,undefined,section);grid.append(section);}body.append(grid);
       detail('Runtime provenance',{source:data.source,release:data.release_id,review_unit_id:data.review.review_unit_id,hand_control_id:data.review.hand_control_id});button('Open original D02 report',()=>navigate(data.review.blind_review_code,'report'));

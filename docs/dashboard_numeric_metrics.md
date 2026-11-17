@@ -11,7 +11,7 @@ Model Performance while preserving all other page functions and existing layouts
 This is an application-only, read-only extension. It creates no scientific
 outputs and does not require editing or rerunning any notebook.
 
-The user verified and approved the numerical additions on 2026-09-04 and
+The numerical additions were verified and approved on 2026-09-04 and
 confirmed the public deployment at https://fhtw-painting-restoration.streamlit.app/.
 The only subsequent Reports & Reproducibility change replaces its outdated
 not-deployed note with that clickable public URL. Historical notebook outputs

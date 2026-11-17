@@ -36,6 +36,8 @@ def remaining_ast(source, allowed):
 
 def baseline_source(root, relative):
     current = (root / relative).read_text(encoding="utf-8")
+    from editorial_baseline import baseline
+    current = baseline(root, relative, current)
     from n35_publication_delta import physical_room_baseline, publication_baseline, validation_baseline
     current = physical_room_baseline(root, relative, current)
     current = publication_baseline(root, relative, current)

@@ -52,7 +52,7 @@ class ZenodoReleaseTests(unittest.TestCase):
     def test_source_keeps_assets_but_excludes_private_and_obsolete_files(self):
         plan={'source_root_files':['README.md'],'required_source_files':['LICENSE'],
               'exclude_prefixes':['docs/thesis/'], 'exclude_files':['docs/supervisor/Next_Steps.pdf']}
-        selected=mod.select_source(['notebooks/01.ipynb','notebooks/.ipynb_checkpoints/01.ipynb','src/module.py','streamlit_assets/room.png','docs/thesis/draft.docx','docs/supervisor/Next_Steps.pdf','.codex_tmp/bundle.zip'],plan)
+        selected=mod.select_source(['notebooks/01.ipynb','notebooks/.ipynb_checkpoints/01.ipynb','src/module.py','streamlit_assets/room.png','docs/thesis/draft.docx','docs/supervisor/Next_Steps.pdf','.local_work/bundle.zip','.private_tmp/bundle.zip'],plan)
         self.assertEqual(selected,['LICENSE','README.md','notebooks/01.ipynb','src/module.py','streamlit_assets/room.png'])
 
     def test_streaming_full_and_partial_hashes_differ(self):

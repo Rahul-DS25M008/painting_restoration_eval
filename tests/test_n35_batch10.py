@@ -40,19 +40,19 @@ class Batch10Tests(unittest.TestCase):
     def test_user_approval_cannot_override_explicit_failure(self):
         with self.assertRaisesRegex(ValueError, "failures require resolution"):
             b10.qualification_record(ValidationCollector(),
-                {b10.MANUAL_GATES[0]: {"passed":False, "evidence":"clipped controls"}}, "looks good")
+                {b10.MANUAL_GATES[0]: {"passed":False, "evidence":"clipped controls"}}, "review recorded")
 
     def test_automated_blocker_cannot_be_deferred(self):
         collector = ValidationCollector()
         collector.add(validation_stage="batch_10", check_id="regression", check_description="test",
             severity="blocking", expected=True, observed=False, passed=False)
         with self.assertRaises(ValidationFailure):
-            b10.qualification_record(collector, {}, "looks good")
+            b10.qualification_record(collector, {}, "review recorded")
 
     def test_detailed_manual_pass_preserved(self):
         key = b10.MANUAL_GATES[0]
         saved, pending = b10.qualification_record(ValidationCollector(),
-            {key:{"passed":True,"evidence":"Direct viewport observation"}}, "looks good")
+            {key:{"passed":True,"evidence":"Direct viewport observation"}}, "review recorded")
         self.assertNotIn(key, pending)
         self.assertTrue(next(r for r in saved.checks if r.check_id==key).passed)
 
@@ -111,7 +111,7 @@ class Batch10Tests(unittest.TestCase):
             root = Path(folder)
             def run(command, **kwargs):
                 token = command[command.index("--request-id")+1]
-                path = root/".codex_tmp/n35_batch10_audit/deployment_suite_trust_portrait.json"
+                path = root/".local_work/n35_batch10_audit/deployment_suite_trust_portrait.json"
                 path.parent.mkdir(parents=True)
                 path.write_text(json.dumps({"request_id":token,"passed":False,"run":28,
                     "failures":0,"errors":0,"integrity_changes":{"notebook_source_changed":True}}))
@@ -125,7 +125,7 @@ class Batch10Tests(unittest.TestCase):
     def test_stale_success_receipt_is_rejected(self):
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder)
-            path=root/".codex_tmp/n35_batch10_audit/deployment_suite_trust_portrait.json"
+            path=root/".local_work/n35_batch10_audit/deployment_suite_trust_portrait.json"
             path.parent.mkdir(parents=True)
             path.write_text(json.dumps({"request_id":"old","passed":True}))
             with patch.object(b10,"ROOT",root),patch.object(b10.subprocess,"run",

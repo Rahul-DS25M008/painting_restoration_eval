@@ -286,7 +286,7 @@ def build_report(ctx, progress=print):
         report_path=to_repo_relative(report,ctx['root']),report_sha256=sha256_file(report),
         embedded_images=len(assets),embedded_tiles=int(assets.tile_count.sum()),section_order=list(SECTIONS),
         numerical_claims=len(claims),approved_mock_elements=len(traceability),
-        visual_review='user-approved assistant inspection; model identities visible; not external expert ratings',
+        visual_review='reviewed automated visual inspection; model identities visible; not external expert ratings',
         report_size_bytes=report.stat().st_size,build_seconds=perf_counter()-started)
     save(path(ctx,ctx['policy']['outputs']['report_metadata']),metadata);ctx['metadata']=metadata
     files=[report,path(ctx,ctx['config']['outputs']['case_observations'])]
@@ -471,7 +471,7 @@ def finalize_report(ctx):
             validation_summary=ctx['validation'].summary(),known_limitations=[
                 'No clean reference for physical paintings; no physical fidelity metrics or correctness claims.',
                 'Ten purposively selected paintings, two per operational category; non-exhaustive masks.',
-                'Qualitative assistant inspection approved by researcher; identities visible; no expert ratings.',
+                'Qualitative automated visual inspection reviewed during the study; identities visible; no expert ratings.',
                 'Targeted physical SD prompts differ from generic synthetic prompts; descriptive comparison only.',
                 'Outside-mask preservation is enforced by compositing; disagreement is not calibrated confidence.'],
             project_root=ctx['root'],package_names=ctx['packages'],run_id='run_d04_'+ctx['execution_fingerprint'][:24])

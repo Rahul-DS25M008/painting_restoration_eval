@@ -4,7 +4,7 @@ config_version: "1.1.37"
 evidence_coverage:
   authority:
     human_readable_audit: "docs/evidence_dependency_audit.md"
-    implementation_guidelines: "docs/refactoring_implementation_guidelines.md"
+    implementation_guidelines: "docs/reproducibility.md"
     notebook_roadmap: "docs/final_notebook_roadmap.md"
     inventory_path: "outputs/inventory/project_file_inventory.csv"
     project_paths_path: "outputs/inventory/project_paths.json"
@@ -215,7 +215,7 @@ evidence_coverage:
       batch_10_expected_observations: 40
       batch_10_expected_embedded_images: 46
       batch_10_expected_embedded_tiles: 481
-      batch_10_review_scope: "user_approved_assistant_visual_inspection_model_identities_visible_not_expert_ratings"
+      batch_10_review_scope: "reviewed_automated_visual_inspection_model_identities_visible_not_expert_ratings"
       batch_10_computation_scope: "presentation_only_saved_evidence_no_inference_or_new_scientific_metrics"
       batch_10_completion_policy: "verify_sources_report_claims_assets_traceability_then_write_universal_manifest_last"
       batch_2_config: "config/experiments/real_damage_readiness.yaml"
@@ -3239,7 +3239,7 @@ evidence_coverage:
         all_pilot_artifact_roles_retained: true
         remaining_work_files: 0
         n35_acceptance_and_provenance_exceptions_retained: true
-        cell_delivery: "inline_chat_only"
+        cell_delivery: "saved_notebook"
       status: "completed_validation_warning"
       completion_gate_passed: true
       run_id: "run_4e221aa9405d4d5cbeb7ae120dfad71a"

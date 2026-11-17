@@ -160,7 +160,7 @@ for this reporting-correction closeout.
 No new HF upload, model run, archive rebuild or re-upload is needed for this
 closeout. GitHub contains the compact publication receipt and updated source/docs;
 the original ZIP, eight parts, credentials and temporary recovery files stay
-outside Git under ignored `.codex_tmp/`. No access token belongs in public URLs.
+outside Git in ignored local working directories. No access token belongs in public URLs.
 The retired builder is guarded against rebuilding the published version, and
 the uploader refuses a submitted record. Any future artifact revision requires
 a separately approved version and rights review.

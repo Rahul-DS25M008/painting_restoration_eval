@@ -24,7 +24,7 @@ from restoration_eval.bundled_assets import (  # noqa: E402
 )
 
 REPO = "RahulMaddineni264/painting-restoration-eval-diagnostics"
-STAGE = ROOT / ".codex_tmp/finished_tabs_01_03"
+STAGE = ROOT / ".local_work/finished_tabs_01_03"
 RECEIPT = "config/publication/finished_tabs_01_03_assets.json"
 SMALL = tuple("streamlit_assets/" + name for name in (
     "rooms/exhibition_foyer_shell.webp", "rooms/study_design_shell.png",

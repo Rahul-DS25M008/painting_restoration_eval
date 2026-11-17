@@ -16,7 +16,7 @@ model_report_generation:
     inventory_run_path: "outputs/inventory/inventory_run.json"
     project_paths_path: "outputs/inventory/project_paths.json"
     proposal_path: "docs/proposal/Rahul_Thesis_Proposal.docx"
-    implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+    implementation_guidelines_path: "docs/reproducibility.md"
     notebook_roadmap_path: "docs/final_notebook_roadmap.md"
     evidence_dependency_audit_path: "docs/evidence_dependency_audit.md"
     evidence_coverage_path: "config/evaluation/evidence_coverage.yaml"

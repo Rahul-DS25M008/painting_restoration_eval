@@ -89,7 +89,7 @@ def tables(manifest):
 
 def build_routes(manifest):
     from n35_final_audit import public_bytes
-    audit = json.loads((ROOT / ".codex_tmp/n35_batch10_audit/remote.json").read_text())
+    audit = json.loads((ROOT / ".local_work/n35_batch10_audit/remote.json").read_text())
     expected_catalogues = {r["receipt"]: r["catalog_sha256"] for r in audit["releases"]}
     routes = defaultdict(list)
     receipts = sorted((ROOT / "outputs/inventory").glob("bundled_publication_*_full.json")) + [ROOT / "config/publication/finished_tabs_01_03_assets.json"]
@@ -98,9 +98,9 @@ def build_routes(manifest):
         prefix = saved["prefix"]
         base = {"repo": saved["repo_id"], "revision": saved["revision"]}
         key = receipt.stem.removeprefix("bundled_publication_")
-        staging = ROOT / ".codex_tmp/bundled_assets" / key
+        staging = ROOT / ".local_work/bundled_assets" / key
         if receipt.name == "finished_tabs_01_03_assets.json":
-            staging = ROOT / ".codex_tmp/finished_tabs_01_03" / saved["release_id"]
+            staging = ROOT / ".local_work/finished_tabs_01_03" / saved["release_id"]
         def metadata(suffix, meta=None):
             local = staging / suffix
             raw = local.read_bytes() if local.is_file() else public_bytes(base["repo"], base["revision"], prefix + "/" + suffix)
@@ -169,7 +169,7 @@ def sidecars(manifest):
     for receipt in sorted((ROOT/"outputs/inventory").glob("bundled_publication_*_full.json")):
         saved = json.loads(receipt.read_text())
         key = receipt.stem.removeprefix("bundled_publication_")
-        cat_path = ROOT/".codex_tmp/bundled_assets"/key/"indexes/catalogue.json"
+        cat_path = ROOT/".local_work/bundled_assets"/key/"indexes/catalogue.json"
         raw = cat_path.read_bytes()
         release = next(r for r in manifest["releases"] if r["prefix"]==saved["prefix"])
         if digest(raw)!=release["catalogue_sha256"]: raise ValueError("Sidecar catalogue checksum mismatch")

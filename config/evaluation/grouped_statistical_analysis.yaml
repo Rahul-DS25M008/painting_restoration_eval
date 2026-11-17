@@ -18,7 +18,7 @@ grouped_statistical_analysis:
     project_paths_path: "outputs/inventory/project_paths.json"
     evidence_coverage_path: "config/evaluation/evidence_coverage.yaml"
     evidence_audit_path: "docs/evidence_dependency_audit.md"
-    implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+    implementation_guidelines_path: "docs/reproducibility.md"
     roadmap_path: "docs/final_notebook_roadmap.md"
     proposal_path: "docs/proposal/Rahul_Thesis_Proposal.docx"
     artworks_path: "outputs/01_dataset_verification/data/artworks.csv"

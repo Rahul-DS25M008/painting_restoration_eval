@@ -60,7 +60,7 @@ def run_check(action, room_id=None, missing_local=False, remote=False):
     print("Running", action, room_id or "", flush=True)
     process = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, timeout=240)
     name = "deployment_" + (room_id if action == "opening" else action + ("_"+room_id if room_id else ""))
-    path = ROOT / ".codex_tmp/n35_batch10_audit" / (name + ".json")
+    path = ROOT / ".local_work/n35_batch10_audit" / (name + ".json")
     # A failed check still has useful structured diagnostics. Accept them only
     # when tied to this invocation; an older successful receipt cannot pass.
     if path.is_file():
@@ -189,7 +189,7 @@ def persist(collector, receipts, before, manual, *, checkpoint_approval=None):
     saved, pending = qualification_record(collector, manual, checkpoint_approval)
     stamp = datetime.now(timezone.utc).isoformat()
     run_id = "run_" + uuid.uuid4().hex
-    staging_parent = ROOT / ".codex_tmp/n35_persistence"
+    staging_parent = ROOT / ".local_work/n35_persistence"
     staging_parent.mkdir(parents=True, exist_ok=True)
     stage = Path(tempfile.mkdtemp(prefix="staged-", dir=staging_parent))
     for path in FILES: (stage / path).parent.mkdir(parents=True, exist_ok=True)

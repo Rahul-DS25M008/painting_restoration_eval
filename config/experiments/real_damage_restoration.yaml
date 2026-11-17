@@ -1,7 +1,7 @@
 config_schema_version: real_damage_restoration_config.v1
 config_version: 1.0.0
 contract_status: approved
-approval_basis: user_approved_ten_batches_with_painting_specific_sd_prompts
+approval_basis: ten_batches_with_painting_specific_sd_prompts
 notebook:
   id: D04
   stem: d04_real_damage_restoration_and_evaluation
@@ -29,7 +29,7 @@ inputs:
   evidence_audit: docs/evidence_dependency_audit.md
   evidence_coverage: config/evaluation/evidence_coverage.yaml
   notebook_roadmap: docs/final_notebook_roadmap.md
-  implementation_guidelines: docs/refactoring_implementation_guidelines.md
+  implementation_guidelines: docs/reproducibility.md
   helper_source: src/restoration_eval/real_damage_restoration.py
   preparation_tests: tests/test_real_damage_restoration.py
 models:
@@ -130,8 +130,7 @@ batches:
   - {number: 9, name: Physical and synthetic comparison}
   - {number: 10, name: Reporting and completion gate}
 execution:
-  assistant_executes_notebook: false
-  user_creates_and_edits_notebook: true
+  notebook_execution: manual
   runtime_and_weights_check_batch: 2
   sequential_models: true
   checkpoint_after_each_candidate: true

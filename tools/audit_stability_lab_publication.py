@@ -130,7 +130,7 @@ def audit():
     samples = []
     for release in releases[:2]:
         reader = RemoteBundleReader(release["repo_id"], release["revision"], release["prefix"],
-                                    ROOT / ".codex_tmp/stability_lab_release_check" / release["name"])
+                                    ROOT / ".local_work/stability_lab_release_check" / release["name"])
         index = reader.painting("p018", reader.catalogue())
         # Diagnostic map filenames can be opaque IDs; select an explicit
         # indexed p018 member rather than infer case identity from its name.

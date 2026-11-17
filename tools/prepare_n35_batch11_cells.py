@@ -126,7 +126,7 @@ def main():
     cells=build_cells()
     for i,c in enumerate(cells,60):
         if c["cell_type"]=="code": ast.parse(c["source"],filename=f"N35 cell {i}")
-    target=ROOT/".codex_tmp/n35_batch11/N35_batch11_cells_60_65.html"
+    target=ROOT/".local_work/n35_batch11/N35_batch11_cells_60_65.html"
     target.parent.mkdir(parents=True,exist_ok=True)
     target.write_text(render(cells,start=60,title="N35 · Batch 11 acceptance closeout · cells 60–65",
         notice="Replace the empty trailing cell 60, then append 61–65. Keep 60 and 65 as Markdown. Save, then execute 61–64. No earlier batch rerun. Closeout preserves unmeasured qualifications as false warning rows under explicit owner acceptance."),encoding="utf-8")

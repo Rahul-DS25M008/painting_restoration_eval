@@ -49,7 +49,7 @@ NOTEBOOK_EXTENSIONS = {".ipynb"}
 
 DEFAULT_SKIP_DIRS = {
     ".git",
-    ".codex_tmp",
+    ".local_work",
     ".ipynb_checkpoints",
     "__pycache__",
     ".pytest_cache",
@@ -360,7 +360,10 @@ def iter_files(root: Path, out_dir: Path, skip_dirs: set[str]) -> Iterable[Path]
     for current_root, dirnames, filenames in os.walk(root):
         current_path = Path(current_root)
         dirnames[:] = sorted(
-            directory for directory in dirnames if directory not in skip_dirs
+            directory for directory in dirnames
+            if directory not in skip_dirs
+            and not (directory.startswith(".") and
+                     (directory.endswith("_tmp") or directory.startswith(".chart-data-")))
         )
 
         for filename in sorted(filenames):

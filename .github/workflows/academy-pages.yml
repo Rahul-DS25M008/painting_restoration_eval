@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'docs/academy/**'
+      - 'tools/build_academy.py'
       - '.github/workflows/academy-pages.yml'
   workflow_dispatch:
 
@@ -31,11 +32,16 @@ jobs:
       - name: Check out academy only
         uses: actions/checkout@v6
         with:
-          sparse-checkout: docs/academy
+          sparse-checkout: |
+            docs/academy
+            tools/build_academy.py
+          sparse-checkout-cone-mode: false
           lfs: false
           persist-credentials: false
       - name: Check static publication file
         run: |
+          python3 tools/build_academy.py
+          git diff --exit-code -- docs/academy/index.html
           test -s docs/academy/index.html
           test "$(wc -c < docs/academy/index.html)" -lt 2000000
           grep -q 'Restoration Evidence Academy' docs/academy/index.html

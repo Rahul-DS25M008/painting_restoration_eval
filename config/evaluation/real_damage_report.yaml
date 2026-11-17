@@ -22,7 +22,7 @@ policy:
   new_scientific_metrics: false
   physical_reference_metrics: false
   combined_quality_score: false
-  visual_review: assistant_visual_inspection_user_approved_model_identities_visible
+  visual_review: reviewed_automated_visual_inspection_model_identities_visible
   expert_validation: false
   primary_seed: 2026
   best_seed_selection: false

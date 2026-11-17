@@ -17,7 +17,7 @@ damage_size_diffusion_uncertainty_extension:
     evidence_coverage_path: "config/evaluation/evidence_coverage.yaml"
     evidence_audit_path: "docs/evidence_dependency_audit.md"
     roadmap_path: "docs/final_notebook_roadmap.md"
-    implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+    implementation_guidelines_path: "docs/reproducibility.md"
     stable_diffusion_config_path: "config/experiments/stable_diffusion.yaml"
     diffusion_uncertainty_config_path: "config/evaluation/diffusion_uncertainty.yaml"
     lpips_config_path: "config/evaluation/lpips.yaml"

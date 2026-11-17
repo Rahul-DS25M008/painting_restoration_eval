@@ -27,7 +27,7 @@ do not use **GitHub Git LFS** or consume its exhausted allowance.
 
 The release is already fully uploaded at HF revision
 `7814540a3fd3bff7db166c35821f18d5023d4d35`. Do not upload it again.
-On 2026-09-30 the user approved a metadata-verified checkpoint without requiring
+On 2026-09-30 the review approved a metadata-verified checkpoint without requiring
 full public re-downloads. All staged bytes are checked against the locally
 validated plan, then all remote paths, sizes and HF SHA-256/Git blob identities
 are matched at that immutable revision. This does not claim an end-to-end
@@ -72,7 +72,7 @@ if ((Run-Checked git rev-parse HEAD) -ne $remoteMainBefore) {
 }
 Run-Checked $py -c "from huggingface_hub import HfApi; print('HF account:', HfApi().whoami()['name'])"
 Run-Checked $py -m unittest tests.test_finished_tab_publication tests.test_bundled_assets
-Run-Checked $py tools/audit_metric_inspection.py --require-count 300 --report .codex_tmp/finished_tabs_scientific_audit.json
+Run-Checked $py tools/audit_metric_inspection.py --require-count 300 --report .local_work/finished_tabs_scientific_audit.json
 Run-Checked $py tools/publish_finished_tab_assets.py prepare
 Run-Checked $py tools/publish_finished_tab_assets.py verify-local
 ```

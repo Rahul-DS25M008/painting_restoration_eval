@@ -11,7 +11,7 @@
 
 This supplement extends, and does not replace, the Notebook 11 contract in
 `docs/final_notebook_roadmap.md`. All general rules in
-`docs/refactoring_implementation_guidelines.md` remain mandatory.
+`docs/reproducibility.md` remain mandatory.
 
 This is the authored experimental contract, so it remains under `docs/`.
 Executed evidence belongs to the notebook-owned output root. The scope and

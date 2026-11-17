@@ -8,7 +8,7 @@ import re
 
 ROOT = Path(__file__).resolve().parents[1]
 NOTEBOOK = ROOT / 'notebooks/35_dashboard_and_deployment_validation.ipynb'
-DEST = ROOT / '.codex_tmp/n35_batches_1_2'
+DEST = ROOT / '.local_work/n35_batches_1_2'
 
 
 def replace_once(source, old, new):

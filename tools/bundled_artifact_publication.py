@@ -241,8 +241,8 @@ def _stage(args: argparse.Namespace) -> Path:
     stage = Path(args.staging_dir).resolve()
     if stage == ROOT or stage.is_relative_to(ROOT / "outputs"):
         raise ValueError("Staging may not be inside canonical outputs")
-    if stage.is_relative_to(ROOT) and not stage.is_relative_to(ROOT / ".codex_tmp"):
-        raise ValueError("In-repository staging must be inside ignored .codex_tmp")
+    if stage.is_relative_to(ROOT) and not stage.is_relative_to(ROOT / ".local_work"):
+        raise ValueError("In-repository staging must be inside ignored .local_work")
     return stage
 
 

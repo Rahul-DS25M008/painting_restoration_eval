@@ -134,7 +134,7 @@ class RealDamageRestorationTests(unittest.TestCase):
             self.plan(eligibility=frame)
 
     def test_unsafe_output_paths_block(self):
-        for path in ("../D03/file.png", "C:/elsewhere/file.png", "/tmp/file.png", ".codex_tmp/file.png"):
+        for path in ("../D03/file.png", "C:/elsewhere/file.png", "/tmp/file.png", ".local_work/file.png"):
             config = copy.deepcopy(self.config)
             config["outputs"]["restored_template"] = path
             with self.subTest(path=path), self.assertRaisesRegex(ValueError, "Unsafe"):
@@ -147,7 +147,7 @@ class RealDamageRestorationTests(unittest.TestCase):
                    ("comparison", "pool_real_and_synthetic_metrics", True),
                    ("comparison", "same_prompt_domain_effect_claim_allowed", True),
                    ("evaluation", "input_as_clean_reference", True),
-                   ("execution", "assistant_executes_notebook", True)]
+                   ("execution", "notebook_execution", "automatic")]
         for group, key, value in changes:
             config = copy.deepcopy(self.config)
             config[group][key] = value

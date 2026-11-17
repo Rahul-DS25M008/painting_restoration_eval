@@ -1,0 +1,41 @@
+{
+  "schema": "editorial_wording_delta.v1",
+  "base_commit": "0b42d9236dd9c2a5f1f402336dd2cb440592dbab",
+  "scope": "Neutral presentation wording for automated visual review and its regression assertion. Numerical findings, review identities and frozen research records are unchanged. Local publication scratch paths are neutralized without changing saved scientific artifacts. Historical freeze checkers verify these exact editorial exceptions against Git preimages.",
+  "files": {
+    "streamlit_assets/focused_portrait_controller.js": {
+      "before_sha256": "e15b9e153e9dabca707195c982f0c482673acc4fbe14ca0ee7a096c41fe5b694",
+      "after_sha256": "9b793d95baa68680ca1ecfc0782eac2a4fdd85e958c360c5e73d2bb30edd4218"
+    },
+    "streamlit_assets/trustworthiness_controller.js": {
+      "before_sha256": "575f2c62e7baefaa85824609404fba1d5827002467c0d6b0155b125f4d187c0e",
+      "after_sha256": "44b404c3f8704fb75f84e316741356f176d27660d16a3e24e59784c12930c263"
+    },
+    "tests/test_focused_portrait.py": {
+      "before_sha256": "738e1cee3ab3c5e54c2ad2d0bb96664074dc406e99d51e24de45ee54cf7b6d92",
+      "after_sha256": "fa335b08d536dca1dacdbb23197e3c9e016dcd7c2ff7ca005b3dd3e25fbe34b6"
+    },
+    "tools/audit_stability_lab_publication.py": {
+      "before_sha256": "946e0ad8150d0f5c537b766fc02d0bfc0e1a6643f6a2677e922ca0015f13f3f2",
+      "after_sha256": "1e574ba1c58d98d04f26217799d9983ceee83a5de0a16c7d3f352f84f94ffcc3"
+    },
+    "docs/dashboard_design_finalists/focused_portrait_steps_01_02.md": {
+      "base_commit": "b560727635972fd392ce73324eb01b7af45d22e7",
+      "before_sha256": "be3e3ef27bf01cf86b446633d5e05825f2fa6f728fbbccaf5d53df9caad3fc3a",
+      "after_sha256": "ee7cf66753c24022c978dc45d672fed3d9ae4e456ccfc664a5bfe6d7b45ae255",
+      "note": "Records the existing neutral wording already committed on main before this maintenance pass."
+    },
+    "tools/check_focused_portrait_freeze.py": {
+      "before_sha256": "694fac4fe7891612835818098ff4a5b4b033057498f3baf15f80aab5b55afb6e",
+      "after_sha256": "7b599a53d23bb15f2a6bc5026da47c932932de5044253989248b28aa621b59b3"
+    },
+    "tools/check_trustworthiness_freeze.py": {
+      "before_sha256": "446777671b49ed25fffbbf32c56cae0abf259b115397256146f43f64eba526ed",
+      "after_sha256": "09d5fb5ebf7b892ea374162050f1df7a7e6d6569062ed659c04d499f7e009d8b"
+    },
+    "tools/check_stability_lab_freeze.py": {
+      "before_sha256": "183d2b57aa81a16785be9f71ae3cba73518ef472ea4f3f8fefa3bb6157c8164e",
+      "after_sha256": "43e2eeed40fb9df0fb537edbfe4bfffd711424b98e66af4f50101c71bc7bee87"
+    }
+  }
+}

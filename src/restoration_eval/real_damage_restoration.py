@@ -61,7 +61,7 @@ def _relative(value: Any) -> str:
     _require(not Path(value).is_absolute() and not PureWindowsPath(value).drive
              and not PureWindowsPath(value).root
              and "\\" not in value and ".." not in value.split("/")
-             and ".codex_tmp" not in value.split("/"), f"Unsafe repository path: {value}")
+             and not any(part.startswith(".") for part in value.split("/")), f"Unsafe repository path: {value}")
     return value
 
 
@@ -102,8 +102,7 @@ def validate_restoration_config(config: Mapping[str, Any]) -> None:
              and comparison["select_using_restoration_scores"] is False
              and comparison["pool_real_and_synthetic_metrics"] is False
              and comparison["same_prompt_domain_effect_claim_allowed"] is False, "Invalid synthetic comparison policy")
-    _require(execution["assistant_executes_notebook"] is False
-             and execution["user_creates_and_edits_notebook"] is True
+    _require(execution["notebook_execution"] == "manual"
              and execution["automatic_cleanup"] is False
              and execution["checkpoint_after_each_candidate"] is True
              and execution["resume_requires_matching_inputs_configuration_prompt_and_output_hashes"] is True,

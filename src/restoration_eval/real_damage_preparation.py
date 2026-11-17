@@ -1,4 +1,4 @@
-"""D03 full preprocessing and assistant-prepared mask candidates.
+"""D03 full preprocessing and automatically prepared mask candidates.
 
 These masks are proposed repair targets, not labels of all physical damage.
 Preparation never grants review approval or starts restoration inference.

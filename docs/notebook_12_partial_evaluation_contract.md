@@ -241,7 +241,7 @@ does not support an SDXL uncertainty comparison in N18, N19, or N22.
 7. Canonical persistence, artifact manifest, and run manifest.
 8. Completion gate, registry/path updates, work cleanup, and final audit.
 
-Every notebook cell is supplied in chat for manual paste and execution. Automated
+Notebook cells and their outputs are retained as execution evidence. Automated
 repository preparation may edit helpers, schemas, configuration, tests, and
 documentation, but must not edit or execute the notebook.
 

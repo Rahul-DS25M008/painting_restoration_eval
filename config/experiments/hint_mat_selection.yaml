@@ -16,7 +16,7 @@ inputs:
   case_registry_path: "outputs/08_experiment_contracts_and_region_policy/data/case_registry.csv"
   region_policy_path: "outputs/08_experiment_contracts_and_region_policy/data/region_policy.csv"
   upstream_run_manifest_path: "outputs/08_experiment_contracts_and_region_policy/manifests/run_manifest.json"
-  implementation_guidelines_path: "docs/refactoring_implementation_guidelines.md"
+  implementation_guidelines_path: "docs/reproducibility.md"
   notebook_roadmap_path: "docs/final_notebook_roadmap.md"
   evidence_dependency_audit_path: "docs/evidence_dependency_audit.md"
   evidence_coverage_path: "config/evaluation/evidence_coverage.yaml"

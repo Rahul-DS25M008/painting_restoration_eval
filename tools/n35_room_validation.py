@@ -69,6 +69,8 @@ def verify_freeze(root, relative):
         baseline = baseline_source(Path(root), r["path"]) if r["path"].endswith(".py") else None
         if baseline is None and r["hash_mode"] == "lf_normalized":
             current = safe_path(root, r["path"]).read_text(encoding="utf-8")
+            from editorial_baseline import baseline as editorial_baseline
+            current = editorial_baseline(root, r["path"], current)
             baseline = publication_baseline(root, r["path"], current)
         if baseline is not None and r["hash_mode"] == "lf_normalized":
             observed = hashlib.sha256(baseline.encode()).hexdigest()
@@ -324,11 +326,6 @@ def verify_committed_files(root, revision, relatives):
 def node_checks(root, filenames):
     """Run explicit offline controller unit scripts, not browser interaction tests."""
     node = os.environ.get("N35_NODE") or shutil.which("node")
-    if not node:
-        # Optional existing desktop runtime; no installation or PATH mutation.
-        bundled = Path.home() / ".cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe"
-        if bundled.is_file():
-            node = str(bundled)
     if not node:
         raise RuntimeError("Node is needed only for validation scripts. Set N35_NODE to an existing node executable and rerun; no test was skipped.")
     rows = []

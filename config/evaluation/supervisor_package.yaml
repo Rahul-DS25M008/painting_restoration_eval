@@ -36,7 +36,7 @@ governing_inputs:
   project_paths_json: "outputs/inventory/project_paths.json"
   project_paths_markdown: "outputs/inventory/project_paths.md"
   roadmap: "docs/final_notebook_roadmap.md"
-  implementation_guidelines: "docs/refactoring_implementation_guidelines.md"
+  implementation_guidelines: "docs/reproducibility.md"
   evidence_audit: "docs/evidence_dependency_audit.md"
   evidence_coverage: "config/evaluation/evidence_coverage.yaml"
   proposal: "docs/proposal/Rahul_Thesis_Proposal.docx"

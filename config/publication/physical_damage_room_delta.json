@@ -1,7 +1,7 @@
 {
   "schema": "physical_damage_room_delta.v1",
   "base_commit": "a9ce94ad0728ffa89e11f9da80e49e3cbbe91ecc",
-  "status": "local implementation visually accepted on 2026-11-16; separate cloud deployment pending",
+  "status": "deployed and validated on the test app; merged into main on 2026-11-17",
   "approved_scope": "One supplementary physical-damage room and the two-tile Study Design alcove. Eight principal rooms and original scientific records retained. Related route and regression assertions updated.",
   "design_record": "docs/dashboard_design_finalists/physical_damage_study_design.md",
   "files": {

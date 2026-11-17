@@ -27,7 +27,7 @@ if record.get("status") != "smoke_reader_verified":
     st.error("The public reader has not passed the bounded smoke test.")
     st.stop()
 
-cache = ROOT / ".codex_tmp/bundled_assets/streamlit_cache"
+cache = ROOT / ".local_work/bundled_assets/streamlit_cache"
 reader = RemoteBundleReader(record["repo_id"], record["revision"],
                             record["prefix"], cache)
 catalogue = reader.catalogue()
